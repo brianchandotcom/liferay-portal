@@ -16,8 +16,8 @@ package com.liferay.social.networking.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -33,6 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 import com.liferay.social.networking.model.MeetupsRegistration;
@@ -177,7 +178,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 				};
 		}
 
-		List<MeetupsRegistration> list = (List<MeetupsRegistration>)FinderCacheUtil.getResult(finderPath,
+		List<MeetupsRegistration> list = (List<MeetupsRegistration>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -242,10 +243,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -540,8 +541,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 		Object[] finderArgs = new Object[] { meetupsEntryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -565,10 +565,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -658,7 +658,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_U_ME,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_U_ME,
 					finderArgs, this);
 		}
 
@@ -698,7 +698,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 				List<MeetupsRegistration> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_ME,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_U_ME,
 						finderArgs, list);
 				}
 				else {
@@ -717,14 +717,13 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 					if ((meetupsRegistration.getUserId() != userId) ||
 							(meetupsRegistration.getMeetupsEntryId() != meetupsEntryId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_ME,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_U_ME,
 							finderArgs, meetupsRegistration);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_ME,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_U_ME, finderArgs);
 
 				throw processException(e);
 			}
@@ -770,8 +769,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 		Object[] finderArgs = new Object[] { userId, meetupsEntryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -799,10 +797,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -908,7 +906,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 				};
 		}
 
-		List<MeetupsRegistration> list = (List<MeetupsRegistration>)FinderCacheUtil.getResult(finderPath,
+		List<MeetupsRegistration> list = (List<MeetupsRegistration>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -978,10 +976,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1291,8 +1289,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 		Object[] finderArgs = new Object[] { meetupsEntryId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1320,10 +1317,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1349,11 +1346,11 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 */
 	@Override
 	public void cacheResult(MeetupsRegistration meetupsRegistration) {
-		EntityCacheUtil.putResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 			MeetupsRegistrationImpl.class, meetupsRegistration.getPrimaryKey(),
 			meetupsRegistration);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_ME,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_U_ME,
 			new Object[] {
 				meetupsRegistration.getUserId(),
 				meetupsRegistration.getMeetupsEntryId()
@@ -1370,7 +1367,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	@Override
 	public void cacheResult(List<MeetupsRegistration> meetupsRegistrations) {
 		for (MeetupsRegistration meetupsRegistration : meetupsRegistrations) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 						MeetupsRegistrationImpl.class,
 						meetupsRegistration.getPrimaryKey()) == null) {
@@ -1386,92 +1383,88 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 * Clears the cache for all meetups registrations.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(MeetupsRegistrationImpl.class);
+		entityCache.clearCache(MeetupsRegistrationImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the meetups registration.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(MeetupsRegistration meetupsRegistration) {
-		EntityCacheUtil.removeResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 			MeetupsRegistrationImpl.class, meetupsRegistration.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(meetupsRegistration);
+		clearUniqueFindersCache((MeetupsRegistrationModelImpl)meetupsRegistration);
 	}
 
 	@Override
 	public void clearCache(List<MeetupsRegistration> meetupsRegistrations) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (MeetupsRegistration meetupsRegistration : meetupsRegistrations) {
-			EntityCacheUtil.removeResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 				MeetupsRegistrationImpl.class,
 				meetupsRegistration.getPrimaryKey());
 
-			clearUniqueFindersCache(meetupsRegistration);
+			clearUniqueFindersCache((MeetupsRegistrationModelImpl)meetupsRegistration);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		MeetupsRegistration meetupsRegistration, boolean isNew) {
+		MeetupsRegistrationModelImpl meetupsRegistrationModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					meetupsRegistration.getUserId(),
-					meetupsRegistration.getMeetupsEntryId()
+					meetupsRegistrationModelImpl.getUserId(),
+					meetupsRegistrationModelImpl.getMeetupsEntryId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_ME, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_U_ME, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_ME, args,
-				meetupsRegistration);
+			finderCache.putResult(FINDER_PATH_FETCH_BY_U_ME, args,
+				meetupsRegistrationModelImpl);
 		}
 		else {
-			MeetupsRegistrationModelImpl meetupsRegistrationModelImpl = (MeetupsRegistrationModelImpl)meetupsRegistration;
-
 			if ((meetupsRegistrationModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_ME.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						meetupsRegistration.getUserId(),
-						meetupsRegistration.getMeetupsEntryId()
+						meetupsRegistrationModelImpl.getUserId(),
+						meetupsRegistrationModelImpl.getMeetupsEntryId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_ME, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_U_ME, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_ME, args,
-					meetupsRegistration);
+				finderCache.putResult(FINDER_PATH_FETCH_BY_U_ME, args,
+					meetupsRegistrationModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		MeetupsRegistration meetupsRegistration) {
-		MeetupsRegistrationModelImpl meetupsRegistrationModelImpl = (MeetupsRegistrationModelImpl)meetupsRegistration;
-
+		MeetupsRegistrationModelImpl meetupsRegistrationModelImpl) {
 		Object[] args = new Object[] {
-				meetupsRegistration.getUserId(),
-				meetupsRegistration.getMeetupsEntryId()
+				meetupsRegistrationModelImpl.getUserId(),
+				meetupsRegistrationModelImpl.getMeetupsEntryId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_ME, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_ME, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_ME, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_ME, args);
 
 		if ((meetupsRegistrationModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_ME.getColumnBitmask()) != 0) {
@@ -1480,8 +1473,8 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 					meetupsRegistrationModelImpl.getOriginalMeetupsEntryId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_ME, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_ME, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_ME, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_ME, args);
 		}
 	}
 
@@ -1641,10 +1634,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !MeetupsRegistrationModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1654,18 +1647,18 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 						meetupsRegistrationModelImpl.getOriginalMeetupsEntryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MEETUPSENTRYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_MEETUPSENTRYID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_MEETUPSENTRYID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_MEETUPSENTRYID,
 					args);
 
 				args = new Object[] {
 						meetupsRegistrationModelImpl.getMeetupsEntryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MEETUPSENTRYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_MEETUPSENTRYID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_MEETUPSENTRYID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_MEETUPSENTRYID,
 					args);
 			}
 
@@ -1676,8 +1669,8 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 						meetupsRegistrationModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ME_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ME_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ME_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ME_S,
 					args);
 
 				args = new Object[] {
@@ -1685,19 +1678,18 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 						meetupsRegistrationModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ME_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ME_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ME_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ME_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 			MeetupsRegistrationImpl.class, meetupsRegistration.getPrimaryKey(),
 			meetupsRegistration, false);
 
-		clearUniqueFindersCache((MeetupsRegistration)meetupsRegistrationModelImpl);
-		cacheUniqueFindersCache((MeetupsRegistration)meetupsRegistrationModelImpl,
-			isNew);
+		clearUniqueFindersCache(meetupsRegistrationModelImpl);
+		cacheUniqueFindersCache(meetupsRegistrationModelImpl, isNew);
 
 		meetupsRegistration.resetOriginalValues();
 
@@ -1773,7 +1765,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 */
 	@Override
 	public MeetupsRegistration fetchByPrimaryKey(Serializable primaryKey) {
-		MeetupsRegistration meetupsRegistration = (MeetupsRegistration)EntityCacheUtil.getResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+		MeetupsRegistration meetupsRegistration = (MeetupsRegistration)entityCache.getResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 				MeetupsRegistrationImpl.class, primaryKey);
 
 		if (meetupsRegistration == _nullMeetupsRegistration) {
@@ -1793,13 +1785,13 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 					cacheResult(meetupsRegistration);
 				}
 				else {
-					EntityCacheUtil.putResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 						MeetupsRegistrationImpl.class, primaryKey,
 						_nullMeetupsRegistration);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 					MeetupsRegistrationImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1849,7 +1841,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MeetupsRegistration meetupsRegistration = (MeetupsRegistration)EntityCacheUtil.getResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+			MeetupsRegistration meetupsRegistration = (MeetupsRegistration)entityCache.getResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 					MeetupsRegistrationImpl.class, primaryKey);
 
 			if (meetupsRegistration == null) {
@@ -1902,7 +1894,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
 					MeetupsRegistrationImpl.class, primaryKey,
 					_nullMeetupsRegistration);
 			}
@@ -1973,7 +1965,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<MeetupsRegistration> list = (List<MeetupsRegistration>)FinderCacheUtil.getResult(finderPath,
+		List<MeetupsRegistration> list = (List<MeetupsRegistration>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2021,10 +2013,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2054,7 +2046,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2067,11 +2059,11 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2096,10 +2088,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(MeetupsRegistrationImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(MeetupsRegistrationImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_MEETUPSREGISTRATION = "SELECT meetupsRegistration FROM MeetupsRegistration meetupsRegistration";
@@ -2130,4 +2122,9 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 				return _nullMeetupsRegistration;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

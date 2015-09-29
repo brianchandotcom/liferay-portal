@@ -419,11 +419,13 @@ public class MeetupsRegistrationPersistenceTest {
 
 		MeetupsRegistration existingMeetupsRegistration = _persistence.findByPrimaryKey(newMeetupsRegistration.getPrimaryKey());
 
-		Assert.assertEquals(existingMeetupsRegistration.getUserId(),
-			ReflectionTestUtil.invoke(existingMeetupsRegistration,
+		Assert.assertEquals(Long.valueOf(
+				existingMeetupsRegistration.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingMeetupsRegistration,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingMeetupsRegistration.getMeetupsEntryId(),
-			ReflectionTestUtil.invoke(existingMeetupsRegistration,
+		Assert.assertEquals(Long.valueOf(
+				existingMeetupsRegistration.getMeetupsEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingMeetupsRegistration,
 				"getOriginalMeetupsEntryId", new Class<?>[0]));
 	}
 

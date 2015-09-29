@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.portlet;
 
+import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
@@ -56,8 +57,6 @@ import org.osgi.service.metatype.MetaTypeService;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=configuration",
-		"com.liferay.portlet.control-panel-entry-weight=11",
 		"com.liferay.portlet.css-class-wrapper=portlet-configuration-admin",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
@@ -65,6 +64,7 @@ import org.osgi.service.metatype.MetaTypeService;
 		"javax.portlet.info.keywords=osgi,configuration,admin",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.ftl",
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

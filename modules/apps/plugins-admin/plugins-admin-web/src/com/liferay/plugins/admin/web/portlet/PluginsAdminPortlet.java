@@ -28,8 +28,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=apps",
-		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-users-admin",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.icon=/icons/plugins_admin.png",

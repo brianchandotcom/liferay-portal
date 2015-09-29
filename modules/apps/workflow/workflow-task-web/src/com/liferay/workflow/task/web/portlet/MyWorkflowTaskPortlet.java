@@ -44,8 +44,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=my",
-		"com.liferay.portlet.control-panel-entry-weight=3.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-tasks",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",

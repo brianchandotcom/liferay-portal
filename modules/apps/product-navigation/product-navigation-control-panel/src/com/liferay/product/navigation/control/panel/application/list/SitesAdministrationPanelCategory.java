@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.site.administration.application.list;
+package com.liferay.product.navigation.control.panel.application.list;
 
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
@@ -48,7 +48,7 @@ public class SitesAdministrationPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.SITES_ADMINISTRATION_SITES;
+		return PanelCategoryKeys.CONTROL_PANEL_SITES;
 	}
 
 	@Override

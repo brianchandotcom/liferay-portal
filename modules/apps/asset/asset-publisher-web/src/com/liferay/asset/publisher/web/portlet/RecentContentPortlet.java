@@ -14,6 +14,8 @@
 
 package com.liferay.asset.publisher.web.portlet;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,8 +28,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.active=false",
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
-		"com.liferay.portlet.control-panel-entry-weight=1.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-publisher",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/recent_content.png",
@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + AssetPublisherPortletKeys.RECENT_CONTENT,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/recent-content-default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",

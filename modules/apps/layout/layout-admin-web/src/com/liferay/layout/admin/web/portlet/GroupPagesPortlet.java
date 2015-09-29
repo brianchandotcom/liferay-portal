@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.portlet;
 
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
@@ -30,8 +31,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.control-panel-entry-category=site_administration.pages",
-		"com.liferay.portlet.control-panel-entry-weight=2.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-layouts-admin",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/group_pages.png",
@@ -45,6 +44,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supports.mime-type=text/html"
 	},

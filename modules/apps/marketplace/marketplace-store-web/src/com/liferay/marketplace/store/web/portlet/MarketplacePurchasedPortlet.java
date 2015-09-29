@@ -29,8 +29,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=marketplace",
-		"com.liferay.portlet.control-panel-entry-weight=3.0",
 		"com.liferay.portlet.css-class-wrapper=marketplace-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",

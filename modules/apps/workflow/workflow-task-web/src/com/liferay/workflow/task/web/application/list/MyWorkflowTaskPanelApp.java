@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.user.application.list;
+package com.liferay.workflow.task.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
@@ -30,15 +30,15 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT,
-		"service.ranking:Integer=400"
+		"service.ranking:Integer=300"
 	},
 	service = PanelApp.class
 )
-public class MyWorkflowInstancesPanelApp extends BaseControlPanelEntryPanelApp {
+public class MyWorkflowTaskPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MY_WORKFLOW_INSTANCE;
+		return PortletKeys.MY_WORKFLOW_TASK;
 	}
 
 	@Reference(unbind = "-")

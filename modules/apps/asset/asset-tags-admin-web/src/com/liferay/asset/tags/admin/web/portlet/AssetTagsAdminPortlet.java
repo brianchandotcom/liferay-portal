@@ -14,6 +14,7 @@
 
 package com.liferay.asset.tags.admin.web.portlet;
 
+import com.liferay.asset.tags.admin.web.constants.AssetTagsAdminPortletKeys;
 import com.liferay.asset.tags.admin.web.upgrade.AssetTagsAdminWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -47,8 +48,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
-		"com.liferay.portlet.control-panel-entry-weight=20.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-tag-admin",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
@@ -61,6 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Asset Tag Admin",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

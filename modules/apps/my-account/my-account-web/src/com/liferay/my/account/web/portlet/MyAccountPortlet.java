@@ -30,8 +30,6 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.control-panel-entry-category=my",
-		"com.liferay.portlet.control-panel-entry-weight=1.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-users-admin",
 		"com.liferay.portlet.display-category=category.tools",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",

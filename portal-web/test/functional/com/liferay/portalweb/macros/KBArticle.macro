@@ -1069,8 +1069,8 @@
 		<if>
 			<isset var="kbChildArticleTitle" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbChildArticleTitle}" />
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbChildArticleContent}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ADMIN_VIEW_CHILD_ARTICLE_TITLE" value1="${kbChildArticleTitle}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ADMIN_VIEW_CHILD_ARTICLE_CONTENT" value1="${kbChildArticleContent}" />
 			</then>
 		</if>
 

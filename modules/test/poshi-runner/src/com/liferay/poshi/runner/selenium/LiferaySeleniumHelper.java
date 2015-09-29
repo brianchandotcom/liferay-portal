@@ -737,7 +737,11 @@ public class LiferaySeleniumHelper {
 		List<String> baseDirNames = new ArrayList<>();
 
 		baseDirNames.add(PropsValues.TEST_BASE_DIR_NAME);
-		baseDirNames.addAll(Arrays.asList(PropsValues.TEST_INCLUDE_DIR_NAMES));
+
+		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
+			baseDirNames.addAll(
+				Arrays.asList(PropsValues.TEST_INCLUDE_DIR_NAMES));
+		}
 
 		for (String baseDirName : baseDirNames) {
 			String filePath = PoshiRunnerGetterUtil.getCanonicalPath(

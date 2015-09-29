@@ -14,32 +14,26 @@
 
 package com.liferay.marketplace.bundle;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.lang.management.ManagementFactory;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-import javax.management.openmbean.CompositeData;
-import javax.management.openmbean.TabularData;
-
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -49,53 +43,38 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = BundleManager.class)
 public class BundleManager {
 
-	public List<Map<String, Object>> getInstalledBundles() {
-		try {
-			MBeanServer mBeanServer =
-				ManagementFactory.getPlatformMBeanServer();
+	public Bundle getBundle(String symbolicName, String version) {
+		List<Bundle> bundles = getBundles();
 
-			ObjectName objectName = new ObjectName(_BUNDLE_STATE_OBJECT_NAME);
+		for (Bundle bundle : bundles) {
+			if (symbolicName.equals(bundle.getSymbolicName()) &&
+				version.equals(bundle.getVersion())) {
 
-			TabularData tabularData = (TabularData)mBeanServer.invoke(
-				objectName, "listBundles", null, null);
-
-			Collection<CompositeData> values =
-				(Collection<CompositeData>)tabularData.values();
-
-			List<Map<String, Object>> bundles = new ArrayList<>(values.size());
-
-			for (CompositeData compositeData : values) {
-				String state = (String)compositeData.get("State");
-
-				if (!ArrayUtil.contains(_INSTALLED_BUNDLE_STATES, state)) {
-					continue;
-				}
-
-				String symbolicName = (String)compositeData.get("SymbolicName");
-
-				if (Validator.isNull(symbolicName)) {
-					continue;
-				}
-
-				Map<String, Object> bundleData = new HashMap<>();
-
-				bundleData.put("bundleId", compositeData.get("Identifier"));
-				bundleData.put("location", compositeData.get("Location"));
-				bundleData.put("state", state);
-				bundleData.put("symbolicName", symbolicName);
-
-				String version = (String)compositeData.get("Version");
-
-				bundleData.put("version", version);
-
-				bundles.add(bundleData);
+				return bundle;
 			}
+		}
 
-			return bundles;
+		return null;
+	}
+
+	public List<Bundle> getBundles() {
+		return ListUtil.fromArray(_bundleContext.getBundles());
+	}
+
+	public List<Bundle> getInstalledBundles() {
+		List<Bundle> bundles = getBundles();
+
+		Iterator<Bundle> itr = bundles.iterator();
+
+		while (itr.hasNext()) {
+			Bundle bundle = itr.next();
+
+			if (!isInstalled(bundle)) {
+				itr.remove();
+			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+
+		return bundles;
 	}
 
 	public Manifest getManifest(File file) {
@@ -132,82 +111,47 @@ public class BundleManager {
 		return null;
 	}
 
-	public boolean isActive(String symbolicName, String version) {
-		List<Map<String, Object>> bundles = getInstalledBundles();
-
-		for (Map<String, Object> bundle : bundles) {
-			String curSymbolicName = GetterUtil.getString(
-				bundle.get("symbolicName"));
-
-			if (!symbolicName.equals(curSymbolicName)) {
-				continue;
-			}
-
-			String curVersion = GetterUtil.getString(bundle.get("version"));
-
-			if (version.equals(curVersion)) {
-				return true;
-			}
+	public boolean isInstalled(Bundle bundle) {
+		if (ArrayUtil.contains(_INSTALLED_BUNDLE_STATES, bundle.getState())) {
+			return true;
 		}
+		else {
+			return false;
+		}
+	}
 
-		return false;
+	public boolean isInstalled(String symbolicName, String version) {
+		Bundle bundle = getBundle(symbolicName, version);
+
+		return isInstalled(bundle);
+	}
+
+	public void uninstallBundle(Bundle bundle) {
+		try {
+			bundle.uninstall();
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+		}
 	}
 
 	public void uninstallBundle(String symbolicName, String version) {
-		try {
-			List<Map<String, Object>> bundles = getInstalledBundles();
+		Bundle bundle = getBundle(symbolicName, version);
 
-			List<Long> bundleIds = new ArrayList<>();
-
-			for (Map<String, Object> bundle : bundles) {
-				String curSymbolicName = GetterUtil.getString(
-					bundle.get("symbolicName"));
-
-				if (!symbolicName.equals(curSymbolicName)) {
-					continue;
-				}
-
-				String curVersion = GetterUtil.getString(bundle.get("version"));
-
-				if (!version.equals(curVersion)) {
-					continue;
-				}
-
-				long bundleId = GetterUtil.getLong(bundle.get("bundleId"));
-
-				if (bundleId > 0) {
-					bundleIds.add(bundleId);
-				}
-			}
-
-			if (bundleIds.isEmpty()) {
-				return;
-			}
-
-			MBeanServer mBeanServer =
-				ManagementFactory.getPlatformMBeanServer();
-
-			ObjectName objectName = new ObjectName(_FRAMEWORK_OBJECT_NAME);
-			long[] bundleIdsArray = ArrayUtil.toArray(
-				bundleIds.toArray(new Long[bundleIds.size()]));
-
-			mBeanServer.invoke(
-				objectName, "uninstallBundles", new Object[] {bundleIdsArray},
-				new String[] {long[].class.getName()});
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+		uninstallBundle(bundle);
 	}
 
-	private static final String _BUNDLE_STATE_OBJECT_NAME =
-		"osgi.core:type=bundleState,version=1.5";
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
 
-	private static final String _FRAMEWORK_OBJECT_NAME =
-		"osgi.core:type=framework,version=1.5";
-
-	private static final String[] _INSTALLED_BUNDLE_STATES = {
-		"ACTIVE", "INSTALLED", "RESOLVED"
+	private static final int[] _INSTALLED_BUNDLE_STATES = {
+		Bundle.ACTIVE, Bundle.INSTALLED, Bundle.RESOLVED
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(BundleManager.class);
+
+	private BundleContext _bundleContext;
 
 }

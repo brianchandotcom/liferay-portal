@@ -107,7 +107,7 @@ public class AppImpl extends AppBaseImpl {
 
 		for (Module module : modules) {
 			if (Validator.isNotNull(module.getBundleSymbolicName())) {
-				if (!_bundleManager.isActive(
+				if (!_bundleManager.isInstalled(
 						module.getBundleSymbolicName(),
 						module.getBundleVersion())) {
 

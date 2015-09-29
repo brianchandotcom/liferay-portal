@@ -797,7 +797,7 @@ public class AssetUtil {
 	}
 
 	protected static String getOrderByCol(
-		String sortField, int sortType, Locale locale) {
+		String sortField, String fieldType, int sortType, Locale locale) {
 
 		if (sortField.startsWith(
 				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
@@ -805,9 +805,10 @@ public class AssetUtil {
 			sortField = sortField.concat(StringPool.UNDERLINE).concat(
 				LocaleUtil.toLanguageId(locale));
 
-			if ((sortType == Sort.DOUBLE_TYPE) ||
-				(sortType == Sort.FLOAT_TYPE) || (sortType == Sort.INT_TYPE) ||
-				(sortType == Sort.LONG_TYPE)) {
+			if (!fieldType.equals("ddm-date") &&
+				((sortType == Sort.DOUBLE_TYPE) ||
+				 (sortType == Sort.FLOAT_TYPE) || (sortType == Sort.INT_TYPE) ||
+				 (sortType == Sort.LONG_TYPE))) {
 
 				sortField = sortField.concat(StringPool.UNDERLINE).concat(
 					"Number");
@@ -842,7 +843,7 @@ public class AssetUtil {
 
 		return SortFactoryUtil.getSort(
 			AssetEntry.class, sortType,
-			getOrderByCol(sortField, sortType, locale),
+			getOrderByCol(sortField, ddmFormFieldType, sortType, locale),
 			!sortField.startsWith(
 				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX),
 			orderByType);
@@ -862,25 +863,25 @@ public class AssetUtil {
 		return new Sort[] {sort1, sort2};
 	}
 
-	protected static int getSortType(String sortField) {
+	protected static int getSortType(String fieldType) {
 		int sortType = Sort.STRING_TYPE;
 
-		if (sortField.equals(Field.CREATE_DATE) ||
-			sortField.equals(Field.EXPIRATION_DATE) ||
-			sortField.equals(Field.PUBLISH_DATE) ||
-			sortField.equals("ddm-date") || sortField.equals("modifiedDate")) {
+		if (fieldType.equals(Field.CREATE_DATE) ||
+			fieldType.equals(Field.EXPIRATION_DATE) ||
+			fieldType.equals(Field.PUBLISH_DATE) ||
+			fieldType.equals("ddm-date") || fieldType.equals("modifiedDate")) {
 
 			sortType = Sort.LONG_TYPE;
 		}
-		else if (sortField.equals(Field.PRIORITY) ||
-				 sortField.equals(Field.RATINGS) ||
-				 sortField.equals("ddm-decimal") ||
-				 sortField.equals("ddm-number")) {
+		else if (fieldType.equals(Field.PRIORITY) ||
+				 fieldType.equals(Field.RATINGS) ||
+				 fieldType.equals("ddm-decimal") ||
+				 fieldType.equals("ddm-number")) {
 
 			sortType = Sort.DOUBLE_TYPE;
 		}
-		else if (sortField.equals(Field.VIEW_COUNT) ||
-				 sortField.equals("ddm-integer")) {
+		else if (fieldType.equals(Field.VIEW_COUNT) ||
+				 fieldType.equals("ddm-integer")) {
 
 			sortType = Sort.INT_TYPE;
 		}

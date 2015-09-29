@@ -24,46 +24,43 @@ int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
 if (folder != null) {
 	restrictionType = folder.getRestrictionType();
 }
-
-List<AddMenuItem> addMenuItems = new ArrayList<>();
-
-if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER)) {
-	PortletURL addFolderURL = renderResponse.createRenderURL();
-
-	addFolderURL.setParameter("mvcPath", "/edit_folder.jsp");
-	addFolderURL.setParameter("redirect", currentURL);
-	addFolderURL.setParameter("groupId", String.valueOf(scopeGroupId));
-	addFolderURL.setParameter("parentFolderId", String.valueOf(journalDisplayContext.getFolderId()));
-
-	String label = "folder";
-
-	if (folder != null) {
-		label = "subfolder";
-	}
-
-	addMenuItems.add(new AddMenuItem(LanguageUtil.get(request, label), addFolderURL.toString()));
-}
-
-List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), restrictionType);
-
-if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_ARTICLE)) {
-	for (DDMStructure ddmStructure : ddmStructures) {
-		PortletURL addArticleURL = renderResponse.createRenderURL();
-
-		addArticleURL.setParameter("mvcPath", "/edit_article.jsp");
-		addArticleURL.setParameter("redirect", currentURL);
-		addArticleURL.setParameter("groupId", String.valueOf(scopeGroupId));
-		addArticleURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
-		addArticleURL.setParameter("ddmStructureKey", ddmStructure.getStructureKey());
-		addArticleURL.setWindowState(LiferayWindowState.MAXIMIZED);
-
-		addMenuItems.add(new AddMenuItem(HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale)), addArticleURL.toString()));
-	}
-}
 %>
 
-<c:if test="<%= !addMenuItems.isEmpty() %>">
-	<liferay-frontend:add-menu
-		addMenuItems="<%= addMenuItems %>"
-	/>
+<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER) || JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
+	<liferay-frontend:add-menu>
+		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER) %>">
+			<portlet:renderURL var="addFolderURL">
+				<portlet:param name="mvcPath" value="/edit_folder.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="parentFolderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (folder != null) ? "subfolder" : "folder") %>' url="<%= addFolderURL.toString() %>" />
+		</c:if>
+
+		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
+
+			<%
+			List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), restrictionType);
+
+			for (DDMStructure ddmStructure : ddmStructures) {
+			%>
+
+				<portlet:renderURL var="addArticleURL">
+					<portlet:param name="mvcPath" value="/edit_article.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+					<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:add-menu-item title="<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale)) %>" url="<%= addArticleURL.toString() %>" />
+
+			<%
+			}
+			%>
+
+		</c:if>
+	</liferay-frontend:add-menu>
 </c:if>

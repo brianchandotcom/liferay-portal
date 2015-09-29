@@ -19,6 +19,11 @@ AUI.add(
 						value: STR_BLANK
 					},
 
+					elementActiveClass: {
+						validator: Lang.isString,
+						value: 'active'
+					},
+
 					hover: {
 						value: STR_BLANK
 					},
@@ -131,7 +136,8 @@ AUI.add(
 						);
 
 						instance._eventHandles = [
-							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance)
+							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance),
+							instance.get('contentBox').delegate('click', instance._toggleSelect, 'input[type=checkbox]', instance)
 						];
 
 						if (instance.get('hover')) {
@@ -395,6 +401,12 @@ AUI.add(
 
 						instance._addRestoreTask();
 						instance._addRestoreTaskState();
+					},
+
+					_toggleSelect: function(event) {
+						var instance = this;
+
+						event.currentTarget.ancestor('li,tr').toggleClass(instance.get('elementActiveClass'));
 					}
 				},
 

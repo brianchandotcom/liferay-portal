@@ -37,6 +37,11 @@ AUI.add(
 						value: 'input[type=checkbox]'
 					},
 
+					elementActiveClass: {
+						validator: Lang.isString,
+						value: 'active'
+					},
+
 					itemsCountContainer: {
 						setter: 'all',
 						value: '.selected-items-count'
@@ -170,7 +175,15 @@ AUI.add(
 					_toggleSelectAll: function(event) {
 						var instance = this;
 
-						instance._getPageCheckBoxes().attr(ATTR_CHECKED, event.currentTarget.attr(ATTR_CHECKED));
+						var pageCheckBoxes = instance._getPageCheckBoxes();
+
+						pageCheckBoxes.attr(ATTR_CHECKED, event.currentTarget.attr(ATTR_CHECKED));
+
+						pageCheckBoxes.each(
+							function(item, index) {
+								item.ancestor('li,tr').toggleClass(instance.get('elementActiveClass'), event.currentTarget.attr(ATTR_CHECKED));
+							}
+						);
 
 						instance._toggleSelect();
 					},

@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
@@ -89,6 +93,65 @@ public class JournalDisplayContext {
 		return _folderId;
 	}
 
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(_request, "navigation", "home");
+
+		return _navigation;
+	}
+
+	public int getStatus() {
+		if (_status != null) {
+			return _status;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int defaultStatus = WorkflowConstants.STATUS_APPROVED;
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) ||
+			isNavigationMine()) {
+
+			defaultStatus = WorkflowConstants.STATUS_ANY;
+		}
+
+		_status = ParamUtil.getInteger(_request, "status", defaultStatus);
+
+		return _status;
+	}
+
+	public boolean isNavigationHome() {
+		if (getNavigation().equals("home")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationMine() {
+		if (getNavigation().equals("mine")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationRecent() {
+		if (getNavigation().equals("recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected String getDisplayStyle(
 		HttpServletRequest request, String[] displayViews) {
 
@@ -120,7 +183,9 @@ public class JournalDisplayContext {
 	private String[] _displayViews;
 	private JournalFolder _folder;
 	private Long _folderId;
+	private String _navigation;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
+	private Integer _status;
 
 }

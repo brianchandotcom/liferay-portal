@@ -20,8 +20,6 @@
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
-
-String navigation = ParamUtil.getString(request, "navigation", "home");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -33,7 +31,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 		<aui:nav-item
 			href="<%= viewArticlesHomeURL %>"
 			label="folders"
-			selected='<%= (navigation.equals("home") && (journalDisplayContext.getFolderId() == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(ddmStructureKey) %>'
+			selected="<%= (journalDisplayContext.isNavigationHome() && (journalDisplayContext.getFolderId() == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(ddmStructureKey) %>"
 		/>
 
 		<portlet:renderURL var="viewRecentArticlesURL">
@@ -44,7 +42,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 		<aui:nav-item
 			href="<%= viewRecentArticlesURL %>"
 			label="recent"
-			selected='<%= navigation.equals("recent") %>'
+			selected="<%= journalDisplayContext.isNavigationRecent() %>"
 		/>
 
 		<portlet:renderURL var="viewMyArticlesURL">
@@ -55,7 +53,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 		<aui:nav-item
 			href="<%= viewMyArticlesURL %>"
 			label="mine"
-			selected='<%= navigation.equals("mine") %>'
+			selected="<%= journalDisplayContext.isNavigationMine() %>"
 		/>
 
 		<aui:nav-item

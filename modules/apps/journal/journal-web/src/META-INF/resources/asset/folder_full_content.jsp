@@ -23,14 +23,8 @@ JournalFolder folder = journalDisplayContext.getFolder();
 <c:if test="<%= folder != null %>">
 
 	<%
-	int status = WorkflowConstants.STATUS_APPROVED;
-
-	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-		status = WorkflowConstants.STATUS_ANY;
-	}
-
-	int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folder.getFolderId(), status);
-	int entriesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, folder.getFolderId(), status);
+	int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folder.getFolderId(), journalDisplayContext.getStatus());
+	int entriesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, folder.getFolderId(), journalDisplayContext.getStatus());
 	%>
 
 	<aui:row>

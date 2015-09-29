@@ -924,7 +924,5 @@
 			<var name="exportTemplateDescription" value="Export Template Description" />
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
-
 	</command>
-
 </definition>

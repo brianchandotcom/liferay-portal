@@ -65,7 +65,7 @@ public class TestSolrClientManager extends SolrClientManager {
 		Mockito.when(
 			componentContext.getProperties()
 		).thenReturn(
-			new Hashtable<String, Object>(configurationProperties)
+			new Hashtable<>(configurationProperties)
 		);
 
 		activate(componentContext);

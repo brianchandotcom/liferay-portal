@@ -17,13 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
-
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
+displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(journalDisplayContext.getNavigation()));
 displayStyleURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
 
 if (!ddmStructureKey.equals("0")) {

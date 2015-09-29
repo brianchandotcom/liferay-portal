@@ -48,7 +48,7 @@ JournalFolder folder = journalDisplayContext.getFolder();
 	<h5><liferay-ui:message key="num-of-items" /></h5>
 
 	<p>
-		<%= JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, journalDisplayContext.getFolderId(), WorkflowConstants.STATUS_ANY) %>
+		<%= JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, journalDisplayContext.getFolderId(), journalDisplayContext.getStatus()) %>
 	</p>
 
 	<c:if test="<%= folder != null %>">

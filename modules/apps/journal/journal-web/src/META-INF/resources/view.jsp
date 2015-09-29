@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation");
 String browseBy = ParamUtil.getString(request, "browseBy");
 
 String keywords = ParamUtil.getString(request, "keywords");
@@ -47,7 +46,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 
 		<div class="sidenav-content">
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
+				<c:if test="<%= !journalDisplayContext.isNavigationRecent() && !journalDisplayContext.isNavigationMine() && Validator.isNull(browseBy) %>">
 					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
 				</c:if>
 			</div>

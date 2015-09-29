@@ -86,25 +86,6 @@ public class DDMFormRendererHelper {
 		return renderedDDMFormFieldValuesMap;
 	}
 
-	protected Map<String, DDMFormFieldEvaluationResult>
-		createInitialStateDDMFormFieldEvaluationResultsMap() {
-
-		try {
-			DDMFormEvaluationResult ddmFormEvaluationResult =
-				_ddmFormEvaluator.evaluate(
-					_ddmForm, _ddmFormValues,
-					_ddmFormRenderingContext.getLocale());
-
-			return ddmFormEvaluationResult.
-				getDDMFormFieldEvaluationResultsMap();
-		}
-		catch (DDMFormEvaluationException ddmfee) {
-			_log.error("Unable to evaluate the form", ddmfee);
-		}
-
-		return new HashMap<>();
-	}
-
 	protected DDMFormFieldRenderingContext
 		createDDMFormFieldRenderingContext() {
 
@@ -183,6 +164,25 @@ public class DDMFormRendererHelper {
 		}
 
 		return new UnlocalizedValue(defaultValueString);
+	}
+
+	protected Map<String, DDMFormFieldEvaluationResult>
+		createInitialStateDDMFormFieldEvaluationResultsMap() {
+
+		try {
+			DDMFormEvaluationResult ddmFormEvaluationResult =
+				_ddmFormEvaluator.evaluate(
+					_ddmForm, _ddmFormValues,
+					_ddmFormRenderingContext.getLocale());
+
+			return ddmFormEvaluationResult.
+				getDDMFormFieldEvaluationResultsMap();
+		}
+		catch (DDMFormEvaluationException ddmfee) {
+			_log.error("Unable to evaluate the form", ddmfee);
+		}
+
+		return new HashMap<>();
 	}
 
 	protected String getAffixedDDMFormFieldParameterName(

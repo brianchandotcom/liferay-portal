@@ -32,42 +32,42 @@ public class DDMFormEvaluationResult {
 
 		return _ddmFormFieldEvaluationResults;
 	}
-	
-	public Map<String, DDMFormFieldEvaluationResult> 
-		getDDMFormFieldEvaluationResultsMap(){
-		
-		Map<String, DDMFormFieldEvaluationResult> 
+
+	public Map<String, DDMFormFieldEvaluationResult>
+		getDDMFormFieldEvaluationResultsMap() {
+
+		Map<String, DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationResultsMap = new HashMap<>();
-		
+
 		populateDDMFormFieldEvaluationResultsMap(
 			_ddmFormFieldEvaluationResults, ddmFormFieldEvaluationResultsMap);
-		
+
 		return ddmFormFieldEvaluationResultsMap;
-	}
-	
-	protected void populateDDMFormFieldEvaluationResultsMap(
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults, 
-		Map<String, DDMFormFieldEvaluationResult> 
-			ddmFormFieldEvaluationResultsMap) {
-		
-		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult : 
-				ddmFormFieldEvaluationResults) {
-			
-			ddmFormFieldEvaluationResultsMap.put(
-				ddmFormFieldEvaluationResult.getName(),
-				ddmFormFieldEvaluationResult);
-			
-			populateDDMFormFieldEvaluationResultsMap(
-				ddmFormFieldEvaluationResult.
-					getNestedDDMFormFieldEvaluationResults(), 
-				ddmFormFieldEvaluationResultsMap);
-		}
 	}
 
 	public void setDDMFormFieldEvaluationResults(
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults) {
 
 		_ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
+	}
+
+	protected void populateDDMFormFieldEvaluationResultsMap(
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults,
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultsMap) {
+
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResults) {
+
+			ddmFormFieldEvaluationResultsMap.put(
+				ddmFormFieldEvaluationResult.getName(),
+				ddmFormFieldEvaluationResult);
+
+			populateDDMFormFieldEvaluationResultsMap(
+				ddmFormFieldEvaluationResult.
+					getNestedDDMFormFieldEvaluationResults(),
+				ddmFormFieldEvaluationResultsMap);
+		}
 	}
 
 	private List<DDMFormFieldEvaluationResult> _ddmFormFieldEvaluationResults =

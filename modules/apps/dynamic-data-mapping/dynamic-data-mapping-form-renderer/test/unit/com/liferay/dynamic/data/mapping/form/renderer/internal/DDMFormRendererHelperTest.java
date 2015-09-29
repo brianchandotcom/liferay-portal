@@ -42,10 +42,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -426,6 +428,16 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		return sb.toString();
 	}
 
+	protected void setUpDDMFormEvaluator() throws Exception {
+		when(
+			_ddmFormEvaluator.evaluate(
+				Matchers.any(DDMForm.class), Matchers.any(DDMFormValues.class),
+				Matchers.any(Locale.class))
+		).thenReturn(
+			new DDMFormEvaluationResult()
+		);
+	}
+
 	protected void setUpDDMFormFieldRenderer() throws Exception {
 		when(
 			_ddmFormFieldRenderer.render(
@@ -447,16 +459,6 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 				}
 
 			}
-		);
-	}
-	
-	protected void setUpDDMFormEvaluator() throws Exception {
-		when(
-			_ddmFormEvaluator.evaluate(
-				Matchers.any(DDMForm.class), Matchers.any(DDMFormValues.class),
-				Matchers.any(Locale.class))
-		).thenReturn(
-			new DDMFormEvaluationResult()
 		);
 	}
 
@@ -507,11 +509,11 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 	private static final String _RANDOM_STRING = "_RANDOM_";
 
 	@Mock
-	private DDMFormFieldRenderer _ddmFormFieldRenderer;
+	private DDMFormEvaluator _ddmFormEvaluator;
 
 	@Mock
-	private DDMFormEvaluator _ddmFormEvaluator;
-	
+	private DDMFormFieldRenderer _ddmFormFieldRenderer;
+
 	@Mock
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 

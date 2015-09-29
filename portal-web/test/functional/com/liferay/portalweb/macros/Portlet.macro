@@ -207,7 +207,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+				<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
 			</else>
 		</if>
 

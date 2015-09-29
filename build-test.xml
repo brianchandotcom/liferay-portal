@@ -5659,10 +5659,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					</or>
 					<then>
 						<replace file="${app.server.jboss.lib.global.dir}/module.xml">
-							<replacetoken><![CDATA[<resource-root path="jtds.jar" />]]></replacetoken>
+							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
 							<replacevalue>
 								<![CDATA[
-									<resource-root path="jtds.jar" />
+									<resource-root path="hsql.jar" />
 									<resource-root path="mysql.jar" />
 								]]>
 							</replacevalue>

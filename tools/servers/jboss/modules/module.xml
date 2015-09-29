@@ -4,7 +4,6 @@
 	<resources>
 		<resource-root path="com.liferay.registry.api.jar" />
 		<resource-root path="hsql.jar" />
-		<resource-root path="jtds.jar" />
 		<resource-root path="mysql.jar" />
 		<resource-root path="portal-service.jar" />
 		<resource-root path="portlet.jar" />

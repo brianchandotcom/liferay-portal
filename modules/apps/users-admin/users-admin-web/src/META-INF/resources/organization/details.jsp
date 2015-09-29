@@ -140,6 +140,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 					defaultLogo="<%= logoId == 0 %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 					logoDisplaySelector=".organization-logo"
+					maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) %>"
 					tempImageFileName="<%= String.valueOf(groupId) %>"
 				/>
 			</c:if>

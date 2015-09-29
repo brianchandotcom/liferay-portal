@@ -15,8 +15,8 @@
 package com.liferay.portal.search.solr.internal.stats;
 
 import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
-import com.liferay.portal.search.unit.test.util.IndexingFixture;
-import com.liferay.portal.search.unit.test.util.stats.BaseStatisticsTest;
+import com.liferay.portal.search.unit.test.IndexingFixture;
+import com.liferay.portal.search.unit.test.stats.BaseStatisticsTest;
 
 import org.junit.Test;
 

@@ -15,8 +15,8 @@ package com.liferay.portal.search.solr.internal.groupby;
  */
 
 import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
-import com.liferay.portal.search.unit.test.util.IndexingFixture;
-import com.liferay.portal.search.unit.test.util.groupby.BaseGroupByTest;
+import com.liferay.portal.search.unit.test.IndexingFixture;
+import com.liferay.portal.search.unit.test.groupby.BaseGroupByTest;
 
 import org.junit.Test;
 

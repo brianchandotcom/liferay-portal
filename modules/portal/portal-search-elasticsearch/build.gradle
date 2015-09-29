@@ -14,7 +14,6 @@ dependencies {
 	provided group: "org.ow2.asm", name: "asm", transitive: false, version: "4.1"
 	provided group: "org.ow2.asm", name: "asm-commons", transitive: false, version: "4.1"
 
-	testCompile group: "com.liferay", name: "com.liferay.portal.search.unit.test.util", version: "1.0.0-SNAPSHOT"
 	testCompile group: "commons-io", name: "commons-io", version: "2.4"
 }
 

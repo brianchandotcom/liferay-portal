@@ -22,9 +22,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.model.impl.JournalArticleImpl;
-import com.liferay.journal.model.impl.JournalFeedImpl;
-import com.liferay.journal.model.impl.JournalFolderImpl;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
@@ -51,7 +48,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.util.List;
 
@@ -140,12 +136,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				JournalFolder.class.getName()));
 		setPublishToLiveByDefault(
 			JournalWebConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
-
-		XStreamAliasRegistryUtil.register(
-			JournalArticleImpl.class, "JournalArticle");
-		XStreamAliasRegistryUtil.register(JournalFeedImpl.class, "JournalFeed");
-		XStreamAliasRegistryUtil.register(
-			JournalFolderImpl.class, "JournalFolder");
 	}
 
 	@Override

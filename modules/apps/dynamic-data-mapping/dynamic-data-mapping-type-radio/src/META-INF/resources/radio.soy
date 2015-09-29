@@ -21,17 +21,17 @@
 				<b>*</b>
 			{/if}
 		</label>
-		
-		<div>
+
+		<div class="radio-options">
 			{foreach $option in $options}
 				{if not $inline}
 					<div class="radio">
 				{/if}
-		
+
 				<label class="radio-default{$inline ? ' radio-inline' : ''}" for="{$option.value}">
 					<input class="field" dir="{$dir}" id="{$option.value}" name="{$name}" {$option.status} type="radio" value="{$option.value}" /> {$option.label}
 				</label>
-		
+
 				{if not $inline}
 					</div>
 				{/if}

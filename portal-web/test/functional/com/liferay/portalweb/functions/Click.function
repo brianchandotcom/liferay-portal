@@ -177,6 +177,8 @@
 	</command>
 
 	<command name="mouseOverClick">
+		<execute selenium="waitForElementPresent" />
+
 		<execute selenium="mouseOver" />
 
 		<execute selenium="waitForVisible" />

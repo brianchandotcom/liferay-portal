@@ -60,7 +60,7 @@ JournalFolder folder = journalDisplayContext.getFolder();
 			<liferay-ui:custom-attributes-available className="<%= JournalFolder.class.getName() %>">
 				<liferay-ui:custom-attribute-list
 					className="<%= JournalFolder.class.getName() %>"
-					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+					classPK="<%= folder.getFolderId() %>"
 					editable="<%= false %>"
 					label="<%= true %>"
 				/>

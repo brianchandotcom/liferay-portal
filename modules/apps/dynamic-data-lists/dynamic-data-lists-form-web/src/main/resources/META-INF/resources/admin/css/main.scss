@@ -1,44 +1,65 @@
 @import "bourbon";
 @import "mixins";
 
-.form-builder-field {
-	border-radius: 0;
-	border-width: 0;
-	box-shadow: none;
-	margin: 0;
-
-	label {
-		float: none;
-	}
-}
-
-.form-builder-page-manager-popover-header  {
-	.popover-content {
-		padding: 7px 21px;
+.portlet-forms {
+	.aspect-ratio img {
+		top: 0;
 	}
 
-	ul {
-		margin: 0;
-		padding: 0;
+    .ddl-form-alert {
+		border-radius: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 500;
 	}
 
-	li {
-		color: #869CAD;
-		cursor: pointer;
-		font-size: 15px;
+	.ddl-form-builder-buttons {
+		margin-bottom: 0;
+	}
+
+	.ddl-form-name {
+		font-size: 32px;
+		line-height: 32px;
+	}
+
+	.ddl-form-description {
+		font-size: 14px;
+		line-height: 24px;
+	}
+
+	.form-builder-page-header {
+		padding-top: 25px;
+	}
+
+	.form-builder-page-header-title,
+	.form-builder-page-header-description,
+	.lfr-ddm-form-page-title,
+	.lfr-ddm-form-page-description {
+		color: #728694;
 		font-weight: 400;
-		line-height: 16px;
-		list-style-type: none;
-		padding: 11px 0 11px 0;
 	}
-}
 
-.form-builder-page-manager-popover-header.popover.left > .arrow {
-	margin-left: 19px;
-}
+	.lfr-ddm-form-page-title {
+		font-size: 19px;
+		margin-top: 0;
+	}
 
-.form-group .checkbox .toggle-switch-handle {
-	padding-left: 8px;
+	.form-builder-page-header-description,
+	.lfr-ddm-form-page-description {
+		font-size: 14px;
+	}
+
+	.form-group {
+		margin: 0;
+
+		.input-group-container,
+		.radio-options,
+		.input-select-wrapper,
+		.checkbox {
+			margin-bottom: 50px;
+		}
+	}
 }
 
 .lfr-ddl-field-settings-modal, .portlet-forms {
@@ -48,18 +69,13 @@
 		}
 	}
 
+	.icon-spinner {
+		@include animation(spin 1000ms infinite linear);
+	}
+
 	.form-builder-field-settings-save .icon-spinner {
 		display: inline-block;
 		margin: -2px 0 0 4px;
-	}
-
-	.help-block {
-		font-size: 14px;
-		position: absolute;
-	}
-
-	.icon-spinner {
-		@include animation(spin 1000ms infinite linear);
 	}
 
 	label.radio-inline {
@@ -69,6 +85,105 @@
 		& + .radio-inline {
 			margin-left: 0;
 		}
+	}
+
+	.help-block {
+		font-size: 14px;
+		position: absolute;
+	}
+}
+
+.portal-popup, .portlet-forms-admin {
+	.alert {
+		margin: 0;
+	}
+
+	.ddl-form-basic-info {
+		background-color: #869CAD;
+		min-height: 300px;
+		padding-bottom: 169px;
+
+		h1, h2, h3, h4, h5, h6  {
+			margin: 0;
+		}
+
+		.alloy-editor.alloy-editor-placeholder:empty:not(:focus),
+		.ddl-form-name,
+		.ddl-form-description {
+			border-width: 0;
+			color: white;
+			margin: 0;
+			padding-left: 0;
+
+			.help-block {
+				top: -15px;
+			}
+
+			p {
+				margin: 0;
+			}
+		}
+
+		.ddl-form-name {
+			font-weight: 300;
+			padding: 52px 0 0 0;
+
+			p {
+				margin: 0;
+			}
+		}
+
+		.ddl-form-description {
+			font-weight: 400;
+			padding: 23px 0 0 0;
+
+			p {
+				margin: 0;
+			}
+		}
+	}
+
+	.form-builder-tabview,
+	.lfr-ddm-form-wizard {
+		border-bottom: 1px solid #DEE4E9;
+		padding: 20px 34px 11px 34px;
+		position: relative;
+	}
+
+	.ddl-form-builder-app {
+		margin-top: -120px;
+
+		.form-builder-field-list-empty .form-builder-field-list-add-button {
+			position: relative;
+		}
+
+		.icon-refresh {
+			display: block;
+			font-size: 60px;
+			margin-top: 150px;
+			text-align: center;
+		}
+
+		.form-builder-content,
+		.lfr-ddm-form-content {
+			background: #FFF;
+			border: 1px solid #DCE0E3;
+			border-radius: 1px;
+			box-shadow: 0 2px 4px rgba(188, 197, 204, 0.3);
+			margin: 0 auto;
+			width: auto;
+		}
+	}
+}
+
+.form-builder-field {
+	border-radius: 0;
+	border-width: 0;
+	box-shadow: none;
+	margin: 0;
+
+	label {
+		float: none;
 	}
 }
 
@@ -289,150 +404,6 @@
 	}
 }
 
-.portal-popup, .portlet-forms-admin {
-	.alert {
-		margin: 0;
-	}
-
-	.ddl-form-basic-info {
-		background-color: #869CAD;
-		min-height: 300px;
-		padding-bottom: 169px;
-
-		h1, h2, h3, h4, h5, h6  {
-			margin: 0;
-		}
-
-		.alloy-editor.alloy-editor-placeholder:empty:not(:focus),
-		.ddl-form-name,
-		.ddl-form-description {
-			border-width: 0;
-			color: white;
-			margin: 0;
-			padding-left: 0;
-
-			.help-block {
-				top: -15px;
-			}
-
-			p {
-				margin: 0;
-			}
-		}
-
-		.ddl-form-name {
-			font-weight: 300;
-			padding: 52px 0 0 0;
-
-			p {
-				margin: 0;
-			}
-		}
-
-		.ddl-form-description {
-			font-weight: 400;
-			padding: 23px 0 0 0;
-
-			p {
-				margin: 0;
-			}
-		}
-	}
-
-	.form-builder-tabview,
-	.lfr-ddm-form-wizard {
-		border-bottom: 1px solid #DEE4E9;
-		padding: 20px 34px 11px 34px;
-		position: relative;
-	}
-
-	.ddl-form-builder-app {
-		margin-top: -120px;
-
-		.form-builder-field-list-empty .form-builder-field-list-add-button {
-			position: relative;
-		}
-
-		.icon-refresh {
-			display: block;
-			font-size: 60px;
-			margin-top: 150px;
-			text-align: center;
-		}
-
-		.form-builder-content,
-		.lfr-ddm-form-content {
-			background: #FFF;
-			border: 1px solid #DCE0E3;
-			border-radius: 1px;
-			box-shadow: 0 2px 4px rgba(188, 197, 204, 0.3);
-			margin: 0 auto;
-			width: auto;
-		}
-	}
-}
-
-.portlet-forms {
-	.aspect-ratio img {
-		top: 0;
-	}
-
-	.ddl-form-builder-buttons {
-		margin-bottom: 0;
-	}
-
-	.ddl-form-name {
-		font-size: 32px;
-		line-height: 32px;
-	}
-
-	.ddl-form-description {
-		font-size: 14px;
-		line-height: 24px;
-	}
-
-	.form-builder-page-header {
-		padding-top: 25px;
-	}
-
-	.form-builder-page-header-title,
-	.form-builder-page-header-description,
-	.lfr-ddm-form-page-title,
-	.lfr-ddm-form-page-description {
-		color: #728694;
-		font-weight: 400;
-	}
-
-	.lfr-ddm-form-page-title {
-		font-size: 19px;
-		margin-top: 0;
-	}
-
-	.form-builder-page-header-description,
-	.lfr-ddm-form-page-description {
-		font-size: 14px;
-	}
-
-	.form-group {
-		margin: 0;
-
-		.input-group-container,
-		.radio-options,
-		.input-select-wrapper,
-		.checkbox {
-			margin-bottom: 50px;
-		}
-
-		.checkbox .toggle-switch-bar {
-			font-size: inherit;
-
-			.toggle-switch-handle {
-				text-transform: none;
-			}
-		}
-	}
-}
-
 .portlet-forms-admin {
 	$side-spacing: 34px;
 
@@ -640,5 +611,30 @@
 		.form-builder-pagination {
 			margin: 0;
 		}
+	}
+}
+
+.form-builder-page-manager-popover-header.popover.left > .arrow {
+	margin-left: 19px;
+}
+
+.form-builder-page-manager-popover-header  {
+	.popover-content {
+		padding: 7px 21px;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		color: #869CAD;
+		cursor: pointer;
+		font-size: 15px;
+		font-weight: 400;
+		line-height: 16px;
+		list-style-type: none;
+		padding: 11px 0 11px 0;
 	}
 }

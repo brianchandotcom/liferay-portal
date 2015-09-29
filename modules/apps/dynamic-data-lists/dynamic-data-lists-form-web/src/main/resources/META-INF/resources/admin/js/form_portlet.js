@@ -41,8 +41,8 @@ AUI.add(
 							}
 						);
 
-						instance.bindUI();
 						instance.renderUI();
+						instance.bindUI();
 					},
 
 					renderUI: function() {
@@ -51,6 +51,8 @@ AUI.add(
 						instance.one('#loader').remove();
 
 						instance.get('formBuilder').render(instance.one('#formBuilder'));
+
+						instance.enableButtons();
 					},
 
 					bindUI: function() {
@@ -60,7 +62,11 @@ AUI.add(
 
 						editForm.set('onSubmit', A.bind('_onSubmitEditForm', instance));
 
+						var rootNode = instance.get('rootNode');
+
 						instance._eventHandlers = [
+							rootNode.delegate('click', A.bind('_onClickButtons', instance), '.ddl-form-builder-buttons .ddl-button'),
+							rootNode.delegate('click', A.bind('_onClickCloseAlert', instance), '.ddl-form-alert .close'),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
 					},
@@ -73,13 +79,15 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
-					_onDestroyPortlet: function(event) {
+					enableButtons: function() {
 						var instance = this;
 
-						instance.destroy();
+						var buttons = instance.all('.ddl-button');
+
+						Liferay.Util.toggleDisabled(buttons, false);
 					},
 
-					_onSubmitEditForm: function() {
+					serializeFormBuilder: function() {
 						var instance = this;
 
 						var description = window[instance.ns('descriptionEditor')].getHTML();
@@ -105,12 +113,63 @@ AUI.add(
 						var name = window[instance.ns('nameEditor')].getHTML();
 
 						instance.one('#name').val(name);
+					},
+
+					submitForm: function() {
+						var instance = this;
+
+						instance.serializeFormBuilder();
 
 						var submitButton = instance.one('#submit');
 
 						submitButton.html(Liferay.Language.get('saving'));
 
 						submitButton.append(TPL_BUTTON_SPINNER);
+
+						var editForm = instance.get('editForm');
+
+						submitForm(editForm.form);
+					},
+
+					_onClickButtons: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						var publishNode = instance.one('#publish');
+
+						if (currentTarget.hasClass('publish')) {
+							publishNode.val('true');
+						}
+						else if (currentTarget.hasClass('unpublish')) {
+							publishNode.val('false');
+						}
+
+						if (currentTarget.hasClass('save')) {
+							instance.submitForm();
+						}
+					},
+
+					_onClickCloseAlert: function() {
+						var instance = this;
+
+						instance.one('.ddl-form-alert').hide();
+					},
+
+					_onDestroyPortlet: function(event) {
+						var instance = this;
+
+						instance.destroy();
+					},
+
+					_onSubmitEditForm: function(event) {
+						var instance = this;
+
+						event.preventDefault();
+
+						instance.serializeFormBuilder();
+
+						instance.submitForm();
 					},
 
 					_valueFormBuilder: function() {

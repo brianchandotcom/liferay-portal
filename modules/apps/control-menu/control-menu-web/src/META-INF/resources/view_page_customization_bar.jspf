@@ -30,7 +30,7 @@
 		</portlet:actionURL>
 
 		<%
-		String taglibURL = "submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetPrototypeURL) + "');";
+		String taglibURL = "submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetPrototypeURL) + "');";
 		%>
 
 		<span class="button-info">

@@ -64,7 +64,20 @@ public class DDMFormRendererHelper {
 	public Map<String, String> getRenderedDDMFormFieldsMap()
 		throws DDMFormRenderingException {
 
-		return getRenderedDDMFormFieldValues();
+		Map<String, String> renderedDDMFormFieldValuesMap = new HashMap<>();
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			_ddmFormValues.getDDMFormFieldValuesMap();
+
+		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
+				ddmFormFieldValuesMap.entrySet()) {
+
+			renderedDDMFormFieldValuesMap.put(
+				entry.getKey(),
+				renderDDMFormFieldValues(entry.getValue(), StringPool.BLANK));
+		}
+
+		return renderedDDMFormFieldValuesMap;
 	}
 
 	protected DDMFormFieldRenderingContext
@@ -181,25 +194,6 @@ public class DDMFormRendererHelper {
 		sb.append(index);
 
 		return sb.toString();
-	}
-
-	protected Map<String, String> getRenderedDDMFormFieldValues()
-		throws DDMFormRenderingException {
-
-		Map<String, String> renderedDDMFormFieldValuesMap = new HashMap<>();
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			_ddmFormValues.getDDMFormFieldValuesMap();
-
-		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
-				ddmFormFieldValuesMap.entrySet()) {
-
-			renderedDDMFormFieldValuesMap.put(
-				entry.getKey(),
-				renderDDMFormFieldValues(entry.getValue(), StringPool.BLANK));
-		}
-
-		return renderedDDMFormFieldValuesMap;
 	}
 
 	protected String renderDDMFormField(

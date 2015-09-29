@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>SITE_PAGES_LINK</td>
-	<td>//ul[@class='visit-links']/li/a</td>
+	<td>//ul[contains(@id,'navTag')]/li[contains(.,'View Pages')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -36,6 +36,7 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 
 		<portlet:renderURL var="viewHistoryURL">
 			<portlet:param name="mvcPath" value="/view_article_history.jsp" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />

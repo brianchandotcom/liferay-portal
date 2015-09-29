@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,21 @@ public interface SCProductScreenshot extends SCProductScreenshotModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<SCProductScreenshot, Long> PRODUCT_SCREENSHOT_ID_ACCESSOR =
+		new Accessor<SCProductScreenshot, Long>() {
+			@Override
+			public Long get(SCProductScreenshot scProductScreenshot) {
+				return scProductScreenshot.getProductScreenshotId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<SCProductScreenshot> getTypeClass() {
+				return SCProductScreenshot.class;
+			}
+		};
 }

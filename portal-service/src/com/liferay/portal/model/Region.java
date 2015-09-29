@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Region service. Represents a row in the &quot;Region&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,4 +34,20 @@ public interface Region extends RegionModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.RegionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Region, Long> REGION_ID_ACCESSOR = new Accessor<Region, Long>() {
+			@Override
+			public Long get(Region region) {
+				return region.getRegionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Region> getTypeClass() {
+				return Region.class;
+			}
+		};
 }

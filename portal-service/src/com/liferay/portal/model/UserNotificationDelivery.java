@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the UserNotificationDelivery service. Represents a row in the &quot;UserNotificationDelivery&quot; database table, with each column mapped to a property of this class.
  *
@@ -33,4 +35,21 @@ public interface UserNotificationDelivery extends UserNotificationDeliveryModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.UserNotificationDeliveryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<UserNotificationDelivery, Long> USER_NOTIFICATION_DELIVERY_ID_ACCESSOR =
+		new Accessor<UserNotificationDelivery, Long>() {
+			@Override
+			public Long get(UserNotificationDelivery userNotificationDelivery) {
+				return userNotificationDelivery.getUserNotificationDeliveryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<UserNotificationDelivery> getTypeClass() {
+				return UserNotificationDelivery.class;
+			}
+		};
 }

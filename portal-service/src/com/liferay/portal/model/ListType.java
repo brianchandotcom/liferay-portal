@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the ListType service. Represents a row in the &quot;ListType&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,4 +34,20 @@ public interface ListType extends ListTypeModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ListTypeImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ListType, Long> LIST_TYPE_ID_ACCESSOR = new Accessor<ListType, Long>() {
+			@Override
+			public Long get(ListType listType) {
+				return listType.getListTypeId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ListType> getTypeClass() {
+				return ListType.class;
+			}
+		};
 }

@@ -35,6 +35,23 @@ public interface Organization extends OrganizationModel, PersistedModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.OrganizationImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Organization, Long> ORGANIZATION_ID_ACCESSOR = new Accessor<Organization, Long>() {
+			@Override
+			public Long get(Organization organization) {
+				return organization.getOrganizationId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Organization> getTypeClass() {
+				return Organization.class;
+			}
+		};
+
 	public static final Accessor<Organization, String> NAME_ACCESSOR = new Accessor<Organization, String>() {
 			@Override
 			public String get(Organization organization) {

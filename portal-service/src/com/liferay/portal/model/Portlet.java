@@ -34,6 +34,23 @@ public interface Portlet extends PortletModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.PortletImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Portlet, Long> ID_ACCESSOR = new Accessor<Portlet, Long>() {
+			@Override
+			public Long get(Portlet portlet) {
+				return portlet.getId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Portlet> getTypeClass() {
+				return Portlet.class;
+			}
+		};
+
 	public static final Accessor<Portlet, String> PORTLET_ID_ACCESSOR = new Accessor<Portlet, String>() {
 			@Override
 			public String get(Portlet portlet) {

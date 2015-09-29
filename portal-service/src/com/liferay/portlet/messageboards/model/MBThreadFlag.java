@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface MBThreadFlag extends MBThreadFlagModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<MBThreadFlag, Long> THREAD_FLAG_ID_ACCESSOR = new Accessor<MBThreadFlag, Long>() {
+			@Override
+			public Long get(MBThreadFlag mbThreadFlag) {
+				return mbThreadFlag.getThreadFlagId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<MBThreadFlag> getTypeClass() {
+				return MBThreadFlag.class;
+			}
+		};
 }

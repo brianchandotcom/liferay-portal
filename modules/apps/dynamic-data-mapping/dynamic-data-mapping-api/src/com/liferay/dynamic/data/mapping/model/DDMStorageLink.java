@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface DDMStorageLink extends DDMStorageLinkModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DDMStorageLink, Long> STORAGE_LINK_ID_ACCESSOR = new Accessor<DDMStorageLink, Long>() {
+			@Override
+			public Long get(DDMStorageLink ddmStorageLink) {
+				return ddmStorageLink.getStorageLinkId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DDMStorageLink> getTypeClass() {
+				return DDMStorageLink.class;
+			}
+		};
+
 	public java.lang.String getStorageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

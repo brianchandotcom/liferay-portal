@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface KaleoTimer extends KaleoTimerModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<KaleoTimer, Long> KALEO_TIMER_ID_ACCESSOR = new Accessor<KaleoTimer, Long>() {
+			@Override
+			public Long get(KaleoTimer kaleoTimer) {
+				return kaleoTimer.getKaleoTimerId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoTimer> getTypeClass() {
+				return KaleoTimer.class;
+			}
+		};
+
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment> getKaleoTaskReassignments();
 
 	public boolean isRecurring();

@@ -16,6 +16,7 @@ package com.liferay.service.access.policy.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,5 +35,22 @@ public interface SAPEntry extends SAPEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.service.access.policy.model.impl.SAPEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<SAPEntry, Long> SAP_ENTRY_ID_ACCESSOR = new Accessor<SAPEntry, Long>() {
+			@Override
+			public Long get(SAPEntry sapEntry) {
+				return sapEntry.getSapEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<SAPEntry> getTypeClass() {
+				return SAPEntry.class;
+			}
+		};
+
 	public java.util.List<java.lang.String> getAllowedServiceSignaturesList();
 }

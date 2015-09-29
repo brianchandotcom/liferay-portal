@@ -16,6 +16,7 @@ package com.liferay.shopping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,24 @@ public interface ShoppingItemField extends ShoppingItemFieldModel, PersistedMode
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.shopping.model.impl.ShoppingItemFieldImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ShoppingItemField, Long> ITEM_FIELD_ID_ACCESSOR =
+		new Accessor<ShoppingItemField, Long>() {
+			@Override
+			public Long get(ShoppingItemField shoppingItemField) {
+				return shoppingItemField.getItemFieldId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ShoppingItemField> getTypeClass() {
+				return ShoppingItemField.class;
+			}
+		};
+
 	public java.lang.String[] getValuesArray();
 
 	public void setValuesArray(java.lang.String[] valuesArray);

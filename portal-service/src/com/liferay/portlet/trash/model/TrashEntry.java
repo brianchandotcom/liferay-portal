@@ -16,6 +16,7 @@ package com.liferay.portlet.trash.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface TrashEntry extends TrashEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.trash.model.impl.TrashEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<TrashEntry, Long> ENTRY_ID_ACCESSOR = new Accessor<TrashEntry, Long>() {
+			@Override
+			public Long get(TrashEntry trashEntry) {
+				return trashEntry.getEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<TrashEntry> getTypeClass() {
+				return TrashEntry.class;
+			}
+		};
+
 	public com.liferay.portlet.trash.model.TrashEntry getRootEntry();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();

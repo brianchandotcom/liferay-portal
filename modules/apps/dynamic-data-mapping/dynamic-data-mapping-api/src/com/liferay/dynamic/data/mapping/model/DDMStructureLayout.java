@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,5 +36,23 @@ public interface DDMStructureLayout extends DDMStructureLayoutModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DDMStructureLayout, Long> STRUCTURE_LAYOUT_ID_ACCESSOR =
+		new Accessor<DDMStructureLayout, Long>() {
+			@Override
+			public Long get(DDMStructureLayout ddmStructureLayout) {
+				return ddmStructureLayout.getStructureLayoutId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DDMStructureLayout> getTypeClass() {
+				return DDMStructureLayout.class;
+			}
+		};
+
 	public com.liferay.dynamic.data.mapping.model.DDMFormLayout getDDMFormLayout();
 }

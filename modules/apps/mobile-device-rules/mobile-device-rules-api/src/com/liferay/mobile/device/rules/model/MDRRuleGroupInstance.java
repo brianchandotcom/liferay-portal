@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,6 +36,24 @@ public interface MDRRuleGroupInstance extends MDRRuleGroupInstanceModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<MDRRuleGroupInstance, Long> RULE_GROUP_INSTANCE_ID_ACCESSOR =
+		new Accessor<MDRRuleGroupInstance, Long>() {
+			@Override
+			public Long get(MDRRuleGroupInstance mdrRuleGroupInstance) {
+				return mdrRuleGroupInstance.getRuleGroupInstanceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<MDRRuleGroupInstance> getTypeClass() {
+				return MDRRuleGroupInstance.class;
+			}
+		};
+
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRAction> getActions();
 
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup()

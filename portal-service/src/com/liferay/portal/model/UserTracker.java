@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the UserTracker service. Represents a row in the &quot;UserTracker&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,23 @@ public interface UserTracker extends UserTrackerModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.UserTrackerImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<UserTracker, Long> USER_TRACKER_ID_ACCESSOR = new Accessor<UserTracker, Long>() {
+			@Override
+			public Long get(UserTracker userTracker) {
+				return userTracker.getUserTrackerId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<UserTracker> getTypeClass() {
+				return UserTracker.class;
+			}
+		};
+
 	public void addPath(com.liferay.portal.model.UserTrackerPath path);
 
 	public java.lang.String getEmailAddress();

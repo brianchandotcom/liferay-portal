@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface ExpandoRow extends ExpandoRowModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.expando.model.impl.ExpandoRowImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ExpandoRow, Long> ROW_ID_ACCESSOR = new Accessor<ExpandoRow, Long>() {
+			@Override
+			public Long get(ExpandoRow expandoRow) {
+				return expandoRow.getRowId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ExpandoRow> getTypeClass() {
+				return ExpandoRow.class;
+			}
+		};
 }

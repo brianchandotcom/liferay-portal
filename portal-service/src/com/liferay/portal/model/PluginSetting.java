@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the PluginSetting service. Represents a row in the &quot;PluginSetting&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,23 @@ public interface PluginSetting extends PluginSettingModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.PluginSettingImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<PluginSetting, Long> PLUGIN_SETTING_ID_ACCESSOR =
+		new Accessor<PluginSetting, Long>() {
+			@Override
+			public Long get(PluginSetting pluginSetting) {
+				return pluginSetting.getPluginSettingId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<PluginSetting> getTypeClass() {
+				return PluginSetting.class;
+			}
+		};
 
 	/**
 	* Adds a role to the list of roles.

@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface SocialRequest extends SocialRequestModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.social.model.impl.SocialRequestImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<SocialRequest, Long> REQUEST_ID_ACCESSOR = new Accessor<SocialRequest, Long>() {
+			@Override
+			public Long get(SocialRequest socialRequest) {
+				return socialRequest.getRequestId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<SocialRequest> getTypeClass() {
+				return SocialRequest.class;
+			}
+		};
 }

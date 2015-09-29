@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the LayoutSet service. Represents a row in the &quot;LayoutSet&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,22 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutSetImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<LayoutSet, Long> LAYOUT_SET_ID_ACCESSOR = new Accessor<LayoutSet, Long>() {
+			@Override
+			public Long get(LayoutSet layoutSet) {
+				return layoutSet.getLayoutSetId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<LayoutSet> getTypeClass() {
+				return LayoutSet.class;
+			}
+		};
 
 	/**
 	* Returns the layout set's color scheme.

@@ -16,6 +16,7 @@ package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,5 +35,22 @@ public interface PollsChoice extends PollsChoiceModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.polls.model.impl.PollsChoiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<PollsChoice, Long> CHOICE_ID_ACCESSOR = new Accessor<PollsChoice, Long>() {
+			@Override
+			public Long get(PollsChoice pollsChoice) {
+				return pollsChoice.getChoiceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<PollsChoice> getTypeClass() {
+				return PollsChoice.class;
+			}
+		};
+
 	public int getVotesCount();
 }

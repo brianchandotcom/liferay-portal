@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -49,18 +49,22 @@ public class DDMFormRendererHelper {
 		_ddmForm = ddmForm;
 		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(true);
 		_ddmFormRenderingContext = ddmFormRenderingContext;
-		_ddmFormValues = ddmFormRenderingContext.getDDMFormValues();
+
+		DDMFormValues ddmFormValues =
+			ddmFormRenderingContext.getDDMFormValues();
+
+		if (ddmFormValues == null) {
+			_ddmFormValues = createDefaultDDMFormValues();
+		}
+		else {
+			_ddmFormValues = ddmFormValues;
+		}
 	}
 
 	public Map<String, String> getRenderedDDMFormFieldsMap()
 		throws DDMFormRenderingException {
 
-		if (_ddmFormValues != null) {
-			return getRenderedDDMFormFieldValues();
-		}
-		else {
-			return getRenderedDDMFormFields();
-		}
+		return getRenderedDDMFormFieldValues();
 	}
 
 	protected DDMFormFieldRenderingContext
@@ -83,6 +87,64 @@ public class DDMFormRendererHelper {
 		ddmFormFieldRenderingContext.setValue(StringPool.BLANK);
 
 		return ddmFormFieldRenderingContext;
+	}
+
+	protected DDMFormFieldValue createDefaultDDMFormFieldValue(
+		DDMFormField ddmFormField) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName(ddmFormField.getName());
+
+		Value value = createDefaultValue(ddmFormField);
+
+		ddmFormFieldValue.setValue(value);
+
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField.getNestedDDMFormFields()) {
+
+			ddmFormFieldValue.addNestedDDMFormFieldValue(
+				createDefaultDDMFormFieldValue(nestedDDMFormField));
+		}
+
+		return ddmFormFieldValue;
+	}
+
+	protected DDMFormValues createDefaultDDMFormValues() {
+		DDMFormValues ddmFormValues = new DDMFormValues(_ddmForm);
+
+		ddmFormValues.setDefaultLocale(_ddmFormRenderingContext.getLocale());
+
+		for (DDMFormField ddmFormField : _ddmForm.getDDMFormFields()) {
+			DDMFormFieldValue ddmFormFieldValue =
+				createDefaultDDMFormFieldValue(ddmFormField);
+
+			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		}
+
+		return ddmFormValues;
+	}
+
+	protected Value createDefaultLocalizedValue(String defaultValueString) {
+		Value value = new LocalizedValue(_ddmFormRenderingContext.getLocale());
+
+		value.addString(
+			_ddmFormRenderingContext.getLocale(), defaultValueString);
+
+		return value;
+	}
+
+	protected Value createDefaultValue(DDMFormField ddmFormField) {
+		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
+
+		String defaultValueString = predefinedValue.getString(
+			_ddmFormRenderingContext.getLocale());
+
+		if (ddmFormField.isLocalizable()) {
+			return createDefaultLocalizedValue(defaultValueString);
+		}
+
+		return new UnlocalizedValue(defaultValueString);
 	}
 
 	protected String getAffixedDDMFormFieldParameterName(
@@ -119,20 +181,6 @@ public class DDMFormRendererHelper {
 		sb.append(index);
 
 		return sb.toString();
-	}
-
-	protected Map<String, String> getRenderedDDMFormFields()
-		throws DDMFormRenderingException {
-
-		Map<String, String> renderedDDMFormFieldsMap = new HashMap<>();
-
-		for (DDMFormField ddmFormField : _ddmForm.getDDMFormFields()) {
-			renderedDDMFormFieldsMap.put(
-				ddmFormField.getName(),
-				renderDDMFormField(ddmFormField, StringPool.BLANK));
-		}
-
-		return renderedDDMFormFieldsMap;
 	}
 
 	protected Map<String, String> getRenderedDDMFormFieldValues()
@@ -178,43 +226,6 @@ public class DDMFormRendererHelper {
 		catch (PortalException pe) {
 			throw new DDMFormRenderingException(pe);
 		}
-	}
-
-	protected String renderDDMFormField(
-			DDMFormField ddmFormField, String parentDDMFormFieldParameterName)
-		throws DDMFormRenderingException {
-
-		String ddmFormFieldParameterName = getDDMFormFieldParameterName(
-			ddmFormField.getName(), StringUtil.randomString(), 0,
-			parentDDMFormFieldParameterName);
-
-		List<DDMFormField> nestedDDMFormFields =
-			ddmFormField.getNestedDDMFormFields();
-
-		StringBundler sb = new StringBundler(nestedDDMFormFields.size());
-
-		for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
-			sb.append(
-				renderDDMFormField(
-					nestedDDMFormField, ddmFormFieldParameterName));
-		}
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			createDDMFormFieldRenderingContext();
-
-		setDDMFormFieldRenderingContextChildElementsHTML(
-			sb.toString(), ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextLabel(
-			ddmFormField.getLabel(), ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextName(
-			ddmFormFieldParameterName, ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextRequired(
-			ddmFormField.isRequired(), ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextVisible(
-			ddmFormField.getVisibilityExpression(),
-			ddmFormFieldRenderingContext);
-
-		return renderDDMFormField(ddmFormField, ddmFormFieldRenderingContext);
 	}
 
 	protected String renderDDMFormFieldValue(

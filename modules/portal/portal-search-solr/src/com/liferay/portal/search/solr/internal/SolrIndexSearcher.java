@@ -485,7 +485,9 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		QueryResponse queryResponse = doSearch(
 			searchContext, query, start, end, false);
 
-		return processResponse(queryResponse, searchContext, query);
+		Hits hits = processResponse(queryResponse, searchContext, query);
+
+		return hits;
 	}
 
 	protected QueryResponse executeSearchRequest(SolrQuery solrQuery)
@@ -688,7 +690,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		Map<String, FieldStatsInfo> fieldsStatsInfo =
 			queryResponse.getFieldStatsInfo();
 
-		if (fieldsStatsInfo == null) {
+		if (MapUtil.isEmpty(fieldsStatsInfo)) {
 			return;
 		}
 

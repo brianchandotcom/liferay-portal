@@ -122,6 +122,18 @@
 	width: 720px;
 
 	.form-builder-field-settings-content {
+		.auto-fields {
+			.lfr-form-row {
+				padding: 0;
+
+				&:hover {
+					background: transparent;
+					background-color: transparent;
+					border-color: transparent;
+				}
+			}
+		}
+
 		.modal-body {
 			background-color: #FFF;
 			max-height: 500px;
@@ -144,10 +156,11 @@
 					}
 
 					.lfr-autorow-controls {
-						bottom: 13px;
+						bottom: 0;
+						right: 0;
 
 						.add-row {
-							margin-right: 5px;
+							margin-right: 3px;
 						}
 					}
 				}
@@ -366,4 +379,8 @@
 		list-style-type: none;
 		padding: 11px 0 11px 0;
 	}
+}
+
+.management-bar a.active.btn span {
+	color: #65B6F0;
 }

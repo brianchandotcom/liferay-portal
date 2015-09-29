@@ -3,25 +3,6 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>9</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.admin.messaging.PluginRepositoriesMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<simple-trigger-value>1</simple-trigger-value>
-					<time-unit>day</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-admin</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>10</portlet-name>
 		<icon>/html/icons/address_book.png</icon>
 		<struts-path>address_book</struts-path>
@@ -144,23 +125,6 @@
 		<render-weight>50</render-weight>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
-	</portlet>
-	<portlet>
-		<portlet-name>137</portlet-name>
-		<icon>/html/icons/admin_server.png</icon>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>server</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/admin/admin-server-friendly-url-routes.xml</friendly-url-routes>
-		<control-panel-entry-category>configuration</control-panel-entry-category>
-		<control-panel-entry-weight>3.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.OmniadminControlPanelEntry</control-panel-entry-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<footer-portlet-javascript>/html/portlet/admin/js/main.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-admin</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>142</portlet-name>

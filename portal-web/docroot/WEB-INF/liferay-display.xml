@@ -12,11 +12,9 @@
 		<portlet id="188" />
 	</category>
 	<category name="category.hidden">
-		<portlet id="9" />
 		<portlet id="104" />
 		<portlet id="111" />
 		<portlet id="136" />
-		<portlet id="137" />
 		<portlet id="157" />
 		<portlet id="158" />
 		<portlet id="164" />

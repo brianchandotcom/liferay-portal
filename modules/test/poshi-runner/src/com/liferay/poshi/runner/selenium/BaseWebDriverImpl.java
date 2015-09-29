@@ -99,6 +99,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertConsoleErrors() throws Exception {
+		LiferaySeleniumHelper.assertConsoleErrors();
+	}
+
+	@Override
 	public void assertConsoleTextNotPresent(String text) throws Exception {
 		LiferaySeleniumHelper.assertConsoleTextNotPresent(text);
 	}
@@ -162,7 +167,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertLiferayErrors() throws Exception {
-		LiferaySeleniumHelper.assertLiferayErrors();
+		LiferaySeleniumHelper.assertConsoleErrors();
 	}
 
 	@Override

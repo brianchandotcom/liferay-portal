@@ -154,6 +154,12 @@ public class PropsValues {
 	public static final boolean TEAR_DOWN_BEFORE_TEST = GetterUtil.getBoolean(
 		PropsUtil.get("tear.down.before.test"));
 
+	public static final boolean TEST_ASSERT_CONSOLE_ERRORS =
+		GetterUtil.getBoolean(PropsUtil.get("test.assert.console.errors"));
+
+	public static final boolean TEST_ASSERT_JAVASCRIPT_ERRORS =
+		GetterUtil.getBoolean(PropsUtil.get("test.assert.javascript.errors"));
+
 	public static final boolean TEST_ASSERT_WARNING_EXCEPTIONS =
 		GetterUtil.getBoolean(PropsUtil.get("test.assert.warning.exceptions"));
 

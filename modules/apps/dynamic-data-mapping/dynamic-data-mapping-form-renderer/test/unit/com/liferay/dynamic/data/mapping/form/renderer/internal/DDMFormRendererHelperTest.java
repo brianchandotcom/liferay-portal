@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -40,12 +42,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -59,6 +59,7 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormEvaluator();
 		setUpDDMFormFieldTypeServicesTracker();
 		setUpLocaleUtil();
 		setUpStringUtil();
@@ -276,6 +277,7 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
 			ddmForm, ddmFormRenderingContext);
 
+		ddmFormRendererHelper.setDDMFormEvaluator(_ddmFormEvaluator);
 		ddmFormRendererHelper.setDDMFormFieldTypeServicesTracker(
 			_ddmFormFieldTypeServicesTracker);
 
@@ -447,6 +449,16 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 			}
 		);
 	}
+	
+	protected void setUpDDMFormEvaluator() throws Exception {
+		when(
+			_ddmFormEvaluator.evaluate(
+				Matchers.any(DDMForm.class), Matchers.any(DDMFormValues.class),
+				Matchers.any(Locale.class))
+		).thenReturn(
+			new DDMFormEvaluationResult()
+		);
+	}
 
 	protected void setUpDDMFormFieldTypeServicesTracker() throws Exception {
 		setUpDDMFormFieldRenderer();
@@ -497,6 +509,9 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 	@Mock
 	private DDMFormFieldRenderer _ddmFormFieldRenderer;
 
+	@Mock
+	private DDMFormEvaluator _ddmFormEvaluator;
+	
 	@Mock
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 

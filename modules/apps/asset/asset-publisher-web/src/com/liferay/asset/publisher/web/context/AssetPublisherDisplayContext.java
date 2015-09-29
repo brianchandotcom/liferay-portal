@@ -232,7 +232,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<AssetEntryResult> getAssetEntryResults(
-			int start, int end, SearchContainer searchContainer)
+			SearchContainer searchContainer)
 		throws Exception {
 
 		if (!showAssetEntryResults()) {
@@ -244,13 +244,13 @@ public class AssetPublisherDisplayContext {
 
 		if (assetVocabularyId > 0) {
 			return getAssetEntryResultsByVocabulary(
-				assetVocabularyId, start, end, searchContainer);
+				assetVocabularyId, searchContainer);
 		}
 		else if (assetVocabularyId <= -1) {
-			return getAssetEntryResultsByClassName(start, end, searchContainer);
+			return getAssetEntryResultsByClassName(searchContainer);
 		}
 
-		return getAssetEntryResultsByDefault(start, end, searchContainer);
+		return getAssetEntryResultsByDefault(searchContainer);
 	}
 
 	public String getAssetLinkBehavior() {
@@ -1134,7 +1134,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	protected List<AssetEntryResult> getAssetEntryResultsByClassName(
-			int start, int end, SearchContainer searchContainer)
+			SearchContainer searchContainer)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -1143,6 +1143,9 @@ public class AssetPublisherDisplayContext {
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
 
 		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
 
 		int total = 0;
 
@@ -1196,18 +1199,19 @@ public class AssetPublisherDisplayContext {
 			}
 		}
 
-		if (searchContainer != null) {
-			searchContainer.setTotal(total);
-		}
+		searchContainer.setTotal(total);
 
 		return assetEntryResults;
 	}
 
 	protected List<AssetEntryResult> getAssetEntryResultsByDefault(
-			int start, int end, SearchContainer searchContainer)
+			SearchContainer searchContainer)
 		throws Exception {
 
 		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
 
@@ -1218,9 +1222,7 @@ public class AssetPublisherDisplayContext {
 
 		int total = baseModelSearchResult.getLength();
 
-		if (searchContainer != null) {
-			searchContainer.setTotal(total);
-		}
+		searchContainer.setTotal(total);
 
 		List<AssetEntry> assetEntries = baseModelSearchResult.getBaseModels();
 
@@ -1232,8 +1234,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	protected List<AssetEntryResult> getAssetEntryResultsByVocabulary(
-			long assetVocabularyId, int start, int end,
-			SearchContainer searchContainer)
+			long assetVocabularyId, SearchContainer searchContainer)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -1248,6 +1249,9 @@ public class AssetPublisherDisplayContext {
 				assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		assetEntryQuery.setClassNameIds(getClassNameIds());
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
 
 		int total = 0;
 
@@ -1297,9 +1301,7 @@ public class AssetPublisherDisplayContext {
 			assetEntryQuery.setStart(QueryUtil.ALL_POS);
 		}
 
-		if (searchContainer != null) {
-			searchContainer.setTotal(total);
-		}
+		searchContainer.setTotal(total);
 
 		return assetEntryResults;
 	}

@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.publisher.web.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -187,14 +188,17 @@ public class AssetRSSUtil {
 
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
-		AssetPublisherDisplayContext displayContext =
+		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
 				PortalUtil.getHttpServletRequest(portletRequest),
 				portletPreferences);
 
+		SearchContainer searchContainer = new SearchContainer();
+
+		searchContainer.setDelta(assetPublisherDisplayContext.getRSSDelta());
+
 		List<AssetEntryResult> assetEntryResults =
-			displayContext.getAssetEntryResults(
-				0, displayContext.getRSSDelta(), null);
+			assetPublisherDisplayContext.getAssetEntryResults(searchContainer);
 
 		for (AssetEntryResult assetEntryResult : assetEntryResults) {
 			assetEntries.addAll(assetEntryResult.getAssetEntries());

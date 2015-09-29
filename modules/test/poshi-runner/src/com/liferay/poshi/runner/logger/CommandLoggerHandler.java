@@ -28,6 +28,7 @@ import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
+ * @author Peter Yoo
  */
 public final class CommandLoggerHandler {
 
@@ -60,6 +61,19 @@ public final class CommandLoggerHandler {
 
 		_commandLogLoggerElement.addChildLoggerElement(
 			dividerLineLoggerElement);
+	}
+
+	public static void logMessage(Element element) throws Exception {
+		_lineGroupLoggerElement = _getMessageGroupLoggerElement(element);
+
+		_commandLogLoggerElement.addChildLoggerElement(_lineGroupLoggerElement);
+
+		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+
+		_linkLoggerElements(xmlLoggerElement);
+
+		_updateStatus(xmlLoggerElement, "pass");
 	}
 
 	public static void logSeleniumCommand(
@@ -295,6 +309,51 @@ public final class CommandLoggerHandler {
 		return loggerElement.toString();
 	}
 
+	private static LoggerElement _getMessageContainerLoggerElement(
+			Element element)
+		throws Exception {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("line-container");
+		loggerElement.setText(_getMessageContainerText(element));
+
+		return loggerElement;
+	}
+
+	private static String _getMessageContainerText(Element element)
+		throws Exception {
+
+		String message = element.attributeValue("message");
+
+		if (message == null) {
+			message = element.getText();
+		}
+
+		return PoshiRunnerVariablesUtil.replaceCommandVars(message);
+	}
+
+	private static LoggerElement _getMessageGroupLoggerElement(Element element)
+		throws Exception {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		String className = "line-group linkable";
+
+		if (_isFail(element)) {
+			className = className + " failed";
+		}
+
+		loggerElement.setClassName(className);
+
+		loggerElement.setName("li");
+
+		loggerElement.addChildLoggerElement(
+			_getMessageContainerLoggerElement(element));
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getRunLineLoggerElement(
 		Element element, List<String> arguments) {
 
@@ -409,6 +468,11 @@ public final class CommandLoggerHandler {
 
 	private static boolean _isCurrentCommand(Element element) {
 		return element.equals(_commandElement);
+	}
+
+	private static boolean _isFail(Element element) {
+		return Validator.equals(
+			StringUtil.toLowerCase(element.getName()), "fail");
 	}
 
 	private static void _linkLoggerElements(LoggerElement xmlLoggerElement) {

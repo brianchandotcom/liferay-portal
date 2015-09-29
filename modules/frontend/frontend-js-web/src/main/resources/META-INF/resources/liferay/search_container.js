@@ -142,7 +142,8 @@ AUI.add(
 
 						instance._eventHandles = [
 							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance),
-							instance.get('contentBox').delegate('click', instance._toggleSelect, 'input[type=checkbox]', instance)
+							instance.get('contentBox').delegate('click', instance._toggleSelect, 'input[type=checkbox]', instance),
+							instance.get('contentBox').delegate('click', instance._toggleExtraSelect, '.click-selector', instance)
 						];
 
 						if (instance.get('hover')) {
@@ -410,10 +411,28 @@ AUI.add(
 						instance._addRestoreTaskState();
 					},
 
+					_toggleActiveElement: function(element) {
+						var instance = this;
+
+						element.toggleClass(instance.get('rowClassNameActive'));
+					},
+
+					_toggleExtraSelect: function(event) {
+						var instance = this;
+
+						var element = event.currentTarget.ancestor('li,tr');
+
+						var checkbox = element.one('input[type=checkbox]');
+
+						checkbox.attr('checked', !checkbox.attr('checked'));
+
+						instance._toggleActiveElement(element);
+					},
+
 					_toggleSelect: function(event) {
 						var instance = this;
 
-						event.currentTarget.ancestor(instance.get('rowSelector')).toggleClass(instance.get('rowClassNameActive'));
+						instance._toggleActiveElement(event.currentTarget.ancestor(instance.get('rowSelector')));
 					}
 				},
 

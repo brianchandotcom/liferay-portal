@@ -27,9 +27,9 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.TeamServiceUtil;
-import com.liferay.portal.service.UserGroupServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.TeamService;
+import com.liferay.portal.service.UserGroupService;
+import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.upgrade.SiteTeamsWebUpgrade;
@@ -80,7 +80,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		TeamServiceUtil.deleteTeam(teamId);
+		_teamService.deleteTeam(teamId);
 	}
 
 	public void deleteTeams(
@@ -91,7 +91,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "teamIds"), 0L);
 
 		for (long teamId : teamIds) {
-			TeamServiceUtil.deleteTeam(teamId);
+			_teamService.deleteTeam(teamId);
 		}
 	}
 
@@ -114,7 +114,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Team.class.getName(), actionRequest);
 
-			TeamServiceUtil.addTeam(
+			_teamService.addTeam(
 				themeDisplay.getSiteGroupId(), name, description,
 				serviceContext);
 		}
@@ -122,7 +122,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 			// Update team
 
-			TeamServiceUtil.updateTeam(teamId, name, description);
+			_teamService.updateTeam(teamId, name, description);
 		}
 	}
 
@@ -137,8 +137,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		long[] removeUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
-		UserGroupServiceUtil.addTeamUserGroups(teamId, addUserGroupIds);
-		UserGroupServiceUtil.unsetTeamUserGroups(teamId, removeUserGroupIds);
+		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
+		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -157,8 +157,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		UserServiceUtil.addTeamUsers(teamId, addUserIds);
-		UserServiceUtil.unsetTeamUsers(teamId, removeUserIds);
+		_userService.addTeamUsers(teamId, addUserIds);
+		_userService.unsetTeamUsers(teamId, removeUserIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -200,5 +200,24 @@ public class SiteTeamsPortlet extends MVCPortlet {
 	protected void setSiteTeamsWebUpgrade(
 		SiteTeamsWebUpgrade siteTeamsWebUpgrade) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setTeamService(TeamService teamService) {
+		_teamService = teamService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupService(UserGroupService userGroupService) {
+		_userGroupService = userGroupService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
+	}
+
+	private TeamService _teamService;
+	private UserGroupService _userGroupService;
+	private UserService _userService;
 
 }

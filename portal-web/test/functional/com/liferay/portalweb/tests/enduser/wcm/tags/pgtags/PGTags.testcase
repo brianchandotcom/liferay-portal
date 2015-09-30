@@ -1004,10 +1004,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />

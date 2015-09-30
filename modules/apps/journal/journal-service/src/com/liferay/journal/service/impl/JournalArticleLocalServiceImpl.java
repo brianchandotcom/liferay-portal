@@ -7679,7 +7679,8 @@ public class JournalArticleLocalServiceImpl
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
-		validateDDMStructureFields(ddmStructure, classNameId, content);
+		validateDDMStructureFields(
+			ddmStructure, classNameId, content, articleDefaultLocale);
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
@@ -7807,7 +7808,7 @@ public class JournalArticleLocalServiceImpl
 
 	protected void validateDDMStructureFields(
 			DDMStructure ddmStructure, long classNameId, Fields fields,
-			Locale[] locales)
+			Locale defaultlocale)
 		throws PortalException {
 
 		for (com.liferay.dynamic.data.mapping.storage.Field field : fields) {
@@ -7815,30 +7816,25 @@ public class JournalArticleLocalServiceImpl
 				throw new StorageFieldNameException();
 			}
 
-			for (Locale locale : locales) {
-				if (ddmStructure.getFieldRequired(field.getName()) &&
-					Validator.isNull(field.getValue(locale)) &&
-					(classNameId ==
-						JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
+			if (ddmStructure.getFieldRequired(field.getName()) &&
+				Validator.isNull(field.getValue(defaultlocale)) &&
+				(classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
 
-					throw new StorageFieldRequiredException(
-						"Required field value is not present for " + locale);
-				}
+				throw new StorageFieldRequiredException(
+					"Required field value is not present for " + defaultlocale);
 			}
 		}
 	}
 
 	protected void validateDDMStructureFields(
-			DDMStructure ddmStructure, long classNameId, String content)
+			DDMStructure ddmStructure, long classNameId, String content,
+			Locale defaultlocale)
 		throws PortalException {
-
-		Locale[] contentLocales = LocaleUtil.fromLanguageIds(
-			LocalizationUtil.getAvailableLanguageIds(content));
 
 		Fields fields = DDMXMLUtil.getFields(ddmStructure, content);
 
 		validateDDMStructureFields(
-			ddmStructure, classNameId, fields, contentLocales);
+			ddmStructure, classNameId, fields, defaultlocale);
 	}
 
 	protected void validateDDMStructureId(

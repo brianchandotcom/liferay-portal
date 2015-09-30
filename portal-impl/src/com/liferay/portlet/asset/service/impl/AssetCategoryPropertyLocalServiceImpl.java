@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.CategoryPropertyKeyException;
 import com.liferay.portlet.asset.CategoryPropertyValueException;
+import com.liferay.portlet.asset.DuplicateCategoryPropertyException;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.service.base.AssetCategoryPropertyLocalServiceBaseImpl;
 import com.liferay.portlet.asset.util.AssetUtil;
@@ -38,7 +39,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		validate(key, value);
+		validate(categoryId, key, value);
 
 		long categoryPropertyId = counterLocalService.increment();
 
@@ -121,11 +122,11 @@ public class AssetCategoryPropertyLocalServiceImpl
 			long userId, long categoryPropertyId, String key, String value)
 		throws PortalException {
 
-		validate(key, value);
-
 		AssetCategoryProperty categoryProperty =
 			assetCategoryPropertyPersistence.findByPrimaryKey(
 				categoryPropertyId);
+
+		validate(categoryProperty.getCategoryId(), key, value);
 
 		if (userId != 0) {
 			User user = userPersistence.findByPrimaryKey(userId);
@@ -150,13 +151,22 @@ public class AssetCategoryPropertyLocalServiceImpl
 		return updateCategoryProperty(0, categoryPropertyId, key, value);
 	}
 
-	protected void validate(String key, String value) throws PortalException {
+	protected void validate(long categoryId, String key, String value)
+		throws PortalException {
+
 		if (!AssetUtil.isValidWord(key)) {
 			throw new CategoryPropertyKeyException("Invalid key " + key);
 		}
 
 		if (!AssetUtil.isValidWord(value)) {
 			throw new CategoryPropertyValueException("Invalid value " + value);
+		}
+
+		AssetCategoryProperty categoryProperty =
+			assetCategoryPropertyPersistence.fetchByCA_K(categoryId, key);
+
+		if (categoryProperty != null) {
+			throw new DuplicateCategoryPropertyException();
 		}
 	}
 

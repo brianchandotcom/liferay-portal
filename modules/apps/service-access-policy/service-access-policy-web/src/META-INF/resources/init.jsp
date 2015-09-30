@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.CharPool" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
@@ -47,6 +46,7 @@ page import="com.liferay.service.access.policy.model.SAPEntry" %><%@
 page import="com.liferay.service.access.policy.model.SAPEntryConstants" %><%@
 page import="com.liferay.service.access.policy.service.SAPEntryServiceUtil" %><%@
 page import="com.liferay.service.access.policy.service.permission.SAPEntryPermission" %><%@
+page import="com.liferay.service.access.policy.web.constants.SAPWebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@

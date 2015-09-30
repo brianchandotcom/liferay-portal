@@ -128,7 +128,7 @@ if (sapEntry != null) {
 
 	<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields,liferay-portlet-url">
 		var getMethodsURL = Liferay.PortletURL.createURL('<%= getMethodsURL %>');
-		var services = <%= JSONFactoryUtil.looseSerialize(JSONWebServiceActionsManagerUtil.getServiceNames()) %>;
+		var services = <%= JSONFactoryUtil.looseSerialize(request.getAttribute(SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES)) %>;
 
 		var autoFields = new Liferay.AutoFields(
 			{

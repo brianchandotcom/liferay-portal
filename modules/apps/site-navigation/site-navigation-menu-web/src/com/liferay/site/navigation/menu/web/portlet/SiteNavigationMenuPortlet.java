@@ -17,6 +17,8 @@ package com.liferay.site.navigation.menu.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
 import com.liferay.site.navigation.menu.web.upgrade.SiteNavigationMenuWebUpgrade;
 
@@ -84,11 +86,30 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 			SiteNavigationMenuWebConfiguration.class, properties);
 	}
 
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_TEMPLATE, _portletDisplayTemplate);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
 	@Reference(unbind = "-")
 	protected void setNavigationWebUpgrade(
 		SiteNavigationMenuWebUpgrade siteNavigationWebUpgrade) {
 	}
 
+	@Reference
+	protected void setPortletDisplayTemplate(
+		PortletDisplayTemplate portletDisplayTemplate) {
+
+		_portletDisplayTemplate = portletDisplayTemplate;
+	}
+
+	private PortletDisplayTemplate _portletDisplayTemplate;
 	private volatile SiteNavigationMenuWebConfiguration
 		_siteNavigationMenuWebConfiguration;
 

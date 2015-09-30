@@ -158,6 +158,8 @@ public interface WebKeys {
 
 	public static final String PORTLET_DECORATE = "PORTLET_DECORATE";
 
+	public static final String PORTLET_DISPLAY_TEMPLATE = "PORTLET_DISPLAY_TEMPLATE";
+
 	public static final String PORTLET_ID = "PORTLET_ID";
 
 	public static final String PORTLET_PREFERENCES_MAP = "PORTLET_PREFERENCES_MAP";

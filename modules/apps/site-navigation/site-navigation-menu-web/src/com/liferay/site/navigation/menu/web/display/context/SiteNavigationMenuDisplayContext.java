@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuPortletInstanceConfiguration;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
 
@@ -82,7 +80,8 @@ public class SiteNavigationMenuDisplayContext {
 
 		if (displayStyle != null) {
 			PortletDisplayTemplate portletDisplayTemplate =
-				getPortletDisplayTemplate();
+				(PortletDisplayTemplate)_request.getAttribute(
+					WebKeys.PORTLET_DISPLAY_TEMPLATE);
 
 			_ddmTemplateKey = portletDisplayTemplate.getDDMTemplateKey(
 				displayStyle);
@@ -198,12 +197,6 @@ public class SiteNavigationMenuDisplayContext {
 			_siteNavigationMenuPortletInstanceConfiguration.preview());
 
 		return _preview;
-	}
-
-	protected PortletDisplayTemplate getPortletDisplayTemplate() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(PortletDisplayTemplate.class);
 	}
 
 	private String _bulletStyle;

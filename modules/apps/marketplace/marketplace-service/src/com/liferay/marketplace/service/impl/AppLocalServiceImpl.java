@@ -14,7 +14,7 @@
 
 package com.liferay.marketplace.service.impl;
 
-import com.liferay.marketplace.bundle.BundleManager;
+import com.liferay.marketplace.bundle.BundleManagerUtil;
 import com.liferay.marketplace.exception.AppPropertiesException;
 import com.liferay.marketplace.exception.AppTitleException;
 import com.liferay.marketplace.exception.AppVersionException;
@@ -66,7 +66,6 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import org.osgi.framework.Bundle;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -137,7 +136,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 		Map<String, String> bundledApps = new HashMap<>();
 
-		List<Bundle> bundles = _bundleManager.getInstalledBundles();
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
 		for (Bundle bundle : bundles) {
 			InputStream inputStream = null;
@@ -349,7 +348,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 							new AutoDeploymentContext();
 
 						if (fileName.endsWith(".jar")) {
-							Manifest manifest = _bundleManager.getManifest(
+							Manifest manifest = BundleManagerUtil.getManifest(
 								pluginPackageFile);
 
 							Attributes attributes =
@@ -450,7 +449,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			moduleLocalService.deleteModule(module.getModuleId());
 
 			if (module.isBundle()) {
-				_bundleManager.uninstallBundle(
+				BundleManagerUtil.uninstallBundle(
 					module.getBundleSymbolicName(), module.getBundleVersion());
 
 				continue;
@@ -601,11 +600,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBundleManager(BundleManager bundleManager) {
-		_bundleManager = bundleManager;
-	}
-
 	protected void validate(String title, String version)
 		throws PortalException {
 
@@ -622,7 +616,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		AppLocalServiceImpl.class);
 
 	private Map<String, String> _bundledApps;
-	private BundleManager _bundleManager;
 	private List<App> _installedApps;
 
 }

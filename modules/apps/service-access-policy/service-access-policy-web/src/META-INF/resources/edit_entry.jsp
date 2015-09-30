@@ -250,12 +250,20 @@ if (sapEntry != null) {
 								if (item.serviceClass == serviceClass) {
 									context = item.context;
 
+									if (context.length == 0) {
+										context = 'portal';
+									}
+
 									serviceInput.attr('data-context', context);
 								}
 							});
 						}
 
 						if (context.length && serviceClass.length) {
+							if (context == 'portal') {
+								context = '';
+							}
+
 							getMethodsURL.setParameter('serviceClass', serviceClass);
 							getMethodsURL.setParameter('context', context);
 

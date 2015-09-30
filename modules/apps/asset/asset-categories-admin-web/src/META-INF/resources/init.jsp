@@ -48,6 +48,7 @@ page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetCategoryNameException" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.DuplicateCategoryException" %><%@
+page import="com.liferay.portlet.asset.DuplicateCategoryPropertyException" %><%@
 page import="com.liferay.portlet.asset.DuplicateVocabularyException" %><%@
 page import="com.liferay.portlet.asset.NoSuchCategoryException" %><%@
 page import="com.liferay.portlet.asset.NoSuchVocabularyException" %><%@

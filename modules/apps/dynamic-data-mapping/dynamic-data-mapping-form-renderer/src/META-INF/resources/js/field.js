@@ -74,7 +74,7 @@ AUI.add(
 					},
 
 					tip: {
-						value: {}
+						value: ''
 					},
 
 					type: {

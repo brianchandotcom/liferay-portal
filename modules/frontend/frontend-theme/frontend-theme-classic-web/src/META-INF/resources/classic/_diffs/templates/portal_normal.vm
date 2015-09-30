@@ -43,9 +43,7 @@ $theme.include($body_top_include)
 				#end
 			</div>
 
-			#if ($has_navigation && $is_setup_complete)
-				#parse ("$full_templates_path/navigation.vm")
-			#end
+			#parse ("$full_templates_path/navigation.vm")
 		</div>
 	</header>
 

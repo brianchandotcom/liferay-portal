@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>AVAILABLE_TRANSLATION</td>
-	<td>//div[contains(@class,'available-translations')]/span[contains(.,'${key_localizedLanguage}')]/span</td>
+	<td>//div[contains(@class,'available-translations')]/span/span[contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>

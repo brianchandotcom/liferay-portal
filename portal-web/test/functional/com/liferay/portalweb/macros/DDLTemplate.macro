@@ -138,7 +138,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDisplayTemplateName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#INFO" value1="There are no templates." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -301,7 +301,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#INFO" value1="There are no templates." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

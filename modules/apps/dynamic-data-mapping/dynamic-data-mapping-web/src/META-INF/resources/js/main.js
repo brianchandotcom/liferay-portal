@@ -623,7 +623,7 @@ AUI.add(
 						}
 					}
 
-					str = str.replace(/\s/g, '_');
+					str = Liferay.Util.camelize(str,' ');
 				}
 
 				return str;

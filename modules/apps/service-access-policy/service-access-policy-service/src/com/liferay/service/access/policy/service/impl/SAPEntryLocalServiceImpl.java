@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
@@ -45,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -63,6 +66,8 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		name = StringUtil.trim(name);
+		allowedServiceSignatures = normalizeServiceSignatures(
+			allowedServiceSignatures);
 
 		validate(name, titleMap);
 
@@ -245,6 +250,8 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		}
 
 		name = StringUtil.trim(name);
+		allowedServiceSignatures = normalizeServiceSignatures(
+			allowedServiceSignatures);
 
 		validate(name, titleMap);
 
@@ -257,6 +264,54 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		sapEntry = sapEntryPersistence.update(sapEntry, serviceContext);
 
 		return sapEntry;
+	}
+
+	protected String normalizeServiceSignatures(String serviceSignatures) {
+		String[] serviceSignaturesArray = serviceSignatures.split(
+			StringPool.NEW_LINE);
+
+		TreeSet<String> sortedServiceSignatures = new TreeSet<>();
+
+		for (String serviceSignature : serviceSignaturesArray) {
+			String[] serviceSignatureArray = serviceSignature.split(
+				StringPool.POUND);
+
+			StringBundler sb = new StringBundler(
+				serviceSignatureArray.length * 2);
+
+			boolean empty = true;
+
+			for (int i = 0; i < serviceSignatureArray.length; i++) {
+				serviceSignatureArray[i] = StringUtil.trim(
+					serviceSignatureArray[i]);
+
+				if (serviceSignatureArray[i].length() > 0) {
+					empty = false;
+				}
+
+				sb.append(serviceSignatureArray[i]);
+				sb.append(StringPool.POUND);
+			}
+
+			if (!empty) {
+				sb.setIndex(sb.index() - 1);
+				sortedServiceSignatures.add(sb.toString());
+			}
+		}
+
+		StringBundler sb = new StringBundler(
+			sortedServiceSignatures.size() * 2);
+
+		for (String sortedServiceSignature : sortedServiceSignatures) {
+			sb.append(sortedServiceSignature);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	protected void validate(String name, Map<Locale, String> titleMap)

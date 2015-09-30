@@ -1530,14 +1530,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletElement.elementText("permission-propagator"),
 				portletModel.getPermissionPropagatorClass()));
 
-		List<String> trashHandlerClasses = new ArrayList<>();
-
-		for (Element trashHandlerClassElement :
-				portletElement.elements("trash-handler")) {
-
-			trashHandlerClasses.add(trashHandlerClassElement.getText());
-		}
-
 		Set<ApplicationType> applicationTypes = new HashSet<>();
 
 		for (Element applicationType :
@@ -1561,6 +1553,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		portletModel.setApplicationTypes(applicationTypes);
+
+		List<String> trashHandlerClasses = new ArrayList<>();
+
+		for (Element trashHandlerClassElement :
+				portletElement.elements("trash-handler")) {
+
+			trashHandlerClasses.add(trashHandlerClassElement.getText());
+		}
 
 		portletModel.setTrashHandlerClasses(trashHandlerClasses);
 

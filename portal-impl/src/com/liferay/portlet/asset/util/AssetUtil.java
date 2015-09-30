@@ -66,7 +66,6 @@ import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
-import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
@@ -196,52 +195,6 @@ public class AssetUtil {
 
 		return ArrayUtil.toArray(
 			viewableCategoryIds.toArray(new Long[viewableCategoryIds.size()]));
-	}
-
-	public static long[] filterTagIds(
-			PermissionChecker permissionChecker, long[] tagIds)
-		throws PortalException {
-
-		List<Long> viewableTagIds = new ArrayList<>();
-
-		for (long tagId : tagIds) {
-			if (AssetTagPermission.contains(
-					permissionChecker, tagId, ActionKeys.VIEW)) {
-
-				viewableTagIds.add(tagId);
-			}
-		}
-
-		return ArrayUtil.toArray(
-			viewableTagIds.toArray(new Long[viewableTagIds.size()]));
-	}
-
-	public static long[][] filterTagIdsArray(
-			PermissionChecker permissionChecker, long[][] tagIdsArray)
-		throws PortalException {
-
-		List<long[]> viewableTagIdsArray = new ArrayList<>();
-
-		for (int i = 0; i< tagIdsArray.length; i++) {
-			long[] tagIds = tagIdsArray[i];
-
-			List<Long> viewableTagIds = new ArrayList<>();
-
-			for (long tagId : tagIds) {
-				if (AssetTagPermission.contains(
-						permissionChecker, tagId, ActionKeys.VIEW)) {
-
-					viewableTagIds.add(tagId);
-				}
-			}
-
-			viewableTagIdsArray.add(
-				ArrayUtil.toArray(
-					viewableTagIds.toArray(new Long[viewableTagIds.size()])));
-		}
-
-		return viewableTagIdsArray.toArray(
-			new long[viewableTagIdsArray.size()][]);
 	}
 
 	public static List<AssetVocabulary> filterVocabularies(

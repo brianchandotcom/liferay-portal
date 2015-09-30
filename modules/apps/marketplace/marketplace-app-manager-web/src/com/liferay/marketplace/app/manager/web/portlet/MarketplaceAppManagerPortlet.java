@@ -19,7 +19,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
-import com.liferay.marketplace.service.AppServiceUtil;
+import com.liferay.marketplace.service.AppService;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -46,9 +46,9 @@ import com.liferay.portal.model.Plugin;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.service.PluginSettingLocalServiceUtil;
-import com.liferay.portal.service.PluginSettingServiceUtil;
-import com.liferay.portal.service.PortletServiceUtil;
+import com.liferay.portal.service.PluginSettingLocalService;
+import com.liferay.portal.service.PluginSettingService;
+import com.liferay.portal.service.PortletService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -169,7 +169,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		long remoteAppId = ParamUtil.getLong(actionRequest, "remoteAppId");
 
 		if (remoteAppId > 0) {
-			AppServiceUtil.uninstallApp(remoteAppId);
+			_appService.uninstallApp(remoteAppId);
 		}
 		else {
 			String[] contextNames = StringUtil.split(
@@ -201,20 +201,20 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		if (pluginType.equals(Plugin.TYPE_PORTLET)) {
-			PortletServiceUtil.updatePortlet(
+			_portletService.updatePortlet(
 				themeDisplay.getCompanyId(), pluginId, StringPool.BLANK,
 				active);
 		}
 		else {
 			if (roles.length == 0) {
 				PluginSetting pluginSetting =
-					PluginSettingLocalServiceUtil.getPluginSetting(
+					_pluginSettingLocalService.getPluginSetting(
 						themeDisplay.getCompanyId(), pluginId, pluginType);
 
 				roles = StringUtil.split(pluginSetting.getRoles());
 			}
 
-			PluginSettingServiceUtil.updatePluginSetting(
+			_pluginSettingService.updatePluginSetting(
 				themeDisplay.getCompanyId(), pluginId, pluginType,
 				StringUtil.merge(roles), active);
 		}
@@ -242,12 +242,12 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			if (layoutTemplates != null) {
 				for (LayoutTemplate layoutTemplate : layoutTemplates) {
 					PluginSetting pluginSetting =
-						PluginSettingLocalServiceUtil.getPluginSetting(
+						_pluginSettingLocalService.getPluginSetting(
 							themeDisplay.getCompanyId(),
 							layoutTemplate.getLayoutTemplateId(),
 							Plugin.TYPE_LAYOUT_TEMPLATE);
 
-					PluginSettingServiceUtil.updatePluginSetting(
+					_pluginSettingService.updatePluginSetting(
 						themeDisplay.getCompanyId(),
 						layoutTemplate.getLayoutTemplateId(),
 						Plugin.TYPE_LAYOUT_TEMPLATE, pluginSetting.getRoles(),
@@ -260,7 +260,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
 			if (portlets != null) {
 				for (Portlet portlet : portlets) {
-					PortletServiceUtil.updatePortlet(
+					_portletService.updatePortlet(
 						themeDisplay.getCompanyId(), portlet.getPortletId(),
 						StringPool.BLANK, active);
 				}
@@ -272,11 +272,11 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			if (themes != null) {
 				for (Theme theme : themes) {
 					PluginSetting pluginSetting =
-						PluginSettingLocalServiceUtil.getPluginSetting(
+						_pluginSettingLocalService.getPluginSetting(
 							themeDisplay.getCompanyId(), theme.getThemeId(),
 							Plugin.TYPE_THEME);
 
-					PluginSettingServiceUtil.updatePluginSetting(
+					_pluginSettingService.updatePluginSetting(
 						themeDisplay.getCompanyId(), theme.getThemeId(),
 						Plugin.TYPE_THEME, pluginSetting.getRoles(), active);
 				}
@@ -408,6 +408,11 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAppService(AppService appService) {
+		_appService = appService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
 		_panelAppRegistry = panelAppRegistry;
 	}
@@ -419,9 +424,32 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPluginSettingLocalService(
+		PluginSettingLocalService pluginSettingLocalService) {
+
+		_pluginSettingLocalService = pluginSettingLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPluginSettingService(
+		PluginSettingService pluginSettingService) {
+
+		_pluginSettingService = pluginSettingService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletService(PortletService portletService) {
+		_portletService = portletService;
+	}
+
 	private static final String _DEPLOY_TO_PREFIX = "DEPLOY_TO__";
 
+	private AppService _appService;
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
+	private PluginSettingLocalService _pluginSettingLocalService;
+	private PluginSettingService _pluginSettingService;
+	private PortletService _portletService;
 
 }

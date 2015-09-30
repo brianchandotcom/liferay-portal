@@ -3991,7 +3991,9 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		if ((list != null) && !list.isEmpty()) {
 			for (AssetTag assetTag : list) {
 				if (!ArrayUtil.contains(groupIds, assetTag.getGroupId()) ||
-						!Validator.equals(name, assetTag.getName())) {
+						!StringUtil.wildcardMatches(assetTag.getName(), name,
+							CharPool.UNDERLINE, CharPool.PERCENT,
+							CharPool.BACK_SLASH, true)) {
 					list = null;
 
 					break;

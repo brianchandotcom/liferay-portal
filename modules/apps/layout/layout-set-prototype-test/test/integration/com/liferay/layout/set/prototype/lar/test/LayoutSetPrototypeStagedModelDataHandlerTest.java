@@ -218,14 +218,6 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
 			(LayoutSetPrototype)stagedModel);
-
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			LayoutPrototype.class.getSimpleName());
-
-		LayoutPrototype layoutPrototype =
-			(LayoutPrototype)dependentStagedModels.get(0);
-
-		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(layoutPrototype);
 	}
 
 	protected LayoutPrototype getImportedLayoutPrototype(

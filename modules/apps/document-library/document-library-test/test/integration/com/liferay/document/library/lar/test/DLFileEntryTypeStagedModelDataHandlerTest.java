@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 
 import java.util.HashMap;
@@ -90,10 +91,17 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new long[] {ddmStructure.getStructureId()}, serviceContext);
+		DLFileEntryType fileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new long[] {ddmStructure.getStructureId()}, serviceContext);
+
+		DDMStructureManagerUtil.updateStructureKey(
+			ddmStructure.getStructureId(),
+			DLUtil.getDDMStructureKey(fileEntryType));
+
+		return fileEntryType;
 	}
 
 	@Override

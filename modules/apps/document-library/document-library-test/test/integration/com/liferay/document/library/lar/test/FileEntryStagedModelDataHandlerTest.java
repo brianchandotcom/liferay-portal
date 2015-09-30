@@ -46,6 +46,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 
@@ -207,10 +208,16 @@ public class FileEntryStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				groupId, TestPropsValues.getUserId());
 
-		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {ddmStructureId},
-			serviceContext);
+		DLFileEntryType fileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), groupId,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new long[] {ddmStructureId}, serviceContext);
+
+		DDMStructureManagerUtil.updateStructureKey(
+			ddmStructureId, DLUtil.getDDMStructureKey(fileEntryType));
+
+		return fileEntryType;
 	}
 
 	@Override

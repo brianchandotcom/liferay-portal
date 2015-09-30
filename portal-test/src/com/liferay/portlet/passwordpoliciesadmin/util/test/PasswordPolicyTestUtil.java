@@ -28,8 +28,15 @@ public class PasswordPolicyTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		return addPasswordPolicy(serviceContext, false);
+	}
+
+	public static PasswordPolicy addPasswordPolicy(
+			ServiceContext serviceContext, boolean defaultPolicy)
+		throws Exception {
+
 		return PasswordPolicyLocalServiceUtil.addPasswordPolicy(
-			serviceContext.getUserId(), RandomTestUtil.randomBoolean(),
+			serviceContext.getUserId(), defaultPolicy,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomLong(), RandomTestUtil.randomBoolean(),

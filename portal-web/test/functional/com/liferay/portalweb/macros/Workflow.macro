@@ -766,6 +766,7 @@
 	</command>
 
 	<command name="viewTaskAssignedToMyRoles">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />

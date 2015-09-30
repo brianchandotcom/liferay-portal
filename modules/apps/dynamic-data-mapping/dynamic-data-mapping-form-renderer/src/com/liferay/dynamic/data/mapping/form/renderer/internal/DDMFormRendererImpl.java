@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -27,7 +28,6 @@ import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.portal.expression.ExpressionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -145,8 +145,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		ddmFormRendererHelper.setDDMFormFieldTypeServicesTracker(
 			_ddmFormFieldTypeServicesTracker);
-		ddmFormRendererHelper.setExpressionEvaluator(
-			new ExpressionEvaluator(_expressionFactory));
+		ddmFormRendererHelper.setDDMFormEvaluator(_ddmFormEvaluator);
 
 		return ddmFormRendererHelper.getRenderedDDMFormFieldsMap();
 	}
@@ -231,20 +230,20 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	@Reference
+	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
+		_ddmFormEvaluator = ddmFormEvaluator;
+	}
+
+	@Reference
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
 
-	@Reference
-	protected void setExpressionFactory(ExpressionFactory expressionFactory) {
-		_expressionFactory = expressionFactory;
-	}
-
 	private DDM _ddm;
+	private DDMFormEvaluator _ddmFormEvaluator;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-	private ExpressionFactory _expressionFactory;
 	private TemplateResource _templateResource;
 
 }

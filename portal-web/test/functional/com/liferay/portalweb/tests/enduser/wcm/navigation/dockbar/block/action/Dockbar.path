@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ADD_ICON</td>
-	<td>//a[contains(@class,'control-menu-icon')]/i</td>
+	<td>//a[contains(@class,'control-menu-icon')]/i[contains(@class,'icon-plus')]</td>
 	<td></td>
 </tr>
 <tr>

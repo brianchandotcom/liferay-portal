@@ -124,7 +124,7 @@ public class FileShortcutStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(FileShortcut fileShortcut) {
-		return fileShortcut.getToTitle();
+		return fileShortcut.getUuid();
 	}
 
 	@Override

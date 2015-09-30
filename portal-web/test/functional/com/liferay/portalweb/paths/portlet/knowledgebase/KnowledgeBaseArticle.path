@@ -114,6 +114,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ADMIN_VIEW-->
+<tr>
+	<td>ADMIN_VIEW_CHILD_ARTICLE_TITLE</td>
+	<td>//div[@class='kb-elements']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_VIEW_CHILD_ARTICLE_CONTENT</td>
+	<td>//div[@class='kb-element-body']//p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ATTACHMENTS-->
 <tr>
 	<td>ATTACHMENTS_ADD_LINK</td>

@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>CUSTOMIZED_PAGE_INFO</td>
-	<td>//div[@class='linked-layout']/span[contains(@class,'message-info')]</td>
+	<td>//div[@class='modified-layout']/span[contains(@class,'message-info')]</td>
 	<td></td>
 </tr>
 <tr>

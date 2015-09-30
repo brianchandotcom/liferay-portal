@@ -66,25 +66,16 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>
 
-<c:if test="<%= !selGroup.isLayoutSetPrototype() || showHeader %>">
+<c:if test="<%= showHeader %>">
 
 	<%
 	Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 	%>
 
-	<c:if test="<%= showHeader %>">
-		<liferay-ui:header
-			escapeXml="<%= false %>"
-			localizeTitle="<%= false %>"
-			title="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
-		/>
-	</c:if>
-
-	<liferay-ui:tabs
-		names="<%= layoutsAdminDisplayContext.getTabs1Names() %>"
-		param="tabs1"
-		url="<%= String.valueOf(layoutsAdminDisplayContext.getRedirectURL()) %>"
-		value="<%= layoutsAdminDisplayContext.getTabs1() %>"
+	<liferay-ui:header
+		escapeXml="<%= false %>"
+		localizeTitle="<%= false %>"
+		title="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
 	/>
 </c:if>
 
@@ -176,16 +167,44 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
 				<%
 				String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+
+				Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 				%>
+
+				<c:if test="<%= !selGroup.isLayoutSetPrototype() %>">
+					<liferay-portlet:renderURL varImpl="editPublicLayoutURL">
+						<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+						<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
+						<portlet:param name="viewLayout" value="<%= Boolean.TRUE.toString() %>" />
+					</liferay-portlet:renderURL>
+
+					<liferay-ui:layouts-tree
+						groupId="<%= selGroup.getGroupId() %>"
+						portletURL="<%= editPublicLayoutURL %>"
+						privateLayout="<%= false %>"
+						rootNodeName="<%= liveGroup.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
+						selectedLayoutIds="<%= selectedLayoutIds %>"
+						selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+						treeId="publicLayoutsTree"
+					/>
+				</c:if>
+
+				<liferay-portlet:renderURL varImpl="editPrivateLayoutURL">
+					<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
+					<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
+					<portlet:param name="viewLayout" value="<%= Boolean.TRUE.toString() %>" />
+				</liferay-portlet:renderURL>
 
 				<liferay-ui:layouts-tree
 					groupId="<%= selGroup.getGroupId() %>"
-					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-					privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
-					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
+					portletURL="<%= editPrivateLayoutURL %>"
+					privateLayout="<%= true %>"
+					rootNodeName="<%= liveGroup.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 					selectedLayoutIds="<%= selectedLayoutIds %>"
 					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
-					treeId="layoutsTree"
+					treeId="privateLayoutsTree"
 				/>
 			</div>
 		</c:if>

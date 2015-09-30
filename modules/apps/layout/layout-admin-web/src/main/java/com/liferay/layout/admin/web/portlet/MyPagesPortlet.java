@@ -20,9 +20,7 @@ import com.liferay.mobile.device.rules.service.MDRActionService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
@@ -37,7 +35,6 @@ import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.ThemeLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.sites.action.ActionUtil;
@@ -97,21 +94,6 @@ public class MyPagesPortlet extends LayoutAdminPortlet {
 
 			dynamicRequest.setParameter(
 				"p_u_i_d", String.valueOf(user.getUserId()));
-
-			String tabs1 = ParamUtil.getString(
-				dynamicRequest, "tabs1", "public-pages");
-
-			boolean hasPowerUserRole = _roleLocalService.hasUserRole(
-				user.getUserId(), user.getCompanyId(), RoleConstants.POWER_USER,
-				true);
-
-			if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED &&
-				!hasPowerUserRole) {
-
-				tabs1 = "private-pages";
-			}
-
-			dynamicRequest.setParameter("tabs1", tabs1);
 
 			Group group = user.getGroup();
 

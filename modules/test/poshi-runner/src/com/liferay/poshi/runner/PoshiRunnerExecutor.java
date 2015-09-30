@@ -38,6 +38,7 @@ import org.dom4j.Element;
 /**
  * @author Karen Dang
  * @author Michael Hashimoto
+ * @author Peter Yoo
  */
 public class PoshiRunnerExecutor {
 
@@ -198,7 +199,7 @@ public class PoshiRunnerExecutor {
 	public static void runEchoElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
-		XMLLoggerHandler.updateStatus(element, "pending");
+		CommandLoggerHandler.logMessage(element);
 
 		String message = element.attributeValue("message");
 
@@ -208,14 +209,12 @@ public class PoshiRunnerExecutor {
 
 		System.out.println(
 			PoshiRunnerVariablesUtil.replaceCommandVars(message));
-
-		XMLLoggerHandler.updateStatus(element, "pass");
 	}
 
 	public static void runFailElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
-		XMLLoggerHandler.updateStatus(element, "pending");
+		CommandLoggerHandler.logMessage(element);
 
 		String message = element.attributeValue("message");
 

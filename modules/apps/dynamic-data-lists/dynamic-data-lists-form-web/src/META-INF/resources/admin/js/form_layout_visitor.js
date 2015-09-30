@@ -14,13 +14,13 @@ AUI.add(
 						value: EMPTY_FN
 					},
 
+					pageHandler: {
+						value: EMPTY_FN
+					},
+
 					pages: {
 						validator: Array.isArray,
 						value: []
-					},
-
-					pageHandler: {
-						value: EMPTY_FN
 					},
 
 					rowHandler: {

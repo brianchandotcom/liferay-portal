@@ -4,11 +4,11 @@ AUI.add(
 		var ExpressionsEvaluator = A.Component.create(
 			{
 				ATTRS: {
-					form: {
-					},
-
 					evaluationURL: {
 						value: '/o/ddm-form-evaluator/'
+					},
+
+					form: {
 					}
 				},
 

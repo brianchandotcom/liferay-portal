@@ -68,11 +68,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	orderByCol.on(
 		'change',
 		function(event) {
-			var uri = '<%= orderByTypeURL %>';
-
-			uri = Liferay.Util.addParams('<portlet:namespace />orderByCol=' + orderByCol.val(), uri);
-
-			console.log(uri);
+			var uri = Liferay.Util.addParams('<portlet:namespace />orderByCol=' + orderByCol.val(), '<%= orderByTypeURL %>');
 
 			location.href = uri;
 		}

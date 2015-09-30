@@ -1,5 +1,5 @@
 <definition component-name="portal-security">
-	<property name="testray.main.component.name" value="Login" />
+	<property name="testray.main.component.name" value="Security" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

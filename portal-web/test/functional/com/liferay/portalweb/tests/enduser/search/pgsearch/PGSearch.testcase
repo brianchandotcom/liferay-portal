@@ -1,5 +1,5 @@
 <definition component-name="portal-search">
-	<property name="testray.main.component.name" value="Search" />
+	<property name="testray.main.component.name" value="Web Search" />
 
 	<var name="searchPageName" value="Search Page" />
 	<var name="searchPortletName" value="Search" />

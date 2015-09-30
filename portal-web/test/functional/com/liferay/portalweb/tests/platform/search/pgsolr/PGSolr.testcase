@@ -1,6 +1,6 @@
 <definition component-name="portal-search">
 	<property name="solr.enabled" value="true" />
-	<property name="testray.main.component.name" value="Solr" />
+	<property name="testray.main.component.name" value="SOLR Impl" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

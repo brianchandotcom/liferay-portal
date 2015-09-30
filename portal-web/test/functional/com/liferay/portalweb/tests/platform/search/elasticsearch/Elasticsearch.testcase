@@ -1,5 +1,5 @@
 <definition component-name="portal-search">
-	<property name="testray.main.component.name" value="Search" />
+	<property name="testray.main.component.name" value="Elastic Search Impl" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

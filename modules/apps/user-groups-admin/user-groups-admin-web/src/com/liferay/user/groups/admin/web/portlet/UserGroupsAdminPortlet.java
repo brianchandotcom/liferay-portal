@@ -27,8 +27,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserGroupServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.UserGroupService;
+import com.liferay.portal.service.UserService;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
 import com.liferay.user.groups.admin.web.upgrade.UserGroupsAdminWebUpgrade;
@@ -81,7 +81,7 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "deleteUserGroupIds"), 0L);
 
 		for (long deleteUserGroupId : deleteUserGroupIds) {
-			UserGroupServiceUtil.deleteUserGroup(deleteUserGroupId);
+			_userGroupService.deleteUserGroup(deleteUserGroupId);
 		}
 	}
 
@@ -103,14 +103,14 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 
 			// Add user group
 
-			userGroup = UserGroupServiceUtil.addUserGroup(
+			userGroup = _userGroupService.addUserGroup(
 				name, description, serviceContext);
 		}
 		else {
 
 			// Update user group
 
-			userGroup = UserGroupServiceUtil.updateUserGroup(
+			userGroup = _userGroupService.updateUserGroup(
 				userGroupId, name, description, serviceContext);
 		}
 
@@ -147,8 +147,8 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		UserServiceUtil.addUserGroupUsers(userGroupId, addUserIds);
-		UserServiceUtil.unsetUserGroupUsers(userGroupId, removeUserIds);
+		_userService.addUserGroupUsers(userGroupId, addUserIds);
+		_userService.unsetUserGroupUsers(userGroupId, removeUserIds);
 	}
 
 	@Override
@@ -201,5 +201,18 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 	protected void setUserGroupsAdminWebUpgrade(
 		UserGroupsAdminWebUpgrade UserGroupsAdminWebUpgrade) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupService(UserGroupService userGroupService) {
+		_userGroupService = userGroupService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
+	}
+
+	private UserGroupService _userGroupService;
+	private UserService _userService;
 
 }

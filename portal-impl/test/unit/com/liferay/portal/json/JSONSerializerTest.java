@@ -79,7 +79,7 @@ public class JSONSerializerTest extends PowerMockito {
 		Assert.assertTrue(json.contains("\"queryTerms\":null"));
 		Assert.assertTrue(json.contains("\"scores\":"));
 		Assert.assertTrue(json.contains("\"snippets\":["));
-		Assert.assertTrue(json.contains("\"start\":0"));
+		Assert.assertTrue(json.contains("\"start\":\"0\""));
 		Assert.assertTrue(json.contains("\"length\":0"));
 	}
 

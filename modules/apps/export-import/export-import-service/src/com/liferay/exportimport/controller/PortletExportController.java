@@ -688,9 +688,26 @@ public class PortletExportController implements ExportController {
 		// Data
 
 		if (exportPortletData) {
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				PortletPreferencesFactoryUtil.getStrictPortletSetup(
-					layout, portletDataContext.getPortletId());
+			javax.portlet.PortletPreferences jxPortletPreferences = null;
+
+			if (ExportImportThreadLocal.isInitialPublicationInProcess()) {
+				Group liveGroup = layout.getGroup();
+
+				Group stagingGroup = liveGroup.getStagingGroup();
+
+				layout.setGroupId(stagingGroup.getGroupId());
+
+				jxPortletPreferences =
+					PortletPreferencesFactoryUtil.getStrictPortletSetup(
+						layout, portletDataContext.getPortletId());
+
+				layout.setGroupId(liveGroup.getGroupId());
+			}
+			else {
+				jxPortletPreferences =
+					PortletPreferencesFactoryUtil.getStrictPortletSetup(
+						layout, portletDataContext.getPortletId());
+			}
 
 			if (!portlet.isPreferencesUniquePerLayout()) {
 				StringBundler sb = new StringBundler(5);

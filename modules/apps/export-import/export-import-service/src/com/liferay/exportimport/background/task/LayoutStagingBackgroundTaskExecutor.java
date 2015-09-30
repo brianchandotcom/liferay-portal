@@ -95,6 +95,17 @@ public class LayoutStagingBackgroundTaskExecutor
 		try {
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
+			Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
+
+			if (sourceGroup.hasStagingGroup()) {
+				Group stagingGroup = sourceGroup.getStagingGroup();
+
+				if (stagingGroup.getGroupId() == targetGroupId) {
+					ExportImportThreadLocal.setInitialPublicationInProcess(
+						true);
+				}
+			}
+
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
@@ -118,6 +129,7 @@ public class LayoutStagingBackgroundTaskExecutor
 					exportImportConfiguration, file, sourceGroupId,
 					targetGroupId, userId));
 
+			ExportImportThreadLocal.setInitialPublicationInProcess(false);
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
@@ -126,6 +138,7 @@ public class LayoutStagingBackgroundTaskExecutor
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {
+			ExportImportThreadLocal.setInitialPublicationInProcess(false);
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(

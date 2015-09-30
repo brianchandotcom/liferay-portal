@@ -299,7 +299,7 @@
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
-			<var name="currentSiteLanguages" value="Arabic (Saudi Arabia),English (United States),German (Germany),Spanish (Spain)" />
+			<var name="currentSiteLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
 			<var name="defaultSiteLanguage" value="English (United States)" />
 			<var name="displaySettings" value="Display Settings" />
 		</execute>
@@ -315,7 +315,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesPresent">
-			<var name="currentLanguages" value="ARABIC,ENGLISH,GERMAN,SPANISH" />
+			<var name="currentLanguages" value="ENGLISH,GERMAN,SPANISH" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -323,7 +323,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#configureViewCurrentLanguages">
-			<var name="currentLanguages" value="Arabic (Saudi Arabia),English (United States),German (Germany),Spanish (Spain)" />
+			<var name="currentLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
 		</execute>
 
 		<execute macro="LanguagePortlet#configureViewAvailableLanguages">

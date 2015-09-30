@@ -46,7 +46,6 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 
 <portlet:renderURL var="backURL">
 	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
@@ -61,7 +60,6 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 
 <portlet:renderURL var="editLayoutRenderURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
 	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 

@@ -94,6 +94,9 @@ public class PropsValues {
 
 	public static final String PORTAL_URL = PropsUtil.get("portal.url");
 
+	public static final String PRINT_JAVA_PROCESS_ON_FAIL = PropsUtil.get(
+		"print.java.process.on.fail");
+
 	public static final String PRODUCT_NAMES = PropsUtil.get("product.names");
 
 	public static final String PROJECT_DIR = PropsUtil.get("project.dir");

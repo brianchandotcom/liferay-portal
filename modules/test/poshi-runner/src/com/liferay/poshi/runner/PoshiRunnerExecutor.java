@@ -21,14 +21,10 @@ import com.liferay.poshi.runner.logger.XMLLoggerHandler;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
-import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RegexUtil;
 import com.liferay.poshi.runner.util.Validator;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 import java.lang.reflect.Method;
 
@@ -375,29 +371,6 @@ public class PoshiRunnerExecutor {
 			runFunctionCommandElement(classCommandName, commandElement);
 		}
 		catch (Throwable t) {
-			String boostrapPID = null;
-			String line = null;
-
-			BufferedReader bufferedReader = _executeShell("jps");
-
-			while ((line = bufferedReader.readLine()) != null) {
-				System.out.println(line);
-
-				if (line.contains("Bootstrap")) {
-					boostrapPID = line.substring(0, line.indexOf(" "));
-
-					System.out.println("Boostrap PID: " + boostrapPID);
-				}
-			}
-
-			if (Validator.isNotNull(boostrapPID)) {
-				bufferedReader = _executeShell("jstack -l " + boostrapPID);
-
-				while ((line = bufferedReader.readLine()) != null) {
-					System.out.println(line);
-				}
-			}
-
 			String warningMessage = _getWarningFromThrowable(t);
 
 			if (warningMessage != null) {
@@ -929,30 +902,6 @@ public class PoshiRunnerExecutor {
 		else {
 			XMLLoggerHandler.updateStatus(element, "conditional-fail");
 		}
-	}
-
-	private static BufferedReader _executeShell(String command)
-		throws Exception {
-
-		String[] runCommand;
-
-		if (!OSDetector.isWindows()) {
-			runCommand = new String[] {"/bin/bash", "-c", command};
-		}
-		else {
-			runCommand = new String[] {"cmd", "/c", command};
-		}
-
-		Runtime runtime = Runtime.getRuntime();
-
-		Process process = runtime.exec(runCommand);
-
-		InputStreamReader inputStreamReader = new InputStreamReader(
-			process.getInputStream());
-
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-		return bufferedReader;
 	}
 
 	private static String _getWarningFromThrowable(Throwable throwable) {

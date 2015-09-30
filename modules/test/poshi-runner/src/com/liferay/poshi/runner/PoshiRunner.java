@@ -103,6 +103,8 @@ public class PoshiRunner {
 			LiferaySeleniumHelper.assertNoPoshiWarnings();
 		}
 		catch (Exception e) {
+			LiferaySeleniumHelper.printJavaProcessStacktrace();
+
 			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
 
 			PoshiRunnerStackTraceUtil.emptyStackTrace();

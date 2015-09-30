@@ -79,7 +79,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 	/>
 </c:if>
 
-<div class="container-fluid">
+<div class="container-fluid-1280">
 	<div class="lfr-app-column-view manage-view row">
 		<c:if test="<%= !group.isLayoutPrototype() %>">
 			<div class="col-md-3">

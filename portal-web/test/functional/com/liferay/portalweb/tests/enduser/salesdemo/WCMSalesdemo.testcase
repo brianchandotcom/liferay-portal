@@ -1,5 +1,5 @@
 <definition component-name="portal-wcm">
-	<property name="testray.main.component.name" value="WCM" />
+	<property name="testray.main.component.name" value="Web Content Display" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

@@ -148,9 +148,9 @@ public class NewEnvTestRule implements TestRule {
 
 		arguments.add("-Djava.net.preferIPv4Stack=true");
 
-		if (Boolean.getBoolean("junit.debug")) {
+		if (Boolean.getBoolean("jvm.debug")) {
 			arguments.add(_JPDA_OPTIONS);
-			arguments.add("-Djunit.debug=true");
+			arguments.add("-Djvm.debug=true");
 		}
 
 		arguments.add("-Dliferay.mode=test");

@@ -146,11 +146,11 @@ public class PACLAggregateTest {
 		arguments.add("-Djava.security.policy==" + url.getFile());
 		arguments.add("-Dliferay.mode=test");
 
-		boolean junitDebug = Boolean.getBoolean("junit.debug");
+		boolean junitDebug = Boolean.getBoolean("jvm.debug");
 
 		if (junitDebug) {
 			arguments.add(_JPDA_OPTIONS);
-			arguments.add("-Djunit.debug=true");
+			arguments.add("-Djvm.debug=true");
 		}
 
 		arguments.add(

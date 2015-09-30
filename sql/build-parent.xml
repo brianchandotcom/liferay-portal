@@ -1,18 +1,15 @@
 <?xml version="1.0"?>
 
-<project name="sql-parent">
+<project name="sql-parent"
+	xmlns:if="ant:if"
+	xmlns:unless="ant:unless"
+>
 	<import file="../build-common.xml" />
 
 	<mkdir dir="log" />
 
 	<var name="fork.mode" value="false" />
-
-	<if>
-		<equals arg1="${db.build.debug}" arg2="true" />
-		<then>
-			<var name="fork.mode" value="true" />
-		</then>
-	</if>
+	<var name="fork.mode" value="true" if:true="${jvm.debug}" />
 
 	<target name="build-db">
 		<if>
@@ -29,7 +26,7 @@
 			classpathref="project.classpath"
 			fork="${fork.mode}"
 		>
-			<jvmarg line="${db.build.debug.jpda}" />
+			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 			<jvmarg value="-Xmx${db.build.java.mx}" />
 			<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
@@ -90,7 +87,7 @@
 			classpathref="project.classpath"
 			fork="${fork.mode}"
 		>
-			<jvmarg line="${db.build.debug.jpda}" />
+			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="-Dfile.encoding=UTF-8" />
 			<arg value="db.database.name=${database.name}" />

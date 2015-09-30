@@ -1051,6 +1051,36 @@ public class LiferaySeleniumHelper {
 		Thread.sleep(GetterUtil.getInteger(waitTime));
 	}
 
+	public static void printJavaProcessStacktrace() throws Exception {
+		if (Validator.isNull(PropsValues.PRINT_JAVA_PROCESS_ON_FAIL)) {
+			return;
+		}
+
+		String line = null;
+		String pid = null;
+
+		BufferedReader bufferedReader = _execute("jps");
+
+		while ((line = bufferedReader.readLine()) != null) {
+			System.out.println(line);
+
+			if (line.contains(PropsValues.PRINT_JAVA_PROCESS_ON_FAIL)) {
+				pid = line.substring(0, line.indexOf(" "));
+
+				System.out.println(
+					PropsValues.PRINT_JAVA_PROCESS_ON_FAIL + " PID: " + pid);
+			}
+		}
+
+		if (Validator.isNotNull(pid)) {
+			bufferedReader = _execute("jstack -l " + pid);
+
+			while ((line = bufferedReader.readLine()) != null) {
+				System.out.println(line);
+			}
+		}
+	}
+
 	public static void replyToEmail(
 			LiferaySelenium liferaySelenium, String to, String body)
 		throws Exception {
@@ -1796,6 +1826,28 @@ public class LiferaySeleniumHelper {
 
 		FileUtil.write(
 			PropsValues.TEST_POSHI_WARNINGS_FILE_NAME, sb.toString());
+	}
+
+	private static BufferedReader _execute(String command) throws Exception {
+		String[] runCommand;
+
+		if (!OSDetector.isWindows()) {
+			runCommand = new String[] {"/bin/bash", "-c", command};
+		}
+		else {
+			runCommand = new String[] {"cmd", "/c", command};
+		}
+
+		Runtime runtime = Runtime.getRuntime();
+
+		Process process = runtime.exec(runCommand);
+
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			process.getInputStream());
+
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+		return bufferedReader;
 	}
 
 	private static List<ScreenRegion> getScreenRegions(

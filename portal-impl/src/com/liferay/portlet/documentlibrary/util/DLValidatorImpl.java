@@ -247,8 +247,12 @@ public final class DLValidatorImpl implements DLValidator {
 			if (StringUtil.equalsIgnoreCase(
 					nameWithoutExtension, blacklistName)) {
 
+				if(Validator.isNull(extension)) {
+					return nameWithoutExtension + StringPool.UNDERLINE;
+				}
+
 				return nameWithoutExtension + StringPool.UNDERLINE +
-					StringPool.PERIOD + extension;
+						StringPool.PERIOD + extension;
 			}
 		}
 

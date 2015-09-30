@@ -1,4 +1,5 @@
 <#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
+<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
 <#assign rootNavigationItems = navItem.fromLayouts(request, themeDisplay.getLayouts(), null) />
 
@@ -17,7 +18,11 @@
 			</#if>
 
 			<#if rootNavigationItem.hasBrowsableChildren() >
-				<#assign nav_item_caret = "<button type='button' class='${nav_item_css_class} btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><span class='caret'></span><span class='sr-only'>Toggle Dropdown</span></button>" />
+				<#assign toggle_text>
+					<@liferay_ui.message key="toggle" />
+				</#assign>
+
+				<#assign nav_item_caret = "<button aria-expanded='false' aria-haspopup='true' class='${nav_item_css_class} btn btn-default dropdown-toggle' data-toggle='dropdown' type='button'><span class='caret'></span><span class='sr-only'>${toggle_text}</span></button>" />
 			</#if>
 
 			<#if rootNavigationItem.isBrowsable() >

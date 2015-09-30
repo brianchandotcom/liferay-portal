@@ -54,7 +54,6 @@ else {
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.ADD_LAYOUT) %>">
 			<portlet:renderURL var="addPagesURL">
 				<portlet:param name="mvcPath" value="/add_layout.jsp" />
-				<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(selGroup.getGroupId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			</portlet:renderURL>

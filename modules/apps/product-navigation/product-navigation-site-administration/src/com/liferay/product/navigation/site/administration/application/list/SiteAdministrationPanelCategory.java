@@ -69,6 +69,10 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
+		if (group.isControlPanel()) {
+			return false;
+		}
+
 		if (GroupPermissionUtil.contains(
 				permissionChecker, group,
 				ActionKeys.VIEW_SITE_ADMINISTRATION)) {

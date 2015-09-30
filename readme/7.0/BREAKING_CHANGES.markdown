@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `c68e01c`.*
+*This document has been reviewed through commit `8d7b1d1`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2326,26 +2326,26 @@ single way to embed portlets into the page for better testing.
 
 ---------------------------------------
 
-### Taglib liferay-ui:control-panel-site-selector has been removed
+### Removed the liferay-ui:control-panel-site-selector Tag
 - **Date:** 2015-Sep-23
 - **JIRA Ticket:** LPS-58210
 
 #### What changed?
 
-The taglib liferay-ui:control-panel-site-selector has been deleted.
+The tag `liferay-ui:control-panel-site-selector` has been deleted.
 
 #### Who is affected?
 
-This affects developers who use this taglib in their code.
+This affects developers who use this tag in their code.
 
 #### How should I update my code?
 
-Consider using the taglib liferay-ui:my-sites or creating your own markup using
-the GroupService API.
+You should consider using the tag `liferay-ui:my-sites`, or create your own
+markup using the `GroupService` API.
 
 #### Why was this change made?
 
-This taglib is not used anymore and it won't be maintained properly.
+This tag is no longer used and will no longer be maintained properly.
 
 ---------------------------------------
 

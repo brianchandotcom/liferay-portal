@@ -22,8 +22,8 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyImpl;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetCategoryLocalService;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
@@ -87,7 +87,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		AssetVocabularyLocalServiceUtil.deleteVocabularies(
+		_assetVocabularyLocalService.deleteVocabularies(
 			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
@@ -177,7 +177,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			AssetCategoryLocalServiceUtil.getExportActionableDynamicQuery(
+			_assetCategoryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		// Override date range criteria
@@ -191,7 +191,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			AssetVocabularyLocalServiceUtil.getExportActionableDynamicQuery(
+			_assetVocabularyLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		// Override date range criteria
@@ -201,9 +201,26 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetCategoryLocalService(
+		AssetCategoryLocalService assetCategoryLocalService) {
+
+		_assetCategoryLocalService = assetCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

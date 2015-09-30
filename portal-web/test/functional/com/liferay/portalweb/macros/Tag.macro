@@ -325,7 +325,9 @@
 
 		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
 
-		<execute function="Type" locator1="Tags#SEARCH_FIELD" value1="tag" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="tag" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<var name="key_tagName" value="${tagName1}" />
 

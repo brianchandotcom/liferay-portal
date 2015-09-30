@@ -36,7 +36,7 @@ if (vocabularyId > 0) {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-new-vocabulary") : vocabulary.getTitle(locale)));
+renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-new-vocabulary") : HtmlUtil.escape(vocabulary.getTitle(locale))));
 %>
 
 <portlet:actionURL name="editVocabulary" var="editVocabularyURL">

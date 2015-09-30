@@ -35,9 +35,9 @@ import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationC
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationHelper;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationServiceUtil;
-import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationService;
+import com.liferay.portlet.exportimport.service.ExportImportService;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
@@ -50,6 +50,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -121,14 +122,14 @@ public class EditExportConfigurationMVCActionCommand
 
 			if (moveToTrash) {
 				ExportImportConfiguration exportImportConfiguration =
-					ExportImportConfigurationServiceUtil.
+					_exportImportConfigurationService.
 						moveExportImportConfigurationToTrash(
 							deleteExportImportConfigurationId);
 
 				trashedModels.add(exportImportConfiguration);
 			}
 			else {
-				ExportImportConfigurationServiceUtil.
+				_exportImportConfigurationService.
 					deleteExportImportConfiguration(
 						deleteExportImportConfigurationId);
 			}
@@ -161,7 +162,7 @@ public class EditExportConfigurationMVCActionCommand
 				long exportImportConfigurationId = ParamUtil.getLong(
 					actionRequest, "exportImportConfigurationId");
 
-				ExportImportServiceUtil.exportLayoutsAsFileInBackground(
+				_exportImportService.exportLayoutsAsFileInBackground(
 					exportImportConfigurationId);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
@@ -204,7 +205,7 @@ public class EditExportConfigurationMVCActionCommand
 		long exportImportConfigurationId = MapUtil.getLong(
 			taskContextMap, "exportImportConfigurationId");
 
-		ExportImportServiceUtil.exportLayoutsAsFileInBackground(
+		_exportImportService.exportLayoutsAsFileInBackground(
 			exportImportConfigurationId);
 	}
 
@@ -215,8 +216,27 @@ public class EditExportConfigurationMVCActionCommand
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
+	}
+
+	@Reference
+	protected void setExportImportConfigurationService(
+		ExportImportConfigurationService exportImportConfigurationService) {
+
+		_exportImportConfigurationService = exportImportConfigurationService;
+	}
+
+	@Reference
+	protected void setExportImportService(
+		ExportImportService exportImportService) {
+
+		_exportImportService = exportImportService;
+	}
+
+	@Reference
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
 	}
 
 	protected ExportImportConfiguration updateExportConfiguration(
@@ -238,5 +258,9 @@ public class EditExportConfigurationMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditExportConfigurationMVCActionCommand.class);
+
+	private ExportImportConfigurationService _exportImportConfigurationService;
+	private ExportImportService _exportImportService;
+	private TrashEntryService _trashEntryService;
 
 }

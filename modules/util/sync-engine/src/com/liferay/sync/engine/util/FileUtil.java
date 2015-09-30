@@ -130,6 +130,23 @@ public class FileUtil {
 		}
 	}
 
+	public static boolean exists(Path filePath) {
+		try {
+			Path realFilePath = filePath.toRealPath();
+
+			String realFilePathString = realFilePath.toString();
+
+			if (!realFilePathString.equals(filePath.toString())) {
+				return false;
+			}
+
+			return Files.exists(filePath);
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
 	public static void fireDeleteEvents(Path filePath) throws IOException {
 		long startTime = System.currentTimeMillis();
 

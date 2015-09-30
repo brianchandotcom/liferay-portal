@@ -258,7 +258,7 @@ public abstract class Watcher implements Runnable {
 		Path syncAccountFilePath = java.nio.file.Paths.get(
 			syncAccount.getFilePathName());
 
-		if (Files.notExists(syncAccountFilePath)) {
+		if (!FileUtil.exists(syncAccountFilePath)) {
 			if (_logger.isTraceEnabled()) {
 				_logger.trace(
 					"Missing sync account file path {}", syncAccountFilePath);
@@ -275,7 +275,7 @@ public abstract class Watcher implements Runnable {
 				missingFilePath.toString(), syncAccount.getSyncAccountId());
 
 			if ((syncSite != null) && syncSite.isActive() &&
-				Files.notExists(missingFilePath)) {
+				!FileUtil.exists(missingFilePath)) {
 
 				if (_logger.isTraceEnabled()) {
 					_logger.trace(

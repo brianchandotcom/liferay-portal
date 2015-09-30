@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean viewEntries = ParamUtil.getBoolean(request, "viewEntries");
-boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
+boolean viewAssetEntries = ParamUtil.getBoolean(request, "viewAssetEntries");
+boolean viewAssetPreview = ParamUtil.getBoolean(request, "viewAssetPreview");
 %>
 
 <c:choose>
-	<c:when test="<%= viewEntries %>">
+	<c:when test="<%= viewAssetEntries %>">
 		<div id="<portlet:namespace />entries">
 
 			<%
@@ -167,7 +167,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 		</div>
 	</c:when>
 
-	<c:when test="<%= viewPreview %>">
+	<c:when test="<%= viewAssetPreview %>">
 
 		<%
 		long classPK = ParamUtil.getLong(request, "classPK");

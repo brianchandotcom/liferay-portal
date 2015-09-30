@@ -181,7 +181,7 @@
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="${ddlFormTemplateName}" />
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 

@@ -104,7 +104,7 @@
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">
 			<var name="localizedTitle" value="WC Titel" />
-			<var name="webContentTranslationLanguage" value="German (Germany)" />
+			<var name="webContentTranslationLanguage" value="Deutsch (Deutschland)" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -129,7 +129,7 @@
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">
 			<var name="localizedTitle" value="WC Otsikko" />
-			<var name="webContentTranslationLanguage" value="Finnish (Finland)" />
+			<var name="webContentTranslationLanguage" value="suomi (Suomi)" />
 		</execute>
 	</command>
 

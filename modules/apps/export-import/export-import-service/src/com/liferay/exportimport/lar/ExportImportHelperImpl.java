@@ -508,7 +508,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		sb.append(groupId);
 		sb.append(StringPool.DASH);
-		sb.append(Time.getShortTimestamp());
+		sb.append(Time.getTimestamp());
 		sb.append(".lar");
 
 		return getZipWriter(sb.toString());
@@ -676,7 +676,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		sb.append(portletId);
 		sb.append(StringPool.DASH);
-		sb.append(Time.getShortTimestamp());
+		sb.append(Time.getTimestamp());
 		sb.append(".lar");
 
 		return getZipWriter(sb.toString());

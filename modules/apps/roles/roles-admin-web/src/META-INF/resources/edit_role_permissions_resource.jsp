@@ -73,7 +73,7 @@ for (int i = 0; i < results.size(); i++) {
 	PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 
 	if (Validator.isNotNull(curPortletResource)) {
-		if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) && !panelCategoryHelper.containsPortlet(curPortletId, PanelCategoryKeys.CONTROL_PANEL)) {
+		if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) && !panelCategoryHelper.hasPanelApp(curPortletId)) {
 			continue;
 		}
 

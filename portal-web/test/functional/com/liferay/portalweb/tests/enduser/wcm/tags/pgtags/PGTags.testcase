@@ -258,6 +258,7 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 		</execute>
 

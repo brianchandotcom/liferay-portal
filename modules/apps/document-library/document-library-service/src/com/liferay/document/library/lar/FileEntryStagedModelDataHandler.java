@@ -374,8 +374,6 @@ public class FileEntryStagedModelDataHandler
 
 		FileEntry importedFileEntry = null;
 
-		String titleWithExtension = DLUtil.getTitleWithExtension(fileEntry);
-
 		if (portletDataContext.isDataStrategyMirror()) {
 			FileEntry existingFileEntry = fetchStagedModelByUuidAndGroupId(
 				fileEntry.getUuid(), portletDataContext.getScopeGroupId());
@@ -411,9 +409,9 @@ public class FileEntryStagedModelDataHandler
 
 				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 					userId, portletDataContext.getScopeGroupId(), folderId,
-					titleWithExtension, fileEntry.getMimeType(), fileEntryTitle,
-					fileEntry.getDescription(), null, is, fileEntry.getSize(),
-					serviceContext);
+					fileEntry.getFileName(), fileEntry.getMimeType(),
+					fileEntryTitle, fileEntry.getDescription(), null, is,
+					fileEntry.getSize(), serviceContext);
 
 				if (fileEntry.isInTrash()) {
 					importedFileEntry = DLAppServiceUtil.moveFileEntryToTrash(
@@ -480,8 +478,8 @@ public class FileEntryStagedModelDataHandler
 						importedFileEntry =
 							DLAppLocalServiceUtil.updateFileEntry(
 								userId, existingFileEntry.getFileEntryId(),
-								titleWithExtension, fileEntry.getMimeType(),
-								fileEntry.getTitle(),
+								fileEntry.getFileName(),
+								fileEntry.getMimeType(), fileEntry.getTitle(),
 								fileEntry.getDescription(), null, false, is,
 								fileEntry.getSize(), serviceContext);
 					}
@@ -532,7 +530,7 @@ public class FileEntryStagedModelDataHandler
 
 			importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 				userId, portletDataContext.getScopeGroupId(), folderId,
-				titleWithExtension, fileEntry.getMimeType(),
+				fileEntry.getFileName(), fileEntry.getMimeType(),
 				fileEntryTitle, fileEntry.getDescription(), null, is,
 				fileEntry.getSize(), serviceContext);
 		}

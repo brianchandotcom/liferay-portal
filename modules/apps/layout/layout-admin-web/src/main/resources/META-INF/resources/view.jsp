@@ -60,25 +60,6 @@ SitesUtil.addPortletBreadcrumbEntries(group, layoutsAdminDisplayContext.getPages
 	</c:if>
 </liferay-ui:error>
 
-<%
-Group selGroup = layoutsAdminDisplayContext.getSelGroup();
-
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
-%>
-
-<c:if test="<%= showHeader %>">
-
-	<%
-	Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
-	%>
-
-	<liferay-ui:header
-		escapeXml="<%= false %>"
-		localizeTitle="<%= false %>"
-		title="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
-	/>
-</c:if>
-
 <div class="container-fluid-1280">
 	<div class="lfr-app-column-view manage-view row">
 		<c:if test="<%= !group.isLayoutPrototype() %>">
@@ -169,6 +150,8 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 				String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 
 				Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
+
+				Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 				%>
 
 				<c:if test="<%= !selGroup.isLayoutSetPrototype() %>">

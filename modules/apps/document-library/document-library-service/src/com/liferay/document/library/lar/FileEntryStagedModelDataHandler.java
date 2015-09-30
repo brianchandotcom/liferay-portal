@@ -387,25 +387,28 @@ public class FileEntryStagedModelDataHandler
 					portletDataContext.getScopeGroupId(), folderId,
 					fileEntryTitle);
 
-				if (existingTitleFileEntry != null) {
-					if ((fileEntry.getGroupId() ==
-							portletDataContext.getSourceGroupId()) &&
-						portletDataContext.
-							isDataStrategyMirrorWithOverwriting()) {
+				if (existingTitleFileEntry == null) {
+					existingTitleFileEntry = FileEntryUtil.fetchByR_F_FN(
+						portletDataContext.getScopeGroupId(), folderId,
+						fileEntry.getFileName());
+				}
 
-						DLAppLocalServiceUtil.deleteFileEntry(
-							existingTitleFileEntry.getFileEntryId());
-					}
-					else {
-						fileEntryTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
-								portletDataContext.getScopeGroupId(), folderId,
-								-1, fileEntryTitle, fileEntry.getExtension());
-					}
+				if ((existingTitleFileEntry != null) &&
+					(fileEntry.getGroupId() ==
+						portletDataContext.getSourceGroupId()) &&
+					portletDataContext.isDataStrategyMirrorWithOverwriting()) {
+
+					DLAppLocalServiceUtil.deleteFileEntry(
+						existingTitleFileEntry.getFileEntryId());
 				}
 
 				serviceContext.setAttribute(
 					"fileVersionUuid", fileVersion.getUuid());
 				serviceContext.setUuid(fileEntry.getUuid());
+
+				fileEntryTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
+						portletDataContext.getScopeGroupId(), folderId, -1,
+						fileEntryTitle, fileEntry.getExtension());
 
 				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 					userId, portletDataContext.getScopeGroupId(), folderId,

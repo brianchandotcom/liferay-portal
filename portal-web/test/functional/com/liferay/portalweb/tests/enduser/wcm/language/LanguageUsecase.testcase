@@ -281,10 +281,6 @@
 		<execute macro="LanguagePortlet#configureViewCurrentLanguages">
 			<var name="currentLanguages" value="Chinese (China),French (France),English (United States)" />
 		</execute>
-
-		<execute macro="LanguagePortlet#configureViewAvailableLanguages">
-			<var name="availableLanguages" value="Arabic (Saudi Arabia),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain)" />
-		</execute>
 	</command>
 
 	<command name="ViewRemovedCurrentSiteLanguagesViaLanguagePortlet" priority="4">

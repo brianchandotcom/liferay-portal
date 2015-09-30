@@ -33,7 +33,7 @@ public class SynchronousMailTestCallback
 	public void doAfterClass(Description description, SyncHandler syncHandler)
 		throws Exception {
 
-		syncHandler.restorePreviousSync();
+		super.doAfterClass(description, syncHandler);
 
 		MailServiceTestUtil.stop();
 	}
@@ -49,11 +49,9 @@ public class SynchronousMailTestCallback
 
 	@Override
 	public SyncHandler doBeforeClass(Description description) throws Throwable {
-		super.doBeforeClass(description);
-
 		MailServiceTestUtil.start();
 
-		SyncHandler syncHandler = new SyncHandler();
+		SyncHandler syncHandler = super.doBeforeClass(description);
 
 		syncHandler.replaceDestination(DestinationNames.MAIL);
 

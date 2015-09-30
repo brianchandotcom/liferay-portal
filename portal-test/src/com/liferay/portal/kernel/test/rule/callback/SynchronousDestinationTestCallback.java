@@ -55,17 +55,30 @@ public class SynchronousDestinationTestCallback
 		new SynchronousDestinationTestCallback();
 
 	@Override
+	public void doAfterClass(Description description, SyncHandler syncHandler)
+		throws Exception {
+
+		if (syncHandler != null) {
+			syncHandler.restorePreviousSync();
+		}
+	}
+
+	@Override
 	public void doAfterMethod(
 		Description description, SyncHandler syncHandler, Object target) {
 
-		syncHandler.restorePreviousSync();
+		if (syncHandler != null) {
+			syncHandler.restorePreviousSync();
+		}
 	}
 
 	@Override
 	public SyncHandler doBeforeClass(Description description) throws Throwable {
 		Class<?> testClass = description.getTestClass();
 
-		if (testClass.getAnnotation(Sync.class) == null) {
+		Sync sync = testClass.getAnnotation(Sync.class);
+
+		if (sync == null) {
 			boolean hasSyncedMethod = false;
 
 			for (Method method : testClass.getMethods()) {
@@ -85,28 +98,30 @@ public class SynchronousDestinationTestCallback
 							" without any usage of " + Sync.class);
 			}
 		}
+		else {
+			return _applySyncHandler(sync);
+		}
 
 		return super.doBeforeClass(description);
 	}
 
 	@Override
 	public SyncHandler doBeforeMethod(Description description, Object target) {
-		Sync sync = description.getAnnotation(Sync.class);
+		Class<?> testClass = description.getTestClass();
 
-		if (sync == null) {
-			Class<?> testClass = description.getTestClass();
+		Sync sync = testClass.getAnnotation(Sync.class);
 
-			sync = testClass.getAnnotation(Sync.class);
+		if (sync != null) {
+			return null;
 		}
 
-		SyncHandler syncHandler = new SyncHandler();
+		sync = description.getAnnotation(Sync.class);
 
-		syncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
-		syncHandler.setSync(sync);
+		if (sync == null) {
+			return null;
+		}
 
-		syncHandler.enableSync();
-
-		return syncHandler;
+		return _applySyncHandler(sync);
 	}
 
 	public static class SyncHandler {
@@ -242,6 +257,17 @@ public class SynchronousDestinationTestCallback
 	}
 
 	protected SynchronousDestinationTestCallback() {
+	}
+
+	private SyncHandler _applySyncHandler(Sync sync) {
+		SyncHandler syncHandler = new SyncHandler();
+
+		syncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
+		syncHandler.setSync(sync);
+
+		syncHandler.enableSync();
+
+		return syncHandler;
 	}
 
 	private static final TransactionAttribute _transactionAttribute;

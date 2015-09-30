@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
+import com.liferay.portal.application.type.ApplicationType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -491,6 +492,7 @@ public class PortletTracker
 		collectPortletPreferences(serviceReference, portletModel);
 		collectResourceBundle(serviceReference, portletModel);
 		collectSecurityRoleRefs(serviceReference, portletModel);
+		collectSupportedApplicationTypes(serviceReference, portletModel);
 		collectSupportedProcessingEvents(serviceReference, portletModel);
 		collectSupportedPublicRenderParameters(serviceReference, portletModel);
 		collectSupportedPublishingEvents(serviceReference, portletModel);
@@ -565,10 +567,6 @@ public class PortletTracker
 			GetterUtil.getString(
 				get(serviceReference, "friendly-url-routes"),
 				portletModel.getFriendlyURLRoutes()));
-		portletModel.setFullPageDisplayable(
-			GetterUtil.getBoolean(
-				get(serviceReference, "full-page-displayable"),
-				portletModel.isFullPageDisplayable()));
 		portletModel.setHeaderPortalCss(
 			StringPlus.asList(get(serviceReference, "header-portal-css")));
 		portletModel.setHeaderPortalJavaScript(
@@ -822,6 +820,38 @@ public class PortletTracker
 		portletModel.setUnlinkedRoles(unlinkedRoles);
 
 		portletModel.linkRoles();
+	}
+
+	protected void collectSupportedApplicationTypes(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.model.Portlet portletModel) {
+
+		Set<ApplicationType> applicationTypes = new HashSet<>();
+
+		List<String> supportedApplicationTypes = StringPlus.asList(
+			get(serviceReference, "supported-application-type"));
+
+		for (String identifier : supportedApplicationTypes) {
+			try {
+				ApplicationType applicationType = ApplicationType.parse(
+					identifier);
+
+				applicationTypes.add(applicationType);
+			}
+			catch (IllegalArgumentException iae) {
+				_log.error(
+					"Application type reference unknown " +
+						"identifier " + identifier);
+
+				continue;
+			}
+		}
+
+		if (supportedApplicationTypes.isEmpty()) {
+			applicationTypes.add(ApplicationType.WIDGET);
+		}
+
+		portletModel.setApplicationTypes(applicationTypes);
 	}
 
 	protected void collectSupportedProcessingEvents(

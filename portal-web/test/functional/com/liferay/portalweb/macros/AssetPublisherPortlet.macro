@@ -490,8 +490,10 @@
 	</command>
 
 	<command name="gotoConfigurationPG">
-		<execute function="Click" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -957,9 +959,9 @@
 		<if>
 			<isset var="nonTaggedAsset" />
 			<then>
-				<var name="key_assetTitle" value="${assetTitle}" />
+				<var name="key_assetTitle" value="${notTaggedAsset}" />
 
-				<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+				<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${notTaggedAsset}" />
 			</then>
 		</if>
 	</command>

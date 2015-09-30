@@ -20,8 +20,8 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.PortletLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,11 +53,12 @@ public class MarketplaceStorePanelApp extends BaseControlPanelEntryPanelApp {
 		return permissionChecker.isOmniadmin();
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + MarketplaceStorePortletKeys.MARKETPLACE_STORE + ")",
+		unbind = "-"
+	)
+	protected void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

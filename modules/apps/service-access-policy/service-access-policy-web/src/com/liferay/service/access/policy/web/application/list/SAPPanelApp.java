@@ -17,7 +17,7 @@ package com.liferay.service.access.policy.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 import com.liferay.service.access.policy.web.constants.SAPPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,11 +41,12 @@ public class SAPPanelApp extends BaseControlPanelEntryPanelApp {
 		return SAPPortletKeys.SERVICE_ACCESS_POLICY;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + SAPPortletKeys.SERVICE_ACCESS_POLICY + ")",
+		unbind = "-"
+	)
+	protected void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

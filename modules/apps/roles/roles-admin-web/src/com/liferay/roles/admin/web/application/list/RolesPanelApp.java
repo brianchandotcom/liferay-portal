@@ -17,7 +17,7 @@ package com.liferay.roles.admin.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 import com.liferay.roles.admin.web.constants.RolesAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,11 +41,12 @@ public class RolesPanelApp extends BaseControlPanelEntryPanelApp {
 		return RolesAdminPortletKeys.ROLES_ADMIN;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN + ")",
+		unbind = "-"
+	)
+	protected void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

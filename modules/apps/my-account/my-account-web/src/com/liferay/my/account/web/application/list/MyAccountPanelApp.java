@@ -20,7 +20,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,11 +43,12 @@ public class MyAccountPanelApp extends BaseControlPanelEntryPanelApp {
 		return MyAccountPortletKeys.MY_ACCOUNT;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT + ")",
+		unbind = "-"
+	)
+	protected final void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -126,7 +126,8 @@ if (sapEntry != null) {
 
 	</div>
 
-	<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields">
+	<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields,liferay-portlet-url">
+		var getMethodsURL = Liferay.PortletURL.createURL('<%= getMethodsURL %>');
 		var services = <%= JSONFactoryUtil.looseSerialize(JSONWebServiceActionsManagerUtil.getServiceNames()) %>;
 
 		var autoFields = new Liferay.AutoFields(
@@ -255,10 +256,11 @@ if (sapEntry != null) {
 						}
 
 						if (context.length && serviceClass.length) {
-							var methodsURL = '<%= getMethodsURL %>&<portlet:namespace />serviceClass=' + serviceClass + '&<portlet:namespace />context=' + context;
+							getMethodsURL.setParameter('serviceClass', serviceClass);
+							getMethodsURL.setParameter('context', context);
 
 							A.io.request(
-								methodsURL,
+								getMethodsURL.toString(),
 								{
 									dataType: 'JSON',
 									method: 'GET',

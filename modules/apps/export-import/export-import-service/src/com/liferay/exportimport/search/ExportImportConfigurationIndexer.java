@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 
 import java.io.Serializable;
 
@@ -47,6 +47,7 @@ import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -171,8 +172,8 @@ public class ExportImportConfigurationIndexer
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(classPK);
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				classPK);
 
 		doReindex(exportImportConfiguration);
 	}
@@ -292,8 +293,7 @@ public class ExportImportConfigurationIndexer
 		throws PortalException {
 
 		final ActionableDynamicQuery actionableDynamicQuery =
-			ExportImportConfigurationLocalServiceUtil.
-				getActionableDynamicQuery();
+			_exportImportConfigurationLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -327,11 +327,23 @@ public class ExportImportConfigurationIndexer
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
 	private static final String _PREFIX_PARAMETER = "parameter_";
 
 	private static final String _PREFIX_SETTING = "setting_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportConfigurationIndexer.class);
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
 
 }

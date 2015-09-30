@@ -663,6 +663,10 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		assetTagPersistence.addAssetEntries(toTagId, entries);
 
 		deleteTag(fromTagId);
+
+		for (AssetEntry entry : entries) {
+			incrementAssetCount(toTagId, entry.getClassNameId());
+		}
 	}
 
 	/**

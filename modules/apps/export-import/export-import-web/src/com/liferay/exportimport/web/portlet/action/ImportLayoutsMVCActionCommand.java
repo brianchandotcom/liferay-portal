@@ -35,11 +35,11 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.LayoutService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.exportimport.LARFileException;
 import com.liferay.portlet.exportimport.LARFileSizeException;
 import com.liferay.portlet.exportimport.LARTypeException;
@@ -51,8 +51,8 @@ import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.MissingReference;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
+import com.liferay.portlet.exportimport.service.ExportImportService;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.io.InputStream;
@@ -69,6 +69,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileUploadBase;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -105,7 +106,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 			String contentType = uploadPortletRequest.getContentType("file");
 
-			LayoutServiceUtil.addTempFileEntry(
+			_layoutService.addTempFileEntry(
 				groupId, folderName, sourceFileName, inputStream, contentType);
 		}
 		catch (Exception e) {
@@ -162,7 +163,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-			LayoutServiceUtil.deleteTempFileEntry(
+			_layoutService.deleteTempFileEntry(
 				themeDisplay.getScopeGroupId(), folderName, fileName);
 
 			jsonObject.put("deleted", Boolean.TRUE);
@@ -182,11 +183,11 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	protected void deleteTempFileEntry(long groupId, String folderName)
 		throws PortalException {
 
-		String[] tempFileNames = LayoutServiceUtil.getTempFileNames(
+		String[] tempFileNames = _layoutService.getTempFileNames(
 			groupId, folderName);
 
 		for (String tempFileEntryName : tempFileNames) {
-			LayoutServiceUtil.deleteTempFileEntry(
+			_layoutService.deleteTempFileEntry(
 				groupId, folderName, tempFileEntryName);
 		}
 	}
@@ -293,7 +294,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		InputStream inputStream = null;
 
 		try {
-			inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
+			inputStream = _dlFileEntryLocalService.getFileAsStream(
 				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
 			importData(actionRequest, fileEntry.getTitle(), inputStream);
@@ -325,14 +326,42 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					themeDisplay.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 					importLayoutSettingsMap);
 
-		ExportImportServiceUtil.importLayoutsInBackground(
+		_exportImportService.importLayoutsInBackground(
 			exportImportConfiguration, inputStream);
+	}
+
+	@Reference
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	@Reference
+	protected void setExportImportService(
+		ExportImportService exportImportService) {
+
+		_exportImportService = exportImportService;
+	}
+
+	@Reference
+	protected void setLayoutService(LayoutService layoutService) {
+		_layoutService = layoutService;
 	}
 
 	protected void validateFile(
@@ -351,7 +380,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		InputStream inputStream = null;
 
 		try {
-			inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
+			inputStream = _dlFileEntryLocalService.getFileAsStream(
 				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
 			MissingReferences missingReferences = validateFile(
@@ -402,17 +431,23 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					themeDisplay.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 					importLayoutSettingsMap);
 
-		return ExportImportServiceUtil.validateImportLayoutsFile(
+		return _exportImportService.validateImportLayoutsFile(
 			exportImportConfiguration, inputStream);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportLayoutsMVCActionCommand.class);
+
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+	private ExportImportService _exportImportService;
+	private LayoutService _layoutService;
 
 }

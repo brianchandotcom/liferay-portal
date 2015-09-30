@@ -15,6 +15,7 @@
 package com.liferay.portlet.exportimport.configuration;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 
@@ -31,8 +32,9 @@ public class ExportImportConfigurationParameterMapFactory {
 	public static Map<String, String[]> buildParameterMap() {
 		return buildParameterMap(
 			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true, false,
-			true, false, false, false, true, true, true, true, true, true, true,
-			true, UserIdStrategy.CURRENT_USER_ID);
+			true, false, false, false, true, true, true, true, true, true,
+			ExportImportDateUtil.RANGE_ALL, true, true,
+			UserIdStrategy.CURRENT_USER_ID);
 	}
 
 	public static Map<String, String[]> buildParameterMap(
@@ -140,8 +142,9 @@ public class ExportImportConfigurationParameterMapFactory {
 		Boolean layoutSetPrototypeLinkEnabled, Boolean layoutSetSettings,
 		Boolean logo, Boolean permissions, Boolean portletConfiguration,
 		Boolean portletConfigurationAll, Boolean portletData,
-		Boolean portletDataAll, Boolean portletSetupAll, Boolean themeReference,
-		Boolean updateLastPublishDate, String userIdStrategy) {
+		Boolean portletDataAll, Boolean portletSetupAll, String range,
+		Boolean themeReference, Boolean updateLastPublishDate,
+		String userIdStrategy) {
 
 		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
@@ -304,6 +307,18 @@ public class ExportImportConfigurationParameterMapFactory {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {String.valueOf(portletSetupAllParameter)});
+
+		// Range
+
+		String rangeParameter =
+			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE;
+
+		if (Validator.isNotNull(range)) {
+			rangeParameter = range;
+		}
+
+		parameterMap.put(
+			ExportImportDateUtil.RANGE, new String[] {rangeParameter});
 
 		// Theme reference
 

@@ -2263,7 +2263,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	<macrodef name="start-appium">
 		<sequential>
 			<if>
-				<equals arg1="${mobile.device.type}" arg2="android" />
+				<or>
+					<equals arg1="${mobile.device.type}" arg2="android" />
+					<equals arg1="${mobile.device.type}" arg2="androidchrome" />
+				</or>
 				<then>
 					<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
 
@@ -5427,10 +5430,23 @@ module.framework.properties.osgi.console=11312</echo>
 
 	<target name="prepare-selenium-mobile-properties">
 		<if>
+			<equals arg1="${mobile.device.type}" arg2="androidchrome" />
+			<then>
+				<exec executable="/bin/bash" outputproperty="mobile.device.name" os="${os.apple},${os.unix}">
+					<arg value="-c" />
+					<arg value="${mobile.android.home}/platform-tools/adb devices" />
+				</exec>
+
+				<propertyregex input="${mobile.device.name}" override="true" property="mobile.device.name" regexp=".*\n([A-z0-9]*)" select="\1" />
+			</then>
+		</if>
+
+		<if>
 			<isset property="mobile.device.type" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					mobile.android.home=${mobile.android.home}
+					mobile.device.name=${mobile.device.name}
 					mobile.device.type=${mobile.device.type}
 				</echo>
 			</then>

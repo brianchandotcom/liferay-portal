@@ -119,6 +119,7 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 		}
 	}
 
+	@Override
 	protected void tap(String locator) {
 		try {
 			Runtime runtime = Runtime.getRuntime();

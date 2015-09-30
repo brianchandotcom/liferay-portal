@@ -75,6 +75,12 @@
 				</then>
 			</elseif>
 			<elseif>
+				<equals arg1="${language}" arg2="Finnish (Finland)" />
+				<then>
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_FINNISH" />
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="${language}" arg2="German (Germany)" />
 				<then>
 					<execute function="Click" locator1="Language#LANGUAGE_MENU_GERMAN" />

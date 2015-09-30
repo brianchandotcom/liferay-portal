@@ -25,6 +25,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGE_MENU_FINNISH</td>
+	<td>//img[@title='suomi']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LANGUAGE_MENU_FRENCH</td>
 	<td>//img[@title='français']</td>
 	<td></td>

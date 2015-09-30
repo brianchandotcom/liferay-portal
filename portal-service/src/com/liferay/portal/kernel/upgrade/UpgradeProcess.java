@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,7 +36,8 @@ import java.sql.ResultSetMetaData;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
-public abstract class UpgradeProcess extends BaseDBProcess {
+public abstract class UpgradeProcess extends BaseDBProcess
+	implements UpgradeStep {
 
 	public int getThreshold() {
 
@@ -189,6 +191,13 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 		}
 
 		upgradeProcess.upgrade();
+	}
+
+	@Override
+	public void upgrade(DBProcessContext dbProcessContext)
+		throws UpgradeException {
+
+		upgrade();
 	}
 
 	public void upgrade(UpgradeProcess upgradeProcess) throws UpgradeException {

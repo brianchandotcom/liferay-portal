@@ -699,7 +699,7 @@
 		<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW" value1="Preview of ${workflowAssetType}" />
 		<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
-		<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#MENU_WORKFLOW_NAME" value1="${workflowDefinition}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${workflowDefinition}" />
 	</command>
 
 	<command name="viewRejectedTask">

@@ -17,7 +17,7 @@ package com.liferay.site.teams.web.lar;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Team;
-import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.service.TeamLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
@@ -31,6 +31,7 @@ import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Akos Thurzo
@@ -65,7 +66,7 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		TeamLocalServiceUtil.deleteTeams(portletDataContext.getScopeGroupId());
+		_teamLocalService.deleteTeams(portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -82,7 +83,7 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			TeamLocalServiceUtil.getExportActionableDynamicQuery(
+			_teamLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -116,10 +117,17 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			TeamLocalServiceUtil.getExportActionableDynamicQuery(
+			_teamLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performCount();
 	}
+
+	@Reference(unbind = "-")
+	protected void setTeamLocalService(TeamLocalService teamLocalService) {
+		_teamLocalService = teamLocalService;
+	}
+
+	private TeamLocalService _teamLocalService;
 
 }

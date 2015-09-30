@@ -43,8 +43,6 @@ import java.io.OutputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.apache.felix.utils.log.Logger;
 
@@ -175,8 +173,6 @@ public class ReleaseManager {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-
-		_executorService.shutdown();
 	}
 
 	protected void executeUpgradeInfos(
@@ -235,8 +231,6 @@ public class ReleaseManager {
 
 	private static Logger _logger;
 
-	private final ExecutorService _executorService =
-		Executors.newSingleThreadExecutor();
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
@@ -253,13 +247,7 @@ public class ReleaseManager {
 			ServiceTrackerMap<String, List<UpgradeInfo>> map, final String key,
 			UpgradeInfo service, List<UpgradeInfo> content) {
 
-			_executorService.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					execute(key);
-				}
-			});
+			execute(key);
 		}
 
 	}

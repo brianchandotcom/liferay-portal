@@ -63,22 +63,22 @@ import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
-import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.ResourceBlockLocalService;
+import com.liferay.portal.service.ResourceBlockPermissionLocalService;
+import com.liferay.portal.service.ResourcePermissionLocalService;
+import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.service.TeamLocalService;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetLinkLocalService;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
@@ -113,6 +113,8 @@ import java.util.Map;
 import java.util.Set;
 
 import jodd.bean.BeanUtil;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * <p>
@@ -151,7 +153,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public void addAssetLinks(Class<?> clazz, long classPK) {
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			clazz.getName(), classPK);
 
 		if (assetEntry == null) {
@@ -159,7 +161,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		List<AssetLink> directAssetLinks =
-			AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
+			_assetLinkLocalService.getDirectLinks(assetEntry.getEntryId());
 
 		if (directAssetLinks.isEmpty()) {
 			return;
@@ -196,7 +198,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Deprecated
 	@Override
 	public void addAssetTags(Class<?> clazz, long classPK) {
-		String[] tagNames = AssetTagLocalServiceUtil.getTagNames(
+		String[] tagNames = _assetTagLocalService.getTagNames(
 			clazz.getName(), classPK);
 
 		_assetTagNamesMap.put(getPrimaryKeyString(clazz, classPK), tagNames);
@@ -395,7 +397,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			long roleId = entry.getKey();
 			Set<String> availableActionIds = entry.getValue();
 
-			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+			Role role = _roleLocalService.fetchRole(roleId);
 
 			if (role == null) {
 				continue;
@@ -443,7 +445,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		long groupId = getGroupId();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		if (group.isStagingGroup()) {
 			if (group.isStagedRemotely()) {
@@ -1628,7 +1630,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 					PermissionExporter.ROLE_TEAM_PREFIX.length());
 
 				try {
-					team = TeamLocalServiceUtil.getTeam(_groupId, roleName);
+					team = _teamLocalService.getTeam(_groupId, roleName);
 				}
 				catch (NoSuchTeamException nste) {
 					if (_log.isWarnEnabled()) {
@@ -1641,11 +1643,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			try {
 				if (team != null) {
-					role = RoleLocalServiceUtil.getTeamRole(
+					role = _roleLocalService.getTeamRole(
 						_companyId, team.getTeamId());
 				}
 				else {
-					role = RoleLocalServiceUtil.getRole(_companyId, roleName);
+					role = _roleLocalService.getRole(_companyId, roleName);
 				}
 			}
 			catch (NoSuchRoleException nsre) {
@@ -1665,13 +1667,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		if (ResourceBlockLocalServiceUtil.isSupported(resourceName)) {
-			ResourceBlockLocalServiceUtil.setIndividualScopePermissions(
+		if (_resourceBlockLocalService.isSupported(resourceName)) {
+			_resourceBlockLocalService.setIndividualScopePermissions(
 				_companyId, _groupId, resourceName, newResourcePK,
 				roleIdsToActionIds);
 		}
 		else {
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			_resourcePermissionLocalService.setResourcePermissions(
 				_companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(newResourcePK), roleIdsToActionIds);
 		}
@@ -1744,7 +1746,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Group group = null;
 
 		try {
-			group = GroupLocalServiceUtil.getGroup(getGroupId());
+			group = _groupLocalService.getGroup(getGroupId());
 		}
 		catch (Exception e) {
 		}
@@ -2007,7 +2009,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		if (!_expandoColumnsMap.containsKey(className)) {
 			List<ExpandoColumn> expandoColumns =
-				ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
+				_expandoColumnLocalService.getDefaultTableColumns(
 					_companyId, className);
 
 			for (ExpandoColumn expandoColumn : expandoColumns) {
@@ -2161,7 +2163,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
 
 			try {
-				Group group = GroupLocalServiceUtil.getGroup(
+				Group group = _groupLocalService.getGroup(
 					stagedGroupedModel.getGroupId());
 
 				long liveGroupId = group.getLiveGroupId();
@@ -2241,13 +2243,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 			String className, long primKey, List<String> actionIds)
 		throws PortalException {
 
-		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
-			return ResourceBlockPermissionLocalServiceUtil.
+		if (_resourceBlockLocalService.isSupported(className)) {
+			return _resourceBlockPermissionLocalService.
 				getAvailableResourceBlockPermissionActionIds(
 					className, primKey, actionIds);
 		}
 		else {
-			return ResourcePermissionLocalServiceUtil.
+			return _resourcePermissionLocalService.
 				getAvailableResourcePermissionActionIds(
 					_companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(primKey), actionIds);
@@ -2509,11 +2511,80 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return true;
 	}
 
+	@Reference
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference
+	protected void setAssetLinkLocalService(
+		AssetLinkLocalService assetLinkLocalService) {
+
+		_assetLinkLocalService = assetLinkLocalService;
+	}
+
+	@Reference
+	protected void setAssetTagLocalService(
+		AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
+	}
+
+	@Reference
+	protected void setExpandoColumnLocalService(
+		ExpandoColumnLocalService expandoColumnLocalService) {
+
+		_expandoColumnLocalService = expandoColumnLocalService;
+	}
+
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference
+	protected void setResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+
+		_resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	@Reference
+	protected void setResourceBlockPermissionLocalService(
+		ResourceBlockPermissionLocalService
+			resourceBlockPermissionLocalService) {
+
+		_resourceBlockPermissionLocalService =
+			resourceBlockPermissionLocalService;
+	}
+
+	@Reference
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	@Reference
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference
+	protected void setTeamLocalService(TeamLocalService teamLocalService) {
+		_teamLocalService = teamLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDataContextImpl.class);
 
 	private final Map<String, long[]> _assetCategoryIdsMap = new HashMap<>();
+	private transient AssetEntryLocalService _assetEntryLocalService;
+	private transient AssetLinkLocalService _assetLinkLocalService;
 	private final Map<String, List<AssetLink>> _assetLinksMap = new HashMap<>();
+	private transient AssetTagLocalService _assetTagLocalService;
 	private final Map<String, String[]> _assetTagNamesMap = new HashMap<>();
 	private long _companyGroupId;
 	private long _companyId;
@@ -2521,10 +2592,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Set<StagedModelType> _deletionSystemEventModelTypes =
 		new HashSet<>();
 	private Date _endDate;
+	private transient ExpandoColumnLocalService _expandoColumnLocalService;
 	private final Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<>();
 	private transient Element _exportDataRootElement;
 	private long _groupId;
+	private transient GroupLocalService _groupLocalService;
 	private transient Element _importDataRootElement;
 	private transient final Map<String, Lock> _locksMap = new HashMap<>();
 	private transient ManifestSummary _manifestSummary = new ManifestSummary();
@@ -2542,6 +2615,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Set<String> _primaryKeys = new HashSet<>();
 	private boolean _privateLayout;
 	private final Set<String> _references = new HashSet<>();
+	private transient ResourceBlockLocalService _resourceBlockLocalService;
+	private transient ResourceBlockPermissionLocalService
+		_resourceBlockPermissionLocalService;
+	private transient ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+	private transient RoleLocalService _roleLocalService;
 	private String _rootPortletId;
 	private final Set<String> _scopedPrimaryKeys = new HashSet<>();
 	private long _scopeGroupId;
@@ -2552,6 +2631,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _sourceGroupId;
 	private long _sourceUserPersonalSiteGroupId;
 	private Date _startDate;
+	private transient TeamLocalService _teamLocalService;
 	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
 	private transient XStream _xStream;

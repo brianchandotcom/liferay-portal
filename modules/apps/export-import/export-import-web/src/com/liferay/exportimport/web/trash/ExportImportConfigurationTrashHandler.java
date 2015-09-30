@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
@@ -49,8 +49,8 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		ExportImportConfigurationLocalServiceUtil.
-			deleteExportImportConfiguration(classPK);
+		_exportImportConfigurationLocalService.deleteExportImportConfiguration(
+			classPK);
 	}
 
 	@Override
@@ -71,8 +71,8 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 	@Override
 	public TrashEntry getTrashEntry(long classPK) throws PortalException {
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(classPK);
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				classPK);
 
 		return exportImportConfiguration.getTrashEntry();
 	}
@@ -80,8 +80,8 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(classPK);
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				classPK);
 
 		ExportImportConfigurationTrashRenderer
 			exportImportConfigurationTrashRenderer =
@@ -97,8 +97,8 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 	@Override
 	public boolean isInTrash(long classPK) throws PortalException {
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(classPK);
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				classPK);
 
 		return exportImportConfiguration.isInTrash();
 	}
@@ -107,7 +107,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		ExportImportConfigurationLocalServiceUtil.
+		_exportImportConfigurationLocalService.
 			restoreExportImportConfigurationFromTrash(userId, classPK);
 	}
 
@@ -125,15 +125,33 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 		throws PortalException {
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(classPK);
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				classPK);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			exportImportConfiguration.getGroupId());
 
 		return GroupPermissionUtil.contains(permissionChecker, group, actionId);
 	}
 
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	protected ServletContext servletContext;
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

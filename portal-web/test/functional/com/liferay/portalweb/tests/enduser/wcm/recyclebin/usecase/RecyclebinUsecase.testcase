@@ -789,6 +789,7 @@
 		</execute>
 
 		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
@@ -886,6 +887,7 @@
 		</execute>
 
 		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -1272,6 +1274,7 @@
 		</execute>
 
 		<execute macro="WebContentFolder#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Folder" />
 			<var name="folderName" value="WC Folder Name" />
 		</execute>
 
@@ -1439,6 +1442,7 @@
 		</execute>
 
 		<execute macro="WebContentFolder#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Folder" />
 			<var name="folderName" value="WC Folder Name" />
 		</execute>
 

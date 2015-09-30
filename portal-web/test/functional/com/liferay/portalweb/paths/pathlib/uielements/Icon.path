@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>BODY_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@class,'portlet-content-container')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//div[contains(@class,'portlet') and contains(@class,'container')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BODY_VERTICAL_ELLIPSIS_2</td>
-	<td>xpath=(//div[contains(@class,'portlet-content-container')]//span[contains(@class,'icon-ellipsis-vertical')])[2]</td>
+	<td>xpath=(//div[contains(@class,'portlet') and contains(@class,'container')]//span[contains(@class,'icon-ellipsis-vertical')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,12 +135,17 @@
 </tr>
 <tr>
 	<td>LIST_VERTICAL_ELLIPSIS</td>
-	<td>//tr[td[contains(.,'${key_assetEntry}')]]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//tr[td[contains(.,'${key_listEntry}')]]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOCALIZED_FLAG</td>
 	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE</td>
+	<td>//a[contains(@id,'merge')]//span[contains(@class,'icon-random')]</td>
 	<td></td>
 </tr>
 <tr>

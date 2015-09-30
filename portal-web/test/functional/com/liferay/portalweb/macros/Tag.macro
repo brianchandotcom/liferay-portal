@@ -187,7 +187,7 @@
 		<if>
 			<equals arg1="${deleteMethod}" arg2="From List" />
 			<then>
-				<var name="key_assetEntry" value="${tagName}" />
+				<var name="key_listEntry" value="${tagName}" />
 
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
@@ -242,8 +242,7 @@
 
 	<command name="mergeMultipleTags">
 		<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
-		<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
-		<execute function="AssertClick" locator1="Button#MERGE" value1="Merge" />
+		<execute function="Click" locator1="Icon#MERGE" />
 		<execute function="Select" locator1="Tags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${tagName2}" />
 		<execute function="AssertClickNoError" locator1="Button#MERGE" value1="Merge" />
 		<execute function="Confirm#assertPartialConfirmation" value1="${mergeConfirmation}" />
@@ -262,8 +261,7 @@
 		<var name="key_tagName" value="${tagName}" />
 
 		<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX" />
-		<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="Button#MERGE" value1="Merge" />
+		<execute function="ClickNoError" locator1="Icon#MERGE" />
 		<execute function="Confirm" value1="Please choose at least 2 tags." />
 	</command>
 
@@ -301,20 +299,21 @@
 	<command name="removeTagViaBlogsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
-		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB" />
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute function="Click" locator1="PGBlogsEdit#CATEGORIZATION_TAG_REMOVE" />
-		<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
-
-		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute macro="BlogsNavigator#gotoSettings" />
 
 		<var name="key_tagName" value="${tagName1}" />
 
-		<execute function="AssertTextNotPresent" locator1="PGBlogs#TAG" value1="${tagName1}" />
+		<execute macro="AssetCategorization#removeTag">
+			<var name="tagName" value="${tagName}" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchTagCP">

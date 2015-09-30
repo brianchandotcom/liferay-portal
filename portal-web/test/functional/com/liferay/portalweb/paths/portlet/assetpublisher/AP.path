@@ -248,7 +248,7 @@
 </tr>
 <tr>
 	<td>METADATA_TAGS</td>
-	<td>//span[contains(@class,'metadata-tags')]</td>
+	<td>//span[contains(@class,'tags-summary')]/span</td>
 	<td></td>
 </tr>
 <tr>

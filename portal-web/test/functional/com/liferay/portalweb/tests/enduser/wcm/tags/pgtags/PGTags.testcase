@@ -134,23 +134,30 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Tag#addMultipleViaBlogsPG">
+		<execute macro="Blogs#addWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Page Name" />
+				<var name="siteName" value="Site Name" />
+				<var name="siteURL" value="true" />
+			</execute>
 
-		<execute macro="Tag#viewMultipleViaBlogsPG">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
-		</execute>
+			<execute macro="BlogsNavigator#gotoEntryPG">
+				<var name="entryContent" value="Entry Content" />
+				<var name="entryTitle" value="Entry Title" />
+			</execute>
+
+			<execute macro="BlogsEntry#viewTagPG">
+				<var name="entryContent" value="Entry Content" />
+				<var name="entryTitle" value="Entry Title" />
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 	</command>
 
 	<command known-issues="LPS-58109" name="AddSelectTagViaBlogs" priority="5">
@@ -243,6 +250,21 @@
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="tag name" />
 		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewTagPG">
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagName" value="tag name" />
+		</execute>
 	</command>
 
 	<command name="AddUTFTagViaBlogs" priority="4">
@@ -274,7 +296,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPG">
+		<execute macro="Blogs#addWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="硒1 liferay1" />
@@ -747,7 +769,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Tag#addMultipleViaBlogsPG">
+		<execute macro="Blogs#addWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
@@ -759,11 +781,24 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#viewMultipleViaBlogsPG">
-			<var name="entryContent" value="Entry Content" />
-			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
-		</execute>
+		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Page Name" />
+				<var name="siteName" value="Site Name" />
+				<var name="siteURL" value="true" />
+			</execute>
+
+			<execute macro="BlogsNavigator#gotoEntryPG">
+				<var name="entryContent" value="Entry Content" />
+				<var name="entryTitle" value="Entry Title" />
+			</execute>
+
+			<execute macro="BlogsEntry#viewTagPG">
+				<var name="entryContent" value="Entry Content" />
+				<var name="entryTitle" value="Entry Title" />
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />
@@ -771,12 +806,33 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#removeSelectTagViaBlogsPG">
+		<execute macro="BlogsNavigator#gotoEditPG">
 			<var name="entryTitle" value="Entry Title" />
-			<var name="pageName" value="Page Name" />
-			<var name="tagName1" value="tag name 1" />
-			<var name="tagName3" value="tag name 3" />
 		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<for list="tag name 1,tag name 3" param="tagName">
+			<execute macro="AssetCategorization#removeTag">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+
+		<execute macro="BlogsEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+
+		<execute function="AssertTextNotPresent" value1="tag name 1" />
+		<execute function="AssertTextNotPresent" value1="tag name 3" />
 	</command>
 
 	<command known-issues="LPS-58109" name="RemoveTagViaBlogs" priority="5">
@@ -808,11 +864,30 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Tag#addMultipleViaBlogsPG">
+		<execute macro="Blogs#addWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
 		</execute>
+
+		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Page Name" />
+				<var name="siteName" value="Site Name" />
+				<var name="siteURL" value="true" />
+			</execute>
+
+			<execute macro="BlogsNavigator#gotoEntryPG">
+				<var name="entryContent" value="Entry Content" />
+				<var name="entryTitle" value="Entry Title" />
+			</execute>
+
+			<execute macro="BlogsEntry#viewTagPG">
+				<var name="entryContent" value="Entry Content" />
+				<var name="entryTitle" value="Entry Title" />
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />
@@ -820,11 +895,17 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#viewMultipleViaBlogsPG">
-			<var name="entryContent" value="Entry Content" />
+		<execute macro="BlogsNavigator#gotoEditPG">
 			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
 		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<execute macro="AssetCategorization#removeTag">
+			<var name="tagName" value="tag name 1" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />
@@ -832,11 +913,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#removeTagViaBlogsPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
-			<var name="pageName" value="Page Name" />
-			<var name="tagName1" value="tag name 1" />
 		</execute>
+
+		<execute function="AssertTextNotPresent" value1="tag name 1" />
 	</command>
 
 	<command name="SearchMultipleTagsViaBlogs" priority="4">

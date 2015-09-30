@@ -727,6 +727,7 @@
 
 	<command name="deleteCP">
 		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
 		</execute>
@@ -1065,6 +1066,8 @@
 		<execute macro="WebContent#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
+
+		<var name="key_assetType" value="Web Content Article" />
 
 		<while>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC" />

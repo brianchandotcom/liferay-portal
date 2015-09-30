@@ -6,7 +6,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Pause" locator1="1000" />
 
-		<var name="key_assetEntry" value="${categoryName}" />
+		<var name="key_listEntry" value="${categoryName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
@@ -33,7 +33,7 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
-		<var name="key_assetEntry" value="${categoryName}" />
+		<var name="key_listEntry" value="${categoryName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
@@ -49,7 +49,7 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
-		<var name="key_assetEntry" value="${categoryName}" />
+		<var name="key_listEntry" value="${categoryName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
@@ -100,7 +100,7 @@
 
 		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 
-		<var name="key_assetEntry" value="${subcategoryName}" />
+		<var name="key_listEntry" value="${subcategoryName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
@@ -118,7 +118,7 @@
 
 		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 
-		<var name="key_assetEntry" value="${subcategoryName}" />
+		<var name="key_listEntry" value="${subcategoryName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
@@ -137,7 +137,7 @@
 
 		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 
-		<var name="key_assetEntry" value="${subcategoryName}" />
+		<var name="key_listEntry" value="${subcategoryName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 
@@ -180,7 +180,7 @@
 
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_LINK" />
 
-		<var name="key_assetEntry" value="${subcategoryName}" />
+		<var name="key_listEntry" value="${subcategoryName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />

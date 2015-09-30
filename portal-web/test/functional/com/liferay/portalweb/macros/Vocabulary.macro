@@ -117,7 +117,7 @@
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<var name="key_assetEntry" value="${vocabularyName}" />
+		<var name="key_listEntry" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
@@ -150,7 +150,7 @@
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<var name="key_assetEntry" value="${vocabularyName}" />
+		<var name="key_listEntry" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
@@ -166,7 +166,7 @@
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<var name="key_assetEntry" value="${vocabularyName}" />
+		<var name="key_listEntry" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
@@ -232,7 +232,7 @@
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
-				<var name="key_assetEntry" value="${vocabularyName}" />
+				<var name="key_listEntry" value="${vocabularyName}" />
 
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
@@ -277,7 +277,7 @@
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<var name="key_assetEntry" value="${vocabularyName}" />
+		<var name="key_listEntry" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
@@ -311,7 +311,7 @@
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<var name="key_assetEntry" value="${vocabularyName}" />
+		<var name="key_listEntry" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />

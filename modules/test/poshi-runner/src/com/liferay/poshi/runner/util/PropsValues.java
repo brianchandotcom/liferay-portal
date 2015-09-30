@@ -92,9 +92,6 @@ public class PropsValues {
 	public static final String MOBILE_DEVICE_NAME = PropsUtil.get(
 		"mobile.device.name");
 
-	public static final String MOBILE_DEVICE_TYPE = PropsUtil.get(
-		"mobile.device.type");
-
 	public static final String OUTPUT_DIR_NAME = PropsUtil.get(
 		"output.dir.name");
 

@@ -14,8 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.type.text;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 
@@ -57,6 +61,21 @@ public class TextDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Deactivate
 	protected void deactivate() {
 		_templateResource = null;
+	}
+
+	@Override
+	protected void populateOptionalContext(
+		Template template, DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		template.put("displayStyle", ddmFormField.getProperty("displayStyle"));
+
+		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
+			"placeholder");
+
+		template.put(
+			"placeholder",
+			placeholder.getString(ddmFormFieldRenderingContext.getLocale()));
 	}
 
 	private TemplateResource _templateResource;

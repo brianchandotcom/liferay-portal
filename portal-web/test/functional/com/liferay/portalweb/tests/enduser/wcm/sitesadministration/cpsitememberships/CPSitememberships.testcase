@@ -1,5 +1,5 @@
 <definition component-name="portal-wcm">
-	<property name="testray.main.component.name" value="Sites Administration" />
+	<property name="testray.main.component.name" value="Site Administration" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

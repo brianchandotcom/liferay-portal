@@ -62,7 +62,7 @@
 		<@liferay.silently propertiesJSONObject.put("title", assetRenderer.getTitle(locale)) />
 
 		<#assign entryAbstract>
-			<@getAbstract asset = entry />
+			<@getAbstract asset=entry />
 		</#assign>
 
 		<@liferay.silently propertiesJSONObject.put("abstract", entryAbstract) />
@@ -119,7 +119,10 @@
 	}
 </style>
 
-<@liferay_ui["map"] name='Map' points="${featureCollectionJSONObject}" />
+<@liferay_ui["map"]
+	name='Map'
+	points="${featureCollectionJSONObject}"
+/>
 
 <@liferay_aui.script use="liferay-map-base">
 	var map = Liferay.component('<@liferay_portlet.namespace />Map');

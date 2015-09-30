@@ -6,7 +6,11 @@
 
 <div class="field-wrapper-content lfr-forms-field-wrapper">
 	<#if !disabled>
-		<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
+		<@aui.input
+			name=namespacedFieldName
+			type="hidden"
+			value=fieldValue
+		/>
 	</#if>
 
 	<#if hasFieldValue || showEmptyFieldLabel>

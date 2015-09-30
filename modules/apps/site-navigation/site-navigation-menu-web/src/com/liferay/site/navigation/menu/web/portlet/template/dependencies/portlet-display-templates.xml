@@ -2,59 +2,59 @@
 
 <root>
 	<template>
-		<template-key>bootstrap-buttons-dropdown-ftl</template-key>
-		<name>portlet-display-template-name-bootstrap-buttons-dropdown</name>
-		<description>portlet-display-template-description-bootstrap-buttons-dropdown</description>
+		<template-key>split-button-dropdowns-ftl</template-key>
+		<name>portlet-display-template-name-split-button-dropdowns</name>
+		<description>portlet-display-template-description-split-button-dropdowns</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_bootstrap_buttons_dropdown.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_split_button_dropdowns.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
-		<template-key>bootstrap-nav-pills-ftl</template-key>
-		<name>portlet-display-template-name-bootstrap-navigation-pills</name>
-		<description>portlet-display-template-description-bootstrap-navigation-pills</description>
+		<template-key>nav-pills-ftl</template-key>
+		<name>portlet-display-template-name-nav-pills</name>
+		<description>portlet-display-template-description-nav-pills</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_bootstrap_nav_pills.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_pills.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
-		<template-key>bootstrap-nav-pills-justified-ftl</template-key>
-		<name>portlet-display-template-name-bootstrap-navigation-pills-justified</name>
-		<description>portlet-display-template-description-bootstrap-navigation-pills-justified</description>
+		<template-key>nav-pills-justified-ftl</template-key>
+		<name>portlet-display-template-name-nav-pills-justified</name>
+		<description>portlet-display-template-description-nav-pills-justified</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_bootstrap_nav_pills_justified.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_pills_justified.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
-		<template-key>bootstrap-nav-pills-stacked-ftl</template-key>
-		<name>portlet-display-template-name-bootstrap-navigation-pills-stacked</name>
-		<description>portlet-display-template-description-bootstrap-navigation-pills-stacked</description>
+		<template-key>nav-pills-stacked-ftl</template-key>
+		<name>portlet-display-template-name-nav-pills-stacked</name>
+		<description>portlet-display-template-description-nav-pills-stacked</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_bootstrap_nav_pills_stacked.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_pills_stacked.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
-		<template-key>bootstrap-nav-tabs-ftl</template-key>
-		<name>portlet-display-template-name-bootstrap-navigation-tabs</name>
-		<description>portlet-display-template-description-bootstrap-navigation-tabs</description>
+		<template-key>nav-tabs-ftl</template-key>
+		<name>portlet-display-template-name-nav-tabs</name>
+		<description>portlet-display-template-description-nav-tabs</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_bootstrap_nav_tabs.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_tabs.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
-		<template-key>bootstrap-nav-tabs-justified-ftl</template-key>
-		<name>portlet-display-template-name-bootstrap-navigation-tabs-justified</name>
-		<description>portlet-display-template-description-bootstrap-navigation-tabs-justified</description>
+		<template-key>nav-tabs-justified-ftl</template-key>
+		<name>portlet-display-template-name-nav-tabs-justified</name>
+		<description>portlet-display-template-description-nav-tabs-justified</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_bootstrap_nav_tabs_justified.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_tabs_justified.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
-		<template-key>bootstrap-navbar-ftl</template-key>
-		<name>portlet-display-template-name-bootstrap-navigation-bar</name>
-		<description>portlet-display-template-description-bootstrap-navigation-bar</description>
+		<template-key>navbar-default-ftl</template-key>
+		<name>portlet-display-template-name-navbar-default</name>
+		<description>portlet-display-template-description-navbar-default</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_bootstrap_navbar.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_navbar_default.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -66,11 +66,11 @@
 		<cacheable>false</cacheable>
 	</template>
 	<template>
-		<template-key>default-classic-navigation-menu-ftl</template-key>
-		<name>portlet-display-template-name-default-classic-navigation-menu</name>
-		<description>portlet-display-template-description-default-classic-navigation-menu</description>
+		<template-key>blank-navigation-menu-ftl</template-key>
+		<name>portlet-display-template-name-blank-navigation-menu</name>
+		<description>portlet-display-template-description-blank-navigation-menu</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_default_classic_navigation_menu.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_blank_navigation_menu.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>

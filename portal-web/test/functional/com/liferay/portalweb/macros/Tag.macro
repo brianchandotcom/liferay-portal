@@ -228,7 +228,7 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${tagName}" />
-		<execute function="AssertClick" locator1="CPTagsEdit#CANCEL_BUTTON" value1="Cancel" />
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 
 		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 	</command>

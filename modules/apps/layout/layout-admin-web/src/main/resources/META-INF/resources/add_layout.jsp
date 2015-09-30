@@ -63,7 +63,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= addLayoutURL %>" enctype="multipart/form-data" method="post" name="addPageFm">
+<aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="addPageFm">
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= editLayoutRenderURL %>" />
 	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />

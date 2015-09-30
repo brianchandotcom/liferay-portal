@@ -14,35 +14,16 @@
 
 package com.liferay.portal.tools.service.builder;
 
-import com.liferay.portal.kernel.util.CharPool;
-
 /**
  * @author Glenn Powell
  * @author Brian Wing Shun Chan
- * @author Manuel de la Peña
  */
 public class EntityMapping {
 
-	public EntityMapping(
-		String table, Entity company, String entity1, String entity2) {
-
+	public EntityMapping(String table, String entity1, String entity2) {
 		_table = table;
-		_company = company;
-
-		String companyModel =
-			company.getPackagePath() + CharPool.PERIOD + company.getName();
-
-		_entities[0] = companyModel;
-		_entities[1] = entity1;
-		_entities[2] = entity2;
-	}
-
-	public Entity getCompany() {
-		return _company;
-	}
-
-	public int getEntitiesCount() {
-		return _entities.length;
+		_entities[0] = entity1;
+		_entities[1] = entity2;
 	}
 
 	public String getEntity(int index) {
@@ -58,8 +39,7 @@ public class EntityMapping {
 		return _table;
 	}
 
-	private final Entity _company;
-	private final String[] _entities = new String[3];
+	private final String[] _entities = new String[2];
 	private final String _table;
 
 }

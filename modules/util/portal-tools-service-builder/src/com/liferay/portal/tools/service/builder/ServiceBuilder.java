@@ -119,7 +119,6 @@ import org.dom4j.io.SAXReader;
  * @author Cody Hoag
  * @author James Hinkey
  * @author Hugo Huijser
- * @author Manuel de la Peña
  */
 public class ServiceBuilder {
 
@@ -1013,7 +1012,7 @@ public class ServiceBuilder {
 
 			if (pos == -1) {
 				throw new ServiceBuilderException(
-					"Unable to find " + name + " in " +
+					"Unable to to find " + name + " in " +
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
 
@@ -1185,7 +1184,7 @@ public class ServiceBuilder {
 
 		EntityMapping entityMapping = _entityMappings.get(mappingTable);
 
-		for (int i = 0; i < entityMapping.getEntitiesCount(); i++) {
+		for (int i = 0; i < 2; i++) {
 			Entity entity = getEntity(entityMapping.getEntity(i));
 
 			if (entity == null) {
@@ -3923,7 +3922,7 @@ public class ServiceBuilder {
 			Map<String, List<IndexMetadata>> indexMetadataMap)
 		throws Exception {
 
-		Entity[] entities = new Entity[entityMapping.getEntitiesCount()];
+		Entity[] entities = new Entity[2];
 
 		for (int i = 0; i < entities.length; i++) {
 			entities[i] = getEntity(entityMapping.getEntity(i));
@@ -3955,7 +3954,7 @@ public class ServiceBuilder {
 	private String _getCreateMappingTableSQL(EntityMapping entityMapping)
 		throws Exception {
 
-		Entity[] entities = new Entity[entityMapping.getEntitiesCount()];
+		Entity[] entities = new Entity[2];
 
 		for (int i = 0; i < entities.length; i++) {
 			entities[i] = getEntity(entityMapping.getEntity(i));
@@ -4793,8 +4792,7 @@ public class ServiceBuilder {
 				Validator.isNotNull(mappingTable)) {
 
 				EntityMapping entityMapping = new EntityMapping(
-					mappingTable, getEntity("com.liferay.portal.Company"),
-					ejbName, collectionEntity);
+					mappingTable, ejbName, collectionEntity);
 
 				if (!_entityMappings.containsKey(mappingTable)) {
 					_entityMappings.put(mappingTable, entityMapping);

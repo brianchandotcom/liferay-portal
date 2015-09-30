@@ -45,7 +45,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 		<span class="company-name"><%= company.getName() %></span>
 	</span>
 
-	<aui:icon cssClass="sidenav-close visible-xs-block" image="remove" url="javascript:;" />
+	<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" image="remove" url="javascript:;" />
 </h4>
 
 <ul class="nav nav-tabs product-menu-tabs">

@@ -210,8 +210,7 @@ public class JSONWebServiceActionsManagerImpl
 					className = className.substring(0, className.length() - 4);
 				}
 
-				serviceObject.put(
-					"context", context.length() > 0 ? context : "root");
+				serviceObject.put("context", context);
 				serviceObject.put("serviceClass", className);
 
 				if (!serviceNames.contains(serviceObject)) {

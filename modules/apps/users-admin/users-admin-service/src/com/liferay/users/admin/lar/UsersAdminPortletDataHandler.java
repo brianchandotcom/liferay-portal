@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.impl.OrganizationImpl;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -36,6 +36,7 @@ import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -71,12 +72,12 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getOrganizations(
+			_organizationLocalService.getOrganizations(
 				portletDataContext.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 
 		for (Organization organization : organizations) {
-			OrganizationLocalServiceUtil.deleteOrganization(organization);
+			_organizationLocalService.deleteOrganization(organization);
 		}
 
 		return portletPreferences;
@@ -96,7 +97,7 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			OrganizationLocalServiceUtil.getExportActionableDynamicQuery(
+			_organizationLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -132,10 +133,19 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			OrganizationLocalServiceUtil.getExportActionableDynamicQuery(
+			_organizationLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performCount();
 	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	private OrganizationLocalService _organizationLocalService;
 
 }

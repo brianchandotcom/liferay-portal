@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.AddressLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.AddressLocalService;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Mendez Gonzalez
@@ -42,7 +43,7 @@ public class AddressStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(Address address) {
-		AddressLocalServiceUtil.deleteAddress(address);
+		_addressLocalService.deleteAddress(address);
 	}
 
 	@Override
@@ -50,11 +51,10 @@ public class AddressStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		Address address =
-			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
-				uuid, group.getCompanyId());
+		Address address = _addressLocalService.fetchAddressByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 
 		if (address != null) {
 			deleteStagedModel(address);
@@ -81,7 +81,7 @@ public class AddressStagedModelDataHandler
 		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(
-			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
+			_addressLocalService.fetchAddressByUuidAndCompanyId(
 				uuid, companyId));
 
 		return addresses;
@@ -103,7 +103,7 @@ public class AddressStagedModelDataHandler
 			address);
 
 		Address existingAddress =
-			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
+			_addressLocalService.fetchAddressByUuidAndCompanyId(
 				address.getUuid(), portletDataContext.getCompanyId());
 
 		Address importedAddress = null;
@@ -111,7 +111,7 @@ public class AddressStagedModelDataHandler
 		if (existingAddress == null) {
 			serviceContext.setUuid(address.getUuid());
 
-			importedAddress = AddressLocalServiceUtil.addAddress(
+			importedAddress = _addressLocalService.addAddress(
 				userId, address.getClassName(), address.getClassPK(),
 				address.getStreet1(), address.getStreet2(),
 				address.getStreet3(), address.getCity(), address.getZip(),
@@ -120,7 +120,7 @@ public class AddressStagedModelDataHandler
 				serviceContext);
 		}
 		else {
-			importedAddress = AddressLocalServiceUtil.updateAddress(
+			importedAddress = _addressLocalService.updateAddress(
 				existingAddress.getAddressId(), address.getStreet1(),
 				address.getStreet2(), address.getStreet3(), address.getCity(),
 				address.getZip(), address.getRegionId(), address.getCountryId(),
@@ -129,5 +129,20 @@ public class AddressStagedModelDataHandler
 
 		portletDataContext.importClassedModel(address, importedAddress);
 	}
+
+	@Reference(unbind = "-")
+	protected void setAddressLocalService(
+		AddressLocalService addressLocalService) {
+
+		_addressLocalService = addressLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	private AddressLocalService _addressLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

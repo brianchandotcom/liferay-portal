@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Phone;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.PhoneLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Mendez Gonzalez
@@ -42,7 +43,7 @@ public class PhoneStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(Phone phone) {
-		PhoneLocalServiceUtil.deletePhone(phone);
+		_phoneLocalService.deletePhone(phone);
 	}
 
 	@Override
@@ -50,9 +51,9 @@ public class PhoneStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		Phone phone = PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
+		Phone phone = _phoneLocalService.fetchPhoneByUuidAndCompanyId(
 			uuid, group.getCompanyId());
 
 		if (phone != null) {
@@ -67,8 +68,7 @@ public class PhoneStagedModelDataHandler
 		List<Phone> phones = new ArrayList<>();
 
 		phones.add(
-			PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
-				uuid, companyId));
+			_phoneLocalService.fetchPhoneByUuidAndCompanyId(uuid, companyId));
 
 		return phones;
 	}
@@ -99,27 +99,39 @@ public class PhoneStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			phone);
 
-		Phone existingPhone =
-			PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
-				phone.getUuid(), portletDataContext.getCompanyId());
+		Phone existingPhone = _phoneLocalService.fetchPhoneByUuidAndCompanyId(
+			phone.getUuid(), portletDataContext.getCompanyId());
 
 		Phone importedPhone = null;
 
 		if (existingPhone == null) {
 			serviceContext.setUuid(phone.getUuid());
 
-			importedPhone = PhoneLocalServiceUtil.addPhone(
+			importedPhone = _phoneLocalService.addPhone(
 				userId, phone.getClassName(), phone.getClassPK(),
 				phone.getNumber(), phone.getExtension(), phone.getTypeId(),
 				phone.isPrimary(), serviceContext);
 		}
 		else {
-			importedPhone = PhoneLocalServiceUtil.updatePhone(
+			importedPhone = _phoneLocalService.updatePhone(
 				existingPhone.getPhoneId(), phone.getNumber(),
 				phone.getExtension(), phone.getTypeId(), phone.isPrimary());
 		}
 
 		portletDataContext.importClassedModel(phone, importedPhone);
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPhoneLocalService(PhoneLocalService phoneLocalService) {
+		_phoneLocalService = phoneLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private PhoneLocalService _phoneLocalService;
 
 }

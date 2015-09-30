@@ -49,10 +49,12 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="add-new-page"
-/>
+<%
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
+%>
 
 <portlet:actionURL name="addLayout" var="addLayoutURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
 	<portlet:param name="mvcPath" value="/add_layout.jsp" />

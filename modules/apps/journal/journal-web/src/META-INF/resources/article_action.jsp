@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -107,7 +109,8 @@ else {
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
 			<portlet:renderURL var="viewHistoryURL">
 				<portlet:param name="mvcPath" value="/view_article_history.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			</portlet:renderURL>

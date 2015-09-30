@@ -65,15 +65,15 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.SystemEventLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutService;
+import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.service.SystemEventLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
@@ -107,6 +107,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -122,7 +123,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public long[] getAllLayoutIds(long groupId, boolean privateLayout) {
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = _layoutLocalService.getLayouts(
 			groupId, privateLayout);
 
 		return getLayoutIds(layouts);
@@ -132,7 +133,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public Map<Long, Boolean> getAllLayoutIdsMap(
 		long groupId, boolean privateLayout) {
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = _layoutLocalService.getLayouts(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		Map<Long, Boolean> layoutIdMap = new HashMap<>();
@@ -171,7 +172,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			long companyId, boolean excludeDataAlwaysStaged)
 		throws Exception {
 
-		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(companyId);
+		List<Portlet> portlets = _portletLocalService.getPortlets(companyId);
 
 		Iterator<Portlet> itr = portlets.iterator();
 
@@ -229,14 +230,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isLayout()) {
-			layout = LayoutLocalServiceUtil.getLayout(scopeGroup.getClassPK());
+			layout = _layoutLocalService.getLayout(scopeGroup.getClassPK());
 		}
 		else if (!scopeGroup.isCompany()) {
-			long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
+			long defaultPlid = _layoutLocalService.getDefaultPlid(
 				themeDisplay.getSiteGroupId());
 
 			if (defaultPlid > 0) {
-				layout = LayoutLocalServiceUtil.getLayout(defaultPlid);
+				layout = _layoutLocalService.getLayout(defaultPlid);
 			}
 		}
 
@@ -247,7 +248,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public String getExportableRootPortletId(long companyId, String portletId)
 		throws Exception {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			companyId, portletId);
 
 		if ((portlet == null) || portlet.isUndeployedPortlet()) {
@@ -455,7 +456,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 			boolean includeChildren = entry.getValue();
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Layout layout = _layoutLocalService.getLayout(plid);
 
 			if (!layouts.contains(layout)) {
 				layouts.add(layout);
@@ -525,7 +526,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			File file)
 		throws Exception {
 
-		final Group group = GroupLocalServiceUtil.getGroup(groupId);
+		final Group group = _groupLocalService.getGroup(groupId);
 		String userIdStrategy = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
@@ -550,7 +551,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 
 		File file = FileUtil.createTempFile("lar");
-		InputStream inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
+		InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
 			fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 		ZipReader zipReader = null;
 
@@ -559,7 +560,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		try {
 			FileUtil.write(file, inputStream);
 
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 			String userIdStrategy = MapUtil.getString(
 				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
@@ -592,7 +593,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		XMLReader xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			portletDataContext.getGroupId());
 		ManifestSummary manifestSummary = new ManifestSummary();
 
@@ -624,11 +625,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Layout parentLayout = null;
 
 		while (parentLayoutId > 0) {
-			parentLayout = LayoutLocalServiceUtil.getLayout(
+			parentLayout = _layoutLocalService.getLayout(
 				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
 
 			try {
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+				_layoutLocalService.getLayoutByUuidAndGroupId(
 					parentLayout.getUuid(), liveGroupId,
 					parentLayout.isPrivateLayout());
 
@@ -653,7 +654,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			SystemEventLocalServiceUtil.getActionableDynamicQuery();
+			_systemEventLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -688,7 +689,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = _layoutLocalService.getLayouts(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		for (Layout layout : layouts) {
@@ -704,7 +705,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			long groupId, long userId, String folderName)
 		throws PortalException {
 
-		String[] tempFileNames = LayoutServiceUtil.getTempFileNames(
+		String[] tempFileNames = _layoutService.getTempFileNames(
 			groupId, folderName);
 
 		if (tempFileNames.length == 0) {
@@ -721,7 +722,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public UserIdStrategy getUserIdStrategy(long userId, String userIdStrategy)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		if (UserIdStrategy.ALWAYS_CURRENT_USER_ID.equals(userIdStrategy)) {
 			return new AlwaysCurrentUserIdStrategy(user);
@@ -749,7 +750,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Group group = null;
 
 		try {
-			group = GroupLocalServiceUtil.getGroup(
+			group = _groupLocalService.getGroup(
 				stagedGroupedModel.getGroupId());
 		}
 		catch (Exception e) {
@@ -762,8 +763,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			Layout scopeLayout = null;
 
 			try {
-				scopeLayout = LayoutLocalServiceUtil.getLayout(
-					group.getClassPK());
+				scopeLayout = _layoutLocalService.getLayout(group.getClassPK());
 			}
 			catch (Exception e) {
 				return false;
@@ -1067,7 +1067,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			File file)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 		String userIdStrategy = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
@@ -1237,7 +1237,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return false;
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			companyId, portletId);
 
 		if ((portlet == null) || portlet.isUndeployedPortlet()) {
@@ -1361,7 +1361,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return false;
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			companyId, portletId);
 
 		if (portlet == null) {
@@ -1542,6 +1542,49 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return false;
 	}
 
+	@Reference
+	protected void setDlFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference
+	protected void setLayoutService(LayoutService layoutService) {
+		_layoutService = layoutService;
+	}
+
+	@Reference
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	@Reference
+	protected void setSystemEventLocalService(
+		SystemEventLocalService systemEventLocalService) {
+
+		_systemEventLocalService = systemEventLocalService;
+	}
+
+	@Reference
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected MissingReference validateMissingReference(
 		PortletDataContext portletDataContext, Element element) {
 
@@ -1575,6 +1618,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportHelperImpl.class);
 
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutService _layoutService;
+	private PortletLocalService _portletLocalService;
+	private SystemEventLocalService _systemEventLocalService;
+	private UserLocalService _userLocalService;
+
 	private class ManifestSummaryElementProcessor implements ElementProcessor {
 
 		public ManifestSummaryElementProcessor(
@@ -1604,7 +1655,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				Portlet portlet = null;
 
 				try {
-					portlet = PortletLocalServiceUtil.getPortletById(
+					portlet = _portletLocalService.getPortletById(
 						_group.getCompanyId(), portletId);
 				}
 				catch (Exception e) {

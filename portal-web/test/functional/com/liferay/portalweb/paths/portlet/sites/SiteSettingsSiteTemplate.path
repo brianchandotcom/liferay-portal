@@ -10,17 +10,17 @@
 <tbody>
 <tr>
 	<td>SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE</td>
-	<td>//div[@id='_165_siteTemplate']/div</td>
+	<td>//div[contains(@id,'siteTemplate')]/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_CLONED_FROM_TEMPLATE_MESSAGE</td>
-	<td>//div[@id='_165_siteTemplate']//div//div</td>
+	<td>//div[contains(@id,'siteTemplate')]//div//div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TEMPLATE_SITE_CLONED_FROM</td>
-	<td>//div[@id='_165_siteTemplate']//div//div/em</td>
+	<td>//div[contains(@id,'siteTemplate')]//div//div/em</td>
 	<td></td>
 </tr>
 </tbody>

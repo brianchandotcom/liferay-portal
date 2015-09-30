@@ -22,17 +22,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -86,34 +81,17 @@ public class AssetTagFinderTest {
 
 		addBlogsEntry(_scopeGroup.getGroupId(), assetTagName);
 
-		User user = UserTestUtil.addUser(null, 0);
+		int scopeGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_C_N(
+			_scopeGroup.getGroupId(), classNameId, assetTagName);
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		Assert.assertEquals(
+			initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
 
-		try {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
+		int siteGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_C_N(
+			_scopeGroup.getParentGroupId(), classNameId, assetTagName);
 
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			int scopeGroupAssetTagsCount =
-				AssetTagFinderUtil.filterCountByG_C_N(
-					_scopeGroup.getGroupId(), classNameId, assetTagName);
-
-			Assert.assertEquals(
-				initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
-
-			int siteGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_C_N(
-				_scopeGroup.getParentGroupId(), classNameId, assetTagName);
-
-			Assert.assertEquals(
-				initialSiteGroupAssetTagsCount, siteGroupAssetTagsCount);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
+		Assert.assertEquals(
+			initialSiteGroupAssetTagsCount, siteGroupAssetTagsCount);
 	}
 
 	@Test
@@ -128,33 +106,16 @@ public class AssetTagFinderTest {
 
 		addBlogsEntry(_scopeGroup.getGroupId(), assetTagName);
 
-		User user = UserTestUtil.addUser(null, 0);
+		int scopeGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_N(
+			_scopeGroup.getGroupId(), assetTagName);
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		Assert.assertEquals(
+			initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
 
-		try {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
+		int siteGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_N(
+			_scopeGroup.getParentGroupId(), assetTagName);
 
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			int scopeGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_N(
-				_scopeGroup.getGroupId(), assetTagName);
-
-			Assert.assertEquals(
-				initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
-
-			int siteGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_N(
-				_scopeGroup.getParentGroupId(), assetTagName);
-
-			Assert.assertEquals(
-				initialTagsCountSiteGroup, siteGroupAssetTagsCount);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
+		Assert.assertEquals(initialTagsCountSiteGroup, siteGroupAssetTagsCount);
 	}
 
 	@Test
@@ -173,38 +134,21 @@ public class AssetTagFinderTest {
 
 		addBlogsEntry(_scopeGroup.getGroupId(), assetTagName);
 
-		User user = UserTestUtil.addUser(null, 0);
+		List<AssetTag> scopeGroupAssetTags =
+			AssetTagFinderUtil.filterFindByG_C_N(
+				_scopeGroup.getGroupId(), classNameId, assetTagName,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		Assert.assertEquals(
+			initialScopeGroupAssetTags.size() + 1, scopeGroupAssetTags.size());
 
-		try {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
+		List<AssetTag> siteGroupAssetTags =
+			AssetTagFinderUtil.filterFindByG_C_N(
+				_scopeGroup.getParentGroupId(), classNameId, assetTagName,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			List<AssetTag> scopeGroupAssetTags =
-				AssetTagFinderUtil.filterFindByG_C_N(
-					_scopeGroup.getGroupId(), classNameId, assetTagName,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			Assert.assertEquals(
-				initialScopeGroupAssetTags.size() + 1,
-				scopeGroupAssetTags.size());
-
-			List<AssetTag> siteGroupAssetTags =
-				AssetTagFinderUtil.filterFindByG_C_N(
-					_scopeGroup.getParentGroupId(), classNameId, assetTagName,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			Assert.assertEquals(
-				initialSiteGroupAssetTags.size(), siteGroupAssetTags.size());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
+		Assert.assertEquals(
+			initialSiteGroupAssetTags.size(), siteGroupAssetTags.size());
 	}
 
 	protected void addAssetTag(long groupId, String name) throws Exception {
@@ -243,7 +187,7 @@ public class AssetTagFinderTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		Group scopeGroup = GroupLocalServiceUtil.addGroup(
+		return GroupLocalServiceUtil.addGroup(
 			TestPropsValues.getUserId(), group.getParentGroupId(),
 			Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
@@ -252,8 +196,6 @@ public class AssetTagFinderTest {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name), false,
 			true, serviceContext);
-
-		return scopeGroup;
 	}
 
 	@DeleteAfterTestRun

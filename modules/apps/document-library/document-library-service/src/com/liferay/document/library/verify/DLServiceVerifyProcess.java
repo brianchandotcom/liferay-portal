@@ -57,6 +57,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
@@ -342,19 +343,15 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 					String title = dlFileEntry.getTitle();
 
-					if (StringUtil.contains(
-							title, StringPool.DOUBLE_BACK_SLASH)) {
-
-						String newTitle = title.replace(
-							StringPool.BACK_SLASH, StringPool.UNDERLINE);
-
+					if (!DLValidatorUtil.isValidName(title)) {
 						try {
-							dlFileEntry = renameTitle(dlFileEntry, newTitle);
+							dlFileEntry = renameTitle(
+								dlFileEntry, DLValidatorUtil.fixName(title));
 						}
 						catch (Exception e) {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
-									"Unable to rename duplicate title for " +
+									"Unable to rename invalid title for " +
 										"file entry " +
 											dlFileEntry.getFileEntryId(),
 									e);

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryLocalService;
 import com.liferay.trash.web.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Activate;
@@ -50,7 +50,7 @@ public class CheckEntryMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		TrashEntryLocalServiceUtil.checkEntries();
+		_trashEntryLocalService.checkEntries();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -63,7 +63,16 @@ public class CheckEntryMessageListener
 	}
 
 	@Reference(unbind = "-")
+	protected void setTrashEntryLocalService(
+		TrashEntryLocalService trashEntryLocalService) {
+
+		_trashEntryLocalService = trashEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
+
+	private TrashEntryLocalService _trashEntryLocalService;
 
 }

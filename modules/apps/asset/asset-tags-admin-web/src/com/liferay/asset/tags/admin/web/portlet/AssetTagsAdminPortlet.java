@@ -27,8 +27,8 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateTagException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
+import com.liferay.portlet.asset.service.AssetTagService;
 
 import java.io.IOException;
 
@@ -86,7 +86,7 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		}
 
 		for (long deleteTagId : deleteTagIds) {
-			AssetTagServiceUtil.deleteTag(deleteTagId);
+			_assetTagService.deleteTag(deleteTagId);
 		}
 	}
 
@@ -105,14 +105,14 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 
 			// Add tag
 
-			AssetTagServiceUtil.addTag(
+			_assetTagService.addTag(
 				serviceContext.getScopeGroupId(), name, serviceContext);
 		}
 		else {
 
 			// Update tag
 
-			AssetTagServiceUtil.updateTag(tagId, name, serviceContext);
+			_assetTagService.updateTag(tagId, name, serviceContext);
 		}
 	}
 
@@ -124,7 +124,7 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		String targetTagName = ParamUtil.getString(
 			actionRequest, "targetTagName");
 
-		AssetTag targetTag = AssetTagLocalServiceUtil.fetchTag(
+		AssetTag targetTag = _assetTagLocalService.fetchTag(
 			groupId, targetTagName);
 
 		if (targetTag == null) {
@@ -139,14 +139,14 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 				continue;
 			}
 
-			AssetTag mergeTag = AssetTagLocalServiceUtil.fetchTag(
+			AssetTag mergeTag = _assetTagLocalService.fetchTag(
 				groupId, mergeTagName);
 
 			if (mergeTag == null) {
 				continue;
 			}
 
-			AssetTagServiceUtil.mergeTags(
+			_assetTagService.mergeTags(
 				mergeTag.getTagId(), targetTag.getTagId());
 		}
 	}
@@ -182,8 +182,23 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAssetTagLocalService(
+		AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setAssetTagsAdminWebUpgrade(
 		AssetTagsAdminWebUpgrade assetTagsAdminWebUpgrade) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setAssetTagService(AssetTagService assetTagService) {
+		_assetTagService = assetTagService;
+	}
+
+	private AssetTagLocalService _assetTagLocalService;
+	private AssetTagService _assetTagService;
 
 }

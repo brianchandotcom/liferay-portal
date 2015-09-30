@@ -44,11 +44,11 @@ import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.CompanyServiceUtil;
+import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.List;
@@ -57,6 +57,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -137,6 +138,16 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setCompanyService(CompanyService companyService) {
+		_companyService = companyService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
 	protected void updateCompany(ActionRequest actionRequest) throws Exception {
 		long companyId = PortalUtil.getCompanyId(actionRequest);
 
@@ -151,8 +162,7 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		if (fileEntryId > 0) {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				fileEntryId);
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
@@ -177,7 +187,7 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
-		CompanyServiceUtil.updateCompany(
+		_companyService.updateCompany(
 			companyId, virtualHostname, mx, homeURL, !deleteLogo, logoBytes,
 			name, legalName, legalId, legalType, sicCode, tickerSymbol,
 			industry, type, size, languageId, timeZoneId, addresses,
@@ -291,5 +301,8 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, "socialInteractionsInvalid");
 		}
 	}
+
+	private CompanyService _companyService;
+	private DLAppLocalService _dlAppLocalService;
 
 }

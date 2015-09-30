@@ -381,34 +381,35 @@ public class FileEntryStagedModelDataHandler
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			if (existingFileEntry == null) {
-				String fileEntryTitle = fileEntry.getTitle();
-
-				FileEntry existingTitleFileEntry = FileEntryUtil.fetchByR_F_T(
-					portletDataContext.getScopeGroupId(), folderId,
-					fileEntryTitle);
-
-				if (existingTitleFileEntry == null) {
-					existingTitleFileEntry = FileEntryUtil.fetchByR_F_FN(
-						portletDataContext.getScopeGroupId(), folderId,
-						fileEntry.getFileName());
-				}
-
-				if ((existingTitleFileEntry != null) &&
+				if (portletDataContext.isDataStrategyMirrorWithOverwriting() &&
 					(fileEntry.getGroupId() ==
-						portletDataContext.getSourceGroupId()) &&
-					portletDataContext.isDataStrategyMirrorWithOverwriting()) {
+						portletDataContext.getSourceGroupId())) {
 
-					DLAppLocalServiceUtil.deleteFileEntry(
-						existingTitleFileEntry.getFileEntryId());
+					FileEntry existingTitleFileEntry =
+						FileEntryUtil.fetchByR_F_T(
+							portletDataContext.getScopeGroupId(), folderId,
+							fileEntry.getTitle());
+
+					if (existingTitleFileEntry == null) {
+						existingTitleFileEntry = FileEntryUtil.fetchByR_F_FN(
+							portletDataContext.getScopeGroupId(), folderId,
+							fileEntry.getFileName());
+					}
+
+					if (existingTitleFileEntry != null) {
+						DLAppLocalServiceUtil.deleteFileEntry(
+							existingTitleFileEntry.getFileEntryId());
+					}
 				}
 
 				serviceContext.setAttribute(
 					"fileVersionUuid", fileVersion.getUuid());
 				serviceContext.setUuid(fileEntry.getUuid());
 
-				fileEntryTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
+				String fileEntryTitle =
+					DLFileEntryLocalServiceUtil.getUniqueTitle(
 						portletDataContext.getScopeGroupId(), folderId, -1,
-						fileEntryTitle, fileEntry.getExtension());
+						fileEntry.getTitle(), fileEntry.getExtension());
 
 				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 					userId, portletDataContext.getScopeGroupId(), folderId,

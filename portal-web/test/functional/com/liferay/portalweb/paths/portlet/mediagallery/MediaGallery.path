@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ENTRY_EDIT_ICON</td>
-	<td>//span[contains(.,'Edit')]/a/i</td>
+	<td>//span[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

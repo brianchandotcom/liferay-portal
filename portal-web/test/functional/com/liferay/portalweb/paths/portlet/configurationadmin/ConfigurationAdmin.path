@@ -21,7 +21,7 @@
 <!--XSL_CONTENT_CONFIGURATION-->
 <tr>
 	<td>XSL_CONTENT_CONFIGURATION_VALID_URL_PREFIXES_FIELD</td>
-	<td>//div[contains(.,'Valid url prefixes')]/input</td>
+	<td>//input[contains(@name,'valid.url.prefixes')]</td>
 	<td></td>
 </tr>
 

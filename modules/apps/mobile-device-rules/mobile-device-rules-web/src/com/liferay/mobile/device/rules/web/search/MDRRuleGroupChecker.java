@@ -26,9 +26,9 @@ import javax.portlet.PortletResponse;
 /**
  * @author Jorge Ferrer
  */
-public class RuleGroupChecker extends RowChecker {
+public class MDRRuleGroupChecker extends RowChecker {
 
-	public RuleGroupChecker(PortletResponse portletResponse) {
+	public MDRRuleGroupChecker(PortletResponse portletResponse) {
 		super(portletResponse);
 	}
 

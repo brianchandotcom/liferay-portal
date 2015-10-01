@@ -18,7 +18,7 @@ import com.liferay.mobile.device.rules.action.ActionHandlerManagerUtil;
 import com.liferay.mobile.device.rules.internal.MDRRuleGroupInstanceImpl;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
+import com.liferay.mobile.device.rules.rule.MDRRuleGroupProcessorUtil;
 import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"key=servlet.service.events.pre"},
 	service = LifecycleAction.class
 )
-public class MobileDeviceRulesServicePreAction extends Action {
+public class MDRServicePreAction extends Action {
 
 	@Override
 	public void run(HttpServletRequest request, HttpServletResponse response) {
@@ -87,7 +87,7 @@ public class MobileDeviceRulesServicePreAction extends Action {
 		MDRRuleGroupInstance mdrRuleGroupInstance = null;
 
 		try {
-			mdrRuleGroupInstance = RuleGroupProcessorUtil.evaluateRuleGroups(
+			mdrRuleGroupInstance = MDRRuleGroupProcessorUtil.evaluateRuleGroups(
 				themeDisplay);
 
 			if (_log.isDebugEnabled()) {
@@ -134,6 +134,6 @@ public class MobileDeviceRulesServicePreAction extends Action {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MobileDeviceRulesServicePreAction.class);
+		MDRServicePreAction.class);
 
 }

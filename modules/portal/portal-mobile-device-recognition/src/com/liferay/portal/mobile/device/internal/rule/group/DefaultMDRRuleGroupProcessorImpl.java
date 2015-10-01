@@ -17,11 +17,11 @@ package com.liferay.portal.mobile.device.internal.rule.group;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.rule.RuleGroupProcessor;
+import com.liferay.mobile.device.rules.rule.MDRRuleGroupProcessor;
 import com.liferay.mobile.device.rules.rule.RuleHandler;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
-import com.liferay.mobile.device.rules.util.comparator.RuleGroupInstancePriorityComparator;
+import com.liferay.mobile.device.rules.util.comparator.MDRRuleGroupInstancePriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,8 +44,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Edward Han
  */
-@Component(immediate = true, service = RuleGroupProcessor.class)
-public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
+@Component(immediate = true, service = MDRRuleGroupProcessor.class)
+public class DefaultMDRRuleGroupProcessorImpl implements MDRRuleGroupProcessor {
 
 	@Override
 	public MDRRuleGroupInstance evaluateRuleGroups(ThemeDisplay themeDisplay) {
@@ -128,7 +128,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		List<MDRRuleGroupInstance> mdrRuleGroupInstances =
 			_mdrRuleGroupInstanceLocalService.getRuleGroupInstances(
 				className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new RuleGroupInstancePriorityComparator());
+				new MDRRuleGroupInstancePriorityComparator());
 
 		for (MDRRuleGroupInstance mdrRuleGroupInstance :
 				mdrRuleGroupInstances) {
@@ -179,7 +179,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultRuleGroupProcessorImpl.class);
+		DefaultMDRRuleGroupProcessorImpl.class);
 
 	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
 	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;

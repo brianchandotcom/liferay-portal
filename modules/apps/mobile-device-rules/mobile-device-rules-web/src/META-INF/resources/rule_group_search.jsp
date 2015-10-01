@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-RuleGroupSearch searchContainer = (RuleGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
+MDRRuleGroupSearch searchContainer = (MDRRuleGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
 
-RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getDisplayTerms();
+MDRRuleGroupDisplayTerms displayTerms = (MDRRuleGroupDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
 <liferay-ui:search-toggle
@@ -28,6 +28,6 @@ RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getD
 	id="toggle_id_mobile_device_rules_rule_group_search"
 >
 	<aui:fieldset>
-		<aui:input label="name" name="<%= RuleGroupDisplayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+		<aui:input label="name" name="<%= MDRRuleGroupDisplayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

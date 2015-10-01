@@ -26,7 +26,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Edward Han
  */
-public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
+public class MDRRuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-device-families-are-configured";
@@ -38,22 +38,22 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 		headerNames.add("description");
 	}
 
-	public RuleGroupSearch(
+	public MDRRuleGroupSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
-			portletRequest, new RuleGroupDisplayTerms(portletRequest),
-			new RuleGroupSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			portletRequest, new MDRRuleGroupDisplayTerms(portletRequest),
+			new MDRRuleGroupSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
-		RuleGroupDisplayTerms displayTerms =
-			(RuleGroupDisplayTerms)getDisplayTerms();
+		MDRRuleGroupDisplayTerms displayTerms =
+			(MDRRuleGroupDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
-			RuleGroupDisplayTerms.GROUP_ID,
+			MDRRuleGroupDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));
 		iteratorURL.setParameter(
-			RuleGroupDisplayTerms.NAME, displayTerms.getName());
+			MDRRuleGroupDisplayTerms.NAME, displayTerms.getName());
 	}
 
 }

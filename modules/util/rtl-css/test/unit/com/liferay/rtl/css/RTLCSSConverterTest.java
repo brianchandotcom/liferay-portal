@@ -388,10 +388,10 @@ public class RTLCSSConverterTest {
 		Assert.assertNotNull(rtlCssConverter);
 
 		Assert.assertEquals(
-			"p{margin-left:5px}",
+			"p{margin-left: 5px}",
 			rtlCssConverter.process("/* @noflip */ p {margin-left: 5px}"));
 		Assert.assertEquals(
-			"p{margin-left:5px}",
+			"p{margin-left: 5px}",
 			rtlCssConverter.process("/*@noflip*/p {margin-left: 5px}"));
 		Assert.assertEquals(
 			"p{margin-right:5px}",

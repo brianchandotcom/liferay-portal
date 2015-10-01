@@ -269,17 +269,17 @@ public class RTLCSSConverter {
 		StringBuilder sb = new StringBuilder();
 
 		for (ICSSTopLevelRule cssTopLevelRule : cssTopLevelRules) {
-			if (cssTopLevelRule instanceof CSSStyleRule) {
-				processRule((CSSStyleRule)cssTopLevelRule);
-			}
-			else if (cssTopLevelRule instanceof CSSMediaRule) {
+			if (cssTopLevelRule instanceof CSSMediaRule) {
 				CSSMediaRule cssMediaRule = (CSSMediaRule)cssTopLevelRule;
 
 				processRules(cssMediaRule.getAllRules());
 			}
-
-			if (cssTopLevelRule instanceof CSSUnknownRule) {
-				String css = cssTopLevelRule.getAsCSSString(_cssWriterSettings, 1);
+			else if (cssTopLevelRule instanceof CSSStyleRule) {
+				processRule((CSSStyleRule)cssTopLevelRule);
+			}
+			else if (cssTopLevelRule instanceof CSSUnknownRule) {
+				String css = cssTopLevelRule.getAsCSSString(
+					_cssWriterSettings, 1);
 
 				sb.append(css.replace("@noflip ", ""));
 			}

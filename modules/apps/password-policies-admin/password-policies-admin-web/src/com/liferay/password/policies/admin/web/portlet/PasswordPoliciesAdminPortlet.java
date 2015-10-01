@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.OrganizationServiceUtil;
-import com.liferay.portal.service.PasswordPolicyServiceUtil;
+import com.liferay.portal.service.OrganizationService;
+import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.UserService;
 
 import java.io.IOException;
 
@@ -79,7 +79,7 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 		long passwordPolicyId = ParamUtil.getLong(
 			actionRequest, "passwordPolicyId");
 
-		PasswordPolicyServiceUtil.deletePasswordPolicy(passwordPolicyId);
+		_passwordPolicyService.deletePasswordPolicy(passwordPolicyId);
 	}
 
 	public void editPasswordPolicy(
@@ -136,7 +136,7 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 
 			// Add password policy
 
-			PasswordPolicyServiceUtil.addPasswordPolicy(
+			_passwordPolicyService.addPasswordPolicy(
 				name, description, changeable, changeRequired, minAge,
 				checkSyntax, allowDictionaryWords, minAlphanumeric, minLength,
 				minLowerCase, minNumbers, minSymbols, minUpperCase, regex,
@@ -148,7 +148,7 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 
 			// Update password policy
 
-			PasswordPolicyServiceUtil.updatePasswordPolicy(
+			_passwordPolicyService.updatePasswordPolicy(
 				passwordPolicyId, name, description, changeable, changeRequired,
 				minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
 				minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
@@ -175,22 +175,21 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
 
 		if (ArrayUtil.isNotEmpty(addUserIds)) {
-			UserServiceUtil.addPasswordPolicyUsers(
-				passwordPolicyId, addUserIds);
+			_userService.addPasswordPolicyUsers(passwordPolicyId, addUserIds);
 		}
 
 		if (ArrayUtil.isNotEmpty(removeUserIds)) {
-			UserServiceUtil.unsetPasswordPolicyUsers(
+			_userService.unsetPasswordPolicyUsers(
 				passwordPolicyId, removeUserIds);
 		}
 
 		if (ArrayUtil.isNotEmpty(addOrganizationIds)) {
-			OrganizationServiceUtil.addPasswordPolicyOrganizations(
+			_organizationService.addPasswordPolicyOrganizations(
 				passwordPolicyId, addOrganizationIds);
 		}
 
 		if (ArrayUtil.isNotEmpty(removeOrganizationIds)) {
-			OrganizationServiceUtil.unsetPasswordPolicyOrganizations(
+			_organizationService.unsetPasswordPolicyOrganizations(
 				passwordPolicyId, removeOrganizationIds);
 		}
 	}
@@ -236,8 +235,31 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setOrganizationService(
+		OrganizationService organizationService) {
+
+		_organizationService = organizationService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPasswordPoliciesAdminWebUpgrade(
 		PasswordPoliciesAdminWebUpgrade passwordPoliciesAdminWebUpgrade) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setPasswordPolicyService(
+		PasswordPolicyService passwordPolicyService) {
+
+		_passwordPolicyService = passwordPolicyService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
+	}
+
+	private OrganizationService _organizationService;
+	private PasswordPolicyService _passwordPolicyService;
+	private UserService _userService;
 
 }

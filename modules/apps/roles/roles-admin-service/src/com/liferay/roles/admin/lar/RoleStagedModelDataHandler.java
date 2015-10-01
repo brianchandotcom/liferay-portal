@@ -36,12 +36,12 @@ import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.security.permission.PermissionConversionFilter;
 import com.liferay.portal.security.permission.PermissionConverterUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionServiceUtil;
-import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.ResourceBlockLocalService;
+import com.liferay.portal.service.ResourcePermissionLocalService;
+import com.liferay.portal.service.ResourcePermissionService;
+import com.liferay.portal.service.ResourceTypePermissionLocalService;
+import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Mendez Gonzalez
@@ -64,7 +65,7 @@ public class RoleStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(Role role) throws PortalException {
-		RoleLocalServiceUtil.deleteRole(role);
+		_roleLocalService.deleteRole(role);
 	}
 
 	@Override
@@ -72,9 +73,9 @@ public class RoleStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
+		Role role = _roleLocalService.fetchRoleByUuidAndCompanyId(
 			uuid, group.getCompanyId());
 
 		if (role != null) {
@@ -89,7 +90,7 @@ public class RoleStagedModelDataHandler
 		List<Role> roles = new ArrayList<>();
 
 		roles.add(
-			RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(uuid, companyId));
+			_roleLocalService.fetchRoleByUuidAndCompanyId(uuid, companyId));
 
 		return roles;
 	}
@@ -108,7 +109,7 @@ public class RoleStagedModelDataHandler
 		PortletDataContext portletDataContext, Role importedRole) {
 
 		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(
+			_resourcePermissionLocalService.getRoleResourcePermissions(
 				importedRole.getRoleId(),
 				new int[] {
 					ResourceConstants.SCOPE_COMPANY,
@@ -117,12 +118,12 @@ public class RoleStagedModelDataHandler
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+			_resourcePermissionLocalService.deleteResourcePermission(
 				resourcePermission);
 		}
 
 		List<ResourcePermission> groupResourcePermissions =
-			ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(
+			_resourcePermissionLocalService.getRoleResourcePermissions(
 				importedRole.getRoleId(),
 				new int[] {ResourceConstants.SCOPE_GROUP},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -136,7 +137,7 @@ public class RoleStagedModelDataHandler
 			if ((groupId == portletDataContext.getCompanyGroupId()) ||
 				(groupId == portletDataContext.getUserPersonalSiteGroupId())) {
 
-				ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+				_resourcePermissionLocalService.deleteResourcePermission(
 					groupResourcePermission);
 			}
 		}
@@ -147,7 +148,7 @@ public class RoleStagedModelDataHandler
 		for (ResourceTypePermission resourceTypePermission :
 				resourceTypePermissions) {
 
-			ResourceTypePermissionLocalServiceUtil.deleteResourceTypePermission(
+			_resourceTypePermissionLocalService.deleteResourceTypePermission(
 				resourceTypePermission);
 		}
 	}
@@ -184,11 +185,11 @@ public class RoleStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			role);
 
-		Role existingRole = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
+		Role existingRole = _roleLocalService.fetchRoleByUuidAndCompanyId(
 			role.getUuid(), portletDataContext.getCompanyId());
 
 		if (existingRole == null) {
-			existingRole = RoleLocalServiceUtil.fetchRole(
+			existingRole = _roleLocalService.fetchRole(
 				portletDataContext.getCompanyId(), role.getName());
 		}
 
@@ -197,13 +198,13 @@ public class RoleStagedModelDataHandler
 		if (existingRole == null) {
 			serviceContext.setUuid(role.getUuid());
 
-			importedRole = RoleLocalServiceUtil.addRole(
+			importedRole = _roleLocalService.addRole(
 				userId, null, 0, role.getName(), role.getTitleMap(),
 				role.getDescriptionMap(), role.getType(), role.getSubtype(),
 				serviceContext);
 		}
 		else {
-			importedRole = RoleLocalServiceUtil.updateRole(
+			importedRole = _roleLocalService.updateRole(
 				existingRole.getRoleId(), role.getName(), role.getTitleMap(),
 				role.getDescriptionMap(), role.getSubtype(), serviceContext);
 
@@ -219,7 +220,7 @@ public class RoleStagedModelDataHandler
 
 		for (Permission permission : permissions) {
 			try {
-				if (ResourceBlockLocalServiceUtil.isSupported(
+				if (_resourceBlockLocalService.isSupported(
 						permission.getName())) {
 
 					importResourceBlock(
@@ -245,7 +246,7 @@ public class RoleStagedModelDataHandler
 		PortletDataContext portletDataContext, Role importedRole) {
 
 		DynamicQuery dynamicQuery =
-			ResourceTypePermissionLocalServiceUtil.dynamicQuery();
+			_resourceTypePermissionLocalService.dynamicQuery();
 
 		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
 
@@ -273,8 +274,7 @@ public class RoleStagedModelDataHandler
 
 		dynamicQuery.add(roleIdProperty.eq(importedRole.getRoleId()));
 
-		return ResourceTypePermissionLocalServiceUtil.dynamicQuery(
-			dynamicQuery);
+		return _resourceTypePermissionLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	protected void importResourceBlock(
@@ -285,7 +285,7 @@ public class RoleStagedModelDataHandler
 		int scope = permission.getScope();
 
 		if (scope == ResourceConstants.SCOPE_COMPANY) {
-			ResourceBlockLocalServiceUtil.addCompanyScopePermission(
+			_resourceBlockLocalService.addCompanyScopePermission(
 				portletDataContext.getCompanyId(), permission.getName(),
 				importedRole.getRoleId(), permission.getActionId());
 		}
@@ -300,13 +300,13 @@ public class RoleStagedModelDataHandler
 				groupId = portletDataContext.getUserPersonalSiteGroupId();
 			}
 
-			ResourceBlockLocalServiceUtil.addGroupScopePermission(
+			_resourceBlockLocalService.addGroupScopePermission(
 				portletDataContext.getCompanyId(), groupId,
 				permission.getName(), importedRole.getRoleId(),
 				permission.getActionId());
 		}
 		else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-			ResourceBlockLocalServiceUtil.addGroupScopePermission(
+			_resourceBlockLocalService.addGroupScopePermission(
 				portletDataContext.getCompanyId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, permission.getName(),
 				importedRole.getRoleId(), permission.getActionId());
@@ -326,7 +326,7 @@ public class RoleStagedModelDataHandler
 		int scope = permission.getScope();
 
 		if (scope == ResourceConstants.SCOPE_COMPANY) {
-			ResourcePermissionServiceUtil.addResourcePermission(
+			_resourcePermissionService.addResourcePermission(
 				portletDataContext.getCompanyGroupId(),
 				portletDataContext.getCompanyId(), permission.getName(), scope,
 				String.valueOf(portletDataContext.getCompanyId()),
@@ -343,14 +343,14 @@ public class RoleStagedModelDataHandler
 				groupId = portletDataContext.getUserPersonalSiteGroupId();
 			}
 
-			ResourcePermissionServiceUtil.addResourcePermission(
+			_resourcePermissionService.addResourcePermission(
 				groupId, portletDataContext.getCompanyId(),
 				permission.getName(), ResourceConstants.SCOPE_GROUP,
 				String.valueOf(groupId), importedRole.getRoleId(),
 				permission.getActionId());
 		}
 		else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-			ResourcePermissionServiceUtil.addResourcePermission(
+			_resourcePermissionService.addResourcePermission(
 				GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				portletDataContext.getCompanyId(), permission.getName(),
 				ResourceConstants.SCOPE_GROUP_TEMPLATE,
@@ -364,10 +364,56 @@ public class RoleStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+
+		_resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionService(
+		ResourcePermissionService resourcePermissionService) {
+
+		_resourcePermissionService = resourcePermissionService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceTypePermissionLocalService(
+		ResourceTypePermissionLocalService resourceTypePermissionLocalService) {
+
+		_resourceTypePermissionLocalService =
+			resourceTypePermissionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RoleStagedModelDataHandler.class);
 
+	private GroupLocalService _groupLocalService;
 	private final PermissionConversionFilter _permissionConversionFilter =
 		new ImportExportPermissionConversionFilter();
+	private ResourceBlockLocalService _resourceBlockLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private ResourcePermissionService _resourcePermissionService;
+	private ResourceTypePermissionLocalService
+		_resourceTypePermissionLocalService;
+	private RoleLocalService _roleLocalService;
 
 }

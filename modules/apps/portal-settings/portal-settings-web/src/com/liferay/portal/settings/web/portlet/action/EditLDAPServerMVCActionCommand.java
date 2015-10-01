@@ -14,7 +14,7 @@
 
 package com.liferay.portal.settings.web.portlet.action;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.counter.service.CounterLocalService;
 import com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException;
 import com.liferay.portal.kernel.ldap.LDAPFilterException;
 import com.liferay.portal.kernel.ldap.LDAPServerNameException;
@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
-import com.liferay.portal.service.CompanyServiceUtil;
+import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
@@ -47,6 +47,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -115,7 +116,7 @@ public class EditLDAPServerMVCActionCommand extends BaseMVCActionCommand {
 			defaultKeys.add(key + defaultPostfix);
 		}
 
-		long ldapServerId = CounterLocalServiceUtil.increment();
+		long ldapServerId = _counterLocalService.increment();
 
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
 
@@ -172,7 +173,7 @@ public class EditLDAPServerMVCActionCommand extends BaseMVCActionCommand {
 			keys[i] = _KEYS[i] + postfix;
 		}
 
-		CompanyServiceUtil.removePreferences(themeDisplay.getCompanyId(), keys);
+		_companyService.removePreferences(themeDisplay.getCompanyId(), keys);
 
 		// Update portletPreferences
 
@@ -189,8 +190,20 @@ public class EditLDAPServerMVCActionCommand extends BaseMVCActionCommand {
 
 		properties.put("ldap.server.ids", ldapServerIds);
 
-		CompanyServiceUtil.updatePreferences(
+		_companyService.updatePreferences(
 			themeDisplay.getCompanyId(), properties);
+	}
+
+	@Reference(unbind = "-")
+	protected void setCompanyService(CompanyService companyService) {
+		_companyService = companyService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCounterLocalService(
+		CounterLocalService counterLocalService) {
+
+		_counterLocalService = counterLocalService;
 	}
 
 	protected void updateLDAPServer(ActionRequest actionRequest)
@@ -213,7 +226,7 @@ public class EditLDAPServerMVCActionCommand extends BaseMVCActionCommand {
 			properties = addLDAPServer(themeDisplay.getCompanyId(), properties);
 		}
 
-		CompanyServiceUtil.updatePreferences(
+		_companyService.updatePreferences(
 			themeDisplay.getCompanyId(), properties);
 	}
 
@@ -272,5 +285,8 @@ public class EditLDAPServerMVCActionCommand extends BaseMVCActionCommand {
 		PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES,
 		PropsKeys.LDAP_USER_MAPPINGS, PropsKeys.LDAP_USERS_DN
 	};
+
+	private CompanyService _companyService;
+	private CounterLocalService _counterLocalService;
 
 }

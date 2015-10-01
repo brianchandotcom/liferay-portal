@@ -45,15 +45,15 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.security.permission.comparator.ActionComparator;
-import com.liferay.portal.service.GroupServiceUtil;
-import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
-import com.liferay.portal.service.ResourceBlockServiceUtil;
-import com.liferay.portal.service.ResourcePermissionServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.RoleServiceUtil;
+import com.liferay.portal.service.GroupService;
+import com.liferay.portal.service.ResourceBlockLocalService;
+import com.liferay.portal.service.ResourceBlockService;
+import com.liferay.portal.service.ResourcePermissionService;
+import com.liferay.portal.service.RoleLocalService;
+import com.liferay.portal.service.RoleService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -123,7 +123,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		String primKey = ParamUtil.getString(actionRequest, "primKey");
 		String actionId = ParamUtil.getString(actionRequest, "actionId");
 
-		Role role = RoleLocalServiceUtil.getRole(roleId);
+		Role role = _roleLocalService.getRole(roleId);
 
 		String roleName = role.getName();
 
@@ -137,20 +137,20 @@ public class RolesAdminPortlet extends MVCPortlet {
 			throw new RolePermissionsException(roleName);
 		}
 
-		if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+		if (_resourceBlockLocalService.isSupported(name)) {
 			if (scope == ResourceConstants.SCOPE_GROUP) {
-				ResourceBlockServiceUtil.removeGroupScopePermission(
+				_resourceBlockService.removeGroupScopePermission(
 					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
 					GetterUtil.getLong(primKey), name, roleId, actionId);
 			}
 			else {
-				ResourceBlockServiceUtil.removeCompanyScopePermission(
+				_resourceBlockService.removeCompanyScopePermission(
 					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
 					name, roleId, actionId);
 			}
 		}
 		else {
-			ResourcePermissionServiceUtil.removeResourcePermission(
+			_resourcePermissionService.removeResourcePermission(
 				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
 				name, scope, primKey, roleId, actionId);
 		}
@@ -173,7 +173,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
-		RoleServiceUtil.deleteRole(roleId);
+		_roleService.deleteRole(roleId);
 	}
 
 	public Role editRole(
@@ -197,7 +197,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			// Add role
 
-			return RoleServiceUtil.addRole(
+			return _roleService.addRole(
 				null, 0, name, titleMap, descriptionMap, type, subtype,
 				serviceContext);
 		}
@@ -205,7 +205,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			// Update role
 
-			return RoleServiceUtil.updateRole(
+			return _roleService.updateRole(
 				roleId, name, titleMap, descriptionMap, subtype,
 				serviceContext);
 		}
@@ -216,7 +216,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
-		Role role = RoleLocalServiceUtil.getRole(roleId);
+		Role role = _roleLocalService.getRole(roleId);
 
 		if (role.getName().equals(RoleConstants.OWNER)) {
 			throw new RoleAssignmentException(role.getName());
@@ -230,8 +230,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (!ArrayUtil.isEmpty(addUserIds) ||
 			!ArrayUtil.isEmpty(removeUserIds)) {
 
-			UserServiceUtil.addRoleUsers(roleId, addUserIds);
-			UserServiceUtil.unsetRoleUsers(roleId, removeUserIds);
+			_userService.addRoleUsers(roleId, addUserIds);
+			_userService.unsetRoleUsers(roleId, removeUserIds);
 		}
 
 		long[] addGroupIds = StringUtil.split(
@@ -242,8 +242,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (!ArrayUtil.isEmpty(addGroupIds) ||
 			!ArrayUtil.isEmpty(removeGroupIds)) {
 
-			GroupServiceUtil.addRoleGroups(roleId, addGroupIds);
-			GroupServiceUtil.unsetRoleGroups(roleId, removeGroupIds);
+			_groupService.addRoleGroups(roleId, addGroupIds);
+			_groupService.unsetRoleGroups(roleId, removeGroupIds);
 		}
 	}
 
@@ -266,7 +266,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
-		Role role = RoleLocalServiceUtil.getRole(roleId);
+		Role role = _roleLocalService.getRole(roleId);
 
 		String roleName = role.getName();
 
@@ -355,7 +355,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 					}
 				}
 
-				if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
+				if (_resourceBlockLocalService.isSupported(selResource)) {
 					updateActions_Blocks(
 						role, themeDisplay.getScopeGroupId(), selResource,
 						actionId, selected, scope, groupIds);
@@ -471,6 +471,11 @@ public class RolesAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupService(GroupService groupService) {
+		_groupService = groupService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
 		_panelAppRegistry = panelAppRegistry;
 	}
@@ -483,8 +488,44 @@ public class RolesAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+
+		_resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceBlockService(
+		ResourceBlockService resourceBlockService) {
+
+		_resourceBlockService = resourceBlockService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionService(
+		ResourcePermissionService resourcePermissionService) {
+
+		_resourcePermissionService = resourcePermissionService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setRolesAdminWebUpgrade(
 		RolesAdminWebUpgrade rolesAdminWebUpgrade) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleService(RoleService roleService) {
+		_roleService = roleService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
 	}
 
 	protected void updateAction(
@@ -497,24 +538,24 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		if (selected) {
 			if (scope == ResourceConstants.SCOPE_COMPANY) {
-				ResourcePermissionServiceUtil.addResourcePermission(
+				_resourcePermissionService.addResourcePermission(
 					groupId, companyId, selResource, scope,
 					String.valueOf(role.getCompanyId()), roleId, actionId);
 			}
 			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-				ResourcePermissionServiceUtil.addResourcePermission(
+				_resourcePermissionService.addResourcePermission(
 					groupId, companyId, selResource,
 					ResourceConstants.SCOPE_GROUP_TEMPLATE,
 					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 					roleId, actionId);
 			}
 			else if (scope == ResourceConstants.SCOPE_GROUP) {
-				ResourcePermissionServiceUtil.removeResourcePermissions(
+				_resourcePermissionService.removeResourcePermissions(
 					groupId, companyId, selResource,
 					ResourceConstants.SCOPE_GROUP, roleId, actionId);
 
 				for (String curGroupId : groupIds) {
-					ResourcePermissionServiceUtil.addResourcePermission(
+					_resourcePermissionService.addResourcePermission(
 						groupId, companyId, selResource,
 						ResourceConstants.SCOPE_GROUP, curGroupId, roleId,
 						actionId);
@@ -525,15 +566,15 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			// Remove company, group template, and group permissions
 
-			ResourcePermissionServiceUtil.removeResourcePermissions(
+			_resourcePermissionService.removeResourcePermissions(
 				groupId, companyId, selResource,
 				ResourceConstants.SCOPE_COMPANY, roleId, actionId);
 
-			ResourcePermissionServiceUtil.removeResourcePermissions(
+			_resourcePermissionService.removeResourcePermissions(
 				groupId, companyId, selResource,
 				ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId, actionId);
 
-			ResourcePermissionServiceUtil.removeResourcePermissions(
+			_resourcePermissionService.removeResourcePermissions(
 				groupId, companyId, selResource, ResourceConstants.SCOPE_GROUP,
 				roleId, actionId);
 		}
@@ -549,28 +590,28 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		if (selected) {
 			if (scope == ResourceConstants.SCOPE_GROUP) {
-				ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+				_resourceBlockService.removeAllGroupScopePermissions(
 					scopeGroupId, companyId, selResource, roleId, actionId);
-				ResourceBlockServiceUtil.removeCompanyScopePermission(
+				_resourceBlockService.removeCompanyScopePermission(
 					scopeGroupId, companyId, selResource, roleId, actionId);
 
 				for (String groupId : groupIds) {
-					ResourceBlockServiceUtil.addGroupScopePermission(
+					_resourceBlockService.addGroupScopePermission(
 						scopeGroupId, companyId, GetterUtil.getLong(groupId),
 						selResource, roleId, actionId);
 				}
 			}
 			else {
-				ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+				_resourceBlockService.removeAllGroupScopePermissions(
 					scopeGroupId, companyId, selResource, roleId, actionId);
-				ResourceBlockServiceUtil.addCompanyScopePermission(
+				_resourceBlockService.addCompanyScopePermission(
 					scopeGroupId, companyId, selResource, roleId, actionId);
 			}
 		}
 		else {
-			ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+			_resourceBlockService.removeAllGroupScopePermissions(
 				scopeGroupId, companyId, selResource, roleId, actionId);
-			ResourceBlockServiceUtil.removeCompanyScopePermission(
+			_resourceBlockService.removeCompanyScopePermission(
 				scopeGroupId, companyId, selResource, roleId, actionId);
 		}
 	}
@@ -627,7 +668,14 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	private GroupService _groupService;
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
+	private ResourceBlockLocalService _resourceBlockLocalService;
+	private ResourceBlockService _resourceBlockService;
+	private ResourcePermissionService _resourcePermissionService;
+	private RoleLocalService _roleLocalService;
+	private RoleService _roleService;
+	private UserService _userService;
 
 }

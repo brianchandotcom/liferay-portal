@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalService;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
 
@@ -41,6 +41,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Hugo Huijser
@@ -135,7 +136,7 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(classPK);
+		UserGroup userGroup = _userGroupLocalService.getUserGroup(classPK);
 
 		doReindex(userGroup);
 	}
@@ -158,7 +159,7 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 
 	protected void reindexUserGroups(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
-			UserGroupLocalServiceUtil.getActionableDynamicQuery();
+			_userGroupLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -189,7 +190,16 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserGroupLocalService(
+		UserGroupLocalService userGroupLocalService) {
+
+		_userGroupLocalService = userGroupLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupIndexer.class);
+
+	private UserGroupLocalService _userGroupLocalService;
 
 }

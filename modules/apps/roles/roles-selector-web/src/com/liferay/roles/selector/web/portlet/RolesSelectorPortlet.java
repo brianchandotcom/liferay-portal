@@ -17,14 +17,15 @@ package com.liferay.roles.selector.web.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.UserGroupGroupRoleServiceUtil;
-import com.liferay.portal.service.UserGroupRoleServiceUtil;
+import com.liferay.portal.service.UserGroupGroupRoleService;
+import com.liferay.portal.service.UserGroupRoleService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -61,9 +62,9 @@ public class RolesSelectorPortlet extends MVCPortlet {
 		long[] removeUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
-		UserGroupGroupRoleServiceUtil.addUserGroupGroupRoles(
+		_userGroupGroupRoleService.addUserGroupGroupRoles(
 			addUserGroupIds, groupId, roleId);
-		UserGroupGroupRoleServiceUtil.deleteUserGroupGroupRoles(
+		_userGroupGroupRoleService.deleteUserGroupGroupRoles(
 			removeUserGroupIds, groupId, roleId);
 	}
 
@@ -79,9 +80,26 @@ public class RolesSelectorPortlet extends MVCPortlet {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		UserGroupRoleServiceUtil.addUserGroupRoles(addUserIds, groupId, roleId);
-		UserGroupRoleServiceUtil.deleteUserGroupRoles(
+		_userGroupRoleService.addUserGroupRoles(addUserIds, groupId, roleId);
+		_userGroupRoleService.deleteUserGroupRoles(
 			removeUserIds, groupId, roleId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupGroupRoleService(
+		UserGroupGroupRoleService userGroupGroupRoleService) {
+
+		_userGroupGroupRoleService = userGroupGroupRoleService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupRoleService(
+		UserGroupRoleService userGroupRoleService) {
+
+		_userGroupRoleService = userGroupRoleService;
+	}
+
+	private UserGroupGroupRoleService _userGroupGroupRoleService;
+	private UserGroupRoleService _userGroupRoleService;
 
 }

@@ -37,7 +37,7 @@ import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoColumnService;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoPresetUtil;
 
@@ -126,7 +126,7 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		long columnId = ParamUtil.getLong(actionRequest, "columnId");
 
-		ExpandoColumnServiceUtil.deleteColumn(columnId);
+		_expandoColumnService.deleteColumn(columnId);
 	}
 
 	public void updateExpando(
@@ -342,6 +342,13 @@ public class ExpandoPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setExpandoColumnService(
+		ExpandoColumnService expandoColumnService) {
+
+		_expandoColumnService = expandoColumnService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setExpandoWebUpgrade(ExpandoWebUpgrade expandoWebUpgrade) {
 	}
 
@@ -376,5 +383,7 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		expandoBridge.setAttributeProperties(name, properties);
 	}
+
+	private ExpandoColumnService _expandoColumnService;
 
 }

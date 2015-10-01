@@ -33,8 +33,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.PortletItemLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.PortletItemLocalService;
 import com.liferay.portal.settings.util.ConfigurationPidUtil;
 
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		List<ArchivedSettings> archivedSettingsList = new ArrayList<>();
 
 		List<PortletItem> portletItems =
-			PortletItemLocalServiceUtil.getPortletItems(
+			_portletItemLocalService.getPortletItems(
 				groupId, portletId,
 				com.liferay.portal.model.PortletPreferences.class.getName());
 
@@ -156,7 +156,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	protected long getCompanyId(long groupId) throws SettingsException {
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			return group.getCompanyId();
 		}
@@ -172,13 +172,13 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		PortletItem portletItem = null;
 
 		try {
-			portletItem = PortletItemLocalServiceUtil.getPortletItem(
+			portletItem = _portletItemLocalService.getPortletItem(
 				groupId, name, portletId, PortletPreferences.class.getName());
 		}
 		catch (NoSuchPortletItemException nspie) {
 			long userId = PrincipalThreadLocal.getUserId();
 
-			portletItem = PortletItemLocalServiceUtil.updatePortletItem(
+			portletItem = _portletItemLocalService.updatePortletItem(
 				userId, groupId, name, portletId,
 				PortletPreferences.class.getName());
 		}
@@ -239,6 +239,18 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletItemLocalService(
+		PortletItemLocalService portletItemLocalService) {
+
+		_portletItemLocalService = portletItemLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSettingsLocatorHelper(
 		SettingsLocatorHelper settingsLocatorHelper) {
 
@@ -271,6 +283,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
 		new ConcurrentHashMap<>();
+	private GroupLocalService _groupLocalService;
+	private PortletItemLocalService _portletItemLocalService;
 	private final Map<String, SettingsDescriptor> _settingsDescriptors =
 		new ConcurrentHashMap<>();
 	private SettingsLocatorHelper _settingsLocatorHelper;

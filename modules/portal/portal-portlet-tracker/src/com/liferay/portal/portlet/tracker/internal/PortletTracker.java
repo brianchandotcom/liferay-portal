@@ -298,11 +298,16 @@ public class PortletTracker
 		collectJxPortletFeatures(serviceReference, portletModel);
 		collectLiferayFeatures(serviceReference, portletModel);
 
-		PortletContextBag portletContextBag = new PortletContextBag(
+		PortletContextBag portletContextBag = PortletContextBagPool.get(
 			bundlePortletApp.getServletContextName());
 
-		PortletContextBagPool.put(
-			bundlePortletApp.getServletContextName(), portletContextBag);
+		if (portletContextBag == null) {
+			portletContextBag = new PortletContextBag(
+				bundlePortletApp.getServletContextName());
+
+			PortletContextBagPool.put(
+				bundlePortletApp.getServletContextName(), portletContextBag);
+		}
 
 		PortletBagFactory portletBagFactory = new BundlePortletBagFactory(
 			portlet);

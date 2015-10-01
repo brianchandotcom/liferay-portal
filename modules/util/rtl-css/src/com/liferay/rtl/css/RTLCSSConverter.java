@@ -20,12 +20,13 @@ import com.helger.css.decl.CSSDeclaration;
 import com.helger.css.decl.CSSExpression;
 import com.helger.css.decl.CSSExpressionMemberTermSimple;
 import com.helger.css.decl.CSSExpressionMemberTermURI;
+import com.helger.css.decl.CSSMediaRule;
 import com.helger.css.decl.CSSStyleRule;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.ICSSExpressionMember;
 import com.helger.css.decl.ICSSTopLevelRule;
-import com.helger.css.reader.errorhandler.DoNothingCSSParseErrorHandler;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.reader.errorhandler.DoNothingCSSParseErrorHandler;
 import com.helger.css.writer.CSSWriter;
 import com.helger.css.writer.CSSWriterSettings;
 
@@ -55,7 +56,6 @@ public class RTLCSSConverter {
 
 		_writer.setWriteHeaderText(Boolean.FALSE);
 		_writer.setWriteFooterText(Boolean.FALSE);
-
 	}
 
 	public String process(String css) {
@@ -63,51 +63,16 @@ public class RTLCSSConverter {
 			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30,
 			new DoNothingCSSParseErrorHandler());
 
-		List<ICSSTopLevelRule> rules =
-			cascadingStyleSheet.getAllRules();
+		List<ICSSTopLevelRule> rules = cascadingStyleSheet.getAllRules();
 
-		for (ICSSTopLevelRule rule : rules) {
-			if (rule instanceof CSSStyleRule) {
-				CSSStyleRule cssStyleRule = (CSSStyleRule)rule;
-
-				for (String property : _replacementStyles.keySet()) {
-					replaceStyle(cssStyleRule, property);
-				}
-
-				for (CSSDeclaration cssDeclaration :
-					cssStyleRule.getAllDeclarations()) {
-
-					String property = cssDeclaration.getProperty();
-
-					String strippedProperty = stripProperty(property);
-
-					if (_shorthandStyles.contains(strippedProperty)) {
-						convertShorthand(cssStyleRule, property);
-					}
-					else if (_shorthandRadiusStyles.contains(strippedProperty)) {
-						convertShorthandRadius(cssStyleRule, property);
-					}
-					else if (_reverseStyles.contains(strippedProperty)) {
-						reverseStyle(cssStyleRule, property);
-					}
-					else if (_reverseImageStyles.contains(strippedProperty)) {
-						reverseImage(cssStyleRule, property);
-					}
-					else if (_backgroundPositionStyles.contains(strippedProperty)) {
-						convertBGPosition(cssStyleRule, property);
-					}
-				}
-			}
-		}
+		processRules(rules);
 
 		return _writer.getCSSAsString(cascadingStyleSheet);
 	}
 
-	protected void convertBGPosition(
-		CSSStyleRule cssStyleRule, String property) {
-
+	private void convertBGPosition(CSSStyleRule styleRule, String property) {
 		CSSDeclaration cssDeclaration =
-			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
+			styleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
 		if (cssDeclaration == null) {
 			return;
@@ -163,11 +128,9 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void convertShorthand(
-		CSSStyleRule cssStyleRule, String property) {
-
+	private void convertShorthand(CSSStyleRule styleRule, String property) {
 		CSSDeclaration cssDeclaration =
-			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
+			styleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
 		if (cssDeclaration == null) {
 			return;
@@ -194,11 +157,11 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void convertShorthandRadius(
-		CSSStyleRule cssStyleRule, String property) {
+	private void convertShorthandRadius(
+		CSSStyleRule styleRule, String property) {
 
 		CSSDeclaration cssDeclaration =
-			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
+			styleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
 		if (cssDeclaration == null) {
 			return;
@@ -262,13 +225,56 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void replaceStyle(CSSStyleRule cssStyleRule, String property) {
-		replaceStyle(cssStyleRule, property, false);
-		replaceStyle(cssStyleRule, property, true);
+	private void processRule(CSSStyleRule styleRule) {
+		for (String property : _replacementStyles.keySet()) {
+			replaceStyle(styleRule, property);
+		}
+
+		for (CSSDeclaration cssDeclaration : styleRule.getAllDeclarations()) {
+			String property = cssDeclaration.getProperty();
+
+			String strippedProperty = stripProperty(property);
+
+			if (_shorthandStyles.contains(strippedProperty)) {
+				convertShorthand(styleRule, property);
+			}
+			else if (_shorthandRadiusStyles.contains(strippedProperty)) {
+				convertShorthandRadius(styleRule, property);
+			}
+			else if (_reverseStyles.contains(strippedProperty)) {
+				reverseStyle(styleRule, property);
+			}
+			else if (_reverseImageStyles.contains(strippedProperty)) {
+				reverseImage(styleRule, property);
+			}
+			else if (_backgroundPositionStyles.contains(strippedProperty)) {
+				convertBGPosition(styleRule, property);
+			}
+		}
 	}
 
-	protected void replaceStyle(
-		CSSStyleRule cssStyleRule, String property, boolean addAsterisk) {
+	private void processRules(List<ICSSTopLevelRule> rules) {
+		for (ICSSTopLevelRule rule : rules) {
+			if (rule instanceof CSSStyleRule) {
+				CSSStyleRule styleRule = (CSSStyleRule)rule;
+
+				processRule(styleRule);
+			}
+			else if (rule instanceof CSSMediaRule) {
+				CSSMediaRule mediaRule = (CSSMediaRule)rule;
+
+				processRules(mediaRule.getAllRules());
+			}
+		}
+	}
+
+	private void replaceStyle(CSSStyleRule styleRule, String property) {
+		replaceStyle(styleRule, property, false);
+		replaceStyle(styleRule, property, true);
+	}
+
+	private void replaceStyle(
+		CSSStyleRule styleRule, String property, boolean addAsterisk) {
 
 		String asterisk = "";
 
@@ -279,11 +285,11 @@ public class RTLCSSConverter {
 		String replacementProperty = _replacementStyles.get(property);
 
 		CSSDeclaration replacementCSSDeclaration =
-			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(
+			styleRule.getDeclarationOfPropertyNameCaseInsensitive(
 				asterisk + replacementProperty);
 
 		CSSDeclaration cssDeclaration =
-			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(
+			styleRule.getDeclarationOfPropertyNameCaseInsensitive(
 				asterisk + property);
 
 		if (cssDeclaration != null) {
@@ -295,9 +301,9 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void reverseImage(CSSStyleRule cssStyleRule, String property) {
+	private void reverseImage(CSSStyleRule styleRule, String property) {
 		CSSDeclaration cssDeclaration =
-			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
+			styleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
 		if (cssDeclaration == null) {
 			return;
@@ -329,9 +335,9 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void reverseStyle(CSSStyleRule cssStyleRule, String property) {
+	private void reverseStyle(CSSStyleRule styleRule, String property) {
 		CSSDeclaration cssDeclaration =
-			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
+			styleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
 		if (cssDeclaration == null) {
 			return;
@@ -366,7 +372,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected String stripProperty(String property) {
+	private String stripProperty(String property) {
 		return property.replaceAll("\\**\\b", "");
 	}
 

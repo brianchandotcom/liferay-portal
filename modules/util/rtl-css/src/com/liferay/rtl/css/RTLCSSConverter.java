@@ -346,9 +346,9 @@ public class RTLCSSConverter {
 
 				String uri = cssExpressionMemberTermURI.getURIString();
 
-				int pos = uri.lastIndexOf("/") + 1;
+				int index = uri.lastIndexOf("/") + 1;
 
-				String fileName = uri.substring(pos);
+				String fileName = uri.substring(index);
 
 				if (fileName.contains("right")) {
 					fileName = fileName.replaceAll("right", "left");
@@ -358,7 +358,7 @@ public class RTLCSSConverter {
 				}
 
 				cssExpressionMemberTermURI.setURIString(
-					uri.substring(0, pos) + fileName);
+					uri.substring(0, index) + fileName);
 			}
 		}
 	}

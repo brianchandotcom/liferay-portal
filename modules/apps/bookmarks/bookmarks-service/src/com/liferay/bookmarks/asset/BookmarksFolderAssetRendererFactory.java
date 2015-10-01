@@ -57,6 +57,7 @@ public class BookmarksFolderAssetRendererFactory
 		setCategorizable(false);
 		setClassName(BookmarksFolder.class.getName());
 		setPortletId(BookmarksPortletKeys.BOOKMARKS);
+		setSearchable(true);
 	}
 
 	@Override

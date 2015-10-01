@@ -64,6 +64,7 @@ public class BlogsEntryAssetRendererFactory
 		setClassName(BlogsEntry.class.getName());
 		setLinkable(true);
 		setPortletId(BlogsPortletKeys.BLOGS);
+		setSearchable(true);
 	}
 
 	@Override

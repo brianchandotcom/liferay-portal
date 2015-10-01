@@ -58,6 +58,7 @@ public class DDLRecordAssetRendererFactory
 		setCategorizable(false);
 		setClassName(DDLRecord.class.getName());
 		setPortletId(DDLPortletKeys.DYNAMIC_DATA_LISTS);
+		setSearchable(true);
 		setSelectable(true);
 	}
 

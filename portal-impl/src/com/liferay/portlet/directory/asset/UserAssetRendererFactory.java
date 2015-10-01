@@ -37,6 +37,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 	public static final String TYPE = "user";
 
 	public UserAssetRendererFactory() {
+		setSearchable(true);
 		setSelectable(false);
 	}
 

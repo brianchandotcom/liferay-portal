@@ -1,6 +1,6 @@
 <definition>
 	<command name="addADTviaPortletPG">
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+		<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
 		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
@@ -68,7 +68,7 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+		<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
 		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />

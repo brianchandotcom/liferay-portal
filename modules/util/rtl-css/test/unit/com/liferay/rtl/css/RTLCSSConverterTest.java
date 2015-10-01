@@ -378,7 +378,7 @@ public class RTLCSSConverterTest {
 		Assert.assertNotNull(rtlCssConverter);
 
 		Assert.assertEquals(
-			"/* some comment*/\n\np {\n  margin-right: 5px;\n}",
+			"p { margin-right:5px; }\n",
 			rtlCssConverter.process(
 				"/* some comment*/\n\np {\n  margin-left: 5px;\n}"));
 	}

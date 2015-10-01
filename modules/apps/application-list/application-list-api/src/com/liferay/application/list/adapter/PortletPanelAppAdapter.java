@@ -86,6 +86,10 @@ public class PortletPanelAppAdapter implements PanelApp {
 		return key;
 	}
 
+	public Portlet getPortlet() {
+		return PortletLocalServiceUtil.getPortletById(getPortletId());
+	}
+
 	@Override
 	public String getPortletId() {
 		return _portletId;
@@ -121,10 +125,6 @@ public class PortletPanelAppAdapter implements PanelApp {
 		catch (Exception e) {
 			throw new PortalException(e);
 		}
-	}
-
-	protected Portlet getPortlet() {
-		return PortletLocalServiceUtil.getPortletById(getPortletId());
 	}
 
 	private final String _portletId;

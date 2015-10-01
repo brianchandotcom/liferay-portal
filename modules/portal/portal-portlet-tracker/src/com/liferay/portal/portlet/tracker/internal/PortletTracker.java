@@ -54,7 +54,6 @@ import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.util.WebKeys;
@@ -525,15 +524,6 @@ public class PortletTracker
 				get(serviceReference, "autopropagated-parameters")));
 
 		portletModel.setAutopropagatedParameters(autopropagatedParameters);
-
-		String controlPanelEntryCategory = GetterUtil.getString(
-			get(serviceReference, "control-panel-entry-category"),
-			portletModel.getControlPanelEntryCategory());
-
-		controlPanelEntryCategory = PortletCategoryUtil.getPortletCategoryKey(
-			controlPanelEntryCategory);
-
-		portletModel.setControlPanelEntryCategory(controlPanelEntryCategory);
 
 		portletModel.setControlPanelEntryWeight(
 			GetterUtil.getDouble(

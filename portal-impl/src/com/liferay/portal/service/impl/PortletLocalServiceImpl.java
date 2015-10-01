@@ -75,7 +75,6 @@ import com.liferay.portal.service.base.PortletLocalServiceBaseImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.servlet.ComboServlet;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
@@ -1483,19 +1482,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletElement.elementText("xml-rpc-method-class"),
 				portletModel.getXmlRpcMethodClass()));
 
-		String controlPanelEntryCategory = GetterUtil.getString(
-			portletElement.elementText("control-panel-entry-category"),
-			portletModel.getControlPanelEntryCategory());
-
-		controlPanelEntryCategory = PortletCategoryUtil.getPortletCategoryKey(
-			controlPanelEntryCategory);
-
-		portletModel.setControlPanelEntryCategory(controlPanelEntryCategory);
-
-		portletModel.setControlPanelEntryWeight(
-			GetterUtil.getDouble(
-				portletElement.elementText("control-panel-entry-weight"),
-				portletModel.getControlPanelEntryWeight()));
 		portletModel.setControlPanelEntryClass(
 			GetterUtil.getString(
 				portletElement.elementText("control-panel-entry-class"),

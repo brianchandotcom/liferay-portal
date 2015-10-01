@@ -21,6 +21,7 @@
 
 		<column name="allowedServiceSignatures" type="String" />
 		<column name="defaultSAPEntry" type="boolean" />
+		<column name="enabled" type="boolean" />
 		<column name="name" type="String" />
 		<column name="title" type="String" localized="true" />
 

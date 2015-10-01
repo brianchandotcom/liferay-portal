@@ -67,6 +67,8 @@ if (sapEntry != null) {
 		</aui:validator>
 	</aui:input>
 
+	<aui:input name="enabled" />
+
 	<aui:input name="title" required="<%= true %>" />
 
 	<aui:input helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />

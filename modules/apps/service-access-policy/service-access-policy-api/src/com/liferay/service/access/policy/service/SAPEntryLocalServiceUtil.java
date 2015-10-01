@@ -56,13 +56,13 @@ public class SAPEntryLocalServiceUtil {
 
 	public static com.liferay.service.access.policy.model.SAPEntry addSAPEntry(
 		long userId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, java.lang.String name,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSAPEntry(userId, allowedServiceSignatures,
-			defaultSAPEntry, name, titleMap, serviceContext);
+			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
 	public static void checkDefaultSAPEntry(long companyId)
@@ -325,13 +325,13 @@ public class SAPEntryLocalServiceUtil {
 
 	public static com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
-		java.lang.String name,
+		boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateSAPEntry(sapEntryId, allowedServiceSignatures, name,
-			titleMap, serviceContext);
+				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,
+			enabled, name, titleMap, serviceContext);
 	}
 
 	public static SAPEntryLocalService getService() {

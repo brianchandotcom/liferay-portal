@@ -52,8 +52,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			href="<%= rowURL %>"
 			name="title"
 			value="<%= sapEntry.getTitle(locale) %>"
-
 		/>
+
+		<liferay-ui:search-container-column-text name="enabled">
+			<c:if test="<%= sapEntry.isEnabled() %>">
+				<liferay-ui:icon cssClass="icon-check" />
+			</c:if>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp
 			align="right"

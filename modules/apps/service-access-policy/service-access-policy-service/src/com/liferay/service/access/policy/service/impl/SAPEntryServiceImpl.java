@@ -39,7 +39,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
 	public SAPEntry addSAPEntry(
-			String allowedServiceSignatures, String name,
+			String allowedServiceSignatures, boolean enabled, String name,
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -48,8 +48,8 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 			SAPActionKeys.ACTION_ADD_SAP_ENTRY);
 
 		return sapEntryLocalService.addSAPEntry(
-			getUserId(), allowedServiceSignatures, false, name, titleMap,
-			serviceContext);
+			getUserId(), allowedServiceSignatures, false, enabled, name,
+			titleMap, serviceContext);
 	}
 
 	@Override
@@ -110,15 +110,16 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
 	public SAPEntry updateSAPEntry(
-			long sapEntryId, String allowedServiceSignatures, String name,
-			Map<Locale, String> titleMap, ServiceContext serviceContext)
+			long sapEntryId, String allowedServiceSignatures, boolean enabled,
+			String name, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SAPEntryPermission.check(
 			getPermissionChecker(), sapEntryId, ActionKeys.UPDATE);
 
 		return sapEntryLocalService.updateSAPEntry(
-			sapEntryId, allowedServiceSignatures, name, titleMap,
+			sapEntryId, allowedServiceSignatures, enabled, name, titleMap,
 			serviceContext);
 	}
 

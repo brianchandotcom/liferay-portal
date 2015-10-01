@@ -231,6 +231,27 @@ public interface SAPEntryModel extends AuditedModel, BaseModel<SAPEntry>,
 	public void setDefaultSAPEntry(boolean defaultSAPEntry);
 
 	/**
+	 * Returns the enabled of this s a p entry.
+	 *
+	 * @return the enabled of this s a p entry
+	 */
+	public boolean getEnabled();
+
+	/**
+	 * Returns <code>true</code> if this s a p entry is enabled.
+	 *
+	 * @return <code>true</code> if this s a p entry is enabled; <code>false</code> otherwise
+	 */
+	public boolean isEnabled();
+
+	/**
+	 * Sets whether this s a p entry is enabled.
+	 *
+	 * @param enabled the enabled of this s a p entry
+	 */
+	public void setEnabled(boolean enabled);
+
+	/**
 	 * Returns the name of this s a p entry.
 	 *
 	 * @return the name of this s a p entry

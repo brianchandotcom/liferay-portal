@@ -55,8 +55,8 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	@Override
 	public SAPEntry addSAPEntry(
 			long userId, String allowedServiceSignatures,
-			boolean defaultSAPEntry, String name, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			boolean defaultSAPEntry, boolean enabled, String name,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Service access policy entry
@@ -80,6 +80,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		sapEntry.setUserName(user.getFullName());
 		sapEntry.setAllowedServiceSignatures(allowedServiceSignatures);
 		sapEntry.setDefaultSAPEntry(defaultSAPEntry);
+		sapEntry.setEnabled(enabled);
 		sapEntry.setName(name);
 		sapEntry.setTitleMap(titleMap);
 
@@ -126,7 +127,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 				defaultUserId,
 				sapConfiguration.
 					defaultApplicationSAPEntryServiceSignatures(),
-				true, sapConfiguration.defaultApplicationSAPEntryName(),
+				true, true, sapConfiguration.defaultApplicationSAPEntryName(),
 				titleMap, new ServiceContext());
 
 			resourcePermissionLocalService.setResourcePermissions(
@@ -146,7 +147,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			userSAPEntry = addSAPEntry(
 				defaultUserId,
 				sapConfiguration.defaultUserSAPEntryServiceSignatures(), true,
-				sapConfiguration.defaultUserSAPEntryName(), titleMap,
+				true, sapConfiguration.defaultUserSAPEntryName(), titleMap,
 				new ServiceContext());
 
 			resourcePermissionLocalService.setResourcePermissions(
@@ -209,8 +210,9 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 	@Override
 	public SAPEntry updateSAPEntry(
-			long sapEntryId, String allowedServiceSignatures, String name,
-			Map<Locale, String> titleMap, ServiceContext serviceContext)
+			long sapEntryId, String allowedServiceSignatures, boolean enabled,
+			String name, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SAPEntry sapEntry = sapEntryPersistence.findByPrimaryKey(sapEntryId);
@@ -233,6 +235,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		validate(name, titleMap);
 
 		sapEntry.setAllowedServiceSignatures(allowedServiceSignatures);
+		sapEntry.setEnabled(enabled);
 		sapEntry.setName(name);
 		sapEntry.setTitleMap(titleMap);
 

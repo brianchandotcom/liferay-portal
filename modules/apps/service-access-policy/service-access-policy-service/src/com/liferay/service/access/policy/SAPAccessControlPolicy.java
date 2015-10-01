@@ -129,6 +129,10 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 				SAPEntry sapEntry = _sapEntryLocalService.getSAPEntry(
 					companyId, name);
 
+				if (!sapEntry.isEnabled()) {
+					continue;
+				}
+
 				allowedServiceSignatures.addAll(
 					sapEntry.getAllowedServiceSignaturesList());
 			}

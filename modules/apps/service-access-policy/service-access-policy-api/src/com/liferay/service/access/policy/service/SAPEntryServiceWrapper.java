@@ -34,12 +34,13 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 
 	@Override
 	public com.liferay.service.access.policy.model.SAPEntry addSAPEntry(
-		java.lang.String allowedServiceSignatures, java.lang.String name,
+		java.lang.String allowedServiceSignatures, boolean enabled,
+		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sapEntryService.addSAPEntry(allowedServiceSignatures, name,
-			titleMap, serviceContext);
+		return _sapEntryService.addSAPEntry(allowedServiceSignatures, enabled,
+			name, titleMap, serviceContext);
 	}
 
 	@Override
@@ -111,12 +112,12 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 	@Override
 	public com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
-		java.lang.String name,
+		boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryService.updateSAPEntry(sapEntryId,
-			allowedServiceSignatures, name, titleMap, serviceContext);
+			allowedServiceSignatures, enabled, name, titleMap, serviceContext);
 	}
 
 	/**

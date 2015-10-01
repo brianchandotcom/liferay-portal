@@ -19,14 +19,23 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String backURL = ParamUtil.getString(request, "backURL");
-
 JournalArticle article = ActionUtil.getArticle(request);
 
 long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack((article == null) ? redirect : backURL);
+
+if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+	PortletURL backURL = liferayPortletResponse.createRenderURL();
+
+	backURL.setParameter("groupId", String.valueOf(article.getGroupId()));
+	backURL.setParameter("folderId", String.valueOf(article.getFolderId()));
+
+	portletDisplay.setURLBack(backURL.toString());
+}
+else {
+	portletDisplay.setURLBack(redirect);
+}
 
 String title = StringPool.BLANK;
 

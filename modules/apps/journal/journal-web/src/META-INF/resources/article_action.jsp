@@ -38,7 +38,6 @@ else {
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_article.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 			<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
@@ -57,7 +56,6 @@ else {
 		<portlet:renderURL var="moveURL">
 			<portlet:param name="mvcPath" value="/move_entries.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 			<portlet:param name="articleIds" value="<%= article.getArticleId() %>" />
 		</portlet:renderURL>
@@ -110,7 +108,6 @@ else {
 			<portlet:renderURL var="viewHistoryURL">
 				<portlet:param name="mvcPath" value="/view_article_history.jsp" />
 				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			</portlet:renderURL>

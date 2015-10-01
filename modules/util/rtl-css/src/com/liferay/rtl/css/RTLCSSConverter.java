@@ -334,11 +334,13 @@ public class RTLCSSConverter {
 
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
-		List<ICSSExpressionMember> cssExpressionMembers =
+		List<ICSSExpressionMember> icssExpressionMembers =
 			cssExpression.getAllMembers();
 
-		for (ICSSExpressionMember cssExpressionMember : cssExpressionMembers) {
-			if (cssExpressionMember instanceof CSSExpressionMemberTermURI) {
+		for (ICSSExpressionMember icssExpressionMember :
+				icssExpressionMembers) {
+
+			if (icssExpressionMember instanceof CSSExpressionMemberTermURI) {
 				CSSExpressionMemberTermURI cssExpressionMemberTermSimpleURI =
 					(CSSExpressionMemberTermURI)cssExpressionMember;
 

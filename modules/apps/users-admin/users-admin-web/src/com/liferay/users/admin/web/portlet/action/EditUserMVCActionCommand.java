@@ -397,12 +397,14 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
+			String mvcPath = "/edit_user.jsp";
+
 			if (e instanceof NoSuchUserException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				mvcPath = "/error.jsp";
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||
@@ -471,6 +473,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw e;
 			}
+
+			actionResponse.setRenderParameter("mvcPath", mvcPath);
 		}
 	}
 

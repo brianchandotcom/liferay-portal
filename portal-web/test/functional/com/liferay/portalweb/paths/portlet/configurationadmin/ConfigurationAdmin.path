@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>CONFIGURATION_ADMIN_NAME_LINK</td>
-	<td>//tbody [@class='table-data']//tr/td/a[contains(.,'${key_configurationAdminName}')]</td>
+	<td>//table[contains(@class,'table-list')]//tbody/tr/td/a[contains(.,'${key_configurationAdminName}')]</td>
 	<td></td>
 </tr>
 <tr>

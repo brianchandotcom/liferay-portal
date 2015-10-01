@@ -452,6 +452,7 @@
 		<exception>CategoryPropertyKey</exception>
 		<exception>CategoryPropertyValue</exception>
 		<exception>DuplicateCategory</exception>
+		<exception>DuplicateCategoryProperty</exception>
 		<exception>DuplicateQueryRule</exception>
 		<exception>DuplicateTag</exception>
 		<exception>DuplicateVocabulary</exception>

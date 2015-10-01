@@ -1147,12 +1147,16 @@
 	</command>
 
 	<command name="viewCategorizationVocabularyCP">
+		<var name="count" value="1" />
+
 		<execute function="Click" locator1="WCEditWebContent#MENU_CATEGORIZATION" />
 
 		<for list="${vocabularyNameList}" param="vocabularyName">
 			<var name="key_vocabularyName" value="${vocabularyName}" />
 
-			<execute function="AssertTextEquals" locator1="AssetCategorization#VOCABULARY" value1="${vocabularyName}" />
+			<execute function="AssertTextEquals" locator1="AssetCategorization#VOCABULARY_LIST_ITEM" value1="${vocabularyName}" />
+
+			<var method="MathUtil#sum('${count}', '1')" name="count" />
 		</for>
 	</command>
 

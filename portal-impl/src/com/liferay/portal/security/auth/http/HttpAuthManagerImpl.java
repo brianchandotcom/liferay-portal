@@ -213,8 +213,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		HttpAuthorizationHeader httpAuthorizationHeader) {
 
 		httpServletResponse.setHeader(
-			HttpHeaders.WWW_AUTHENTICATE,
-			httpAuthorizationHeader.toChallengeString());
+			HttpHeaders.WWW_AUTHENTICATE, httpAuthorizationHeader.toString());
 
 		httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
@@ -236,8 +235,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_NONCE, nonce);
 
 		httpServletResponse.setHeader(
-			HttpHeaders.WWW_AUTHENTICATE,
-			httpAuthorizationHeader.toChallengeString());
+			HttpHeaders.WWW_AUTHENTICATE, httpAuthorizationHeader.toString());
 
 		httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}

@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.security.auth.http;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +69,13 @@ public class HttpAuthorizationHeader {
 
 	@Override
 	public String toString() {
+		if (_scheme.equals(SCHEME_BASIC) &&
+			!Validator.isBlank(
+				getAuthParameter(AUTH_PARAMETER_NAME_USERNAME))) {
+
+			return toStringBasicBase64();
+		}
+
 		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 2);
 
 		sb.append(_scheme);
@@ -86,6 +93,18 @@ public class HttpAuthorizationHeader {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	protected String toStringBasicBase64() {
+		String userName = getAuthParameter(AUTH_PARAMETER_NAME_USERNAME);
+		String password = getAuthParameter(AUTH_PARAMETER_NAME_PASSWORD);
+
+		String userNameAndPassword = userName + StringPool.COLON + password;
+
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
+
+		return SCHEME_BASIC + StringPool.SPACE + encodedUserNameAndPassword;
 	}
 
 	private final Map<String, String> _authParameters = new HashMap<>();

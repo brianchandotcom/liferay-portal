@@ -959,9 +959,9 @@
 		<if>
 			<isset var="nonTaggedAsset" />
 			<then>
-				<var name="key_assetTitle" value="${notTaggedAsset}" />
+				<var name="key_assetTitle" value="${nonTaggedAsset}" />
 
-				<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${notTaggedAsset}" />
+				<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${nonTaggedAsset}" />
 			</then>
 		</if>
 	</command>

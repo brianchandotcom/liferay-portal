@@ -208,52 +208,52 @@
 <!--METADATA-->
 <tr>
 	<td>METADATA_AUTHOR</td>
-	<td>//div[@class='asset-author']/div/span[contains(.,'${key_author}')]</td>
+	<td>//div[contains(@class,'author')]//span[contains(.,'${key_author}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_VOCABULARY</td>
-	<td>//span[contains(@class,'metadata-entry')]/span[contains(.,'${key_vocabularyName}')]</td>
+	<td>//dd[contains(@class,'categories')]/span[contains(.,'${key_vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_CATEGORY</td>
-	<td>//span[contains(@class,'metadata-categories')]/span/a[contains(.,'${key_categoryName}')]</td>
+	<td>//dd[contains(@class,'categories')]/span/a[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_CREATE_DATE</td>
-	<td>//span[@class='metadata-entry metadata-create-date']</td>
+	<td>//dd[contains(@class,'create-date')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_EXPIRATION_DATE</td>
-	<td>//span[@class='metadata-entry metadata-expiration-date']</td>
+	<td>//dd[contains(@class,'expiration-date')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_MODIFIED_DATE</td>
-	<td>//span[@class='metadata-entry metadata-modified-date']</td>
+	<td>//dd[contains(@class,'modified-date')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_PRIORITY</td>
-	<td>//span[@class='metadata-entry metadata-priority']</td>
+	<td>//dd[contains(@class,'priority')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_PUBLISH_DATE</td>
-	<td>//span[@class='metadata-entry metadata-publish-date']</td>
+	<td>//dd[contains(@class,'publish-date')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_TAGS</td>
-	<td>//dl[contains(@class,'asset-metadata')]//span[contains(@class,'tags')]</td>
+	<td>//dd[contains(@class,'tags')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METADATA_VIEW_COUNT</td>
-	<td>//span[@class='metadata-entry metadata-view-count']</td>
+	<td>//dd[contains(@class,'view-count')]</td>
 	<td></td>
 </tr>
 </tbody>

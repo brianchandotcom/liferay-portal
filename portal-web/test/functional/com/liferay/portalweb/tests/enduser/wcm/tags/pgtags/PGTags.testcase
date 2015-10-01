@@ -63,6 +63,17 @@
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="tag name 3" />
 		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewTagPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagName" value="tag name 3" />
+		</execute>
 	</command>
 
 	<command name="AddFrontPageTag" priority="4">
@@ -997,12 +1008,6 @@
 			<var name="entryContent" value="Entry Content 3" />
 			<var name="entryTitle" value="Entry Title 3" />
 			<var name="tagName" value="yellow" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

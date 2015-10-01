@@ -244,23 +244,23 @@ public class RTLCSSConverter {
 
 			String strippedProperty = stripProperty(property);
 
-			if (_shorthandStyles.contains(strippedProperty)) {
-				convertShorthand(cssStyleRule, property);
-			}
-			else if (_shorthandRadiusStyles.contains(strippedProperty)) {
-				convertShorthandRadius(cssStyleRule, property);
-			}
-			else if (_reverseStyles.contains(strippedProperty)) {
-				reverseStyle(cssStyleRule, property);
-			}
-			else if (_reverseImageStyles.contains(strippedProperty)) {
-				reverseImage(cssStyleRule, property);
+			if (_backgroundPositionStyles.contains(strippedProperty)) {
+				convertBackgroundPosition(cssStyleRule, property);
 			}
 			else if (_backgroundStyles.contains(strippedProperty)) {
 				convertBackground(cssStyleRule, property);
 			}
-			else if (_backgroundPositionStyles.contains(strippedProperty)) {
-				convertBackgroundPosition(cssStyleRule, property);
+			else if (_reverseImageStyles.contains(strippedProperty)) {
+				reverseImage(cssStyleRule, property);
+			}
+			else if (_reverseStyles.contains(strippedProperty)) {
+				reverseStyle(cssStyleRule, property);
+			}
+			else if (_shorthandRadiusStyles.contains(strippedProperty)) {
+				convertShorthandRadius(cssStyleRule, property);
+			}
+			else if (_shorthandStyles.contains(strippedProperty)) {
+				convertShorthand(cssStyleRule, property);
 			}
 		}
 	}

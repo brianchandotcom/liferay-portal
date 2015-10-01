@@ -20,7 +20,7 @@
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_MENULIST_OPTION" value1="join-xor" />
 			</then>
 			<else>
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_MENULIST_APPROVE" value1="Approve" />
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#APPROVE" value1="Approve" />
 			</else>
 		</if>
 
@@ -78,7 +78,7 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_APPROVE" value1="Approve" />
+		<execute function="AssertClick" locator1="MenuItem#APPROVE" value1="Approve" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
@@ -100,7 +100,7 @@
 		<execute function="AssertTextEquals#assertValue" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="${userName}" />
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_APPROVE" value1="Approve" />
+		<execute function="AssertClick" locator1="MenuItem#APPROVE" value1="Approve" />
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 
@@ -120,7 +120,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO_ME" value1="Assign to Me" />
+		<execute function="AssertClick" locator1="MenuItem#ASSIGN_TO_ME" value1="Assign to Me" />
 
 		<if>
 			<isset var="workflowActivityComment" />
@@ -275,7 +275,7 @@
 	</command>
 
 	<command name="deactivateWorkflowDefinitionCmd">
-		<execute function="AssertClickNoError" locator1="WorkflowDefinition#DEFINITION_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DEACTIVATE" value1="Deactivate" />
 		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -295,7 +295,7 @@
 	</command>
 
 	<command name="deleteWorkflowDefinitionCmd">
-		<execute function="AssertClickNoError" locator1="WorkflowDefinition#DEFINITION_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -319,7 +319,7 @@
 
 		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_ACTIVE" value1="No" />
 		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_DEACTIVATED_DEFINITION_ELLIPSIS" />
-		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_MENULIST_ACTIVATE" value1="Activate" />
+		<execute function="AssertClick" locator1="MenuItem#ACTIVATE" value1="Activate" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_ACTIVE" value1="Yes" />
 	</command>
@@ -337,7 +337,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_MENULIST_REJECT" value1="Reject" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#REJECT" value1="Reject" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 
@@ -368,7 +368,7 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_REJECT" value1="Reject" />
+		<execute function="AssertClick" locator1="MenuItem#REJECT" value1="Reject" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
@@ -397,7 +397,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_MENULIST_RESUBMIT" value1="Resubmit" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#RESUBMIT" value1="Resubmit" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 
@@ -426,7 +426,7 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_RESUBMIT" value1="Resubmit" />
+		<execute function="AssertClick" locator1="MenuItem#RESUBMIT" value1="Resubmit" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
@@ -556,7 +556,7 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_MENULIST_UPDATE_DUE_DATE" value1="Update Due Date" />
+		<execute function="AssertClick" locator1="MenuItem#UPDATE_DUE_DATE" value1="Update Due Date" />
 
 		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
 		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />

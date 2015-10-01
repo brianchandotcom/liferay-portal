@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>APPROVE</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Approve')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGN_MEMBERS</td>
 	<td>//a[@role='menuitem' and contains(.,'Assign Members')]</td>
 	<td></td>
@@ -106,6 +111,11 @@
 <tr>
 	<td>ASSIGN_SITE_ROLES</td>
 	<td>//div[contains(@class,'open')]//a[contains(.,'Assign Site Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGN_TO_ME</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Assign to Me')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -454,6 +464,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REJECT</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Reject')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Remove')]</td>
 	<td></td>
@@ -476,6 +491,11 @@
 <tr>
 	<td>RESTORE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Restore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESUBMIT</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Resubmit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -596,6 +616,11 @@
 <tr>
 	<td>UNINSTALL</td>
 	<td>//a[@role='menuitem' and contains(.,'Uninstall')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_DUE_DATE</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Update Due Date')]</td>
 	<td></td>
 </tr>
 <tr>

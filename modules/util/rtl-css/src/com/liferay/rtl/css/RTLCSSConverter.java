@@ -23,7 +23,10 @@ import com.helger.css.decl.CSSExpressionMemberTermURI;
 import com.helger.css.decl.CSSStyleRule;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.ICSSExpressionMember;
+import com.helger.css.decl.ICSSTopLevelRule;
+import com.helger.css.reader.errorhandler.DoNothingCSSParseErrorHandler;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.writer.CSSWriter;
 import com.helger.css.writer.CSSWriterSettings;
 
 import java.util.Arrays;
@@ -43,51 +46,61 @@ public class RTLCSSConverter {
 	}
 
 	public RTLCSSConverter(boolean compress) {
-		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
+		_settings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
+
+		_settings.setOptimizedOutput(compress);
+		_settings.setRemoveUnnecessaryCode(compress);
+
+		_writer = new CSSWriter(_settings);
+
+		_writer.setWriteHeaderText(Boolean.FALSE);
+		_writer.setWriteFooterText(Boolean.FALSE);
+
 	}
 
 	public String process(String css) {
 		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
-			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
+			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30,
+			new DoNothingCSSParseErrorHandler());
 
-		List<CSSStyleRule> cssStyleRules =
-			cascadingStyleSheet.getAllStyleRules();
+		List<ICSSTopLevelRule> rules =
+			cascadingStyleSheet.getAllRules();
 
-		StringBuilder sb = new StringBuilder(cssStyleRules.size());
+		for (ICSSTopLevelRule rule : rules) {
+			if (rule instanceof CSSStyleRule) {
+				CSSStyleRule cssStyleRule = (CSSStyleRule)rule;
 
-		for (CSSStyleRule cssStyleRule : cssStyleRules) {
-			for (String property : _replacementStyles.keySet()) {
-				replaceStyle(cssStyleRule, property);
-			}
+				for (String property : _replacementStyles.keySet()) {
+					replaceStyle(cssStyleRule, property);
+				}
 
-			for (CSSDeclaration cssDeclaration :
+				for (CSSDeclaration cssDeclaration :
 					cssStyleRule.getAllDeclarations()) {
 
-				String property = cssDeclaration.getProperty();
+					String property = cssDeclaration.getProperty();
 
-				String strippedProperty = stripProperty(property);
+					String strippedProperty = stripProperty(property);
 
-				if (_shorthandStyles.contains(strippedProperty)) {
-					convertShorthand(cssStyleRule, property);
-				}
-				else if (_shorthandRadiusStyles.contains(strippedProperty)) {
-					convertShorthandRadius(cssStyleRule, property);
-				}
-				else if (_reverseStyles.contains(strippedProperty)) {
-					reverseStyle(cssStyleRule, property);
-				}
-				else if (_reverseImageStyles.contains(strippedProperty)) {
-					reverseImage(cssStyleRule, property);
-				}
-				else if (_backgroundPositionStyles.contains(strippedProperty)) {
-					convertBGPosition(cssStyleRule, property);
+					if (_shorthandStyles.contains(strippedProperty)) {
+						convertShorthand(cssStyleRule, property);
+					}
+					else if (_shorthandRadiusStyles.contains(strippedProperty)) {
+						convertShorthandRadius(cssStyleRule, property);
+					}
+					else if (_reverseStyles.contains(strippedProperty)) {
+						reverseStyle(cssStyleRule, property);
+					}
+					else if (_reverseImageStyles.contains(strippedProperty)) {
+						reverseImage(cssStyleRule, property);
+					}
+					else if (_backgroundPositionStyles.contains(strippedProperty)) {
+						convertBGPosition(cssStyleRule, property);
+					}
 				}
 			}
-
-			sb.append(cssStyleRule.getAsCSSString(_cssWriterSettings, 1));
 		}
 
-		return sb.toString();
+		return _writer.getCSSAsString(cascadingStyleSheet);
 	}
 
 	protected void convertBGPosition(
@@ -400,6 +413,7 @@ public class RTLCSSConverter {
 		_replacementStyles.put("padding-left", "padding-right");
 	}
 
-	private final CSSWriterSettings _cssWriterSettings;
+	private final CSSWriterSettings _settings;
+	private final CSSWriter _writer;
 
 }

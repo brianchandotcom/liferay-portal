@@ -32,7 +32,7 @@ public class AssetTagsPortletXStreamConfigurator
 	implements XStreamConfigurator {
 
 	@Override
-	public List<XStreamAlias> getAliases() {
+	public List<XStreamAlias> getXStreamAliases() {
 		return ListUtil.toList(
 			new XStreamAlias[] {
 				new XStreamAlias(AssetTagImpl.class, "AssetTag")
@@ -40,7 +40,7 @@ public class AssetTagsPortletXStreamConfigurator
 	}
 
 	@Override
-	public List<XStreamConverter> getConverters() {
+	public List<XStreamConverter> getXStreamConverters() {
 		return null;
 	}
 

@@ -256,7 +256,7 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="tag name" />
@@ -308,7 +308,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="硒1 liferay1" />
@@ -980,7 +980,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content 1" />
 			<var name="entryTitle" value="Entry Title 1" />
 			<var name="tagName" value="blue" />
@@ -992,7 +992,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content 2" />
 			<var name="entryTitle" value="Entry Title 2" />
 			<var name="tagName" value="blue green" />
@@ -1004,7 +1004,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content 3" />
 			<var name="entryTitle" value="Entry Title 3" />
 			<var name="tagName" value="yellow" />

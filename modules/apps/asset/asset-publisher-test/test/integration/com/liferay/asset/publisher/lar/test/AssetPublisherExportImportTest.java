@@ -15,11 +15,13 @@
 package com.liferay.asset.publisher.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.publisher.test.util.AssetPublisherTestUtil;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -40,6 +42,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -49,6 +53,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
@@ -67,7 +72,9 @@ import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +87,8 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Julio Camarero
@@ -108,9 +117,12 @@ public class AssetPublisherExportImportTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
 		super.setUp();
 
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+		_permissionChecker = PermissionCheckerFactoryUtil.create(
+			TestPropsValues.getUser());
 	}
 
 	@Test
@@ -259,10 +271,56 @@ public class AssetPublisherExportImportTest
 				portletPreferences.getValue("displayStyle", null)));
 	}
 
+	@Test
+	public void testExportImportAssetEntries() throws Exception {
+		testExportImportAssetEntries(group);
+	}
+
 	@Ignore
 	@Override
 	@Test
 	public void testExportImportAssetLinks() throws Exception {
+	}
+
+	@Ignore
+	@Test
+	public void testExportImportLayoutScopedAssetEntries() throws Exception {
+		Group layoutGroup = GroupTestUtil.addGroup(
+			TestPropsValues.getUserId(), layout);
+
+		testExportImportAssetEntries(layoutGroup);
+	}
+
+	@Ignore
+	@Test
+	public void testExportImportSeveralScopedAssetEntries() throws Exception {
+		List<Group> groups = new ArrayList<>();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			layout.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		groups.add(companyGroup);
+
+		groups.add(group);
+
+		Group otherGroup = GroupTestUtil.addGroup();
+
+		groups.add(otherGroup);
+
+		Group layoutGroup1 = GroupTestUtil.addGroup(
+			TestPropsValues.getUserId(), layout);
+
+		groups.add(layoutGroup1);
+
+		Layout otherLayout = LayoutTestUtil.addLayout(group);
+		Group otherLayoutGroup = GroupTestUtil.addGroup(
+			TestPropsValues.getUserId(), otherLayout);
+
+		groups.add(otherLayoutGroup);
+
+		testExportImportAssetEntries(groups);
 	}
 
 	@Test
@@ -677,6 +735,21 @@ public class AssetPublisherExportImportTest
 		testSortByAssetVocabulary(true);
 	}
 
+	protected List<AssetEntry> addAssetEntries(
+			Group group, int count, List<AssetEntry> assetEntries)
+		throws Exception {
+
+		for (int i = 0; i < count; i++) {
+			JournalArticle article = JournalTestUtil.addArticle(
+				group.getGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(100));
+
+			assetEntries.add(getAssetEntry(article));
+		}
+
+		return assetEntries;
+	}
+
 	protected DLFileEntryType addDLFileEntryType(
 			long groupId, long ddmStructureId, ServiceContext serviceContext)
 		throws Exception {
@@ -685,6 +758,30 @@ public class AssetPublisherExportImportTest
 			serviceContext.getUserId(), groupId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[] {ddmStructureId},
 			serviceContext);
+	}
+
+	protected void assertAssetEntries(
+		List<AssetEntry> expectedAssetEntries,
+		List<AssetEntry> actualAssetEntries) {
+
+		Assert.assertEquals(
+			expectedAssetEntries.size(), actualAssetEntries.size());
+
+		Iterator<AssetEntry> expectedIterator = expectedAssetEntries.iterator();
+		Iterator<AssetEntry> actualIterator = expectedAssetEntries.iterator();
+
+		while (expectedIterator.hasNext() && actualIterator.hasNext()) {
+			AssetEntry expectedAssetEntry = expectedIterator.next();
+			AssetEntry actualAssetEntry = actualIterator.next();
+
+			Assert.assertEquals(
+				expectedAssetEntry.getClassName(),
+				actualAssetEntry.getClassName());
+
+			Assert.assertEquals(
+				expectedAssetEntry.getClassUuid(),
+				actualAssetEntry.getClassUuid());
+		}
 	}
 
 	@Override
@@ -736,6 +833,17 @@ public class AssetPublisherExportImportTest
 		Assert.assertNotNull(importedLayout);
 	}
 
+	protected String[] getAssetEntryXmls(List<AssetEntry> assetEntries) {
+		String[] assetEntryXmls = new String[assetEntries.size()];
+
+		for (int i = 0; i < assetEntries.size(); i++) {
+			assetEntryXmls[i] = AssetPublisherTestUtil.getAssetEntryXml(
+				assetEntries.get(i));
+		}
+
+		return assetEntryXmls;
+	}
+
 	@Override
 	protected Map<String, String[]> getExportParameterMap() throws Exception {
 		Map<String, String[]> parameterMap = new HashMap<>();
@@ -756,9 +864,69 @@ public class AssetPublisherExportImportTest
 		return parameterMap;
 	}
 
+	protected long[] getGroupIdsFromScopeIds(String[] scopeIds, Layout layout)
+		throws Exception {
+
+		long[] groupIds = new long[scopeIds.length];
+
+		for (int i = 0; i < scopeIds.length; i++) {
+			groupIds[i] = AssetPublisherUtil.getGroupIdFromScopeId(
+				scopeIds[i], layout.getGroupId(), layout.isPrivateLayout());
+		}
+
+		return groupIds;
+	}
+
 	@Override
 	protected Map<String, String[]> getImportParameterMap() throws Exception {
 		return getExportParameterMap();
+	}
+
+	protected void testExportImportAssetEntries(Group scopeGroup)
+		throws Exception {
+
+		List<Group> groups = new ArrayList<>();
+
+		groups.add(scopeGroup);
+
+		testExportImportAssetEntries(groups);
+	}
+
+	protected void testExportImportAssetEntries(List<Group> scopeGroups)
+		throws Exception {
+
+		List<AssetEntry> assetEntries = new ArrayList<>();
+		String[] scopeIds = new String[0];
+
+		for (Group scopeGroup : scopeGroups) {
+			assetEntries = addAssetEntries(scopeGroup, 3, assetEntries);
+
+			String scopeId = AssetPublisherUtil.getScopeId(
+				scopeGroup, group.getGroupId());
+
+			scopeIds = ArrayUtil.append(scopeIds, scopeId);
+		}
+
+		Map<String, String[]> preferenceMap = new HashMap<>();
+
+		preferenceMap.put("assetEntryXml", getAssetEntryXmls(assetEntries));
+		preferenceMap.put("scopeIds", scopeIds);
+
+		PortletPreferences importedPortletPreferences =
+			getImportedPortletPreferences(preferenceMap);
+
+		String[] importedScopeIds = importedPortletPreferences.getValues(
+			"scopeIds", null);
+
+		long[] selectedGroupIds = getGroupIdsFromScopeIds(
+			importedScopeIds, importedLayout);
+
+		List<AssetEntry> actualAssetEntries =
+			AssetPublisherUtil.getAssetEntries(
+				new MockPortletRequest(), importedPortletPreferences,
+				_permissionChecker, selectedGroupIds, false, false);
+
+		assertAssetEntries(assetEntries, actualAssetEntries);
 	}
 
 	protected void testSortByAssetVocabulary(boolean globalVocabulary)
@@ -816,5 +984,7 @@ public class AssetPublisherExportImportTest
 
 		AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(assetVocabulary);
 	}
+
+	private PermissionChecker _permissionChecker;
 
 }

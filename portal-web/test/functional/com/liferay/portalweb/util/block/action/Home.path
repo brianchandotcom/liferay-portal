@@ -203,7 +203,7 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@class,'navbar')]/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td>Page</td>
 </tr>
 <tr>
@@ -213,12 +213,12 @@
 </tr>
 <tr>
 	<td>PAGE_1</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[1]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[1]/a</td>
 	<td>1st Page</td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_1</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@class,'navbar')]/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -248,12 +248,12 @@
 </tr>
 <tr>
 	<td>PAGE_2</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[2]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[2]/a</td>
 	<td>2nd Page</td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_2</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[2]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -268,7 +268,7 @@
 </tr>
 <tr>
 	<td>PAGE_3</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[3]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[3]/a</td>
 	<td>3rd Page</td>
 </tr>
 <tr>
@@ -278,7 +278,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_3</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[3]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[3]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -288,22 +288,22 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_4</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[4]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_5</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[5]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_6</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[6]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[6]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_7</td>
-	<td>//div[contains(@class,'navbar-default')]/ul/li[7]/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[7]/a</td>
 	<td></td>
 </tr>
 <tr>

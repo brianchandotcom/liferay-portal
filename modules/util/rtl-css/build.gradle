@@ -1,6 +1,5 @@
 dependencies {
-	provided group: "com.google.code.findbugs", name: "annotations", transitive: false, version: "2.0.3"
-	provided group: "com.helger", name: "ph-commons", transitive: false, version: "5.6.0"
-	provided group: "com.helger", name: "ph-css", transitive: false, version: "3.9.1"
-	provided group: "org.slf4j", name: "slf4j-api", transitive: false, version: "1.7.10"
+	provided group: "com.google.code.findbugs", name: "annotations", version: "2.0.3"
+	provided group: "com.helger", name: "ph-css", version: "4.0.0"
+	provided group: "org.slf4j", name: "slf4j-api", version: "1.7.10"
 }

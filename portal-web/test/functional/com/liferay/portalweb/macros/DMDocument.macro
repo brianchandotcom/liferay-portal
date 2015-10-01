@@ -553,7 +553,7 @@
 
 	<command name="checkinCP">
 		<if>
-			<equals arg1="${sharepointRepository}" arg2="true" />
+			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
@@ -646,7 +646,7 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<if>
-			<equals arg1="${sharepointRepository}" arg2="true" />
+			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
@@ -776,7 +776,7 @@
 			</not>
 			<then>
 				<if>
-					<equals arg1="${sharepointRepository}" arg2="true" />
+					<equals arg1="${dmRepositoryName}" arg2="true" />
 					<then>
 						<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 					</then>
@@ -1063,7 +1063,7 @@
 	</command>
 
 	<command name="gotoHomeCP">
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="HOME" />
 	</command>
 
 	<command name="gotoPG">
@@ -1633,7 +1633,7 @@
 		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" />
 
 		<if>
-			<equals arg1="${sharepointRepository}" arg2="true" />
+			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
 				<execute function="AssertTextNotPresent" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
@@ -1647,7 +1647,7 @@
 		<execute function="AssertVisible" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION_LOCKED" />
 
 		<if>
-			<equals arg1="${sharepointRepository}" arg2="true" />
+			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>

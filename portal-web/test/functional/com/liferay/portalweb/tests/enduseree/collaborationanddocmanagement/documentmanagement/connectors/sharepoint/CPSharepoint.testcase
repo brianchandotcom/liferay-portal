@@ -180,7 +180,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -196,7 +196,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkinCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -216,7 +216,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedinCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 
@@ -235,7 +235,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -255,7 +255,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 
@@ -533,7 +533,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -553,7 +553,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -584,7 +584,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 
@@ -686,7 +686,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -701,7 +701,7 @@
 			<var name="checkedOut" value="true" />
 			<var name="dmDocumentTitle" value="Document_1.xls" />
 			<var name="dmDocumentTitleEdit" value="Document_1_Edit.jpg" />
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -721,7 +721,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 

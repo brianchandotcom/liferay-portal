@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `8d7b1d1`.*
+*This document has been reviewed through commit `330259a`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2349,38 +2349,38 @@ This tag is no longer used and will no longer be maintained properly.
 
 ---------------------------------------
 
-### Methods related to Control Panel in PortalUtil have been removed
+### Removed Methods Related to Control Panel in PortalUtil
 - **Date:** 2015-Sep-23
 - **JIRA Ticket:** LPS-58210
 
 #### What changed?
 
-The following methods been deleted:
+The following methods have been deleted:
 
-- getControlPanelCategoriesMap
-- getControlPanelCategory
-- getControlPanelPortlets
-- getFirstMyAccountPortlet
-- getFirstSiteAdministrationPortlet
-- getSiteAdministrationCategoriesMap
-- getSiteAdministrationURL
-- isCompanyControlPanelVisible
-
+- `getControlPanelCategoriesMap`
+- `getControlPanelCategory`
+- `getControlPanelPortlets`
+- `getFirstMyAccountPortlet`
+- `getFirstSiteAdministrationPortlet`
+- `getSiteAdministrationCategoriesMap`
+- `getSiteAdministrationURL`
+- `isCompanyControlPanelVisible`
 
 #### Who is affected?
 
-This affects developers who use any of these methods.
+This affects developers that use any of the methods listed above.
 
 #### How should I update my code?
 
-In order to work with the apps displayed in the product menu, developers should
-use the application-list-api calling the PanelCategoryRegistry and the
-PanelAppRegistry.
+In order to work with applications displayed in the Product Menu, developers
+should call the `PanelCategoryRegistry` and `PanelAppRegistry` classes located
+in the `application-list-api` module. These classes allow developers to interact
+with categories and applications in the Control Panel.
 
 #### Why was this change made?
 
-These methods are not used anymore and they won't work properly since they can't
-call the application-list-api from the context of the portal.
+These methods are no longer used and they will not work properly since they
+cannot call the `application-list-api` from the portal context.
 
 ---------------------------------------
 

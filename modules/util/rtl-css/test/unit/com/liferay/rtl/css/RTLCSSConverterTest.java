@@ -364,7 +364,7 @@ public class RTLCSSConverterTest {
 		Assert.assertNotNull(rtlCssConverter);
 
 		Assert.assertEquals(
-			"@media (max-width: 320px){#myid{margin-left:1px}" +
+			"@media (max-width:320px){#myid{margin-left:1px}" +
 				".cls{padding-right:3px}}td{float:right}",
 			rtlCssConverter.process(
 				"@media (max-width: 320px) { #myid { margin-right: 1px; } " +

@@ -43,10 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
-		"search.asset.type=com.liferay.dynamic.data.lists.model.DDLRecord"
-	},
+	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
 	service = AssetRendererFactory.class
 )
 public class DDLRecordAssetRendererFactory

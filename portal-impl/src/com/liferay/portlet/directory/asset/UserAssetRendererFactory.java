@@ -15,7 +15,6 @@
 package com.liferay.portlet.directory.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -29,9 +28,6 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 /**
  * @author Michael C. Han
  */
-@OSGiBeanProperties(
-	property = {"search.asset.type=com.liferay.portal.model.User"}
-)
 public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 
 	public static final String TYPE = "user";

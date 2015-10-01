@@ -35,7 +35,7 @@ public interface SearchFacet {
 
 	public JSONObject getData();
 
-	public FacetConfiguration getDefaultConfiguration();
+	public FacetConfiguration getDefaultConfiguration(long companyId);
 
 	public Facet getFacet();
 
@@ -65,9 +65,12 @@ public interface SearchFacet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
 
-	public void init(String searchConfiguration) throws Exception;
+	public void init(long companyId, String searchConfiguration)
+		throws Exception;
 
-	public void init(String searchConfiguration, SearchContext searchContext)
+	public void init(
+			long companyId, String searchConfiguration,
+			SearchContext searchContext)
 		throws Exception;
 
 	public boolean isStatic();

@@ -1152,6 +1152,8 @@
 		<execute function="Click" locator1="WCEditWebContent#MENU_CATEGORIZATION" />
 
 		<for list="${vocabularyNameList}" param="vocabularyName">
+			<var name="key_count" value="${count}" />
+
 			<execute function="AssertTextEquals" locator1="AssetCategorization#VOCABULARY_LIST_ITEM" value1="${vocabularyName}" />
 
 			<var method="MathUtil#sum('${count}', '1')" name="count" />

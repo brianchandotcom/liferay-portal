@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>VOCABULARY_LIST_ITEM</td>
-	<td>//span[@class='field-content'][${count}]/label</td>
+	<td>//span[@class='field-content'][${key_count}]/label</td>
 	<td></td>
 </tr>
 <tr>

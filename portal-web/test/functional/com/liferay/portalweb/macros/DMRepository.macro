@@ -1,21 +1,37 @@
 <definition>
-	<command name="addCP">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
+	<command name="addDocumentum">
+		<execute function="Type" locator1="DocumentsAndMediaEditRepository#CABINET_FIELD" value1="${dmCabinetName}" />
 
-		<execute function="Type" locator1="DocumentsAndMediaEditRepository#NAME_FIELD" value1="${dmRepositoryName}" />
-		<execute function="Select" locator1="DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT" value1="${dmRepositoryType}" />
+		<execute function="Type" locator1="DocumentsAndMediaEditRepository#REPOSITORY_FIELD" value1="${dmRepositoryFieldName}" />
+	</command>
+
+	<command name="addSharepoint">
 		<execute function="Type" locator1="DocumentsAndMediaEditRepository#SITE_URL_FIELD" value1="${dmRepositorySiteURL}" />
 		<execute function="Type" locator1="DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD" value1="${dmRepositoryLibraryName}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	<command name="gotoAdd">
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
+
+		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
 	</command>
 
 	<command name="gotoCP">
 		<var name="key_dmRepositoryName" value="${dmRepositoryName}" />
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#FILTER_REPOSITORY" value1="${dmRepositoryName}" />
+	</command>
+
+	<command name="save">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="select">
+		<execute function="Type" locator1="DocumentsAndMediaEditRepository#NAME_FIELD" value1="${dmRepositoryName}" />
+
+		<execute function="Select" locator1="DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT" value1="${dmRepositoryType}" />
 	</command>
 
 	<command name="tearDownCP">

@@ -65,6 +65,7 @@ public class RTLCSSConverter {
 
 	private void convertBackground(CSSStyleRule cssStyleRule, String property) {
 		reverseImage(cssStyleRule, property);
+
 		convertBackgroundPosition(cssStyleRule, property);
 	}
 

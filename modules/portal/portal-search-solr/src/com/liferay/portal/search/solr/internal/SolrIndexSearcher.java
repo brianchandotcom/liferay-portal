@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.BaseIndexSearcher;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.IndexSearcher;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.Stats;
+import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -51,9 +54,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.solr.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr.connection.SolrClientManager;
 import com.liferay.portal.search.solr.facet.FacetProcessor;
+import com.liferay.portal.search.solr.groupby.GroupByTranslator;
 import com.liferay.portal.search.solr.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.solr.internal.facet.SolrFacetFieldCollector;
 import com.liferay.portal.search.solr.internal.facet.SolrFacetQueryCollector;
+import com.liferay.portal.search.solr.stats.StatsTranslator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,6 +75,10 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.SolrRequest.METHOD;
 import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.FieldStatsInfo;
+import org.apache.solr.client.solrj.response.Group;
+import org.apache.solr.client.solrj.response.GroupCommand;
+import org.apache.solr.client.solrj.response.GroupResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -227,6 +236,18 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		solrQuery.setFacetLimit(-1);
 	}
 
+	protected void addGroupBy(
+		SolrQuery solrQuery, SearchContext searchContext, int start, int end) {
+
+		GroupBy groupBy = searchContext.getGroupBy();
+
+		if (groupBy == null) {
+			return;
+		}
+
+		_groupByTranslator.translate(solrQuery, searchContext, start, end);
+	}
+
 	protected void addHighlightedField(
 		SolrQuery solrQuery, QueryConfig queryConfig, String fieldName) {
 
@@ -257,7 +278,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			queryConfig.isHighlightRequireFieldMatch());
 	}
 
-	protected void addPagination(SolrQuery solrQuery, int start, int end) {
+	protected void addPagination(
+		SolrQuery solrQuery, SearchContext searchContext, int start, int end) {
+
+		GroupBy groupBy = searchContext.getGroupBy();
+
+		if (groupBy != null) {
+			return;
+		}
+
 		solrQuery.setRows(end - start);
 		solrQuery.setStart(start);
 	}
@@ -282,8 +311,10 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 	protected void addSnippets(
 		SolrDocument solrDocument, Document document, QueryConfig queryConfig,
-		Set<String> queryTerms,
-		Map<String, Map<String, List<String>>> highlights) {
+		Set<String> queryTerms, QueryResponse queryResponse) {
+
+		Map<String, Map<String, List<String>>> highlights =
+			queryResponse.getHighlighting();
 
 		if (!queryConfig.isHighlightEnabled()) {
 			return;
@@ -366,6 +397,14 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected void addStats(SolrQuery solrQuery, SearchContext searchContext) {
+		Map<String, Stats> statsMap = searchContext.getStats();
+
+		for (Stats stats : statsMap.values()) {
+			_statsTranslator.translate(solrQuery, stats);
+		}
+	}
+
 	protected QueryResponse doSearch(
 			SearchContext searchContext, Query query, int start, int end,
 			boolean count)
@@ -375,10 +414,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		SolrQuery solrQuery = new SolrQuery();
 
+		addStats(solrQuery, searchContext);
+
 		if (!count) {
 			addFacets(solrQuery, searchContext);
+			addGroupBy(solrQuery, searchContext, start, end);
 			addHighlights(solrQuery, queryConfig);
-			addPagination(solrQuery, start, end);
+			addPagination(solrQuery, searchContext, start, end);
 			addSelectedFields(solrQuery, queryConfig);
 			addSort(solrQuery, searchContext.getSorts());
 
@@ -459,45 +501,36 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	protected Hits processResponse(
 		QueryResponse queryResponse, SearchContext searchContext, Query query) {
 
-		long startTime = System.currentTimeMillis();
-
-		SolrDocumentList solrDocumentList = queryResponse.getResults();
+		Hits hits = new HitsImpl();
 
 		updateFacetCollectors(queryResponse, searchContext);
+		updateGroupedHits(queryResponse, searchContext, query, hits);
+		updateStatsResults(searchContext, queryResponse, hits);
 
-		Hits hits = new HitsImpl();
+		hits.setQuery(query);
+		hits.setSearchTime(queryResponse.getQTime());
+
+		processSearchHits(
+			queryResponse, queryResponse.getResults(), query, hits);
+
+		return hits;
+	}
+
+	protected void processSearchHits(
+		QueryResponse queryResponse, SolrDocumentList solrDocumentList,
+		Query query, Hits hits) {
 
 		List<Document> documents = new ArrayList<>();
 		Set<String> queryTerms = new HashSet<>();
 		List<Float> scores = new ArrayList<>();
 
-		QueryConfig queryConfig = query.getQueryConfig();
-		Map<String, Map<String, List<String>>> highlights =
-			queryResponse.getHighlighting();
-
-		for (SolrDocument solrDocument : solrDocumentList) {
-			Document document = processSolrDocument(solrDocument, queryConfig);
-
-			documents.add(document);
-
-			addSnippets(
-				solrDocument, document, queryConfig, queryTerms, highlights);
-
-			float score = GetterUtil.getFloat(
-				String.valueOf(solrDocument.getFieldValue("score")));
-
-			scores.add(score);
-		}
+		processSolrDocumentList(
+			queryResponse, solrDocumentList, query, hits, documents, queryTerms,
+			scores);
 
 		hits.setDocs(documents.toArray(new Document[documents.size()]));
-		hits.setLength((int)solrDocumentList.getNumFound());
-		hits.setQuery(query);
 		hits.setQueryTerms(queryTerms.toArray(new String[queryTerms.size()]));
 		hits.setScores(ArrayUtil.toFloatArray(scores));
-		hits.setSearchTime(queryResponse.getQTime());
-		hits.setStart(startTime);
-
-		return hits;
 	}
 
 	protected Document processSolrDocument(
@@ -524,6 +557,34 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		return document;
 	}
 
+	protected void processSolrDocumentList(
+		QueryResponse queryResponse, SolrDocumentList solrDocumentList,
+		Query query, Hits hits, List<Document> documents,
+		Set<String> queryTerms, List<Float> scores) {
+
+		if (solrDocumentList == null) {
+			return;
+		}
+
+		hits.setLength((int)solrDocumentList.getNumFound());
+
+		for (SolrDocument solrDocument : solrDocumentList) {
+			QueryConfig queryConfig = query.getQueryConfig();
+
+			Document document = processSolrDocument(solrDocument, queryConfig);
+
+			documents.add(document);
+
+			addSnippets(
+				solrDocument, document, queryConfig, queryTerms, queryResponse);
+
+			float score = GetterUtil.getFloat(
+				String.valueOf(solrDocument.getFieldValue("score")));
+
+			scores.add(score);
+		}
+	}
+
 	@Reference(service = CompositeFacetProcessor.class, unbind = "-")
 	protected void setFacetProcessor(FacetProcessor<SolrQuery> facetProcessor) {
 		_facetProcessor = facetProcessor;
@@ -536,6 +597,11 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		_filterTranslator = filterTranslator;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupByTranslator(GroupByTranslator groupByTranslator) {
+		_groupByTranslator = groupByTranslator;
+	}
+
 	@Reference(target = "(search.engine.impl=Solr)", unbind = "-")
 	protected void setQueryTranslator(QueryTranslator<String> queryTranslator) {
 		_queryTranslator = queryTranslator;
@@ -544,6 +610,11 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	@Reference(unbind = "-")
 	protected void setSolrClientManager(SolrClientManager solrClientManager) {
 		_solrClientManager = solrClientManager;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStatsTranslator(StatsTranslator statsTranslator) {
+		_statsTranslator = statsTranslator;
 	}
 
 	protected String translateQuery(Query query, SearchContext searchContext) {
@@ -579,14 +650,72 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected void updateGroupedHits(
+		QueryResponse queryResponse, SearchContext searchContext, Query query,
+		Hits hits) {
+
+		GroupBy groupBy = searchContext.getGroupBy();
+
+		if (groupBy == null) {
+			return;
+		}
+
+		GroupResponse groupResponse = queryResponse.getGroupResponse();
+
+		List<GroupCommand> groupCommands = groupResponse.getValues();
+
+		for (GroupCommand groupCommand : groupCommands) {
+			List<Group> groups = groupCommand.getValues();
+
+			for (Group group : groups) {
+				Hits groupedHits = new HitsImpl();
+
+				processSearchHits(
+					queryResponse, group.getResult(), query, groupedHits);
+
+				hits.addGroupedHits(group.getGroupValue(), groupedHits);
+			}
+		}
+	}
+
+	protected void updateStatsResults(
+		SearchContext searchContext, QueryResponse queryResponse, Hits hits) {
+
+		Map<String, Stats> statsMap = searchContext.getStats();
+
+		if (statsMap.isEmpty()) {
+			return;
+		}
+
+		Map<String, FieldStatsInfo> fieldsStatsInfo =
+			queryResponse.getFieldStatsInfo();
+
+		if (MapUtil.isEmpty(fieldsStatsInfo)) {
+			return;
+		}
+
+		for (Stats stats : statsMap.values()) {
+			if (!stats.isEnabled()) {
+				continue;
+			}
+
+			StatsResults statsResults = _statsTranslator.translate(
+				fieldsStatsInfo.get(stats.getField()), stats);
+
+			hits.addStatsResults(statsResults);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrIndexSearcher.class);
 
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private FilterTranslator<String> _filterTranslator;
+	private GroupByTranslator _groupByTranslator;
 	private boolean _logExceptionsOnly;
 	private QueryTranslator<String> _queryTranslator;
 	private SolrClientManager _solrClientManager;
 	private volatile SolrConfiguration _solrConfiguration;
+	private StatsTranslator _statsTranslator;
 
 }

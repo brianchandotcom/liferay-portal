@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.CompanyServiceUtil;
+import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.WebKeys;
 
@@ -37,6 +37,7 @@ import javax.portlet.ActionResponse;
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -56,7 +57,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
-		CompanyServiceUtil.deleteCompany(companyId);
+		_companyService.deleteCompany(companyId);
 	}
 
 	@Override
@@ -105,6 +106,11 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setCompanyService(CompanyService companyService) {
+		_companyService = companyService;
+	}
+
 	protected void updateInstance(ActionRequest actionRequest)
 		throws Exception {
 
@@ -122,7 +128,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add instance
 
-			Company company = CompanyServiceUtil.addCompany(
+			Company company = _companyService.addCompany(
 				webId, virtualHostname, mx, system, maxUsers, active);
 
 			ServletContext servletContext =
@@ -134,9 +140,11 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update instance
 
-			CompanyServiceUtil.updateCompany(
+			_companyService.updateCompany(
 				companyId, virtualHostname, mx, maxUsers, active);
 		}
 	}
+
+	private CompanyService _companyService;
 
 }

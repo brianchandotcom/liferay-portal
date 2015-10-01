@@ -970,6 +970,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				group.setSite(false);
 
+				groupPersistence.update(group);
+
 				// Group roles
 
 				userGroupRoleLocalService.deleteUserGroupRoles(
@@ -979,10 +981,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(
 					group.getGroupId(), RoleConstants.TYPE_SITE);
-
-				groupPersistence.update(group);
 			}
 			else {
+				groupPersistence.remove(group);
 
 				// Group roles
 
@@ -993,8 +994,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				userGroupGroupRoleLocalService.
 					deleteUserGroupGroupRolesByGroupId(group.getGroupId());
-
-				groupPersistence.remove(group);
 			}
 
 			// Permission cache

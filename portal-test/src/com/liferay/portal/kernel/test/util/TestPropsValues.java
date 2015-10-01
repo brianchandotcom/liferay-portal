@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -39,6 +40,9 @@ public class TestPropsValues {
 
 	public static final boolean ASSERT_LOGS = GetterUtil.getBoolean(
 		TestPropsUtil.get("assert.logs"));
+
+	public static final long CI_TEST_TIMEOUT_TIME = GetterUtil.getLong(
+		TestPropsUtil.get("ci.test.timeout.time"), 20 * Time.MINUTE);
 
 	public static final String COMPANY_WEB_ID;
 

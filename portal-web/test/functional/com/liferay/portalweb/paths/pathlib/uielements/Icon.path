@@ -44,6 +44,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARET_LEFT</td>
+	<td>//span[contains(@class,'icon-caret-left')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARET_RIGHT</td>
+	<td>//span[contains(@class,'icon-caret-right')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLEAR_SEARCH</td>
 	<td>//input[@type='image' and @title='Clear Search']</td>
 	<td></td>

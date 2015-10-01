@@ -14,15 +14,13 @@
 
 package com.liferay.marketplace.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
+import com.liferay.marketplace.bundle.BundleManagerUtil;
 import com.liferay.marketplace.exception.AppPropertiesException;
 import com.liferay.marketplace.exception.AppTitleException;
 import com.liferay.marketplace.exception.AppVersionException;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.base.AppLocalServiceBaseImpl;
-import com.liferay.marketplace.util.BundleUtil;
 import com.liferay.marketplace.util.ContextUtil;
 import com.liferay.marketplace.util.comparator.AppTitleComparator;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -53,6 +50,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -66,13 +65,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import javax.servlet.ServletContext;
+import org.osgi.framework.Bundle;
 
 /**
  * @author Ryan Park
  * @author Joan Kim
  */
-@ProviderType
 public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 	@Override
@@ -138,34 +136,37 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 		Map<String, String> bundledApps = new HashMap<>();
 
-		List<PluginPackage> pluginPackages =
-			DeployManagerUtil.getInstalledPluginPackages();
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
-		for (PluginPackage pluginPackage : pluginPackages) {
-			ServletContext servletContext = ServletContextPool.get(
-				pluginPackage.getContext());
-
+		for (Bundle bundle : bundles) {
 			InputStream inputStream = null;
 
 			try {
-				inputStream = servletContext.getResourceAsStream(
-					"/WEB-INF/liferay-releng.changelog.md5");
+				URL url = bundle.getResource(
+					"/META-INF/liferay-releng.changelog.md5");
 
-				if (inputStream == null) {
+				if (url == null) {
+					url = bundle.getResource(
+						"/WEB-INF/liferay-releng.changelog.md5");
+				}
+
+				if (url == null) {
 					continue;
 				}
+
+				inputStream = url.openStream();
 
 				String relengHash = StringUtil.read(inputStream);
 
 				if (Validator.isNotNull(relengHash)) {
-					bundledApps.put(pluginPackage.getContext(), relengHash);
+					bundledApps.put(bundle.getSymbolicName(), relengHash);
 				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to read plugin package MD5 checksum for " +
-							pluginPackage.getContext());
+							bundle.getSymbolicName());
 				}
 			}
 			finally {
@@ -347,7 +348,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 							new AutoDeploymentContext();
 
 						if (fileName.endsWith(".jar")) {
-							Manifest manifest = BundleUtil.getManifest(
+							Manifest manifest = BundleManagerUtil.getManifest(
 								pluginPackageFile);
 
 							Attributes attributes =
@@ -448,7 +449,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			moduleLocalService.deleteModule(module.getModuleId());
 
 			if (module.isBundle()) {
-				BundleUtil.uninstallBundle(
+				BundleManagerUtil.uninstallBundle(
 					module.getBundleSymbolicName(), module.getBundleVersion());
 
 				continue;

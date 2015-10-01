@@ -16,9 +16,9 @@ package com.liferay.marketplace.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.marketplace.bundle.BundleManagerUtil;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
-import com.liferay.marketplace.util.BundleUtil;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -105,7 +105,7 @@ public class AppImpl extends AppBaseImpl {
 
 		for (Module module : modules) {
 			if (Validator.isNotNull(module.getBundleSymbolicName())) {
-				if (!BundleUtil.isActive(
+				if (!BundleManagerUtil.isInstalled(
 						module.getBundleSymbolicName(),
 						module.getBundleVersion())) {
 

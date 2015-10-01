@@ -307,7 +307,7 @@ public class RTLCSSConverter {
 
 		String replacementProperty = _replacementStyles.get(property);
 
-		CSSDeclaration replacementDeclaration =
+		CSSDeclaration replacementCSSDeclaration =
 			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(
 				asterisk + replacementProperty);
 
@@ -319,8 +319,8 @@ public class RTLCSSConverter {
 			cssDeclaration.setProperty(asterisk + replacementProperty);
 		}
 
-		if (replacementDeclaration != null) {
-			replacementDeclaration.setProperty(asterisk + property);
+		if (replacementCSSDeclaration != null) {
+			replacementCSSDeclaration.setProperty(asterisk + property);
 		}
 	}
 

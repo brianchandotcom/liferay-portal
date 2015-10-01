@@ -70,7 +70,14 @@ public class RTLCSSConverter {
 		return _writer.getCSSAsString(cascadingStyleSheet);
 	}
 
-	private void convertBGPosition(CSSStyleRule styleRule, String property) {
+	private void convertBackground(CSSStyleRule styleRule, String property) {
+		reverseImage(styleRule, property);
+		convertBackgroundPosition(styleRule, property);
+	}
+
+	private void convertBackgroundPosition(
+		CSSStyleRule styleRule, String property) {
+
 		CSSDeclaration declaration =
 			styleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
@@ -229,8 +236,11 @@ public class RTLCSSConverter {
 			else if (_reverseImageStyles.contains(strippedProperty)) {
 				reverseImage(styleRule, property);
 			}
+			else if (_backgroundStyles.contains(strippedProperty)) {
+				convertBackground(styleRule, property);
+			}
 			else if (_backgroundPositionStyles.contains(strippedProperty)) {
-				convertBGPosition(styleRule, property);
+				convertBackgroundPosition(styleRule, property);
 			}
 		}
 	}
@@ -302,14 +312,18 @@ public class RTLCSSConverter {
 
 				String uri = termURI.getURIString();
 
-				if (uri.contains("right")) {
-					uri = uri.replaceAll("right", "left");
+				int pos = uri.lastIndexOf("/") + 1;
+
+				String fileName = uri.substring(pos);
+
+				if (fileName.contains("right")) {
+					fileName = fileName.replaceAll("right", "left");
 				}
 				else {
-					uri = uri.replaceAll("left", "right");
+					fileName = fileName.replaceAll("left", "right");
 				}
 
-				termURI.setURIString(uri);
+				termURI.setURIString(uri.substring(0, pos) + fileName);
 			}
 		}
 	}
@@ -356,13 +370,15 @@ public class RTLCSSConverter {
 
 	private static final List<String> _backgroundPositionStyles = Arrays.asList(
 		"background-position");
+	private static final List<String> _backgroundStyles = Arrays.asList(
+		"background");
 	private static final Pattern _percentOrLengthPattern = Pattern.compile(
 		"(\\d+)([a-z]{2}|%)");
 	private static final Pattern _percentPattern = Pattern.compile("\\d+%");
 	private static final Map<String, String> _replacementStyles =
 		new HashMap<>();
 	private static final List<String> _reverseImageStyles = Arrays.asList(
-		"background", "background-image");
+		"background-image");
 	private static final List<String> _reverseStyles = Arrays.asList(
 		"clear", "direction", "float", "text-align");
 	private static final List<String> _shorthandRadiusStyles = Arrays.asList(

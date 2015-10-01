@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -56,7 +57,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		long classPK, String portletId, String actionId) {
 
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			return doHasPermission(
 				permissionChecker, group, className, classPK, portletId,
@@ -90,7 +91,14 @@ public class StagingPermissionImpl implements StagingPermission {
 		}
 	}
 
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingPermissionImpl.class);
+
+	private GroupLocalService _groupLocalService;
 
 }

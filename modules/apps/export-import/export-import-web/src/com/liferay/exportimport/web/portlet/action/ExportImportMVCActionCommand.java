@@ -42,8 +42,8 @@ import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationS
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
+import com.liferay.portlet.exportimport.service.ExportImportService;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.io.InputStream;
@@ -55,6 +55,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -212,13 +213,13 @@ public class ExportImportMVCActionCommand
 						fileName);
 
 			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
+				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						themeDisplay.getUserId(),
 						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
 						exportPortletSettingsMap);
 
-			ExportImportServiceUtil.exportPortletInfoAsFileInBackground(
+			_exportImportService.exportPortletInfoAsFileInBackground(
 				exportImportConfiguration);
 		}
 		catch (Exception e) {
@@ -256,14 +257,30 @@ public class ExportImportMVCActionCommand
 					themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					themeDisplay.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
 					importPortletSettingsMap);
 
-		ExportImportServiceUtil.importPortletInfoInBackground(
+		_exportImportService.importPortletInfoInBackground(
 			exportImportConfiguration, inputStream);
+	}
+
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	@Reference
+	protected void setExportImportService(
+		ExportImportService exportImportService) {
+
+		_exportImportService = exportImportService;
 	}
 
 	@Override
@@ -287,17 +304,21 @@ public class ExportImportMVCActionCommand
 					themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					themeDisplay.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
 					importPortletSettingsMap);
 
-		return ExportImportServiceUtil.validateImportPortletInfo(
+		return _exportImportService.validateImportPortletInfo(
 			exportImportConfiguration, inputStream);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportMVCActionCommand.class);
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+	private ExportImportService _exportImportService;
 
 }

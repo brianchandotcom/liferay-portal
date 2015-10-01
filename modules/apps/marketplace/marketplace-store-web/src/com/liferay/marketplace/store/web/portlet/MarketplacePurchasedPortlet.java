@@ -14,6 +14,8 @@
 
 package com.liferay.marketplace.store.web.portlet;
 
+import com.liferay.marketplace.service.AppLocalService;
+import com.liferay.marketplace.service.AppService;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.marketplace.store.web.oauth.util.OAuthManager;
 
@@ -50,6 +52,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = {Portlet.class}
 )
 public class MarketplacePurchasedPortlet extends MarketplaceStorePortlet {
+
+	@Reference
+	protected void setAppLocalService(AppLocalService appLocalService) {
+		super.setAppLocalService(appLocalService);
+	}
+
+	@Reference
+	protected void setAppService(AppService appService) {
+		super.setAppService(appService);
+	}
 
 	@Override
 	@Reference

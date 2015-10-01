@@ -228,6 +228,7 @@ public class RTLCSSConverter {
 
 	protected String processNoFlip(String css) {
 		css = css.replaceAll("/\\*\\s*@noflip\\s*\\*/ *(\\n|$)", "");
+
 		return css.replaceAll("/\\*\\s*@noflip\\s*\\*/", "@noflip ");
 	}
 

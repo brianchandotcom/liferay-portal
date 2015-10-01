@@ -103,7 +103,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
 			<then>
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+				<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
 				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 				<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
@@ -124,7 +124,7 @@
 	</command>
 
 	<command name="tearDownPG">
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+		<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
 		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
 
@@ -157,7 +157,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
 			<then>
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+				<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
 				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 				<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />

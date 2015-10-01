@@ -341,10 +341,10 @@ public class RTLCSSConverter {
 				icssExpressionMembers) {
 
 			if (icssExpressionMember instanceof CSSExpressionMemberTermURI) {
-				CSSExpressionMemberTermURI cssExpressionMemberTermSimpleURI =
-					(CSSExpressionMemberTermURI)cssExpressionMember;
+				CSSExpressionMemberTermURI cssExpressionMemberTermURI =
+					(CSSExpressionMemberTermURI)icssExpressionMember;
 
-				String uri = cssExpressionMemberTermSimpleURI.getURIString();
+				String uri = cssExpressionMemberTermURI.getURIString();
 
 				int pos = uri.lastIndexOf("/") + 1;
 
@@ -357,7 +357,7 @@ public class RTLCSSConverter {
 					fileName = fileName.replaceAll("left", "right");
 				}
 
-				cssExpressionMemberTermSimpleURI.setURIString(
+				cssExpressionMemberTermURI.setURIString(
 					uri.substring(0, pos) + fileName);
 			}
 		}

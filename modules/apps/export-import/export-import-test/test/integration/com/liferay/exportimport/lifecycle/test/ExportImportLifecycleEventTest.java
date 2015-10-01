@@ -121,6 +121,12 @@ public class ExportImportLifecycleEventTest {
 			Assert.assertEquals(
 				"No Group exists with the primary key 0", nsge.getMessage());
 		}
+		catch (NoSuchLayoutSetException nslse) {
+			Assert.assertEquals(
+				"No LayoutSet exists with the key " +
+					"{groupId=0, privateLayout=false}",
+				nslse.getMessage());
+		}
 
 		Assert.assertTrue(
 			_firedExportImportLifecycleEventsMap.containsKey(

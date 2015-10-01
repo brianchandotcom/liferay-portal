@@ -104,14 +104,11 @@ public class AnnouncementsEntryPermission {
 			layout = virtualLayout.getSourceLayout();
 		}
 
-		if (permissionChecker.isGroupAdmin(layout.getGroupId()) ||
-			permissionChecker.isGroupOwner(layout.getGroupId())) {
+		String primKey = PortletPermissionUtil.getPrimaryKey(
+			layout.getPlid(), name);
 
-			return true;
-		}
-
-		return PortletPermissionUtil.contains(
-			permissionChecker, layout, name, actionId);
+		return permissionChecker.hasPermission(
+			layout.getGroupId(), name, primKey, actionId);
 	}
 
 	public static boolean contains(

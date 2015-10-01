@@ -1,14 +1,10 @@
 <definition component-name="portal-document-management-ee">
-	<property name="cmis.repository.type" value="sharepoint2010" />
+	<property name="cmis.repository.type" value="documentum6" />
 	<property name="custom.properties" value="session.store.password=true${line.separator}company.security.auth.type=screenName" />
-	<property name="hook.plugins.includes" value="sharepoint-hook" />
+	<property name="hook.plugins.includes" value="documentum-hook" />
 	<property name="testray.main.component.name" value="Documents Management" />
 
 	<set-up>
-		<var method="TestPropsUtil#get('cmis.repository.vm.host.name')" name="sharepointVMHostName" />
-
-		<execute function="AntCommand" locator1="build-test-sharepoint.xml" value1="clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}" />
-
 		<execute macro="User#loginPG">
 			<var name="authenticationMethod" value="By Screen Name" />
 			<var name="userScreenName" value="test" />
@@ -19,7 +15,7 @@
 		</execute>
 
 		<execute macro="User#editDetailsViaMyAccount">
-			<var name="userScreenNameEdit" value="administrator" />
+			<var name="userScreenNameEdit" value="barthur" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -28,15 +24,15 @@
 
 		<execute macro="User#editPasswordViaMyAccount">
 			<var name="currentPassword" value="test" />
-			<var name="newPassword" value="password" />
+			<var name="newPassword" value="barthur" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
 			<var name="authenticationMethod" value="By Screen Name" />
-			<var name="password" value="password" />
-			<var name="userScreenName" value="administrator" />
+			<var name="password" value="barthur" />
+			<var name="userScreenName" value="barthur" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -46,16 +42,40 @@
 		<execute macro="DMRepository#gotoAdd" />
 
 		<execute macro="DMRepository#select">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-			<var name="dmRepositoryType" value="Sharepoint" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
+			<var name="dmRepositoryType" value="Documentum" />
 		</execute>
 
-		<execute macro="DMRepository#addSharepoint">
-			<var name="dmRepositoryLibraryName" value="Documents" />
-			<var name="dmRepositorySiteURL" value="http://${sharepointVMHostName}" />
+		<execute macro="DMRepository#addDocumentum">
+			<var name="dmCabinetName" value="Wombat Insurance Co" />
+			<var name="dmRepositoryFieldName" value="documentum" />
 		</execute>
 
 		<execute macro="DMRepository#save" />
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
+			<var name="dmFolderName" value="Claim Templates" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
+			<var name="dmFolderName" value="Filed Claims" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -89,9 +109,9 @@
 		</execute>
 	</tear-down>
 
-	<command name="AddDocument" priority="4">
+	<command name="AddDocument" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -108,13 +128,13 @@
 		</execute>
 	</command>
 
-	<command name="AddDocumentInSubfolder" priority="4">
+	<command name="AddDocumentInSubfolder" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
@@ -135,7 +155,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
@@ -151,9 +171,9 @@
 		</execute>
 	</command>
 
-	<command name="AddSubfolder" priority="4">
+	<command name="AddSubfolder" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
@@ -165,9 +185,9 @@
 		</execute>
 	</command>
 
-	<command name="CheckinDocument" priority="4">
+	<command name="CheckinDocument" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -188,7 +208,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
@@ -204,7 +224,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconNotLockedCP">
@@ -220,9 +240,9 @@
 		</execute>
 	</command>
 
-	<command name="CheckoutDocument" priority="4">
+	<command name="CheckoutDocument" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -243,7 +263,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
@@ -259,9 +279,9 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDocument" priority="4">
+	<command name="DeleteDocument" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -275,7 +295,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
@@ -285,9 +305,9 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteDocumentInSubfolder" priority="4">
+	<command name="DeleteDocumentInSubfolder" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
@@ -308,7 +328,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
@@ -323,7 +343,7 @@
 		<execute macro="DMDocument#gotoHomeCP" />
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
@@ -337,9 +357,9 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteSubfolder" priority="4">
+	<command name="DeleteSubfolder" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
@@ -352,7 +372,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#cannotViewCP">
@@ -362,9 +382,9 @@
 		<execute macro="DMFolder#viewDefaultCP" />
 	</command>
 
-	<command name="EditDocumentFile" priority="4">
+	<command name="EditDocumentFile" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -380,7 +400,7 @@
 		<execute macro="DMDocument#gotoHomeCP" />
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
@@ -402,9 +422,9 @@
 		</execute>
 	</command>
 
-	<command name="EditDocumentTitleFileExtension" priority="4">
+	<command name="EditDocumentTitleFileExtension" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -422,7 +442,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
@@ -434,9 +454,9 @@
 		</execute>
 	</command>
 
-	<command name="EditDocumentTitleFileNameAndFileExtension" priority="4">
+	<command name="EditDocumentTitleFileNameAndFileExtension" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -454,7 +474,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
@@ -466,9 +486,9 @@
 		</execute>
 	</command>
 
-	<command name="EditDocumentTitleRemoveFileExtension" priority="4">
+	<command name="EditDocumentTitleRemoveFileExtension" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -486,7 +506,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
@@ -498,21 +518,21 @@
 		</execute>
 	</command>
 
-	<command name="MoveCheckedoutDocumentToFolder" priority="4">
+	<command name="MoveCheckedoutDocumentToFolder" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
-			<var name="dmSubFolderName" value="Sharepoint Folder" />
+			<var name="dmSubFolderName" value="Documentum Subfolder Name" />
 		</execute>
 
 		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="Sharepoint Folder" />
+			<var name="dmFolderName" value="Documentum Subfolder Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -520,7 +540,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -541,7 +561,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
@@ -561,18 +581,18 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#moveToSubFolderCP">
 			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmFolderName" value="Sharepoint Repository Name" />
-			<var name="dmSubFolderName" value="Sharepoint Folder" />
+			<var name="dmFolderName" value="Documentum Repository Name" />
+			<var name="dmSubFolderName" value="Documentum Subfolder Name" />
 		</execute>
 
 		<execute macro="DMDocument#viewMovedToFolderCP">
 			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmFolderName" value="Sharepoint Folder" />
+			<var name="dmFolderName" value="Documentum Subfolder Name" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
@@ -588,9 +608,9 @@
 		</execute>
 	</command>
 
-	<command name="MoveDocumentToHome" priority="4">
+	<command name="MoveDocumentToHome" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -620,7 +640,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
@@ -628,9 +648,9 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocument" priority="4">
+	<command name="SearchDocument" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -644,13 +664,13 @@
 
 		<execute macro="DMDocument#viewSearchResultsCP">
 			<var name="dmDocumentTitle" value="Document_2.odt" />
-			<var name="dmParentFolder" value="Home » Sharepoint Repository Name" />
+			<var name="dmParentFolder" value="Home » Documentum Repository Name" />
 		</execute>
 	</command>
 
-	<command name="SearchDocumentViaHome" priority="4">
+	<command name="SearchDocumentViaHome" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -666,14 +686,14 @@
 
 		<execute macro="DMDocument#viewSearchResultsCP">
 			<var name="dmDocumentTitle" value="Document_3.odt" />
-			<var name="dmParentFolder" value="Home » Sharepoint Repository Name" />
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmParentFolder" value="Home » Documentum Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 	</command>
 
-	<command name="ViewEditedCheckedoutDocument" priority="4">
+	<command name="ViewEditedCheckedoutDocument" priority="5">
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -686,6 +706,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
+
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
@@ -694,7 +715,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#editCP">
@@ -709,7 +730,7 @@
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">
@@ -725,17 +746,17 @@
 		</execute>
 	</command>
 
-	<command name="ViewRepository" priority="4">
+	<command name="ViewRepository" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
 		<execute macro="DMRepository#viewCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 	</command>
 </definition>

@@ -55,12 +55,19 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMRepository#addCP">
-			<var name="dmRepositoryLibraryName" value="Documents" />
+		<execute macro="DMRepository#gotoAdd" />
+
+		<execute macro="DMRepository#select">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-			<var name="dmRepositorySiteURL" value="http://${sharepointVMHostName}" />
 			<var name="dmRepositoryType" value="Sharepoint" />
 		</execute>
+
+		<execute macro="DMRepository#addSharepoint">
+			<var name="dmRepositoryLibraryName" value="Documents" />
+			<var name="dmRepositorySiteURL" value="http://${sharepointVMHostName}" />
+		</execute>
+
+		<execute macro="DMRepository#save" />
 	</set-up>
 
 	<tear-down>

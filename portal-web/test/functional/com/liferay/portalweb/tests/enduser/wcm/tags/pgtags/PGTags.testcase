@@ -63,6 +63,17 @@
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="tag name 3" />
 		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewTagPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagName" value="tag name 3" />
+		</execute>
 	</command>
 
 	<command name="AddFrontPageTag" priority="4">
@@ -134,7 +145,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
@@ -245,7 +256,7 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="tag name" />
@@ -258,6 +269,7 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 		</execute>
 
@@ -296,7 +308,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="硒1 liferay1" />
@@ -769,7 +781,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
@@ -864,7 +876,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addWithTag">
+		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
@@ -968,7 +980,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPG">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content 1" />
 			<var name="entryTitle" value="Entry Title 1" />
 			<var name="tagName" value="blue" />
@@ -980,7 +992,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPG">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content 2" />
 			<var name="entryTitle" value="Entry Title 2" />
 			<var name="tagName" value="blue green" />
@@ -992,20 +1004,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPG">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Entry Content 3" />
 			<var name="entryTitle" value="Entry Title 3" />
 			<var name="tagName" value="yellow" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

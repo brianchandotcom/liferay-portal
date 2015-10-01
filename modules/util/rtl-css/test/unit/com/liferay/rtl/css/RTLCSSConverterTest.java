@@ -16,9 +16,9 @@ package com.liferay.rtl.css;
 
 import com.helger.commons.charset.CCharset;
 import com.helger.css.ECSSVersion;
-import com.helger.css.decl.CSSStyleRule;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.writer.CSSWriter;
 import com.helger.css.writer.CSSWriterSettings;
 
 import java.net.URL;
@@ -26,8 +26,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -431,9 +429,11 @@ public class RTLCSSConverterTest {
 
 		Assert.assertNotNull(rtlCssConverter);
 
-		Assert.assertEquals(
-			formatCss(read("main_rtl.css")),
-			rtlCssConverter.process(read("main.css")));
+		String expected = formatCss(read("main_rtl.css"));
+
+		String actual = rtlCssConverter.process(read("main.css"));
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -477,19 +477,10 @@ public class RTLCSSConverterTest {
 		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
 			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
 
-		List<CSSStyleRule> cssStyleRules =
-			cascadingStyleSheet.getAllStyleRules();
+		CSSWriter writer = new CSSWriter(
+			new CSSWriterSettings(ECSSVersion.CSS30, true));
 
-		StringBuilder sb = new StringBuilder(cssStyleRules.size());
-
-		CSSWriterSettings cssWriterSettings = new CSSWriterSettings(
-			ECSSVersion.CSS30, true);
-
-		for (CSSStyleRule cssStyleRule : cssStyleRules) {
-			sb.append(cssStyleRule.getAsCSSString(cssWriterSettings, 1));
-		}
-
-		return sb.toString();
+		return writer.getCSSAsString(cascadingStyleSheet);
 	}
 
 	protected String read(String fileName) throws Exception {

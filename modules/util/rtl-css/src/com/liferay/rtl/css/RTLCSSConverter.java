@@ -284,7 +284,8 @@ public class RTLCSSConverter {
 				sb.append(css.replace("@noflip ", ""));
 			}
 			else {
-				sb.append(cssTopLevelRule.getAsCSSString(_cssWriterSettings, 1));
+				sb.append(
+					cssTopLevelRule.getAsCSSString(_cssWriterSettings, 1));
 			}
 		}
 

@@ -476,11 +476,18 @@ public class FileEntryStagedModelDataHandler
 
 						serviceContext.setUuid(fileVersion.getUuid());
 
+						String fileEntryTitle =
+							DLFileEntryLocalServiceUtil.getUniqueTitle(
+								portletDataContext.getScopeGroupId(),
+								existingFileEntry.getFolderId(),
+								existingFileEntry.getFileEntryId(),
+								fileEntry.getTitle(), fileEntry.getExtension());
+
 						importedFileEntry =
 							DLAppLocalServiceUtil.updateFileEntry(
 								userId, existingFileEntry.getFileEntryId(),
 								fileEntry.getFileName(),
-								fileEntry.getMimeType(), fileEntry.getTitle(),
+								fileEntry.getMimeType(), fileEntryTitle,
 								fileEntry.getDescription(), null, false, is,
 								fileEntry.getSize(), serviceContext);
 					}

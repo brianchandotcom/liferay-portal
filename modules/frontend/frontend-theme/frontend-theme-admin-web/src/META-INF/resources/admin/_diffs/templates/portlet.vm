@@ -19,7 +19,7 @@
 				</div>
 
 				#if ($portlet_display.isShowBackIcon())
-					<div class="hidden-xs toolbar-group-content">
+					<div class="toolbar-group-content">
 						<a href="$portlet_back_url"><span class="icon-angle-left icon-monospaced"></span></a>
 					</div>
 				#end

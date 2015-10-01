@@ -51,6 +51,7 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -107,65 +108,18 @@ public class StagingImplTest {
 
 	@Test
 	public void testInitialPublication() throws Exception {
-		LayoutTestUtil.addLayout(_group);
-		LayoutTestUtil.addLayout(_group, true);
+		boolean stagingDeleteTempLarOnSuccess =
+			PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS;
 
-		JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+		PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS = false;
 
-		enableLocalStaging(false);
-
-		Assert.assertEquals(
-			1,
-			JournalArticleLocalServiceUtil.getArticlesCount(
-				_group.getGroupId()));
-
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
-
-		String userIdStrategyString = MapUtil.getString(
-			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
-
-		UserIdStrategy userIdStrategy =
-			ExportImportHelperUtil.getUserIdStrategy(
-				TestPropsValues.getUserId(), userIdStrategyString);
-
-		String includePattern = String.valueOf(_group.getGroupId()) + "*.lar";
-
-		String[] larFileNames = FileUtil.find(
-			SystemProperties.get(SystemProperties.TMP_DIR), includePattern,
-			null);
-
-		Arrays.sort(larFileNames);
-
-		File larFile = new File(larFileNames[larFileNames.length - 1]);
-
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(larFile);
-
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				_group.getCompanyId(), _group.getGroupId(), parameterMap,
-				userIdStrategy, zipReader);
-
-		String journalPortletPath = ExportImportPathUtil.getPortletPath(
-			portletDataContext, JournalPortletKeys.JOURNAL);
-
-		String portletData = portletDataContext.getZipEntryAsString(
-			journalPortletPath + StringPool.SLASH + _group.getGroupId() +
-				"/portlet-data.xml");
-
-		Document document = SAXReaderUtil.read(portletData);
-
-		portletDataContext.setImportDataRootElement(document.getRootElement());
-
-		Element journalElement = portletDataContext.getImportDataGroupElement(
-			JournalArticle.class);
-
-		List<Element> journalStagedModelElements = journalElement.elements(
-			"staged-model");
-
-		Assert.assertEquals(0, journalStagedModelElements.size());
+		try {
+			doTestInitialPublication();
+		}
+		finally {
+			PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS =
+				stagingDeleteTempLarOnSuccess;
+		}
 	}
 
 	@Test
@@ -263,6 +217,68 @@ public class StagingImplTest {
 		return AssetCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(), groupId, 0, titleMap, descriptionMap,
 			assetVocabulary.getVocabularyId(), new String[0], serviceContext);
+	}
+
+	protected void doTestInitialPublication() throws Exception {
+		LayoutTestUtil.addLayout(_group);
+		LayoutTestUtil.addLayout(_group, true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		enableLocalStaging(false);
+
+		Assert.assertEquals(
+			1,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				_group.getGroupId()));
+
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+
+		String userIdStrategyString = MapUtil.getString(
+			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+
+		UserIdStrategy userIdStrategy =
+			ExportImportHelperUtil.getUserIdStrategy(
+				TestPropsValues.getUserId(), userIdStrategyString);
+
+		String includePattern = String.valueOf(_group.getGroupId()) + "*.lar";
+
+		String[] larFileNames = FileUtil.find(
+			SystemProperties.get(SystemProperties.TMP_DIR), includePattern,
+			null);
+
+		Arrays.sort(larFileNames);
+
+		File larFile = new File(larFileNames[larFileNames.length - 1]);
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(larFile);
+
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				_group.getCompanyId(), _group.getGroupId(), parameterMap,
+				userIdStrategy, zipReader);
+
+		String journalPortletPath = ExportImportPathUtil.getPortletPath(
+			portletDataContext, JournalPortletKeys.JOURNAL);
+
+		String portletData = portletDataContext.getZipEntryAsString(
+			journalPortletPath + StringPool.SLASH + _group.getGroupId() +
+				"/portlet-data.xml");
+
+		Document document = SAXReaderUtil.read(portletData);
+
+		portletDataContext.setImportDataRootElement(document.getRootElement());
+
+		Element journalElement = portletDataContext.getImportDataGroupElement(
+			JournalArticle.class);
+
+		List<Element> journalStagedModelElements = journalElement.elements(
+			"staged-model");
+
+		Assert.assertEquals(0, journalStagedModelElements.size());
 	}
 
 	protected void enableLocalStaging(boolean branching) throws Exception {

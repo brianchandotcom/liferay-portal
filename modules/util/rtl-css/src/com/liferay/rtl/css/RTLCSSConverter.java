@@ -47,10 +47,10 @@ public class RTLCSSConverter {
 	}
 
 	public RTLCSSConverter(boolean compress) {
-		_settings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
+		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
 
-		_settings.setOptimizedOutput(compress);
-		_settings.setRemoveUnnecessaryCode(Boolean.TRUE);
+		_cssWriterSettings.setOptimizedOutput(compress);
+		_cssWriterSettings.setRemoveUnnecessaryCode(Boolean.TRUE);
 	}
 
 	public String process(String css) {
@@ -277,12 +277,12 @@ public class RTLCSSConverter {
 			}
 
 			if (cssTopLevelRule instanceof CSSUnknownRule) {
-				String css = cssTopLevelRule.getAsCSSString(_settings, 1);
+				String css = cssTopLevelRule.getAsCSSString(_cssWriterSettings, 1);
 
 				sb.append(css.replace("@noflip ", ""));
 			}
 			else {
-				sb.append(cssTopLevelRule.getAsCSSString(_settings, 1));
+				sb.append(cssTopLevelRule.getAsCSSString(_cssWriterSettings, 1));
 			}
 		}
 
@@ -445,6 +445,6 @@ public class RTLCSSConverter {
 		_replacementStyles.put("padding-left", "padding-right");
 	}
 
-	private final CSSWriterSettings _settings;
+	private final CSSWriterSettings _cssWriterSettings;
 
 }

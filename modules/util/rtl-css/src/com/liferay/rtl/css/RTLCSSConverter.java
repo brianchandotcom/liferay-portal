@@ -63,13 +63,13 @@ public class RTLCSSConverter {
 		return processRules(cascadingStyleSheet.getAllRules());
 	}
 
-	private void convertBackground(CSSStyleRule cssStyleRule, String property) {
+	protected void convertBackground(CSSStyleRule cssStyleRule, String property) {
 		reverseImage(cssStyleRule, property);
 
 		convertBackgroundPosition(cssStyleRule, property);
 	}
 
-	private void convertBackgroundPosition(
+	protected void convertBackgroundPosition(
 		CSSStyleRule cssStyleRule, String property) {
 
 		CSSDeclaration cssDeclaration =
@@ -129,7 +129,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void convertShorthand(CSSStyleRule cssStyleRule, String property) {
+	protected void convertShorthand(CSSStyleRule cssStyleRule, String property) {
 		CSSDeclaration cssDeclaration =
 			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
@@ -158,7 +158,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void convertShorthandRadius(
+	protected void convertShorthandRadius(
 		CSSStyleRule cssStyleRule, String property) {
 
 		CSSDeclaration cssDeclaration =
@@ -226,12 +226,12 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private String processNoFlip(String css) {
+	protected String processNoFlip(String css) {
 		css = css.replaceAll("/\\*\\s*@noflip\\s*\\*/ *(\\n|$)", "");
 		return css.replaceAll("/\\*\\s*@noflip\\s*\\*/", "@noflip ");
 	}
 
-	private void processRule(CSSStyleRule cssStyleRule) {
+	protected void processRule(CSSStyleRule cssStyleRule) {
 		for (String property : _replacementStyles.keySet()) {
 			replaceStyle(cssStyleRule, property);
 		}
@@ -264,7 +264,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private String processRules(List<ICSSTopLevelRule> cssTopLevelRules) {
+	protected String processRules(List<ICSSTopLevelRule> cssTopLevelRules) {
 		StringBuilder sb = new StringBuilder();
 
 		for (ICSSTopLevelRule cssTopLevelRule : cssTopLevelRules) {
@@ -290,12 +290,12 @@ public class RTLCSSConverter {
 		return sb.toString();
 	}
 
-	private void replaceStyle(CSSStyleRule cssStyleRule, String property) {
+	protected void replaceStyle(CSSStyleRule cssStyleRule, String property) {
 		replaceStyle(cssStyleRule, property, false);
 		replaceStyle(cssStyleRule, property, true);
 	}
 
-	private void replaceStyle(
+	protected void replaceStyle(
 		CSSStyleRule cssStyleRule, String property, boolean addAsterisk) {
 
 		String asterisk = "";
@@ -323,7 +323,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void reverseImage(CSSStyleRule cssStyleRule, String property) {
+	protected void reverseImage(CSSStyleRule cssStyleRule, String property) {
 		CSSDeclaration cssDeclaration =
 			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
@@ -360,7 +360,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void reverseStyle(CSSStyleRule cssStyleRule, String property) {
+	protected void reverseStyle(CSSStyleRule cssStyleRule, String property) {
 		CSSDeclaration cssDeclaration =
 			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
@@ -397,7 +397,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private String stripProperty(String property) {
+	protected String stripProperty(String property) {
 		return property.replaceAll("\\**\\b", "");
 	}
 

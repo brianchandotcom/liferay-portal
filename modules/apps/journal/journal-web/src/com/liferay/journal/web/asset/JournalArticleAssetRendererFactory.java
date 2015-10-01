@@ -60,10 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"search.asset.type=com.liferay.journal.model.JournalArticle"
-	},
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = AssetRendererFactory.class
 )
 public class JournalArticleAssetRendererFactory
@@ -75,6 +72,7 @@ public class JournalArticleAssetRendererFactory
 		setClassName(JournalArticle.class.getName());
 		setLinkable(true);
 		setPortletId(JournalPortletKeys.JOURNAL);
+		setSearchable(true);
 		setSupportsClassTypes(true);
 	}
 

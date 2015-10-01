@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"search.asset.type=com.liferay.journal.model.JournalFolder"
-	},
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = AssetRendererFactory.class
 )
 public class JournalFolderAssetRendererFactory
@@ -57,6 +54,7 @@ public class JournalFolderAssetRendererFactory
 		setCategorizable(false);
 		setClassName(JournalFolder.class.getName());
 		setPortletId(JournalPortletKeys.JOURNAL);
+		setSearchable(true);
 	}
 
 	@Override

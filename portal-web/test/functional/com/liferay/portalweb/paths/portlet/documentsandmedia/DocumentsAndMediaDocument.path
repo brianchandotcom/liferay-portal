@@ -21,42 +21,42 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_DOWNLOAD_BUTTON</td>
-	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Download')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Download')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_EDIT_BUTTON</td>
-	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Edit')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_MOVE_BUTTON</td>
-	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Move')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CHECKOUT_BUTTON</td>
-	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Checkout')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CANCEL_CHECKOUT_BUTTON</td>
-	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Cancel Checkout')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Cancel Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CHECKIN_BUTTON</td>
-	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Checkin')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Checkin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_PERMISSIONS_BUTTON</td>
-	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Permissions')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_RECYCLE_BIN_BUTTON</td>
-	<td>//div[@id='_199_fileEntryToolbar']/div/button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

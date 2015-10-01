@@ -33,7 +33,7 @@ public class AssetCategoryPortletXStreamConfigurator
 	implements XStreamConfigurator {
 
 	@Override
-	public List<XStreamAlias> getAliases() {
+	public List<XStreamAlias> getXStreamAliases() {
 		return ListUtil.toList(
 			new XStreamAlias[] {
 				new XStreamAlias(AssetCategoryImpl.class, "AssetCategory"),
@@ -42,7 +42,7 @@ public class AssetCategoryPortletXStreamConfigurator
 	}
 
 	@Override
-	public List<XStreamConverter> getConverters() {
+	public List<XStreamConverter> getXStreamConverters() {
 		return null;
 	}
 

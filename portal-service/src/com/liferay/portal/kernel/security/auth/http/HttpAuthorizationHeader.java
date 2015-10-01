@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -107,7 +107,7 @@ public class HttpAuthorizationHeader {
 		return SCHEME_BASIC + StringPool.SPACE + encodedUserNameAndPassword;
 	}
 
-	private final Map<String, String> _authParameters = new HashMap<>();
+	private final Map<String, String> _authParameters = new LinkedHashMap<>();
 	private String _scheme;
 
 }

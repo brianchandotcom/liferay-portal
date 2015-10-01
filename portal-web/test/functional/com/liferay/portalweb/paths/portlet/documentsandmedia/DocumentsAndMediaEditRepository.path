@@ -33,6 +33,16 @@
 	<td>//input[contains(@id,'LIBRARY_NAME')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REPOSITORY_FIELD</td>
+	<td>//input[contains(@id,'REPOSITORY')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CABINET_FIELD</td>
+	<td>//input[contains(@id,'CABINET')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

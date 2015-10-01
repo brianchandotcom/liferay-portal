@@ -22,12 +22,12 @@ import com.helger.css.decl.CSSExpressionMemberTermSimple;
 import com.helger.css.decl.CSSExpressionMemberTermURI;
 import com.helger.css.decl.CSSMediaRule;
 import com.helger.css.decl.CSSStyleRule;
+import com.helger.css.decl.CSSUnknownRule;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.ICSSExpressionMember;
 import com.helger.css.decl.ICSSTopLevelRule;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.reader.errorhandler.DoNothingCSSParseErrorHandler;
-import com.helger.css.writer.CSSWriter;
 import com.helger.css.writer.CSSWriterSettings;
 
 import java.util.Arrays;
@@ -50,24 +50,17 @@ public class RTLCSSConverter {
 		_settings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
 
 		_settings.setOptimizedOutput(compress);
-		_settings.setRemoveUnnecessaryCode(compress);
-
-		_writer = new CSSWriter(_settings);
-
-		_writer.setWriteHeaderText(Boolean.FALSE);
-		_writer.setWriteFooterText(Boolean.FALSE);
+		_settings.setRemoveUnnecessaryCode(Boolean.TRUE);
 	}
 
 	public String process(String css) {
+		css = processNoFlip(css);
+
 		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
 			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30,
 			new DoNothingCSSParseErrorHandler());
 
-		List<ICSSTopLevelRule> rules = cascadingStyleSheet.getAllRules();
-
-		processRules(rules);
-
-		return _writer.getCSSAsString(cascadingStyleSheet);
+		return processRules(cascadingStyleSheet.getAllRules());
 	}
 
 	private void convertBackground(CSSStyleRule styleRule, String property) {
@@ -214,6 +207,11 @@ public class RTLCSSConverter {
 		}
 	}
 
+	private String processNoFlip(String css) {
+		css = css.replaceAll("/\\*\\s*@noflip\\s*\\*/ *(\\n|$)", "");
+		return css.replaceAll("/\\*\\s*@noflip\\s*\\*/", "@noflip ");
+	}
+
 	private void processRule(CSSStyleRule styleRule) {
 		for (String property : _replacementStyles.keySet()) {
 			replaceStyle(styleRule, property);
@@ -245,7 +243,9 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void processRules(List<ICSSTopLevelRule> rules) {
+	private String processRules(List<ICSSTopLevelRule> rules) {
+		StringBuilder sb = new StringBuilder();
+
 		for (ICSSTopLevelRule rule : rules) {
 			if (rule instanceof CSSStyleRule) {
 				CSSStyleRule styleRule = (CSSStyleRule)rule;
@@ -257,7 +257,18 @@ public class RTLCSSConverter {
 
 				processRules(mediaRule.getAllRules());
 			}
+
+			if (rule instanceof CSSUnknownRule) {
+				String css = rule.getAsCSSString(_settings, 1);
+
+				sb.append(css.replace("@noflip ", ""));
+			}
+			else {
+				sb.append(rule.getAsCSSString(_settings, 1));
+			}
 		}
+
+		return sb.toString();
 	}
 
 	private void replaceStyle(CSSStyleRule styleRule, String property) {
@@ -414,6 +425,5 @@ public class RTLCSSConverter {
 	}
 
 	private final CSSWriterSettings _settings;
-	private final CSSWriter _writer;
 
 }

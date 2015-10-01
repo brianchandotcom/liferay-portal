@@ -72,11 +72,11 @@ import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.ListTypeLocalServiceUtil;
+import com.liferay.portal.service.ListTypeLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -88,8 +88,8 @@ import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
-import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
@@ -112,6 +112,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.Globals;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -199,7 +200,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
-		User user = UserServiceUtil.addUser(
+		User user = _userService.addUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
@@ -213,7 +214,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				userGroupRole.setUserId(user.getUserId());
 			}
 
-			user = UserServiceUtil.updateUser(
+			user = _userService.updateUser(
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, reminderQueryQuestion,
 				reminderQueryAnswer, user.getScreenName(),
@@ -249,7 +250,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
-		UserServiceUtil.deleteRoleUser(roleId, user.getUserId());
+		_userService.deleteRoleUser(roleId, user.getUserId());
 	}
 
 	protected void deleteUsers(ActionRequest actionRequest) throws Exception {
@@ -268,11 +269,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					status = WorkflowConstants.STATUS_INACTIVE;
 				}
 
-				UserServiceUtil.updateStatus(
+				_userService.updateStatus(
 					deleteUserId, status, new ServiceContext());
 			}
 			else {
-				UserServiceUtil.deleteUser(deleteUserId);
+				_userService.deleteUser(deleteUserId);
 			}
 		}
 	}
@@ -386,7 +387,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
 			if (scopeGroup.isUser() &&
-				(UserLocalServiceUtil.fetchUserById(
+				(_userLocalService.fetchUserById(
 					scopeGroup.getClassPK()) == null)) {
 
 				redirect = HttpUtil.setParameter(redirect, "doAsGroupId", 0);
@@ -508,7 +509,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				"announcementsType" + AnnouncementsEntryConstants.TYPES[0] +
 					"Email") == null) {
 
-			return AnnouncementsDeliveryLocalServiceUtil.getUserDeliveries(
+			return _announcementsDeliveryLocalService.getUserDeliveries(
 				user.getUserId());
 		}
 
@@ -522,16 +523,45 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String parameterValue = ParamUtil.getString(
 			portletRequest, parameterName);
 
-		ListType listType = ListTypeLocalServiceUtil.addListType(
+		ListType listType = _listTypeLocalService.addListType(
 			parameterValue, type);
 
 		return listType.getListTypeId();
 	}
 
+	@Reference(unbind = "-")
+	protected void setAnnouncementsDeliveryLocalService(
+		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
+
+		_announcementsDeliveryLocalService = announcementsDeliveryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setListTypeLocalService(
+		ListTypeLocalService listTypeLocalService) {
+
+		_listTypeLocalService = listTypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
+	}
+
 	protected User updateLockout(ActionRequest actionRequest) throws Exception {
 		User user = PortalUtil.getSelectedUser(actionRequest);
 
-		UserServiceUtil.updateLockoutById(user.getUserId(), false);
+		_userService.updateLockoutById(user.getUserId(), false);
 
 		return user;
 	}
@@ -579,8 +609,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		if (fileEntryId > 0) {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				fileEntryId);
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 			portraitBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
@@ -663,7 +692,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
-		user = UserServiceUtil.updateUser(
+		user = _userService.updateUser(
 			user.getUserId(), oldPassword, newPassword1, newPassword2,
 			passwordReset, reminderQueryQuestion, reminderQueryAnswer,
 			screenName, emailAddress, facebookId, openId, !deleteLogo,
@@ -759,5 +788,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
+
+	private AnnouncementsDeliveryLocalService
+				_announcementsDeliveryLocalService;
+	private DLAppLocalService _dlAppLocalService;
+	private ListTypeLocalService _listTypeLocalService;
+	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }

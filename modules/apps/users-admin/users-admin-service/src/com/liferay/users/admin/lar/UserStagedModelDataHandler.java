@@ -18,8 +18,8 @@ import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -42,9 +43,9 @@ public class UserStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		User user = UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
+		User user = _userLocalService.fetchUserByUuidAndCompanyId(
 			uuid, group.getCompanyId());
 
 		if (user != null) {
@@ -54,7 +55,7 @@ public class UserStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(User user) throws PortalException {
-		UserLocalServiceUtil.deleteUser(user);
+		_userLocalService.deleteUser(user);
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class UserStagedModelDataHandler
 		List<User> users = new ArrayList<>();
 
 		users.add(
-			UserLocalServiceUtil.fetchUserByUuidAndCompanyId(uuid, companyId));
+			_userLocalService.fetchUserByUuidAndCompanyId(uuid, companyId));
 
 		return users;
 	}
@@ -88,5 +89,18 @@ public class UserStagedModelDataHandler
 	protected void doImportStagedModel(
 		PortletDataContext portletDataContext, User user) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private UserLocalService _userLocalService;
 
 }

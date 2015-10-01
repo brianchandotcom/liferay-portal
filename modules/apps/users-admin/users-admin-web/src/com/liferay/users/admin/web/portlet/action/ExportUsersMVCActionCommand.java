@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -58,6 +58,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -213,7 +214,7 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (searchTerms.isAdvancedSearch()) {
-			return UserLocalServiceUtil.search(
+			return _userLocalService.search(
 				themeDisplay.getCompanyId(), searchTerms.getFirstName(),
 				searchTerms.getMiddleName(), searchTerms.getLastName(),
 				searchTerms.getScreenName(), searchTerms.getEmailAddress(),
@@ -222,7 +223,7 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 				(OrderByComparator<User>)null);
 		}
 		else {
-			return UserLocalServiceUtil.search(
+			return _userLocalService.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), params, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, (OrderByComparator<User>)null);
@@ -267,5 +268,12 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 
 		return sb.toString();
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private UserLocalService _userLocalService;
 
 }

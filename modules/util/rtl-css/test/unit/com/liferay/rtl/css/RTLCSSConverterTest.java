@@ -429,11 +429,9 @@ public class RTLCSSConverterTest {
 
 		Assert.assertNotNull(rtlCssConverter);
 
-		String expected = formatCss(read("main_rtl.css"));
-
-		String actual = rtlCssConverter.process(read("main.css"));
-
-		Assert.assertEquals(expected, actual);
+		Assert.assertEquals(
+			formatCss(read("main_rtl.css")),
+			rtlCssConverter.process(read("main.css")));
 	}
 
 	@Test

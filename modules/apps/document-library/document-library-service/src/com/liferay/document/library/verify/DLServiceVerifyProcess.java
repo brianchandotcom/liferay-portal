@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -513,57 +512,12 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	protected void renameDuplicateTitle(DLFileEntry dlFileEntry)
 		throws PortalException {
 
-		String uniqueTitle = getUniqueTitle(
+		String uniqueTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
 				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
 				dlFileEntry.getFileEntryId(), dlFileEntry.getTitle(),
 				dlFileEntry.getExtension());
 
 		renameTitle(dlFileEntry, uniqueTitle);
-	}
-
-	protected String getUniqueTitle(
-			long groupId, long folderId, long fileEntryId, String title,
-			String extension)
-		throws PortalException {
-
-		String titleExtension = StringPool.BLANK;
-		String titleWithoutExtension = title;
-
-		if (title.endsWith(StringPool.PERIOD.concat(extension))) {
-			titleExtension = extension;
-			titleWithoutExtension = FileUtil.stripExtension(title);
-		}
-
-		String uniqueTitle = title;
-
-		for (int i = 1;;) {
-			String uniqueFileName = DLUtil.getSanitizedFileName(
-				uniqueTitle, extension);
-
-			try {
-				DLFileEntryLocalServiceUtil.validateFile(
-					groupId, folderId, fileEntryId, uniqueFileName,
-					uniqueTitle);
-
-				return uniqueTitle;
-			}
-			catch (PortalException pe) {
-				if (!(pe instanceof DuplicateFolderNameException) &&
-					 !(pe instanceof DuplicateFileException)) {
-
-					throw pe;
-				}
-			}
-
-			uniqueTitle =
-				titleWithoutExtension + StringPool.UNDERLINE +
-					String.valueOf(i++);
-
-			if (Validator.isNotNull(titleExtension)) {
-				uniqueTitle = uniqueTitle.concat(
-					StringPool.PERIOD.concat(titleExtension));
-			}
-		}
 	}
 
 	protected DLFileEntry renameTitle(DLFileEntry dlFileEntry, String newTitle)

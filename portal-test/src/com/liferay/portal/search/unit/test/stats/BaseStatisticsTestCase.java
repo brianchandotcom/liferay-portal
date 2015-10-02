@@ -38,10 +38,10 @@ public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 	protected static String toString(StatsResults statsResults) {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{field=");
-		sb.append(statsResults.getField());
-		sb.append(", count=");
+		sb.append("{count=");
 		sb.append(statsResults.getCount());
+		sb.append(", field=");
+		sb.append(statsResults.getField());
 		sb.append(", max=");
 		sb.append(statsResults.getMax());
 		sb.append(", mean=");

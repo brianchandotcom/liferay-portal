@@ -26,8 +26,8 @@ public class UpgradeAssetTagsResourcePermission extends UpgradeProcess {
 	@Override
 	public void doUpgrade() throws Exception {
 		runSQL(
-			"delete from ResourcePermission where name = " +
-				AssetTag.class.getName() + " and scope = " +
+			"delete from ResourcePermission where name = '" +
+				AssetTag.class.getName() + "' and scope = " +
 					ResourceConstants.SCOPE_INDIVIDUAL);
 	}
 

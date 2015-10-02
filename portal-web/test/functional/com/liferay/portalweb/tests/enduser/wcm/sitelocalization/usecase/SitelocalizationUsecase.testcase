@@ -436,21 +436,22 @@
 		</execute>
 
 		<execute macro="PortalSettings#viewCurrentDefaultPortalLanguageCP">
-			<var name="defaultPortalLanguage" value="inglés (Estados Unidos)" />
-			<var name="displaySettings" value="Preferencias de presentación" />
+			<var name="defaultPortalLanguage" value="English (United States)" />
+			<var name="displaySettings" value="Display Settings" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationLocalizedCP">
-			<var name="localizedAdmin" value="Administración" />
+			<var name="tabName" value="Sites" />
+			<var name="localizedTabName" value="Sitios Web" />
 			<var name="localizedPortletCategoryName" value="Configuración" />
 			<var name="localizedPortletName" value="Ajustes del sitio" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
-			<var name="currentSiteLanguages" value="español (España),alemán (Alemania)" />
-			<var name="displaySettings" value="Preferencias de presentación" />
-			<var name="localizedSuccessMessage" value="Su petición ha terminado con éxito." />
+			<var name="currentSiteLanguages" value="Spanish (Spain),German (Germany)" />
+			<var name="displaySettings" value="Display Settings" />
+			<var name="localizedSuccessMessage" value="Your request completed successfully." />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -474,8 +475,8 @@
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="WebContent#viewAvailableLanguagesPGViaWCD">
-			<var name="webContentTranslationLanguage1" value="alemán (Alemania)" />
-			<var name="webContentTranslationLanguage2" value="inglés (Estados Unidos)" />
+			<var name="webContentTranslationLanguage1" value="German (Germany)" />
+			<var name="webContentTranslationLanguage2" value="English (United States)" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -485,16 +486,17 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationLocalizedCP">
-			<var name="localizedAdmin" value="Administración" />
+			<var name="tabName" value="Sites" />
+			<var name="localizedTabName" value="Sitios Web" />
 			<var name="localizedPortletCategoryName" value="Configuración" />
 			<var name="localizedPortletName" value="Ajustes del sitio" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
-			<var name="currentSiteLanguages" value="español (España),alemán (Alemania),inglés (Estados Unidos)" />
-			<var name="displaySettings" value="Preferencias de presentación" />
-			<var name="localizedSuccessMessage" value="Su petición ha terminado con éxito." />
+			<var name="currentSiteLanguages" value="Spanish (Spain),German (Germany),English (United States)" />
+			<var name="displaySettings" value="Display Settings" />
+			<var name="localizedSuccessMessage" value="Your request completed successfully." />
 		</execute>
 
 		<execute macro="Page#gotoPG">

@@ -114,7 +114,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			if (value.startsWith(StringPool.QUOTE) &&
 				value.endsWith(StringPool.QUOTE)) {
 
-				value = value.substring(0, value.length() - 2);
+				value = value.substring(1, value.length() - 1);
 
 				if (value.endsWith(StringPool.STAR)) {
 					matchQuery.setType(MatchQuery.Type.PHRASE_PREFIX);

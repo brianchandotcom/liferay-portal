@@ -37,10 +37,21 @@ public class MatchQueryTranslatorImpl
 	public QueryBuilder translate(MatchQuery matchQuery) {
 		String value = matchQuery.getValue();
 
+		MatchQuery.Type matchQueryType = matchQuery.getType();
+
 		if (value.startsWith(StringPool.QUOTE) &&
 			value.endsWith(StringPool.QUOTE)) {
 
 			value = value.substring(1, value.length() - 1);
+
+			if (value.endsWith(StringPool.STAR)) {
+				value = value.substring(0, value.length() - 1);
+
+				matchQueryType = MatchQuery.Type.PHRASE_PREFIX;
+			}
+			else {
+				matchQueryType = MatchQuery.Type.PHRASE;
+			}
 		}
 
 		MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(
@@ -96,9 +107,9 @@ public class MatchQueryTranslatorImpl
 			matchQueryBuilder.slop(matchQuery.getSlop());
 		}
 
-		if (matchQuery.getType() != null) {
+		if (matchQueryType != null) {
 			MatchQueryBuilder.Type matchQueryBuilderType = translate(
-				matchQuery.getType());
+				matchQueryType);
 
 			matchQueryBuilder.type(matchQueryBuilderType);
 		}

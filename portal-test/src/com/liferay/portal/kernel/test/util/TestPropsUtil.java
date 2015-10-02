@@ -53,6 +53,10 @@ public class TestPropsUtil {
 			InputStream is = classLoader.getResourceAsStream(
 				"test-portal-impl.properties");
 
+			if (is == null) {
+				return;
+			}
+
 			_props.load(is);
 
 			is = classLoader.getResourceAsStream(

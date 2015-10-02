@@ -17,6 +17,8 @@ package com.liferay.portal.servlet;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -101,8 +103,8 @@ public class NetvibesServlet extends HttpServlet {
 		String iconURL =
 			portalURL + PortalUtil.getPathContext() + portlet.getIcon();
 
-		String widgetJsURL =
-			portalURL + PortalUtil.getPathContext() + "/liferay/widget.js";
+		String widgetJsURL = portalURL + PortalWebResourcesUtil.getContextPath(
+			PortalWebResourceConstants.RESOURCE_TYPE_JS) + "/liferay/widget.js";
 
 		String widgetURL = request.getRequestURL().toString();
 

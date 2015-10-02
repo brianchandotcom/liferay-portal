@@ -578,9 +578,9 @@
 			<var name="gmailMessageTitle" value="New Blogs Post by Test Test" />
 		</execute>
 
-		<execute macro="Gmail#openMessageLink">
+		<execute macro="Gmail#openMessageContinueReadingButton">
 			<var name="contentTitle" value="Blogs Entry Title" />
-			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="gmailAssetType" value="Blogs" />
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 

@@ -57,6 +57,30 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			AccessControlled accessControlled)
 		throws SecurityException {
 
+		if (alreadyChecked()){
+			return;
+		}
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		List<String> serviceAccessPolicyNames = getActiveSAPNames();
+
+		List<String> systemSAPNames = getSystemSAPNames(companyId);
+		serviceAccessPolicyNames.addAll(systemSAPNames);
+
+		Set<String> allowedServiceSignatures =
+			loadAllowedServiceSignatures(companyId, serviceAccessPolicyNames);
+
+		Class<?> clazz = method.getDeclaringClass();
+
+		String className = clazz.getName();
+		String methodName = method.getName();
+
+		checkAccess(allowedServiceSignatures, className, methodName);
+	}
+
+
+	protected boolean alreadyChecked() {
 		AccessControlContext accessControlContext =
 			AccessControlUtil.getAccessControlContext();
 
@@ -67,59 +91,73 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 				AccessControlContext.Settings.SERVICE_DEPTH.toString());
 
 			if (serviceDepth > 1) {
-				return;
+				return true;
 			}
 		}
 
+		return false;
+	}
+
+	protected List<String> getActiveSAPNames() {
 		List<String> serviceAccessPolicyNames =
 			ServiceAccessPolicyThreadLocal.getActiveServiceAccessPolicyNames();
 
-		SAPConfiguration sapConfiguration = null;
+		if (serviceAccessPolicyNames == null) {
+			serviceAccessPolicyNames = new ArrayList<>();
 
+			ServiceAccessPolicyThreadLocal.
+				setActiveServiceAccessPolicyNames(serviceAccessPolicyNames);
+		}
+
+		return serviceAccessPolicyNames;
+	}
+
+	protected List<String> getSystemSAPNames(long companyId) {
+		List<String> systemSAPNames = new ArrayList<>(2);
+
+		SAPConfiguration sapConfiguration = null;
 		try {
 			sapConfiguration = _configurationFactory.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
-					CompanyThreadLocal.getCompanyId(),
-					SAPConstants.SERVICE_NAME));
+					companyId, SAPConstants.SERVICE_NAME));
 		}
 		catch (ConfigurationException ce) {
 			throw new SecurityException(
 				"Unable to get service access policy configuration", ce);
 		}
 
-		if (sapConfiguration.useSystemSAPEntries() ||
-			(serviceAccessPolicyNames == null)) {
+		if (!sapConfiguration.useSystemSAPEntries()) {
+			return systemSAPNames;
+		}
 
-			if (serviceAccessPolicyNames == null) {
-				serviceAccessPolicyNames = new ArrayList<>();
+		systemSAPNames.add(sapConfiguration.systemDefaultSAPEntryName());
 
-				ServiceAccessPolicyThreadLocal.
-					setActiveServiceAccessPolicyNames(serviceAccessPolicyNames);
-			}
+		boolean passwordBasedAuthentication = false;
 
-			serviceAccessPolicyNames.add(
-				sapConfiguration.systemDefaultSAPEntryName());
+		AccessControlContext accessControlContext =
+			AccessControlUtil.getAccessControlContext();
 
-			boolean passwordBasedAuthentication = false;
+		if (accessControlContext != null) {
+			AuthVerifierResult authVerifierResult =
+				accessControlContext.getAuthVerifierResult();
 
-			if (accessControlContext != null) {
-				AuthVerifierResult authVerifierResult =
-					accessControlContext.getAuthVerifierResult();
-
-				if (authVerifierResult != null) {
-					passwordBasedAuthentication =
-						authVerifierResult.isPasswordBasedAuthentication();
-				}
-			}
-
-			if (passwordBasedAuthentication) {
-				serviceAccessPolicyNames.add(
-					sapConfiguration.systemUserPasswordSAPEntryName());
+			if (authVerifierResult != null) {
+				passwordBasedAuthentication =
+					authVerifierResult.isPasswordBasedAuthentication();
 			}
 		}
 
-		long companyId = CompanyThreadLocal.getCompanyId();
+		if (passwordBasedAuthentication) {
+			systemSAPNames.add(
+				sapConfiguration.systemUserPasswordSAPEntryName());
+		}
+
+		return systemSAPNames;
+	}
+
+	protected Set<String> loadAllowedServiceSignatures(
+		long companyId, List<String> serviceAccessPolicyNames) {
 
 		Set<String> allowedServiceSignatures = new HashSet<>();
 
@@ -140,19 +178,20 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			}
 		}
 
+		return allowedServiceSignatures;
+	}
+
+	protected void checkAccess(
+		Set<String> allowedServiceSignatures, String className,
+		String methodName) {
+
 		if (allowedServiceSignatures.contains(StringPool.STAR)) {
 			return;
 		}
 
-		Class<?> clazz = method.getDeclaringClass();
-
-		String className = clazz.getName();
-
 		if (allowedServiceSignatures.contains(className)) {
 			return;
 		}
-
-		String methodName = method.getName();
 
 		String classNameAndMethodName = className.concat(
 			StringPool.POUND).concat(methodName);

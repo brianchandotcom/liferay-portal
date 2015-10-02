@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Ant Postponeed Exec
+Bundle-SymbolicName: com.liferay.ant.exec
+Bundle-Version: 1.0.1
+Export-Package: com.liferay.ant.exec
+Include-Resource:\
+	classes

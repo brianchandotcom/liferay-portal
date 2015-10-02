@@ -17,7 +17,7 @@ package com.liferay.portal.settings.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,11 +41,12 @@ public class PortalSettingsPanelApp extends BaseControlPanelEntryPanelApp {
 		return PortalSettingsPortletKeys.PORTAL_SETTINGS;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS + ")",
+		unbind = "-"
+	)
+	protected void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

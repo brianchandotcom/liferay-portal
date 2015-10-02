@@ -17,7 +17,7 @@ package com.liferay.wiki.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,11 +41,12 @@ public class WikiPanelApp extends BaseControlPanelEntryPanelApp {
 		return WikiPortletKeys.WIKI_ADMIN;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN + ")",
+		unbind = "-"
+	)
+	protected void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

@@ -199,6 +199,14 @@ public class SAPEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_D() throws Exception {
+		_persistence.countByC_D(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_D(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByC_N() throws Exception {
 		_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 

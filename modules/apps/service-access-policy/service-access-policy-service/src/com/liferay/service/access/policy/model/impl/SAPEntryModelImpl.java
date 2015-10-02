@@ -124,9 +124,10 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 				"value.object.column.bitmask.enabled.com.liferay.service.access.policy.model.SAPEntry"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long SAPENTRYID_COLUMN_BITMASK = 8L;
+	public static final long DEFAULTSAPENTRY_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long SAPENTRYID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -470,7 +471,19 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 	@Override
 	public void setDefaultSAPEntry(boolean defaultSAPEntry) {
+		_columnBitmask |= DEFAULTSAPENTRY_COLUMN_BITMASK;
+
+		if (!_setOriginalDefaultSAPEntry) {
+			_setOriginalDefaultSAPEntry = true;
+
+			_originalDefaultSAPEntry = _defaultSAPEntry;
+		}
+
 		_defaultSAPEntry = defaultSAPEntry;
+	}
+
+	public boolean getOriginalDefaultSAPEntry() {
+		return _originalDefaultSAPEntry;
 	}
 
 	@JSON
@@ -788,6 +801,10 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 		sapEntryModelImpl._setModifiedDate = false;
 
+		sapEntryModelImpl._originalDefaultSAPEntry = sapEntryModelImpl._defaultSAPEntry;
+
+		sapEntryModelImpl._setOriginalDefaultSAPEntry = false;
+
 		sapEntryModelImpl._originalName = sapEntryModelImpl._name;
 
 		sapEntryModelImpl._columnBitmask = 0;
@@ -981,6 +998,8 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 	private boolean _setModifiedDate;
 	private String _allowedServiceSignatures;
 	private boolean _defaultSAPEntry;
+	private boolean _originalDefaultSAPEntry;
+	private boolean _setOriginalDefaultSAPEntry;
 	private boolean _enabled;
 	private String _name;
 	private String _originalName;

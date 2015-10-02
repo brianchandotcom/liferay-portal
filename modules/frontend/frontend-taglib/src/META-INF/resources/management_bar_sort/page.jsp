@@ -28,10 +28,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 		<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="orderByCol">
 
 			<%
-			for (String columnTitle : orderColumns.keySet()) {
+			for (String columnKey : orderColumns.keySet()) {
 			%>
 
-				<aui:option label="<%= columnTitle %>" selected="<%= orderByCol.equals(orderColumns.get(columnTitle)) %>" value="<%= orderColumns.get(columnTitle) %>" />
+				<aui:option label="<%= orderColumns.get(columnKey) %>" selected="<%= orderByCol.equals(columnKey) %>" value="<%= columnKey %>" />
 
 			<%
 			}

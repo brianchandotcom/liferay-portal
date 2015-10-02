@@ -56,7 +56,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 
 		orderColumns.put("title", "title");
 		orderColumns.put("size", "size");
-		orderColumns.put("modified-date", "modifiedDate");
+		orderColumns.put("modifiedDate", "modified-date");
 		%>
 
 		<liferay-frontend:management-bar-sort

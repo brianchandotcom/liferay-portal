@@ -565,7 +565,7 @@
 		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData1" value="Text" />
-		<var name="ddlRecordFieldData2" value="Document" />
+		<var name="ddlRecordFieldData2" value="Document_1.doc" />
 		<var name="document" value="Document_1.doc" />
 		<var name="field1" value="Text" />
 		<var name="field2" value="Documents and Media" />
@@ -726,6 +726,7 @@
 		<execute function="Open" locator1="${adminEditURL}" />
 
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#FIELD_1" value1="${fieldFieldLabel1}" />
+
 		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
 
 		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />

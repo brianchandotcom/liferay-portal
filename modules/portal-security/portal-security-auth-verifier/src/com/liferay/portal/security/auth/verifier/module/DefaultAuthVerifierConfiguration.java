@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth.verifier.module;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.security.auth.verifier.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration;
 import com.liferay.portal.security.auth.verifier.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration;
 import com.liferay.portal.security.auth.verifier.tunnel.module.configuration.TunnelAuthVerifierConfiguration;
@@ -63,7 +64,7 @@ public class DefaultAuthVerifierConfiguration {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filter);
 
-		if ((configurations != null) && (configurations.length > 0)) {
+		if (ArrayUtil.isNotEmpty(configurations)) {
 			return;
 		}
 

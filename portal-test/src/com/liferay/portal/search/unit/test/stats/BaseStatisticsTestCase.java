@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.search.unit.test.BaseIndexingTest;
+import com.liferay.portal.search.unit.test.BaseIndexingTestCase;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -33,7 +33,7 @@ import org.junit.Assert;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public abstract class BaseStatisticsTest extends BaseIndexingTest {
+public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 
 	protected static String toString(StatsResults statsResults) {
 		StringBundler sb = new StringBundler(15);

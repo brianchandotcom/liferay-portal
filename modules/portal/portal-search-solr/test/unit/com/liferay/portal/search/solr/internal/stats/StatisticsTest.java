@@ -16,14 +16,14 @@ package com.liferay.portal.search.solr.internal.stats;
 
 import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
 import com.liferay.portal.search.unit.test.IndexingFixture;
-import com.liferay.portal.search.unit.test.stats.BaseStatisticsTest;
+import com.liferay.portal.search.unit.test.stats.BaseStatisticsTestCase;
 
 import org.junit.Test;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public class StatisticsTest extends BaseStatisticsTest {
+public class StatisticsTest extends BaseStatisticsTestCase {
 
 	@Override
 	@Test

@@ -16,14 +16,14 @@ package com.liferay.portal.search.solr.internal.groupby;
 
 import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
 import com.liferay.portal.search.unit.test.IndexingFixture;
-import com.liferay.portal.search.unit.test.groupby.BaseGroupByTest;
+import com.liferay.portal.search.unit.test.groupby.BaseGroupByTestCase;
 
 import org.junit.Test;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public class GroupByTest extends BaseGroupByTest {
+public class GroupByTest extends BaseGroupByTestCase {
 
 	@Override
 	@Test

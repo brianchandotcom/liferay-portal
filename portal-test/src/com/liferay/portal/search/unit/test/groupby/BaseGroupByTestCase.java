@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
-import com.liferay.portal.search.unit.test.BaseIndexingTest;
+import com.liferay.portal.search.unit.test.BaseIndexingTestCase;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -31,7 +31,7 @@ import org.junit.Assert;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public abstract class BaseGroupByTest extends BaseIndexingTest {
+public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 	protected void addDocuments(final String name, int count) throws Exception {
 		final String field = GROUP_FIELD;

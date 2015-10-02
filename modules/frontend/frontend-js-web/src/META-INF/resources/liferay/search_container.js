@@ -322,13 +322,11 @@ AUI.add(
 					_deleteRow: function(event) {
 						var instance = this;
 
-						var action = 'hide';
-
-						if (instance._ids.length) {
-							action = 'show';
-						}
+						var action = 'show';
 
 						if (instance._ids.length == 0) {
+							action = 'hide';
+
 							instance._emptyResultsMessage.show();
 						}
 

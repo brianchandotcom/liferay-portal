@@ -1,5 +1,6 @@
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:item-selector:item-selector-api")
 	compile project(":apps:item-selector:item-selector-criteria-api")
 	compile project(":portal:portal-settings")

@@ -123,7 +123,8 @@ public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 		addDocuments(31);
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, new Callable<Void>() {
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {

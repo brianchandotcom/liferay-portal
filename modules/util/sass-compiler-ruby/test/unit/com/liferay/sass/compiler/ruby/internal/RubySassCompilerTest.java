@@ -33,8 +33,6 @@ public class RubySassCompilerTest {
 	public void testBoxShadowTransparent() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		String expectedOutput =
 			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
 		String actualOutput = sassCompiler.compileString(
@@ -47,8 +45,6 @@ public class RubySassCompilerTest {
 	@Test
 	public void testCompileFile() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
-
-		Assert.assertNotNull(sassCompiler);
 
 		File sassSpecDir = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
@@ -78,8 +74,6 @@ public class RubySassCompilerTest {
 	@Test
 	public void testCompileFileWithSourceMap() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
-
-		Assert.assertNotNull(sassCompiler);
 
 		File inputDir = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
@@ -115,8 +109,6 @@ public class RubySassCompilerTest {
 	public void testCompileString() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		String expectedOutput = "foo { margin: 42px; }";
 		String actualOutput = sassCompiler.compileString(
 			"foo { margin: 21px * 2; }", "");
@@ -128,8 +120,6 @@ public class RubySassCompilerTest {
 	@Test
 	public void testCompileStringWithSourceMap() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
-
-		Assert.assertNotNull(sassCompiler);
 
 		File inputDir = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +

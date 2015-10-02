@@ -57,7 +57,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			AccessControlled accessControlled)
 		throws SecurityException {
 
-		if (alreadyChecked()){
+		if (alreadyChecked()) {
 			return;
 		}
 
@@ -68,8 +68,8 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		List<String> systemSAPNames = getSystemSAPNames(companyId);
 		serviceAccessPolicyNames.addAll(systemSAPNames);
 
-		Set<String> allowedServiceSignatures =
-			loadAllowedServiceSignatures(companyId, serviceAccessPolicyNames);
+		Set<String> allowedServiceSignatures = loadAllowedServiceSignatures(
+			companyId, serviceAccessPolicyNames);
 
 		Class<?> clazz = method.getDeclaringClass();
 
@@ -78,7 +78,6 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 
 		checkAccess(allowedServiceSignatures, className, methodName);
 	}
-
 
 	protected boolean alreadyChecked() {
 		AccessControlContext accessControlContext =
@@ -98,6 +97,35 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		return false;
 	}
 
+	protected void checkAccess(
+		Set<String> allowedServiceSignatures, String className,
+		String methodName) {
+
+		if (allowedServiceSignatures.contains(StringPool.STAR)) {
+			return;
+		}
+
+		if (allowedServiceSignatures.contains(className)) {
+			return;
+		}
+
+		String classNameAndMethodName = className.concat(
+			StringPool.POUND).concat(methodName);
+
+		if (allowedServiceSignatures.contains(classNameAndMethodName)) {
+			return;
+		}
+
+		for (String allowedService : allowedServiceSignatures) {
+			if (matches(className, methodName, allowedService)) {
+				return;
+			}
+		}
+
+		throw new SecurityException(
+			"Access denied to " + classNameAndMethodName);
+	}
+
 	protected List<String> getActiveSAPNames() {
 		List<String> serviceAccessPolicyNames =
 			ServiceAccessPolicyThreadLocal.getActiveServiceAccessPolicyNames();
@@ -105,8 +133,8 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		if (serviceAccessPolicyNames == null) {
 			serviceAccessPolicyNames = new ArrayList<>();
 
-			ServiceAccessPolicyThreadLocal.
-				setActiveServiceAccessPolicyNames(serviceAccessPolicyNames);
+			ServiceAccessPolicyThreadLocal.setActiveServiceAccessPolicyNames(
+				serviceAccessPolicyNames);
 		}
 
 		return serviceAccessPolicyNames;
@@ -116,6 +144,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		List<String> systemSAPNames = new ArrayList<>(2);
 
 		SAPConfiguration sapConfiguration = null;
+
 		try {
 			sapConfiguration = _configurationFactory.getConfiguration(
 				SAPConfiguration.class,
@@ -179,35 +208,6 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		}
 
 		return allowedServiceSignatures;
-	}
-
-	protected void checkAccess(
-		Set<String> allowedServiceSignatures, String className,
-		String methodName) {
-
-		if (allowedServiceSignatures.contains(StringPool.STAR)) {
-			return;
-		}
-
-		if (allowedServiceSignatures.contains(className)) {
-			return;
-		}
-
-		String classNameAndMethodName = className.concat(
-			StringPool.POUND).concat(methodName);
-
-		if (allowedServiceSignatures.contains(classNameAndMethodName)) {
-			return;
-		}
-
-		for (String allowedService : allowedServiceSignatures) {
-			if (matches(className, methodName, allowedService)) {
-				return;
-			}
-		}
-
-		throw new SecurityException(
-			"Access denied to " + classNameAndMethodName);
 	}
 
 	protected boolean matches(

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `330259a`.*
+*This document has been reviewed through commit `11689fd`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2384,34 +2384,34 @@ cannot call the `application-list-api` from the portal context.
 
 ---------------------------------------
 
-### Methods related to Control Panel or Site Administration in ThemeDisplay have been removed
+### Removed ThemeDisplay Methods Related to Control Panel and Site Administration
 - **Date:** 2015-Sep-23
 - **JIRA Ticket:** LPS-58210
 
 #### What changed?
 
-The following methods been deleted:
+The following methods have been deleted:
 
-- getControlPanelCategory
-- getURLSiteAdministration
-
+- `getControlPanelCategory`
+- `getURLSiteAdministration`
 
 #### Who is affected?
 
-This affects developers who use any of these methods.
+This affects developers that use either of the methods listed above.
 
 #### How should I update my code?
 
-Site Administration isn't a site per se anymore. Some apps are displayed in that
-context. In order to create a link to an app that is displayed in the site 
-administration, developers should use the method PortalUtil.getControlPanelURL.
-In order to obtain the first app displayed in a section of the product menu,
-developers should use the application-list-api calling the 
-PanelCategoryRegistry and the PanelAppRegistry.
+Site Administration is not a site per se; some applications are displayed in
+that context. To create a link to an application that is displayed in Site
+Administration, developers should use the method
+`PortalUtil.getControlPanelURL`. In order to obtain the first application
+displayed in a section of the Product Menu, developers should use the
+`application-list-api` module to call the `PanelCategoryRegistry` and
+`PanelAppRegistry` classes.
 
 #### Why was this change made?
 
-These methods are not used anymore and they won't work properly since they can't
-call the application-list-api from the context of the portal.
+These methods are no longer used and they will not work properly since they
+cannot call the `application-list-api` from the portal context.
 
 ---------------------------------------

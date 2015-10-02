@@ -82,6 +82,7 @@ AUI.add(
 						var contentBox = instance.get('contentBox');
 
 						instance._dataStore = A.one('#' + id + 'PrimaryKeys');
+						instance._emptyResultsMessage = A.one('#' + id + 'EmptyResultsMessage');
 
 						if (instance._dataStore) {
 							var dataStoreForm = instance._dataStore.attr('form');
@@ -315,6 +316,7 @@ AUI.add(
 						var instance = this;
 
 						instance._parentContainer.show();
+						instance._emptyResultsMessage.hide();
 					},
 
 					_deleteRow: function(event) {
@@ -324,6 +326,10 @@ AUI.add(
 
 						if (instance._ids.length) {
 							action = 'show';
+						}
+
+						if (instance._ids.length == 0) {
+							instance._emptyResultsMessage.show();
 						}
 
 						instance._parentContainer[action]();

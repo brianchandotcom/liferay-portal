@@ -69,6 +69,8 @@ if (sapEntry != null) {
 
 	<aui:input name="enabled" />
 
+	<aui:input disabled="<%= systemSAPEntry %>" helpMessage="default-sapentry-help" label="default" name="defaultSAPEntry" />
+
 	<aui:input name="title" required="<%= true %>" />
 
 	<aui:input helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />

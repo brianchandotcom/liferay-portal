@@ -65,7 +65,7 @@ public interface SAPEntryLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void checkDefaultSAPEntry(long companyId) throws PortalException;
+	public void checkSystemSAPEntries(long companyId) throws PortalException;
 
 	/**
 	* Creates a new s a p entry with the primary key. Does not add the s a p entry to the database.

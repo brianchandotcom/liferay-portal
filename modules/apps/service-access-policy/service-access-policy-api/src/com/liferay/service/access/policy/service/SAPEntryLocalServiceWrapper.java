@@ -58,9 +58,9 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	}
 
 	@Override
-	public void checkDefaultSAPEntry(long companyId)
+	public void checkSystemSAPEntries(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_sapEntryLocalService.checkDefaultSAPEntry(companyId);
+		_sapEntryLocalService.checkSystemSAPEntries(companyId);
 	}
 
 	/**

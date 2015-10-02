@@ -88,7 +88,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 				"Unable to get service access policy configuration", ce);
 		}
 
-		if (sapConfiguration.requireDefaultSAPEntry() ||
+		if (sapConfiguration.useSystemSAPEntries() ||
 			(serviceAccessPolicyNames == null)) {
 
 			if (serviceAccessPolicyNames == null) {
@@ -112,11 +112,11 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 
 			if (passwordBasedAuthentication) {
 				serviceAccessPolicyNames.add(
-					sapConfiguration.defaultUserSAPEntryName());
+					sapConfiguration.systemUserPasswordSAPEntryName());
 			}
 			else {
 				serviceAccessPolicyNames.add(
-					sapConfiguration.defaultApplicationSAPEntryName());
+					sapConfiguration.systemDefaultSAPEntryName());
 			}
 		}
 

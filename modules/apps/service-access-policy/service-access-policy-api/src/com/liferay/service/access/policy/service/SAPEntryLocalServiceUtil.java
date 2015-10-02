@@ -65,9 +65,9 @@ public class SAPEntryLocalServiceUtil {
 			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
-	public static void checkDefaultSAPEntry(long companyId)
+	public static void checkSystemSAPEntries(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkDefaultSAPEntry(companyId);
+		getService().checkSystemSAPEntries(companyId);
 	}
 
 	/**

@@ -44,7 +44,7 @@ public class PasswordPolicyModelListener
 		}
 
 		try {
-			sapEntryLocalService.checkDefaultSAPEntry(
+			sapEntryLocalService.checkSystemSAPEntries(
 				passwordPolicy.getCompanyId());
 		}
 		catch (PortalException pe) {

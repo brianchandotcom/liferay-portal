@@ -19,11 +19,7 @@ package com.liferay.portal.util;
  */
 public class PortletKeys {
 
-	public static final String ADMIN = "9";
-
 	public static final String ADMIN_PLUGINS = "136";
-
-	public static final String ADMIN_SERVER = "137";
 
 	public static final String BACKGROUND_TASK = "189";
 
@@ -129,6 +125,9 @@ public class PortletKeys {
 	public static final String RECENT_DOCUMENTS = "64";
 
 	public static final String REQUESTS = "121";
+
+	public static final String SERVER_ADMIN =
+		"com_liferay_server_admin_web_portlet_ServerAdminPortlet";
 
 	public static final String SHOPPING = "34";
 

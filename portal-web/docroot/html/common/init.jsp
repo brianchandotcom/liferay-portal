@@ -27,8 +27,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ page import="com.liferay.portal.GroupFriendlyURLException" %><%@
@@ -228,8 +226,7 @@ page import="com.liferay.taglib.search.TextSearchEntry" %><%@
 page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %><%@
 page import="com.liferay.taglib.util.OutputTag" %><%@
 page import="com.liferay.util.ContentUtil" %><%@
-page import="com.liferay.util.Encryptor" %><%@
-page import="com.liferay.util.log4j.Levels" %>
+page import="com.liferay.util.Encryptor" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -242,10 +239,8 @@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@
 page import="java.util.Calendar" %><%@
-page import="java.util.Collection" %><%@
 page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
-page import="java.util.Enumeration" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.HashSet" %><%@
 page import="java.util.Iterator" %><%@
@@ -258,7 +253,6 @@ page import="java.util.Properties" %><%@
 page import="java.util.ResourceBundle" %><%@
 page import="java.util.Set" %><%@
 page import="java.util.TimeZone" %><%@
-page import="java.util.TreeMap" %><%@
 page import="java.util.TreeSet" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@

@@ -19,7 +19,6 @@
 <portlet:defineObjects />
 
 <%
-PortletMode portletMode = liferayPortletRequest.getPortletMode();
 WindowState windowState = liferayPortletRequest.getWindowState();
 
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

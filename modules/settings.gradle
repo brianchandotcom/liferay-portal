@@ -65,6 +65,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/roles/*/build.gradle"
 		include "apps/rss/*/build.gradle"
 		include "apps/search/*/build.gradle"
+		include "apps/server-admin/*/build.gradle"
 		include "apps/service-access-policy/*/build.gradle"
 		include "apps/shopping/*/build.gradle"
 		include "apps/site-navigation/*/build.gradle"

@@ -167,8 +167,9 @@
 				<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
 
 				<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME_LOCALIZED" value1="${webContentContent}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${webContentContent}" />
 				<execute function="Click" locator1="Button#PUBLISH_LOCALIZED" />
+				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 			<elseif>
 				<isset var="structureName" />

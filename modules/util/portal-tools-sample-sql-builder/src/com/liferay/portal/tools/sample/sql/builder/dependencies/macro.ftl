@@ -12,13 +12,13 @@
 		<#local assetCategoryIds = dataFactory.getAssetCategoryIds(assetEntryModel.groupId)>
 
 		<#list assetCategoryIds as assetCategoryId>
-			insert into AssetEntries_AssetCategories values (${assetCategoryId}, ${assetEntryModel.entryId});
+			insert into AssetEntries_AssetCategories values (${assetCategoryId}, ${assetEntryModel.entryId}, ${assetEntryModel.companyId});
 		</#list>
 
 		<#local assetTagIds = dataFactory.getAssetTagIds(assetEntryModel.groupId)>
 
 		<#list assetTagIds as assetTagId>
-			insert into AssetEntries_AssetTags values (${assetEntryModel.entryId}, ${assetTagId});
+			insert into AssetEntries_AssetTags values (${assetEntryModel.entryId}, ${assetTagId}, ${assetEntryModel.companyId});
 		</#list>
 	</#if>
 </#macro>
@@ -257,10 +257,10 @@
 	insert into Contact_ values (${contactModel.mvccVersion}, ${contactModel.contactId}, ${contactModel.companyId}, ${contactModel.userId}, '${contactModel.userName}', '${dataFactory.getDateString(contactModel.createDate)}', '${dataFactory.getDateString(contactModel.modifiedDate)}', ${contactModel.classNameId}, ${contactModel.classPK}, ${contactModel.accountId}, ${contactModel.parentContactId}, '${contactModel.emailAddress}', '${contactModel.firstName}', '${contactModel.middleName}', '${contactModel.lastName}', ${contactModel.prefixId}, ${contactModel.suffixId}, ${contactModel.male?string}, '${dataFactory.getDateString(contactModel.birthday)}', '${contactModel.smsSn}', '${contactModel.aimSn}', '${contactModel.facebookSn}', '${contactModel.icqSn}', '${contactModel.jabberSn}', '${contactModel.msnSn}', '${contactModel.mySpaceSn}', '${contactModel.skypeSn}', '${contactModel.twitterSn}', '${contactModel.ymSn}', '${contactModel.employeeStatusId}', '${contactModel.employeeNumber}', '${contactModel.jobTitle}', '${contactModel.jobClass}', '${contactModel.hoursOfOperation}');
 
 	<#list _roleIds as roleId>
-		insert into Users_Roles values (${roleId}, ${_userModel.userId});
+		insert into Users_Roles values (${_userModel.companyId}, ${roleId}, ${_userModel.userId});
 	</#list>
 
 	<#list _groupIds as groupId>
-		insert into Users_Groups values (${groupId}, ${_userModel.userId});
+		insert into Users_Groups values (${_userModel.companyId}, ${groupId}, ${_userModel.userId});
 	</#list>
 </#macro>

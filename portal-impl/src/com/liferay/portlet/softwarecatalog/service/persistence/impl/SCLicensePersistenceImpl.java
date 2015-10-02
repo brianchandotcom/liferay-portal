@@ -1957,7 +1957,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	protected SCLicense removeImpl(SCLicense scLicense) {
 		scLicense = toUnwrappedModel(scLicense);
 
-		scLicenseToSCProductEntryTableMapper.deleteLeftPrimaryKeyTableMappings(scLicense.getPrimaryKey());
+		scLicenseToSCProductEntryTableMapper.deleteLeftPrimaryKeyTableMappings(0,
+			scLicense.getPrimaryKey());
 
 		Session session = null;
 
@@ -2451,7 +2452,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public long[] getSCProductEntryPrimaryKeys(long pk) {
-		long[] pks = scLicenseToSCProductEntryTableMapper.getRightPrimaryKeys(pk);
+		long[] pks = scLicenseToSCProductEntryTableMapper.getRightPrimaryKeys(0,
+				pk);
 
 		return pks.clone();
 	}
@@ -2503,7 +2505,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
 		long pk, int start, int end,
 		OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
-		return scLicenseToSCProductEntryTableMapper.getRightBaseModels(pk,
+		return scLicenseToSCProductEntryTableMapper.getRightBaseModels(0, pk,
 			start, end, orderByComparator);
 	}
 
@@ -2515,7 +2517,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public int getSCProductEntriesSize(long pk) {
-		long[] pks = scLicenseToSCProductEntryTableMapper.getRightPrimaryKeys(pk);
+		long[] pks = scLicenseToSCProductEntryTableMapper.getRightPrimaryKeys(0,
+				pk);
 
 		return pks.length;
 	}
@@ -2529,7 +2532,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public boolean containsSCProductEntry(long pk, long scProductEntryPK) {
-		return scLicenseToSCProductEntryTableMapper.containsTableMapping(pk,
+		return scLicenseToSCProductEntryTableMapper.containsTableMapping(0, pk,
 			scProductEntryPK);
 	}
 
@@ -2557,7 +2560,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public void addSCProductEntry(long pk, long scProductEntryPK) {
-		scLicenseToSCProductEntryTableMapper.addTableMapping(pk,
+		scLicenseToSCProductEntryTableMapper.addTableMapping(0, pk,
 			scProductEntryPK);
 	}
 
@@ -2570,7 +2573,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void addSCProductEntry(long pk,
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
-		scLicenseToSCProductEntryTableMapper.addTableMapping(pk,
+		scLicenseToSCProductEntryTableMapper.addTableMapping(0, pk,
 			scProductEntry.getPrimaryKey());
 	}
 
@@ -2583,7 +2586,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void addSCProductEntries(long pk, long[] scProductEntryPKs) {
 		for (long scProductEntryPK : scProductEntryPKs) {
-			scLicenseToSCProductEntryTableMapper.addTableMapping(pk,
+			scLicenseToSCProductEntryTableMapper.addTableMapping(0, pk,
 				scProductEntryPK);
 		}
 	}
@@ -2598,7 +2601,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void addSCProductEntries(long pk,
 		List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> scProductEntries) {
 		for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
-			scLicenseToSCProductEntryTableMapper.addTableMapping(pk,
+			scLicenseToSCProductEntryTableMapper.addTableMapping(0, pk,
 				scProductEntry.getPrimaryKey());
 		}
 	}
@@ -2610,7 +2613,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public void clearSCProductEntries(long pk) {
-		scLicenseToSCProductEntryTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		scLicenseToSCProductEntryTableMapper.deleteLeftPrimaryKeyTableMappings(0,
+			pk);
 	}
 
 	/**
@@ -2621,7 +2625,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public void removeSCProductEntry(long pk, long scProductEntryPK) {
-		scLicenseToSCProductEntryTableMapper.deleteTableMapping(pk,
+		scLicenseToSCProductEntryTableMapper.deleteTableMapping(0, pk,
 			scProductEntryPK);
 	}
 
@@ -2634,7 +2638,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void removeSCProductEntry(long pk,
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
-		scLicenseToSCProductEntryTableMapper.deleteTableMapping(pk,
+		scLicenseToSCProductEntryTableMapper.deleteTableMapping(0, pk,
 			scProductEntry.getPrimaryKey());
 	}
 
@@ -2647,7 +2651,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void removeSCProductEntries(long pk, long[] scProductEntryPKs) {
 		for (long scProductEntryPK : scProductEntryPKs) {
-			scLicenseToSCProductEntryTableMapper.deleteTableMapping(pk,
+			scLicenseToSCProductEntryTableMapper.deleteTableMapping(0, pk,
 				scProductEntryPK);
 		}
 	}
@@ -2662,7 +2666,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void removeSCProductEntries(long pk,
 		List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> scProductEntries) {
 		for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
-			scLicenseToSCProductEntryTableMapper.deleteTableMapping(pk,
+			scLicenseToSCProductEntryTableMapper.deleteTableMapping(0, pk,
 				scProductEntry.getPrimaryKey());
 		}
 	}
@@ -2677,21 +2681,21 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void setSCProductEntries(long pk, long[] scProductEntryPKs) {
 		Set<Long> newSCProductEntryPKsSet = SetUtil.fromArray(scProductEntryPKs);
 		Set<Long> oldSCProductEntryPKsSet = SetUtil.fromArray(scLicenseToSCProductEntryTableMapper.getRightPrimaryKeys(
-					pk));
+					0, pk));
 
 		Set<Long> removeSCProductEntryPKsSet = new HashSet<Long>(oldSCProductEntryPKsSet);
 
 		removeSCProductEntryPKsSet.removeAll(newSCProductEntryPKsSet);
 
 		for (long removeSCProductEntryPK : removeSCProductEntryPKsSet) {
-			scLicenseToSCProductEntryTableMapper.deleteTableMapping(pk,
+			scLicenseToSCProductEntryTableMapper.deleteTableMapping(0, pk,
 				removeSCProductEntryPK);
 		}
 
 		newSCProductEntryPKsSet.removeAll(oldSCProductEntryPKsSet);
 
 		for (long newSCProductEntryPK : newSCProductEntryPKsSet) {
-			scLicenseToSCProductEntryTableMapper.addTableMapping(pk,
+			scLicenseToSCProductEntryTableMapper.addTableMapping(0, pk,
 				newSCProductEntryPK);
 		}
 	}
@@ -2737,7 +2741,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	public void afterPropertiesSet() {
 		scLicenseToSCProductEntryTableMapper = TableMapperFactory.getTableMapper("SCLicenses_SCProductEntries",
-				"licenseId", "productEntryId", this, scProductEntryPersistence);
+				"companyId", "licenseId", "productEntryId", this,
+				scProductEntryPersistence);
 	}
 
 	public void destroy() {

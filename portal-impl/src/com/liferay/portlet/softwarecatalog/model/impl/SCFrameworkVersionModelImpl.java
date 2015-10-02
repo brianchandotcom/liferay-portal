@@ -171,11 +171,12 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		"SCFrameworkVersi_SCProductVers";
 	public static final Object[][] MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_COLUMNS =
 		{
+			{ "companyId", Types.BIGINT },
 			{ "frameworkVersionId", Types.BIGINT },
 			{ "productVersionId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_SQL_CREATE =
-		"create table SCFrameworkVersi_SCProductVers (frameworkVersionId LONG not null,productVersionId LONG not null,primary key (frameworkVersionId, productVersionId))";
+		"create table SCFrameworkVersi_SCProductVers (companyId LONG not null,frameworkVersionId LONG not null,productVersionId LONG not null,primary key (companyId, frameworkVersionId, productVersionId))";
 	public static final boolean FINDER_CACHE_ENABLED_SCFRAMEWORKVERSI_SCPRODUCTVERS =
 		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.SCFrameworkVersi_SCProductVers"),

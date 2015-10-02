@@ -114,13 +114,15 @@ create table AssetCategoryProperty (
 create table AssetEntries_AssetCategories (
 	categoryId LONG not null,
 	entryId LONG not null,
-	primary key (categoryId, entryId)
+	companyId LONG not null,
+	primary key (categoryId, entryId, companyId)
 );
 
 create table AssetEntries_AssetTags (
 	entryId LONG not null,
 	tagId LONG not null,
-	primary key (entryId, tagId)
+	companyId LONG not null,
+	primary key (entryId, tagId, companyId)
 );
 
 create table AssetEntry (
@@ -440,9 +442,10 @@ create table DLFileEntryType (
 );
 
 create table DLFileEntryTypes_DLFolders (
+	companyId LONG not null,
 	fileEntryTypeId LONG not null,
 	folderId LONG not null,
-	primary key (fileEntryTypeId, folderId)
+	primary key (companyId, fileEntryTypeId, folderId)
 );
 
 create table DLFileRank (
@@ -639,21 +642,24 @@ create table Group_ (
 );
 
 create table Groups_Orgs (
+	companyId LONG not null,
 	groupId LONG not null,
 	organizationId LONG not null,
-	primary key (groupId, organizationId)
+	primary key (companyId, groupId, organizationId)
 );
 
 create table Groups_Roles (
+	companyId LONG not null,
 	groupId LONG not null,
 	roleId LONG not null,
-	primary key (groupId, roleId)
+	primary key (companyId, groupId, roleId)
 );
 
 create table Groups_UserGroups (
+	companyId LONG not null,
 	groupId LONG not null,
 	userGroupId LONG not null,
-	primary key (groupId, userGroupId)
+	primary key (companyId, groupId, userGroupId)
 );
 
 create table Image (
@@ -1344,9 +1350,10 @@ create table Role_ (
 );
 
 create table SCFrameworkVersi_SCProductVers (
+	companyId LONG not null,
 	frameworkVersionId LONG not null,
 	productVersionId LONG not null,
-	primary key (frameworkVersionId, productVersionId)
+	primary key (companyId, frameworkVersionId, productVersionId)
 );
 
 create table SCFrameworkVersion (
@@ -1373,9 +1380,10 @@ create table SCLicense (
 );
 
 create table SCLicenses_SCProductEntries (
+	companyId LONG not null,
 	licenseId LONG not null,
 	productEntryId LONG not null,
-	primary key (licenseId, productEntryId)
+	primary key (companyId, licenseId, productEntryId)
 );
 
 create table SCProductEntry (
@@ -1709,9 +1717,10 @@ create table UserGroupRole (
 );
 
 create table UserGroups_Teams (
+	companyId LONG not null,
 	teamId LONG not null,
 	userGroupId LONG not null,
-	primary key (teamId, userGroupId)
+	primary key (companyId, teamId, userGroupId)
 );
 
 create table UserIdMapper (
@@ -1740,33 +1749,38 @@ create table UserNotificationEvent (
 );
 
 create table Users_Groups (
+	companyId LONG not null,
 	groupId LONG not null,
 	userId LONG not null,
-	primary key (groupId, userId)
+	primary key (companyId, groupId, userId)
 );
 
 create table Users_Orgs (
+	companyId LONG not null,
 	organizationId LONG not null,
 	userId LONG not null,
-	primary key (organizationId, userId)
+	primary key (companyId, organizationId, userId)
 );
 
 create table Users_Roles (
+	companyId LONG not null,
 	roleId LONG not null,
 	userId LONG not null,
-	primary key (roleId, userId)
+	primary key (companyId, roleId, userId)
 );
 
 create table Users_Teams (
+	companyId LONG not null,
 	teamId LONG not null,
 	userId LONG not null,
-	primary key (teamId, userId)
+	primary key (companyId, teamId, userId)
 );
 
 create table Users_UserGroups (
+	companyId LONG not null,
 	userId LONG not null,
 	userGroupId LONG not null,
-	primary key (userId, userGroupId)
+	primary key (companyId, userId, userGroupId)
 );
 
 create table UserTracker (

@@ -27,60 +27,63 @@ import bsh.Interpreter;
  * @author Peter Yoo
  */
 public class BeanshellTask extends Task {
-	
+
 	public void addText(String text) {
 		_code = text;
 	}
-	
+
 	@Override
 	public void execute() throws BuildException {
 		Project project = getProject();
-		
+
 		String beanshellType = project.getProperty("beanshell.type");
-		
+
 		if ("script".equals(beanshellType)) {
 			executeScriptTask();
 		}
 		else {
 			Interpreter interpreter = new Interpreter();
-			
-			interpreter.setClassLoader(this.getClass().getClassLoader());
+
+			Class<?> clazz = this.getClass();
+
+			interpreter.setClassLoader(clazz.getClassLoader());
+
 			try {
 				interpreter.set("project", getProject());
-				
+
 				interpreter.eval(_code);
-			} 
+			}
 			catch (EvalError ee) {
 				throw new BuildException(ee);
 			}
-		}		
+		}
 	}
-	
+
 	public void setClasspathref(String classpathRef) {
 		_classpathRef = classpathRef;
 	}
 
 	protected void executeScriptTask() throws BuildException {
 		Script scriptTag = new Script();
-		
+
 		scriptTag.setProject(getProject());
-		
+
 		scriptTag.setClasspathRef(new Reference(getProject(), _classpathRef));
-		
+
 		scriptTag.setLanguage("beanshell");
-		
+
 		scriptTag.addText(_code);
-		
+
 		scriptTag.perform();
 	}
-	
+
     private long getMemoryUsage() {
         Runtime runtime = Runtime.getRuntime();
-        //runtime.gc();
-        return (runtime.totalMemory() - runtime.freeMemory())/1024;
-    }	
-	
-	private String _classpathRef;	
+
+        return (runtime.totalMemory() - runtime.freeMemory()) / 1024;
+    }
+
+	private String _classpathRef;
 	private String _code;
 }
 

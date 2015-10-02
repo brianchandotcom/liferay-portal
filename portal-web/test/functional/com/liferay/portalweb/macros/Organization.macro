@@ -301,7 +301,7 @@
 
 	<command name="advancedSearchCP">
 		<execute function="AssertClick" locator1="NavTab#ALL_ORGANIZATIONS" value1="All Organizations" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADVANCED_SEARCH_ICON" />
+		<execute function="Click" locator1="UsersAndOrganizations#ADVANCED_SEARCH_ICON" />
 
 		<if>
 			<equals arg1="${orgAdvancedSearch}" arg2="Name" />

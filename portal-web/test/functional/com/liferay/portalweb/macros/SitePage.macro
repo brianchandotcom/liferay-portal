@@ -74,9 +74,7 @@
 				<var name="key_category" value="Page" />
 
 				<if>
-					<not>
-						<condition function="IsElementPresent#isVisible" locator1="ProductMenu#CATEGORY_EXPANDED" />
-					</not>
+					<condition function="IsElementPresent" locator1="ProductMenu#CATEGORY_COLLAPSED" />
 					<then>
 						<execute function="Click" locator1="ProductMenu#CATEGORY_COLLAPSED" />
 					</then>

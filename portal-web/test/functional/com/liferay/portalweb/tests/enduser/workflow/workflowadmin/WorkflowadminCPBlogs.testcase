@@ -320,6 +320,10 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Icon" />
+		</execute>
+
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>

@@ -92,8 +92,6 @@ AUI.add(
 					activate: function(index) {
 						var instance = this;
 
-						instance.clearAll();
-
 						instance._setState(index, 'active');
 					},
 
@@ -133,6 +131,8 @@ AUI.add(
 
 					_afterSelectionChange: function(event) {
 						var instance = this;
+
+						instance.clearAll();
 
 						if (event.newVal > -1) {
 							instance.activate(event.newVal);

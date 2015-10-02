@@ -74,3 +74,13 @@
 		padding-bottom: $side-spacing;
 	}
 }
+
+.multi-step-progress-bar {
+	> .complete {
+		color: #65B6F0;
+		
+		.divider {
+			background-color: #65B6F0;
+		}
+	}
+}

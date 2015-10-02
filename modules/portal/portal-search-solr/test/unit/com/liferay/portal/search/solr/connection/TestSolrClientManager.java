@@ -34,8 +34,7 @@ import org.osgi.service.component.ComponentContext;
  */
 public class TestSolrClientManager extends SolrClientManager {
 
-	public TestSolrClientManager(
-			HashMap<String, Object> configurationProperties)
+	public TestSolrClientManager(Map<String, Object> configurationProperties)
 		throws Exception {
 
 		BasicAuthPoolingHttpClientFactory httpClientFactory =

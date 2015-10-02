@@ -53,6 +53,7 @@ import com.liferay.portal.search.solr.internal.stats.DefaultStatsTranslator;
 import com.liferay.portal.search.unit.test.IndexingFixture;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
@@ -94,7 +95,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 	protected static SolrFilterTranslator createSolrFilterTranslator() {
 		return new SolrFilterTranslator() {
-
 			{
 				setBooleanQueryTranslator(new BooleanFilterTranslatorImpl());
 				setDateRangeTermFilterTranslator(
@@ -144,7 +144,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 		final SolrClientManager solrClientManager) {
 
 		return new SolrIndexSearcher() {
-
 			{
 				setFacetProcessor(new DateRangeFacetProcessor());
 				setFilterTranslator(createSolrFilterTranslator());
@@ -163,7 +162,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 		final SolrUpdateDocumentCommand updateDocumentCommand =
 			new SolrUpdateDocumentCommandImpl() {
-
 				{
 					setSolrClientManager(solrClientManager);
 					setSolrDocumentFactory(new DefaultSolrDocumentFactory());
@@ -171,7 +169,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 			};
 
 		return new SolrIndexWriter() {
-
 			{
 				setSolrClientManager(solrClientManager);
 				setSolrUpdateDocumentCommand(updateDocumentCommand);
@@ -179,8 +176,8 @@ public class SolrIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	protected HashMap<String, Object> createSolrConfigurationProperties() {
-		HashMap<String, Object> properties = new HashMap<>();
+	protected Map<String, Object> createSolrConfigurationProperties() {
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("logExceptionsOnly", false);
 		properties.put("readURL", "http://localhost:8983/solr/liferay");
@@ -191,6 +188,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
-	private final HashMap<String, Object> _properties;
+	private final Map<String, Object> _properties;
 
 }

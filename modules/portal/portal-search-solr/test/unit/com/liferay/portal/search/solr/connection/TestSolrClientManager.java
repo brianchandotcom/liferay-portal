@@ -40,7 +40,6 @@ public class TestSolrClientManager extends SolrClientManager {
 
 		BasicAuthPoolingHttpClientFactory httpClientFactory =
 			new BasicAuthPoolingHttpClientFactory() {
-
 				{
 					activate(Collections.<String, Object>emptyMap());
 				}

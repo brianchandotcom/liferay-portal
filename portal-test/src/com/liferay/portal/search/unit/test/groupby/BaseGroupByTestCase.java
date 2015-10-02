@@ -37,14 +37,15 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		final String field = GROUP_FIELD;
 
 		for (int i = 1; i <= count; i++) {
-			addDocument(new DocumentCreationHelper() {
+			addDocument(
+				new DocumentCreationHelper() {
 
-				@Override
-				public void populate(Document document) {
-					document.addKeyword(field, name);
-				}
+					@Override
+					public void populate(Document document) {
+						document.addKeyword(field, name);
+					}
 
-			});
+				});
 		}
 	}
 

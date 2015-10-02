@@ -79,6 +79,7 @@ AUI.add(
 
 						instance._renderFields();
 						instance._renderPages();
+						instance._findForLastColsInAllRows();
 					},
 
 					destructor: function() {
@@ -146,6 +147,50 @@ AUI.add(
 						visitor.visit();
 
 						return fields;
+					},
+
+					_afterLayoutRowsChange: function(event) {
+						var instance = this;
+
+						FormBuilder.superclass._afterLayoutRowsChange.apply(instance, arguments);
+
+						AArray.forEach(event.newVal, function(row){
+							instance._setLastColumn(row);
+						});
+					},
+
+					_afterActivePageNumberChange: function() {
+						var instance = this;
+
+						FormBuilder.superclass._afterActivePageNumberChange.apply(instance, arguments);
+
+						instance._findForLastColsInAllRows();
+					},
+
+					_afterLayoutsChange: function() {
+						var instance = this;
+
+						FormBuilder.superclass._afterLayoutsChange.apply(instance, arguments);
+
+						instance._findForLastColsInAllRows();
+					},
+
+					_afterLayoutColsChange: function(event) {
+						var instance = this;
+
+						FormBuilder.superclass._afterLayoutColsChange.apply(instance, arguments);
+
+						instance._setLastColumn(event.target);
+					},
+
+					_findForLastColsInAllRows: function() {
+						var instance = this;
+
+						var rows = instance.getActiveLayout().get('rows');
+
+						AArray.forEach(rows, function(row){
+							instance._setLastColumn(row);
+						});
 					},
 
 					_getPageManagerInstance: function(config) {
@@ -260,6 +305,18 @@ AUI.add(
 								return !item.get('system');
 							}
 						);
+					},
+
+					_setLastColumn: function(row) {
+						var lastColumn = row.get('node').one('.last-col');
+
+						var cols = row.get('cols');
+
+						if (lastColumn) {
+							lastColumn.removeClass('last-col');
+						}
+
+						cols[cols.length - 1].get('node').addClass('last-col')
 					},
 
 					_valueDeserializer: function() {

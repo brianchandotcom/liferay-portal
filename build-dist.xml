@@ -281,7 +281,7 @@
 
 		<delete file="output.txt" />
 
-		<script classpathref="project.classpath" language="beanshell">
+		<beanshell classpathref="project.classpath">
 			String outputTxtContent = project.getProperty("output.txt.content");
 
 			if (outputTxtContent.contains("File Not Found")) {
@@ -299,7 +299,7 @@
 			}
 
 			project.setProperty("locale.list", locales);
-		</script>
+		</beanshell>
 
 		<for list="${locale.list}" param="locale.current">
 			<sequential>
@@ -362,13 +362,13 @@
 			<param name="tomcat.keep.app.server.properties" value="true" />
 		</antcall>
 
-		<script classpathref="project.classpath" language="beanshell">
+		<beanshell classpathref="project.classpath">
 			String lpVersion = project.getProperty("lp.version");
 
 			String lpVersionTcat = lpVersion.replace(".", "_");
 
 			project.setProperty("lp.version.tcat", lpVersionTcat);
-		</script>
+		</beanshell>
 
 		<echo append="true" file="release.${user.name}.properties">
 			lp.version.tcat=${lp.version.tcat}
@@ -1015,9 +1015,9 @@ release was successful.</echo>
 			</sequential>
 		</parallel>
 
-		<script classpathref="project.classpath" language="beanshell">
+		<beanshell classpathref="project.classpath">
 			project.setProperty("prepare-generated-files.tstamp", String.valueOf(System.currentTimeMillis()));
-		</script>
+		</beanshell>
 
 		<record name="prepare-generated-files.txt" action="stop" />
 

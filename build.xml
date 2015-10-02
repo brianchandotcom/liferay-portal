@@ -946,7 +946,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 	<target name="update-plugins-to-svn-revision">
 		<loadfile property="svn.info.revision.valid" srcfile="svn-revision" />
 
-		<script classpathref="project.classpath" language="beanshell">
+		<beanshell classpathref="project.classpath">
 			String svnInfoOutput = project.getProperty("svn.info.revision.valid");
 
 			int x = svnInfoOutput.indexOf("Revision: ");
@@ -958,7 +958,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			String revision = svnInfoOutput.substring(x, y).trim();
 
 			project.setProperty("svn.info.revision", revision);
-		</script>
+		</beanshell>
 
 		<exec dir="${lp.plugins.dir}" executable="cmd.exe" os="${os.windows}">
 			<arg line="/c svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.revision}" />

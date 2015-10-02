@@ -149,7 +149,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			systemUserPasswordSAPEntry = addSAPEntry(
 				defaultUserId,
 				sapConfiguration.systemUserPasswordSAPEntryServiceSignatures(),
-				true, true, sapConfiguration.systemUserPasswordSAPEntryName(),
+				false, true, sapConfiguration.systemUserPasswordSAPEntryName(),
 				titleMap, new ServiceContext());
 
 			resourcePermissionLocalService.setResourcePermissions(

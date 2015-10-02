@@ -56,7 +56,6 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		Hits hits = groupedHitsMap.get(key);
 
 		Assert.assertNotNull(hits);
-
 		Assert.assertEquals(hitsCount, hits.getLength());
 
 		Document[] docs = hits.getDocs();

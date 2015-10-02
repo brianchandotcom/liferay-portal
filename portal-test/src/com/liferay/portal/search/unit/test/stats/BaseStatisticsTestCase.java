@@ -67,14 +67,15 @@ public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 		for (int i = 1; i <= count; i++) {
 			final int value = i;
 
-			addDocument(new DocumentCreationHelper() {
+			addDocument(
+				new DocumentCreationHelper() {
 
-				@Override
-				public void populate(Document document) {
-					document.addNumberSortable(field, value);
-				}
+					@Override
+					public void populate(Document document) {
+						document.addNumberSortable(field, value);
+					}
 
-			});
+				});
 		}
 	}
 

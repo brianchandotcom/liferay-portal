@@ -28,12 +28,12 @@
 			<var name="columnName" value="1_column" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Dynamic Data Lists Display" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Company Picnic" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">

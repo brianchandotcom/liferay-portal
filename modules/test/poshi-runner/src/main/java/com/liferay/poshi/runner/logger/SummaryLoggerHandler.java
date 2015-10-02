@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -89,38 +90,23 @@ public final class SummaryLoggerHandler {
 	}
 
 	public static LoggerElement getSummarySnapshotLoggerElement() {
-		LoggerElement loggerElement = _summaryLogLoggerElement.copy();
+		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
 
-		LoggerElement stepsLoggerElement = loggerElement.loggerElement("div");
+		List<LoggerElement> loggerElements =
+			summaryLogLoggerElement.loggerElements("div");
 
-		LoggerElement majorStepsLoggerElement =
-			stepsLoggerElement.loggerElement("ul");
+		for (LoggerElement loggerElement : loggerElements) {
+			String className = loggerElement.getClassName();
 
-		List<LoggerElement> majorStepLoggerElements =
-			majorStepsLoggerElement.loggerElements("li");
-
-		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
-			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
-				i);
-
-			boolean lastMajorStep = (i >= (majorStepLoggerElements.size() - 1));
-
-			majorStepLoggerElement.removeChildLoggerElements("button");
-
-			if (lastMajorStep) {
-				if (_containsMinorStepWarning) {
-					_warnStepLoggerElement(majorStepLoggerElement);
-				}
-				else {
-					_failStepLoggerElement(majorStepLoggerElement);
-				}
+			if (className.equals("steps")) {
+				_reduceStepsLoggerElement(loggerElement);
 			}
-			else {
-				majorStepLoggerElement.removeChildLoggerElements("ul");
+			else if (className.equals("screenshots")) {
+				summaryLogLoggerElement.removeChildLoggerElement(loggerElement);
 			}
 		}
 
-		return loggerElement;
+		return summaryLogLoggerElement;
 	}
 
 	public static void passSummary(Element element) {
@@ -736,6 +722,34 @@ public final class SummaryLoggerHandler {
 		bufferedReader.close();
 
 		return sb.toString();
+	}
+
+	private static void _reduceStepsLoggerElement(LoggerElement loggerElement) {
+		LoggerElement majorStepsLoggerElement = loggerElement.loggerElement(
+			"ul");
+
+		List<LoggerElement> majorStepLoggerElements =
+			majorStepsLoggerElement.loggerElements("li");
+
+		Iterator<LoggerElement> iterator = majorStepLoggerElements.iterator();
+
+		while (iterator.hasNext()) {
+			LoggerElement majorStepLoggerElement = iterator.next();
+
+			majorStepLoggerElement.removeChildLoggerElements("button");
+
+			if (iterator.hasNext()) {
+				majorStepLoggerElement.removeChildLoggerElements("ul");
+			}
+			else {
+				if (_containsMinorStepWarning) {
+					_warnStepLoggerElement(majorStepLoggerElement);
+				}
+				else {
+					_failStepLoggerElement(majorStepLoggerElement);
+				}
+			}
+		}
 	}
 
 	private static String _replaceExecuteVars(String token, Element element)

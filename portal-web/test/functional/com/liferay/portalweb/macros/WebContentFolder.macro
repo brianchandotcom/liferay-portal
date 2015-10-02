@@ -11,7 +11,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-		<execute macro="WebContent#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
@@ -22,7 +22,7 @@
 	<command name="addSubfolderCP">
 		<var name="key_webContentTitle" value="${folderName}" />
 
-		<execute macro="WebContent#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
@@ -85,7 +85,7 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute macro="WebContent#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
@@ -98,7 +98,7 @@
 	<command name="gotoEditCP">
 		<var name="key_webContentTitle" value="${folderName}" />
 
-		<execute macro="WebContent#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
@@ -108,7 +108,7 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<execute macro="WebContent#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 

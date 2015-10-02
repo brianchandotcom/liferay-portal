@@ -28,7 +28,7 @@
 			</else>
 		</if>
 
-		<execute macro="WebContent#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
@@ -55,7 +55,7 @@
 	<command name="gotoViewStatus">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute macro="WebContent#changeDisplayStyle">
+		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 

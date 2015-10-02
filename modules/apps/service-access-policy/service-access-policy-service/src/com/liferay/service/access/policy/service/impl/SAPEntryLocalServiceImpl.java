@@ -219,9 +219,9 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 	@Override
 	public SAPEntry updateSAPEntry(
-			long sapEntryId, String allowedServiceSignatures, boolean enabled,
-			String name, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			long sapEntryId, String allowedServiceSignatures,
+			boolean defaultSAPEntry, boolean enabled, String name,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		SAPEntry sapEntry = sapEntryPersistence.findByPrimaryKey(sapEntryId);
@@ -237,6 +237,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 		if (sapEntry.isSystem()) {
 			name = sapEntry.getName();
+			defaultSAPEntry = sapEntry.getDefaultSAPEntry();
 		}
 
 		name = StringUtil.trim(name);
@@ -244,6 +245,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		validate(name, titleMap);
 
 		sapEntry.setAllowedServiceSignatures(allowedServiceSignatures);
+		sapEntry.setDefaultSAPEntry(defaultSAPEntry);
 		sapEntry.setEnabled(enabled);
 		sapEntry.setName(name);
 		sapEntry.setTitleMap(titleMap);

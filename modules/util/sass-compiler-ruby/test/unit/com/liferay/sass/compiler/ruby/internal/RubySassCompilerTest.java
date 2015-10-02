@@ -96,7 +96,7 @@ public class RubySassCompilerTest {
 
 		File expectedOutputFile = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
-				"/internal/dependencies/sourcemaps",
+				"/internal/dependencies/sourcemap",
 			"expected_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
@@ -143,7 +143,7 @@ public class RubySassCompilerTest {
 
 		File expectedOutputFile = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
-				"/internal/dependencies/sourcemaps",
+				"/internal/dependencies/sourcemap",
 			"expected_custom_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());

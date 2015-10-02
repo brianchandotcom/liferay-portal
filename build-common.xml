@@ -93,6 +93,7 @@
 
 	<liferay-build-logger-installer />
 
+	<taskdef classname="com.liferay.ant.build.exec.BeanshellTask" classpathref="lib.classpath" name="beanshell" />
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
 

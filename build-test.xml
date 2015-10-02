@@ -155,7 +155,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<property name="property.name" value="@{property.name}" />
 
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					String propertyName = project.getProperty("property.name");
 
@@ -170,7 +170,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					project.setProperty(propertyName, propertyValue);
 				]]>
-			</script>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
@@ -382,7 +382,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<get-test-simple-class-name />
 
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					String testSimpleClassName = project.getProperty("test.simple.class.name");
 
@@ -390,7 +390,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					project.setProperty("poshi.class.name", poshiClassName);
 				]]>
-			</script>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
@@ -402,7 +402,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<get-test-method-name />
 
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					String testMethodName = project.getProperty("test.method.name");
 
@@ -410,7 +410,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					project.setProperty("poshi.method.name", poshiClassName);
 				]]>
-			</script>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
@@ -443,7 +443,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<get-poshi-class-name />
 
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					import org.apache.tools.ant.DirectoryScanner;
 
@@ -479,7 +479,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					catch (Exception e) {
 					}
 				]]>
-			</script>
+			</beanshell>
 
 			<fail message="${test.name}.testcase does not exist." unless="test.class.name" />
 		</sequential>
@@ -491,7 +491,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<var name="test.method.name" unset="true" />
 
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					String testClass = project.getProperty("test.class");
 
@@ -507,7 +507,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						project.setProperty("test.method.name", testMethodName);
 					}
 				]]>
-			</script>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
@@ -517,7 +517,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<var name="test.simple.class.name" unset="true" />
 
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					String testClass = project.getProperty("test.class");
 
@@ -535,7 +535,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					project.setProperty("test.simple.class.name", testSimpleClassName);
 				]]>
-			</script>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
@@ -587,7 +587,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<get-test-method-name />
 					<get-test-simple-class-name />
 
-					<script classpathref="project.classpath" language="beanshell">
+					<beanshell classpathref="project.classpath">
 						<![CDATA[
 							String propertyName = project.getProperty("property.name");
 							String testMethodName = project.getProperty("test.method.name");
@@ -617,7 +617,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 							project.setProperty(propertyName, propertyValue);
 						]]>
-					</script>
+					</beanshell>
 				</then>
 			</if>
 		</sequential>
@@ -739,7 +739,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-testray-team-name">
 		<sequential>
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					import org.apache.commons.lang.WordUtils;
 
@@ -766,7 +766,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						}
 					}
 				]]>
-			</script>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
@@ -1592,7 +1592,7 @@ ${tomcat-gc-log}
 
 	<macrodef name="record-git-commit-plugins">
 		<sequential>
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					File pluginsDir = null;
 
@@ -1617,7 +1617,7 @@ ${tomcat-gc-log}
 
 					project.setProperty("git.plugins.dir", pluginsDir.toString());
 				]]>
-			</script>
+			</beanshell>
 
 			<exec dir="${git.plugins.dir}" executable="git" outputproperty="git.commit.plugins.rev.parse">
 				<arg line="rev-parse HEAD" />
@@ -1663,7 +1663,7 @@ ${tomcat-gc-log}
 
 	<macrodef name="record-test-class-file-names">
 		<sequential>
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					import org.apache.tools.ant.DirectoryScanner;
 
@@ -1771,7 +1771,7 @@ ${tomcat-gc-log}
 
 					project.setProperty("test.class.file.names.properties.content", sb.toString());
 				]]>
-			</script>
+			</beanshell>
 
 			<echo file="test.class.file.names.properties">${test.class.file.names.properties.content}</echo>
 		</sequential>
@@ -6092,7 +6092,7 @@ if (ppstate.equals("normal")) {
 			</filterchain>
 		</loadproperties>
 
-		<script classpathref="project.classpath" language="beanshell">
+		<beanshell classpathref="project.classpath">
 			<![CDATA[
 				import org.apache.tools.ant.DirectoryScanner;
 
@@ -6185,7 +6185,7 @@ if (ppstate.equals("normal")) {
 
 				project.setProperty("test.plugin.names.properties.content", sb.toString());
 			]]>
-		</script>
+		</beanshell>
 
 		<echo file="test.plugin.names.properties">${test.plugin.names.properties.content}</echo>
 	</target>
@@ -6927,7 +6927,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<delete file="java-processes" />
 
-		<script classpathref="project.classpath" language="beanshell">
+		<beanshell classpathref="project.classpath">
 			String javaProcessesNewContent = project.getProperty("java-processes.content");
 
 			if (javaProcessesNewContent.contains("File Not Found")) {
@@ -6941,7 +6941,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			}
 
 			project.setProperty("java.process.list", javaProcessList);
-		</script>
+		</beanshell>
 
 		<for list="${java.process.list}" param="java.process">
 			<sequential>
@@ -7040,7 +7040,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<get-testcase-property property.name="theme.plugins.includes" />
 		<get-testcase-property property.name="web.plugins.includes" />
 
-		<script classpathref="project.classpath" language="beanshell">
+		<beanshell classpathref="project.classpath">
 			<![CDATA[
 				import com.liferay.portal.kernel.util.StringUtil;
 
@@ -7094,6 +7094,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 					}
 				}
 			]]>
-		</script>
+		</beanshell>
 	</target>
 </project>

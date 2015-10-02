@@ -80,7 +80,6 @@ public abstract class BaseIndexingTestCase {
 		searchContext.setCompanyId(COMPANY_ID);
 		searchContext.setEnd(QueryUtil.ALL_POS);
 		searchContext.setGroupIds(new long[] {GROUP_ID});
-		searchContext.setStart(QueryUtil.ALL_POS);
 
 		QueryConfig queryConfig = new QueryConfig();
 
@@ -89,6 +88,8 @@ public abstract class BaseIndexingTestCase {
 		queryConfig.setScoreEnabled(false);
 
 		searchContext.setQueryConfig(queryConfig);
+
+		searchContext.setStart(QueryUtil.ALL_POS);
 
 		return searchContext;
 	}

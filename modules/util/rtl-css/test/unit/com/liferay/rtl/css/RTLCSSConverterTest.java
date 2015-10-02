@@ -475,10 +475,10 @@ public class RTLCSSConverterTest {
 		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
 			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
 
-		CSSWriter writer = new CSSWriter(
+		CSSWriter cssWriter = new CSSWriter(
 			new CSSWriterSettings(ECSSVersion.CSS30, true));
 
-		return writer.getCSSAsString(cascadingStyleSheet);
+		return cssWriter.getCSSAsString(cascadingStyleSheet);
 	}
 
 	protected String read(String fileName) throws Exception {

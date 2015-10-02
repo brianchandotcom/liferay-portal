@@ -63,7 +63,9 @@ public class RTLCSSConverter {
 		return processRules(cascadingStyleSheet.getAllRules());
 	}
 
-	protected void convertBackground(CSSStyleRule cssStyleRule, String property) {
+	protected void convertBackground(
+		CSSStyleRule cssStyleRule, String property) {
+
 		reverseImage(cssStyleRule, property);
 
 		convertBackgroundPosition(cssStyleRule, property);
@@ -129,7 +131,9 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void convertShorthand(CSSStyleRule cssStyleRule, String property) {
+	protected void convertShorthand(
+		CSSStyleRule cssStyleRule, String property) {
+
 		CSSDeclaration cssDeclaration =
 			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
@@ -265,28 +269,26 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected String processRules(List<ICSSTopLevelRule> cssTopLevelRules) {
+	protected String processRules(List<ICSSTopLevelRule> icssTopLevelRules) {
 		StringBuilder sb = new StringBuilder();
 
-		for (ICSSTopLevelRule cssTopLevelRule : cssTopLevelRules) {
-			if (cssTopLevelRule instanceof CSSMediaRule) {
-				CSSMediaRule cssMediaRule = (CSSMediaRule)cssTopLevelRule;
+		for (ICSSTopLevelRule icssTopLevelRule : icssTopLevelRules) {
+			if (icssTopLevelRule instanceof CSSMediaRule) {
+				CSSMediaRule cssMediaRule = (CSSMediaRule)icssTopLevelRule;
 
 				processRules(cssMediaRule.getAllRules());
 			}
-			else if (cssTopLevelRule instanceof CSSStyleRule) {
-				processRule((CSSStyleRule)cssTopLevelRule);
+			else if (icssTopLevelRule instanceof CSSStyleRule) {
+				processRule((CSSStyleRule)icssTopLevelRule);
 			}
-			else if (cssTopLevelRule instanceof CSSUnknownRule) {
-				String css = cssTopLevelRule.getAsCSSString(
-					_cssWriterSettings, 1);
 
-				sb.append(css.replace("@noflip ", ""));
+			String css = icssTopLevelRule.getAsCSSString(_cssWriterSettings, 1);
+
+			if (icssTopLevelRule instanceof CSSUnknownRule) {
+				css = css.replace("@noflip ", "");
 			}
-			else {
-				sb.append(
-					cssTopLevelRule.getAsCSSString(_cssWriterSettings, 1));
-			}
+
+			sb.append(css);
 		}
 
 		return sb.toString();

@@ -86,7 +86,7 @@ public class JniSassCompilerTest {
 	}
 
 	@Test
-	public void testCompileFileWithSourceMaps() throws Exception {
+	public void testCompileFileWithSourceMap() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
 		Class<?> clazz = getClass();
@@ -110,7 +110,7 @@ public class JniSassCompilerTest {
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());
 
-		url = clazz.getResource("dependencies/sourcemaps");
+		url = clazz.getResource("dependencies/sourcemap");
 
 		File expectedOutputDir = new File(url.toURI());
 
@@ -136,7 +136,7 @@ public class JniSassCompilerTest {
 	}
 
 	@Test
-	public void testCompileStringWithSourceMaps() throws Exception {
+	public void testCompileStringWithSourceMap() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
 		Class<?> clazz = getClass();
@@ -161,7 +161,7 @@ public class JniSassCompilerTest {
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());
 
-		url = clazz.getResource("dependencies/sourcemaps");
+		url = clazz.getResource("dependencies/sourcemap");
 
 		File expectedOutputDir = new File(url.toURI());
 

@@ -44,8 +44,6 @@ public class JniSassCompilerTest {
 	public void testBoxShadowTransparent() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		String expectedOutput =
 			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
 		String actualOutput = sassCompiler.compileString(
@@ -59,8 +57,6 @@ public class JniSassCompilerTest {
 	@Test
 	public void testCompileFile() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
-
-		Assert.assertNotNull(sassCompiler);
 
 		Class<?> clazz = getClass();
 
@@ -93,8 +89,6 @@ public class JniSassCompilerTest {
 	public void testCompileFileWithSourceMaps() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		Class<?> clazz = getClass();
 
 		URL url = clazz.getResource("dependencies/sass-spec/14_imports");
@@ -102,7 +96,9 @@ public class JniSassCompilerTest {
 		File inputDir = new File(url.toURI());
 
 		File inputFile = new File(inputDir, "input.scss");
+
 		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
+
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
@@ -131,8 +127,6 @@ public class JniSassCompilerTest {
 	public void testCompileString() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		String expectedOutput = "foo { margin: 42px; }";
 		String actualOutput = sassCompiler.compileString(
 			"foo { margin: 21px * 2; }", "");
@@ -144,8 +138,6 @@ public class JniSassCompilerTest {
 	@Test
 	public void testCompileStringWithSourceMaps() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
-
-		Assert.assertNotNull(sassCompiler);
 
 		Class<?> clazz = getClass();
 

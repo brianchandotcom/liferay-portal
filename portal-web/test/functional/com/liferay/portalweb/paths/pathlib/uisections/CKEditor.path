@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>IFRAME_LOCALIZED</td>
-	<td>//iframe[contains(@title,'_editor')]</td>
+	<td>//iframe[contains(@title,'Editor')]</td>
 	<td></td>
 </tr>
 <tr>

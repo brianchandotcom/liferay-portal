@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ADD_MENULIST_LANGUAGE</td>
-	<td>//li[contains(@class,'translation-item')]/a[contains(.,'${key_localizedLanguage}')]</td>
+	<td>//div[contains(@class,'translation-manager')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -138,6 +138,17 @@
 		</if>
 	</command>
 
+	<command name="changeDisplayStyle">
+		<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyle" />
+
+		<if>
+			<condition function="IsElementPresent#isVisible" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
+			<then>
+				<execute function="Click" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="configureCustomTitleViaLookandfeelPG">
 		<execute function="Check" locator1="BasePortlet#PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX" />
 		<execute function="Type" locator1="BasePortlet#PORTLET_CONFIGURATION_CUSTOM_TITLE_FIELD" value1="${portletName} Custom" />

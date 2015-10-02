@@ -106,7 +106,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		createElasticsearchFilterTranslator() {
 
 		return new ElasticsearchFilterTranslator() {
-
 			{
 				setBooleanQueryTranslator(new BooleanFilterTranslatorImpl());
 				setDateRangeTermFilterTranslator(
@@ -158,14 +157,13 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		final ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
 		return new ElasticsearchIndexSearcher() {
-
 			{
+				setElasticsearchConnectionManager(
+					elasticsearchConnectionManager);
 				setFacetProcessor(new DateRangeFacetProcessor());
 				setFilterTranslator(createElasticsearchFilterTranslator());
 				setGroupByTranslator(new DefaultGroupByTranslator());
 				setQueryTranslator(createElasticsearchQueryTranslator());
-				setElasticsearchConnectionManager(
-					elasticsearchConnectionManager);
 				setStatsTranslator(new DefaultStatsTranslator());
 
 				activate(_properties);
@@ -178,7 +176,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 		final ElasticsearchUpdateDocumentCommand updateDocumentCommand =
 			new ElasticsearchUpdateDocumentCommandImpl() {
-
 				{
 					setElasticsearchConnectionManager(
 						elasticsearchConnectionManager);
@@ -190,7 +187,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			};
 
 		return new ElasticsearchIndexWriter() {
-
 			{
 				setElasticsearchConnectionManager(
 					elasticsearchConnectionManager);

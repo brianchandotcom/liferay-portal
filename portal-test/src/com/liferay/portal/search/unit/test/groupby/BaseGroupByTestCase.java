@@ -51,7 +51,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 	protected void assertGroup(
 		String key, int hitsCount, int docsCount,
-		Map<String, Hits> groupedHitsMap ) {
+		Map<String, Hits> groupedHitsMap) {
 
 		Hits hits = groupedHitsMap.get(key);
 
@@ -87,7 +87,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		addDocuments("two", 2);
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, new Callable<Void>() {
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
@@ -114,7 +115,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		addDocuments("sixteen", 16);
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, new Callable<Void>() {
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
@@ -139,7 +141,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		addDocuments("sixteen", 16);
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, new Callable<Void>() {
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {

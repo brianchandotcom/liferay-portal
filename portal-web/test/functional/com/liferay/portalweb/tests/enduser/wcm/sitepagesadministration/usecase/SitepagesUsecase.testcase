@@ -570,12 +570,12 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Blogs Post" />
-			<var name="gmailMailTableMessageTitle" value="New Blogs Post" />
-			<var name="gmailMessageBody" value="Test Test created a new blog entry titled Blogs Entry Title." />
+			<var name="gmailAssetType" value="Blogs" />
+			<var name="gmailMailTableMessageTitle" value="Blogs Entry Title" /> 
+			<var name="gmailMessageBody" value="Blogs Entry Title" /> 
 			<var name="gmailMessageBodyClosing" value="Sincerely" />
 			<var name="gmailMessageBodyGreeting" value="Joe Bloggs" />
-			<var name="gmailMessageTitle" value="New Blogs Post by Test Test" />
+			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title&quot; on Liferay Blogs" />
 		</execute>
 
 		<execute macro="Gmail#openMessageContinueReadingButton">
@@ -597,13 +597,13 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMailTableMessageTitle" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageBodyClosing" value="http://localhost" />
 			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
-			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="message-boards-home - Liferay New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">
@@ -822,13 +822,13 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMailTableMessageTitle" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageBodyClosing" value="http://localhost" />
 			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
-			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="message-boards-home - Liferay New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">
@@ -1064,13 +1064,13 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMailTableMessageTitle" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageBodyClosing" value="http://localhost" />
 			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
-			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="message-boards-home - Liferay New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">

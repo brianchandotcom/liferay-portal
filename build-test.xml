@@ -1411,10 +1411,6 @@ tell application "Safari" to quit
 							<prepare-elasticsearch-configuration />
 						</else>
 					</if>
-
-					<antcall target="prepare-portal-ext-properties" />
-
-					<antcall target="prepare-system-ext-properties" />
 				</else>
 			</if>
 

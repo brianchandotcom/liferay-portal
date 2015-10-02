@@ -18,6 +18,9 @@ import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +48,14 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 		_orderByType = orderByType;
 	}
 
-	public void setOrderColumns(String[] orderColumns) {
+	public void setOrderColumns(Map<String, String> orderColumns) {
 		_orderColumns = orderColumns;
+	}
+
+	public void setOrderColumns(String[] orderColumns) {
+		for (String orderColumn : orderColumns) {
+			_orderColumns.put(orderColumn, orderColumn);
+		}
 	}
 
 	@Override
@@ -104,7 +113,7 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 
 	private String _orderByCol;
 	private String _orderByType;
-	private String[] _orderColumns;
+	private Map<String, String> _orderColumns = new HashMap<>();
 	private PortletURL _portletURL;
 
 }

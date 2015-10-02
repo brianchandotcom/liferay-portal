@@ -6,5 +6,4 @@ Include-Resource:\
 	classes,\
 	test-classes/integration,\
 	@lib/com.liferay.bookmarks.test.jar!/com/liferay/bookmarks/util/test/BookmarksTestUtil.class,\
-	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class,\
-	../../../../portal-impl/test/test-portal-impl.properties
+	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class

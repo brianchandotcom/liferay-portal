@@ -6275,10 +6275,6 @@ if (ppstate.equals("normal")) {
 		<delete file="portal-impl/test/portal-test-ext.properties" failonerror="false" />
 
 		<execute>
-			<![CDATA[git checkout -- portal-impl/test/test-portal-impl.properties]]>
-		</execute>
-
-		<execute>
 			<![CDATA[git checkout -- portal-web/test/test-portal-web.properties]]>
 		</execute>
 	</target>

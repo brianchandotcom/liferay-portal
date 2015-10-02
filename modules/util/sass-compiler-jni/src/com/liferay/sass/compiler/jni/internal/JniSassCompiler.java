@@ -78,7 +78,7 @@ public class JniSassCompiler implements SassCompiler {
 				sourceMapFileName = getOutputFileName(inputFileName) + ".map";
 			}
 
-			sassFileContext = _createSassFileContext(
+			sassFileContext = createSassFileContext(
 				inputFileName, includeDirNames, generateSourceMap,
 				sourceMapFileName);
 
@@ -104,11 +104,11 @@ public class JniSassCompiler implements SassCompiler {
 				try {
 					File sourceMapFile = new File(sourceMapFileName);
 
-					String sourcemapOutput =
+					String sourceMapOutput =
 						_liferaysassLibrary.sass_context_get_source_map_string(
 							sassContext);
 
-					write(sourceMapFile, sourcemapOutput);
+					write(sourceMapFile, sourceMapOutput);
 				}
 				catch (Exception e) {
 					System.out.println("Unable to create source map");
@@ -143,8 +143,9 @@ public class JniSassCompiler implements SassCompiler {
 
 	@Override
 	public String compileString(
-		String input, String inputFileName, String includeDirName,
-		boolean generateSourceMap) throws JniSassCompilerException {
+			String input, String inputFileName, String includeDirName,
+			boolean generateSourceMap)
+		throws JniSassCompilerException {
 
 		return compileString(
 			input, inputFileName, includeDirName, generateSourceMap, "");
@@ -161,23 +162,24 @@ public class JniSassCompiler implements SassCompiler {
 				inputFileName = _tmpDirName + "tmp.scss";
 
 				if (generateSourceMap) {
-					System.out.println("Source maps require a valid fileName");
+					System.out.println("Source maps require a valid file name");
 
 					generateSourceMap = false;
 				}
 			}
 
-			int pos = inputFileName.lastIndexOf("/") + 1;
+			int index = inputFileName.lastIndexOf("/") + 1;
 
-			String path = inputFileName.substring(0, pos);
-			String fileName = inputFileName.substring(pos);
+			String dirName = inputFileName.substring(0, index);
+			String fileName = inputFileName.substring(index);
+
 			String outputFileName = getOutputFileName(fileName);
 
 			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
-				sourceMapFileName = path + outputFileName + ".map";
+				sourceMapFileName = dirName + outputFileName + ".map";
 			}
 
-			File tempFile = new File(path, "tmp.scss");
+			File tempFile = new File(dirName, "tmp.scss");
 
 			tempFile.deleteOnExit();
 
@@ -208,16 +210,12 @@ public class JniSassCompiler implements SassCompiler {
 		}
 	}
 
-	private Sass_File_Context _createSassFileContext(
+	protected Sass_File_Context createSassFileContext(
 		String inputFileName, String includeDirNames, boolean generateSourceMap,
 		String sourceMapFileName) {
 
 		Sass_File_Context sassFileContext =
 			_liferaysassLibrary.sass_make_file_context(inputFileName);
-
-		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
-
-		byte sourceComments = (byte)0;
 
 		Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
 
@@ -228,18 +226,23 @@ public class JniSassCompiler implements SassCompiler {
 		_liferaysassLibrary.sass_option_set_output_path(sassOptions, "");
 		_liferaysassLibrary.sass_option_set_output_style(
 			sassOptions, Sass_Output_Style.SASS_STYLE_NESTED);
+
+		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
+
+		byte sourceComments = (byte)0;
+
 		_liferaysassLibrary.sass_option_set_source_comments(
 			sassOptions, sourceComments);
 
 		if (generateSourceMap) {
+			_liferaysassLibrary.sass_option_set_source_map_contents(
+				sassOptions, (byte)0);
+			_liferaysassLibrary.sass_option_set_source_map_embed(
+				sassOptions, (byte)0);
 			_liferaysassLibrary.sass_option_set_source_map_file(
 				sassOptions, sourceMapFileName);
-			_liferaysassLibrary.sass_option_set_source_map_contents(
-				sassOptions, (byte) 0);
-			_liferaysassLibrary.sass_option_set_source_map_embed(
-				sassOptions, (byte) 0);
 			_liferaysassLibrary.sass_option_set_omit_source_map_url(
-				sassOptions, (byte) 0);
+				sassOptions, (byte)0);
 		}
 
 		_liferaysassLibrary.sass_file_context_set_options(
@@ -250,11 +253,11 @@ public class JniSassCompiler implements SassCompiler {
 		return sassFileContext;
 	}
 
-	private String getOutputFileName(String fileName) {
+	protected String getOutputFileName(String fileName) {
 		return fileName.replaceAll("scss$", "css");
 	}
 
-	private void write(File file, String string) throws IOException {
+	protected void write(File file, String string) throws IOException {
 		if (!file.exists()) {
 			File parentFile = file.getParentFile();
 

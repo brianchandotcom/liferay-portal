@@ -102,7 +102,7 @@
 			<get-database-property property.name="database.url" />
 			<get-database-property property.name="database.username" />
 
-			<echo file="@{properties.file}"><![CDATA[liferay.home=${project.dir}
+			<echo file="@{properties.file}"><![CDATA[liferay.home=${liferay.home}
 
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}
@@ -1846,7 +1846,7 @@ ${tomcat-gc-log}
 			<generate-jdbc-properties properties.file="portal-impl/test/portal-test-ext.properties">
 				<post-action>
 					<echo file="@{properties.file}" append="true"><![CDATA[
-module.framework.base.dir=${project.dir}/osgi]]></echo>
+module.framework.base.dir=${liferay.home}/osgi]]></echo>
 				</post-action>
 			</generate-jdbc-properties>
 		</sequential>

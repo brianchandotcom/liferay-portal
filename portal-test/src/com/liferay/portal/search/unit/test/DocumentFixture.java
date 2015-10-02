@@ -40,15 +40,16 @@ public class DocumentFixture {
 
 		DocumentImpl document = new DocumentImpl();
 
-		long entryClassPk = RandomUtils.nextLong();
-
 		document.addKeyword(Field.COMPANY_ID, companyId);
 		document.addKeyword(Field.GROUP_ID, groupId);
-		document.addUID(entryClassName, entryClassPk);
+
+		long entryClassPK = RandomUtils.nextLong();
+
+		document.addUID(entryClassName, entryClassPK);
 
 		DocumentHelper documentHelper = new DocumentHelper(document);
 
-		documentHelper.setEntryKey(entryClassName, entryClassPk);
+		documentHelper.setEntryKey(entryClassName, entryClassPK);
 
 		return document;
 	}

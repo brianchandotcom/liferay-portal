@@ -177,7 +177,9 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 	protected double toDouble(Object value) {
 		if (value instanceof Number) {
-			return ((Number)value).doubleValue();
+			Number number = (Number)value;
+
+			return number.doubleValue();
 		}
 
 		throw new IllegalArgumentException("Only numeric fields are supported");

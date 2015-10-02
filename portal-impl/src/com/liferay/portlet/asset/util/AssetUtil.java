@@ -740,8 +740,8 @@ public class AssetUtil {
 		String[] sortFields = sortField.split(
 			DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
 
-		long ddmStructureId = GetterUtil.getLong(sortFields[1]);
-		String fieldName = sortFields[2];
+		long ddmStructureId = GetterUtil.getLong(sortFields[2]);
+		String fieldName = sortFields[3];
 
 		DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
 			ddmStructureId);

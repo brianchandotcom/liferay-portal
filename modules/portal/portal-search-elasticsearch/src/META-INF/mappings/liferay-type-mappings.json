@@ -36,6 +36,17 @@
 				}
 			},
 			{
+				"template_ddm_keyword": {
+					"mapping": {
+						"index": "not_analyzed",
+						"store": "true",
+						"type": "string"
+					},
+					"match": "ddm__keyword__*",
+					"match_mapping_type": "string"
+				}
+			},
+			{
 				"template_ar": {
 					"mapping": {
 						"analyzer": "arabic",

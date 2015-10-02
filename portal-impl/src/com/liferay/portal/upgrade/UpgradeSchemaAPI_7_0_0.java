@@ -12,23 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_1_0;
+package com.liferay.portal.upgrade;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.UpgradeMVCC;
-import com.liferay.portal.upgrade.UpgradeSchemaAPI_7_0_0;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Alberto Chaparro
  */
-public class UpgradeSchema extends UpgradeProcess {
+public class UpgradeSchemaAPI_7_0_0 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQLTemplate("update-6.0.6-6.1.0.sql", false);
+		runSQL("alter table ResourcePermission add primKeyId LONG");
 
-		upgrade(UpgradeMVCC.class);
-		upgrade(UpgradeSchemaAPI_7_0_0.class);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Added column primKeyId to table ResourcePermission");
+		}
+
+		runSQL("alter table ResourcePermission add viewActionId BOOLEAN");
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Added column viewActionId to table ResourcePermission");
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeSchemaAPI_7_0_0.class);
 
 }

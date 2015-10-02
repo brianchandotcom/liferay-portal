@@ -276,24 +276,6 @@ public class PropsValues {
 
 	public static final int CAPTCHA_MAX_CHALLENGES = GetterUtil.getInteger(PropsUtil.get(PropsKeys.CAPTCHA_MAX_CHALLENGES));
 
-	public static final boolean CAS_AUTH_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CAS_AUTH_ENABLED));
-
-	public static final boolean CAS_IMPORT_FROM_LDAP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CAS_IMPORT_FROM_LDAP));
-
-	public static final String CAS_LOGIN_URL = PropsUtil.get(PropsKeys.CAS_LOGIN_URL);
-
-	public static final boolean CAS_LOGOUT_ON_SESSION_EXPIRATION = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION));
-
-	public static final String CAS_LOGOUT_URL = PropsUtil.get(PropsKeys.CAS_LOGOUT_URL);
-
-	public static final String CAS_NO_SUCH_USER_REDIRECT_URL = PropsUtil.get(PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL);
-
-	public static final String CAS_SERVER_NAME = PropsUtil.get(PropsKeys.CAS_SERVER_NAME);
-
-	public static final String CAS_SERVER_URL = PropsUtil.get(PropsKeys.CAS_SERVER_URL);
-
-	public static final String CAS_SERVICE_URL = PropsUtil.get(PropsKeys.CAS_SERVICE_URL);
-
 	public static final boolean CDN_DYNAMIC_RESOURCES_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED));
 
 	public static final String CDN_HOST_HTTP = PropsUtil.get(PropsKeys.CDN_HOST_HTTP);

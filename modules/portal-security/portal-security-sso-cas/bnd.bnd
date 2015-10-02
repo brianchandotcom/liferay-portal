@@ -5,6 +5,9 @@ Import-Package:\
 	!javax.microedition.*,\
 	!junit.*,\
 	*
+Export-Package:\
+	com.liferay.portal.security.sso.cas.module.configuration,\
+	com.liferay.portal.security.sso.cas.constants
 Include-Resource:\
 	classes,\
 	@lib/cas-client-core.jar,\

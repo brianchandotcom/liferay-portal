@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_ICON</td>
-	<td>//a[@id='toggle_id_users_admin_organization_searchtoggleAdvanced']</td>
+	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a/strong</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>

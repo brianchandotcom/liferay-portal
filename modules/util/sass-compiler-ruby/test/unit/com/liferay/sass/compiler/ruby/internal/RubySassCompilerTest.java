@@ -76,7 +76,7 @@ public class RubySassCompilerTest {
 	}
 
 	@Test
-	public void testCompileFileWithSourceMaps() throws Exception {
+	public void testCompileFileWithSourceMap() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
 		Assert.assertNotNull(sassCompiler);
@@ -126,7 +126,7 @@ public class RubySassCompilerTest {
 	}
 
 	@Test
-	public void testCompileStringWithSourceMaps() throws Exception {
+	public void testCompileStringWithSourceMap() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
 		Assert.assertNotNull(sassCompiler);

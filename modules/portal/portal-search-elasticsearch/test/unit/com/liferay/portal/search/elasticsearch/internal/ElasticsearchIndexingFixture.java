@@ -64,8 +64,6 @@ import org.mockito.Mockito;
 public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	public ElasticsearchIndexingFixture(String subdirName) throws Exception {
-		_properties = new HashMap<>();
-
 		_elasticsearchFixture = new ElasticsearchFixture(
 			subdirName, _properties);
 
@@ -204,6 +202,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	private final ElasticsearchFixture _elasticsearchFixture;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
-	private final HashMap<String, Object> _properties;
+	private final HashMap<String, Object> _properties = new HashMap<>();
 
 }

@@ -20,10 +20,14 @@ import com.helger.css.decl.CSSDeclaration;
 import com.helger.css.decl.CSSExpression;
 import com.helger.css.decl.CSSExpressionMemberTermSimple;
 import com.helger.css.decl.CSSExpressionMemberTermURI;
+import com.helger.css.decl.CSSMediaRule;
 import com.helger.css.decl.CSSStyleRule;
+import com.helger.css.decl.CSSUnknownRule;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.ICSSExpressionMember;
+import com.helger.css.decl.ICSSTopLevelRule;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.reader.errorhandler.DoNothingCSSParseErrorHandler;
 import com.helger.css.writer.CSSWriterSettings;
 
 import java.util.Arrays;
@@ -44,53 +48,30 @@ public class RTLCSSConverter {
 
 	public RTLCSSConverter(boolean compress) {
 		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
+
+		_cssWriterSettings.setOptimizedOutput(compress);
+		_cssWriterSettings.setRemoveUnnecessaryCode(Boolean.TRUE);
 	}
 
 	public String process(String css) {
+		css = processNoFlip(css);
+
 		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
-			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
+			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30,
+			new DoNothingCSSParseErrorHandler());
 
-		List<CSSStyleRule> cssStyleRules =
-			cascadingStyleSheet.getAllStyleRules();
-
-		StringBuilder sb = new StringBuilder(cssStyleRules.size());
-
-		for (CSSStyleRule cssStyleRule : cssStyleRules) {
-			for (String property : _replacementStyles.keySet()) {
-				replaceStyle(cssStyleRule, property);
-			}
-
-			for (CSSDeclaration cssDeclaration :
-					cssStyleRule.getAllDeclarations()) {
-
-				String property = cssDeclaration.getProperty();
-
-				String strippedProperty = stripProperty(property);
-
-				if (_shorthandStyles.contains(strippedProperty)) {
-					convertShorthand(cssStyleRule, property);
-				}
-				else if (_shorthandRadiusStyles.contains(strippedProperty)) {
-					convertShorthandRadius(cssStyleRule, property);
-				}
-				else if (_reverseStyles.contains(strippedProperty)) {
-					reverseStyle(cssStyleRule, property);
-				}
-				else if (_reverseImageStyles.contains(strippedProperty)) {
-					reverseImage(cssStyleRule, property);
-				}
-				else if (_backgroundPositionStyles.contains(strippedProperty)) {
-					convertBGPosition(cssStyleRule, property);
-				}
-			}
-
-			sb.append(cssStyleRule.getAsCSSString(_cssWriterSettings, 1));
-		}
-
-		return sb.toString();
+		return processRules(cascadingStyleSheet.getAllRules());
 	}
 
-	protected void convertBGPosition(
+	protected void convertBackground(
+		CSSStyleRule cssStyleRule, String property) {
+
+		reverseImage(cssStyleRule, property);
+
+		convertBackgroundPosition(cssStyleRule, property);
+	}
+
+	protected void convertBackgroundPosition(
 		CSSStyleRule cssStyleRule, String property) {
 
 		CSSDeclaration cssDeclaration =
@@ -249,6 +230,70 @@ public class RTLCSSConverter {
 		}
 	}
 
+	protected String processNoFlip(String css) {
+		css = css.replaceAll("/\\*\\s*@noflip\\s*\\*/ *(\\n|$)", "");
+
+		return css.replaceAll("/\\*\\s*@noflip\\s*\\*/", "@noflip ");
+	}
+
+	protected void processRule(CSSStyleRule cssStyleRule) {
+		for (String property : _replacementStyles.keySet()) {
+			replaceStyle(cssStyleRule, property);
+		}
+
+		for (CSSDeclaration cssDeclaration :
+				cssStyleRule.getAllDeclarations()) {
+
+			String property = cssDeclaration.getProperty();
+
+			String strippedProperty = stripProperty(property);
+
+			if (_backgroundPositionStyles.contains(strippedProperty)) {
+				convertBackgroundPosition(cssStyleRule, property);
+			}
+			else if (_backgroundStyles.contains(strippedProperty)) {
+				convertBackground(cssStyleRule, property);
+			}
+			else if (_reverseImageStyles.contains(strippedProperty)) {
+				reverseImage(cssStyleRule, property);
+			}
+			else if (_reverseStyles.contains(strippedProperty)) {
+				reverseStyle(cssStyleRule, property);
+			}
+			else if (_shorthandRadiusStyles.contains(strippedProperty)) {
+				convertShorthandRadius(cssStyleRule, property);
+			}
+			else if (_shorthandStyles.contains(strippedProperty)) {
+				convertShorthand(cssStyleRule, property);
+			}
+		}
+	}
+
+	protected String processRules(List<ICSSTopLevelRule> icssTopLevelRules) {
+		StringBuilder sb = new StringBuilder();
+
+		for (ICSSTopLevelRule icssTopLevelRule : icssTopLevelRules) {
+			if (icssTopLevelRule instanceof CSSMediaRule) {
+				CSSMediaRule cssMediaRule = (CSSMediaRule)icssTopLevelRule;
+
+				processRules(cssMediaRule.getAllRules());
+			}
+			else if (icssTopLevelRule instanceof CSSStyleRule) {
+				processRule((CSSStyleRule)icssTopLevelRule);
+			}
+
+			String css = icssTopLevelRule.getAsCSSString(_cssWriterSettings, 1);
+
+			if (icssTopLevelRule instanceof CSSUnknownRule) {
+				css = css.replace("@noflip ", "");
+			}
+
+			sb.append(css);
+		}
+
+		return sb.toString();
+	}
+
 	protected void replaceStyle(CSSStyleRule cssStyleRule, String property) {
 		replaceStyle(cssStyleRule, property, false);
 		replaceStyle(cssStyleRule, property, true);
@@ -304,14 +349,19 @@ public class RTLCSSConverter {
 
 				String uri = cssExpressionMemberTermURI.getURIString();
 
-				if (uri.contains("right")) {
-					uri = uri.replaceAll("right", "left");
+				int index = uri.lastIndexOf("/") + 1;
+
+				String fileName = uri.substring(index);
+
+				if (fileName.contains("right")) {
+					fileName = fileName.replaceAll("right", "left");
 				}
 				else {
-					uri = uri.replaceAll("left", "right");
+					fileName = fileName.replaceAll("left", "right");
 				}
 
-				cssExpressionMemberTermURI.setURIString(uri);
+				cssExpressionMemberTermURI.setURIString(
+					uri.substring(0, index) + fileName);
 			}
 		}
 	}
@@ -359,13 +409,15 @@ public class RTLCSSConverter {
 
 	private static final List<String> _backgroundPositionStyles = Arrays.asList(
 		"background-position");
+	private static final List<String> _backgroundStyles = Arrays.asList(
+		"background");
 	private static final Pattern _percentOrLengthPattern = Pattern.compile(
 		"(\\d+)([a-z]{2}|%)");
 	private static final Pattern _percentPattern = Pattern.compile("\\d+%");
 	private static final Map<String, String> _replacementStyles =
 		new HashMap<>();
 	private static final List<String> _reverseImageStyles = Arrays.asList(
-		"background", "background-image");
+		"background-image");
 	private static final List<String> _reverseStyles = Arrays.asList(
 		"clear", "direction", "float", "text-align");
 	private static final List<String> _shorthandRadiusStyles = Arrays.asList(

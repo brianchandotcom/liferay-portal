@@ -23,16 +23,12 @@ import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Tomas Polesovsky
  */
 public abstract class AbstractAuthVerifierPublisher {
 
-	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
@@ -52,6 +48,7 @@ public abstract class AbstractAuthVerifierPublisher {
 
 		for (Map.Entry<String, Object> entry : properties.entrySet()) {
 			String key = translateKey(authVerifierPropertyName, entry.getKey());
+
 			authVerifierProperties.put(key, entry.getValue());
 		}
 
@@ -59,7 +56,6 @@ public abstract class AbstractAuthVerifierPublisher {
 			AuthVerifier.class, authVerifier, authVerifierProperties);
 	}
 
-	@Deactivate
 	protected void deactivate() {
 		if (_authVerifierRegistration != null) {
 			_authVerifierRegistration.unregister();
@@ -68,7 +64,6 @@ public abstract class AbstractAuthVerifierPublisher {
 
 	protected abstract AuthVerifier getAuthVerifierInstance();
 
-	@Modified
 	protected void modified(
 		BundleContext bundleContext, Map<String, Object> properties) {
 

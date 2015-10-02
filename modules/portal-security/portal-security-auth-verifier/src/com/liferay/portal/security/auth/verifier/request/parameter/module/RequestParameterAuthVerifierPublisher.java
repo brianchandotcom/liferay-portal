@@ -18,8 +18,14 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.security.auth.verifier.module.AbstractAuthVerifierPublisher;
 import com.liferay.portal.security.auth.verifier.request.parameter.RequestParameterAuthVerifier;
 
+import java.util.Map;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Tomas Polesovsky
@@ -31,9 +37,31 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 public class RequestParameterAuthVerifierPublisher
 	extends AbstractAuthVerifierPublisher {
 
+	@Activate
+	@Override
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		super.activate(bundleContext, properties);
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+	}
+
 	@Override
 	protected AuthVerifier getAuthVerifierInstance() {
 		return _authVerifier;
+	}
+
+	@Modified
+	@Override
+	protected void modified(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		super.modified(bundleContext, properties);
 	}
 
 	private final AuthVerifier _authVerifier =

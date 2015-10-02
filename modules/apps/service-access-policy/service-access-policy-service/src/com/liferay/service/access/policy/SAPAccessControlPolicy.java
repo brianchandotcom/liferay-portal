@@ -68,6 +68,9 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		List<String> systemSAPNames = getSystemSAPNames(companyId);
 		serviceAccessPolicyNames.addAll(systemSAPNames);
 
+		List<String> defaultSAPNames = getDefaultSAPNames(companyId);
+		serviceAccessPolicyNames.addAll(defaultSAPNames);
+
 		Set<String> allowedServiceSignatures = loadAllowedServiceSignatures(
 			companyId, serviceAccessPolicyNames);
 
@@ -138,6 +141,20 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		}
 
 		return serviceAccessPolicyNames;
+	}
+
+	protected List<String> getDefaultSAPNames(long companyId) {
+		List<SAPEntry> defaultSAPEntries =
+			_sapEntryLocalService.findDefaultSAPEntries(companyId, true);
+
+		List<String> defaultSAPNames = new ArrayList<>(
+			defaultSAPEntries.size());
+
+		for (SAPEntry sapEntry : defaultSAPEntries) {
+			defaultSAPNames.add(sapEntry.getName());
+		}
+
+		return defaultSAPNames;
 	}
 
 	protected List<String> getSystemSAPNames(long companyId) {

@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-danger') and contains(.,'You do not have the required permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

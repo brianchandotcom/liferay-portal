@@ -37,6 +37,15 @@
 	<td>UNSUBSCRIBE_LINK</td>
 	<td>//div[contains(@class,'subscribe')]/span/a/span[contains(.,'Unsubscribe')]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class, 'alert-danger') and contains(.,'You do not have the required permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ICON_VIEW-->

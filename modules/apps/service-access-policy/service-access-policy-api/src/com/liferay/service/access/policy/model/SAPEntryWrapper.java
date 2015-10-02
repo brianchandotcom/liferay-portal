@@ -428,6 +428,12 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
+	public boolean isSystem()
+		throws com.liferay.portal.kernel.module.configuration.ConfigurationException {
+		return _sapEntry.isSystem();
+	}
+
+	@Override
 	public void persist() {
 		_sapEntry.persist();
 	}

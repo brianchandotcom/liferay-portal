@@ -53,4 +53,7 @@ public interface SAPEntry extends SAPEntryModel, PersistedModel {
 		};
 
 	public java.util.List<java.lang.String> getAllowedServiceSignaturesList();
+
+	public boolean isSystem()
+		throws com.liferay.portal.kernel.module.configuration.ConfigurationException;
 }

@@ -66,14 +66,14 @@ public class DocumentFixture {
 		FastDateFormatFactory fastDateFormatFactory = Mockito.mock(
 			FastDateFormatFactory.class);
 
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			fastDateFormatFactory);
-
 		Mockito.when(
 			fastDateFormatFactory.getSimpleDateFormat("yyyyMMddHHmmss")
 		).thenReturn(
 			new SimpleDateFormat("yyyyMMddHHmmss")
 		);
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			fastDateFormatFactory);
 	}
 
 	protected void mockProperty(String property, String value) {

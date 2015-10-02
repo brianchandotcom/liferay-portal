@@ -4,5 +4,4 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	test-classes/integration,\
-	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class,\
-	../../../../portal-impl/test/test-portal-impl.properties
+	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class

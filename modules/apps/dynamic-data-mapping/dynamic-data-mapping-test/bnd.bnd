@@ -4,6 +4,5 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	test-classes/integration,\
-	../../../../portal-impl/test/test-portal-impl.properties,\
 	@lib/json.jar,\
 	@lib/jsonassert.jar

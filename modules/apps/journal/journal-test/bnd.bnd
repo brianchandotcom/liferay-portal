@@ -8,5 +8,4 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	test-classes/integration/,\
-	../../../../portal-impl/test/test-portal-impl.properties,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class

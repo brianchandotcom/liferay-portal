@@ -2,6 +2,4 @@ Bundle-Activator: com.liferay.portal.store.file.system.test.activator.configurat
 Bundle-Name: Liferay Portal Store File System Test
 Bundle-SymbolicName: com.liferay.portal.store.file.system.test
 Bundle-Version: 1.0.0
-Include-Resource:\
-	com/liferay/portal/store/file/system/test/activator/configuration=classes/com/liferay/portal/store/file/system/test/activator/configuration,\
-	../../../portal-impl/test/test-portal-impl.properties
+Include-Resource: com/liferay/portal/store/file/system/test/activator/configuration=classes/com/liferay/portal/store/file/system/test/activator/configuration

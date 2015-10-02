@@ -2,6 +2,4 @@ Bundle-Activator: com.liferay.portal.store.jcr.test.activator.configuration.Conf
 Bundle-Name: Liferay Portal Store JCR Test
 Bundle-SymbolicName: com.liferay.portal.store.jcr.test
 Bundle-Version: 1.0.0
-Include-Resource:\
-	com/liferay/portal/store/jcr/test/activator/configuration=classes/com/liferay/portal/store/jcr/test/activator/configuration,\
-	../../../portal-impl/test/test-portal-impl.properties
+Include-Resource: com/liferay/portal/store/jcr/test/activator/configuration=classes/com/liferay/portal/store/jcr/test/activator/configuration

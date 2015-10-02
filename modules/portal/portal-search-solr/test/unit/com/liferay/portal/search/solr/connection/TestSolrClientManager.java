@@ -54,6 +54,8 @@ public class TestSolrClientManager extends SolrClientManager {
 
 		setHttpClientFactory(httpClientFactory, properties);
 
+		properties.clear();
+
 		properties.put("type", solrConfiguration.clientType());
 
 		setSolrClientFactory(new ReplicatedSolrClientFactory(), properties);

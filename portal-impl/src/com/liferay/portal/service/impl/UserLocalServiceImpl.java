@@ -6724,7 +6724,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if ((user != null) && (user.getUserId() != userId)) {
 			throw new UserScreenNameException.MustNotBeDuplicate(
-				userId, screenName);
+				user.getUserId(), screenName);
 		}
 
 		String friendlyURL = StringPool.SLASH + screenName;

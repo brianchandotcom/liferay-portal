@@ -5,7 +5,7 @@
 		<while>
 			<condition function="IsElementNotPresent" locator1="ConfigurationAdmin#CONFIGURATION_ADMIN_NAME_LINK" />
 			<then>
-				<execute function="Click" locator1="Pagination#NEXT_LINK" />
+				<execute function="Click" locator1="Icon#CARET_RIGHT" />
 			</then>
 		</while>
 

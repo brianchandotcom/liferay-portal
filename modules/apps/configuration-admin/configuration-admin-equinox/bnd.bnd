@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Configuration Admin Equinox
+Bundle-SymbolicName: com.liferay.configuration.admin.equinox
+Bundle-Version: 1.0.0
+Include-Resource: classes

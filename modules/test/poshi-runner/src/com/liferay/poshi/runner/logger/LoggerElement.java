@@ -155,6 +155,10 @@ public class LoggerElement {
 		return childLoggerElements;
 	}
 
+	public void removeChildLoggerElement(LoggerElement childLoggerElement) {
+		_childLoggerElements.remove(childLoggerElement);
+	}
+
 	public void removeChildLoggerElements(String name) {
 		List<LoggerElement> childLoggerElements = new ArrayList<>();
 

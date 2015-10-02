@@ -98,6 +98,9 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 					setActiveServiceAccessPolicyNames(serviceAccessPolicyNames);
 			}
 
+			serviceAccessPolicyNames.add(
+				sapConfiguration.systemDefaultSAPEntryName());
+
 			boolean passwordBasedAuthentication = false;
 
 			if (accessControlContext != null) {
@@ -113,10 +116,6 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			if (passwordBasedAuthentication) {
 				serviceAccessPolicyNames.add(
 					sapConfiguration.systemUserPasswordSAPEntryName());
-			}
-			else {
-				serviceAccessPolicyNames.add(
-					sapConfiguration.systemDefaultSAPEntryName());
 			}
 		}
 

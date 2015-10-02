@@ -21,7 +21,8 @@ public class SolrUnitTestRequirements {
 
 	public static boolean isSolrExternallyStartedByDeveloper() {
 		return Boolean.valueOf(
-			System.getProperty("portal.search.test.unit.solr.started"));
+			System.getProperty(
+				"com.liferay.portal.search.solr.test.unit.started"));
 	}
 
 }

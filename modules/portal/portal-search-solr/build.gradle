@@ -19,5 +19,5 @@ liferay {
 }
 
 test {
-    systemProperty "portal.search.test.unit.solr.started", System.getProperty("portal.search.test.unit.solr.started")
+    systemProperty "com.liferay.portal.search.solr.test.unit.started", System.getProperty("com.liferay.portal.search.solr.test.unit.started")
 }

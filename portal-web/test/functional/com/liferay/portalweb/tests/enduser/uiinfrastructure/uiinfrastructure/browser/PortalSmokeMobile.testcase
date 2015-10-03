@@ -1,5 +1,5 @@
 <definition component-name="portal-user-interface">
-	<property name="mobile.device.type" value="android" />
+	<property name="browser.type" value="android" />
 	<property name="testray.main.component.name" value="User Interface" />
 
 	<set-up>

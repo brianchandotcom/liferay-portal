@@ -232,8 +232,7 @@ public class ManifestSummaryTest
 			manifestSummary.getModelAdditionCount(
 				new StagedModelType(JournalFolder.class)));
 		Assert.assertTrue(
-			DateUtil.equals(
-				_exportDate, manifestSummary.getExportDate(), true));
+			DateUtil.equals(_exportDate, manifestSummary.getExportDate()));
 	}
 
 	private Date _exportDate;

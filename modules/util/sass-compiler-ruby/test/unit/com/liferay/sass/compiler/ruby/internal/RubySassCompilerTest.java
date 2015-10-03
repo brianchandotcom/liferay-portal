@@ -97,7 +97,7 @@ public class RubySassCompilerTest {
 		File expectedOutputFile = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
 				"/internal/dependencies/sourcemap",
-			"expected_output.css");
+			"expected_output_custom_source_map.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 
@@ -144,7 +144,7 @@ public class RubySassCompilerTest {
 		File expectedOutputFile = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
 				"/internal/dependencies/sourcemap",
-			"expected_custom_output.css");
+			"expected_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 
@@ -153,9 +153,7 @@ public class RubySassCompilerTest {
 	}
 
 	protected String read(Path filePath) throws Exception {
-		String content = new String(Files.readAllBytes(filePath));
-
-		return stripNewLines(content);
+		return new String(Files.readAllBytes(filePath));
 	}
 
 	protected String stripNewLines(String string) {

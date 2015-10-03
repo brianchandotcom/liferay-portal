@@ -79,6 +79,25 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the portlet preferenceses where plid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param plid the plid
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public java.util.List<PortletPreferences> findByPlid(long plid, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first portlet preferences in the ordered set where plid = &#63;.
 	*
 	* @param plid the plid
@@ -191,6 +210,25 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public java.util.List<PortletPreferences> findByPortletId(
 		java.lang.String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses where portletId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public java.util.List<PortletPreferences> findByPortletId(
+		java.lang.String portletId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first portlet preferences in the ordered set where portletId = &#63;.
@@ -311,6 +349,26 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public java.util.List<PortletPreferences> findByO_P(int ownerType,
 		java.lang.String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses where ownerType = &#63; and portletId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public java.util.List<PortletPreferences> findByO_P(int ownerType,
+		java.lang.String portletId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first portlet preferences in the ordered set where ownerType = &#63; and portletId = &#63;.
@@ -439,6 +497,26 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public java.util.List<PortletPreferences> findByP_P(long plid,
 		java.lang.String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param plid the plid
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public java.util.List<PortletPreferences> findByP_P(long plid,
+		java.lang.String portletId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
@@ -570,6 +648,27 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public java.util.List<PortletPreferences> findByO_O_P(long ownerId,
 		int ownerType, long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param plid the plid
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public java.util.List<PortletPreferences> findByO_O_P(long ownerId,
+		int ownerType, long plid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
@@ -708,6 +807,27 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public java.util.List<PortletPreferences> findByO_O_PI(long ownerId,
 		int ownerType, java.lang.String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public java.util.List<PortletPreferences> findByO_O_PI(long ownerId,
+		int ownerType, java.lang.String portletId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
@@ -849,6 +969,27 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public java.util.List<PortletPreferences> findByO_P_P(int ownerType,
 		long plid, java.lang.String portletId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param ownerType the owner type
+	* @param plid the plid
+	* @param portletId the portlet ID
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching portlet preferenceses
+	*/
+	public java.util.List<PortletPreferences> findByO_P_P(int ownerType,
+		long plid, java.lang.String portletId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -1098,6 +1239,23 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public java.util.List<PortletPreferences> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PortletPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of portlet preferenceses
+	*/
+	public java.util.List<PortletPreferences> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the portlet preferenceses from the database.

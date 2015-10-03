@@ -83,6 +83,26 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the resource blocks where companyId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param start the lower bound of the range of resource blocks
+	* @param end the upper bound of the range of resource blocks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching resource blocks
+	*/
+	public java.util.List<ResourceBlock> findByC_N(long companyId,
+		java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
 	*
 	* @param companyId the company ID
@@ -209,6 +229,27 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	public java.util.List<ResourceBlock> findByC_G_N(long companyId,
 		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param groupId the group ID
+	* @param name the name
+	* @param start the lower bound of the range of resource blocks
+	* @param end the upper bound of the range of resource blocks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching resource blocks
+	*/
+	public java.util.List<ResourceBlock> findByC_G_N(long companyId,
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
@@ -457,6 +498,23 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public java.util.List<ResourceBlock> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the resource blocks.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of resource blocks
+	* @param end the upper bound of the range of resource blocks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of resource blocks
+	*/
+	public java.util.List<ResourceBlock> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the resource blocks from the database.

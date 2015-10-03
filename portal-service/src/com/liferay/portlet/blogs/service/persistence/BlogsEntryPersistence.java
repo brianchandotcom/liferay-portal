@@ -81,6 +81,25 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -248,6 +267,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -367,6 +406,25 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByGroupId(long groupId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByGroupId(long groupId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63;.
@@ -543,6 +601,25 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByCompanyId(long companyId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -708,6 +785,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByG_LtD(long groupId,
 		java.util.Date displayDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and displayDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_LtD(long groupId,
+		java.util.Date displayDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63;.
@@ -905,6 +1002,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_S(long groupId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -1093,6 +1210,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByG_NotS(long groupId, int status,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_NotS(long groupId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and status &ne; &#63;.
@@ -1286,6 +1423,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByC_U(long companyId, long userId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
 	*
 	* @param companyId the company ID
@@ -1408,6 +1565,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByC_LtD(long companyId,
 		java.util.Date displayDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByC_LtD(long companyId,
+		java.util.Date displayDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
@@ -1537,6 +1714,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByC_S(long companyId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
@@ -1658,6 +1855,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByC_NotS(long companyId, int status,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByC_NotS(long companyId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -1782,6 +1999,26 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByLtD_S(java.util.Date displayDate,
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByLtD_S(java.util.Date displayDate,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
@@ -1910,6 +2147,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByG_U_LtD(long groupId, long userId,
 		java.util.Date displayDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and displayDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param displayDate the display date
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_LtD(long groupId, long userId,
+		java.util.Date displayDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63;.
@@ -2126,6 +2384,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_S(long groupId, long userId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -2331,6 +2610,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByG_U_NotS(long groupId, long userId,
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_NotS(long groupId, long userId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and userId = &#63; and status &ne; &#63;.
@@ -2542,6 +2842,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByG_LtD_S(long groupId,
 		java.util.Date displayDate, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_LtD_S(long groupId,
+		java.util.Date displayDate, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
@@ -2758,6 +3079,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_LtD_NotS(long groupId,
+		java.util.Date displayDate, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
 	*
 	* @param groupId the group ID
@@ -2972,6 +3314,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByC_U_S(long companyId, long userId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
@@ -3107,6 +3470,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByC_U_NotS(long companyId,
 		long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByC_U_NotS(long companyId,
+		long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
@@ -3247,6 +3631,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByC_LtD_S(long companyId,
+		java.util.Date displayDate, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
@@ -3385,6 +3790,27 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public java.util.List<BlogsEntry> findByC_LtD_NotS(long companyId,
 		java.util.Date displayDate, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByC_LtD_NotS(long companyId,
+		java.util.Date displayDate, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
@@ -3529,6 +3955,29 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		long userId, java.util.Date displayDate, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_LtD_S(long groupId,
+		long userId, java.util.Date displayDate, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status = &#63;.
@@ -3760,6 +4209,29 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		long userId, java.util.Date displayDate, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_LtD_NotS(long groupId,
+		long userId, java.util.Date displayDate, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first blogs entry in the ordered set where groupId = &#63; and userId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
@@ -4031,6 +4503,23 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	*/
 	public java.util.List<BlogsEntry> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of blogs entries
+	*/
+	public java.util.List<BlogsEntry> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the blogs entries from the database.

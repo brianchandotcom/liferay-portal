@@ -155,6 +155,27 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	@Override
 	public List<ShoppingCoupon> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<ShoppingCoupon> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping coupons where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of shopping coupons
+	 * @param end the upper bound of the range of shopping coupons (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching shopping coupons
+	 */
+	@Override
+	public List<ShoppingCoupon> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<ShoppingCoupon> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -170,15 +191,19 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<ShoppingCoupon> list = (List<ShoppingCoupon>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingCoupon> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ShoppingCoupon shoppingCoupon : list) {
-				if ((groupId != shoppingCoupon.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ShoppingCoupon>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ShoppingCoupon shoppingCoupon : list) {
+					if ((groupId != shoppingCoupon.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1379,6 +1404,26 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	@Override
 	public List<ShoppingCoupon> findAll(int start, int end,
 		OrderByComparator<ShoppingCoupon> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping coupons.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of shopping coupons
+	 * @param end the upper bound of the range of shopping coupons (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of shopping coupons
+	 */
+	@Override
+	public List<ShoppingCoupon> findAll(int start, int end,
+		OrderByComparator<ShoppingCoupon> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1394,8 +1439,12 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<ShoppingCoupon> list = (List<ShoppingCoupon>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingCoupon> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ShoppingCoupon>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

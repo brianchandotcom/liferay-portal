@@ -150,6 +150,27 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findByUuid(String uuid, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByUuid(String uuid, int start, int end,
+		OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -165,15 +186,19 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PollsVote pollsVote : list) {
-				if (!Validator.equals(uuid, pollsVote.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if (!Validator.equals(uuid, pollsVote.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -931,6 +956,28 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<PollsVote> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -950,16 +997,20 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				};
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PollsVote pollsVote : list) {
-				if (!Validator.equals(uuid, pollsVote.getUuid()) ||
-						(companyId != pollsVote.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if (!Validator.equals(uuid, pollsVote.getUuid()) ||
+							(companyId != pollsVote.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1486,6 +1537,27 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findByQuestionId(long questionId, int start,
 		int end, OrderByComparator<PollsVote> orderByComparator) {
+		return findByQuestionId(questionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes where questionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param questionId the question ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByQuestionId(long questionId, int start,
+		int end, OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1501,15 +1573,19 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			finderArgs = new Object[] { questionId, start, end, orderByComparator };
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PollsVote pollsVote : list) {
-				if ((questionId != pollsVote.getQuestionId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if ((questionId != pollsVote.getQuestionId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1965,6 +2041,27 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findByChoiceId(long choiceId, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator) {
+		return findByChoiceId(choiceId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes where choiceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param choiceId the choice ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByChoiceId(long choiceId, int start, int end,
+		OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1980,15 +2077,19 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			finderArgs = new Object[] { choiceId, start, end, orderByComparator };
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PollsVote pollsVote : list) {
-				if ((choiceId != pollsVote.getChoiceId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if ((choiceId != pollsVote.getChoiceId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3290,6 +3391,26 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findAll(int start, int end,
 		OrderByComparator<PollsVote> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of polls votes
+	 */
+	@Override
+	public List<PollsVote> findAll(int start, int end,
+		OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3305,8 +3426,12 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

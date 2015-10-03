@@ -152,6 +152,27 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	@Override
 	public List<SocialActivityCounter> findByGroupId(long groupId, int start,
 		int end, OrderByComparator<SocialActivityCounter> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social activity counters where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityCounterModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of social activity counters
+	 * @param end the upper bound of the range of social activity counters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social activity counters
+	 */
+	@Override
+	public List<SocialActivityCounter> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<SocialActivityCounter> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -167,15 +188,19 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<SocialActivityCounter> list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialActivityCounter> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityCounter socialActivityCounter : list) {
-				if ((groupId != socialActivityCounter.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialActivityCounter socialActivityCounter : list) {
+					if ((groupId != socialActivityCounter.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -640,6 +665,30 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	public List<SocialActivityCounter> findByC_C(long classNameId,
 		long classPK, int start, int end,
 		OrderByComparator<SocialActivityCounter> orderByComparator) {
+		return findByC_C(classNameId, classPK, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityCounterModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of social activity counters
+	 * @param end the upper bound of the range of social activity counters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social activity counters
+	 */
+	@Override
+	public List<SocialActivityCounter> findByC_C(long classNameId,
+		long classPK, int start, int end,
+		OrderByComparator<SocialActivityCounter> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -659,16 +708,20 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				};
 		}
 
-		List<SocialActivityCounter> list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialActivityCounter> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityCounter socialActivityCounter : list) {
-				if ((classNameId != socialActivityCounter.getClassNameId()) ||
-						(classPK != socialActivityCounter.getClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialActivityCounter socialActivityCounter : list) {
+					if ((classNameId != socialActivityCounter.getClassNameId()) ||
+							(classPK != socialActivityCounter.getClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1178,6 +1231,32 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	public List<SocialActivityCounter> findByG_C_C_O(long groupId,
 		long classNameId, long classPK, int ownerType, int start, int end,
 		OrderByComparator<SocialActivityCounter> orderByComparator) {
+		return findByG_C_C_O(groupId, classNameId, classPK, ownerType, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityCounterModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @param start the lower bound of the range of social activity counters
+	 * @param end the upper bound of the range of social activity counters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social activity counters
+	 */
+	@Override
+	public List<SocialActivityCounter> findByG_C_C_O(long groupId,
+		long classNameId, long classPK, int ownerType, int start, int end,
+		OrderByComparator<SocialActivityCounter> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1197,18 +1276,22 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				};
 		}
 
-		List<SocialActivityCounter> list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialActivityCounter> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityCounter socialActivityCounter : list) {
-				if ((groupId != socialActivityCounter.getGroupId()) ||
-						(classNameId != socialActivityCounter.getClassNameId()) ||
-						(classPK != socialActivityCounter.getClassPK()) ||
-						(ownerType != socialActivityCounter.getOwnerType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialActivityCounter socialActivityCounter : list) {
+					if ((groupId != socialActivityCounter.getGroupId()) ||
+							(classNameId != socialActivityCounter.getClassNameId()) ||
+							(classPK != socialActivityCounter.getClassPK()) ||
+							(ownerType != socialActivityCounter.getOwnerType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3115,6 +3198,26 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	@Override
 	public List<SocialActivityCounter> findAll(int start, int end,
 		OrderByComparator<SocialActivityCounter> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social activity counters.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialActivityCounterModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of social activity counters
+	 * @param end the upper bound of the range of social activity counters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of social activity counters
+	 */
+	@Override
+	public List<SocialActivityCounter> findAll(int start, int end,
+		OrderByComparator<SocialActivityCounter> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3130,8 +3233,12 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<SocialActivityCounter> list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialActivityCounter> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

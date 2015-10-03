@@ -150,6 +150,27 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	@Override
 	public List<ResourceTypePermission> findByRoleId(long roleId, int start,
 		int end, OrderByComparator<ResourceTypePermission> orderByComparator) {
+		return findByRoleId(roleId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource type permissions where roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceTypePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching resource type permissions
+	 */
+	@Override
+	public List<ResourceTypePermission> findByRoleId(long roleId, int start,
+		int end, OrderByComparator<ResourceTypePermission> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -165,15 +186,19 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			finderArgs = new Object[] { roleId, start, end, orderByComparator };
 		}
 
-		List<ResourceTypePermission> list = (List<ResourceTypePermission>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ResourceTypePermission> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourceTypePermission resourceTypePermission : list) {
-				if ((roleId != resourceTypePermission.getRoleId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ResourceTypePermission>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourceTypePermission resourceTypePermission : list) {
+					if ((roleId != resourceTypePermission.getRoleId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -650,6 +675,31 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	public List<ResourceTypePermission> findByC_N_R(long companyId,
 		String name, long roleId, int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator) {
+		return findByC_N_R(companyId, name, roleId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceTypePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching resource type permissions
+	 */
+	@Override
+	public List<ResourceTypePermission> findByC_N_R(long companyId,
+		String name, long roleId, int start, int end,
+		OrderByComparator<ResourceTypePermission> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -669,17 +719,22 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				};
 		}
 
-		List<ResourceTypePermission> list = (List<ResourceTypePermission>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ResourceTypePermission> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourceTypePermission resourceTypePermission : list) {
-				if ((companyId != resourceTypePermission.getCompanyId()) ||
-						!Validator.equals(name, resourceTypePermission.getName()) ||
-						(roleId != resourceTypePermission.getRoleId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ResourceTypePermission>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourceTypePermission resourceTypePermission : list) {
+					if ((companyId != resourceTypePermission.getCompanyId()) ||
+							!Validator.equals(name,
+								resourceTypePermission.getName()) ||
+							(roleId != resourceTypePermission.getRoleId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2084,6 +2139,26 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	@Override
 	public List<ResourceTypePermission> findAll(int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource type permissions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceTypePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of resource type permissions
+	 */
+	@Override
+	public List<ResourceTypePermission> findAll(int start, int end,
+		OrderByComparator<ResourceTypePermission> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2099,8 +2174,12 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<ResourceTypePermission> list = (List<ResourceTypePermission>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ResourceTypePermission> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ResourceTypePermission>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

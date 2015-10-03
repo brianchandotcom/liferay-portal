@@ -155,6 +155,28 @@ public class ModuleUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the modules where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ModuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of modules
+	* @param end the upper bound of the range of modules (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching modules
+	*/
+	public static List<Module> findByUuid(java.lang.String uuid, int start,
+		int end, OrderByComparator<Module> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first module in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -283,6 +305,27 @@ public class ModuleUtil {
 	public static List<Module> findByAppId(long appId, int start, int end,
 		OrderByComparator<Module> orderByComparator) {
 		return getPersistence().findByAppId(appId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the modules where appId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ModuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param appId the app ID
+	* @param start the lower bound of the range of modules
+	* @param end the upper bound of the range of modules (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching modules
+	*/
+	public static List<Module> findByAppId(long appId, int start, int end,
+		OrderByComparator<Module> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByAppId(appId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -420,6 +463,28 @@ public class ModuleUtil {
 		return getPersistence()
 				   .findByBundleSymbolicName(bundleSymbolicName, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the modules where bundleSymbolicName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ModuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param bundleSymbolicName the bundle symbolic name
+	* @param start the lower bound of the range of modules
+	* @param end the upper bound of the range of modules (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching modules
+	*/
+	public static List<Module> findByBundleSymbolicName(
+		java.lang.String bundleSymbolicName, int start, int end,
+		OrderByComparator<Module> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByBundleSymbolicName(bundleSymbolicName, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -569,6 +634,28 @@ public class ModuleUtil {
 		int start, int end, OrderByComparator<Module> orderByComparator) {
 		return getPersistence()
 				   .findByContextName(contextName, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the modules where contextName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ModuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contextName the context name
+	* @param start the lower bound of the range of modules
+	* @param end the upper bound of the range of modules (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching modules
+	*/
+	public static List<Module> findByContextName(java.lang.String contextName,
+		int start, int end, OrderByComparator<Module> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByContextName(contextName, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -912,6 +999,25 @@ public class ModuleUtil {
 	public static List<Module> findAll(int start, int end,
 		OrderByComparator<Module> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the modules.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ModuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of modules
+	* @param end the upper bound of the range of modules (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of modules
+	*/
+	public static List<Module> findAll(int start, int end,
+		OrderByComparator<Module> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**

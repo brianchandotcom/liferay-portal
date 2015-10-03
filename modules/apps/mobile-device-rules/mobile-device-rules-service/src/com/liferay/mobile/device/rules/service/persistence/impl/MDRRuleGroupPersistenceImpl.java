@@ -154,6 +154,27 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	public List<MDRRuleGroup> findByUuid(String uuid, int start, int end,
 		OrderByComparator<MDRRuleGroup> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule groups where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of m d r rule groups
+	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching m d r rule groups
+	 */
+	@Override
+	public List<MDRRuleGroup> findByUuid(String uuid, int start, int end,
+		OrderByComparator<MDRRuleGroup> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -169,15 +190,19 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<MDRRuleGroup> list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroup> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroup mdrRuleGroup : list) {
-				if (!Validator.equals(uuid, mdrRuleGroup.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroup mdrRuleGroup : list) {
+					if (!Validator.equals(uuid, mdrRuleGroup.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -935,6 +960,28 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	public List<MDRRuleGroup> findByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<MDRRuleGroup> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule groups where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of m d r rule groups
+	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching m d r rule groups
+	 */
+	@Override
+	public List<MDRRuleGroup> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<MDRRuleGroup> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -954,16 +1001,20 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 				};
 		}
 
-		List<MDRRuleGroup> list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroup> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroup mdrRuleGroup : list) {
-				if (!Validator.equals(uuid, mdrRuleGroup.getUuid()) ||
-						(companyId != mdrRuleGroup.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroup mdrRuleGroup : list) {
+					if (!Validator.equals(uuid, mdrRuleGroup.getUuid()) ||
+							(companyId != mdrRuleGroup.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1493,6 +1544,27 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	public List<MDRRuleGroup> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<MDRRuleGroup> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule groups where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of m d r rule groups
+	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching m d r rule groups
+	 */
+	@Override
+	public List<MDRRuleGroup> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<MDRRuleGroup> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1508,15 +1580,19 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<MDRRuleGroup> list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroup> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroup mdrRuleGroup : list) {
-				if ((groupId != mdrRuleGroup.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroup mdrRuleGroup : list) {
+					if ((groupId != mdrRuleGroup.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2332,6 +2408,27 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	public List<MDRRuleGroup> findByGroupId(long[] groupIds, int start,
 		int end, OrderByComparator<MDRRuleGroup> orderByComparator) {
+		return findByGroupId(groupIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule groups where groupId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of m d r rule groups
+	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching m d r rule groups
+	 */
+	@Override
+	public List<MDRRuleGroup> findByGroupId(long[] groupIds, int start,
+		int end, OrderByComparator<MDRRuleGroup> orderByComparator,
+		boolean retrieveFromCache) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -2359,15 +2456,19 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 				};
 		}
 
-		List<MDRRuleGroup> list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
-				finderArgs, this);
+		List<MDRRuleGroup> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroup mdrRuleGroup : list) {
-				if (!ArrayUtil.contains(groupIds, mdrRuleGroup.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroup mdrRuleGroup : list) {
+					if (!ArrayUtil.contains(groupIds, mdrRuleGroup.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3317,6 +3418,26 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	public List<MDRRuleGroup> findAll(int start, int end,
 		OrderByComparator<MDRRuleGroup> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule groups.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of m d r rule groups
+	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of m d r rule groups
+	 */
+	@Override
+	public List<MDRRuleGroup> findAll(int start, int end,
+		OrderByComparator<MDRRuleGroup> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3332,8 +3453,12 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<MDRRuleGroup> list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroup> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroup>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

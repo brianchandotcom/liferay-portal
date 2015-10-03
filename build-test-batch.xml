@@ -542,13 +542,13 @@
 			<if>
 				<isset property="test.batch.start.time" />
 				<then>
-					<script classpathref="project.classpath" language="beanshell">
+					<beanshell classpathref="project.classpath">
 						<![CDATA[
 							long testBatchStopTime = System.currentTimeMillis();
 
 							project.setProperty("test.batch.stop.time", String.valueOf(testBatchStopTime));
 						]]>
-					</script>
+					</beanshell>
 
 					<math
 						datatype="long"
@@ -563,7 +563,7 @@
 				</else>
 			</if>
 
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell classpathref="project.classpath">
 				<![CDATA[
 					import java.util.concurrent.TimeUnit;
 
@@ -606,7 +606,7 @@
 
 					project.setProperty("testray.build.time", sb.toString());
 				]]>
-			</script>
+			</beanshell>
 		</sequential>
 	</macrodef>
 

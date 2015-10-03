@@ -601,7 +601,7 @@ public class MobileDriverToSeleniumBridge
 	public boolean isVisible(String locator) {
 		WebElement webElement = getWebElement(locator, "1");
 
-		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
+		if (PropsValues.BROWSER_TYPE.equals("android")) {
 			if (!isInViewport(locator)) {
 				swipeWebElementIntoView(locator);
 			}

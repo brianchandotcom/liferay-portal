@@ -984,14 +984,6 @@ public class LiferaySeleniumHelper {
 		return false;
 	}
 
-	public static boolean isMobileDeviceEnabled() {
-		if (Validator.isNull(PropsValues.MOBILE_DEVICE_TYPE)) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public static boolean isNotChecked(
 		LiferaySelenium liferaySelenium, String locator) {
 

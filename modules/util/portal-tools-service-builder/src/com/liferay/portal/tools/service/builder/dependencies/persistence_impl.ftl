@@ -1043,6 +1043,24 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ${entity.humanNames}.
+	 *
+	 * <p>
+	 * <#include "range_comment.ftl">
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of ${entity.humanNames}
+	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of ${entity.humanNames}
+	 */
+	@Override
+	public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1057,7 +1075,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
+		List<${entity.name}> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

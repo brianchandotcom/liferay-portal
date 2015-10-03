@@ -753,7 +753,8 @@ public class PoshiRunnerValidation {
 			"and", "condition", "contains", "equals", "isset", "not", "or");
 
 		if (fileName.equals("function")) {
-			conditionTags = Arrays.asList("condition", "contains");
+			conditionTags = Arrays.asList(
+				"and", "condition", "contains", "not", "or");
 		}
 
 		validateElseElement(element, filePath);

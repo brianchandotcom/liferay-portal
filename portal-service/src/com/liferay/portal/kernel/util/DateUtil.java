@@ -219,20 +219,6 @@ public class DateUtil {
 		return formatAmPm;
 	}
 
-	public static Date newDate() {
-		return new Date();
-	}
-
-	public static Date newDate(long date) {
-		return new Date(date);
-	}
-
-	public static long newTime() {
-		Date date = new Date();
-
-		return date.getTime();
-	}
-
 	public static Date parseDate(String dateString, Locale locale)
 		throws ParseException {
 

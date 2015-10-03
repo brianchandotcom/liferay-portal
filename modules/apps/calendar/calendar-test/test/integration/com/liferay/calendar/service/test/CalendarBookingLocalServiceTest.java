@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
@@ -79,7 +78,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		Recurrence recurrence = new Recurrence();
 
@@ -137,7 +136,7 @@ public class CalendarBookingLocalServiceTest {
 			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
 			false, false, serviceContext);
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -179,7 +178,7 @@ public class CalendarBookingLocalServiceTest {
 			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
 			false, false, serviceContext);
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
@@ -220,7 +219,7 @@ public class CalendarBookingLocalServiceTest {
 			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
 			false, false, serviceContext);
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
@@ -258,7 +257,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
@@ -289,7 +288,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -341,7 +340,7 @@ public class CalendarBookingLocalServiceTest {
 			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
 			false, false, serviceContext);
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -400,7 +399,7 @@ public class CalendarBookingLocalServiceTest {
 			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
 			false, false, serviceContext);
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
@@ -446,7 +445,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -477,7 +476,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -521,7 +520,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
@@ -563,7 +562,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		java.util.Calendar untilJCalendar = CalendarFactoryUtil.getCalendar(
 			startTime);

@@ -26,18 +26,8 @@ public class DateUtil_IW {
 		return DateUtil.compareTo(date1, date2);
 	}
 
-	public int compareTo(java.util.Date date1, java.util.Date date2,
-		boolean ignoreMilliseconds) {
-		return DateUtil.compareTo(date1, date2, ignoreMilliseconds);
-	}
-
 	public boolean equals(java.util.Date date1, java.util.Date date2) {
 		return DateUtil.equals(date1, date2);
-	}
-
-	public boolean equals(java.util.Date date1, java.util.Date date2,
-		boolean ignoreMilliseconds) {
-		return DateUtil.equals(date1, date2, ignoreMilliseconds);
 	}
 
 	public java.lang.String getCurrentDate(java.lang.String pattern,
@@ -92,18 +82,6 @@ public class DateUtil_IW {
 
 	public boolean isFormatAmPm(java.util.Locale locale) {
 		return DateUtil.isFormatAmPm(locale);
-	}
-
-	public java.util.Date newDate() {
-		return DateUtil.newDate();
-	}
-
-	public java.util.Date newDate(long date) {
-		return DateUtil.newDate(date);
-	}
-
-	public long newTime() {
-		return DateUtil.newTime();
 	}
 
 	public java.util.Date parseDate(java.lang.String dateString,

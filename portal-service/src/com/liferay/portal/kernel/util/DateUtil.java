@@ -35,33 +35,19 @@ public class DateUtil {
 	public static final String ISO_8601_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ";
 
 	public static int compareTo(Date date1, Date date2) {
-
-		// Workaround for bug in JDK 1.5.x. This bug is fixed in JDK 1.5.07. See
-		// http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=6207898 for
-		// more information.
-
-		if ((date1 != null) && (date2 == null)) {
-			return -1;
-		}
-		else if ((date1 == null) && (date2 != null)) {
-			return 1;
-		}
-		else if ((date1 == null) && (date2 == null)) {
+		if (date1 == date2) {
 			return 0;
 		}
 
-		long time1 = date1.getTime();
-		long time2 = date2.getTime();
-
-		if (time1 == time2) {
-			return 0;
-		}
-		else if (time1 < time2) {
-			return -1;
-		}
-		else {
+		if (date1 == null) {
 			return 1;
 		}
+
+		if (date2 == null) {
+			return -1;
+		}
+
+		return Long.compare(date1.getTime(), date2.getTime());
 	}
 
 	public static boolean equals(Date date1, Date date2) {

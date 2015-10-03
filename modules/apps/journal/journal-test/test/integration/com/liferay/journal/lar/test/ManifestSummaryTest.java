@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.Time;
@@ -33,6 +34,8 @@ import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+
+import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -192,9 +195,14 @@ public class ManifestSummaryTest
 
 		Element headerElement = rootElement.addElement("header");
 
-		_exportDate = new Date();
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			Time.RFC822_FORMAT);
 
-		headerElement.addAttribute("export-date", Time.getRFC822(_exportDate));
+		String rfc822DateString = Time.getRFC822();
+
+		_exportDate = dateFormat.parse(rfc822DateString);
+
+		headerElement.addAttribute("export-date", rfc822DateString);
 
 		ExportImportHelperUtil.writeManifestSummary(document, manifestSummary);
 

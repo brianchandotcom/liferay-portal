@@ -14,13 +14,9 @@
 
 package com.liferay.portlet.messageboards.util.comparator;
 
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.messageboards.model.MBThread;
-
-import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,19 +43,8 @@ public class ThreadLastPostDateComparator extends OrderByComparator<MBThread> {
 
 	@Override
 	public int compare(MBThread thread1, MBThread thread2) {
-		Date lastPostDate1 = thread1.getLastPostDate();
-		Date lastPostDate2 = thread2.getLastPostDate();
-
-		boolean ignoreMilliseconds = false;
-
-		DB db = DBFactoryUtil.getDB();
-
-		if (!db.isSupportsDateMilliseconds()) {
-			ignoreMilliseconds = true;
-		}
-
 		int value = DateUtil.compareTo(
-			lastPostDate1, lastPostDate2, ignoreMilliseconds);
+			thread1.getLastPostDate(), thread2.getLastPostDate());
 
 		if (value == 0) {
 			if (thread1.getThreadId() < thread2.getThreadId()) {

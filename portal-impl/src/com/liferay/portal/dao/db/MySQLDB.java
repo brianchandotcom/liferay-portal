@@ -92,11 +92,6 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsDateMilliseconds() {
-		return _SUPPORTS_DATE_MILLISECONDS;
-	}
-
-	@Override
 	public boolean isSupportsUpdateWithInnerJoin() {
 		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
 	}
@@ -207,8 +202,6 @@ public class MySQLDB extends BaseDB {
 		" tinyint", " datetime", " double", " integer", " bigint", " longtext",
 		" longtext", " varchar", "  auto_increment", "commit"
 	};
-
-	private static final boolean _SUPPORTS_DATE_MILLISECONDS = false;
 
 	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
 

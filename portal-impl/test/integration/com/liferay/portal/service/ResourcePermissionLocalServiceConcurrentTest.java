@@ -68,6 +68,9 @@ import org.springframework.aop.framework.AdvisedSupport;
  * @author William Newbury
  * @author Shuyang Zhou
  */
+@Ignore(
+	"Ignored due to random hanging, Matthew Tambara will fix and reenable it"
+)
 public class ResourcePermissionLocalServiceConcurrentTest {
 
 	@ClassRule
@@ -193,7 +196,6 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 			)
 		}
 	)
-	@Ignore
 	@Test
 	public void testAddResourcePermissionConcurrently() throws Exception {
 		SynchronousInvocationHandler.enable();

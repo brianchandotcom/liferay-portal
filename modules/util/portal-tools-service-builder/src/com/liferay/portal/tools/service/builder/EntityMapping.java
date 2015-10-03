@@ -22,8 +22,9 @@ public class EntityMapping {
 
 	public EntityMapping(String table, String entity1, String entity2) {
 		_table = table;
-		_entities[0] = entity1;
-		_entities[1] = entity2;
+		_entities[0] = "com.liferay.portal.Company";
+		_entities[1] = entity1;
+		_entities[2] = entity2;
 	}
 
 	public String getEntity(int index) {
@@ -39,7 +40,7 @@ public class EntityMapping {
 		return _table;
 	}
 
-	private final String[] _entities = new String[2];
+	private final String[] _entities = new String[3];
 	private final String _table;
 
 }

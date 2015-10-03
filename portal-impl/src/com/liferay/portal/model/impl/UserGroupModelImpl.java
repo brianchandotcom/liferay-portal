@@ -175,26 +175,29 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_NAME = "Groups_UserGroups";
 	public static final Object[][] MAPPING_TABLE_GROUPS_USERGROUPS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE = "create table Groups_UserGroups (groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
+	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE = "create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,primary key (companyId, groupId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Groups_UserGroups"), true);
 	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_NAME = "UserGroups_Teams";
 	public static final Object[][] MAPPING_TABLE_USERGROUPS_TEAMS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "teamId", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (teamId LONG not null,userGroupId LONG not null,primary key (teamId, userGroupId))";
+	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,primary key (companyId, teamId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.UserGroups_Teams"), true);
 	public static final String MAPPING_TABLE_USERS_USERGROUPS_NAME = "Users_UserGroups";
 	public static final Object[][] MAPPING_TABLE_USERS_USERGROUPS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE = "create table Users_UserGroups (userId LONG not null,userGroupId LONG not null,primary key (userId, userGroupId))";
+	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE = "create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,primary key (companyId, userId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_UserGroups"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(

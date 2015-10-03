@@ -32,7 +32,8 @@ public class TableMapperFactory {
 	public static
 		<L extends BaseModel<L>, R extends BaseModel<R>> TableMapper<L, R>
 			getTableMapper(
-				String tableName, String leftColumnName, String rightColumnName,
+				String tableName, String companyColumnName,
+				String leftColumnName, String rightColumnName,
 				BasePersistence<L> leftPersistence,
 				BasePersistence<R> rightPersistence) {
 
@@ -43,13 +44,13 @@ public class TableMapperFactory {
 
 			if (cacheMappingTableNames.contains(tableName)) {
 				tableMapperImpl = new TableMapperImpl<>(
-					tableName, leftColumnName, rightColumnName, leftPersistence,
-					rightPersistence);
+					tableName, companyColumnName, leftColumnName,
+					rightColumnName, leftPersistence, rightPersistence);
 			}
 			else {
 				tableMapperImpl = new CachelessTableMapperImpl<>(
-					tableName, leftColumnName, rightColumnName, leftPersistence,
-					rightPersistence);
+					tableName, companyColumnName, leftColumnName,
+					rightColumnName, leftPersistence, rightPersistence);
 			}
 
 			tableMapperImpl.setReverseTableMapper(

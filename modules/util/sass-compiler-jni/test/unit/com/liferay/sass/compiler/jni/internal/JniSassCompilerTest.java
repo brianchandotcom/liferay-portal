@@ -47,8 +47,7 @@ public class JniSassCompilerTest {
 		String expectedOutput =
 			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
 		String actualOutput = sassCompiler.compileString(
-			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }",
-			"");
+			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "");
 
 		Assert.assertEquals(
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
@@ -91,13 +90,14 @@ public class JniSassCompilerTest {
 
 		Class<?> clazz = getClass();
 
-		URL url = clazz.getResource("dependencies/sass-spec/14_imports");
+		URL url = clazz.getResource("dependencies");
 
 		File inputDir = new File(url.toURI());
 
-		File inputFile = new File(inputDir, "input.scss");
+		File inputFile = new File(inputDir, "/sass-spec/14_imports/input.scss");
 
-		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
+		File sourceMapFile = new File(
+			inputDir, "/sass-spec/14_imports/.sass-cache/input.css.map");
 
 		sourceMapFile.deleteOnExit();
 
@@ -110,12 +110,8 @@ public class JniSassCompilerTest {
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());
 
-		url = clazz.getResource("dependencies/sourcemap");
-
-		File expectedOutputDir = new File(url.toURI());
-
 		File expectedOutputFile = new File(
-			expectedOutputDir, "expected_output.css");
+			inputDir, "/sourcemap/expected_output_custom_source_map.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 
@@ -141,13 +137,14 @@ public class JniSassCompilerTest {
 
 		Class<?> clazz = getClass();
 
-		URL url = clazz.getResource("dependencies/sass-spec/14_imports");
+		URL url = clazz.getResource("dependencies");
 
 		File inputDir = new File(url.toURI());
 
-		File inputFile = new File(inputDir, "input.scss");
+		File inputFile = new File(inputDir, "/sass-spec/14_imports/input.scss");
 
-		File sourceMapFile = new File(inputDir, "input.css.map");
+		File sourceMapFile = new File(
+			inputDir, "/sass-spec/14_imports/input.css.map");
 
 		sourceMapFile.deleteOnExit();
 
@@ -161,12 +158,8 @@ public class JniSassCompilerTest {
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());
 
-		url = clazz.getResource("dependencies/sourcemap");
-
-		File expectedOutputDir = new File(url.toURI());
-
 		File expectedOutputFile = new File(
-			expectedOutputDir, "expected_custom_output.css");
+			inputDir, "/sourcemap/expected_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 
@@ -175,9 +168,7 @@ public class JniSassCompilerTest {
 	}
 
 	protected String read(Path filePath) throws Exception {
-		String content = new String(Files.readAllBytes(filePath));
-
-		return stripNewLines(content);
+		return new String(Files.readAllBytes(filePath));
 	}
 
 	protected String stripNewLines(String string) {

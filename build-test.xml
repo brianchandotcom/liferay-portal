@@ -63,9 +63,9 @@
 					<or>
 						<equals arg1="${browser.type}" arg2="android" />
 						<equals arg1="${browser.type}" arg2="androidchrome" />
-						<equals arg1="${browser.type}" arg2="firefox" />
 						<equals arg1="${browser.type}" arg2="chrome" />
 						<equals arg1="${browser.type}" arg2="edge" />
+						<equals arg1="${browser.type}" arg2="firefox" />
 						<equals arg1="${browser.type}" arg2="internetexplorer" />
 						<equals arg1="${browser.type}" arg2="iossafari" />
 						<equals arg1="${browser.type}" arg2="safari" />
@@ -4972,9 +4972,9 @@ module.framework.properties.osgi.console=11312</echo>
 				<prepare-ie-driver />
 
 				<echo append="true" file="${test.ext.properties.file}">
+					selenium.executable.dir.name=${selenium.executable.dir.name}
 					selenium.ie.driver.executable=${selenium.ie.driver.executable}
 					selenium.ie.driver.version=${selenium.ie.driver.version}
-					selenium.executable.dir.name=${selenium.executable.dir.name}
 				</echo>
 			</then>
 		</if>
@@ -5501,28 +5501,6 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium-testcase-properties">
-		<get-testcase-property property.name="ignore.errors" />
-
-		<if>
-			<isset property="ignore.errors" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					ignore.errors=${ignore.errors}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="ignore.errors.delimiter" />
-
-		<if>
-			<isset property="ignore.errors.delimiter" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					ignore.errors.delimiter=${ignore.errors.delimiter}
-				</echo>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="browser.type" />
 
 		<if>
@@ -5548,6 +5526,28 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
+				</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="ignore.errors" />
+
+		<if>
+			<isset property="ignore.errors" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					ignore.errors=${ignore.errors}
+				</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="ignore.errors.delimiter" />
+
+		<if>
+			<isset property="ignore.errors.delimiter" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					ignore.errors.delimiter=${ignore.errors.delimiter}
 				</echo>
 			</then>
 		</if>

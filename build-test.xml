@@ -4651,6 +4651,15 @@ module.framework.properties.osgi.console=11312</echo>
 		</echo>
 
 		<if>
+			<isset property="print.java.process.on.fail" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					print.java.process.on.fail=${print.java.process.on.fail}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.base.dir.name" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

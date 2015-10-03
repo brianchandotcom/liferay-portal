@@ -35,11 +35,6 @@ public class DateUtil {
 	public static final String ISO_8601_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ";
 
 	public static int compareTo(Date date1, Date date2) {
-		return compareTo(date1, date2, false);
-	}
-
-	public static int compareTo(
-		Date date1, Date date2, boolean ignoreMilliseconds) {
 
 		// Workaround for bug in JDK 1.5.x. This bug is fixed in JDK 1.5.07. See
 		// http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=6207898 for
@@ -58,11 +53,6 @@ public class DateUtil {
 		long time1 = date1.getTime();
 		long time2 = date2.getTime();
 
-		if (ignoreMilliseconds) {
-			time1 = time1 / Time.SECOND;
-			time2 = time2 / Time.SECOND;
-		}
-
 		if (time1 == time2) {
 			return 0;
 		}
@@ -75,13 +65,7 @@ public class DateUtil {
 	}
 
 	public static boolean equals(Date date1, Date date2) {
-		return equals(date1, date2, false);
-	}
-
-	public static boolean equals(
-		Date date1, Date date2, boolean ignoreMilliseconds) {
-
-		if (compareTo(date1, date2, ignoreMilliseconds) == 0) {
+		if (compareTo(date1, date2) == 0) {
 			return true;
 		}
 

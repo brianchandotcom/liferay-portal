@@ -1170,11 +1170,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PORTAL_LOCALIZATION_MESSAGE_INFO" value1="${pageLocalizationMessage}" />
 		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Display the page in English (United States)." />
 		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="${pageLocalizationPreferredLanguage}" />
-
-		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" />
-
-		<execute function="AssertTextEquals" locator1="ControlMenu#ADMIN" value1="${adminTranslation}" />
-		<execute function="AssertTextEquals" locator1="ControlMenu#MY_SITES" value1="${mySitesTranslation}" />
 	</command>
 
 	<command name="viewURLLocale">

@@ -416,7 +416,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplate" priority="4">
+	<command known-issues="LPS-58915" name="AddTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -718,7 +718,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithStructure" priority="4">
+	<command known-issues="LPS-58915" name="AddWebContentWithStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -838,7 +838,7 @@
 		</execute>
 	</command>
 
-	<command name="AdvancedSearchStructure" priority="4">
+	<command known-issues="LPS-58915" name="AdvancedSearchStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1184,7 +1184,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportLAR" priority="4">
+	<command known-issues="LPS-58915" name="ImportLAR" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

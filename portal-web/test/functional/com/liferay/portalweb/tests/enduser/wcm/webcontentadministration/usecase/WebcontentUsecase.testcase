@@ -101,7 +101,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command known-issues="WCM-260" name="AddContentWithTitleAndAllFieldsNull" priority="4">
+	<command known-issues="LPS-58915,WCM-260" name="AddContentWithTitleAndAllFieldsNull" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -803,7 +803,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWebContentTemplate" priority="4">
+	<command known-issues="LPS-58915" name="EditWebContentTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

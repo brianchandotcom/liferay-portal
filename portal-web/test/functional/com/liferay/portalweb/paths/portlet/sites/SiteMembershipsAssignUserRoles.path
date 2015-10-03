@@ -26,17 +26,17 @@
 <!--ROLE_TABLE-->
 <tr>
 	<td>ROLE_TABLE_TITLE</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[1]/a</td>
+	<td>//div[contains(@id,'rolesSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLE_TABLE_TYPE</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[2]/a</td>
+	<td>//div[contains(@id,'rolesSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLE_TABLE_DESCRIPTION</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[3]/a</td>
+	<td>//div[contains(@id,'rolesSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>

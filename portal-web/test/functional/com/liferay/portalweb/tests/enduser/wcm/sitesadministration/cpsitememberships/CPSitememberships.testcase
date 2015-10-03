@@ -247,7 +247,7 @@
 		<var name="key_siteName" value="Liferay" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Liferay" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="Liferay" />
 		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX_DISABLED" />

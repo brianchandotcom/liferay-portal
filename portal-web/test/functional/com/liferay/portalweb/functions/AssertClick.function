@@ -179,6 +179,8 @@
 	<command name="assertTextClickTagSelector">
 		<execute function="AssertClick#assertTextClick" />
 
+		<execute function="SelectFrameTop" />
+
 		<execute argument1="//div[contains(@class,'lfr-tag-selector-popup')]" selenium="waitForVisible" />
 
 		<execute selenium="assertJavaScriptErrors" />

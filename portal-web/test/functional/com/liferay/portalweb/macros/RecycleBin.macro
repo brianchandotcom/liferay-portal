@@ -31,6 +31,20 @@
 		</if>
 	</command>
 
+	<command name="gotoEntryViaSuccessMessage">
+		<var name="key_assetName" value="${assetName}" />
+
+		<execute function="AssertClick" locator1="RecycleBin#SUCCESS_MESSAGE_CONTENT_LINK" value1="${assetName}" />
+
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${assetName}" />
+	</command>
+
+	<command name="gotoRecycleBinViaSuccessMessage">
+		<execute function="AssertClick" locator1="RecycleBin#SUCCESS_MESSAGE_RECYCLE_BIN_LINK" value1="the Recycle Bin" />
+
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Recycle Bin" />
+	</command>
+
 	<command name="restoreContentFromFolderCP">
 		<var name="key_assetName" value="${assetName}" />
 
@@ -133,7 +147,11 @@
 
 	<command name="searchCP">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${assetName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+	</command>
+
+	<command name="undoMoveToRecycleBin">
+		<execute function="AssertClick" locator1="Button#UNDO" value1="Undo" />
 	</command>
 
 	<command name="viewCP">
@@ -188,6 +206,13 @@
 
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME_1" value1="${assetName}" />
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME_2" value1="${assetName}" />
+	</command>
+
+	<command name="viewEntry">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${assetName}" />
+		<execute function="AssertTextPresent" value1="${assetContent}" />
+		<execute function="AssertElementPresent" locator1="Button#RESTORE" />
+		<execute function="AssertElementPresent" locator1="Button#DELETE" />
 	</command>
 
 	<command name="viewRecyclebinViaSiteSettingsCP">

@@ -27,9 +27,10 @@
 	</command>
 
 	<command name="configureSetupPG">
-		<execute function="Click" locator1="Icon#COG" />
-
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Wiki Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

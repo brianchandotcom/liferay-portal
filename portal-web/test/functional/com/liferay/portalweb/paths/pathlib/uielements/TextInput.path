@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>DATA_DEFINITION</td>
-	<td>//div[label[contains(.,'Data Definition')]]//input[@type='text']</td>
+	<td>//div[label[contains(.,'Data Definition')]]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -184,8 +184,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE_APPS_API_KEY</td>
+	<td>//input[contains(@id,'googleAppsAPIKey')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_CLIENT_ID</td>
-	<td>//input[contains(@id,'google-client-id')]</td>
+	<td>//input[contains(@id,'google-client-id')] | //input[contains(@id,'googleClientId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -386,6 +391,11 @@
 <tr>
 	<td>STREET_1</td>
 	<td>//div[label[contains(.,'Street 1')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE</td>
+	<td>//div[label[contains(.,'Structure')]]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

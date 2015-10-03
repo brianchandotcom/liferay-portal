@@ -16,6 +16,7 @@ package com.liferay.portal.servlet;
 
 import static org.mockito.Mockito.verify;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.service.PortletLocalService;
@@ -92,11 +93,11 @@ public class ComboServletTest extends PowerMockito {
 
 					Object[] args = invocation.getArguments();
 
-					if (PortletKeys.PORTAL.equals(args[0])) {
-						return _portalPortlet;
+					if (Validator.equals(_TEST_PORTLET_ID, args[0])) {
+						return _testPortlet;
 					}
-					else if (PortletKeys.SERVER_ADMIN.equals(args[0])) {
-						return _serverAdminPortlet;
+					else if (Validator.equals(PortletKeys.PORTAL, args[0])) {
+						return _portalPortlet;
 					}
 
 					return _portletUndeployed;
@@ -113,54 +114,15 @@ public class ComboServletTest extends PowerMockito {
 			_portletLocalService
 		);
 
-		_comboServlet = new ComboServlet();
+		setupComboServlet();
 
-		_portalServletContext = spy(new MockServletContext());
+		setupPortalServletContext();
 
-		ServletConfig servletConfig = new MockServletConfig(
-			_portalServletContext);
-
-		_portalServletContext.setContextPath("portal");
-
-		when(
-			_portalPortletApp.getServletContext()
-		).thenReturn(
-			_portalServletContext
-		);
-
-		when(
-			_portalPortlet.getPortletApp()
-		).thenReturn(
-			_portalPortletApp
-		);
-
-		when(
-			_portalPortlet.getRootPortletId()
-		).thenReturn(
-			PortletKeys.PORTAL
-		);
-
-		_comboServlet.init(servletConfig);
+		setupPortalPortlet();
 
 		_pluginServletContext = spy(new MockServletContext());
 
-		when(
-			_serverAdminPortletApp.getServletContext()
-		).thenReturn(
-			_pluginServletContext
-		);
-
-		when(
-			_serverAdminPortlet.getPortletApp()
-		).thenReturn(
-			_serverAdminPortletApp
-		);
-
-		when(
-			_serverAdminPortlet.getRootPortletId()
-		).thenReturn(
-			"75"
-		);
+		setupTestPortlet();
 
 		when(
 			_portletUndeployed.isUndeployedPortlet()
@@ -208,12 +170,75 @@ public class ComboServletTest extends PowerMockito {
 	public void testGetResourceWithPortletId() throws Exception {
 		_comboServlet.getResourceRequestDispatcher(
 			_mockHttpServletRequest, _mockHttpServletResponse,
-			PortletKeys.SERVER_ADMIN + ":/js/javascript.js");
+			_TEST_PORTLET_ID + ":/js/javascript.js");
 
 		verify(_pluginServletContext);
 
 		_pluginServletContext.getRequestDispatcher("/js/javascript.js");
 	}
+
+	protected ServletConfig getServletConfig() {
+		ServletConfig servletConfig = new MockServletConfig(
+			_portalServletContext);
+
+		return servletConfig;
+	}
+
+	protected void setupComboServlet() throws ServletException {
+		_comboServlet = new ComboServlet();
+
+		ServletConfig servletConfig = getServletConfig();
+
+		_comboServlet.init(servletConfig);
+	}
+
+	protected void setupPortalPortlet() {
+		when(
+			_portalPortletApp.getServletContext()
+		).thenReturn(
+			_portalServletContext
+		);
+
+		when(
+			_portalPortlet.getPortletApp()
+		).thenReturn(
+			_portalPortletApp
+		);
+
+		when(
+			_portalPortlet.getRootPortletId()
+		).thenReturn(
+			PortletKeys.PORTAL
+		);
+	}
+
+	protected void setupPortalServletContext() {
+		_portalServletContext = spy(new MockServletContext());
+
+		_portalServletContext.setContextPath("portal");
+	}
+
+	protected void setupTestPortlet() {
+		when(
+			_testPortletApp.getServletContext()
+		).thenReturn(
+			_pluginServletContext
+		);
+
+		when(
+			_testPortlet.getPortletApp()
+		).thenReturn(
+			_testPortletApp
+		);
+
+		when(
+			_testPortlet.getRootPortletId()
+		).thenReturn(
+			_TEST_PORTLET_ID
+		);
+	}
+
+	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 
 	private static Portal _portal;
 	private static final PortalUtil _portalUtil = new PortalUtil();
@@ -238,9 +263,9 @@ public class ComboServletTest extends PowerMockito {
 	private Portlet _portletUndeployed;
 
 	@Mock
-	private Portlet _serverAdminPortlet;
+	private Portlet _testPortlet;
 
 	@Mock
-	private PortletApp _serverAdminPortletApp;
+	private PortletApp _testPortletApp;
 
 }

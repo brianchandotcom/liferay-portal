@@ -92,8 +92,6 @@ public interface DB {
 
 	public boolean isSupportsAlterColumnType();
 
-	public boolean isSupportsDateMilliseconds();
-
 	public boolean isSupportsInlineDistinct();
 
 	public boolean isSupportsQueryingAfterException();

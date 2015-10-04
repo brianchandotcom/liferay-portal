@@ -760,13 +760,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				importedStagedModel.getCreateDate(),
 			DateUtil.equals(
 				stagedModel.getCreateDate(),
-				importedStagedModel.getCreateDate(), true));
+				importedStagedModel.getCreateDate()));
 		Assert.assertTrue(
 			stagedModel.getModifiedDate() + " " +
 				importedStagedModel.getModifiedDate(),
 			DateUtil.equals(
 				stagedModel.getModifiedDate(),
-				importedStagedModel.getModifiedDate(), true));
+				importedStagedModel.getModifiedDate()));
 		Assert.assertEquals(
 			stagedModel.getUuid(), importedStagedModel.getUuid());
 	}

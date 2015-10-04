@@ -233,22 +233,22 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		if (retrieveFromCache) {
 			list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
-		}
 
-		if ((list != null) && !list.isEmpty()) {
-			for (${entity.name} ${entity.varName} : list) {
-				if (
-					<#list finderColsList as finderCol>
-						<#include "persistence_impl_finder_field_comparator.ftl">
+			if ((list != null) && !list.isEmpty()) {
+				for (${entity.name} ${entity.varName} : list) {
+					if (
+						<#list finderColsList as finderCol>
+							<#include "persistence_impl_finder_field_comparator.ftl">
 
-						<#if finderCol_has_next>
-							||
-						</#if>
-					</#list>
-				) {
-					list = null;
+							<#if finderCol_has_next>
+								||
+							</#if>
+						</#list>
+					) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1576,26 +1576,26 @@ that may or may not be enforced with a unique index at the database level. Case
 
 			if (retrieveFromCache) {
 				list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case}, finderArgs, this);
-			}
 
-			if ((list != null) && !list.isEmpty()) {
-				for (${entity.name} ${entity.varName} : list) {
-					if (
-						<#list finderColsList as finderCol>
-							<#if finderCol.hasArrayableOperator()>
-								!ArrayUtil.contains(${finderCol.names}, ${entity.varName}.get${finderCol.methodName}())
-							<#else>
-								<#include "persistence_impl_finder_field_comparator.ftl">
-							</#if>
+				if ((list != null) && !list.isEmpty()) {
+					for (${entity.name} ${entity.varName} : list) {
+						if (
+							<#list finderColsList as finderCol>
+								<#if finderCol.hasArrayableOperator()>
+									!ArrayUtil.contains(${finderCol.names}, ${entity.varName}.get${finderCol.methodName}())
+								<#else>
+									<#include "persistence_impl_finder_field_comparator.ftl">
+								</#if>
 
-							<#if finderCol_has_next>
-								||
-							</#if>
-						</#list>
-					) {
-						list = null;
+								<#if finderCol_has_next>
+									||
+								</#if>
+							</#list>
+						) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}

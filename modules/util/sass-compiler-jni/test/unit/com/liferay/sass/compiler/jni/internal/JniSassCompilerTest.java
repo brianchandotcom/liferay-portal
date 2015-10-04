@@ -44,12 +44,10 @@ public class JniSassCompilerTest {
 	public void testBoxShadowTransparent() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		String expectedOutput =
 			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
 		String actualOutput = sassCompiler.compileString(
-			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "", "");
+			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "");
 
 		Assert.assertEquals(
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
@@ -58,8 +56,6 @@ public class JniSassCompilerTest {
 	@Test
 	public void testCompileFile() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
-
-		Assert.assertNotNull(sassCompiler);
 
 		Class<?> clazz = getClass();
 
@@ -75,7 +71,7 @@ public class JniSassCompilerTest {
 			}
 
 			String actualOutput = sassCompiler.compileFile(
-				inputFile.getCanonicalPath(), "", "");
+				inputFile.getCanonicalPath(), "", false);
 
 			Assert.assertNotNull(actualOutput);
 
@@ -89,23 +85,90 @@ public class JniSassCompilerTest {
 	}
 
 	@Test
+	public void testCompileFileWithSourceMap() throws Exception {
+		SassCompiler sassCompiler = new JniSassCompiler();
+
+		Class<?> clazz = getClass();
+
+		URL url = clazz.getResource("dependencies");
+
+		File inputDir = new File(url.toURI());
+
+		File inputFile = new File(inputDir, "/sass-spec/14_imports/input.scss");
+
+		File sourceMapFile = new File(
+			inputDir, "/sass-spec/14_imports/.sass-cache/input.css.map");
+
+		sourceMapFile.deleteOnExit();
+
+		Assert.assertFalse(sourceMapFile.exists());
+
+		String actualOutput = sassCompiler.compileFile(
+			inputFile.getCanonicalPath(), "", true,
+			sourceMapFile.getCanonicalPath());
+
+		Assert.assertNotNull(actualOutput);
+		Assert.assertTrue(sourceMapFile.exists());
+
+		File expectedOutputFile = new File(
+			inputDir, "/sourcemap/expected_output_custom_source_map.css");
+
+		String expectedOutput = read(expectedOutputFile.toPath());
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
 	public void testCompileString() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		String expectedOutput = "foo { margin: 42px; }";
 		String actualOutput = sassCompiler.compileString(
-			"foo { margin: 21px * 2; }", "", "");
+			"foo { margin: 21px * 2; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
+	public void testCompileStringWithSourceMap() throws Exception {
+		SassCompiler sassCompiler = new JniSassCompiler();
+
+		Class<?> clazz = getClass();
+
+		URL url = clazz.getResource("dependencies");
+
+		File inputDir = new File(url.toURI());
+
+		File inputFile = new File(inputDir, "/sass-spec/14_imports/input.scss");
+
+		File sourceMapFile = new File(
+			inputDir, "/sass-spec/14_imports/input.css.map");
+
+		sourceMapFile.deleteOnExit();
+
+		Assert.assertFalse(sourceMapFile.exists());
+
+		String input = read(inputFile.toPath());
+
+		String actualOutput = sassCompiler.compileString(
+			input, inputFile.getCanonicalPath(), "", true);
+
+		Assert.assertNotNull(actualOutput);
+		Assert.assertTrue(sourceMapFile.exists());
+
+		File expectedOutputFile = new File(
+			inputDir, "/sourcemap/expected_output.css");
+
+		String expectedOutput = read(expectedOutputFile.toPath());
 
 		Assert.assertEquals(
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	protected String read(Path filePath) throws Exception {
-		String content = new String(Files.readAllBytes(filePath));
-
-		return stripNewLines(content);
+		return new String(Files.readAllBytes(filePath));
 	}
 
 	protected String stripNewLines(String string) {

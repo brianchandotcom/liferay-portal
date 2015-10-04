@@ -33,12 +33,10 @@ public class RubySassCompilerTest {
 	public void testBoxShadowTransparent() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		String expectedOutput =
 			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
 		String actualOutput = sassCompiler.compileString(
-			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "", "");
+			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "");
 
 		Assert.assertEquals(
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
@@ -47,8 +45,6 @@ public class RubySassCompilerTest {
 	@Test
 	public void testCompileFile() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
-
-		Assert.assertNotNull(sassCompiler);
 
 		File sassSpecDir = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
@@ -62,7 +58,7 @@ public class RubySassCompilerTest {
 			}
 
 			String actualOutput = sassCompiler.compileFile(
-				inputFile.getCanonicalPath(), "", "");
+				inputFile.getCanonicalPath(), "");
 
 			Assert.assertNotNull(actualOutput);
 
@@ -76,23 +72,88 @@ public class RubySassCompilerTest {
 	}
 
 	@Test
+	public void testCompileFileWithSourceMap() throws Exception {
+		SassCompiler sassCompiler = new RubySassCompiler();
+
+		File inputDir = new File(
+			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
+				"/internal/dependencies/sass-spec/14_imports");
+
+		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
+
+		sourceMapFile.deleteOnExit();
+
+		Assert.assertFalse(sourceMapFile.exists());
+
+		File inputFile = new File(inputDir, "input.scss");
+
+		String actualOutput = sassCompiler.compileFile(
+			inputFile.getCanonicalPath(), "", true,
+			sourceMapFile.getCanonicalPath());
+
+		Assert.assertNotNull(actualOutput);
+		Assert.assertTrue(sourceMapFile.exists());
+
+		File expectedOutputFile = new File(
+			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
+				"/internal/dependencies/sourcemap",
+			"expected_output_custom_source_map.css");
+
+		String expectedOutput = read(expectedOutputFile.toPath());
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
 	public void testCompileString() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
-		Assert.assertNotNull(sassCompiler);
-
 		String expectedOutput = "foo { margin: 42px; }";
 		String actualOutput = sassCompiler.compileString(
-			"foo { margin: 21px * 2; }", "", "");
+			"foo { margin: 21px * 2; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
+	public void testCompileStringWithSourceMap() throws Exception {
+		SassCompiler sassCompiler = new RubySassCompiler();
+
+		File inputDir = new File(
+			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
+				"/internal/dependencies/sass-spec/14_imports");
+
+		File sourceMapFile = new File(inputDir, "input.css.map");
+
+		sourceMapFile.deleteOnExit();
+
+		Assert.assertFalse(sourceMapFile.exists());
+
+		File inputFile = new File(inputDir, "input.scss");
+
+		String input = read(inputFile.toPath());
+
+		String actualOutput = sassCompiler.compileString(
+			input, inputFile.getCanonicalPath(), "", true);
+
+		Assert.assertNotNull(actualOutput);
+		Assert.assertTrue(sourceMapFile.exists());
+
+		File expectedOutputFile = new File(
+			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
+				"/internal/dependencies/sourcemap",
+			"expected_output.css");
+
+		String expectedOutput = read(expectedOutputFile.toPath());
 
 		Assert.assertEquals(
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	protected String read(Path filePath) throws Exception {
-		String content = new String(Files.readAllBytes(filePath));
-
-		return stripNewLines(content);
+		return new String(Files.readAllBytes(filePath));
 	}
 
 	protected String stripNewLines(String string) {

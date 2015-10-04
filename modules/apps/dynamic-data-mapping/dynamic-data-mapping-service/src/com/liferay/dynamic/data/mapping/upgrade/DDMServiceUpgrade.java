@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -58,10 +60,15 @@ public class DDMServiceUpgrade {
 		upgradeProcesses.add(new UpgradeDynamicDataMapping());
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
-		_releaseLocalService.updateRelease(
-			"com.liferay.dynamic.data.mapping.service", upgradeProcesses, 1, 1,
-			false);
+		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Upgrade process " + upgradeProcess);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMServiceUpgrade.class);
 
 	private ReleaseLocalService _releaseLocalService;
 

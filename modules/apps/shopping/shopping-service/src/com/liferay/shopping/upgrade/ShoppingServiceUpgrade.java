@@ -15,6 +15,8 @@
 package com.liferay.shopping.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -58,9 +60,15 @@ public class ShoppingServiceUpgrade {
 		upgradeProcesses.add(new UpgradeShopping());
 		upgradeProcesses.add(new UpgradeShoppingPreferences());
 
-		_releaseLocalService.updateRelease(
-			"com.liferay.shopping.service", upgradeProcesses, 1, 1, false);
+		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Upgrade process " + upgradeProcess);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ShoppingServiceUpgrade.class);
 
 	private ReleaseLocalService _releaseLocalService;
 

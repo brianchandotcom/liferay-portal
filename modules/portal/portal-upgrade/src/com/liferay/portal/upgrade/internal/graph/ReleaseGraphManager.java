@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.upgrade.internal.UpgradeInfo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -47,21 +48,25 @@ public class ReleaseGraphManager {
 		}
 	}
 
-	public List<UpgradeInfo> getUpgradeInfos(String fromVersionString) {
+	public List<List<UpgradeInfo>> getUpgradeInfos(String fromVersionString) {
 		List<String> endVertices = getEndVertices();
 
 		endVertices.remove(fromVersionString);
 
-		if (endVertices.size() == 1) {
-			return getUpgradeInfos(fromVersionString, endVertices.get(0));
+		List<List<UpgradeInfo>> upgradeInfoLists = new ArrayList<>();
+
+		for (String endVertex : endVertices) {
+			List<UpgradeInfo> upgradeInfos = getUpgradeInfos(
+				fromVersionString, endVertex);
+
+			if (upgradeInfos.isEmpty()) {
+				continue;
+			}
+
+			upgradeInfoLists.add(upgradeInfos);
 		}
 
-		if (endVertices.size() > 1) {
-			throw new IllegalStateException(
-				"There is more than one possible end node " + endVertices);
-		}
-
-		throw new IllegalStateException("There are no end nodes");
+		return upgradeInfoLists;
 	}
 
 	public List<UpgradeInfo> getUpgradeInfos(
@@ -85,9 +90,7 @@ public class ReleaseGraphManager {
 			dijkstraShortestPath.getPathEdgeList();
 
 		if (upgradeProcessEdges == null) {
-			throw new IllegalArgumentException(
-				"There is no path between " + fromVersionString + " and " +
-					toVersionString);
+			return Collections.emptyList();
 		}
 
 		return ListUtil.toList(

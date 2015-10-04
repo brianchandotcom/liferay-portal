@@ -15,6 +15,8 @@
 package com.liferay.microblogs.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -52,9 +54,15 @@ public class MicroblogsServiceUpgrade {
 		upgradeProcesses.add(new MicroblogsServiceUpgrade_1_0_1());
 		upgradeProcesses.add(new MicroblogsServiceUpgrade_1_0_2());
 
-		_releaseLocalService.updateRelease(
-			"com.liferay.microblogs.service", upgradeProcesses, 1, 1, false);
+		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Upgrade process " + upgradeProcess);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MicroblogsServiceUpgrade.class);
 
 	private ReleaseLocalService _releaseLocalService;
 

@@ -19,6 +19,8 @@ import com.liferay.bookmarks.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.bookmarks.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.bookmarks.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -64,9 +66,15 @@ public class BookmarksServiceUpgrade {
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 
-		_releaseLocalService.updateRelease(
-			"com.liferay.bookmarks.service", upgradeProcesses, 1, 1, false);
+		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Upgrade process " + upgradeProcess);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BookmarksServiceUpgrade.class);
 
 	private ReleaseLocalService _releaseLocalService;
 	private SettingsFactory _settingsFactory;

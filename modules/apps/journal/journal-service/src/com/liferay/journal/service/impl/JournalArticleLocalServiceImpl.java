@@ -5807,7 +5807,11 @@ public class JournalArticleLocalServiceImpl
 		article.setStatus(status);
 		article.setStatusByUserId(user.getUserId());
 		article.setStatusByUserName(user.getFullName());
-		article.setStatusDate(serviceContext.getModifiedDate(now));
+
+		Date modifiedDate = serviceContext.getModifiedDate();
+
+		article.setModifiedDate(modifiedDate);
+		article.setStatusDate(modifiedDate);
 
 		journalArticlePersistence.update(article);
 

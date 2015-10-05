@@ -6,11 +6,14 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="Check" locator1="Checkbox#SHOW_ACTIONS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_FOLDER_MENU_CHECKBOX" />
 		<execute function="Check" locator1="PGMediagalleryConfiguration#DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 

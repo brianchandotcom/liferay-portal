@@ -162,6 +162,7 @@
 		<execute function="Click#pauseClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" />
 
 		<execute function="AssertClickNoError" locator1="BasePortlet#REMOVE" value1="Remove" />
+
 		<execute function="Confirm" value1="Are you sure you want to remove this component?" />
 	</command>
 

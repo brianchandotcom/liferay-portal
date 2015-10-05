@@ -609,7 +609,7 @@
 	</command>
 
 	<command name="viewFirstRecordViaDDLDisplayTemplate">
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 
 		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
@@ -624,7 +624,7 @@
 	</command>
 
 	<command name="viewSecondRecordViaDDLDisplayTemplate">
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_COLUMN_TWO_NAME" value1="${fieldFieldLabel}" />
 
 		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
@@ -635,7 +635,7 @@
 	</command>
 
 	<command name="viewViaDDLDisplayPG">
-		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 
 		<var name="key_ddlRecordFieldData" value="${key_ddlRecordFieldData}" />

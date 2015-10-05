@@ -44,17 +44,17 @@ public class UpgradeModules extends UpgradeProcess {
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 			for (String bundleSymbolicName : _bundleSymbolicNames) {
-				ps.setLong(1, 0);
-				ps.setLong(2, increment());
+				ps.setLong(1, increment());
+				ps.setTimestamp(2, timestamp);
 				ps.setTimestamp(3, timestamp);
-				ps.setTimestamp(4, timestamp);
-				ps.setString(5, bundleSymbolicName);
-				ps.setString(6, "0.0.0.1");
-				ps.setLong(7, 0);
-				ps.setTimestamp(8, timestamp);
-				ps.setInt(9, 1);
-				ps.setInt(10, 0);
-				ps.setString(11, ReleaseConstants.TEST_STRING);
+				ps.setString(4, bundleSymbolicName);
+				ps.setInt(5, 001);
+				ps.setTimestamp(6, timestamp);
+				ps.setInt(7, 1);
+				ps.setInt(8, 0);
+				ps.setString(9, ReleaseConstants.TEST_STRING);
+				ps.setString(10, "0.0.1");
+				ps.setLong(11, 0);
 
 				ps.addBatch();
 			}

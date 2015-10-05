@@ -623,8 +623,8 @@
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var method="TestPropsUtil#get('email.address.1')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

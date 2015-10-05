@@ -441,11 +441,11 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationLocalizedCP">
-			<var name="tabName" value="Sites" />
-			<var name="localizedTabName" value="Sitios Web" />
 			<var name="localizedPortletCategoryName" value="Configuración" />
 			<var name="localizedPortletName" value="Ajustes del sitio" />
+			<var name="localizedTabName" value="Sitios Web" />
 			<var name="siteScopeName" value="Site Name" />
+			<var name="tabName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
@@ -486,11 +486,11 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationLocalizedCP">
-			<var name="tabName" value="Sites" />
-			<var name="localizedTabName" value="Sitios Web" />
 			<var name="localizedPortletCategoryName" value="Configuración" />
 			<var name="localizedPortletName" value="Ajustes del sitio" />
+			<var name="localizedTabName" value="Sitios Web" />
 			<var name="siteScopeName" value="Site Name" />
+			<var name="tabName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">

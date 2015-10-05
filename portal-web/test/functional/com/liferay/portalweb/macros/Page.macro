@@ -469,12 +469,12 @@
 			<var name="localizedAdmin" value="${localizedAdmin}" />
 			<var name="localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
 			<var name="localizedPortletName" value="${localizedPortletName}" />
+			<var name="localizedTabName" value="${localizedTabName}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION_LOCALIZED" />
 			<var name="portletCategoryName" value="${portletCategoryName}" />
 			<var name="portletName" value="${portletName}" />
 			<var name="siteScopeName" value="${siteScopeName}" />
 			<var name="tabName" value="${tabName}" />
-			<var name="localizedTabName" value="${localizedTabName}" />
 		</execute>
 	</command>
 

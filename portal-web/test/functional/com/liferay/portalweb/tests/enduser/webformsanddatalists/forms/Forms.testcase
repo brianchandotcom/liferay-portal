@@ -154,7 +154,7 @@
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
-		<for list="one,two,three,four,five,six" param="fieldName">
+		<for list="one,two,three,four,five" param="fieldName">
 			<execute macro="FormsAdmin#viewFormEntry">
 				<var name="fieldName" value="${fieldName}" />
 				<var name="fieldValue" value="Field ${fieldName}" />

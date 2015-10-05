@@ -39,12 +39,11 @@ public class WorkflowDefinitionLinkPanelApp
 
 	@Override
 	public String getPortletId() {
-		return WorkflowDefinitionLinkPortletKeys.
-			WORKFLOW_DEFINITION_LINK_CONTROL_PANEL;
+		return WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK;
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL + ")",
+		target = "(javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK + ")",
 		unbind = "-"
 	)
 	protected void setPortlet(Portlet portlet) {

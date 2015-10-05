@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_TABLE_ENTRY_2</td>
+	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr[2]/td[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECORD_TABLE_COLUMN_ONE_NAME</td>
 	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[1])</td>
 	<td></td>

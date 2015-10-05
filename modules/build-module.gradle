@@ -160,7 +160,7 @@ dependencies {
 	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
 	upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
-	wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "dependencies"
+	wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "default"
 }
 

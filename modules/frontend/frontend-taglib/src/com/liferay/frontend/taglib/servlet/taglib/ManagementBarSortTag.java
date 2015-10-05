@@ -71,7 +71,7 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
-		_orderColumns = null;
+		_orderColumns = new HashMap<>();
 		_orderByCol = StringPool.BLANK;
 		_orderByType = StringPool.BLANK;
 		_portletURL = null;

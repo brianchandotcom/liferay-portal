@@ -385,8 +385,8 @@
 		<var name="ddlRecordFieldData" value="Contenido" />
 
 		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
-		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='Content 2'])" />
-		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 2'])" />
+		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='${ddlRecordFieldData} 2'])" />
+		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 3'])" />
 	</command>
 
 	<command name="AssertConfigurationMenulist" priority="3">

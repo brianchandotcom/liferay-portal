@@ -344,6 +344,7 @@
 
 		<execute macro="DDLRecord#populateTranslationFieldText">
 			<var name="ddlRecordFieldData" value="Contenido" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />

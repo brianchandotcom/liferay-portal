@@ -386,28 +386,6 @@
 		</if>
 	</command>
 
-	<command name="viewSecondFieldCP">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY_2" value1="${ddlRecordFieldData}" />
-
-		<var name="key_listEntry" value="${ddlRecordFieldData}" />
-
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
-
-		<if>
-			<equals arg1="${ddlRecordFieldData}" arg2="" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
-			</else>
-		</if>
-	</command>
-
 	<command name="viewFieldFormTemplateSpecific">
 		<if>
 			<equals arg1="${field}" arg2="Paragraph" />
@@ -644,6 +622,28 @@
 
 	<command name="viewRepeatableNestedFieldsVisualGrouping">
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
+	</command>
+
+	<command name="viewSecondFieldCP">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY_2" value1="${ddlRecordFieldData}" />
+
+		<var name="key_listEntry" value="${ddlRecordFieldData}" />
+
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+
+		<if>
+			<equals arg1="${ddlRecordFieldData}" arg2="" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewSecondRecordViaDDLDisplayTemplate">

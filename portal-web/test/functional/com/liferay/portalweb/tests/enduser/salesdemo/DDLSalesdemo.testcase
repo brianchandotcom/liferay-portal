@@ -74,7 +74,7 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
-		<execute macro="DDLDataDefinition#selectCP">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 

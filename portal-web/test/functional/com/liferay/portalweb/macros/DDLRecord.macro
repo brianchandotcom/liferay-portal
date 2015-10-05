@@ -398,7 +398,7 @@
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 
 		<if>
-			<equals arg1="${fieldBlank}" arg2="true" />
+			<equals arg1="${ddlRecordFieldData}" arg2="" />
 			<then>
 				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>

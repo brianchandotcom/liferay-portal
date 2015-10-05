@@ -269,7 +269,6 @@
 
 		<execute macro="DDLRecord#viewSecondFieldCP">
 			<var name="ddlRecordFieldData" value="" />
-			<var name="fieldBlank" value="true" />
 			<var name="fieldFieldLabel" value="Date" />
 		</execute>
 	</command>

@@ -215,7 +215,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//div[contains(@class,'open')]//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Delete')] | //div[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Delete')] | //div[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')] | //li[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -300,7 +300,7 @@
 </tr>
 <tr>
 	<td>IMPORT</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Import')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Import')] | //li[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>

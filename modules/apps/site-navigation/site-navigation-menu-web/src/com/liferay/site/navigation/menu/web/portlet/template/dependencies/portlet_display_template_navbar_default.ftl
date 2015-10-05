@@ -65,7 +65,7 @@
 </div>
 
 <@aui.script use="liferay-navigation-interaction">
-	var navigation = A.one(${navbarId});
+	var navigation = A.one('#${navbarId}');
 
 	if (navigation) {
 		navigation.plug(Liferay.NavigationInteraction);

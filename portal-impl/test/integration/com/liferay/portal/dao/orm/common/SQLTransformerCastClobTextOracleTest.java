@@ -85,7 +85,7 @@ public class SQLTransformerCastClobTextOracleTest {
 
 				preparedStatement.setLong(1, 3);
 				preparedStatement.setClob(
-					2, new UnsyncStringReader(_BIG_TEXT_A_4000 + _A));
+					2, new UnsyncStringReader(_BIG_TEXT_A_4001));
 
 				Assert.assertEquals(1, preparedStatement.executeUpdate());
 
@@ -97,13 +97,13 @@ public class SQLTransformerCastClobTextOracleTest {
 
 				preparedStatement.setLong(1, 5);
 				preparedStatement.setClob(
-					2, new UnsyncStringReader(_BIG_TEXT_A_3999_B + _B));
+					2, new UnsyncStringReader(_BIG_TEXT_A_3999_BB));
 
 				Assert.assertEquals(1, preparedStatement.executeUpdate());
 
 				preparedStatement.setLong(1, 6);
 				preparedStatement.setClob(
-					2, new UnsyncStringReader(_BIG_TEXT_A_4000 + _B));
+					2, new UnsyncStringReader(_BIG_TEXT_A_4000_B));
 
 				Assert.assertEquals(1, preparedStatement.executeUpdate());
 			}

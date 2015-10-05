@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IFRAME_LOCALIZED</td>
-	<td>//iframe[contains(@title,'Editor')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BODY</td>
 	<td>//body[contains(@class,'cke_editable')]</td>
 	<td></td>

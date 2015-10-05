@@ -1800,16 +1800,20 @@
 	</command>
 
 	<command name="viewPG">
-		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
 		<if>
 			<isset var="entrySubtitle" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_SUBTITLE" value1="${entrySubtitle}" />
+				<execute function="AssertTextEquals" locator1="BlogsEntry#SUBTITLE" value1="${entrySubtitle}" />
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<var name="key_entryContent" value="${entryContent}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewPGViaAP">

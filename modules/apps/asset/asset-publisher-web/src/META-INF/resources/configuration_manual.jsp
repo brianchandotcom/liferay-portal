@@ -111,6 +111,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 			long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 
 			for (long groupId : groupIds) {
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
 			%>
 
 				<div class="select-asset-selector">
@@ -118,7 +119,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 						<liferay-ui:icon-menu
 							cssClass="select-existing-selector"
 							direction="right" icon="../aui/plus"
-							message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>'
+							message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
 							showWhenSingleIcon="<%= true %>"
 						>
 
@@ -145,7 +146,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 								data.put("groupid", String.valueOf(groupId));
 
 								if (!curRendererFactory.isSupportsClassTypes()) {
-									data.put("href", HttpUtil.addParameter(assetBrowserURL.toString(), "doAsGroupId", scopeGroupId));
+									data.put("href", assetBrowserURL.toString());
 
 									String type = curRendererFactory.getTypeName(locale);
 
@@ -172,7 +173,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 									for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
 										assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
 
-										data.put("href", HttpUtil.addParameter(assetBrowserURL.toString(), "doAsGroupId", scopeGroupId));
+										data.put("href", assetBrowserURL.toString());
 
 										String type = assetAvailableClassType.getName();
 

@@ -93,9 +93,8 @@ if (organization != null) {
 			<c:if test="<%= site %>">
 
 				<%
-				LiferayPortletURL editOrganizationSiteURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.EDIT);
+				LiferayPortletURL editOrganizationSiteURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, organizationGroup, Group.class.getName(), PortletProvider.Action.EDIT);
 
-				editOrganizationSiteURL.setDoAsGroupId(organizationGroup.getGroupId());
 				editOrganizationSiteURL.setParameter("viewOrganizationsRedirect", currentURL);
 				%>
 

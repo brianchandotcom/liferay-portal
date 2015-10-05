@@ -46,6 +46,10 @@ public class MSOfficeFileUtil {
 		SummaryInformation summaryInformation =
 			hpsfPropertiesOnlyDocument.getSummaryInformation();
 
+		if (summaryInformation == null) {
+			return null;
+		}
+
 		return summaryInformation.getLastSaveDateTime();
 	}
 

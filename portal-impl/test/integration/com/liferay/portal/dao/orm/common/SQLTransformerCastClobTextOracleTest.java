@@ -91,19 +91,19 @@ public class SQLTransformerCastClobTextOracleTest {
 
 				preparedStatement.setLong(1, 4);
 				preparedStatement.setClob(
-					2, new UnsyncStringReader(_BIG_TEXT_A_3999_B));
+					2, new UnsyncStringReader(_BIG_TEXT_A_3999_B_1));
 
 				Assert.assertEquals(1, preparedStatement.executeUpdate());
 
 				preparedStatement.setLong(1, 5);
 				preparedStatement.setClob(
-					2, new UnsyncStringReader(_BIG_TEXT_A_3999_BB));
+					2, new UnsyncStringReader(_BIG_TEXT_A_3999_B_2));
 
 				Assert.assertEquals(1, preparedStatement.executeUpdate());
 
 				preparedStatement.setLong(1, 6);
 				preparedStatement.setClob(
-					2, new UnsyncStringReader(_BIG_TEXT_A_4000_B));
+					2, new UnsyncStringReader(_BIG_TEXT_A_4000_B_1));
 
 				Assert.assertEquals(1, preparedStatement.executeUpdate());
 			}
@@ -139,11 +139,11 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		checkResult(
 			runSelect(_BIG_TEXT_A_4000, ""), _BIG_TEXT_A_4000, _BIG_TEXT_A_4001,
-			_BIG_TEXT_A_4000_B);
+			_BIG_TEXT_A_4000_B_1);
 
 		checkResult(
-			runSelect(_BIG_TEXT_A_3999_B, ""), _BIG_TEXT_A_3999_B,
-			_BIG_TEXT_A_3999_BB);
+			runSelect(_BIG_TEXT_A_3999_B_1, ""), _BIG_TEXT_A_3999_B_1,
+			_BIG_TEXT_A_3999_B_2);
 	}
 
 	@Test
@@ -158,7 +158,7 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// selects where data = _BIG_TEXT_A_3999_BB
 
-		checkResult(runSelect(_BIG_TEXT_A_3999_B, String.valueOf(_B)));
+		checkResult(runSelect(_BIG_TEXT_A_3999_B_1, String.valueOf(_B)));
 
 		// selects where data = _BIG_TEXT_A_4000_B
 
@@ -240,13 +240,14 @@ public class SQLTransformerCastClobTextOracleTest {
 	private static final String _BIG_TEXT_A_3999 = CharBuffer.allocate(
 		3999).toString().replace('\0', _A);
 
-	private static final String _BIG_TEXT_A_3999_B = _BIG_TEXT_A_3999 + _B;
+	private static final String _BIG_TEXT_A_3999_B_1 = _BIG_TEXT_A_3999 + _B;
 
-	private static final String _BIG_TEXT_A_3999_BB = _BIG_TEXT_A_3999_B + _B;
+	private static final String _BIG_TEXT_A_3999_B_2 =
+		_BIG_TEXT_A_3999_B_1 + _B;
 
 	private static final String _BIG_TEXT_A_4000 = _BIG_TEXT_A_3999 + _A;
 
-	private static final String _BIG_TEXT_A_4000_B = _BIG_TEXT_A_4000 + _B;
+	private static final String _BIG_TEXT_A_4000_B_1 = _BIG_TEXT_A_4000 + _B;
 
 	private static final String _BIG_TEXT_A_4001 = _BIG_TEXT_A_4000 + _A;
 

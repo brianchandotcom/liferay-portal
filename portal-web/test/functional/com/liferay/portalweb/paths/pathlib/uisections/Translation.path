@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>ADD</td>
-	<td>//div[contains(@class,'translation-manager')]/a[@title='Add Translation']</td>
+	<td>//div[contains(@class,'translation-manager')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_LANGUAGE</td>
-	<td>//div[contains(@class,'translation-manager')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//li[contains(@class,'translation-item')]/a[contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>

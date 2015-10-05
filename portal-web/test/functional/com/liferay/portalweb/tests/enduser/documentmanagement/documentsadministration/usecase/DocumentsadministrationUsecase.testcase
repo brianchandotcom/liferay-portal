@@ -981,7 +981,9 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="DMPortlet#viewDefaultPG" />
+		<execute macro="DMPortlet#viewDefaultPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />

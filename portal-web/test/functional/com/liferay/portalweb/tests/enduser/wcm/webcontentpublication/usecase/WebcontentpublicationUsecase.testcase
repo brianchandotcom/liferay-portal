@@ -1763,6 +1763,10 @@
 		</execute>
 
 		<execute macro="BlogsEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
 		
 		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="Blogs Entry1 Content" />
@@ -1793,6 +1797,10 @@
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewPG">

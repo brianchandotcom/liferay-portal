@@ -94,16 +94,34 @@ public class AssetEntryFinderImpl
 	}
 
 	@Override
-	public List<AssetEntry> findEntries(AssetEntryQuery entryQuery) {
+	public List<AssetEntry> findByDLFileEntryC_T(
+		long classNameId, String treePath) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			SQLQuery q = buildAssetQuerySQL(entryQuery, false, session);
+			String sql = CustomSQLUtil.get(FIND_BY_CLASS_NAME_ID);
 
-			return (List<AssetEntry>)QueryUtil.list(
-				q, getDialect(), entryQuery.getStart(), entryQuery.getEnd());
+			sql = StringUtil.replace(
+				sql, "[$JOIN$]", CustomSQLUtil.get(
+					DLFileEntryFinderImpl.JOIN_AE_BY_DL_FILE_ENTRY));
+
+			sql = StringUtil.replace(
+				sql, "[$WHERE$]", "DLFileEntry.treePath LIKE ? AND");
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(
+				CustomSQLUtil.keywords(treePath, WildcardMode.TRAILING)[0]);
+			qPos.add(classNameId);
+
+			q.addEntity(AssetEntryImpl.TABLE_NAME, AssetEntryImpl.class);
+
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -114,7 +132,7 @@ public class AssetEntryFinderImpl
 	}
 
 	@Override
-	public List<AssetEntry> joinDLF_ByAssetEntry(
+	public List<AssetEntry> findByDLFolderC_T(
 		long classNameId, String treePath) {
 
 		Session session = null;
@@ -152,34 +170,16 @@ public class AssetEntryFinderImpl
 	}
 
 	@Override
-	public List<AssetEntry> joinDLFE_ByAssetEntry(
-		long classNameId, String treePath) {
-
+	public List<AssetEntry> findEntries(AssetEntryQuery entryQuery) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_CLASS_NAME_ID);
+			SQLQuery q = buildAssetQuerySQL(entryQuery, false, session);
 
-			sql = StringUtil.replace(
-				sql, "[$JOIN$]", CustomSQLUtil.get(
-					DLFileEntryFinderImpl.JOIN_AE_BY_DL_FILE_ENTRY));
-
-			sql = StringUtil.replace(
-				sql, "[$WHERE$]", "DLFileEntry.treePath LIKE ? AND");
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(
-				CustomSQLUtil.keywords(treePath, WildcardMode.TRAILING)[0]);
-			qPos.add(classNameId);
-
-			q.addEntity(AssetEntryImpl.TABLE_NAME, AssetEntryImpl.class);
-
-			return q.list(true);
+			return (List<AssetEntry>)QueryUtil.list(
+				q, getDialect(), entryQuery.getStart(), entryQuery.getEnd());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

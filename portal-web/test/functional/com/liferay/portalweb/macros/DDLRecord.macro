@@ -392,18 +392,6 @@
 
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY_2" value1="${ddlRecordFieldData}" />
 
-		<if>
-			<isset var="ddlRecordNestedFieldData" />
-			<then>
-				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
-				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
-
-				<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
-			</then>
-		</if>
-
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 		<var name="key_listEntry" value="${ddlRecordFieldData}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
@@ -417,17 +405,6 @@
 			<else>
 				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 			</else>
-		</if>
-
-		<if>
-			<isset var="ddlRecordNestedFieldData" />
-			<then>
-				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
-				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
-
-				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
-				<execute function="AssertCssValue" locator1="DDLRecord#FIELD_NESTED" locator2="margin-left" value1="15px" />
-			</then>
 		</if>
 	</command>
 

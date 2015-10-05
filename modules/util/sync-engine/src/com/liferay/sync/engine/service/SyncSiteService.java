@@ -280,7 +280,9 @@ public class SyncSiteService {
 			syncSite.getGroupId(), syncSite.getSyncAccountId());
 
 		for (SyncFile syncFile : syncFiles) {
-			SyncFileService.deleteSyncFile(syncFile, false);
+			if (!syncFile.isSystem()) {
+				SyncFileService.deleteSyncFile(syncFile, false);
+			}
 		}
 
 		Path filePath = Paths.get(syncSite.getFilePathName());

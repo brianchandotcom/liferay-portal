@@ -17,8 +17,10 @@ Export-Package:\
 	com.liferay.portal.resiliency.service,\
 	com.liferay.portal.search,\
 	com.liferay.portal.security.access.control,\
+	com.liferay.portal.security.auth,\
 	com.liferay.portal.security.lang,\
 	com.liferay.portal.service.http,\
+	com.liferay.portal.servlet,\
 	com.liferay.portal.servlet.filters.authverifier,\
 	com.liferay.portal.service.permission,\
 	com.liferay.portal.spring.aop,\

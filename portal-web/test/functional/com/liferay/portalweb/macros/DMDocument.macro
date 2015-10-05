@@ -40,7 +40,12 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
+				<if>
+					<isset var="dmDocumentFile" />
+					<then>
+						<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
+					</then>
+				</if>
 			</else>
 		</if>
 

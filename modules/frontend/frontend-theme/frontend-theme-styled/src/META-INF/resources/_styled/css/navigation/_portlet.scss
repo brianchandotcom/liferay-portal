@@ -21,15 +21,13 @@
 }
 
 .portlet-navigation {
-	.nav-pills {
-		> li {
-			> a {
-				margin-bottom: 2px;
-			}
+	.nav-pills > li {
+		> a {
+			margin-bottom: 2px;
+		}
 
-			> .dropdown-menu {
-				margin-top: 0;
-			}
+		> .dropdown-menu {
+			margin-top: 0;
 		}
 	}
 }

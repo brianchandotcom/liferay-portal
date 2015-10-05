@@ -28,7 +28,7 @@ if (editable || portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 %>
 
-<div class="lfr-spreadsheet-container">
+<div class="lfr-spreadsheet-container container-fluid-1280">
 	<div id="<portlet:namespace />spreadsheet">
 		<div class="table-striped yui3-datatable yui3-widget" id="<portlet:namespace />dataTable">
 			<div class="yui3-datatable-content yui3-datatable-scrollable" id="<portlet:namespace />dataTableContent"></div>

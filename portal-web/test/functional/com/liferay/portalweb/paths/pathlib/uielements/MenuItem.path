@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD_CHILD_SITE</td>
-	<td>//a[@role='menuitem' and contains(.,'Add Child Site')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Add Child Site')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>DEACTIVATE</td>
-	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,7 +215,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Delete')] | //div[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')]</td>
+	<td>//div[contains(@class,'open')]//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Delete')] | //div[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -320,7 +320,7 @@
 </tr>
 <tr>
 	<td>LEAVE</td>
-	<td>//a[@role='menuitem' and contains(.,'Leave')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Leave')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -540,7 +540,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION</td>
-	<td>//a[@role='menuitem' and contains(.,'Site Administration')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Site Administration')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -537,11 +537,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="Blogs#addEntryWithPermissions">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="viewableBy" value="true" />
-			<var name="viewableBySelection" value="Site Members" />
+			<var name="viewableBy" value="Site Members" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -762,11 +761,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="Blogs#addEntryWithPermissions">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="viewableBy" value="true" />
-			<var name="viewableBySelection" value="Site Members" />
+			<var name="viewableBy" value="Site Members" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1004,11 +1002,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="Blogs#addEntryWithPermissions">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="viewableBy" value="true" />
-			<var name="viewableBySelection" value="Site Members" />
+			<var name="viewableBy" value="Site Members" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

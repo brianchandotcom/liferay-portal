@@ -188,7 +188,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />
 	</command>
 
 	<command name="selectViaDDLDisplayPG">

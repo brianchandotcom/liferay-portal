@@ -82,7 +82,7 @@
 	<command name="addFormTemplateViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#TOOLBAR_ADD_FORM_TEMPLATE" />
 
-		<execute function="Type#clickAtSendKeys" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateName}" />
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 	</command>
 
 	<command name="copyCP">
@@ -212,7 +212,7 @@
 	<command name="editFormTemplatePG">
 		<execute function="Click" locator1="DDL#TOOLBAR_EDIT_FORM_TEMPLATE" />
 
-		<execute function="Type#clickAtSendKeys" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlFormTemplateNameEdit}" />
 	</command>
 
 	<command name="gotoManageTemplatesCmd">

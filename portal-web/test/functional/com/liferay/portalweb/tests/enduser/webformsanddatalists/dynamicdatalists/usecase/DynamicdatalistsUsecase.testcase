@@ -355,7 +355,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="Content" />
+			<var name="ddlRecordFieldData" value="Content, Content 2" />
 		</execute>
 
 		<execute macro="DDLRecord#addRepeatableField">
@@ -375,7 +375,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="Content" />
+			<var name="ddlRecordFieldData" value="Content, Content 2, Content 3" />
 		</execute>
 
 		<execute macro="DDLRecord#editTranslation">

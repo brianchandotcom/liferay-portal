@@ -68,7 +68,7 @@
 				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 				<var name="key_listEntry" value="${siteName}" />
-				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+				<execute function="ClickNoError" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
 
 				<execute macro="ProductMenu#gotoSitesPages">

@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassTypeReader;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
@@ -112,8 +114,9 @@ public class DDLRecordAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			DDLPortletKeys.DYNAMIC_DATA_LISTS);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 

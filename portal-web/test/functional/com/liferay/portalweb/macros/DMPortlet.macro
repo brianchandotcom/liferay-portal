@@ -89,7 +89,7 @@
 
 	<command name="configureRootFolderPG">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="Documents and Media" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

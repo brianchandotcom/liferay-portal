@@ -12,9 +12,9 @@
 	</command>
 
 	<command name="addPage">
-		<execute function="Click" locator1="Form#PAGE_CONTROLS_ICON" />
+		<execute function="Click" locator1="Form#PAGE_CONTROLS_ELLIPSIS_ICON" />
 
-		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_ADD_AFTER_LAST" value1="Add new page after last" />
+		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_ADD_NEW_PAGE" value1="Add new page" />
 	</command>
 
 	<command name="editDescription">

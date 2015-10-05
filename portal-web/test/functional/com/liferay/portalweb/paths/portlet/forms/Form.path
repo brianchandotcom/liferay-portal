@@ -40,13 +40,13 @@
 </tr>
 <!--PAGE_CONTROLS-->
 <tr>
-	<td>PAGE_CONTROLS_ICON</td>
-	<td>//div[@class='form-builder-page-controls']/a</td>
+	<td>PAGE_CONTROLS_ELLIPSIS_ICON</td>
+	<td>//a[@class='form-builder-controls-trigger']/span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_CONTROLS_ADD_AFTER_LAST</td>
-	<td>//ul[@class='form-builder-pages-popover-content']/li[contains(text(),'Add new page after last')]</td>
+	<td>PAGE_CONTROLS_ADD_NEW_PAGE</td>
+	<td>//li[@class='form-builder-page-manager-add-last-position' and contains(text(),'Add new page')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -728,6 +728,8 @@
 
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#FIELD_1" value1="${fieldFieldLabel1}" />
 
+		<var name="key_fieldName" value="${fieldName2}" />
+
 		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
 
 		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />

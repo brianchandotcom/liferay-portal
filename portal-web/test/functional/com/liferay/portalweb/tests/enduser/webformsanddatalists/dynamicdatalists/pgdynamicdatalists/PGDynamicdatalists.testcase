@@ -886,6 +886,8 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
+		<var name="key_ddlDataDefinitionName" value="Add ${ddlDataDefinition1Name}" />
+
 		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinition1Name}" />
 
 		<execute macro="DDLList#addViaDDLDisplayPG">

@@ -542,6 +542,8 @@ create table ResourceBlockPermission (
 drop index IX_8D83D0CE on ResourcePermission;
 
 alter table ResourcePermission add ownerId LONG;
+alter table ResourcePermission add primKeyId LONG;
+alter table ResourcePermission add viewActionId BOOLEAN;
 
 create table ResourceTypePermission (
 	resourceTypePermissionId LONG not null primary key,

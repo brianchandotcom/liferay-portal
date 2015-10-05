@@ -112,9 +112,10 @@
 	</command>
 
 	<command name="configureScopetoGlobalPG">
-		<execute function="Click" locator1="Icon#COG" />
-
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Documents and Media" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 

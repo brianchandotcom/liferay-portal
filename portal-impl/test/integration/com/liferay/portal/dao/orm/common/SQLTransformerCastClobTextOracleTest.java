@@ -17,18 +17,22 @@ package com.liferay.portal.dao.orm.common;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.nio.CharBuffer;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import java.util.Collections;
 import java.util.List;
@@ -61,7 +65,48 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		if (dbType.equals(DB.TYPE_ORACLE)) {
 			_db.runSQL(_SQL_CREATE_TABLE);
-			_db.runSQL(createInserts());
+
+			try (Connection connection = DataAccess.getConnection();
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"INSERT INTO TestCastClobText VALUES (?, ?)")) {
+
+				preparedStatement.setLong(1, 1);
+				preparedStatement.setClob(
+					2, new UnsyncStringReader(_BIG_TEXT_A_3999));
+
+				Assert.assertEquals(1, preparedStatement.executeUpdate());
+
+				preparedStatement.setLong(1, 2);
+				preparedStatement.setClob(
+					2, new UnsyncStringReader(_BIG_TEXT_A_4000));
+
+				Assert.assertEquals(1, preparedStatement.executeUpdate());
+
+				preparedStatement.setLong(1, 3);
+				preparedStatement.setClob(
+					2, new UnsyncStringReader(_BIG_TEXT_A_4000 + _A));
+
+				Assert.assertEquals(1, preparedStatement.executeUpdate());
+
+				preparedStatement.setLong(1, 4);
+				preparedStatement.setClob(
+					2, new UnsyncStringReader(_BIG_TEXT_A_3999_B));
+
+				Assert.assertEquals(1, preparedStatement.executeUpdate());
+
+				preparedStatement.setLong(1, 5);
+				preparedStatement.setClob(
+					2, new UnsyncStringReader(_BIG_TEXT_A_3999_B + _B));
+
+				Assert.assertEquals(1, preparedStatement.executeUpdate());
+
+				preparedStatement.setLong(1, 6);
+				preparedStatement.setClob(
+					2, new UnsyncStringReader(_BIG_TEXT_A_4000 + _B));
+
+				Assert.assertEquals(1, preparedStatement.executeUpdate());
+			}
 		}
 	}
 
@@ -128,48 +173,6 @@ public class SQLTransformerCastClobTextOracleTest {
 		checkResult(runSelect(String.valueOf(_B), ""));
 
 		checkResult(runSelect(String.valueOf(_A), ""));
-	}
-
-	private static String[] createInserts() {
-		String[] sqls = new String[6];
-
-		sqls[0] = StringUtil.replace(
-			_SQL_INSERT_LONG_STRING,
-			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"0", _BIG_TEXT_A_3999, ""});
-
-		sqls[1] = StringUtil.replace(
-			_SQL_INSERT_LONG_STRING,
-			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"1", _BIG_TEXT_A_4000, ""});
-
-		// inserts _BIG_TEXT_A_4001
-
-		sqls[2] = StringUtil.replace(
-			_SQL_INSERT_LONG_STRING,
-			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"2", _BIG_TEXT_A_4000, String.valueOf(_A)});
-
-		sqls[3] = StringUtil.replace(
-			_SQL_INSERT_LONG_STRING,
-			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"3", _BIG_TEXT_A_3999_B, ""});
-
-		// inserts _BIG_TEXT_A_3999_BB
-
-		sqls[4] = StringUtil.replace(
-			_SQL_INSERT_LONG_STRING,
-			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"4", _BIG_TEXT_A_3999_B, String.valueOf(_B)});
-
-		// inserts _BIG_TEXT_A_4000_B
-
-		sqls[5] = StringUtil.replace(
-			_SQL_INSERT_LONG_STRING,
-			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"5", _BIG_TEXT_A_4000, String.valueOf(_B)});
-
-		return sqls;
 	}
 
 	private void checkResult(List<?> queryResult, String... expectedResult) {
@@ -253,12 +256,6 @@ public class SQLTransformerCastClobTextOracleTest {
 		"data clob null)";
 
 	private static final String _SQL_DROP_TABLE = "DROP TABLE TestCastClobText";
-
-	// this query inserts clobs longer than 4000 chars from 2 string chunks
-
-	private static final String _SQL_INSERT_LONG_STRING =
-		"INSERT INTO TestCastClobText VALUES " +
-		"([$ID$], to_clob('[$DATA_1$]') || to_clob('[$DATA_2$]'))";
 
 	// following queries select from a clob column into 2 string chunks.
 	// This allows to fetch strings longer than 4000 chars.

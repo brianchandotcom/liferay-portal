@@ -349,7 +349,6 @@
 		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Translation#ADD" value1="Add Translation" />
 
 		<var name="key_localizedLanguage" value="${webContentTranslationLanguage}" />
-		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 
 		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="MenuItem#WEB_CONTENT_LANGUAGE" value1="${webContentTranslationLanguage}" />
 		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Translation#AVAILABLE_TRANSLATION" value1="${webContentTranslationLanguage}" />
@@ -1106,11 +1105,11 @@
 	<command name="viewAvailableLanguagesPGViaWCD">
 		<execute function="Click" locator1="Translation#ADD_MENULIST_LANGUAGE" />
 
-		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage1}" />
+		<var name="key_localizedLanguage" value="${webContentTranslationLanguage1}" />
 
 		<execute function="AssertTextEquals" locator1="MenuItem#WEB_CONTENT_LANGUAGE" value1="${webContentTranslationLanguage1}" />
 
-		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage2}" />
+		<var name="key_localizedLanguage" value="${webContentTranslationLanguage2}" />
 
 		<execute function="AssertTextNotPresent" locator1="MenuItem#WEB_CONTENT_LANGUAGE" value1="${webContentTranslationLanguage2}" />
 	</command>

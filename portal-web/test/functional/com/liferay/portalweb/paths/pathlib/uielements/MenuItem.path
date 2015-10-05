@@ -675,7 +675,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_LANGUAGE</td>
-	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_webContentTranslationLanguage}')]</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>

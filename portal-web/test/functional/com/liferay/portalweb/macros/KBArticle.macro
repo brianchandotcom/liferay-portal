@@ -66,7 +66,9 @@
 		<if>
 			<isset var="kbArticleAttachment" />
 			<then>
-				<execute macro="KBArticle#selectAttachmentCP" />
+				<execute macro="KBArticle#selectAttachmentCP">
+					<var name="kbArticleAttachment" value="${kbArticleAttachment}" />
+				</execute>
 			</then>
 		</if>
 

@@ -16,7 +16,7 @@ package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,6 +35,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -120,7 +121,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		BlogsGroupServiceOverriddenConfiguration
 			blogsGroupServiceOverridenConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
+				_configurationFactory.getConfiguration(
 					BlogsGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						themeDisplay.getSiteGroupId(),
@@ -128,5 +129,14 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		return blogsGroupServiceOverridenConfiguration.enableRss();
 	}
+
+	@Reference
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
+	}
+
+	private ConfigurationFactory _configurationFactory;
 
 }

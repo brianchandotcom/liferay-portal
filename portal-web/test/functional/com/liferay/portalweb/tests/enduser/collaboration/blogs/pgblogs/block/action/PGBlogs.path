@@ -208,7 +208,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_SPECIFIC</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved')]//div[@class='entry-body']/div[contains(.,'${key_entryContent}')]</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved')]//div[contains(@class,'entry-body') and contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>

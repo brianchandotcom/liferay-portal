@@ -145,7 +145,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 
 	protected List<String> getDefaultSAPNames(long companyId) {
 		List<SAPEntry> defaultSAPEntries =
-			_sapEntryLocalService.findDefaultSAPEntries(companyId, true);
+			_sapEntryLocalService.getDefaltSAPEntries(companyId, true);
 
 		List<String> defaultSAPNames = new ArrayList<>(
 			defaultSAPEntries.size());

@@ -185,13 +185,6 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<SAPEntry> findDefaultSAPEntries(
-		long companyId, boolean defaultSAPEntry) {
-
-		return sapEntryPersistence.findByC_D(companyId, defaultSAPEntry);
-	}
-
-	@Override
 	public List<SAPEntry> getCompanySAPEntries(
 		long companyId, int start, int end) {
 
@@ -208,6 +201,13 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	@Override
 	public int getCompanySAPEntriesCount(long companyId) {
 		return sapEntryPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public List<SAPEntry> getDefaltSAPEntries(
+		long companyId, boolean defaultSAPEntry) {
+
+		return sapEntryPersistence.findByC_D(companyId, defaultSAPEntry);
 	}
 
 	@Override

@@ -187,9 +187,6 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntryByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
-	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> findDefaultSAPEntries(
-		long companyId, boolean defaultSAPEntry);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -211,6 +208,10 @@ public interface SAPEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanySAPEntriesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getDefaltSAPEntries(
+		long companyId, boolean defaultSAPEntry);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

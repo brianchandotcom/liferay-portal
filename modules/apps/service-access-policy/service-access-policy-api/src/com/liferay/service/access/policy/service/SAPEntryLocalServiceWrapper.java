@@ -218,13 +218,6 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> findDefaultSAPEntries(
-		long companyId, boolean defaultSAPEntry) {
-		return _sapEntryLocalService.findDefaultSAPEntries(companyId,
-			defaultSAPEntry);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _sapEntryLocalService.getActionableDynamicQuery();
 	}
@@ -256,6 +249,13 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	@Override
 	public int getCompanySAPEntriesCount(long companyId) {
 		return _sapEntryLocalService.getCompanySAPEntriesCount(companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getDefaltSAPEntries(
+		long companyId, boolean defaultSAPEntry) {
+		return _sapEntryLocalService.getDefaltSAPEntries(companyId,
+			defaultSAPEntry);
 	}
 
 	@Override

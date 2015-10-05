@@ -228,7 +228,7 @@ public class ReleaseGraphManagerTest {
 			upgradePath);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testGetUpgradePathWithIllegalArguments() {
 		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
 		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
@@ -239,7 +239,10 @@ public class ReleaseGraphManagerTest {
 			Arrays.asList(
 				upgradeInfo4, upgradeInfo2, upgradeInfo1, upgradeInfo3));
 
-		releaseGraphManager.getUpgradeInfos("0.0.0", "2.0.1");
+		List<UpgradeInfo> upgradeInfos = releaseGraphManager.getUpgradeInfos(
+			"0.0.0", "2.0.1");
+
+		Assert.assertEquals(0, upgradeInfos.size());
 	}
 
 	protected UpgradeInfo createUpgradeInfo(String from, String to) {

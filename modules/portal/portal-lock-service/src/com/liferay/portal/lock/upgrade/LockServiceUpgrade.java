@@ -14,55 +14,25 @@
 
 package com.liferay.portal.lock.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.lock.upgrade.v1_0_0.UpgradeLock;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true, service = LockServiceUpgrade.class)
-public class LockServiceUpgrade {
+@Component(immediate = true)
+public class LockServiceUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.portal.lock.service", "0.0.1", "1.0.0",
+			Collections.<UpgradeStep>singleton(new UpgradeLock()));
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradeLock());
-
-		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Upgrade process " + upgradeProcess);
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LockServiceUpgrade.class);
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

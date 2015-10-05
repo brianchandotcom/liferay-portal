@@ -52,13 +52,11 @@ public class ReleaseGraphManager {
 		String fromVersionString, String toVersionString) {
 
 		if (!_directedGraph.containsVertex(fromVersionString)) {
-			throw new IllegalArgumentException(
-				"There is no path for " + fromVersionString);
+			return Collections.emptyList();
 		}
 
 		if (!_directedGraph.containsVertex(toVersionString)) {
-			throw new IllegalArgumentException(
-				"There is no path for " + toVersionString);
+			return Collections.emptyList();
 		}
 
 		DijkstraShortestPath<String, UpgradeProcessEdge> dijkstraShortestPath =

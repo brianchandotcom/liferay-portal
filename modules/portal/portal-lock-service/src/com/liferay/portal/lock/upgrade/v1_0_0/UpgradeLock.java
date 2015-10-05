@@ -26,6 +26,8 @@ public class UpgradeLock extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		runSQL("alter table Lock_ add mvccVersion LONG default 0");
+
 		try {
 			runSQL("alter_column_type Lock_ owner VARCHAR(1024) null");
 		}

@@ -14,6 +14,8 @@
 
 package com.liferay.configuration.admin.web.util;
 
+import com.liferay.configuration.admin.api.ExtendedAttributeDefinition;
+import com.liferay.configuration.admin.api.ExtendedObjectClassDefinition;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -41,8 +43,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.metatype.AttributeDefinition;
-import org.osgi.service.metatype.ObjectClassDefinition;
 
 /**
  * @author Marcellus Tavares
@@ -81,23 +81,23 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmFormValues.addDDMFormFieldValue(
 			createDDMFormFieldValue("Boolean", "true", _enLocale));
 
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
 		Configuration configuration = mock(Configuration.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 3);
-		whenAttributeDefinitionGetID(attributeDefinition, "Boolean");
+		whenGetCardinality(extendedAttributeDefinition, 3);
+		whenGetID(extendedAttributeDefinition, "Boolean");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -136,23 +136,23 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmFormValues.addDDMFormFieldValue(
 			createDDMFormFieldValue("Boolean", "true", _enLocale));
 
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
 		Configuration configuration = mock(Configuration.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
-		whenAttributeDefinitionGetID(attributeDefinition, "Boolean");
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetID(extendedAttributeDefinition, "Boolean");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -185,23 +185,23 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmFormValues.addDDMFormFieldValue(
 			createDDMFormFieldValue("Integer", "42", _enLocale));
 
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
 		Configuration configuration = mock(Configuration.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
-		whenAttributeDefinitionGetID(attributeDefinition, "Integer");
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetID(extendedAttributeDefinition, "Integer");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -234,23 +234,23 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmFormValues.addDDMFormFieldValue(
 			createDDMFormFieldValue("Select", "[\"42\"]", _enLocale));
 
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
 		Configuration configuration = mock(Configuration.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
-		whenAttributeDefinitionGetID(attributeDefinition, "Select");
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetID(extendedAttributeDefinition, "Select");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -288,23 +288,23 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmFormValues.addDDMFormFieldValue(
 			createDDMFormFieldValue("Boolean", "true", _enLocale));
 
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
 		Configuration configuration = mock(Configuration.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, -3);
-		whenAttributeDefinitionGetID(attributeDefinition, "Boolean");
+		whenGetCardinality(extendedAttributeDefinition, -3);
+		whenGetID(extendedAttributeDefinition, "Boolean");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -339,34 +339,37 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		return ddmFormFieldValue;
 	}
 
-	protected void whenAttributeDefinitionGetCardinality(
-		AttributeDefinition attributeDefinition, int returnCardinality) {
+	protected void whenGetAttributeDefinitions(
+		ExtendedObjectClassDefinition extendedObjectClassDefinition,
+		ExtendedAttributeDefinition[] returnAttributeDefinitions) {
 
 		when(
-			attributeDefinition.getCardinality()
+			extendedObjectClassDefinition.getAttributeDefinitions(
+				Matchers.anyInt())
+		).thenReturn(
+			returnAttributeDefinitions
+		);
+	}
+
+	protected void whenGetCardinality(
+		ExtendedAttributeDefinition extendedAttributeDefinition,
+		int returnCardinality) {
+
+		when(
+			extendedAttributeDefinition.getCardinality()
 		).thenReturn(
 			returnCardinality
 		);
 	}
 
-	protected void whenAttributeDefinitionGetID(
-		AttributeDefinition attributeDefinition, String returnID) {
+	protected void whenGetID(
+		ExtendedAttributeDefinition extendedAttributeDefinition,
+		String returnID) {
 
 		when(
-			attributeDefinition.getID()
+			extendedAttributeDefinition.getID()
 		).thenReturn(
 			returnID
-		);
-	}
-
-	protected void whenObjectClassDefinitionGetAttributeDefinitions(
-		ObjectClassDefinition objectClassDefinition,
-		AttributeDefinition[] returnAttributeDefinitions) {
-
-		when(
-			objectClassDefinition.getAttributeDefinitions(Matchers.anyInt())
-		).thenReturn(
-			returnAttributeDefinitions
 		);
 	}
 

@@ -280,7 +280,7 @@
 
 		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -633,16 +633,16 @@
 		</execute>
 
 		<execute macro="User#viewLoginPG" />
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE" />
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
 
 		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="AssertTextEquals" locator1="Blogs#PERMISSIONS_ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 
 		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#PERMISSIONS_ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="4">
@@ -863,7 +863,7 @@
 			<var name="pageNameList" value="Private Page" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE" />
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
 
 		<execute function="Open" locator1="${blogEntryURL}" />
@@ -1104,7 +1104,7 @@
 
 		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="AssertTextEquals" locator1="Blogs#PERMISSIONS_ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1112,7 +1112,7 @@
 
 		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#PERMISSIONS_ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">

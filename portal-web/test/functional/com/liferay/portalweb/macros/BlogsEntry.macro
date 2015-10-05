@@ -1381,7 +1381,7 @@
 				</and>
 			</not>
 			<then>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AUTHOR" value1="By Test Test" />
+				<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AUTHOR" value1="Test Test" />
 			</then>
 			<else>
 				<if>

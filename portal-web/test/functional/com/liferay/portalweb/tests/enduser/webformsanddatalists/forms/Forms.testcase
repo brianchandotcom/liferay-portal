@@ -15,7 +15,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SubmitForm3x3Layout" priority="5">
+	<command name="SubmitForm3x3Layout" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Forms" />
 		</execute>

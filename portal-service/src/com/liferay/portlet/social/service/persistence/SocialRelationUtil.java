@@ -155,6 +155,29 @@ public class SocialRelationUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the social relations where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByUuid(java.lang.String uuid,
+		int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first social relation in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -291,6 +314,30 @@ public class SocialRelationUtil {
 		OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the social relations where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -440,6 +487,29 @@ public class SocialRelationUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the social relations where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first social relation in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -579,6 +649,28 @@ public class SocialRelationUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the social relations where userId1 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId1 the user id1
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByUserId1(long userId1, int start,
+		int end, OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUserId1(userId1, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first social relation in the ordered set where userId1 = &#63;.
 	*
 	* @param userId1 the user id1
@@ -713,6 +805,28 @@ public class SocialRelationUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the social relations where userId2 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId2 the user id2
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByUserId2(long userId2, int start,
+		int end, OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUserId2(userId2, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first social relation in the ordered set where userId2 = &#63;.
 	*
 	* @param userId2 the user id2
@@ -842,6 +956,28 @@ public class SocialRelationUtil {
 	public static List<SocialRelation> findByType(int type, int start, int end,
 		OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence().findByType(type, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the social relations where type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param type the type
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByType(int type, int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByType(type, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -978,6 +1114,30 @@ public class SocialRelationUtil {
 		int start, int end, OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence()
 				   .findByC_T(companyId, type, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the social relations where companyId = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByC_T(long companyId, int type,
+		int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_T(companyId, type, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -1130,6 +1290,30 @@ public class SocialRelationUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the social relations where userId1 = &#63; and userId2 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId1 the user id1
+	* @param userId2 the user id2
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByU1_U2(long userId1, long userId2,
+		int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU1_U2(userId1, userId2, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
 	* Returns the first social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
 	*
 	* @param userId1 the user id1
@@ -1279,6 +1463,30 @@ public class SocialRelationUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the social relations where userId1 = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId1 the user id1
+	* @param type the type
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByU1_T(long userId1, int type,
+		int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU1_T(userId1, type, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first social relation in the ordered set where userId1 = &#63; and type = &#63;.
 	*
 	* @param userId1 the user id1
@@ -1424,6 +1632,30 @@ public class SocialRelationUtil {
 		int start, int end, OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence()
 				   .findByU2_T(userId2, type, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the social relations where userId2 = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId2 the user id2
+	* @param type the type
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching social relations
+	*/
+	public static List<SocialRelation> findByU2_T(long userId2, int type,
+		int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU2_T(userId2, type, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -1702,6 +1934,26 @@ public class SocialRelationUtil {
 	public static List<SocialRelation> findAll(int start, int end,
 		OrderByComparator<SocialRelation> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the social relations.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of social relations
+	*/
+	public static List<SocialRelation> findAll(int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**

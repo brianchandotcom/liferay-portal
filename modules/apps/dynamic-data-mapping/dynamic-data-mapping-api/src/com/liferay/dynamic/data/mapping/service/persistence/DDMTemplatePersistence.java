@@ -81,6 +81,25 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d m templates where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first d d m template in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -248,6 +267,26 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d m templates where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first d d m template in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -369,6 +408,25 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<DDMTemplate> findByGroupId(long groupId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByGroupId(long groupId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63;.
@@ -546,6 +604,25 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d m templates where classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByClassPK(long classPK, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first d d m template in the ordered set where classPK = &#63;.
 	*
 	* @param classPK the class p k
@@ -658,6 +735,25 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<DDMTemplate> findByTemplateKey(
 		java.lang.String templateKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates where templateKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param templateKey the template key
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByTemplateKey(
+		java.lang.String templateKey, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template in the ordered set where templateKey = &#63;.
@@ -773,6 +869,25 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d m templates where type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param type the type
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByType(java.lang.String type,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first d d m template in the ordered set where type = &#63;.
 	*
 	* @param type the type
@@ -884,6 +999,25 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<DDMTemplate> findByLanguage(
 		java.lang.String language, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates where language = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param language the language
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByLanguage(
+		java.lang.String language, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template in the ordered set where language = &#63;.
@@ -1045,6 +1179,26 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<DDMTemplate> findByG_C(long groupId,
 		long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByG_C(long groupId,
+		long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -1236,6 +1390,26 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<DDMTemplate> findByG_CPK(long groupId, long classPK,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByG_CPK(long groupId, long classPK,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
@@ -1451,6 +1625,26 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63; and classPK = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByG_CPK(long[] groupIds,
+		long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Removes all the d d m templates where groupId = &#63; and classPK = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1540,6 +1734,27 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<DDMTemplate> findByG_C_C(long groupId,
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1775,6 +1990,27 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByG_C_C(long[] groupIds,
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Removes all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1931,6 +2167,27 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByC_C_T(long classNameId,
+		long classPK, java.lang.String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -2074,6 +2331,29 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		long classNameId, long classPK, java.lang.String type, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByG_C_C_T(long groupId,
+		long classNameId, long classPK, java.lang.String type, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -2311,6 +2591,30 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param mode the mode
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m templates
+	*/
+	public java.util.List<DDMTemplate> findByG_C_C_T_M(long groupId,
+		long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
@@ -2598,6 +2902,23 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<DDMTemplate> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m templates.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of d d m templates
+	*/
+	public java.util.List<DDMTemplate> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplate> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the d d m templates from the database.

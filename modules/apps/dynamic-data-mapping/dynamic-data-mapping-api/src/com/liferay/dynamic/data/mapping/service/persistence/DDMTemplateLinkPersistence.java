@@ -81,6 +81,25 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d m template links where classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m template links
+	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m template links
+	*/
+	public java.util.List<DDMTemplateLink> findByClassNameId(long classNameId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first d d m template link in the ordered set where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -192,6 +211,25 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 	public java.util.List<DDMTemplateLink> findByTemplateId(long templateId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m template links where templateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param templateId the template ID
+	* @param start the lower bound of the range of d d m template links
+	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d m template links
+	*/
+	public java.util.List<DDMTemplateLink> findByTemplateId(long templateId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d m template link in the ordered set where templateId = &#63;.
@@ -406,6 +444,23 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 	*/
 	public java.util.List<DDMTemplateLink> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d m template links.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of d d m template links
+	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of d d m template links
+	*/
+	public java.util.List<DDMTemplateLink> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the d d m template links from the database.

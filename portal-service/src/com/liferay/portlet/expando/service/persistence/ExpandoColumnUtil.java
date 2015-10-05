@@ -156,6 +156,28 @@ public class ExpandoColumnUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the expando columns where tableId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExpandoColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param tableId the table ID
+	* @param start the lower bound of the range of expando columns
+	* @param end the upper bound of the range of expando columns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching expando columns
+	*/
+	public static List<ExpandoColumn> findByTableId(long tableId, int start,
+		int end, OrderByComparator<ExpandoColumn> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByTableId(tableId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first expando column in the ordered set where tableId = &#63;.
 	*
 	* @param tableId the table ID
@@ -373,6 +395,30 @@ public class ExpandoColumnUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the expando columns where tableId = &#63; and name = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExpandoColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param tableId the table ID
+	* @param name the name
+	* @param start the lower bound of the range of expando columns
+	* @param end the upper bound of the range of expando columns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching expando columns
+	*/
+	public static List<ExpandoColumn> findByT_N(long tableId,
+		java.lang.String[] names, int start, int end,
+		OrderByComparator<ExpandoColumn> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByT_N(tableId, names, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the expando column where tableId = &#63; and name = &#63; or throws a {@link NoSuchColumnException} if it could not be found.
 	*
 	* @param tableId the table ID
@@ -575,6 +621,26 @@ public class ExpandoColumnUtil {
 	public static List<ExpandoColumn> findAll(int start, int end,
 		OrderByComparator<ExpandoColumn> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the expando columns.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExpandoColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of expando columns
+	* @param end the upper bound of the range of expando columns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of expando columns
+	*/
+	public static List<ExpandoColumn> findAll(int start, int end,
+		OrderByComparator<ExpandoColumn> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**

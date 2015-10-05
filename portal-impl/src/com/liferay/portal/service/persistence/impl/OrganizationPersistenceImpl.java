@@ -157,6 +157,27 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Organization> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the organizations where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of organizations
+	 * @param end the upper bound of the range of organizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching organizations
+	 */
+	@Override
+	public List<Organization> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -172,15 +193,19 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Organization> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Organization organization : list) {
-				if (!Validator.equals(uuid, organization.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Organization organization : list) {
+					if (!Validator.equals(uuid, organization.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1084,6 +1109,28 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> findByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<Organization> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the organizations where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of organizations
+	 * @param end the upper bound of the range of organizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching organizations
+	 */
+	@Override
+	public List<Organization> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1103,16 +1150,20 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				};
 		}
 
-		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Organization> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Organization organization : list) {
-				if (!Validator.equals(uuid, organization.getUuid()) ||
-						(companyId != organization.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Organization organization : list) {
+					if (!Validator.equals(uuid, organization.getUuid()) ||
+							(companyId != organization.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2062,6 +2113,27 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator<Organization> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the organizations where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of organizations
+	 * @param end the upper bound of the range of organizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching organizations
+	 */
+	@Override
+	public List<Organization> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2077,15 +2149,19 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Organization> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Organization organization : list) {
-				if ((companyId != organization.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Organization organization : list) {
+					if ((companyId != organization.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2902,6 +2978,27 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> findByLocations(long companyId, int start,
 		int end, OrderByComparator<Organization> orderByComparator) {
+		return findByLocations(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the organizations where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of organizations
+	 * @param end the upper bound of the range of organizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching organizations
+	 */
+	@Override
+	public List<Organization> findByLocations(long companyId, int start,
+		int end, OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2917,15 +3014,19 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Organization> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Organization organization : list) {
-				if ((companyId != organization.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Organization organization : list) {
+					if ((companyId != organization.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3747,6 +3848,30 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public List<Organization> findByC_P(long companyId,
 		long parentOrganizationId, int start, int end,
 		OrderByComparator<Organization> orderByComparator) {
+		return findByC_P(companyId, parentOrganizationId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the organizations where companyId = &#63; and parentOrganizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param parentOrganizationId the parent organization ID
+	 * @param start the lower bound of the range of organizations
+	 * @param end the upper bound of the range of organizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching organizations
+	 */
+	@Override
+	public List<Organization> findByC_P(long companyId,
+		long parentOrganizationId, int start, int end,
+		OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3766,16 +3891,20 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				};
 		}
 
-		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Organization> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Organization organization : list) {
-				if ((companyId != organization.getCompanyId()) ||
-						(parentOrganizationId != organization.getParentOrganizationId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Organization organization : list) {
+					if ((companyId != organization.getCompanyId()) ||
+							(parentOrganizationId != organization.getParentOrganizationId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4639,6 +4768,29 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> findByC_T(long companyId, String treePath,
 		int start, int end, OrderByComparator<Organization> orderByComparator) {
+		return findByC_T(companyId, treePath, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the organizations where companyId = &#63; and treePath LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param treePath the tree path
+	 * @param start the lower bound of the range of organizations
+	 * @param end the upper bound of the range of organizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching organizations
+	 */
+	@Override
+	public List<Organization> findByC_T(long companyId, String treePath,
+		int start, int end, OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4650,19 +4802,23 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				start, end, orderByComparator
 			};
 
-		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Organization> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Organization organization : list) {
-				if ((companyId != organization.getCompanyId()) ||
-						!StringUtil.wildcardMatches(
-							organization.getTreePath(), treePath,
-							CharPool.UNDERLINE, CharPool.PERCENT,
-							CharPool.BACK_SLASH, true)) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Organization organization : list) {
+					if ((companyId != organization.getCompanyId()) ||
+							!StringUtil.wildcardMatches(
+								organization.getTreePath(), treePath,
+								CharPool.UNDERLINE, CharPool.PERCENT,
+								CharPool.BACK_SLASH, true)) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5869,6 +6025,31 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public List<Organization> findByO_C_P(long organizationId, long companyId,
 		long parentOrganizationId, int start, int end,
 		OrderByComparator<Organization> orderByComparator) {
+		return findByO_C_P(organizationId, companyId, parentOrganizationId,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the organizations where organizationId &gt; &#63; and companyId = &#63; and parentOrganizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param companyId the company ID
+	 * @param parentOrganizationId the parent organization ID
+	 * @param start the lower bound of the range of organizations
+	 * @param end the upper bound of the range of organizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching organizations
+	 */
+	@Override
+	public List<Organization> findByO_C_P(long organizationId, long companyId,
+		long parentOrganizationId, int start, int end,
+		OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5880,17 +6061,21 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				start, end, orderByComparator
 			};
 
-		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Organization> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Organization organization : list) {
-				if ((organizationId >= organization.getOrganizationId()) ||
-						(companyId != organization.getCompanyId()) ||
-						(parentOrganizationId != organization.getParentOrganizationId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Organization organization : list) {
+					if ((organizationId >= organization.getOrganizationId()) ||
+							(companyId != organization.getCompanyId()) ||
+							(parentOrganizationId != organization.getParentOrganizationId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -7072,6 +7257,26 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> findAll(int start, int end,
 		OrderByComparator<Organization> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the organizations.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of organizations
+	 * @param end the upper bound of the range of organizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of organizations
+	 */
+	@Override
+	public List<Organization> findAll(int start, int end,
+		OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7087,8 +7292,12 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Organization> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Organization>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

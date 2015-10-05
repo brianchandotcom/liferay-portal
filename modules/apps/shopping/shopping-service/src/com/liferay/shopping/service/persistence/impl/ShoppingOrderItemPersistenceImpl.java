@@ -152,6 +152,27 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	@Override
 	public List<ShoppingOrderItem> findByOrderId(long orderId, int start,
 		int end, OrderByComparator<ShoppingOrderItem> orderByComparator) {
+		return findByOrderId(orderId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping order items where orderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingOrderItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param orderId the order ID
+	 * @param start the lower bound of the range of shopping order items
+	 * @param end the upper bound of the range of shopping order items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching shopping order items
+	 */
+	@Override
+	public List<ShoppingOrderItem> findByOrderId(long orderId, int start,
+		int end, OrderByComparator<ShoppingOrderItem> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -167,15 +188,19 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 			finderArgs = new Object[] { orderId, start, end, orderByComparator };
 		}
 
-		List<ShoppingOrderItem> list = (List<ShoppingOrderItem>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingOrderItem> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ShoppingOrderItem shoppingOrderItem : list) {
-				if ((orderId != shoppingOrderItem.getOrderId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ShoppingOrderItem>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ShoppingOrderItem shoppingOrderItem : list) {
+					if ((orderId != shoppingOrderItem.getOrderId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1066,6 +1091,26 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	@Override
 	public List<ShoppingOrderItem> findAll(int start, int end,
 		OrderByComparator<ShoppingOrderItem> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping order items.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingOrderItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of shopping order items
+	 * @param end the upper bound of the range of shopping order items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of shopping order items
+	 */
+	@Override
+	public List<ShoppingOrderItem> findAll(int start, int end,
+		OrderByComparator<ShoppingOrderItem> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1081,8 +1126,12 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<ShoppingOrderItem> list = (List<ShoppingOrderItem>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingOrderItem> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ShoppingOrderItem>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

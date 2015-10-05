@@ -150,6 +150,26 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Address> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	@Override
+	public List<Address> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Address> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -165,15 +185,19 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Address address : list) {
-				if (!Validator.equals(uuid, address.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Address address : list) {
+					if (!Validator.equals(uuid, address.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -676,6 +700,28 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<Address> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	@Override
+	public List<Address> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator<Address> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -695,16 +741,20 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				};
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Address address : list) {
-				if (!Validator.equals(uuid, address.getUuid()) ||
-						(companyId != address.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Address address : list) {
+					if (!Validator.equals(uuid, address.getUuid()) ||
+							(companyId != address.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1230,6 +1280,26 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findByCompanyId(long companyId, int start, int end,
 		OrderByComparator<Address> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	@Override
+	public List<Address> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<Address> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1245,15 +1315,19 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Address address : list) {
-				if ((companyId != address.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Address address : list) {
+					if ((companyId != address.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1706,6 +1780,26 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findByUserId(long userId, int start, int end,
 		OrderByComparator<Address> orderByComparator) {
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	@Override
+	public List<Address> findByUserId(long userId, int start, int end,
+		OrderByComparator<Address> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1721,15 +1815,19 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			finderArgs = new Object[] { userId, start, end, orderByComparator };
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Address address : list) {
-				if ((userId != address.getUserId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Address address : list) {
+					if ((userId != address.getUserId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2187,6 +2285,29 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findByC_C(long companyId, long classNameId, int start,
 		int end, OrderByComparator<Address> orderByComparator) {
+		return findByC_C(companyId, classNameId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	@Override
+	public List<Address> findByC_C(long companyId, long classNameId, int start,
+		int end, OrderByComparator<Address> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2206,16 +2327,20 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				};
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Address address : list) {
-				if ((companyId != address.getCompanyId()) ||
-						(classNameId != address.getClassNameId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Address address : list) {
+					if ((companyId != address.getCompanyId()) ||
+							(classNameId != address.getClassNameId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2712,6 +2837,30 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public List<Address> findByC_C_C(long companyId, long classNameId,
 		long classPK, int start, int end,
 		OrderByComparator<Address> orderByComparator) {
+		return findByC_C_C(companyId, classNameId, classPK, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	@Override
+	public List<Address> findByC_C_C(long companyId, long classNameId,
+		long classPK, int start, int end,
+		OrderByComparator<Address> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2731,17 +2880,21 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				};
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Address address : list) {
-				if ((companyId != address.getCompanyId()) ||
-						(classNameId != address.getClassNameId()) ||
-						(classPK != address.getClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Address address : list) {
+					if ((companyId != address.getCompanyId()) ||
+							(classNameId != address.getClassNameId()) ||
+							(classPK != address.getClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3274,6 +3427,31 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public List<Address> findByC_C_C_M(long companyId, long classNameId,
 		long classPK, boolean mailing, int start, int end,
 		OrderByComparator<Address> orderByComparator) {
+		return findByC_C_C_M(companyId, classNameId, classPK, mailing, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param mailing the mailing
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	@Override
+	public List<Address> findByC_C_C_M(long companyId, long classNameId,
+		long classPK, boolean mailing, int start, int end,
+		OrderByComparator<Address> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3293,18 +3471,22 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				};
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Address address : list) {
-				if ((companyId != address.getCompanyId()) ||
-						(classNameId != address.getClassNameId()) ||
-						(classPK != address.getClassPK()) ||
-						(mailing != address.getMailing())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Address address : list) {
+					if ((companyId != address.getCompanyId()) ||
+							(classNameId != address.getClassNameId()) ||
+							(classPK != address.getClassPK()) ||
+							(mailing != address.getMailing())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3872,6 +4054,31 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public List<Address> findByC_C_C_P(long companyId, long classNameId,
 		long classPK, boolean primary, int start, int end,
 		OrderByComparator<Address> orderByComparator) {
+		return findByC_C_C_P(companyId, classNameId, classPK, primary, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param primary the primary
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	@Override
+	public List<Address> findByC_C_C_P(long companyId, long classNameId,
+		long classPK, boolean primary, int start, int end,
+		OrderByComparator<Address> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3891,18 +4098,22 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				};
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Address address : list) {
-				if ((companyId != address.getCompanyId()) ||
-						(classNameId != address.getClassNameId()) ||
-						(classPK != address.getClassPK()) ||
-						(primary != address.getPrimary())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Address address : list) {
+					if ((companyId != address.getCompanyId()) ||
+							(classNameId != address.getClassNameId()) ||
+							(classPK != address.getClassPK()) ||
+							(primary != address.getPrimary())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5064,6 +5275,25 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findAll(int start, int end,
 		OrderByComparator<Address> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of addresses
+	 */
+	@Override
+	public List<Address> findAll(int start, int end,
+		OrderByComparator<Address> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5079,8 +5309,12 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Address> list = (List<Address>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Address> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Address>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

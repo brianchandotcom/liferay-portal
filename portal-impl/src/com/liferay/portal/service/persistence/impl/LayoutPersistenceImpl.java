@@ -154,6 +154,26 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -169,15 +189,19 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if (!Validator.equals(uuid, layout.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!Validator.equals(uuid, layout.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -963,6 +987,28 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<Layout> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -982,16 +1028,20 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				};
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if (!Validator.equals(uuid, layout.getUuid()) ||
-						(companyId != layout.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!Validator.equals(uuid, layout.getUuid()) ||
+							(companyId != layout.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1516,6 +1566,26 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1531,15 +1601,19 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if ((groupId != layout.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2350,6 +2424,26 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> findByCompanyId(long companyId, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2365,15 +2459,19 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if ((companyId != layout.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((companyId != layout.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3044,6 +3142,28 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> findByLayoutPrototypeUuid(String layoutPrototypeUuid,
 		int start, int end, OrderByComparator<Layout> orderByComparator) {
+		return findByLayoutPrototypeUuid(layoutPrototypeUuid, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where layoutPrototypeUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutPrototypeUuid the layout prototype uuid
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByLayoutPrototypeUuid(String layoutPrototypeUuid,
+		int start, int end, OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3063,16 +3183,20 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				};
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if (!Validator.equals(layoutPrototypeUuid,
-							layout.getLayoutPrototypeUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!Validator.equals(layoutPrototypeUuid,
+								layout.getLayoutPrototypeUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3586,6 +3710,28 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findBySourcePrototypeLayoutUuid(
 		String sourcePrototypeLayoutUuid, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
+		return findBySourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where sourcePrototypeLayoutUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findBySourcePrototypeLayoutUuid(
+		String sourcePrototypeLayoutUuid, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3605,16 +3751,20 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				};
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if (!Validator.equals(sourcePrototypeLayoutUuid,
-							layout.getSourcePrototypeLayoutUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if (!Validator.equals(sourcePrototypeLayoutUuid,
+								layout.getSourcePrototypeLayoutUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4131,6 +4281,29 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> findByG_P(long groupId, boolean privateLayout,
 		int start, int end, OrderByComparator<Layout> orderByComparator) {
+		return findByG_P(groupId, privateLayout, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P(long groupId, boolean privateLayout,
+		int start, int end, OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4150,16 +4323,20 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				};
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if ((groupId != layout.getGroupId()) ||
-						(privateLayout != layout.getPrivateLayout())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+							(privateLayout != layout.getPrivateLayout())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5287,6 +5464,30 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findByG_P_P(long groupId, boolean privateLayout,
 		long parentLayoutId, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
+		return findByG_P_P(groupId, privateLayout, parentLayoutId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_P(long groupId, boolean privateLayout,
+		long parentLayoutId, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5306,17 +5507,21 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				};
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if ((groupId != layout.getGroupId()) ||
-						(privateLayout != layout.getPrivateLayout()) ||
-						(parentLayoutId != layout.getParentLayoutId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+							(privateLayout != layout.getPrivateLayout()) ||
+							(parentLayoutId != layout.getParentLayoutId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6246,6 +6451,30 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findByG_P_T(long groupId, boolean privateLayout,
 		String type, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
+		return findByG_P_T(groupId, privateLayout, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T(long groupId, boolean privateLayout,
+		String type, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6265,17 +6494,21 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				};
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Layout layout : list) {
-				if ((groupId != layout.getGroupId()) ||
-						(privateLayout != layout.getPrivateLayout()) ||
-						!Validator.equals(type, layout.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+							(privateLayout != layout.getPrivateLayout()) ||
+							!Validator.equals(type, layout.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -8745,6 +8978,25 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> findAll(int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of layouts
+	 */
+	@Override
+	public List<Layout> findAll(int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8760,8 +9012,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Layout> list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Layout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Layout>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

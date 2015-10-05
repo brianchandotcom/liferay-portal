@@ -154,6 +154,29 @@ public class PasswordPolicyUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the password policies where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PasswordPolicyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of password policies
+	* @param end the upper bound of the range of password policies (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching password policies
+	*/
+	public static List<PasswordPolicy> findByUuid(java.lang.String uuid,
+		int start, int end,
+		OrderByComparator<PasswordPolicy> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first password policy in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -365,6 +388,30 @@ public class PasswordPolicyUtil {
 		OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the password policies where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PasswordPolicyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of password policies
+	* @param end the upper bound of the range of password policies (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching password policies
+	*/
+	public static List<PasswordPolicy> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<PasswordPolicy> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -593,6 +640,29 @@ public class PasswordPolicyUtil {
 		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the password policies where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PasswordPolicyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of password policies
+	* @param end the upper bound of the range of password policies (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching password policies
+	*/
+	public static List<PasswordPolicy> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<PasswordPolicy> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -999,6 +1069,26 @@ public class PasswordPolicyUtil {
 	public static List<PasswordPolicy> findAll(int start, int end,
 		OrderByComparator<PasswordPolicy> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the password policies.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PasswordPolicyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of password policies
+	* @param end the upper bound of the range of password policies (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of password policies
+	*/
+	public static List<PasswordPolicy> findAll(int start, int end,
+		OrderByComparator<PasswordPolicy> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**

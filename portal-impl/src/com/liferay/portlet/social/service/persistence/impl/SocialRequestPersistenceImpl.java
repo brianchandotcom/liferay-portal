@@ -150,6 +150,27 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findByUuid(String uuid, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByUuid(String uuid, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -165,15 +186,19 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if (!Validator.equals(uuid, socialRequest.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if (!Validator.equals(uuid, socialRequest.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -933,6 +958,28 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -952,16 +999,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				};
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if (!Validator.equals(uuid, socialRequest.getUuid()) ||
-						(companyId != socialRequest.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if (!Validator.equals(uuid, socialRequest.getUuid()) ||
+							(companyId != socialRequest.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1491,6 +1542,27 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator<SocialRequest> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1506,15 +1578,19 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if ((companyId != socialRequest.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if ((companyId != socialRequest.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1970,6 +2046,27 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findByUserId(long userId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByUserId(long userId, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1985,15 +2082,19 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			finderArgs = new Object[] { userId, start, end, orderByComparator };
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if ((userId != socialRequest.getUserId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if ((userId != socialRequest.getUserId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2451,6 +2552,28 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findByReceiverUserId(long receiverUserId,
 		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
+		return findByReceiverUserId(receiverUserId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where receiverUserId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param receiverUserId the receiver user ID
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByReceiverUserId(long receiverUserId,
+		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2470,15 +2593,19 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				};
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if ((receiverUserId != socialRequest.getReceiverUserId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if ((receiverUserId != socialRequest.getReceiverUserId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2940,6 +3067,28 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findByU_S(long userId, int status, int start,
 		int end, OrderByComparator<SocialRequest> orderByComparator) {
+		return findByU_S(userId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where userId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByU_S(long userId, int status, int start,
+		int end, OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2959,16 +3108,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				};
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if ((userId != socialRequest.getUserId()) ||
-						(status != socialRequest.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if ((userId != socialRequest.getUserId()) ||
+							(status != socialRequest.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3456,6 +3609,29 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findByC_C(long classNameId, long classPK,
 		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
+		return findByC_C(classNameId, classPK, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByC_C(long classNameId, long classPK,
+		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3475,16 +3651,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				};
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if ((classNameId != socialRequest.getClassNameId()) ||
-						(classPK != socialRequest.getClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if ((classNameId != socialRequest.getClassNameId()) ||
+							(classPK != socialRequest.getClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3973,6 +4153,29 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findByR_S(long receiverUserId, int status,
 		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
+		return findByR_S(receiverUserId, status, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where receiverUserId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param receiverUserId the receiver user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByR_S(long receiverUserId, int status,
+		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3992,16 +4195,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				};
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if ((receiverUserId != socialRequest.getReceiverUserId()) ||
-						(status != socialRequest.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if ((receiverUserId != socialRequest.getReceiverUserId()) ||
+							(status != socialRequest.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4817,6 +5024,33 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public List<SocialRequest> findByU_C_C_T_S(long userId, long classNameId,
 		long classPK, int type, int status, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
+		return findByU_C_C_T_S(userId, classNameId, classPK, type, status,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByU_C_C_T_S(long userId, long classNameId,
+		long classPK, int type, int status, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4836,19 +5070,23 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				};
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if ((userId != socialRequest.getUserId()) ||
-						(classNameId != socialRequest.getClassNameId()) ||
-						(classPK != socialRequest.getClassPK()) ||
-						(type != socialRequest.getType()) ||
-						(status != socialRequest.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if ((userId != socialRequest.getUserId()) ||
+							(classNameId != socialRequest.getClassNameId()) ||
+							(classPK != socialRequest.getClassPK()) ||
+							(type != socialRequest.getType()) ||
+							(status != socialRequest.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5454,6 +5692,33 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public List<SocialRequest> findByC_C_T_R_S(long classNameId, long classPK,
 		int type, long receiverUserId, int status, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
+		return findByC_C_T_R_S(classNameId, classPK, type, receiverUserId,
+			status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param type the type
+	 * @param receiverUserId the receiver user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching social requests
+	 */
+	@Override
+	public List<SocialRequest> findByC_C_T_R_S(long classNameId, long classPK,
+		int type, long receiverUserId, int status, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5475,19 +5740,23 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				};
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialRequest socialRequest : list) {
-				if ((classNameId != socialRequest.getClassNameId()) ||
-						(classPK != socialRequest.getClassPK()) ||
-						(type != socialRequest.getType()) ||
-						(receiverUserId != socialRequest.getReceiverUserId()) ||
-						(status != socialRequest.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialRequest socialRequest : list) {
+					if ((classNameId != socialRequest.getClassNameId()) ||
+							(classPK != socialRequest.getClassPK()) ||
+							(type != socialRequest.getType()) ||
+							(receiverUserId != socialRequest.getReceiverUserId()) ||
+							(status != socialRequest.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6824,6 +7093,26 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public List<SocialRequest> findAll(int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the social requests.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of social requests
+	 */
+	@Override
+	public List<SocialRequest> findAll(int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6839,8 +7128,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<SocialRequest> list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<SocialRequest> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

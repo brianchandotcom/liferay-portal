@@ -157,6 +157,29 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public List<LayoutRevision> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
 		OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByLayoutSetBranchId(layoutSetBranchId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByLayoutSetBranchId(
+		long layoutSetBranchId, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -176,15 +199,19 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				};
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -646,6 +673,27 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public List<LayoutRevision> findByPlid(long plid, int start, int end,
 		OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByPlid(plid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByPlid(long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -661,15 +709,19 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			finderArgs = new Object[] { plid, start, end, orderByComparator };
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((plid != layoutRevision.getPlid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((plid != layoutRevision.getPlid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1130,6 +1182,30 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public List<LayoutRevision> findByL_H(long layoutSetBranchId, boolean head,
 		int start, int end, OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByL_H(layoutSetBranchId, head, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByL_H(long layoutSetBranchId, boolean head,
+		int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1149,16 +1225,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				};
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-						(head != layoutRevision.getHead())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
+							(head != layoutRevision.getHead())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1648,6 +1728,30 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public List<LayoutRevision> findByL_P(long layoutSetBranchId, long plid,
 		int start, int end, OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByL_P(layoutSetBranchId, plid, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByL_P(long layoutSetBranchId, long plid,
+		int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1667,16 +1771,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				};
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-						(plid != layoutRevision.getPlid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
+							(plid != layoutRevision.getPlid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2166,6 +2274,30 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public List<LayoutRevision> findByL_S(long layoutSetBranchId, int status,
 		int start, int end, OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByL_S(layoutSetBranchId, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByL_S(long layoutSetBranchId, int status,
+		int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2185,16 +2317,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				};
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-						(status != layoutRevision.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
+							(status != layoutRevision.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2683,6 +2819,28 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public List<LayoutRevision> findByH_P(boolean head, long plid, int start,
 		int end, OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByH_P(head, plid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where head = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param head the head
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByH_P(boolean head, long plid, int start,
+		int end, OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2698,16 +2856,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			finderArgs = new Object[] { head, plid, start, end, orderByComparator };
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((head != layoutRevision.getHead()) ||
-						(plid != layoutRevision.getPlid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((head != layoutRevision.getHead()) ||
+							(plid != layoutRevision.getPlid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3189,6 +3351,28 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public List<LayoutRevision> findByP_NotS(long plid, int status, int start,
 		int end, OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByP_NotS(plid, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where plid = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByP_NotS(long plid, int status, int start,
+		int end, OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3196,16 +3380,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_P_NOTS;
 		finderArgs = new Object[] { plid, status, start, end, orderByComparator };
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((plid != layoutRevision.getPlid()) ||
-						(status == layoutRevision.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((plid != layoutRevision.getPlid()) ||
+							(status == layoutRevision.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3706,6 +3894,31 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public List<LayoutRevision> findByL_L_P(long layoutSetBranchId,
 		long layoutBranchId, long plid, int start, int end,
 		OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByL_L_P(layoutSetBranchId, layoutBranchId, plid, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByL_L_P(long layoutSetBranchId,
+		long layoutBranchId, long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3725,17 +3938,21 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				};
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-						(layoutBranchId != layoutRevision.getLayoutBranchId()) ||
-						(plid != layoutRevision.getPlid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
+							(layoutBranchId != layoutRevision.getLayoutBranchId()) ||
+							(plid != layoutRevision.getPlid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4273,6 +4490,31 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public List<LayoutRevision> findByL_P_P(long layoutSetBranchId,
 		long parentLayoutRevisionId, long plid, int start, int end,
 		OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByL_P_P(layoutSetBranchId, parentLayoutRevisionId, plid,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param parentLayoutRevisionId the parent layout revision ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByL_P_P(long layoutSetBranchId,
+		long parentLayoutRevisionId, long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4294,17 +4536,21 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				};
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-						(parentLayoutRevisionId != layoutRevision.getParentLayoutRevisionId()) ||
-						(plid != layoutRevision.getPlid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
+							(parentLayoutRevisionId != layoutRevision.getParentLayoutRevisionId()) ||
+							(plid != layoutRevision.getPlid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5107,6 +5353,31 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public List<LayoutRevision> findByL_P_S(long layoutSetBranchId, long plid,
 		int status, int start, int end,
 		OrderByComparator<LayoutRevision> orderByComparator) {
+		return findByL_P_S(layoutSetBranchId, plid, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param plid the plid
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findByL_P_S(long layoutSetBranchId, long plid,
+		int status, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5126,17 +5397,21 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				};
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutRevision layoutRevision : list) {
-				if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-						(plid != layoutRevision.getPlid()) ||
-						(status != layoutRevision.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutRevision layoutRevision : list) {
+					if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
+							(plid != layoutRevision.getPlid()) ||
+							(status != layoutRevision.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6364,6 +6639,26 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public List<LayoutRevision> findAll(int start, int end,
 		OrderByComparator<LayoutRevision> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of layout revisions
+	 */
+	@Override
+	public List<LayoutRevision> findAll(int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6379,8 +6674,12 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<LayoutRevision> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LayoutRevision>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

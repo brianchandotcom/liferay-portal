@@ -139,6 +139,26 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	@Override
 	public List<Image> findByLtSize(int size, int start, int end,
 		OrderByComparator<Image> orderByComparator) {
+		return findByLtSize(size, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the images where size &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ImageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param size the size
+	 * @param start the lower bound of the range of images
+	 * @param end the upper bound of the range of images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching images
+	 */
+	@Override
+	public List<Image> findByLtSize(int size, int start, int end,
+		OrderByComparator<Image> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -146,15 +166,19 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTSIZE;
 		finderArgs = new Object[] { size, start, end, orderByComparator };
 
-		List<Image> list = (List<Image>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Image> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Image image : list) {
-				if ((size <= image.getSize())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Image>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Image image : list) {
+					if ((size <= image.getSize())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1002,6 +1026,25 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	@Override
 	public List<Image> findAll(int start, int end,
 		OrderByComparator<Image> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the images.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ImageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of images
+	 * @param end the upper bound of the range of images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of images
+	 */
+	@Override
+	public List<Image> findAll(int start, int end,
+		OrderByComparator<Image> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1017,8 +1060,12 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Image> list = (List<Image>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Image> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Image>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

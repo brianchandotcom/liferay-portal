@@ -403,6 +403,30 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	@Override
 	public List<Ticket> findByC_C_T(long classNameId, long classPK, int type,
 		int start, int end, OrderByComparator<Ticket> orderByComparator) {
+		return findByC_C_T(classNameId, classPK, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param type the type
+	 * @param start the lower bound of the range of tickets
+	 * @param end the upper bound of the range of tickets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of matching tickets
+	 */
+	@Override
+	public List<Ticket> findByC_C_T(long classNameId, long classPK, int type,
+		int start, int end, OrderByComparator<Ticket> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -422,17 +446,21 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 				};
 		}
 
-		List<Ticket> list = (List<Ticket>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Ticket> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Ticket ticket : list) {
-				if ((classNameId != ticket.getClassNameId()) ||
-						(classPK != ticket.getClassPK()) ||
-						(type != ticket.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Ticket>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Ticket ticket : list) {
+					if ((classNameId != ticket.getClassNameId()) ||
+							(classPK != ticket.getClassPK()) ||
+							(type != ticket.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1417,6 +1445,25 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	@Override
 	public List<Ticket> findAll(int start, int end,
 		OrderByComparator<Ticket> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the tickets.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of tickets
+	 * @param end the upper bound of the range of tickets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the ordered range of tickets
+	 */
+	@Override
+	public List<Ticket> findAll(int start, int end,
+		OrderByComparator<Ticket> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1432,8 +1479,12 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Ticket> list = (List<Ticket>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Ticket> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Ticket>)FinderCacheUtil.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;

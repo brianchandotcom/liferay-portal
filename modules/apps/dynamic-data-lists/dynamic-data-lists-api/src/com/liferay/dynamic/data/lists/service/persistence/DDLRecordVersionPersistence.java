@@ -81,6 +81,25 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the d d l record versions where recordId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param recordId the record ID
+	* @param start the lower bound of the range of d d l record versions
+	* @param end the upper bound of the range of d d l record versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d l record versions
+	*/
+	public java.util.List<DDLRecordVersion> findByRecordId(long recordId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first d d l record version in the ordered set where recordId = &#63;.
 	*
 	* @param recordId the record ID
@@ -245,6 +264,26 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	public java.util.List<DDLRecordVersion> findByR_S(long recordId,
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d l record versions where recordId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param recordId the record ID
+	* @param status the status
+	* @param start the lower bound of the range of d d l record versions
+	* @param end the upper bound of the range of d d l record versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of matching d d l record versions
+	*/
+	public java.util.List<DDLRecordVersion> findByR_S(long recordId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first d d l record version in the ordered set where recordId = &#63; and status = &#63;.
@@ -416,6 +455,23 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public java.util.List<DDLRecordVersion> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the d d l record versions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of d d l record versions
+	* @param end the upper bound of the range of d d l record versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the ordered range of d d l record versions
+	*/
+	public java.util.List<DDLRecordVersion> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the d d l record versions from the database.

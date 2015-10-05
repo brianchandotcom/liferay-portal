@@ -2,7 +2,7 @@
 	<command name="addChildPGViaKBAdmin">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
 		<execute function="Type" locator1="CPKnowledgebaseadminAddchildarticle#TITLE_FIELD" value1="${kbChildArticleTitle}" />
@@ -417,8 +417,8 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="Click" locator1="KnowledgeBase#MENUBAR_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertClick" locator1="NavBar#ACTIONS" value1="Actions" />
+		<execute function="ClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete the selected articles?" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
@@ -426,7 +426,7 @@
 	</command>
 
 	<command name="deletePGViaKBArticle">
-		<execute function="Click" locator1="PGKnowledgebasearticle#ARTICLE_ACTIONS_BUTTON" />
+		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
 		<execute function="AssertClickNoError" locator1="PGKnowledgebasearticle#ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected article no longer exists." />
@@ -669,7 +669,7 @@
 	<command name="moveArticleViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" value1="Actions" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
@@ -822,7 +822,7 @@
 	</command>
 
 	<command name="selectRelatedAssetCP">
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
 
 		<var name="key_kbArticleRelatedAssetType" value="${kbArticleRelatedAssetType}" />
 

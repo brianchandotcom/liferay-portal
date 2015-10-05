@@ -38,7 +38,7 @@
 
 		<execute function="AssertClick" locator1="WCEditWebContent#MENU_RELATED_ASSETS" value1="Related Assets" />
 
-		<execute function="Click" locator1="Button#SELECT" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
 
 		<var name="key_assetType" value="${assetType}" />
 
@@ -989,7 +989,7 @@
 
 		<execute function="AssertClick" locator1="WCEditWebContent#MENU_RELATED_ASSETS" value1="Related Assets" />
 
-		<execute function="Click" locator1="Button#SELECT" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
 
 		<var name="key_assetType" value="${assetType}" />
 

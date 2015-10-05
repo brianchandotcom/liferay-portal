@@ -32,6 +32,9 @@ public interface PanelCategoryKeys {
 	public static final String CONTROL_PANEL_SITES =
 		PortletCategoryKeys.CONTROL_PANEL_SITES;
 
+	public static final String CONTROL_PANEL_SYSTEM =
+		PortletCategoryKeys.CONTROL_PANEL_SYSTEM;
+
 	public static final String CONTROL_PANEL_USERS =
 		PortletCategoryKeys.CONTROL_PANEL_USERS;
 

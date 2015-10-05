@@ -7532,6 +7532,8 @@ public class PortalImpl implements Portal {
 				portletCategory.equals(
 					PortletCategoryKeys.CONTROL_PANEL_SITES) ||
 				portletCategory.equals(
+					PortletCategoryKeys.CONTROL_PANEL_SYSTEM) ||
+				portletCategory.equals(
 					PortletCategoryKeys.CONTROL_PANEL_USERS)) {
 
 				return layout;

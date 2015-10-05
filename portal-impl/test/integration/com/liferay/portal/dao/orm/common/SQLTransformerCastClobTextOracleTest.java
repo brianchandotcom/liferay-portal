@@ -84,7 +84,7 @@ public class SQLTransformerCastClobTextOracleTest {
 	@Test
 	public void testSelectBigText_3999() {
 		checkResult(
-			runSelect(BIG_TEXT_A_3999, ""), new String[] {BIG_TEXT_A_3999});
+			runSelect(_BIG_TEXT_A_3999, ""), new String[] {_BIG_TEXT_A_3999});
 	}
 
 	@Test
@@ -94,12 +94,14 @@ public class SQLTransformerCastClobTextOracleTest {
 		// as CAST_CLOB_TEXT truncates data prior to comparison
 
 		checkResult(
-			runSelect(BIG_TEXT_A_4000, ""),
-			new String[] {BIG_TEXT_A_4000, BIG_TEXT_A_4001, BIG_TEXT_A_4000_B});
+			runSelect(_BIG_TEXT_A_4000, ""),
+			new String[] {
+				_BIG_TEXT_A_4000, _BIG_TEXT_A_4001, _BIG_TEXT_A_4000_B
+			});
 
 		checkResult(
-			runSelect(BIG_TEXT_A_3999_B, ""),
-			new String[] {BIG_TEXT_A_3999_B, BIG_TEXT_A_3999_BB});
+			runSelect(_BIG_TEXT_A_3999_B, ""),
+			new String[] {_BIG_TEXT_A_3999_B, _BIG_TEXT_A_3999_BB});
 	}
 
 	@Test
@@ -108,20 +110,20 @@ public class SQLTransformerCastClobTextOracleTest {
 		// those match nothing as CAST_CLOB_TEXT truncates data prior to
 		// comparison. Note this is intended behavior
 
-		// selects where data = BIG_TEXT_A_4001
+		// selects where data = _BIG_TEXT_A_4001
 
 		checkResult(
-			runSelect(BIG_TEXT_A_4000, String.valueOf(A)), _EMPTY_RESULT);
+			runSelect(_BIG_TEXT_A_4000, String.valueOf(_A)), _EMPTY_RESULT);
 
-		// selects where data = BIG_TEXT_A_3999_BB
-
-		checkResult(
-			runSelect(BIG_TEXT_A_3999_B, String.valueOf(B)), _EMPTY_RESULT);
-
-		// selects where data = BIG_TEXT_A_4000_B
+		// selects where data = _BIG_TEXT_A_3999_BB
 
 		checkResult(
-			runSelect(BIG_TEXT_A_4000, String.valueOf(B)), _EMPTY_RESULT);
+			runSelect(_BIG_TEXT_A_3999_B, String.valueOf(_B)), _EMPTY_RESULT);
+
+		// selects where data = _BIG_TEXT_A_4000_B
+
+		checkResult(
+			runSelect(_BIG_TEXT_A_4000, String.valueOf(_B)), _EMPTY_RESULT);
 	}
 
 	@Test
@@ -129,9 +131,9 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// matches nothing
 
-		checkResult(runSelect(String.valueOf(B), ""), _EMPTY_RESULT);
+		checkResult(runSelect(String.valueOf(_B), ""), _EMPTY_RESULT);
 
-		checkResult(runSelect(String.valueOf(A), ""), _EMPTY_RESULT);
+		checkResult(runSelect(String.valueOf(_A), ""), _EMPTY_RESULT);
 	}
 
 	private static String[] createInserts() {
@@ -140,38 +142,38 @@ public class SQLTransformerCastClobTextOracleTest {
 		sqls[0] = StringUtil.replace(
 			_SQL_INSERT_LONG_STRING,
 			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"0", BIG_TEXT_A_3999, ""});
+			new String[] {"0", _BIG_TEXT_A_3999, ""});
 
 		sqls[1] = StringUtil.replace(
 			_SQL_INSERT_LONG_STRING,
 			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"1", BIG_TEXT_A_4000, ""});
+			new String[] {"1", _BIG_TEXT_A_4000, ""});
 
-		// inserts BIG_TEXT_A_4001
+		// inserts _BIG_TEXT_A_4001
 
 		sqls[2] = StringUtil.replace(
 			_SQL_INSERT_LONG_STRING,
 			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"2", BIG_TEXT_A_4000, String.valueOf(A)});
+			new String[] {"2", _BIG_TEXT_A_4000, String.valueOf(_A)});
 
 		sqls[3] = StringUtil.replace(
 			_SQL_INSERT_LONG_STRING,
 			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"3", BIG_TEXT_A_3999_B, ""});
+			new String[] {"3", _BIG_TEXT_A_3999_B, ""});
 
-		// inserts BIG_TEXT_A_3999_BB
+		// inserts _BIG_TEXT_A_3999_BB
 
 		sqls[4] = StringUtil.replace(
 			_SQL_INSERT_LONG_STRING,
 			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"4", BIG_TEXT_A_3999_B, String.valueOf(B)});
+			new String[] {"4", _BIG_TEXT_A_3999_B, String.valueOf(_B)});
 
-		// inserts BIG_TEXT_A_4000_B
+		// inserts _BIG_TEXT_A_4000_B
 
 		sqls[5] = StringUtil.replace(
 			_SQL_INSERT_LONG_STRING,
 			new String[] {"[$ID$]", "[$DATA_1$]", "[$DATA_2$]"},
-			new String[] {"5", BIG_TEXT_A_4000, String.valueOf(B)});
+			new String[] {"5", _BIG_TEXT_A_4000, String.valueOf(_B)});
 
 		return sqls;
 	}
@@ -234,7 +236,24 @@ public class SQLTransformerCastClobTextOracleTest {
 		return list;
 	}
 
-	private static String[] _EMPTY_RESULT = new String[] {};
+	private static final Character _A = 'a';
+
+	private static final Character _B = 'b';
+
+	private static final String _BIG_TEXT_A_3999 = CharBuffer.allocate(
+		3999).toString().replace('\0', _A);
+
+	private static final String _BIG_TEXT_A_3999_B = _BIG_TEXT_A_3999 + _B;
+
+	private static final String _BIG_TEXT_A_3999_BB = _BIG_TEXT_A_3999_B + _B;
+
+	private static final String _BIG_TEXT_A_4000 = _BIG_TEXT_A_3999 + _A;
+
+	private static final String _BIG_TEXT_A_4000_B = _BIG_TEXT_A_4000 + _B;
+
+	private static final String _BIG_TEXT_A_4001 = _BIG_TEXT_A_4000 + _A;
+
+	private static final String[] _EMPTY_RESULT = new String[] {};
 
 	private static final String _SQL_CREATE_TABLE =
 		"create table TestCastClobText (" +
@@ -272,23 +291,6 @@ public class SQLTransformerCastClobTextOracleTest {
 		"WHERE " +
 		" DBMS_LOB.COMPARE(CAST_CLOB_TEXT(TestCastClobText.data), " +
 		" to_clob(?) || to_clob(?)) = 0";
-
-	private static final Character A = 'a';
-
-	private static final Character B = 'b';
-
-	private static final String BIG_TEXT_A_3999 = CharBuffer.allocate(
-		3999).toString().replace('\0', A);
-
-	private static final String BIG_TEXT_A_3999_B = BIG_TEXT_A_3999 + B;
-
-	private static final String BIG_TEXT_A_3999_BB = BIG_TEXT_A_3999_B + B;
-
-	private static final String BIG_TEXT_A_4000 = BIG_TEXT_A_3999 + A;
-
-	private static final String BIG_TEXT_A_4000_B = BIG_TEXT_A_4000 + B;
-
-	private static final String BIG_TEXT_A_4001 = BIG_TEXT_A_4000 + A;
 
 	private static DB _db;
 

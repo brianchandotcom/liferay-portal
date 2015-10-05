@@ -6555,7 +6555,20 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 	</target>
 
-	<target name="run-simple-server" depends="prepare-portal-properties,prepare-portal-ext-properties,prepare-system-ext-properties">
+	<target name="run-simple-server">
+		<if>
+			<not>
+				<equals arg1="${test.prepare.bundle.properties}" arg2="false" />
+			</not>
+			<then>
+				<antcall target="prepare-portal-properties" />
+
+				<antcall target="prepare-portal-ext-properties" />
+
+				<antcall target="prepare-system-ext-properties" />
+			</then>
+		</if>
+
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>

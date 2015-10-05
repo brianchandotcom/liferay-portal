@@ -78,6 +78,9 @@ public class DLFolderFinderImpl
 	public static final String JOIN_FS_BY_DL_FILE_ENTRY =
 		DLFolderFinder.class.getName() + ".joinFS_ByDLFileEntry";
 
+	public static final String JOIN_AE_BY_DL_FOLDER =
+		DLFolderFinder.class.getName() + ".joinAE_ByDLFolder";
+
 	@Override
 	public int countF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, String[] mimeTypes,

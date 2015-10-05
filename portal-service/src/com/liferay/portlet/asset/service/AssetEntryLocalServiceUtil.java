@@ -832,6 +832,12 @@ public class AssetEntryLocalServiceUtil {
 		return getService().updateVisible(className, classPK, visible);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetEntry updateVisible(
+		com.liferay.portlet.asset.model.AssetEntry entry, boolean visible)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateVisible(entry, visible);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long,
 	long[], String[])}

@@ -1706,6 +1706,30 @@ public class DLAppHelperLocalServiceImpl
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 
+		long dlFileEntryClassNameId = classNameLocalService.getClassNameId(
+			DLFileEntry.class);
+
+		List<AssetEntry> dlFileEntryAssetEntries =
+			assetEntryFinder.findByDLFileEntryC_T(
+				dlFileEntryClassNameId, dlFolder.getTreePath());
+
+		for (AssetEntry dlFileEntryAssetEntry : dlFileEntryAssetEntries) {
+			assetEntryLocalService.updateVisible(
+				dlFileEntryAssetEntry, !moveToTrash);
+		}
+
+		long dlFolderClassNameId = classNameLocalService.getClassNameId(
+			DLFolder.class);
+
+		List<AssetEntry> dlFolderAssetEntries =
+			assetEntryFinder.findByDLFolderC_T(
+				dlFolderClassNameId, dlFolder.getTreePath());
+
+		for (AssetEntry dlFolderAssetEntry : dlFolderAssetEntries) {
+			assetEntryLocalService.updateVisible(
+				dlFolderAssetEntry, !moveToTrash);
+		}
+
 		List<DLFolder> dlFolders = dlFolderPersistence.findByG_M_T_H(
 			dlFolder.getGroupId(), false,
 			CustomSQLUtil.keywords(
@@ -1818,24 +1842,6 @@ public class DLAppHelperLocalServiceImpl
 				}
 			}
 
-			// Asset
-
-			if (moveToTrash) {
-				assetEntryLocalService.updateVisible(
-					DLFileEntryConstants.getClassName(),
-					dlFileEntry.getFileEntryId(), false);
-			}
-			else {
-				DLFileVersion latestDlFileVersion =
-					dlFileEntry.getLatestFileVersion(false);
-
-				if (latestDlFileVersion.isApproved()) {
-					assetEntryLocalService.updateVisible(
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(), true);
-				}
-			}
-
 			// Index
 
 			Indexer<DLFileEntry> indexer =
@@ -1942,12 +1948,6 @@ public class DLAppHelperLocalServiceImpl
 				trashVersionLocalService.deleteTrashVersion(trashVersion);
 			}
 		}
-
-		// Asset
-
-		assetEntryLocalService.updateVisible(
-			DLFolderConstants.getClassName(), childDLFolder.getFolderId(),
-			!moveToTrash);
 
 		// Index
 

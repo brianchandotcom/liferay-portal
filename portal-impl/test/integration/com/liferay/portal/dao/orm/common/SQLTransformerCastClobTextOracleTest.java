@@ -83,8 +83,7 @@ public class SQLTransformerCastClobTextOracleTest {
 
 	@Test
 	public void testSelectBigText_3999() {
-		checkResult(
-			runSelect(_BIG_TEXT_A_3999, ""), new String[] {_BIG_TEXT_A_3999});
+		checkResult(runSelect(_BIG_TEXT_A_3999, ""), _BIG_TEXT_A_3999);
 	}
 
 	@Test
@@ -94,14 +93,12 @@ public class SQLTransformerCastClobTextOracleTest {
 		// as CAST_CLOB_TEXT truncates data prior to comparison
 
 		checkResult(
-			runSelect(_BIG_TEXT_A_4000, ""),
-			new String[] {
-				_BIG_TEXT_A_4000, _BIG_TEXT_A_4001, _BIG_TEXT_A_4000_B
-			});
+			runSelect(_BIG_TEXT_A_4000, ""), _BIG_TEXT_A_4000, _BIG_TEXT_A_4001,
+			_BIG_TEXT_A_4000_B);
 
 		checkResult(
-			runSelect(_BIG_TEXT_A_3999_B, ""),
-			new String[] {_BIG_TEXT_A_3999_B, _BIG_TEXT_A_3999_BB});
+			runSelect(_BIG_TEXT_A_3999_B, ""), _BIG_TEXT_A_3999_B,
+			_BIG_TEXT_A_3999_BB);
 	}
 
 	@Test
@@ -112,18 +109,15 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// selects where data = _BIG_TEXT_A_4001
 
-		checkResult(
-			runSelect(_BIG_TEXT_A_4000, String.valueOf(_A)), _EMPTY_RESULT);
+		checkResult(runSelect(_BIG_TEXT_A_4000, String.valueOf(_A)));
 
 		// selects where data = _BIG_TEXT_A_3999_BB
 
-		checkResult(
-			runSelect(_BIG_TEXT_A_3999_B, String.valueOf(_B)), _EMPTY_RESULT);
+		checkResult(runSelect(_BIG_TEXT_A_3999_B, String.valueOf(_B)));
 
 		// selects where data = _BIG_TEXT_A_4000_B
 
-		checkResult(
-			runSelect(_BIG_TEXT_A_4000, String.valueOf(_B)), _EMPTY_RESULT);
+		checkResult(runSelect(_BIG_TEXT_A_4000, String.valueOf(_B)));
 	}
 
 	@Test
@@ -131,9 +125,9 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// matches nothing
 
-		checkResult(runSelect(String.valueOf(_B), ""), _EMPTY_RESULT);
+		checkResult(runSelect(String.valueOf(_B), ""));
 
-		checkResult(runSelect(String.valueOf(_A), ""), _EMPTY_RESULT);
+		checkResult(runSelect(String.valueOf(_A), ""));
 	}
 
 	private static String[] createInserts() {
@@ -178,7 +172,7 @@ public class SQLTransformerCastClobTextOracleTest {
 		return sqls;
 	}
 
-	private void checkResult(List<?> queryResult, String[] expectedResult) {
+	private void checkResult(List<?> queryResult, String... expectedResult) {
 		Assert.assertEquals(queryResult.size(), expectedResult.length);
 
 		List<String> expected = ListUtil.fromArray(expectedResult);
@@ -252,8 +246,6 @@ public class SQLTransformerCastClobTextOracleTest {
 	private static final String _BIG_TEXT_A_4000_B = _BIG_TEXT_A_4000 + _B;
 
 	private static final String _BIG_TEXT_A_4001 = _BIG_TEXT_A_4000 + _A;
-
-	private static final String[] _EMPTY_RESULT = new String[] {};
 
 	private static final String _SQL_CREATE_TABLE =
 		"create table TestCastClobText (" +

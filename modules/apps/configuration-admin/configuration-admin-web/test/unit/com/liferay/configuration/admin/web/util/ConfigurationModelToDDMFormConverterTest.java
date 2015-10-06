@@ -244,13 +244,14 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 	protected void whenGetAttributeDefinitions(
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
-		ExtendedAttributeDefinition[] returnAttributeDefinitions, int filter) {
+		ExtendedAttributeDefinition[] extendedAttributeDefinitions,
+		int filter) {
 
 		when(
 			extendedObjectClassDefinition.getAttributeDefinitions(
 				Matchers.eq(filter))
 		).thenReturn(
-			returnAttributeDefinitions
+			extendedAttributeDefinitions
 		);
 	}
 

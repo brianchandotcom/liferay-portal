@@ -243,11 +243,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PROFILE_INFO_INSTANT_MESSENGER_MSN_CONTENT</td>
-	<td>//div[@data-title='Instant Messenger']/ul/li[contains(.,'msn')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT</td>
 	<td>//div[@data-title='Instant Messenger']/ul/li[contains(.,'Skype')]</td>
 	<td></td>

@@ -1,8 +1,5 @@
 import com.liferay.gradle.util.FileUtil
 
-import org.gradle.internal.hash.HashUtil
-import org.gradle.internal.hash.HashValue
-
 buildscript {
 	repositories {
 		if (!Boolean.getBoolean("maven.local.ignore")) {
@@ -30,47 +27,6 @@ gradle.beforeProject {
 
 	if (buildGradleFile.exists() && project.parent) {
 		project.apply from: rootProject.file("build-module.gradle")
-	}
-}
-
-if (System.getProperty("line.separator") != "\n") {
-	gradle.buildFinished {
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
-
-		exec {
-			commandLine "git", "ls-files", "--exclude-standard", "--others"
-			standardOutput = byteArrayOutputStream
-			workingDir = gradle.gradleUserHomeDir
-		}
-
-		String output = byteArrayOutputStream.toString()
-
-		List<String> fileNames = output.readLines()
-
-		fileNames.retainAll {
-			it.endsWith ".pom"
-		}
-
-		fileNames.each {
-			String pomFileName ->
-
-			File pomFile = new File(gradle.gradleUserHomeDir, pomFileName)
-
-			ant.fixcrlf encoding: "UTF-8", eol: "lf", file: pomFile, fixlast: false
-
-			HashValue hashValue = HashUtil.sha1(pomFile)
-
-			String hash = hashValue.asHexString()
-			File hashDir = pomFile.parentFile
-
-			if (hashDir.name != hash) {
-				boolean success = hashDir.renameTo new File(hashDir.parentFile, hash)
-
-				if (!success) {
-					delete hashDir
-				}
-			}
-		}
 	}
 }
 

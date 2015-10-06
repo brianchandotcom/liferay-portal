@@ -20,13 +20,12 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
-
-import java.nio.CharBuffer;
 
 import java.sql.Clob;
 import java.sql.Connection;
@@ -155,19 +154,19 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// selects where data = _BIG_TEXT_A_4001
 
-		List<String> list = runSelect(_BIG_TEXT_A_4000, String.valueOf(_A));
+		List<String> list = runSelect(_BIG_TEXT_A_4000, _A);
 
 		Assert.assertTrue(list.toString(), list.isEmpty());
 
 		// selects where data = _BIG_TEXT_A_3999_BB
 
-		list = runSelect(_BIG_TEXT_A_3999_B_1, String.valueOf(_B));
+		list = runSelect(_BIG_TEXT_A_3999_B_1, _B);
 
 		Assert.assertTrue(list.toString(), list.isEmpty());
 
 		// selects where data = _BIG_TEXT_A_4000_B
 
-		list = runSelect(_BIG_TEXT_A_4000, String.valueOf(_B));
+		list = runSelect(_BIG_TEXT_A_4000, _B);
 
 		Assert.assertTrue(list.toString(), list.isEmpty());
 	}
@@ -177,11 +176,11 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// matches nothing
 
-		List<String> list = runSelect(String.valueOf(_A));
+		List<String> list = runSelect(_A);
 
 		Assert.assertTrue(list.toString(), list.isEmpty());
 
-		list = runSelect(String.valueOf(_B));
+		list = runSelect(_B);
 
 		Assert.assertTrue(list.toString(), list.isEmpty());
 	}
@@ -225,23 +224,21 @@ public class SQLTransformerCastClobTextOracleTest {
 		}
 	}
 
-	private static final Character _A = 'a';
+	private static final String _A = "a";
 
-	private static final Character _B = 'b';
+	private static final String _B = "b";
 
-	private static final String _BIG_TEXT_A_3999 = CharBuffer.allocate(
-		3999).toString().replace('\0', _A);
+	private static final String _BIG_TEXT_A_3999;
 
-	private static final String _BIG_TEXT_A_3999_B_1 = _BIG_TEXT_A_3999 + _B;
+	private static final String _BIG_TEXT_A_3999_B_1;
 
-	private static final String _BIG_TEXT_A_3999_B_2 =
-		_BIG_TEXT_A_3999_B_1 + _B;
+	private static final String _BIG_TEXT_A_3999_B_2;
 
-	private static final String _BIG_TEXT_A_4000 = _BIG_TEXT_A_3999 + _A;
+	private static final String _BIG_TEXT_A_4000;
 
-	private static final String _BIG_TEXT_A_4000_B_1 = _BIG_TEXT_A_4000 + _B;
+	private static final String _BIG_TEXT_A_4000_B_1;
 
-	private static final String _BIG_TEXT_A_4001 = _BIG_TEXT_A_4000 + _A;
+	private static final String _BIG_TEXT_A_4001;
 
 	private static final String _SQL_CREATE_TABLE =
 		"create table TestCastClobText (id LONG not null primary key, " +
@@ -255,5 +252,23 @@ public class SQLTransformerCastClobTextOracleTest {
 				"= 0 ORDER BY id";
 
 	private static DB _db;
+
+	static {
+		char[] data = new char[3999];
+
+		Arrays.fill(data, CharPool.LOWER_CASE_A);
+
+		_BIG_TEXT_A_3999 = new String(data);
+
+		_BIG_TEXT_A_3999_B_1 = _BIG_TEXT_A_3999 + _B;
+
+		_BIG_TEXT_A_3999_B_2 = _BIG_TEXT_A_3999_B_1 + _B;
+
+		_BIG_TEXT_A_4000 = _BIG_TEXT_A_3999 + _A;
+
+		_BIG_TEXT_A_4000_B_1 = _BIG_TEXT_A_4000 + _B;
+
+		_BIG_TEXT_A_4001 = _BIG_TEXT_A_4000 + _A;
+	}
 
 }

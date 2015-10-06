@@ -257,23 +257,23 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 	protected void whenGetCardinality(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		int returnCardinality) {
+		int cardinality) {
 
 		when(
 			extendedAttributeDefinition.getCardinality()
 		).thenReturn(
-			returnCardinality
+			cardinality
 		);
 	}
 
 	protected void whenGetID(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		String returnID) {
+		String id) {
 
 		when(
 			extendedAttributeDefinition.getID()
 		).thenReturn(
-			returnID
+			id
 		);
 	}
 
@@ -290,23 +290,23 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 	protected void whenGetOptionValues(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		String[] returnOptionValues) {
+		String[] optionValues) {
 
 		when(
 			extendedAttributeDefinition.getOptionValues()
 		).thenReturn(
-			returnOptionValues
+			optionValues
 		);
 	}
 
 	protected void whenGetType(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		int returnType) {
+		int type) {
 
 		when(
 			extendedAttributeDefinition.getType()
 		).thenReturn(
-			returnType
+			type
 		);
 	}
 

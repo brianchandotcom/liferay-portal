@@ -346,67 +346,67 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 	protected void whenGetCardinality(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		int returnCardinality) {
+		int cardinality) {
 
 		when(
 			extendedAttributeDefinition.getCardinality()
 		).thenReturn(
-			returnCardinality
+			cardinality
 		);
 	}
 
 	protected void whenGetDefaultValue(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		String[] returnDefaultValue) {
+		String[] defaultValue) {
 
 		when(
 			extendedAttributeDefinition.getDefaultValue()
 		).thenReturn(
-			returnDefaultValue
+			defaultValue
 		);
 	}
 
 	protected void whenGetID(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		String returnID) {
+		String id) {
 
 		when(
 			extendedAttributeDefinition.getID()
 		).thenReturn(
-			returnID
+			id
 		);
 	}
 
 	protected void whenGetOptionLabels(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		String[] returnOptionLabels) {
+		String[] optionLabels) {
 
 		when(
 			extendedAttributeDefinition.getOptionLabels()
 		).thenReturn(
-			returnOptionLabels
+			optionLabels
 		);
 	}
 
 	protected void whenGetOptionValues(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		String[] returnOptionValues) {
+		String[] optionValues) {
 
 		when(
 			extendedAttributeDefinition.getOptionValues()
 		).thenReturn(
-			returnOptionValues
+			optionValues
 		);
 	}
 
 	protected void whenGetProperties(
 		Configuration configuration,
-		Dictionary<String, Object> returnProperties) {
+		Dictionary<String, Object> properties) {
 
 		when(
 			configuration.getProperties()
 		).thenReturn(
-			returnProperties
+			properties
 		);
 	}
 

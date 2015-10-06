@@ -53,7 +53,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
@@ -73,7 +75,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
 
 		<execute macro="UserGroup#addCP">
 			<var name="userGroupName" value="${userGroupName}" />
@@ -95,7 +99,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 	</command>

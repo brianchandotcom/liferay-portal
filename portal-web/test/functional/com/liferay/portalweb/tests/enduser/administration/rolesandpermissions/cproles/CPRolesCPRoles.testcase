@@ -52,7 +52,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
@@ -72,7 +74,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName1}" />
@@ -95,7 +99,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 	</command>
@@ -133,7 +139,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
@@ -153,7 +161,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName1}" />
@@ -175,7 +185,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 	</command>
@@ -214,7 +226,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
@@ -234,7 +248,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName1}" />
@@ -257,7 +273,9 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 	</command>

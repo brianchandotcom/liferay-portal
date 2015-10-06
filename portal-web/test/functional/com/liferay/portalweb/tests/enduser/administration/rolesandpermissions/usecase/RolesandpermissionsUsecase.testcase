@@ -160,7 +160,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -262,7 +264,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
 

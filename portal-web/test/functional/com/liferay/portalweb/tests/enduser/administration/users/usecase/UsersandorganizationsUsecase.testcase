@@ -686,7 +686,9 @@
 			<var name="userEmailAddress" value="userea1@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
 
 		<execute macro="User#deactivateCP">
 			<var name="deactivateType" value="Actions" />
@@ -694,7 +696,9 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
 
 		<execute macro="User#activateCP">
 			<var name="userFirstName" value="userfn2" />

@@ -39,15 +39,6 @@ if (resourceClassNameId == 0) {
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteTemplate");
-portletURL.setParameter("mvcPath", "/view_template.jsp");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("classNameId", String.valueOf(classNameId));
-portletURL.setParameter("classPK", String.valueOf(classPK));
-portletURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
-
 boolean controlPanel = false;
 
 if (layout != null) {
@@ -56,16 +47,26 @@ if (layout != null) {
 	controlPanel = group.isControlPanel();
 }
 
-TemplateSearch templateSearch = new TemplateSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
+PortletURL portletURL = renderResponse.createRenderURL();
+
+TemplateSearch templateSearch = new TemplateSearch(renderRequest, portletURL);
 
 TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.getSearchTerms();
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+<portlet:actionURL name="deleteTemplate" var="deleteTemplateURL">
+	<portlet:param name="mvcPath" value="/view_template.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteTemplateURL.toString() %>" method="post" name="fm">
+	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
+	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="deleteTemplateIds" type="hidden" />
+	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
+	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
+	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 
 	<%
 	String orderByCol = ParamUtil.getString(request, "orderByCol");

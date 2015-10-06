@@ -1455,8 +1455,8 @@
 
 		<execute function="SelectWindow" locator1="title=Welcome - Liferay" />
 
-		<execute function="AssertElementPresent" locator1="ControlMenu#IMPERSONATE_USER_ICON" />
-		<execute function="AssertClick" locator1="ControlMenu#IMPERSONATE_USER_ICON" />
+		<execute function="AssertElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
 		<execute function="AssertElementPresent" locator1="Message#INFO" />
 	</command>
 

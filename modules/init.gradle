@@ -1,5 +1,49 @@
+import org.gradle.internal.hash.HashUtil
+import org.gradle.internal.hash.HashValue
+
 if (System.getenv("JENKINS_HOME")) {
 	System.setProperty "http.proxyHost", "squid.lax.liferay.com"
 	System.setProperty "http.proxyPort", "3128"
 	System.setProperty "repository.url", "http://repository.liferay.com/nexus/content/groups/public"
+}
+
+if (System.getProperty("line.separator") != "\n") {
+	gradle.buildFinished {
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
+
+		exec {
+			commandLine "git", "ls-files", "--exclude-standard", "--others"
+			standardOutput = byteArrayOutputStream
+			workingDir = gradle.gradleUserHomeDir
+		}
+
+		String output = byteArrayOutputStream.toString()
+
+		List<String> fileNames = output.readLines()
+
+		fileNames.retainAll {
+			it.endsWith ".pom"
+		}
+
+		fileNames.each {
+			String pomFileName ->
+
+			File pomFile = new File(gradle.gradleUserHomeDir, pomFileName)
+
+			rootProject.ant.fixcrlf encoding: "UTF-8", eol: "lf", file: pomFile, fixlast: false
+
+			HashValue hashValue = HashUtil.sha1(pomFile)
+
+			String hash = hashValue.asHexString()
+			File hashDir = pomFile.parentFile
+
+			if (hashDir.name != hash) {
+				boolean success = hashDir.renameTo new File(hashDir.parentFile, hash)
+
+				if (!success) {
+					delete hashDir
+				}
+			}
+		}
+	}
 }

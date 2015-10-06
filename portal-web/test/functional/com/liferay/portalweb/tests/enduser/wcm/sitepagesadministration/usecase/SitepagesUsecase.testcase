@@ -602,7 +602,7 @@
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageBodyClosing" value="http://localhost" />
 			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
-			<var name="gmailMessageTitle" value="message-boards-home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">
@@ -826,7 +826,7 @@
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageBodyClosing" value="http://localhost" />
 			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
-			<var name="gmailMessageTitle" value="message-boards-home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">
@@ -1067,7 +1067,7 @@
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageBodyClosing" value="http://localhost" />
 			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
-			<var name="gmailMessageTitle" value="message-boards-home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">

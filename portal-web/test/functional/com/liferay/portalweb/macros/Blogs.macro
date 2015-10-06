@@ -54,6 +54,24 @@
 		<execute macro="BlogsEntry#publish" />
 	</command>
 
+	<command name="addEntryWithPermissions">
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<execute macro="BlogsEntry#entryAddPermissions">
+			<var name="viewableBy" value="${viewableBy}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
 	<command name="addEntryWithTag">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
@@ -88,24 +106,6 @@
 				<var name="tagName" value="${tagName}" />
 			</execute>
 		</for>
-
-		<execute macro="BlogsEntry#publish" />
-	</command>
-
-	<command name="addEntryWithPermissions">
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySubtitle" value="${entrySubtitle}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoSettings" />
-
-		<execute macro="BlogsEntry#entryAddPermissions">
-			<var name="viewableBy" value="${viewableBy}" />
-		</execute>
 
 		<execute macro="BlogsEntry#publish" />
 	</command>

@@ -175,7 +175,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String facebookSn = ParamUtil.getString(actionRequest, "facebookSn");
 		String icqSn = ParamUtil.getString(actionRequest, "icqSn");
 		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
-		String msnSn = ParamUtil.getString(actionRequest, "msnSn");
 		String mySpaceSn = ParamUtil.getString(actionRequest, "mySpaceSn");
 		String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
 		String twitterSn = ParamUtil.getString(actionRequest, "twitterSn");
@@ -222,7 +221,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				languageId, timeZoneId, greeting, comments, firstName,
 				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 				birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn,
-				jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
+				jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
 				groupIds, organizationIds, roleIds, userGroupRoles,
 				userGroupIds, addresses, emailAddresses, phones, websites,
 				announcementsDeliveries, serviceContext);
@@ -658,7 +657,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String icqSn = BeanParamUtil.getString(contact, actionRequest, "icqSn");
 		String jabberSn = BeanParamUtil.getString(
 			contact, actionRequest, "jabberSn");
-		String msnSn = BeanParamUtil.getString(contact, actionRequest, "msnSn");
 		String mySpaceSn = BeanParamUtil.getString(
 			contact, actionRequest, "mySpaceSn");
 		String skypeSn = BeanParamUtil.getString(
@@ -705,9 +703,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			portraitBytes, languageId, timeZoneId, greeting, comments,
 			firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
-			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
-			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
-			userGroupIds, addresses, emailAddresses, phones, websites,
+			icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
+			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
+			addresses, emailAddresses, phones, websites,
 			announcementsDeliveries, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {

@@ -67,8 +67,8 @@ public class AdminUtil {
 			String emailAddress, long facebookId, String openId,
 			String languageId, String timeZoneId, String greeting,
 			String comments, String smsSn, String aimSn, String facebookSn,
-			String icqSn, String jabberSn, String msnSn, String mySpaceSn,
-			String skypeSn, String twitterSn, String ymSn)
+			String icqSn, String jabberSn, String mySpaceSn, String skypeSn,
+			String twitterSn, String ymSn)
 		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
@@ -77,8 +77,7 @@ public class AdminUtil {
 		return updateUser(
 			request, userId, screenName, emailAddress, facebookId, openId,
 			languageId, timeZoneId, greeting, comments, smsSn, aimSn,
-			facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn,
-			ymSn);
+			facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn);
 	}
 
 	public static User updateUser(
@@ -86,8 +85,8 @@ public class AdminUtil {
 			String emailAddress, long facebookId, String openId,
 			String languageId, String timeZoneId, String greeting,
 			String comments, String smsSn, String aimSn, String facebookSn,
-			String icqSn, String jabberSn, String msnSn, String mySpaceSn,
-			String skypeSn, String twitterSn, String ymSn)
+			String icqSn, String jabberSn, String mySpaceSn, String skypeSn,
+			String twitterSn, String ymSn)
 		throws PortalException {
 
 		String password = getUpdateUserPassword(request, userId);
@@ -119,9 +118,9 @@ public class AdminUtil {
 			contact.getFirstName(), contact.getMiddleName(),
 			contact.getLastName(), contact.getPrefixId(), contact.getSuffixId(),
 			contact.isMale(), birthdayMonth, birthdayDay, birthdayYear, smsSn,
-			aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn,
-			twitterSn, ymSn, contact.getJobTitle(), groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, serviceContext);
+			aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn,
+			ymSn, contact.getJobTitle(), groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, serviceContext);
 	}
 
 }

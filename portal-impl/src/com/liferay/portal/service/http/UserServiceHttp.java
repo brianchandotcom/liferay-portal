@@ -1816,11 +1816,10 @@ public class UserServiceHttp {
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds,
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
 		java.util.List<com.liferay.portal.model.Address> addresses,
@@ -1841,11 +1840,10 @@ public class UserServiceHttp {
 					languageId, timeZoneId, greeting, comments, firstName,
 					middleName, lastName, prefixId, suffixId, male,
 					birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn,
-					facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn,
-					twitterSn, ymSn, jobTitle, groupIds, organizationIds,
-					roleIds, userGroupRoles, userGroupIds, addresses,
-					emailAddresses, phones, websites, announcementsDelivers,
-					serviceContext);
+					facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn,
+					ymSn, jobTitle, groupIds, organizationIds, roleIds,
+					userGroupRoles, userGroupIds, addresses, emailAddresses,
+					phones, websites, announcementsDelivers, serviceContext);
 
 			Object returnObj = null;
 
@@ -1882,11 +1880,10 @@ public class UserServiceHttp {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds,
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
 		java.util.List<com.liferay.portal.model.Address> addresses,
@@ -1907,9 +1904,9 @@ public class UserServiceHttp {
 					greeting, comments, firstName, middleName, lastName,
 					prefixId, suffixId, male, birthdayMonth, birthdayDay,
 					birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
-					msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
-					groupIds, organizationIds, roleIds, userGroupRoles,
-					userGroupIds, addresses, emailAddresses, phones, websites,
+					mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
+					organizationIds, roleIds, userGroupRoles, userGroupIds,
+					addresses, emailAddresses, phones, websites,
 					announcementsDelivers, serviceContext);
 
 			Object returnObj = null;
@@ -1947,11 +1944,10 @@ public class UserServiceHttp {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds,
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1967,9 +1963,9 @@ public class UserServiceHttp {
 					greeting, comments, firstName, middleName, lastName,
 					prefixId, suffixId, male, birthdayMonth, birthdayDay,
 					birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
-					msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
-					groupIds, organizationIds, roleIds, userGroupRoles,
-					userGroupIds, serviceContext);
+					mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
+					organizationIds, roleIds, userGroupRoles, userGroupIds,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -2218,11 +2214,10 @@ public class UserServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, long[].class, long[].class, long[].class,
-			java.util.List.class, long[].class, java.util.List.class,
+			java.lang.String.class, java.lang.String.class, long[].class,
+			long[].class, long[].class, java.util.List.class, long[].class,
 			java.util.List.class, java.util.List.class, java.util.List.class,
-			java.util.List.class,
+			java.util.List.class, java.util.List.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateUserParameterTypes55 = new Class[] {
@@ -2239,10 +2234,10 @@ public class UserServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, long[].class,
-			long[].class, long[].class, java.util.List.class, long[].class,
+			java.lang.String.class, long[].class, long[].class, long[].class,
+			java.util.List.class, long[].class, java.util.List.class,
 			java.util.List.class, java.util.List.class, java.util.List.class,
-			java.util.List.class, java.util.List.class,
+			java.util.List.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateUserParameterTypes56 = new Class[] {
@@ -2259,8 +2254,8 @@ public class UserServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, long[].class,
-			long[].class, long[].class, java.util.List.class, long[].class,
+			java.lang.String.class, long[].class, long[].class, long[].class,
+			java.util.List.class, long[].class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

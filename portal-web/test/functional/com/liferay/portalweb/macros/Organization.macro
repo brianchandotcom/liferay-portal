@@ -633,7 +633,7 @@
 	</command>
 
 	<command name="viewMembersNotFoundCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This organization does not have any users. " />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This organization does not have any users." />
 	</command>
 
 	<command name="viewParentOrganizationCP">

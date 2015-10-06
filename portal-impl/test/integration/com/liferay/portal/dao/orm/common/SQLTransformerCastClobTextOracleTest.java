@@ -14,15 +14,9 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
@@ -38,6 +32,7 @@ import java.nio.CharBuffer;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -197,36 +192,35 @@ public class SQLTransformerCastClobTextOracleTest {
 	private List<String> runSelect(String data1, String data2)
 		throws Exception {
 
-		Session session = null;
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				SQLTransformer.transform(_SQL_SELECT_COMPARE_STRINGS))) {
 
-		try {
-			session = _sessionFactory.openSession();
+			Clob clob1 = connection.createClob();
 
-			Query q = session.createSynchronizedSQLQuery(
-				_SQL_SELECT_COMPARE_STRINGS);
+			clob1.setString(1, data1);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			preparedStatement.setClob(1, clob1);
 
-			qPos.add(data1);
+			Clob clob2 = connection.createClob();
 
-			qPos.add(data2);
+			clob2.setString(1, data2);
 
-			List<Clob> clobs = (List<Clob>)QueryUtil.list(
-				q, _sessionFactory.getDialect(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, false);
+			preparedStatement.setClob(2, clob2);
 
-			List<String> dataStrings = new ArrayList<>(clobs.size());
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				List<String> dataStrings = new ArrayList<>();
 
-			for (Clob clob : clobs) {
-				try (InputStream inputStream = clob.getAsciiStream()) {
-					dataStrings.add(StringUtil.read(inputStream));
+				while (resultSet.next()) {
+					Clob clob = resultSet.getClob(1);
+
+					try (InputStream inputStream = clob.getAsciiStream()) {
+						dataStrings.add(StringUtil.read(inputStream));
+					}
 				}
-			}
 
-			return dataStrings;
-		}
-		finally {
-			_sessionFactory.closeSession(session);
+				return dataStrings;
+			}
 		}
 	}
 
@@ -257,12 +251,9 @@ public class SQLTransformerCastClobTextOracleTest {
 
 	private static final String _SQL_SELECT_COMPARE_STRINGS =
 		"SELECT data FROM TestCastClobText WHERE " +
-			"DBMS_LOB.COMPARE(CAST_CLOB_TEXT(TestCastClobText.data), " +
-				" to_clob(?) || to_clob(?)) = 0";
+			"DBMS_LOB.COMPARE(CAST_CLOB_TEXT(TestCastClobText.data), ? || ?) " +
+				"= 0";
 
 	private static DB _db;
-
-	private final SessionFactory _sessionFactory =
-		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
 
 }

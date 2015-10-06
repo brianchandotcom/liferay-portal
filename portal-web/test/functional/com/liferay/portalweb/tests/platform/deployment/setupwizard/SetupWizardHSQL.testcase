@@ -60,23 +60,6 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command name="HSQLtoHSQL" priority="4">
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.hypersonic.password" />
-			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hypersonic.username" />
-			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
-			<var name="jdbcURL" property-value="database.hypersonic.url" />
-		</execute>
-
-		<execute macro="Smoke#viewWelcomePage" />
-
-		<execute macro="Smoke#runSmoke" />
-	</command>
-
 	<command name="HSQLtoHSQLLportal1" priority="4">
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
@@ -131,29 +114,6 @@
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
-
-		<execute macro="Smoke#runSmoke" />
-	</command>
-
-	<command name="HSQLtoMySQL" priority="4">
-		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=mysql -Ddelete.liferay.home=false" />
-
-		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-			<var name="databaseName" value="lportal1" />
-			<var name="databasePassword" property-value="database.mysql.password" />
-			<var name="databaseType" value="MySQL" />
-			<var name="databaseUserName" property-value="database.mysql.username" />
-			<var name="jdbcDriverClassName" property-value="database.mysql.driver" />
-			<var name="jdbcURL" property-value="database.mysql.url" />
-		</execute>
-
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Joe" />
-			<var name="userLastName" value="Bloggs" />
-		</execute>
 
 		<execute macro="Smoke#runSmoke" />
 	</command>

@@ -192,13 +192,6 @@
 		</if>
 
 		<if>
-			<isset var="userInstantMessengerWindowsLiveMessenger" />
-			<then>
-				<execute function="Type" locator1="TextInput#WINDOWS_LIVE_MESSENGER" value1="${userInstantMessengerWindowsLiveMessenger}" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="userInstantMessengerYM" />
 			<then>
 				<execute function="Type" locator1="TextInput#YM" value1="${userInstantMessengerYM}" />

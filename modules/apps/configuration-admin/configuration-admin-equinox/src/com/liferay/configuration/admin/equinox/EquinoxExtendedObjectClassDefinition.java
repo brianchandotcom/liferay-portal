@@ -46,7 +46,7 @@ public class EquinoxExtendedObjectClassDefinition
 			throw new IllegalArgumentException(
 				"ObjectClassDefinition implementation " +
 					clazz.getName() + " does not implement " +
-					Extendable.class.getName());
+						Extendable.class.getName());
 		}
 
 		_extendable = (Extendable)objectClassDefinition;
@@ -78,7 +78,9 @@ public class EquinoxExtendedObjectClassDefinition
 
 	@Override
 	public Map<String, String> getExtensionAttributes(String uri) {
-		if (_extendable.getExtensionUris().contains(uri)) {
+		Set<String> extensionUris = _extendable.getExtensionUris();
+
+		if (extensionUris.contains(uri)) {
 			return _extendable.getExtensionAttributes(uri);
 		}
 

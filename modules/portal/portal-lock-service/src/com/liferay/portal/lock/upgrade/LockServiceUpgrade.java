@@ -30,10 +30,6 @@ public class LockServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		if (true) {
-			return;
-		}
-
 		registry.register(
 			"com.liferay.portal.lock.service", "0.0.1", "1.0.0",
 			Collections.<UpgradeStep>singleton(new UpgradeLock()));

@@ -35,8 +35,8 @@ import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationC
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
+import com.liferay.portlet.exportimport.service.ExportImportService;
 
 import java.io.Serializable;
 
@@ -50,6 +50,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -105,13 +106,13 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
+				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						themeDisplay.getUserId(), taskName,
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 						exportLayoutSettingsMap);
 
-			ExportImportServiceUtil.exportLayoutsAsFileInBackground(
+			_exportImportService.exportLayoutsAsFileInBackground(
 				exportImportConfiguration);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -154,7 +155,27 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			new ArrayList<Layout>(layouts));
 	}
 
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	@Reference
+	protected void setExportImportService(
+		ExportImportService exportImportService) {
+
+		_exportImportService = exportImportService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportLayoutsMVCActionCommand.class);
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+	private ExportImportService _exportImportService;
 
 }

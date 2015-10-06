@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -178,7 +179,7 @@ public class PortletDataContextFactoryImpl
 		PortletDataContext portletDataContext = new PortletDataContextImpl();
 
 		try {
-			Group companyGroup = GroupLocalServiceUtil.fetchCompanyGroup(
+			Group companyGroup = _groupLocalService.fetchCompanyGroup(
 				companyId);
 
 			if (companyGroup != null) {
@@ -197,7 +198,7 @@ public class PortletDataContextFactoryImpl
 
 		try {
 			Group userPersonalSiteGroup =
-				GroupLocalServiceUtil.fetchUserPersonalSiteGroup(companyId);
+				_groupLocalService.fetchUserPersonalSiteGroup(companyId);
 
 			if (userPersonalSiteGroup != null) {
 				portletDataContext.setUserPersonalSiteGroupId(
@@ -255,6 +256,11 @@ public class PortletDataContextFactoryImpl
 			sourceUserPersonalSiteGroupId);
 	}
 
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	protected void validateDateRange(Date startDate, Date endDate)
 		throws PortletDataException {
 
@@ -286,5 +292,7 @@ public class PortletDataContextFactoryImpl
 			}
 		}
 	}
+
+	private GroupLocalService _groupLocalService;
 
 }

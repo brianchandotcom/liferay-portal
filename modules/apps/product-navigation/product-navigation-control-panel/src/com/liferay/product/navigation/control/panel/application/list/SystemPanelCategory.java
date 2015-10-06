@@ -38,7 +38,7 @@ public class SystemPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-cog";
+		return "icon-hdd";
 	}
 
 	@Override

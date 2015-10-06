@@ -114,6 +114,7 @@ public class AnnotationsExtendedObjectClassDefinition
 	private void _loadConfigurationBeanClass(Bundle bundle) {
 		try {
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
 			_configurationBeanClass = classLoader.loadClass(

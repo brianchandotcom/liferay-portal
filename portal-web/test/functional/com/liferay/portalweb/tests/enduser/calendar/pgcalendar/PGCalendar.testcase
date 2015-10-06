@@ -613,6 +613,10 @@
 			<var name="user" value="Test Test" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="LAR#exportPortlet">
 			<var name="larFileName" value="calendar_calendar_with_comments.portlet.lar" />
 			<var name="portletName" value="Calendar" />

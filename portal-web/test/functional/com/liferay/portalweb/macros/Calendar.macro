@@ -56,6 +56,17 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
+	<command name="_viewEmailHeader">
+		<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
+		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#HEADER_TITLE" value1="${header}" />
+
+		<execute function="AssertClick" locator1="CalendarEditCalendar#NAVIGATION_NOTIFICATION_TEMPLATES_TAB" value1="Notification Templates" />
+
+		<var name="key_calendarName" value="${header}" />
+
+		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#NOTIFICATION_TEMPLATES_HEADER_TITLE" value1="${header}" />
+	</command>
+
 	<command name="_viewPermissionsIframe">
 		<execute function="AssertTextEquals" locator1="CalendarPermissions#HEADER_TITLE" value1="${calendarName}" />
 
@@ -271,6 +282,10 @@
 				<execute macro="Calendar#_gotoMenulistOption">
 					<var name="menuListOption" value="Calendar Settings" />
 				</execute>
+
+				<execute macro="Calendar#_viewEmailHeader">
+					<var name="header" value="${user} - ${calendarName}" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
@@ -284,6 +299,10 @@
 					<execute macro="Calendar#_gotoMenulistOption">
 						<var name="menuListOption" value="Calendar Settings" />
 					</execute>
+
+					<execute macro="Calendar#_viewEmailHeader">
+						<var name="header" value="${site} - ${calendarName}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -293,16 +312,18 @@
 						<var name="calendarName" value="${calendarName}" />
 						<var name="menuListOption" value="Calendar Settings" />
 					</execute>
+
+					<execute macro="Calendar#_viewEmailHeader">
+						<var name="header" value="${calendarName}" />
+					</execute>
 				</then>
 			</elseif>
+			<else>
+				<execute macro="Calendar#_viewEmailHeader">
+					<var name="header" value="${calendarName}" />
+				</execute>
+			</else>
 		</if>
-
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
-		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#HEADER_TITLE" value1="${calendarName}" />
-		<execute function="AssertClick" locator1="CalendarEditCalendar#NAVIGATION_NOTIFICATION_TEMPLATES_TAB" value1="Notification Templates" />
-		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#NOTIFICATION_TEMPLATES_HEADER_TITLE" value1="${calendarName}" />
 
 		<execute function="Pause" locator1="5000" />
 

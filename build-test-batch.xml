@@ -934,9 +934,7 @@
 
 	<macrodef name="run-source-formatter">
 		<sequential>
-			<antcall target="test-package" inheritAll="false">
-				<param name="test.package" value="com.liferay.source.formatter" />
-			</antcall>
+			<gradle-execute dir="modules/util/source-formatter" task="test" />
 		</sequential>
 	</macrodef>
 

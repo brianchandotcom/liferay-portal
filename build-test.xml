@@ -7045,8 +7045,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<ant dir="portal-impl" target="test-package" inheritAll="false" />
 
 		<ant dir="util-java" target="test-package" inheritAll="false" />
-
-		<ant dir="modules" target="test-package" inheritAll="false" />
 	</target>
 
 	<target name="test-unit">
@@ -7055,8 +7053,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<ant dir="portal-impl" target="test-unit" inheritAll="false" />
 
 		<ant dir="util-java" target="test-unit" inheritAll="false" />
-
-		<ant dir="modules" target="test-unit" inheritAll="false" />
 	</target>
 
 	<target name="wait-for-plugins-deployment">

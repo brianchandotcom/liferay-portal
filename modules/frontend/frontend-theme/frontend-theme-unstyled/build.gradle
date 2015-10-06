@@ -1,6 +1,5 @@
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 dependencies {
@@ -61,8 +60,6 @@ buildLexicon {
 		delete lexiconDestinationDir
 	}
 
-	eachFile new ReplaceLeadingPathAction("scss": "", "fonts" : "fonts")
-
 	eachFile {
 		if (name in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
 			filter {
@@ -104,7 +101,12 @@ buildLexicon {
 		}
 	}
 
+	filesMatching "scss/**", new StripPathSegmentsAction(1)
 	from zipTree(lexiconZipFile)
+
+	include "fonts/**"
+	include "scss/**"
+
 	includeEmptyDirs = false
 	into lexiconDestinationDir
 

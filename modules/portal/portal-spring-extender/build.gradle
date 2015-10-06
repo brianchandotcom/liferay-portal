@@ -7,8 +7,7 @@ dependencies {
 	compile group: "org.springframework", name: "spring-context", version: "3.2.10.RELEASE"
 	compile group: "org.springframework", name: "spring-orm", version: "3.2.10.RELEASE"
 	compile project(":portal:portal-upgrade")
-}
-	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 }
 

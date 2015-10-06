@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,14 +46,14 @@ import org.junit.Test;
 
 /**
  * @author Daniel Sanz
+ * @author Shuyang Zhou
  */
 public class SQLTransformerCastClobTextOracleTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

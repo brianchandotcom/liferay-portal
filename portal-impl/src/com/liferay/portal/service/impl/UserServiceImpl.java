@@ -1780,7 +1780,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  facebookSn the user's new Facebook screen name
 	 * @param  icqSn the user's new ICQ screen name
 	 * @param  jabberSn the user's new Jabber screen name
-	 * @param  msnSn the user's new MSN screen name
 	 * @param  mySpaceSn the user's new MySpace screen name
 	 * @param  skypeSn the user's new Skype screen name
 	 * @param  twitterSn the user's new Twitter screen name
@@ -1818,12 +1817,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String lastName, long prefixId, long suffixId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
 			String aimSn, String facebookSn, String icqSn, String jabberSn,
-			String msnSn, String mySpaceSn, String skypeSn, String twitterSn,
-			String ymSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
-			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
+			String mySpaceSn, String skypeSn, String twitterSn, String ymSn,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, List<UserGroupRole> userGroupRoles,
+			long[] userGroupIds, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<Phone> phones,
+			List<Website> websites,
 			List<AnnouncementsDelivery> announcementsDelivers,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -2063,10 +2062,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			emailAddress, facebookId, openId, portrait, portraitBytes,
 			languageId, timeZoneId, greeting, comments, firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
-			mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupRoles, userGroupIds,
-			serviceContext);
+			birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn,
+			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupRoles, userGroupIds, serviceContext);
 
 		if (!addGroupIds.isEmpty() || !removeGroupIds.isEmpty()) {
 			SiteMembershipPolicyUtil.propagateMembership(
@@ -2150,7 +2148,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param      facebookSn the user's new Facebook screen name
 	 * @param      icqSn the user's new ICQ screen name
 	 * @param      jabberSn the user's new Jabber screen name
-	 * @param      msnSn the user's new MSN screen name
 	 * @param      mySpaceSn the user's new MySpace screen name
 	 * @param      skypeSn the user's new Skype screen name
 	 * @param      twitterSn the user's new Twitter screen name
@@ -2195,8 +2192,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String middleName, String lastName, long prefixId, long suffixId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String smsSn, String aimSn, String facebookSn, String icqSn,
-			String jabberSn, String msnSn, String mySpaceSn, String skypeSn,
-			String twitterSn, String ymSn, String jobTitle, long[] groupIds,
+			String jabberSn, String mySpaceSn, String skypeSn, String twitterSn,
+			String ymSn, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
@@ -2211,10 +2208,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDelivers, serviceContext);
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
+			twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
+			websites, announcementsDelivers, serviceContext);
 	}
 
 	/**
@@ -2253,7 +2250,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  facebookSn the user's new Facebook screen name
 	 * @param  icqSn the user's new ICQ screen name
 	 * @param  jabberSn the user's new Jabber screen name
-	 * @param  msnSn the user's new MSN screen name
 	 * @param  mySpaceSn the user's new MySpace screen name
 	 * @param  skypeSn the user's new Skype screen name
 	 * @param  twitterSn the user's new Twitter screen name
@@ -2285,8 +2281,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String middleName, String lastName, long prefixId, long suffixId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String smsSn, String aimSn, String facebookSn, String icqSn,
-			String jabberSn, String msnSn, String mySpaceSn, String skypeSn,
-			String twitterSn, String ymSn, String jobTitle, long[] groupIds,
+			String jabberSn, String mySpaceSn, String skypeSn, String twitterSn,
+			String ymSn, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			ServiceContext serviceContext)
@@ -2298,9 +2294,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, null, null, null, null, null,
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
+			twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, null, null, null, null, null,
 			serviceContext);
 	}
 

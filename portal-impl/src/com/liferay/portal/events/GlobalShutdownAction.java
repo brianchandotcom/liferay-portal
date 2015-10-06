@@ -18,7 +18,6 @@ import com.liferay.portal.deploy.RequiredPluginsUtil;
 import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.im.AIMConnector;
 import com.liferay.portal.im.ICQConnector;
-import com.liferay.portal.im.MSNConnector;
 import com.liferay.portal.im.YMConnector;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -125,18 +124,6 @@ public class GlobalShutdownAction extends SimpleAction {
 			}
 
 			ICQConnector.disconnect();
-		}
-		catch (Exception e) {
-		}
-
-		// Instant messenger MSN
-
-		try {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Shutting down MSN");
-			}
-
-			MSNConnector.disconnect();
 		}
 		catch (Exception e) {
 		}

@@ -5147,7 +5147,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  facebookSn the user's new Facebook screen name
 	 * @param  icqSn the user's new ICQ screen name
 	 * @param  jabberSn the user's new Jabber screen name
-	 * @param  msnSn the user's new MSN screen name
 	 * @param  mySpaceSn the user's new MySpace screen name
 	 * @param  skypeSn the user's new Skype screen name
 	 * @param  twitterSn the user's new Twitter screen name
@@ -5179,11 +5178,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String lastName, long prefixId, long suffixId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
 			String aimSn, String facebookSn, String icqSn, String jabberSn,
-			String msnSn, String mySpaceSn, String skypeSn, String twitterSn,
-			String ymSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
-			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
-			ServiceContext serviceContext)
+			String mySpaceSn, String skypeSn, String twitterSn, String ymSn,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, List<UserGroupRole> userGroupRoles,
+			long[] userGroupIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		// User
@@ -5200,7 +5198,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		facebookSn = StringUtil.toLowerCase(facebookSn.trim());
 		icqSn = StringUtil.toLowerCase(icqSn.trim());
 		jabberSn = StringUtil.toLowerCase(jabberSn.trim());
-		msnSn = StringUtil.toLowerCase(msnSn.trim());
 		mySpaceSn = StringUtil.toLowerCase(mySpaceSn.trim());
 		skypeSn = StringUtil.toLowerCase(skypeSn.trim());
 		twitterSn = StringUtil.toLowerCase(twitterSn.trim());
@@ -5342,7 +5339,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setFacebookSn(facebookSn);
 		contact.setIcqSn(icqSn);
 		contact.setJabberSn(jabberSn);
-		contact.setMsnSn(msnSn);
 		contact.setMySpaceSn(mySpaceSn);
 		contact.setSkypeSn(skypeSn);
 		contact.setTwitterSn(twitterSn);
@@ -5476,7 +5472,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param      facebookSn the user's new Facebook screen name
 	 * @param      icqSn the user's new ICQ screen name
 	 * @param      jabberSn the user's new Jabber screen name
-	 * @param      msnSn the user's new MSN screen name
 	 * @param      mySpaceSn the user's new MySpace screen name
 	 * @param      skypeSn the user's new Skype screen name
 	 * @param      twitterSn the user's new Twitter screen name
@@ -5514,8 +5509,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String middleName, String lastName, long prefixId, long suffixId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String smsSn, String aimSn, String facebookSn, String icqSn,
-			String jabberSn, String msnSn, String mySpaceSn, String skypeSn,
-			String twitterSn, String ymSn, String jobTitle, long[] groupIds,
+			String jabberSn, String mySpaceSn, String skypeSn, String twitterSn,
+			String ymSn, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			ServiceContext serviceContext)
@@ -5527,9 +5522,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, serviceContext);
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
+			twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, serviceContext);
 	}
 
 	/**

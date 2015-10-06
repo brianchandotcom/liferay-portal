@@ -329,7 +329,6 @@ public class UserTestUtil {
 		String facebookSn = StringPool.BLANK;
 		String icqSn = StringPool.BLANK;
 		String jabberSn = StringPool.BLANK;
-		String msnSn = StringPool.BLANK;
 		String mySpaceSn = StringPool.BLANK;
 		String skypeSn = StringPool.BLANK;
 		String twitterSn = StringPool.BLANK;
@@ -347,9 +346,9 @@ public class UserTestUtil {
 			screenName, emailAddress, facebookId, openId, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, serviceContext);
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
+			twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, serviceContext);
 	}
 
 }

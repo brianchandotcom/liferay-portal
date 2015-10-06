@@ -54,22 +54,23 @@ public class AnnotationsExtendedObjectClassDefinition
 		ExtendedAttributeDefinition[] extendedAttributeDefinitions =
 			_extendedAttributeDefinitions.get(filter);
 
-		if (extendedAttributeDefinitions == null) {
-			AttributeDefinition[] attributeDefinitions =
-				_objectClassDefinition.getAttributeDefinitions(filter);
-
-			extendedAttributeDefinitions =
-				new ExtendedAttributeDefinition[attributeDefinitions.length];
-
-			for (int i = 0; i < attributeDefinitions.length; i++) {
-				extendedAttributeDefinitions[i] =
-					new AnnotationsExtendedAttributeDefinition(
-						_configurationBeanClass, attributeDefinitions[i]);
-			}
-
-			_extendedAttributeDefinitions.put(
-				filter, extendedAttributeDefinitions);
+		if (extendedAttributeDefinitions != null) {
+			return extendedAttributeDefinitions;
 		}
+
+		AttributeDefinition[] attributeDefinitions =
+			_objectClassDefinition.getAttributeDefinitions(filter);
+
+		extendedAttributeDefinitions =
+			new ExtendedAttributeDefinition[attributeDefinitions.length];
+
+		for (int i = 0; i < attributeDefinitions.length; i++) {
+			extendedAttributeDefinitions[i] =
+				new AnnotationsExtendedAttributeDefinition(
+					_configurationBeanClass, attributeDefinitions[i]);
+		}
+
+		_extendedAttributeDefinitions.put(filter, extendedAttributeDefinitions);
 
 		return extendedAttributeDefinitions;
 	}

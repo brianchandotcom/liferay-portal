@@ -82,12 +82,12 @@
 <!--CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX</td>
-	<td>//input[@value='125ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[@value='125VIEW']</td>
+	<td>//input[contains(@value,'VIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,12 +98,12 @@
 <!--CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_IMPERSONATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.UserIMPERSONATE']</td>
+	<td>//input[contains(@value,'UserIMPERSONATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.UserVIEW']</td>
+	<td>//input[contains(@value,'UserVIEW')]</td>
 	<td></td>
 </tr>
 <tr>

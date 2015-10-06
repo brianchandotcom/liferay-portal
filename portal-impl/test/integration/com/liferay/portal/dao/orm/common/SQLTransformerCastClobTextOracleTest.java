@@ -28,14 +28,18 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.InputStream;
 
 import java.nio.CharBuffer;
 
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -128,12 +132,12 @@ public class SQLTransformerCastClobTextOracleTest {
 	}
 
 	@Test
-	public void testSelectBigText_3999() {
+	public void testSelectBigText_3999() throws Exception {
 		checkResult(runSelect(_BIG_TEXT_A_3999), _BIG_TEXT_A_3999);
 	}
 
 	@Test
-	public void testSelectBigText_4000() {
+	public void testSelectBigText_4000() throws Exception {
 
 		// those match all rows sharing the first 4000 characters
 		// as CAST_CLOB_TEXT truncates data prior to comparison
@@ -148,7 +152,7 @@ public class SQLTransformerCastClobTextOracleTest {
 	}
 
 	@Test
-	public void testSelectBigText_4001() {
+	public void testSelectBigText_4001() throws Exception {
 
 		// those match nothing as CAST_CLOB_TEXT truncates data prior to
 		// comparison. Note this is intended behavior
@@ -167,7 +171,7 @@ public class SQLTransformerCastClobTextOracleTest {
 	}
 
 	@Test
-	public void testSelectText_1() {
+	public void testSelectText_1() throws Exception {
 
 		// matches nothing
 
@@ -182,26 +186,16 @@ public class SQLTransformerCastClobTextOracleTest {
 		List<String> expected = ListUtil.fromArray(expectedResult);
 
 		for (Object result : queryResult) {
-			Object[] cols = (Object[])result;
-
-			// data from the data DB column comes in 2 cols. Let's recompose it
-
-			String data = (String)cols[0];
-
-			if (cols[1] != null) {
-				data = data + (String)cols[1];
-			}
-
-			Assert.assertTrue(expected.contains(data));
+			Assert.assertTrue(expected.contains(result));
 		}
 	}
 
-	private List<?> runSelect(String data) {
+	private List<String> runSelect(String data) throws Exception {
 		return runSelect(data, StringPool.BLANK);
 	}
 
-	private List<?> runSelect(String data1, String data2) {
-		List<?> list = null;
+	private List<String> runSelect(String data1, String data2)
+		throws Exception {
 
 		Session session = null;
 
@@ -217,17 +211,23 @@ public class SQLTransformerCastClobTextOracleTest {
 
 			qPos.add(data2);
 
-			list = QueryUtil.list(
+			List<Clob> clobs = (List<Clob>)QueryUtil.list(
 				q, _sessionFactory.getDialect(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, false);
 
-			list = Collections.unmodifiableList(list);
+			List<String> dataStrings = new ArrayList<>(clobs.size());
+
+			for (Clob clob : clobs) {
+				try (InputStream inputStream = clob.getAsciiStream()) {
+					dataStrings.add(StringUtil.read(inputStream));
+				}
+			}
+
+			return dataStrings;
 		}
 		finally {
 			_sessionFactory.closeSession(session);
 		}
-
-		return list;
 	}
 
 	private static final Character _A = 'a';
@@ -256,13 +256,9 @@ public class SQLTransformerCastClobTextOracleTest {
 	private static final String _SQL_DROP_TABLE = "DROP TABLE TestCastClobText";
 
 	private static final String _SQL_SELECT_COMPARE_STRINGS =
-		"SELECT " +
-		" DBMS_LOB.SUBSTR(data, 4000, 1), DBMS_LOB.SUBSTR(data, 1, 4001) " +
-		"FROM " +
-		" TestCastClobText " +
-		"WHERE " +
-		" DBMS_LOB.COMPARE(CAST_CLOB_TEXT(TestCastClobText.data), " +
-		" to_clob(?) || to_clob(?)) = 0";
+		"SELECT data FROM TestCastClobText WHERE " +
+			"DBMS_LOB.COMPARE(CAST_CLOB_TEXT(TestCastClobText.data), " +
+				" to_clob(?) || to_clob(?)) = 0";
 
 	private static DB _db;
 

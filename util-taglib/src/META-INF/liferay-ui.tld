@@ -47,19 +47,19 @@
 		<tag-class>com.liferay.taglib.ui.AppViewEntryTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The path to an action JSP page.</description>
+			<description>The path to an action JSP page</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The service context of the <![CDATA[<code>actionJsp</code>]]>.</description>
+			<description>The service context of the <![CDATA[<code>actionJsp</code>]]></description>
 			<name>actionJspServletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Java class name for any categories added to the entry.</description>
+			<description>The Java class name for any categories added to the entry</description>
 			<name>assetCategoryClassName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -71,7 +71,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Java class name for any tags added to the entry.</description>
+			<description>The Java class name for any tags added to the entry</description>
 			<name>assetTagClassName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -83,7 +83,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the entry's author.</description>
+			<description>The name of the entry's author</description>
 			<name>author</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -95,13 +95,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The date the entry was created.</description>
+			<description>The date the entry was created</description>
 			<name>createDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the component.</description>
+			<description>A CSS class for styling the component</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -114,13 +114,13 @@
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
-			<description>A description of the entry.</description>
+			<description>A description of the entry</description>
 			<name>description</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A date to display the entry.</description>
+			<description>A date to display the entry</description>
 			<name>displayDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -132,7 +132,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A date for the entry to expire and be automatically deleted.</description>
+			<description>A date for the entry to expire and be automatically deleted</description>
 			<name>expirationDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -157,13 +157,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The version number of the most recently published copy of the entry.</description>
+			<description>The version number of the most recently published copy of the entry</description>
 			<name>latestApprovedVersion</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The author of the most recently published version of the entry.</description>
+			<description>The author of the most recently published version of the entry</description>
 			<name>latestApprovedVersionAuthor</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -181,25 +181,25 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The date of the most recent modification to the entry.</description>
+			<description>The date of the most recent modification to the entry</description>
 			<name>modifiedDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The date the entry was reviewed.</description>
+			<description>The date the entry was reviewed</description>
 			<name>reviewDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A checkbox input ID to be used for the entry row checker.</description>
+			<description>A checkbox input ID to be used for the entry row checker</description>
 			<name>rowCheckerId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A name for the entry row checker.</description>
+			<description>A name for the entry row checker</description>
 			<name>rowCheckerName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -233,37 +233,37 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>A CSS style to be applied to the <![CDATA[<code>div</code>]]> containing the thumbnail for the entry.</description>
+			<description>A CSS style to be applied to the <![CDATA[<code>div</code>]]> containing the thumbnail for the entry</description>
 			<name>thumbnailDivStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The source URL for an entry thumbnail image.</description>
+			<description>The source URL for an entry thumbnail image</description>
 			<name>thumbnailSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS style to be applied to the thumbnail for the entry.</description>
+			<description>A CSS style to be applied to the thumbnail for the entry</description>
 			<name>thumbnailStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A title for the entry.</description>
+			<description>A title for the entry</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A URL to view the full entry.</description>
+			<description>A URL to view the full entry</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The current version of the entry.</description>
+			<description>The current version of the entry</description>
 			<name>version</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -275,13 +275,13 @@
 		<tag-class>com.liferay.taglib.ui.AppViewNavigationEntryTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The path for an action JSP page.</description>
+			<description>The path for an action JSP page</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the component.</description>
+			<description>A CSS class for styling the component</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -294,32 +294,32 @@
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
-			<description>A title for the component.</description>
+			<description>A title for the component</description>
 			<name>entryTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for setting the icon of the component.</description>
+			<description>A CSS class for setting the icon of the component</description>
 			<name>iconImage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>iconImage</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>iconImage</code>]]></description>
 			<name>iconSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the entry is selected.</description>
+			<description>Whether the entry is selected</description>
 			<name>selected</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A URL to view the entry.</description>
+			<description>A URL to view the entry</description>
 			<name>viewURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -345,7 +345,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The file path for a search JSP page.</description>
+			<description>The file path for a search JSP page</description>
 			<name>searchJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -374,7 +374,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, with no direct replacement.</description>
+			<description>Deprecated as of 7.0.0, with no direct replacement</description>
 			<name>containerIcon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -386,7 +386,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, with no direct replacement.</description>
+			<description>Deprecated as of 7.0.0, with no direct replacement</description>
 			<name>containerSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1300,7 +1300,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, with no direct replacement.</description>
+			<description>Deprecated as of 7.0.0, with no direct replacement</description>
 			<name>redirect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1637,13 +1637,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of each category in the form.</description>
+			<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>FormNavigatorCategory</code>]]> implementations. List the name of each category within the navigator.</description>
 			<name>categoryNames</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of each section within a category.</description>
+			<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>FormNavigatorEntry</code>]]> implementations. List the name of each section within the category.</description>
 			<name>categorySections</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1655,12 +1655,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The bean edited in the form</description>
 			<name>formModelBean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A name for the form.</description>
+			<description>A name for the form</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1678,12 +1679,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>An ID for the component instance. It's referenced by the navigator's categories and sections.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A path to the <![CDATA[<code>formSection.jsp</code>]]> file's folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
+			<description>Deprecated as of 7.0.0. This is a path to the <![CDATA[<code>formSection.jsp</code>]]> file's folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
 			<name>jspPath</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2396,7 +2398,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>editorName</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>editorName</code>]]></description>
 			<name>editorImpl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2429,7 +2431,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>contents</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>contents</code>]]></description>
 			<name>initMethod</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4708,13 +4710,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 6.2.0, replaced by the <![CDATA[<code>liferay-aui:search-container</code>]]> attribute <![CDATA[<code>total</code>]]>.</description>
+			<description>Deprecated as of 6.2.0, replaced by the <![CDATA[<code>liferay-aui:search-container</code>]]> attribute <![CDATA[<code>total</code>]]></description>
 			<name>total</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 6.2.0, replaced by the <![CDATA[<code>liferay-aui:search-container</code>]]> attribute <![CDATA[<code>totalVar</code>]]>.</description>
+			<description>Deprecated as of 6.2.0, replaced by the <![CDATA[<code>liferay-aui:search-container</code>]]> attribute <![CDATA[<code>totalVar</code>]]></description>
 			<name>totalVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5026,13 +5028,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>feedURL</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>feedURL</code>]]></description>
 			<name>feedLink</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>feedURLMessage</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>feedURLMessage</code>]]></description>
 			<name>feedLinkMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5323,19 +5325,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]></description>
 			<name>url0</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]></description>
 			<name>url1</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]></description>
 			<name>url2</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5353,7 +5355,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]></description>
 			<name>url5</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5371,13 +5373,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]></description>
 			<name>url8</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]></description>
 			<name>url9</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5633,7 +5635,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, with no direct replacement.</description>
+			<description>Deprecated as of 7.0.0, with no direct replacement</description>
 			<name>redirect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

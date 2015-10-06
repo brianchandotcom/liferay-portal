@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.nio.CharBuffer;
@@ -128,7 +129,7 @@ public class SQLTransformerCastClobTextOracleTest {
 
 	@Test
 	public void testSelectBigText_3999() {
-		checkResult(runSelect(_BIG_TEXT_A_3999, ""), _BIG_TEXT_A_3999);
+		checkResult(runSelect(_BIG_TEXT_A_3999), _BIG_TEXT_A_3999);
 	}
 
 	@Test
@@ -138,11 +139,11 @@ public class SQLTransformerCastClobTextOracleTest {
 		// as CAST_CLOB_TEXT truncates data prior to comparison
 
 		checkResult(
-			runSelect(_BIG_TEXT_A_4000, ""), _BIG_TEXT_A_4000, _BIG_TEXT_A_4001,
+			runSelect(_BIG_TEXT_A_4000), _BIG_TEXT_A_4000, _BIG_TEXT_A_4001,
 			_BIG_TEXT_A_4000_B_1);
 
 		checkResult(
-			runSelect(_BIG_TEXT_A_3999_B_1, ""), _BIG_TEXT_A_3999_B_1,
+			runSelect(_BIG_TEXT_A_3999_B_1), _BIG_TEXT_A_3999_B_1,
 			_BIG_TEXT_A_3999_B_2);
 	}
 
@@ -170,9 +171,9 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// matches nothing
 
-		checkResult(runSelect(String.valueOf(_B), ""));
+		checkResult(runSelect(String.valueOf(_B)));
 
-		checkResult(runSelect(String.valueOf(_A), ""));
+		checkResult(runSelect(String.valueOf(_A)));
 	}
 
 	private void checkResult(List<?> queryResult, String... expectedResult) {
@@ -195,24 +196,20 @@ public class SQLTransformerCastClobTextOracleTest {
 		}
 	}
 
+	private List<?> runSelect(String data) {
+		return runSelect(data, StringPool.BLANK);
+	}
+
 	private List<?> runSelect(String data1, String data2) {
 		List<?> list = null;
-
-		String sql = null;
-
-		if ((data1.length() + data2.length()) > 4000) {
-			sql = _SQL_SELECT_COMPARE_STRINGS_ABOVE_4000;
-		}
-		else {
-			sql = _SQL_SELECT_COMPARE_STRINGS_4000_AND_BELOW;
-		}
 
 		Session session = null;
 
 		try {
 			session = _sessionFactory.openSession();
 
-			Query q = session.createSynchronizedSQLQuery(sql);
+			Query q = session.createSynchronizedSQLQuery(
+				_SQL_SELECT_COMPARE_STRINGS);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -258,22 +255,7 @@ public class SQLTransformerCastClobTextOracleTest {
 
 	private static final String _SQL_DROP_TABLE = "DROP TABLE TestCastClobText";
 
-	// following queries select from a clob column into 2 string chunks.
-	// This allows to fetch strings longer than 4000 chars.
-	// They also compare a clob column with a value made up from 2 strings
-	// Both apply the CAST_CLOB_TEXT function to the column being compared,
-	// just like *PersistenceImpl does. This way we test how that function
-	// works when transformed to an oracle native function
-
-	private static final String _SQL_SELECT_COMPARE_STRINGS_4000_AND_BELOW =
-		"SELECT " +
-		" DBMS_LOB.SUBSTR(data, 4000, 1), DBMS_LOB.SUBSTR(data, 1, 4001) " +
-		"FROM " +
-		" TestCastClobText " +
-		"WHERE " +
-		" CAST_CLOB_TEXT(TestCastClobText.data) = ? || ?";
-
-	private static final String _SQL_SELECT_COMPARE_STRINGS_ABOVE_4000 =
+	private static final String _SQL_SELECT_COMPARE_STRINGS =
 		"SELECT " +
 		" DBMS_LOB.SUBSTR(data, 4000, 1), DBMS_LOB.SUBSTR(data, 1, 4001) " +
 		"FROM " +

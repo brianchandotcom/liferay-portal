@@ -6,13 +6,11 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 apply plugin: "com.liferay.cache"
 
 task buildAlloy(type: Copy)
-task buildAlloyBootstrap(type: Copy)
 task buildJQueryPluginsForm
 task buildLexicon(type: Copy)
 task buildLfrAMDLoader(type: Copy)
 task downloadLfrAMDLoader(type: DownloadNodeModuleTask)
 
-String alloyBootstrapVersion = "3.2.0-2"
 String alloyVersion = "3.0.1"
 String jqueryPluginsFormVersion = "3.51"
 String lexiconVersion = "0.1.19"
@@ -55,27 +53,6 @@ buildAlloy {
 
 	onlyIf {
 		!FileUtil.isUpToDate(project, alloyZipFile, alloyDestinationDir)
-	}
-}
-
-buildAlloyBootstrap {
-	File alloyBootstrapAssetsDestinationDir = new File(jsDestinationDir, "bootstrap-assets")
-	File alloyBootstrapDestinationDir = new File(jsDestinationDir, "bootstrap")
-	File bootstrapSassZipFile = new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip")
-
-	doFirst {
-		delete alloyBootstrapAssetsDestinationDir, alloyBootstrapDestinationDir
-	}
-
-	eachFile new ReplaceLeadingPathAction("bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts": alloyBootstrapDestinationDir.name, "bootstrap-sass-${alloyBootstrapVersion}/assets": alloyBootstrapAssetsDestinationDir.name)
-	exclude "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/bootstrap-*.js"
-	from zipTree(bootstrapSassZipFile)
-	include "bootstrap-sass-${alloyBootstrapVersion}/assets/**"
-	includeEmptyDirs = false
-	into jsDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, bootstrapSassZipFile, alloyBootstrapDestinationDir)
 	}
 }
 
@@ -135,7 +112,6 @@ cache {
 
 classes {
 	dependsOn buildAlloy
-	dependsOn buildAlloyBootstrap
 	dependsOn buildJQueryPluginsForm
 	dependsOn buildLexicon
 	dependsOn buildLfrAMDLoader

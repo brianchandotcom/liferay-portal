@@ -2225,10 +2225,18 @@
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute function="AssertClick" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="${orgName1}" />
+ 		
+ 		<execute macro="Breadcrumb#viewPG">
+ 			<var name="breadcrumbListVisible" value="${orgName1}" />
+ 			<var name="breadcrumbListNotVisible" value="Liferay" />
+ 			<var name="pathLocator" value="CURRENT_LOCATION" />
+ 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="Organization Name 1Test Page" />
-		<execute function="AssertTextNotPresent" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="Liferay/Organization Name 1/Test Page/" />
-
+ 		<execute macro="Breadcrumb#viewPG">
+ 			<var name="breadcrumbListVisible" value="${sitePageName}" />
+ 			<var name="pathLocator" value="PAGE" />
+ 		</execute>
+ 		
 		<execute macro="Page#tearDownPG" />
 	</command>
 </definition>

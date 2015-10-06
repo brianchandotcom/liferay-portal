@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -35,6 +34,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -128,7 +128,8 @@ public class SQLTransformerCastClobTextOracleTest {
 
 	@Test
 	public void testSelectBigText_3999() throws Exception {
-		checkResult(runSelect(_BIG_TEXT_A_3999), _BIG_TEXT_A_3999);
+		Assert.assertEquals(
+			Arrays.asList(_BIG_TEXT_A_3999), runSelect(_BIG_TEXT_A_3999));
 	}
 
 	@Test
@@ -137,13 +138,13 @@ public class SQLTransformerCastClobTextOracleTest {
 		// those match all rows sharing the first 4000 characters
 		// as CAST_CLOB_TEXT truncates data prior to comparison
 
-		checkResult(
-			runSelect(_BIG_TEXT_A_4000), _BIG_TEXT_A_4000, _BIG_TEXT_A_4001,
-			_BIG_TEXT_A_4000_B_1);
-
-		checkResult(
-			runSelect(_BIG_TEXT_A_3999_B_1), _BIG_TEXT_A_3999_B_1,
-			_BIG_TEXT_A_3999_B_2);
+		Assert.assertEquals(
+			Arrays.asList(
+				_BIG_TEXT_A_4000, _BIG_TEXT_A_4001, _BIG_TEXT_A_4000_B_1),
+			runSelect(_BIG_TEXT_A_4000));
+		Assert.assertEquals(
+			Arrays.asList(_BIG_TEXT_A_3999_B_1, _BIG_TEXT_A_3999_B_2),
+			runSelect(_BIG_TEXT_A_3999_B_1));
 	}
 
 	@Test
@@ -154,15 +155,21 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// selects where data = _BIG_TEXT_A_4001
 
-		checkResult(runSelect(_BIG_TEXT_A_4000, String.valueOf(_A)));
+		List<String> list = runSelect(_BIG_TEXT_A_4000, String.valueOf(_A));
+
+		Assert.assertTrue(list.toString(), list.isEmpty());
 
 		// selects where data = _BIG_TEXT_A_3999_BB
 
-		checkResult(runSelect(_BIG_TEXT_A_3999_B_1, String.valueOf(_B)));
+		list = runSelect(_BIG_TEXT_A_3999_B_1, String.valueOf(_B));
+
+		Assert.assertTrue(list.toString(), list.isEmpty());
 
 		// selects where data = _BIG_TEXT_A_4000_B
 
-		checkResult(runSelect(_BIG_TEXT_A_4000, String.valueOf(_B)));
+		list = runSelect(_BIG_TEXT_A_4000, String.valueOf(_B));
+
+		Assert.assertTrue(list.toString(), list.isEmpty());
 	}
 
 	@Test
@@ -170,19 +177,13 @@ public class SQLTransformerCastClobTextOracleTest {
 
 		// matches nothing
 
-		checkResult(runSelect(String.valueOf(_B)));
+		List<String> list = runSelect(String.valueOf(_A));
 
-		checkResult(runSelect(String.valueOf(_A)));
-	}
+		Assert.assertTrue(list.toString(), list.isEmpty());
 
-	private void checkResult(List<?> queryResult, String... expectedResult) {
-		Assert.assertEquals(queryResult.size(), expectedResult.length);
+		list = runSelect(String.valueOf(_B));
 
-		List<String> expected = ListUtil.fromArray(expectedResult);
-
-		for (Object result : queryResult) {
-			Assert.assertTrue(expected.contains(result));
-		}
+		Assert.assertTrue(list.toString(), list.isEmpty());
 	}
 
 	private List<String> runSelect(String data) throws Exception {
@@ -251,7 +252,7 @@ public class SQLTransformerCastClobTextOracleTest {
 	private static final String _SQL_SELECT_COMPARE_STRINGS =
 		"SELECT data FROM TestCastClobText WHERE " +
 			"DBMS_LOB.COMPARE(CAST_CLOB_TEXT(TestCastClobText.data), ? || ?) " +
-				"= 0";
+				"= 0 ORDER BY id";
 
 	private static DB _db;
 

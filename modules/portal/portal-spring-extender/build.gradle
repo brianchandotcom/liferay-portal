@@ -1,9 +1,15 @@
 dependencies {
+	compile group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-1"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
 	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
-	compile group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile group: "org.springframework", name: "spring-beans", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-context", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-orm", version: "3.2.10.RELEASE"
 	compile project(":portal:portal-upgrade")
+}
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 }
 
 liferay {

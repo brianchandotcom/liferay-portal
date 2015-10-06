@@ -333,7 +333,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSubcategoryProperty" priority="4">
+	<command name="AddSubcategoryProperty" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -980,7 +980,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchCategoryWithNullResult" priority="4">
+	<command name="SearchCategoryWithNullResult" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1150,7 +1150,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSubcategoryWithNullResult" priority="4">
+	<command name="SearchSubcategoryWithNullResult" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1250,7 +1250,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchVocabularyWithNullResult" priority="4">
+	<command name="SearchVocabularyWithNullResult" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1273,7 +1273,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCannotAddDuplicateSubCategory" priority="4">
+	<command name="ViewCannotAddDuplicateSubCategory" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

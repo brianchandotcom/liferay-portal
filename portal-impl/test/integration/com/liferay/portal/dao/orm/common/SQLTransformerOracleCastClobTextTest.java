@@ -70,9 +70,9 @@ public class SQLTransformerOracleCastClobTextTest {
 				"data TEXT null)");
 
 		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement =
-				connection.prepareStatement(
-					"insert into TestCastClobText values (?, ?)")) {
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"insert into TestCastClobText values (?, ?)")) {
 
 			preparedStatement.setLong(1, 1);
 			preparedStatement.setClob(
@@ -177,9 +177,7 @@ public class SQLTransformerOracleCastClobTextTest {
 		return select(data, StringPool.BLANK);
 	}
 
-	protected List<String> select(String data1, String data2)
-		throws Exception {
-		
+	protected List<String> select(String data1, String data2) throws Exception {
 		String sql =
 			"select data from TestCastClobText where DBMS_LOB.COMPARE(" +
 				"CAST_CLOB_TEXT(TestCastClobText.data), ? || ?) = 0 order by " +

@@ -418,6 +418,27 @@
 			<var name="orgName" value="Organization Name" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Organization Name" />
+			<var name="sitePageName" value="Public Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Teams" />
 			<var name="siteScopeName" value="Organization Name" />
@@ -1458,6 +1479,27 @@
 		<execute macro="Organization#manageMembershipOptionsInSites">
 			<var name="allowManualMembershipManagement" value="true" />
 			<var name="orgName" value="Organization Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Organization Name" />
+			<var name="sitePageName" value="Public Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">

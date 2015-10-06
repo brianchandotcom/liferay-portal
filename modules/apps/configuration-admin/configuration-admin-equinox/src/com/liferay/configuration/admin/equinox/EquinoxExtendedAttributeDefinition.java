@@ -38,8 +38,7 @@ public class EquinoxExtendedAttributeDefinition
 			Class<?> clazz = attributeDefinition.getClass();
 
 			throw new IllegalArgumentException(
-				"AttributeDefinition implementation " +
-					clazz.getName() + " does not implement " +
+				clazz.getName() + " does not implement " +
 					Extendable.class.getName());
 		}
 

@@ -44,9 +44,8 @@ public class EquinoxExtendedObjectClassDefinition
 			Class<?> clazz = objectClassDefinition.getClass();
 
 			throw new IllegalArgumentException(
-				"ObjectClassDefinition implementation " +
-					clazz.getName() + " does not implement " +
-						Extendable.class.getName());
+				clazz.getName() + " does not implement " +
+					Extendable.class.getName());
 		}
 
 		_extendable = (Extendable)objectClassDefinition;

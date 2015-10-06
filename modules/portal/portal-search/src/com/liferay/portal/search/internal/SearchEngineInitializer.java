@@ -91,11 +91,9 @@ public class SearchEngineInitializer implements Runnable {
 
 			SearchEngineUtil.initialize(_companyId);
 
-			Set<Indexer<?>> indexers = IndexerRegistryUtil.getIndexers();
-
 			Set<String> searchEngineIds = new HashSet<>();
 
-			for (Indexer<?> indexer : indexers) {
+			for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
 				String searchEngineId = indexer.getSearchEngineId();
 
 				if (searchEngineIds.add(searchEngineId)) {

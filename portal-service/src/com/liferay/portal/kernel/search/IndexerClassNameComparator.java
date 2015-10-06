@@ -39,9 +39,8 @@ public class IndexerClassNameComparator implements Comparator<Indexer<?>> {
 		if (_ascending) {
 			return value;
 		}
-		else {
-			return -value;
-		}
+
+		return -value;
 	}
 
 	public boolean isAscending() {

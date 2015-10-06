@@ -42,10 +42,10 @@ public class AnnotationsExtendedObjectClassDefinition
 
 		_objectClassDefinition = objectClassDefinition;
 
-		_loadConfigurationBeanClass(bundle);
+		loadConfigurationBeanClass(bundle);
 
 		if (_configurationBeanClass != null) {
-			_processCategoryAnnotation();
+			processConfigurationAdminCategory();
 		}
 	}
 
@@ -111,7 +111,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		return _objectClassDefinition.getName();
 	}
 
-	private void _loadConfigurationBeanClass(Bundle bundle) {
+	protected void loadConfigurationBeanClass(Bundle bundle) {
 		try {
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -124,7 +124,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		}
 	}
 
-	private void _processCategoryAnnotation() {
+	protected void processConfigurationAdminCategory() {
 		ConfigurationAdmin configurationAdmin =
 			_configurationBeanClass.getAnnotation(ConfigurationAdmin.class);
 

@@ -43,14 +43,14 @@ public class SAPEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.service.access.policy.service.impl.SAPEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.service.access.policy.model.SAPEntry addSAPEntry(
-		java.lang.String allowedServiceSignatures, boolean enabled,
-		java.lang.String name,
+		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addSAPEntry(allowedServiceSignatures, enabled, name,
-			titleMap, serviceContext);
+				   .addSAPEntry(allowedServiceSignatures, defaultSAPEntry,
+			enabled, name, titleMap, serviceContext);
 	}
 
 	public static com.liferay.service.access.policy.model.SAPEntry deleteSAPEntry(
@@ -112,13 +112,13 @@ public class SAPEntryServiceUtil {
 
 	public static com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean enabled, java.lang.String name,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,
-			enabled, name, titleMap, serviceContext);
+			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
 	public static SAPEntryService getService() {

@@ -26,27 +26,32 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface SAPConfiguration {
 
 	@Meta.AD(
-		deflt = "Default Service Access Policy for Applications",
+		deflt = "System Service Access Policy Applied on Every Request",
 		required = false
 	)
-	public String defaultApplicationSAPEntryDescription();
+	public String systemDefaultSAPEntryDescription();
 
-	@Meta.AD(deflt = "DEFAULT_APP", required = false)
-	public String defaultApplicationSAPEntryName();
+	@Meta.AD(deflt = "SYSTEM_DEFAULT", required = false)
+	public String systemDefaultSAPEntryName();
 
 	@Meta.AD(deflt = "", required = false)
-	public String defaultApplicationSAPEntryServiceSignatures();
+	public String systemDefaultSAPEntryServiceSignatures();
 
-	@Meta.AD(deflt = "Default Service Access Policy for User", required = false)
-	public String defaultUserSAPEntryDescription();
+	@Meta.AD(
+		deflt =
+			"System Service Access Policy for Requests Authenticated " +
+			"using User Password",
+		required = false
+	)
+	public String systemUserPasswordSAPEntryDescription();
 
-	@Meta.AD(deflt = "DEFAULT_USER", required = false)
-	public String defaultUserSAPEntryName();
+	@Meta.AD(deflt = "SYSTEM_USER_PASSWORD", required = false)
+	public String systemUserPasswordSAPEntryName();
 
 	@Meta.AD(deflt = "*", required = false)
-	public String defaultUserSAPEntryServiceSignatures();
+	public String systemUserPasswordSAPEntryServiceSignatures();
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean requireDefaultSAPEntry();
+	public boolean useSystemSAPEntries();
 
 }

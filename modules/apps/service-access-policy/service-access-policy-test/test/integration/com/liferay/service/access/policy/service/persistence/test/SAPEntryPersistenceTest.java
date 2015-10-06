@@ -45,7 +45,6 @@ import com.liferay.service.access.policy.service.persistence.SAPEntryUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -65,9 +64,8 @@ import java.util.Set;
  */
 @RunWith(Arquillian.class)
 public class SAPEntryPersistenceTest {
-	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -198,6 +196,14 @@ public class SAPEntryPersistenceTest {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByC_D() throws Exception {
+		_persistence.countByC_D(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_D(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

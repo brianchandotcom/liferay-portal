@@ -65,7 +65,7 @@ public interface SAPEntryLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void checkDefaultSAPEntry(long companyId) throws PortalException;
+	public void checkSystemSAPEntries(long companyId) throws PortalException;
 
 	/**
 	* Creates a new s a p entry with the primary key. Does not add the s a p entry to the database.
@@ -209,6 +209,10 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanySAPEntriesCount(long companyId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getDefaltSAPEntries(
+		long companyId, boolean defaultSAPEntry);
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -283,7 +287,7 @@ public interface SAPEntryLocalService extends BaseLocalService,
 
 	public com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean enabled, java.lang.String name,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;

@@ -74,6 +74,8 @@ public class SAPPortlet extends MVCPortlet {
 
 		String allowedServiceSignatures = ParamUtil.getString(
 			actionRequest, "allowedServiceSignatures");
+		boolean defaultSAPEntry = ParamUtil.getBoolean(
+			actionRequest, "defaultSAPEntry");
 		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
 		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
@@ -84,13 +86,13 @@ public class SAPPortlet extends MVCPortlet {
 
 		if (sapEntryId > 0) {
 			_sapEntryService.updateSAPEntry(
-				sapEntryId, allowedServiceSignatures, enabled, name, titleMap,
-				serviceContext);
+				sapEntryId, allowedServiceSignatures, defaultSAPEntry, enabled,
+				name, titleMap, serviceContext);
 		}
 		else {
 			_sapEntryService.addSAPEntry(
-				allowedServiceSignatures, enabled, name, titleMap,
-				serviceContext);
+				allowedServiceSignatures, defaultSAPEntry, enabled, name,
+				titleMap, serviceContext);
 		}
 	}
 

@@ -70,8 +70,9 @@ import java.util.Map;
 @ProviderType
 public class SAPEntryServiceSoap {
 	public static com.liferay.service.access.policy.model.SAPEntrySoap addSAPEntry(
-		java.lang.String allowedServiceSignatures, boolean enabled,
-		java.lang.String name, java.lang.String[] titleMapLanguageIds,
+		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, java.lang.String name,
+		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -80,7 +81,7 @@ public class SAPEntryServiceSoap {
 					titleMapValues);
 
 			com.liferay.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.addSAPEntry(allowedServiceSignatures,
-					enabled, name, titleMap, serviceContext);
+					defaultSAPEntry, enabled, name, titleMap, serviceContext);
 
 			return com.liferay.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
 		}
@@ -199,7 +200,7 @@ public class SAPEntryServiceSoap {
 
 	public static com.liferay.service.access.policy.model.SAPEntrySoap updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean enabled, java.lang.String name,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -209,8 +210,8 @@ public class SAPEntryServiceSoap {
 					titleMapValues);
 
 			com.liferay.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.updateSAPEntry(sapEntryId,
-					allowedServiceSignatures, enabled, name, titleMap,
-					serviceContext);
+					allowedServiceSignatures, defaultSAPEntry, enabled, name,
+					titleMap, serviceContext);
 
 			return com.liferay.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
 		}

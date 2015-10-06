@@ -58,9 +58,9 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	}
 
 	@Override
-	public void checkDefaultSAPEntry(long companyId)
+	public void checkSystemSAPEntries(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_sapEntryLocalService.checkDefaultSAPEntry(companyId);
+		_sapEntryLocalService.checkSystemSAPEntries(companyId);
 	}
 
 	/**
@@ -252,6 +252,13 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getDefaltSAPEntries(
+		long companyId, boolean defaultSAPEntry) {
+		return _sapEntryLocalService.getDefaltSAPEntries(companyId,
+			defaultSAPEntry);
+	}
+
+	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -347,12 +354,13 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	@Override
 	public com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean enabled, java.lang.String name,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryLocalService.updateSAPEntry(sapEntryId,
-			allowedServiceSignatures, enabled, name, titleMap, serviceContext);
+			allowedServiceSignatures, defaultSAPEntry, enabled, name, titleMap,
+			serviceContext);
 	}
 
 	/**

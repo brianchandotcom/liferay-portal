@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationValues;
 import com.liferay.dynamic.data.lists.web.portlet.DDLPortletUtil;
+import com.liferay.dynamic.data.lists.web.util.DDLRequestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
@@ -38,7 +39,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -47,7 +47,8 @@ import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -55,11 +56,10 @@ import javax.portlet.RenderResponse;
 public class DDLDisplayContext {
 
 	public DDLDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest request, RenderRequest renderRequest) {
 
+		_ddlRequestHelper = new DDLRequestHelper(request);
 		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-
 		_portletPreferences = renderRequest.getPreferences();
 
 		if (Validator.isNotNull(getPortletResource())) {
@@ -75,9 +75,7 @@ public class DDLDisplayContext {
 	}
 
 	public String getAddDDMTemplateTitle() throws PortalException {
-		DDMDisplay ddmDisplay = getDDMDisplay();
-
-		return ddmDisplay.getEditTemplateTitle(
+		return getDDMDisplay().getEditTemplateTitle(
 			_recordSet.getDDMStructure(), null, getLocale());
 	}
 
@@ -113,9 +111,7 @@ public class DDLDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		DDMDisplay ddmDisplay = getDDMDisplay();
-
-		return ddmDisplay.getEditTemplateTitle(
+		return getDDMDisplay().getEditTemplateTitle(
 			recordSet.getDDMStructure(), fetchDisplayDDMTemplate(),
 			getLocale());
 	}
@@ -127,9 +123,7 @@ public class DDLDisplayContext {
 			return LanguageUtil.get(_renderRequest.getLocale(), "add-list");
 		}
 
-		DDMDisplay ddmDisplay = getDDMDisplay();
-
-		return ddmDisplay.getEditTemplateTitle(
+		return getDDMDisplay().getEditTemplateTitle(
 			recordSet.getDDMStructure(), fetchFormDDMTemplate(), getLocale());
 	}
 
@@ -159,6 +153,14 @@ public class DDLDisplayContext {
 	public long getRecordSetId() {
 		return PrefsParamUtil.getLong(
 			_portletPreferences, _renderRequest, "recordSetId");
+	}
+
+	public boolean isAdminPortlet() {
+		return getPortletName().equals(DDLPortletKeys.DYNAMIC_DATA_LISTS);
+	}
+
+	public boolean isDisplayPortlet() {
+		return !isAdminPortlet();
 	}
 
 	public boolean isEditable() {
@@ -204,11 +206,9 @@ public class DDLDisplayContext {
 			return _showConfigurationIcon;
 		}
 
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
 		_showConfigurationIcon = PortletPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			getPortletId(), ActionKeys.CONFIGURATION);
+			getPermissionChecker(), getLayout(), getPortletId(),
+			ActionKeys.CONFIGURATION);
 
 		return _showConfigurationIcon;
 	}
@@ -261,15 +261,11 @@ public class DDLDisplayContext {
 
 		_hasShowIconsActionPermission = Boolean.FALSE;
 
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		if (!themeDisplay.isSignedIn()) {
+		if (!getThemeDisplay().isSignedIn()) {
 			return _hasShowIconsActionPermission;
 		}
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isLayoutPrototypeLinkActive()) {
+		if (getLayout().isLayoutPrototypeLinkActive()) {
 			return _hasShowIconsActionPermission;
 		}
 
@@ -316,56 +312,39 @@ public class DDLDisplayContext {
 	}
 
 	protected Layout getLayout() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		return themeDisplay.getLayout();
+		return _ddlRequestHelper.getLayout();
 	}
 
 	protected Locale getLocale() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		return themeDisplay.getLocale();
+		return _ddlRequestHelper.getLocale();
 	}
 
 	protected PermissionChecker getPermissionChecker() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		return themeDisplay.getPermissionChecker();
+		return _ddlRequestHelper.getPermissionChecker();
 	}
 
 	protected String getPortletId() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
+		return _ddlRequestHelper.getPortletId();
+	}
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getId();
+	protected String getPortletName() {
+		return _ddlRequestHelper.getPortletName();
 	}
 
 	protected String getPortletResource() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getPortletResource();
+		return _ddlRequestHelper.getPortletResource();
 	}
 
 	protected long getScopeGroupId() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		return themeDisplay.getScopeGroupId();
+		return _ddlRequestHelper.getScopeGroupId();
 	}
 
 	protected long getStructureTypeClassNameId() {
-		DDMDisplay ddmDisplay = getDDMDisplay();
-
-		return PortalUtil.getClassNameId(ddmDisplay.getStructureType());
+		return PortalUtil.getClassNameId(getDDMDisplay().getStructureType());
 	}
 
 	protected ThemeDisplay getThemeDisplay() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay;
+		return _ddlRequestHelper.getThemeDisplay();
 	}
 
 	protected boolean hasViewPermission() {
@@ -376,11 +355,8 @@ public class DDLDisplayContext {
 		_hasViewPermission = true;
 
 		if (_recordSet != null) {
-			ThemeDisplay themeDisplay = getThemeDisplay();
-
 			_hasViewPermission = DDLRecordSetPermission.contains(
-				themeDisplay.getPermissionChecker(), _recordSet,
-				ActionKeys.VIEW);
+				getPermissionChecker(), _recordSet, ActionKeys.VIEW);
 		}
 
 		return _hasViewPermission;
@@ -388,6 +364,7 @@ public class DDLDisplayContext {
 
 	private String _ddlRecordDisplayStyle;
 	private String[] _ddlRecordDisplayViews;
+	private final DDLRequestHelper _ddlRequestHelper;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;
 	private Boolean _hasAddDDMTemplatePermission;
@@ -399,7 +376,6 @@ public class DDLDisplayContext {
 	private final PortletPreferences _portletPreferences;
 	private DDLRecordSet _recordSet;
 	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 	private Boolean _showConfigurationIcon;
 
 }

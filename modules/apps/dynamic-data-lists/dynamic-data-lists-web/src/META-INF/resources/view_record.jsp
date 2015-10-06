@@ -38,10 +38,12 @@ DDLRecordVersion recordVersion = record.getRecordVersion(version);
 
 DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+if (ddlDisplayContext.isAdminPortlet()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(LanguageUtil.format(request, "view-x", ddmStructure.getName(locale), false));
+	renderResponse.setTitle(LanguageUtil.format(request, "view-x", ddmStructure.getName(locale), false));
+}
 %>
 
 <div class="container-fluid-1280">

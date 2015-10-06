@@ -27,7 +27,7 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 
 DDLRecordSet selRecordSet = (DDLRecordSet)request.getAttribute("record_set_action.jsp-selRecordSet");
 
-boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW);
+boolean hasViewPermission = ddlDisplayContext.isAdminPortlet() && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW);
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">

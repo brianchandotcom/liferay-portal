@@ -137,7 +137,7 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 
 String currentURL = currentURLObj.toString();
 
-DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(renderRequest, renderResponse);
+DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(request, renderRequest);
 %>
 
 <%@ include file="/init-ext.jsp" %>

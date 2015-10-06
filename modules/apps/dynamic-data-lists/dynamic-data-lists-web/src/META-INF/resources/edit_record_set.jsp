@@ -44,11 +44,12 @@ if (ddmStructureId > 0) {
 	catch (NoSuchStructureException nsse) {
 	}
 }
+if (ddlDisplayContext.isAdminPortlet()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-list") : recordSet.getName(locale));
+	renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-list") : recordSet.getName(locale));
+}
 %>
 
 <portlet:actionURL name="addRecordSet" var="addRecordSetURL">

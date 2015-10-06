@@ -133,10 +133,6 @@ public class SQLTransformerCastClobTextOracleTest {
 
 	@Test
 	public void testSelectBigText_4000() throws Exception {
-
-		// those match all rows sharing the first 4000 characters
-		// as CAST_CLOB_TEXT truncates data prior to comparison
-
 		Assert.assertEquals(
 			Arrays.asList(
 				_BIG_TEXT_A_4000, _BIG_TEXT_A_4001, _BIG_TEXT_A_4000_B_1),
@@ -148,23 +144,13 @@ public class SQLTransformerCastClobTextOracleTest {
 
 	@Test
 	public void testSelectBigText_4001() throws Exception {
-
-		// those match nothing as CAST_CLOB_TEXT truncates data prior to
-		// comparison. Note this is intended behavior
-
-		// selects where data = _BIG_TEXT_A_4001
-
 		List<String> list = runSelect(_BIG_TEXT_A_4000, _A);
 
 		Assert.assertTrue(list.toString(), list.isEmpty());
 
-		// selects where data = _BIG_TEXT_A_3999_BB
-
 		list = runSelect(_BIG_TEXT_A_3999_B_1, _B);
 
 		Assert.assertTrue(list.toString(), list.isEmpty());
-
-		// selects where data = _BIG_TEXT_A_4000_B
 
 		list = runSelect(_BIG_TEXT_A_4000, _B);
 
@@ -173,9 +159,6 @@ public class SQLTransformerCastClobTextOracleTest {
 
 	@Test
 	public void testSelectText_1() throws Exception {
-
-		// matches nothing
-
 		List<String> list = runSelect(_A);
 
 		Assert.assertTrue(list.toString(), list.isEmpty());
@@ -185,11 +168,11 @@ public class SQLTransformerCastClobTextOracleTest {
 		Assert.assertTrue(list.toString(), list.isEmpty());
 	}
 
-	private List<String> runSelect(String data) throws Exception {
+	protected List<String> runSelect(String data) throws Exception {
 		return runSelect(data, StringPool.BLANK);
 	}
 
-	private List<String> runSelect(String data1, String data2)
+	protected List<String> runSelect(String data1, String data2)
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();

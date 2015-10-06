@@ -243,9 +243,8 @@ public class SQLTransformerCastClobTextOracleTest {
 	private static final String _BIG_TEXT_A_4001 = _BIG_TEXT_A_4000 + _A;
 
 	private static final String _SQL_CREATE_TABLE =
-		"create table TestCastClobText (" +
-		"id number(30,0) not null primary key," +
-		"data clob null)";
+		"create table TestCastClobText (id LONG not null primary key, " +
+			"data TEXT null)";
 
 	private static final String _SQL_DROP_TABLE = "DROP TABLE TestCastClobText";
 

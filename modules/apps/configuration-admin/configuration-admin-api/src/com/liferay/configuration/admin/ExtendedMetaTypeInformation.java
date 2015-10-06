@@ -12,20 +12,17 @@
  * details.
  */
 
-package com.liferay.configuration.admin.api;
+package com.liferay.configuration.admin;
 
-import java.util.Map;
-import java.util.Set;
-
-import org.osgi.service.metatype.AttributeDefinition;
+import org.osgi.service.metatype.MetaTypeInformation;
 
 /**
  * @author Iván Zaera
  */
-public interface ExtendedAttributeDefinition extends AttributeDefinition {
+public interface ExtendedMetaTypeInformation extends MetaTypeInformation {
 
-	public Map<String, String> getExtensionAttributes(String uri);
-
-	public Set<String> getExtensionUris();
+	@Override
+	public ExtendedObjectClassDefinition getObjectClassDefinition(
+		String id, String locale);
 
 }

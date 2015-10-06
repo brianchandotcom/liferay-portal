@@ -14,8 +14,8 @@
 
 package com.liferay.configuration.admin.web.util;
 
-import com.liferay.configuration.admin.api.ExtendedAttributeDefinition;
-import com.liferay.configuration.admin.api.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.ExtendedAttributeDefinition;
+import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.Value;

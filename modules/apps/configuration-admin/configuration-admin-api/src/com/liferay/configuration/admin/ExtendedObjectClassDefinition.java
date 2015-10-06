@@ -12,17 +12,23 @@
  * details.
  */
 
-package com.liferay.configuration.admin.api;
+package com.liferay.configuration.admin;
 
-import org.osgi.framework.Bundle;
-import org.osgi.service.metatype.MetaTypeService;
+import java.util.Map;
+import java.util.Set;
+
+import org.osgi.service.metatype.ObjectClassDefinition;
 
 /**
  * @author Iván Zaera
  */
-public interface ExtendedMetaTypeService extends MetaTypeService {
+public interface ExtendedObjectClassDefinition extends ObjectClassDefinition {
 
 	@Override
-	public ExtendedMetaTypeInformation getMetaTypeInformation(Bundle bundle);
+	public ExtendedAttributeDefinition[] getAttributeDefinitions(int filter);
+
+	public Map<String, String> getExtensionAttributes(String uri);
+
+	public Set<String> getExtensionUris();
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.configuration.admin.equinox;
 
-import com.liferay.configuration.admin.api.ExtendedAttributeDefinition;
+import com.liferay.configuration.admin.ExtendedAttributeDefinition;
 
 import java.util.Map;
 import java.util.Set;

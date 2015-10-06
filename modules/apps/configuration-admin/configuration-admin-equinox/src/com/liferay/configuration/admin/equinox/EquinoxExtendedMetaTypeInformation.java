@@ -14,8 +14,8 @@
 
 package com.liferay.configuration.admin.equinox;
 
-import com.liferay.configuration.admin.api.ExtendedMetaTypeInformation;
-import com.liferay.configuration.admin.api.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.ExtendedMetaTypeInformation;
+import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.metatype.MetaTypeInformation;

@@ -14,7 +14,7 @@
 
 package com.liferay.configuration.admin.web.portlet.action;
 
-import com.liferay.configuration.admin.api.ExtendedMetaTypeService;
+import com.liferay.configuration.admin.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;

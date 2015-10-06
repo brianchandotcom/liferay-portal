@@ -14,9 +14,9 @@
 
 package com.liferay.configuration.admin.annotations;
 
-import com.liferay.configuration.admin.api.ConfigurationAdmin;
-import com.liferay.configuration.admin.api.ExtendedAttributeDefinition;
-import com.liferay.configuration.admin.api.ExtendedObjectClassDefinition;
+import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.configuration.admin.ExtendedAttributeDefinition;
+import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -14,8 +14,8 @@
 
 package com.liferay.configuration.admin.web.util;
 
-import com.liferay.configuration.admin.api.ExtendedMetaTypeInformation;
-import com.liferay.configuration.admin.api.ExtendedMetaTypeService;
+import com.liferay.configuration.admin.ExtendedMetaTypeInformation;
+import com.liferay.configuration.admin.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;

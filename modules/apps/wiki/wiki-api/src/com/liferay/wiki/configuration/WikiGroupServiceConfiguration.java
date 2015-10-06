@@ -16,7 +16,7 @@ package com.liferay.wiki.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.api.ConfigurationAdmin;
+import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**

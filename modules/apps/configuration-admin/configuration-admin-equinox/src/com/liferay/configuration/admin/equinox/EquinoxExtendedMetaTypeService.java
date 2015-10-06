@@ -14,8 +14,8 @@
 
 package com.liferay.configuration.admin.equinox;
 
-import com.liferay.configuration.admin.api.ExtendedMetaTypeInformation;
-import com.liferay.configuration.admin.api.ExtendedMetaTypeService;
+import com.liferay.configuration.admin.ExtendedMetaTypeInformation;
+import com.liferay.configuration.admin.ExtendedMetaTypeService;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Reference;

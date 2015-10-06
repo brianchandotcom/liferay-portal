@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.configuration.admin.api;
+package com.liferay.configuration.admin;
 
-import org.osgi.service.metatype.MetaTypeInformation;
+import org.osgi.framework.Bundle;
+import org.osgi.service.metatype.MetaTypeService;
 
 /**
  * @author Iván Zaera
  */
-public interface ExtendedMetaTypeInformation extends MetaTypeInformation {
+public interface ExtendedMetaTypeService extends MetaTypeService {
 
 	@Override
-	public ExtendedObjectClassDefinition getObjectClassDefinition(
-		String id, String locale);
+	public ExtendedMetaTypeInformation getMetaTypeInformation(Bundle bundle);
 
 }

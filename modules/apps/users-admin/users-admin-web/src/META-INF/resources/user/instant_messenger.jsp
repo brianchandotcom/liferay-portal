@@ -52,10 +52,6 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 			</div>
 
 			<div class="instant-messenger">
-				<aui:input label="windows-live-messenger" name="msnSn" />
-			</div>
-
-			<div class="instant-messenger">
 				<aui:input label="yim" name="ymSn" />
 
 				<c:if test="<%= Validator.isNotNull(selContact.getYmSn()) %>">

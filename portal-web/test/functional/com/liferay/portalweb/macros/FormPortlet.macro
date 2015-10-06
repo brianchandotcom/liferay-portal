@@ -10,7 +10,7 @@
 
 		<var name="key_formPageName" value="${formPageCurrent}" />
 
-		<execute function="AssertTextEquals" locator1="FormPortlet#FORM_PAGE_COMPLETE" value1="${formPageCurrent}" />
+		<execute function="AssertTextEquals" locator1="FormPortlet#FORM_PAGE_INACTIVE" value1="${formPageCurrent}" />
 
 		<var name="key_formPageName" value="${formPageNext}" />
 

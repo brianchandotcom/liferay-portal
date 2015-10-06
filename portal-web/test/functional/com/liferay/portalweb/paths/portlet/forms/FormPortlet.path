@@ -24,8 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_PAGE_COMPLETE</td>
-	<td>//ul[contains(@class,'multi-step-progress-bar')]/li[@class='complete' and contains(.,'${key_formPageName}')]/div[@class='progress-bar-title']</td>
+	<td>FORM_PAGE_INACTIVE</td>
+	<td>//ul[contains(@class,'multi-step-progress-bar')]/li[not(contains(@class,'active')) and contains(.,'${key_formPageName}')]/div[@class='progress-bar-title']</td>
 	<td></td>
 </tr>
 </tbody>

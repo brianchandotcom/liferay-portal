@@ -19,7 +19,7 @@
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="Pause" locator1="10000" />
+		<execute function="AssertElementPresent" locator1="Portlet#H3_HEADER" value1="Templates for Structure: ${ddlDataDefinitionName}" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -68,6 +68,8 @@
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
+		<execute function="AssertElementPresent" locator1="Portlet#H3_HEADER" value1="Templates for Structure: Data Definition" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_FORM_TEMPLATE" value1="Add Form Template" />
@@ -80,7 +82,7 @@
 	<command name="addFormTemplateViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#TOOLBAR_ADD_FORM_TEMPLATE" />
 
-		<execute function="Type#clickAtSendKeys" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 	</command>
 
 	<command name="copyCP">
@@ -120,7 +122,7 @@
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlTemplateName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Check" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
-		<execute function="Click" locator1="Icon#DELETE" />
+		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
@@ -138,7 +140,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDisplayTemplateName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#INFO" value1="There are no templates." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -181,7 +183,7 @@
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="${ddlFormTemplateName}" />
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -210,7 +212,7 @@
 	<command name="editFormTemplatePG">
 		<execute function="Click" locator1="DDL#TOOLBAR_EDIT_FORM_TEMPLATE" />
 
-		<execute function="Type#clickAtSendKeys" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateNameEdit}" />
 	</command>
 
 	<command name="gotoManageTemplatesCmd">
@@ -301,7 +303,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#INFO" value1="There are no templates." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

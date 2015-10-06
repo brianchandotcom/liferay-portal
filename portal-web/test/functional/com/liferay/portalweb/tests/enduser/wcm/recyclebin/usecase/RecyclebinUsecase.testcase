@@ -27,6 +27,35 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
+	<command name="DisableRecycleBin" priority="3">
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<execute macro="RecycleBin#disableRecycleBinViaSiteSettings" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#deleteWithDisabledRB">
+			<var name="entryTitle" value="Web Content Title" />
+		</execute>
+	</command>
+
 	<command name="RecycleBinBlogs" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
@@ -224,60 +253,39 @@
 	</command>
 
 	<command name="RecycleBinEntriesMaxAge" priority="4">
-		<property name="custom.properties" value="trash.entries.max.age=86400" />
+		<property name="custom.properties" value="trash.entry.check.interval=1" />
+		<property name="custom.properties" value="trash.entries.max.age=1" />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Site#disableRecycleBinCP" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="RecycleBin#viewDisabledCP">
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Recycle Bin" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="RecycleBin#viewRecycleBinMaxAge">
+			<var name="maxAgeField" value="1" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
+		<execute function="Pause" locator1="120000" />
 
-		<execute macro="RecycleBin#viewDeleteWithDisabledRBViaBlogsCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="Site#enableRecycleBinCP" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="RecycleBin#viewRecyclebinViaSiteSettingsCP">
-			<var name="maxAgeField" value="60" />
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="Web Content Title" />
 		</execute>
 	</command>
 

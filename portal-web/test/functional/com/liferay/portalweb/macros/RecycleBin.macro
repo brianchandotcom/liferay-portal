@@ -12,6 +12,18 @@
 		<execute function="AssertTextNotPresent" value1="${assetName}" />
 	</command>
 
+	<command name="disableRecycleBinViaSiteSettings">
+		<execute function="AssertClick" locator1="NavListItem#RECYCLE_BIN" value1="Recycle Bin" />
+
+		<execute function="ClickNoError" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
+
+		<execute function="Confirm" value1="Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin." />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
 	<command name="dragAndDropContentToRecycleBin">
 		<var name="key_webContentTitle" value="${assetName}" />
 
@@ -179,28 +191,6 @@
 		<execute function="AssertTextNotPresent" value1="${assetName}" />
 	</command>
 
-	<command name="viewDeleteWithDisabledRBViaBlogsCP">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="Click" locator1="CPBlogs#ENTRY_TABLE_CHECKBOX" value1="${entryTitle}" />
-		<execute function="AssertElementPresent" locator1="CPBlogs#DELETE_BUTTON" />
-		<execute function="Click" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" />
-		<execute function="AssertTextEquals" locator1="CPBlogs#ENTRY_MENULIST_DELETE" value1="Delete" />
-		<execute function="AssertClickNoError" locator1="CPBlogs#ENTRY_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="viewDisabledCP">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-		</execute>
-
-		<execute function="AssertClick" locator1="NavListItem#RECYCLE_BIN" value1="Recycle Bin" />
-
-		<execute function="AssertNotChecked" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
-	</command>
-
 	<command name="viewDuplicateNames">
 		<var name="key_assetName" value="${assetName}" />
 
@@ -213,6 +203,10 @@
 		<execute function="AssertTextPresent" value1="${assetContent}" />
 		<execute function="AssertElementPresent" locator1="Button#RESTORE" />
 		<execute function="AssertElementPresent" locator1="Button#DELETE" />
+	</command>
+
+	<command name="viewRecycleBinMaxAge">
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="Entries that have been in the Recycle Bin for more than ${maxAgeField} minute are automatically deleted." />
 	</command>
 
 	<command name="viewRecyclebinViaSiteSettingsCP">

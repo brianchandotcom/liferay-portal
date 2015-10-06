@@ -1744,16 +1744,28 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
-			<var name="assetTitle" value="Blogs Entry1 Title" />
-			<var name="assetType" value="Blogs Entry" />
-			<var name="entryAddRelatedAsset" value="true" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<execute macro="BlogsEntry#addRelatedAssetPG">
+			<var name="assetTitle" value="Blogs Entry1 Title" />
+			<var name="assetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#gotoPG">
@@ -1765,10 +1777,6 @@
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewPG">
-			<var name="assetTitle" value="Blogs Entry2 Title" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_2" />
@@ -1788,6 +1796,10 @@
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewPG">

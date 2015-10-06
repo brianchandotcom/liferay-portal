@@ -1,15 +1,19 @@
 <definition>
 	<command name="configureShowAllPG">
-		<execute function="AssertElementPresent" locator1="Icon#COG" />
-		<execute function="Click#pauseClickAt" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Media Gallery" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="Check" locator1="Checkbox#SHOW_ACTIONS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_FOLDER_MENU_CHECKBOX" />
 		<execute function="Check" locator1="PGMediagalleryConfiguration#DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 

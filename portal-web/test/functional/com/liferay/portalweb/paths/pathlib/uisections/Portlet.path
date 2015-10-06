@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>H2_HEADER_2</td>
+	<td>xpath=(//h2)[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>H3_HEADER</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>

@@ -167,7 +167,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG" />
+		<execute macro="Blogs#addEntry" />
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />

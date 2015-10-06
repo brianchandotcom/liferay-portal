@@ -142,8 +142,10 @@
 	</command>
 
 	<command name="configureAPSelectMoreThanOnePG">
-		<execute function="Click" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="Select More Than One..." />
@@ -438,8 +440,10 @@
 	<command name="configureSiteScopeRemoveSitePG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="Click" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -921,8 +925,10 @@
 	</command>
 
 	<command name="viewRestoredSetupPG">
-		<execute function="Click" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

@@ -60,12 +60,11 @@
 	<command name="ApprovePageRevisionPG" priority="4">
 		<var name="pageName" value="Page Revision Page" />
 
-		<execute macro="Page#addWithWorkflowPG">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -74,6 +73,8 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
+
+		<execute macro="Staging#submitForPublicationPageRevision" />
 
 		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
@@ -151,12 +152,11 @@
 	<command name="RejectPageRevisionPG" priority="4">
 		<var name="pageName" value="Page Revision Page" />
 
-		<execute macro="Page#addWithWorkflowPG">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -165,6 +165,8 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
+
+		<execute macro="Staging#submitForPublicationPageRevision" />
 
 		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />

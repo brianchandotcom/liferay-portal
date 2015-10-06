@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//h3[@class='task-content-title']/../div[2]</td>
+	<td>//h3[@class='task-content-title']/../div[2] | //h3[@class='task-content-title']/../../div</td>
 	<td></td>
 </tr>
 <tr>

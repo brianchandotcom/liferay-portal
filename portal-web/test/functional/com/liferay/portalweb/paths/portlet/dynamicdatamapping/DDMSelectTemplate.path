@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO</td>
+	<td>//form[contains(@id,'DDMPortlet')]//div[contains(@class,'empty-message')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

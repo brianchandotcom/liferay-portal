@@ -106,6 +106,7 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
@@ -220,6 +221,7 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />

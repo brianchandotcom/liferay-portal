@@ -1414,6 +1414,7 @@
 			<else>
 				<execute macro="User#loginPG">
 					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="virtualHostsURL" value="${virtualHostsURL}" />
 				</execute>
 			</else>
 		</if>

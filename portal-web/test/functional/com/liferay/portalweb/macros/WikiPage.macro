@@ -1463,7 +1463,7 @@
 	<command name="viewPageWithWorkflowPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Pending Approval" />
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER_2" value1="Pending Approval" />
 		<execute function="AssertTextEquals" locator1="Wiki#DRAFT_PAGES_TABLE_PAGE_NAME" value1="${wikiPageTitle}" />
 		<execute function="AssertTextEquals" locator1="Wiki#DRAFT_PAGES_TABLE_STATUS" value1="${wikiPageStatus}" />
 		<execute function="AssertTextEquals" locator1="Wiki#DRAFT_PAGES_TABLE_REVISION" value1="1.0" />
@@ -1474,7 +1474,7 @@
 	<command name="viewPageWithWorkflowPGViaWD">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Pending Approval" />
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER_2" value1="Pending Approval" />
 		<execute function="AssertTextEquals" locator1="Wiki#DRAFT_PAGES_TABLE_PAGE_NAME" value1="${wikiPageTitle}" />
 		<execute function="AssertTextEquals" locator1="Wiki#DRAFT_PAGES_TABLE_STATUS" value1="${wikiPageStatus}" />
 		<execute function="AssertTextEquals" locator1="Wiki#DRAFT_PAGES_TABLE_REVISION" value1="1.0" />

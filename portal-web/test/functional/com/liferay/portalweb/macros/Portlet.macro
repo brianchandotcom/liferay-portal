@@ -138,6 +138,17 @@
 		</if>
 	</command>
 
+	<command name="changeDisplayStyle">
+		<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyle" />
+
+		<if>
+			<condition function="IsElementPresent#isVisible" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
+			<then>
+				<execute function="Click" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="configureCustomTitleViaLookandfeelPG">
 		<execute function="Check" locator1="BasePortlet#PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX" />
 		<execute function="Type" locator1="BasePortlet#PORTLET_CONFIGURATION_CUSTOM_TITLE_FIELD" value1="${portletName} Custom" />
@@ -146,10 +157,12 @@
 	</command>
 
 	<command name="deletePG">
-		<var name="portletLocator" value="//h1[@class='portlet-title']/span[contains(.,'${portletName}')]/../../menu//a[@title='Options']" />
+		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertClick" locator1="${portletLocator}" value1="Options" />
+		<execute function="Click#pauseClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" />
+
 		<execute function="AssertClickNoError" locator1="BasePortlet#REMOVE" value1="Remove" />
+
 		<execute function="Confirm" value1="Are you sure you want to remove this component?" />
 	</command>
 

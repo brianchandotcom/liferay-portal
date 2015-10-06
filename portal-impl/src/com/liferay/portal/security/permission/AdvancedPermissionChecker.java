@@ -118,13 +118,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return resourceBlockIdsBag;
 		}
-		finally {
-			if (resourceBlockIdsBag == null) {
-				resourceBlockIdsBag = new ResourceBlockIdsBag();
-			}
+		catch (Exception e) {
+			PermissionCacheUtil.removeResourceBlockIdsBag(
+				getCompanyId(), groupId, defaultUserId, name);
 
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, defaultUserId, groupId, name, resourceBlockIdsBag);
+			throw e;
 		}
 	}
 
@@ -161,14 +159,15 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			bag = new PermissionCheckerBagImpl(
 				defaultUserId, SetUtil.fromList(roles));
-		}
-		finally {
-			if (bag == null) {
-				bag = new PermissionCheckerBagImpl(defaultUserId);
-			}
 
 			PermissionCacheUtil.putBag(
 				defaultUserId, guestGroup.getGroupId(), bag);
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeBag(
+				defaultUserId, guestGroup.getGroupId());
+
+			throw e;
 		}
 
 		return bag;
@@ -215,14 +214,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return resourceBlockIdsBag;
 		}
-		finally {
-			if (resourceBlockIdsBag == null) {
-				resourceBlockIdsBag = new ResourceBlockIdsBag();
-			}
+		catch (Exception e) {
+			PermissionCacheUtil.removeResourceBlockIdsBag(
+				companyId, groupId, ResourceBlockConstants.OWNER_USER_ID, name);
 
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, ResourceBlockConstants.OWNER_USER_ID, groupId, name,
-				resourceBlockIdsBag);
+			throw e;
 		}
 	}
 
@@ -268,13 +264,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return resourceBlockIdsBag;
 		}
-		finally {
-			if (resourceBlockIdsBag == null) {
-				resourceBlockIdsBag = new ResourceBlockIdsBag();
-			}
+		catch (Exception e) {
+			PermissionCacheUtil.removeResourceBlockIdsBag(
+				companyId, groupId, userId, name);
 
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, userId, groupId, name, resourceBlockIdsBag);
+			throw e;
 		}
 	}
 
@@ -355,16 +349,15 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				user.getUserId(), SetUtil.fromList(userGroups), userOrgs,
 				userOrgGroups, userUserGroupGroups, userRoles);
 
-			return userPermissionCheckerBag;
-		}
-		finally {
-			if (userPermissionCheckerBag == null) {
-				userPermissionCheckerBag = new UserPermissionCheckerBagImpl(
-					user.getUserId());
-			}
-
 			PermissionCacheUtil.putUserBag(
 				user.getUserId(), userPermissionCheckerBag);
+
+			return userPermissionCheckerBag;
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserBag(user.getUserId());
+
+			throw e;
 		}
 	}
 
@@ -470,14 +463,14 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			bag = new PermissionCheckerBagImpl(userPermissionCheckerBag, roles);
 
+			PermissionCacheUtil.putBag(userId, groupId, bag);
+
 			return bag;
 		}
-		finally {
-			if (bag == null) {
-				bag = new PermissionCheckerBagImpl(userId);
-			}
+		catch (Exception e) {
+			PermissionCacheUtil.removeBag(userId, groupId);
 
-			PermissionCacheUtil.putBag(userId, groupId, bag);
+			throw e;
 		}
 	}
 
@@ -604,15 +597,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 						" " + primKey + " " + actionId + " takes " +
 							stopWatch.getTime() + " ms");
 			}
-		}
-		finally {
-			if (value == null) {
-				value = Boolean.FALSE;
-			}
 
 			PermissionCacheUtil.putPermission(
 				user.getUserId(), signedIn, groupId, name, primKey, actionId,
 				value);
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removePermission(
+				user.getUserId(), signedIn, groupId, name, primKey, actionId);
+
+			throw e;
 		}
 
 		return value.booleanValue();

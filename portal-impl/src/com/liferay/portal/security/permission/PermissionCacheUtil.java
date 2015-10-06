@@ -231,6 +231,35 @@ public class PermissionCacheUtil {
 		_userRolePortalCache.put(userRoleKey, value);
 	}
 
+	public static void removeBag(long userId, long groupId) {
+		BagKey bagKey = new BagKey(userId, groupId);
+
+		_permissionCheckerBagPortalCache.remove(bagKey);
+	}
+
+	public static void removePermission(
+		long userId, boolean signedIn, long groupId, String name,
+		String primKey, String actionId) {
+
+		PermissionKey permissionKey = new PermissionKey(
+			userId, signedIn, groupId, name, primKey, actionId);
+
+		_permissionPortalCache.remove(permissionKey);
+	}
+
+	public static void removeResourceBlockIdsBag(
+		long companyId, long groupId, long userId, String name) {
+
+		ResourceBlockIdsBagKey resourceBlockIdsBagKey =
+			new ResourceBlockIdsBagKey(companyId, groupId, userId, name);
+
+		_resourceBlockIdsBagCache.remove(resourceBlockIdsBagKey);
+	}
+
+	public static void removeUserBag(long userId) {
+		_userPermissionCheckerBagPortalCache.remove(userId);
+	}
+
 	private static final PortalCache<BagKey, PermissionCheckerBag>
 		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getPortalCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,

@@ -341,35 +341,35 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 
 	protected void whenGetAttributeDefinitions(
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
-		ExtendedAttributeDefinition[] returnAttributeDefinitions) {
+		ExtendedAttributeDefinition[] extendedAttributeDefinitions) {
 
 		when(
 			extendedObjectClassDefinition.getAttributeDefinitions(
 				Matchers.anyInt())
 		).thenReturn(
-			returnAttributeDefinitions
+			extendedAttributeDefinitions
 		);
 	}
 
 	protected void whenGetCardinality(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		int returnCardinality) {
+		int cardinality) {
 
 		when(
 			extendedAttributeDefinition.getCardinality()
 		).thenReturn(
-			returnCardinality
+			cardinality
 		);
 	}
 
 	protected void whenGetID(
 		ExtendedAttributeDefinition extendedAttributeDefinition,
-		String returnID) {
+		String id) {
 
 		when(
 			extendedAttributeDefinition.getID()
 		).thenReturn(
-			returnID
+			id
 		);
 	}
 

@@ -166,6 +166,19 @@ public class ServiceTrackerMapFactory {
 			new SingleValueServiceTrackerBucketFactory<S, S>(comparator), null);
 	}
 
+	public static <S> ServiceTrackerMap<String, S> singleValueMap(
+			BundleContext bundleContext, Class<S> clazz, String propertyKey,
+			ServiceTrackerMapListener<String, S, S> serviceTrackerMapListener)
+		throws InvalidSyntaxException {
+
+		return new ServiceTrackerMapImpl<>(
+			bundleContext, clazz, "(" + propertyKey + "=*)",
+			new PropertyServiceReferenceMapper<String, S>(propertyKey),
+			new DefaultServiceTrackerCustomizer<S>(bundleContext),
+			new SingleValueServiceTrackerBucketFactory<S, S>(),
+			serviceTrackerMapListener);
+	}
+
 	public static <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
 			BundleContext bundleContext, Class<SR> clazz, String filterString,
 			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,

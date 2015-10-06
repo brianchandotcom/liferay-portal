@@ -14,27 +14,35 @@
 
 package com.liferay.portal.verify.extender.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.RunnableUtil;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
+import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,7 +52,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"osgi.command.function=execute", "osgi.command.function=executeAll",
 		"osgi.command.function=list", "osgi.command.function=show",
@@ -119,10 +128,29 @@ public class VerifyProcessTracker {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_verifyProcessTrackerConfiguration = Configurable.createConfigurable(
+			VerifyProcessTrackerConfiguration.class, properties);
+
 		try {
+			_releases = ServiceTrackerMapFactory.singleValueMap(
+				bundleContext, Release.class, "release.bundle.symbolic.name");
+
+			_releases.open();
+
+			VerifyServiceTrackerMapListener verifyServiceTrackerMapListener =
+				null;
+
+			if (_verifyProcessTrackerConfiguration.autoVerify()) {
+				verifyServiceTrackerMapListener =
+					new VerifyServiceTrackerMapListener();
+			}
+
 			_verifyProcesses = ServiceTrackerMapFactory.singleValueMap(
-				bundleContext, VerifyProcess.class, "verify.process.name");
+				bundleContext, VerifyProcess.class, "verify.process.name",
+				verifyServiceTrackerMapListener);
 
 			_verifyProcesses.open();
 		}
@@ -142,6 +170,8 @@ public class VerifyProcessTracker {
 
 	@Deactivate
 	protected void deactivate() {
+		_releases.close();
+
 		_verifyProcesses.close();
 	}
 
@@ -220,11 +250,46 @@ public class VerifyProcessTracker {
 			outputStreamContainerFactoryTracker;
 	}
 
+	@Reference
+	protected void setReleaseLocalService(
+		ReleaseLocalService releaseLocalService) {
+
+		_releaseLocalService = releaseLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyProcessTracker.class);
 
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
+	private ReleaseLocalService _releaseLocalService;
+	private ServiceTrackerMap<String, Release> _releases;
 	private ServiceTrackerMap<String, VerifyProcess> _verifyProcesses;
+	private VerifyProcessTrackerConfiguration
+		_verifyProcessTrackerConfiguration;
+
+	private class VerifyServiceTrackerMapListener
+		implements ServiceTrackerMapListener
+			<String, VerifyProcess, VerifyProcess> {
+
+		@Override
+		public void keyEmitted(
+			ServiceTrackerMap<String, VerifyProcess> serviceTrackerMap,
+			String key, VerifyProcess service, VerifyProcess content) {
+
+			Release release = _releases.getService(key);
+
+			if ((release == null) || release.isVerified()) {
+				return;
+			}
+
+			execute(key);
+
+			release.setVerified(true);
+
+			_releaseLocalService.updateRelease(release);
+		}
+
+	};
 
 }

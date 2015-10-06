@@ -710,88 +710,23 @@
 	</command>
 
 	<command name="OrganizationDropDownItems" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
+		<var name="siteNameList" value="Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H" />
 
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name A" />
-		</execute>
+		<for list="${siteNameList}" param="siteName" >
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Sites" />
+			</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
+			<execute macro="Site#addCommunityCP">
+				<var name="siteName" value="${siteName}" />
+			</execute>
+		</for>
 
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name B" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name C" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name D" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name E" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name F" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name G" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name H" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name I" />
-		</execute>
-
-		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name A" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name B" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name C" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name D" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name E" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name F" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name G" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name H" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name I" />
+		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+		<for list="${siteNameList}" param="siteName" >
+			<var name="key_portletName" value="${siteName}" />
+			<execute function="AssertTextPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${siteName}" />
+		</for>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -813,8 +748,8 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name I" />
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
+		<execute function="AssertTextPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="Site Name H" />
 	</command>
 
 	<command name="OrganizationSiteDefaultUserAssociations" priority="3">

@@ -28,7 +28,6 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />
@@ -36,10 +35,7 @@
 			<var name="jdbcURL" property-value="database.mysql.url" />
 		</execute>
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="userFirstName" value="Joe" />
-			<var name="userLastName" value="Bloggs" />
-		</execute>
+		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />
 	</command>

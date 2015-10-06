@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -123,7 +124,7 @@ public class DDLDisplayContext {
 		DDLRecordSet recordSet = getRecordSet();
 
 		if (recordSet == null) {
-			return StringPool.BLANK;
+			return LanguageUtil.get(_renderRequest.getLocale(), "add-list");
 		}
 
 		DDMDisplay ddmDisplay = getDDMDisplay();

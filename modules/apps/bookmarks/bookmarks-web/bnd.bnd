@@ -59,6 +59,7 @@ Include-Resource:\
 	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+Require-SchemaVersion: 1.0.0
 Web-ContextPath: /bookmarks-web
 
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)

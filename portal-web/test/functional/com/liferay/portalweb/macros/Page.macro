@@ -382,12 +382,7 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#TOGGLE" />
-			</then>
-		</if>
+		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<var name="key_localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
 

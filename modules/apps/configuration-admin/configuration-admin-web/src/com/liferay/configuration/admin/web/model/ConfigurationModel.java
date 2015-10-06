@@ -14,31 +14,35 @@
 
 package com.liferay.configuration.admin.web.model;
 
+import com.liferay.configuration.admin.api.ExtendedAttributeDefinition;
+import com.liferay.configuration.admin.api.ExtendedObjectClassDefinition;
+
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
+import java.util.Set;
+
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.metatype.AttributeDefinition;
-import org.osgi.service.metatype.ObjectClassDefinition;
 
 /**
  * @author Raymond Augé
  */
-public class ConfigurationModel implements ObjectClassDefinition {
+public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	public ConfigurationModel(
-		ObjectClassDefinition objectClassDefinition,
+		ExtendedObjectClassDefinition extendedObjectClassDefinition,
 		Configuration configuration, String bundleLocation, boolean factory) {
 
-		_objectClassDefinition = objectClassDefinition;
+		_extendedObjectClassDefinition = extendedObjectClassDefinition;
 		_configuration = configuration;
 		_bundleLocation = bundleLocation;
 		_factory = factory;
 	}
 
 	@Override
-	public AttributeDefinition[] getAttributeDefinitions(int filter) {
-		return _objectClassDefinition.getAttributeDefinitions(filter);
+	public ExtendedAttributeDefinition[] getAttributeDefinitions(int filter) {
+		return _extendedObjectClassDefinition.getAttributeDefinitions(filter);
 	}
 
 	public String getBundleLocation() {
@@ -51,16 +55,35 @@ public class ConfigurationModel implements ObjectClassDefinition {
 
 	@Override
 	public String getDescription() {
-		return _objectClassDefinition.getDescription();
+		return _extendedObjectClassDefinition.getDescription();
+	}
+
+	public ExtendedObjectClassDefinition getExtendedObjectClassDefinition() {
+		return _extendedObjectClassDefinition;
+	}
+
+	@Override
+	public Map<String, String> getExtensionAttributes(String uri) {
+		return _extendedObjectClassDefinition.getExtensionAttributes(uri);
+	}
+
+	@Override
+	public Set<String> getExtensionUris() {
+		return _extendedObjectClassDefinition.getExtensionUris();
 	}
 
 	public String getFactoryPid() {
-		return _objectClassDefinition.getID();
+		return _extendedObjectClassDefinition.getID();
+	}
+
+	public Map<String, String> getHintAttributes() {
+		return _extendedObjectClassDefinition.getExtensionAttributes(
+			"http://www.liferay.com/xsd/meta-type-hints_7_0_0");
 	}
 
 	@Override
 	public InputStream getIcon(int size) throws IOException {
-		return _objectClassDefinition.getIcon(size);
+		return _extendedObjectClassDefinition.getIcon(size);
 	}
 
 	@Override
@@ -69,16 +92,12 @@ public class ConfigurationModel implements ObjectClassDefinition {
 			return _configuration.getPid();
 		}
 
-		return _objectClassDefinition.getID();
+		return _extendedObjectClassDefinition.getID();
 	}
 
 	@Override
 	public String getName() {
-		return _objectClassDefinition.getName();
-	}
-
-	public ObjectClassDefinition getObjectClassDefinition() {
-		return _objectClassDefinition;
+		return _extendedObjectClassDefinition.getName();
 	}
 
 	public boolean isFactory() {
@@ -87,7 +106,7 @@ public class ConfigurationModel implements ObjectClassDefinition {
 
 	private final String _bundleLocation;
 	private final Configuration _configuration;
+	private final ExtendedObjectClassDefinition _extendedObjectClassDefinition;
 	private final boolean _factory;
-	private final ObjectClassDefinition _objectClassDefinition;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.portlet.action;
 
+import com.liferay.configuration.admin.api.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
@@ -48,7 +49,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.MetaTypeService;
 
 /**
  * @author Kamesh Sampath
@@ -81,7 +81,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
-			_bundleContext, _configurationAdmin, _metaTypeService,
+			_bundleContext, _configurationAdmin, _extendedMetaTypeService,
 			themeDisplay.getLanguageId());
 
 		ConfigurationModel configurationModel =
@@ -204,13 +204,15 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
+	protected void setExtendedMetaTypeService(
+		ExtendedMetaTypeService extendedMetaTypeService) {
+
+		_extendedMetaTypeService = extendedMetaTypeService;
 	}
 
 	@Reference(unbind = "-")
-	protected void setMetaTypeService(MetaTypeService metaTypeService) {
-		_metaTypeService = metaTypeService;
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -219,7 +221,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 	private BundleContext _bundleContext;
 	private ConfigurationAdmin _configurationAdmin;
 	private DDMFormValuesFactory _ddmFormValuesFactory;
+	private ExtendedMetaTypeService _extendedMetaTypeService;
 	private JSONFactory _jsonFactory;
-	private MetaTypeService _metaTypeService;
 
 }

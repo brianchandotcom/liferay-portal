@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.portlet;
 
+import com.liferay.configuration.admin.api.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
@@ -48,7 +49,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.MetaTypeService;
 
 /**
  * @author Kamesh Sampath
@@ -119,7 +119,7 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
-			_bundleContext, _configurationAdmin, _metaTypeService,
+			_bundleContext, _configurationAdmin, _extendedMetaTypeService,
 			themeDisplay.getLanguageId());
 
 		if (path.equals("/edit_configuration.ftl")) {
@@ -137,7 +137,7 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 
 			if (configurationModel != null) {
 				configurationModel = new ConfigurationModel(
-					configurationModel.getObjectClassDefinition(),
+					configurationModel.getExtendedObjectClassDefinition(),
 					configurationHelper.getConfiguration(pid),
 					configurationModel.getBundleLocation(),
 					configurationModel.isFactory());
@@ -202,13 +202,15 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setMetaTypeService(MetaTypeService metaTypeService) {
-		_metaTypeService = metaTypeService;
+	protected void setExtendedMetaTypeService(
+		ExtendedMetaTypeService extendedMetaTypeService) {
+
+		_extendedMetaTypeService = extendedMetaTypeService;
 	}
 
 	private BundleContext _bundleContext;
 	private ConfigurationAdmin _configurationAdmin;
 	private DDMFormRenderer _ddmFormRenderer;
-	private MetaTypeService _metaTypeService;
+	private ExtendedMetaTypeService _extendedMetaTypeService;
 
 }

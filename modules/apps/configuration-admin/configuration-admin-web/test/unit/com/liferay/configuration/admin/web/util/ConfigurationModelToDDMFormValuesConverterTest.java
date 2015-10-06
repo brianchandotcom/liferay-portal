@@ -57,16 +57,16 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
 			ExtendedObjectClassDefinition.class);
 
-		ExtendedAttributeDefinition attributeDefinition = mock(
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
 			ExtendedAttributeDefinition.class);
 
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
-			new ExtendedAttributeDefinition[] {attributeDefinition});
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenGetCardinality(attributeDefinition, -2);
-		whenGetDefaultValue(attributeDefinition, null);
-		whenGetID(attributeDefinition, "Text");
+		whenGetCardinality(extendedAttributeDefinition, -2);
+		whenGetDefaultValue(extendedAttributeDefinition, null);
+		whenGetID(extendedAttributeDefinition, "Text");
 
 		Configuration configuration = mock(Configuration.class);
 
@@ -180,17 +180,18 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
 			ExtendedObjectClassDefinition.class);
 
-		ExtendedAttributeDefinition attributeDefinition = mock(
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
 			ExtendedAttributeDefinition.class);
 
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
-			new ExtendedAttributeDefinition[] {attributeDefinition});
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenGetCardinality(attributeDefinition, 0);
-		whenGetID(attributeDefinition, "Boolean");
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetID(extendedAttributeDefinition, "Boolean");
 
-		whenGetDefaultValue(attributeDefinition, new String[] {"false"});
+		whenGetDefaultValue(
+			extendedAttributeDefinition, new String[] {"false"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
 			extendedObjectClassDefinition, null, null, false);
@@ -210,21 +211,23 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
 			ExtendedObjectClassDefinition.class);
 
-		ExtendedAttributeDefinition attributeDefinition = mock(
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
 			ExtendedAttributeDefinition.class);
 
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
-			new ExtendedAttributeDefinition[] {attributeDefinition});
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenGetCardinality(attributeDefinition, 0);
+		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetDefaultValue(
-			attributeDefinition, new String[] {"REQUEST_HEADER"});
-		whenGetID(attributeDefinition, "Select");
+			extendedAttributeDefinition, new String[] {"REQUEST_HEADER"});
+		whenGetID(extendedAttributeDefinition, "Select");
 		whenGetOptionLabels(
-			attributeDefinition, new String[] {"COOKIE", "REQUEST_HEADER"});
+			extendedAttributeDefinition,
+			new String[] {"COOKIE", "REQUEST_HEADER"});
 		whenGetOptionValues(
-			attributeDefinition, new String[] {"COOKIE", "REQUEST_HEADER"});
+			extendedAttributeDefinition,
+			new String[] {"COOKIE", "REQUEST_HEADER"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
 			extendedObjectClassDefinition, null, null, false);
@@ -245,17 +248,18 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
 			ExtendedObjectClassDefinition.class);
 
-		ExtendedAttributeDefinition attributeDefinition = mock(
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
 			ExtendedAttributeDefinition.class);
 
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
-			new ExtendedAttributeDefinition[] {attributeDefinition});
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenGetCardinality(attributeDefinition, 2);
+		whenGetCardinality(extendedAttributeDefinition, 2);
 		whenGetDefaultValue(
-			attributeDefinition, new String[] {"Joe Bloggs|Ella Fitzgerald"});
-		whenGetID(attributeDefinition, "Text");
+			extendedAttributeDefinition,
+			new String[] {"Joe Bloggs|Ella Fitzgerald"});
+		whenGetID(extendedAttributeDefinition, "Text");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
 			extendedObjectClassDefinition, null, null, false);
@@ -278,16 +282,16 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
 			ExtendedObjectClassDefinition.class);
 
-		ExtendedAttributeDefinition attributeDefinition = mock(
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
 			ExtendedAttributeDefinition.class);
 
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
-			new ExtendedAttributeDefinition[] {attributeDefinition});
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenGetCardinality(attributeDefinition, 0);
-		whenGetDefaultValue(attributeDefinition, null);
-		whenGetID(attributeDefinition, "Text");
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetDefaultValue(extendedAttributeDefinition, null);
+		whenGetID(extendedAttributeDefinition, "Text");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
 			extendedObjectClassDefinition, null, null, false);
@@ -341,54 +345,55 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	}
 
 	protected void whenGetCardinality(
-		ExtendedAttributeDefinition attributeDefinition,
+		ExtendedAttributeDefinition extendedAttributeDefinition,
 		int returnCardinality) {
 
 		when(
-			attributeDefinition.getCardinality()
+			extendedAttributeDefinition.getCardinality()
 		).thenReturn(
 			returnCardinality
 		);
 	}
 
 	protected void whenGetDefaultValue(
-		ExtendedAttributeDefinition attributeDefinition,
+		ExtendedAttributeDefinition extendedAttributeDefinition,
 		String[] returnDefaultValue) {
 
 		when(
-			attributeDefinition.getDefaultValue()
+			extendedAttributeDefinition.getDefaultValue()
 		).thenReturn(
 			returnDefaultValue
 		);
 	}
 
 	protected void whenGetID(
-		ExtendedAttributeDefinition attributeDefinition, String returnID) {
+		ExtendedAttributeDefinition extendedAttributeDefinition,
+		String returnID) {
 
 		when(
-			attributeDefinition.getID()
+			extendedAttributeDefinition.getID()
 		).thenReturn(
 			returnID
 		);
 	}
 
 	protected void whenGetOptionLabels(
-		ExtendedAttributeDefinition attributeDefinition,
+		ExtendedAttributeDefinition extendedAttributeDefinition,
 		String[] returnOptionLabels) {
 
 		when(
-			attributeDefinition.getOptionLabels()
+			extendedAttributeDefinition.getOptionLabels()
 		).thenReturn(
 			returnOptionLabels
 		);
 	}
 
 	protected void whenGetOptionValues(
-		ExtendedAttributeDefinition attributeDefinition,
+		ExtendedAttributeDefinition extendedAttributeDefinition,
 		String[] returnOptionValues) {
 
 		when(
-			attributeDefinition.getOptionValues()
+			extendedAttributeDefinition.getOptionValues()
 		).thenReturn(
 			returnOptionValues
 		);

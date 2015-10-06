@@ -596,12 +596,14 @@
 								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 								<execute function="Pause" value1="1000" />
 								<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+								<execute function="Pause" value1="2000" />
 							</then>
 							<else>
 								<execute function="Pause" value1="1000" />
 								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 								<execute function="Pause" value1="1000" />
 								<execute function="AssertClick" locator1="CalendarEditEvent#ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series"  />
+								<execute function="Pause" value1="2000" />
 							</else>
 						</if>
 					</else>

@@ -27,7 +27,7 @@ File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 
 boolean addPortalDependencies = true
 
-if (project.path.startsWith(":core:") || project.path.startsWith(":util:")) {
+if (project.path.startsWith(":core:") || project.path.startsWith(":sdk:") || project.path.startsWith(":util:")) {
 	addPortalDependencies = false
 }
 

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -27,7 +26,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.util.List;
 
@@ -61,8 +59,6 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "tags", true, false, null,
 				AssetTag.class.getName()));
 		setPublishToLiveByDefault(true);
-
-		XStreamAliasRegistryUtil.register(AssetTagImpl.class, "AssetTag");
 	}
 
 	@Override

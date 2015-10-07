@@ -20,7 +20,6 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
-import com.liferay.bookmarks.verify.BookmarksServiceVerifyProcess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -35,10 +34,14 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,6 +63,24 @@ public class BookmarksServiceVerifyProcessTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(!(verify.process.name=com.liferay.bookmarks.service))" +
+				"(objectClass=" + VerifyProcess.class.getName() + "))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -162,10 +183,10 @@ public class BookmarksServiceVerifyProcessTest
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(BookmarksServiceVerifyProcess.class);
+		return _serviceTracker.getService();
 	}
+
+	private static ServiceTracker<VerifyProcess, VerifyProcess> _serviceTracker;
 
 	@DeleteAfterTestRun
 	private Group _group;

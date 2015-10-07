@@ -2056,7 +2056,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);
 
-		if (!addGroupIds.isEmpty() || !removeGroupIds.isEmpty()) {
+		if ((groupIds != null) &&
+			(!addGroupIds.isEmpty() || !removeGroupIds.isEmpty())) {
+
 			SiteMembershipPolicyUtil.propagateMembership(
 				new long[] {user.getUserId()},
 				ArrayUtil.toLongArray(addGroupIds),

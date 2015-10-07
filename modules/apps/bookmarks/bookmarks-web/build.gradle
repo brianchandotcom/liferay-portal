@@ -3,6 +3,7 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:bookmarks:bookmarks-api")
 	compile project(":apps:bookmarks:bookmarks-service")
+	compile project(":portal:portal-upgrade")
 }
 
 liferay {

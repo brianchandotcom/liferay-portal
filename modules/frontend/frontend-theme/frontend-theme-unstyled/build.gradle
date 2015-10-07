@@ -9,6 +9,8 @@ dependencies {
 }
 
 ext {
+	alloyBootstrapVersion = "3.2.0-2"
+	alloyFontAwesomeVersion = "2.0.0"
 	alloyVersion = "3.0.1"
 	lexiconVersion = "0.1.19"
 }
@@ -20,10 +22,55 @@ liferay {
 File themeDestinationDir = file("src/META-INF/resources/_unstyled");
 File thirdPartyDir = file("../../../../portal-web/third-party")
 
+task buildAlloyBootstrapTheme(type: Copy)
+task buildAlloyFontAwesome(type: Copy)
 task buildAlloyTheme(type: Copy)
 task buildLexicon(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
+
+buildAlloyBootstrapTheme {
+	File alloyBootstrapDestinationDir = new File(themeDestinationDir, "css/aui")
+	File bootstrapSassZipFile = new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip")
+
+	doFirst {
+		delete alloyBootstrapDestinationDir
+	}
+
+	eachFile new ReplaceLeadingPathAction("bootstrap-sass-${alloyBootstrapVersion}/assets/fonts/bootstrap": "glyphicons/font", "bootstrap-sass-${alloyBootstrapVersion}/assets/stylesheets": "")
+	exclude "bootstrap-sass-${alloyBootstrapVersion}/assets/stylesheets/_bootstrap-*.scss"
+	from zipTree(bootstrapSassZipFile)
+	includeEmptyDirs = false
+	into alloyBootstrapDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, bootstrapSassZipFile, alloyBootstrapDestinationDir)
+	}
+}
+
+buildAlloyFontAwesome {
+	File alloyFontAwesomeDestinationDir = new File(themeDestinationDir, "css/aui/alloy-font-awesome")
+	File alloyFontAwesomeZipFile = new File(thirdPartyDir, "alloy-font-awesome-${alloyFontAwesomeVersion}.zip")
+
+	dependsOn buildAlloyBootstrapTheme
+
+	doFirst {
+		delete alloyFontAwesomeDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(1)
+
+	exclude "alloy-font-awesome/css/**"
+	exclude "alloy-font-awesome/less/**"
+
+	from zipTree(alloyFontAwesomeZipFile)
+	includeEmptyDirs = false
+	into alloyFontAwesomeDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, alloyFontAwesomeZipFile, alloyFontAwesomeDestinationDir)
+	}
+}
 
 buildAlloyTheme {
 	File alloyThemeDestinationDir = new File(themeDestinationDir, "images/aui")
@@ -56,6 +103,8 @@ buildCSS {
 buildLexicon {
 	File lexiconDestinationDir = new File(themeDestinationDir, "css/aui/lexicon")
 	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
+
+	dependsOn buildAlloyBootstrapTheme
 
 	doFirst {
 		delete lexiconDestinationDir
@@ -118,6 +167,8 @@ buildLexicon {
 }
 
 buildTheme {
+	dependsOn buildAlloyBootstrapTheme
+	dependsOn buildAlloyFontAwesome
 	dependsOn buildAlloyTheme
 	dependsOn buildLexicon
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -375,6 +376,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkPrincipalException(newContent);
 
+		newContent = formatLogFileName(absolutePath, newContent);
+
 		Matcher matcher = _javaClassPattern.matcher(newContent);
 
 		if (matcher.find()) {
@@ -612,6 +615,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						"LanguageUtil.get(request,");
 				}
 
+				if (!fileName.endsWith("test.jsp") &&
+					line.contains("System.out.print")) {
+
+					processErrorMessage(
+						fileName,
+						"System.out.print: " + fileName + " " + lineCount);
+				}
+
 				if (!trimmedLine.equals("%>") && line.contains("%>") &&
 					!line.contains("--%>") && !line.contains(" %>")) {
 
@@ -667,6 +678,42 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					String ifClause = "if (" + matcher.group(2) + ") {";
 
 					checkIfClauseParentheses(ifClause, fileName, lineCount);
+				}
+
+				matcher = _jspTagAttributes.matcher(line);
+
+				if (matcher.find()) {
+					String attributes = matcher.group(1);
+
+					Matcher attributeValueMatcher =
+						_jspTagAttributeValue.matcher(attributes);
+
+					while (attributeValueMatcher.find()) {
+						String delimeter = attributeValueMatcher.group(1);
+						String javaCode = attributeValueMatcher.group(2);
+
+						if (delimeter.equals(StringPool.QUOTE) ^
+							javaCode.contains(StringPool.QUOTE)) {
+
+							continue;
+						}
+
+						String newDelimeter = StringPool.QUOTE;
+
+						if (delimeter.equals(StringPool.QUOTE)) {
+							newDelimeter = StringPool.APOSTROPHE;
+						}
+
+						String match = attributeValueMatcher.group();
+
+						String replacement = StringUtil.replaceFirst(
+							match, delimeter, newDelimeter);
+
+						replacement = StringUtil.replaceLast(
+							replacement, delimeter, newDelimeter);
+
+						line = StringUtil.replace(line, match, replacement);
+					}
 				}
 
 				if (readAttributes) {
@@ -947,6 +994,53 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		content = beforeImports + imports + "\n" + afterImports;
 
 		return content;
+	}
+
+	protected String formatLogFileName(String absolutePath, String content) {
+		if (!isModulesFile(absolutePath) &&
+			!absolutePath.contains("/portal-web/")) {
+
+			return content;
+		}
+
+		Matcher matcher = _logPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String logFileName = StringUtil.replace(
+			absolutePath, StringPool.PERIOD, StringPool.UNDERLINE);
+
+		logFileName = StringUtil.replace(
+			logFileName, StringPool.SLASH, StringPool.PERIOD);
+
+		logFileName = StringUtil.replace(
+			logFileName, StringPool.DASH, StringPool.UNDERLINE);
+
+		int x = logFileName.lastIndexOf(".portal_web.");
+
+		if (x != -1) {
+			logFileName = logFileName.substring(x + 1);
+		}
+		else {
+			x = Math.max(
+				logFileName.lastIndexOf(".docroot."),
+				logFileName.lastIndexOf(".src.META_INF.resources."));
+
+			x = logFileName.lastIndexOf(StringPool.PERIOD, x - 1);
+
+			logFileName = "com_liferay_" + logFileName.substring(x + 1);
+
+			logFileName = StringUtil.replace(
+				logFileName,
+				new String[] {".docroot.", ".src.META_INF.resources."},
+				new String[] {StringPool.PERIOD, StringPool.PERIOD});
+		}
+
+		return StringUtil.replace(
+			content, matcher.group(),
+			"Log _log = LogFactoryUtil.getLog(\"" + logFileName + "\")");
 	}
 
 	@Override
@@ -1567,8 +1661,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
+	private final Pattern _jspTagAttributes = Pattern.compile(
+		"<\\w+:\\w+ (.*?[^%])>");
+	private final Pattern _jspTagAttributeValue = Pattern.compile(
+		"('|\")<%= (.+?) %>('|\")");
 	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
+	private final Pattern _logPattern = Pattern.compile(
+		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(

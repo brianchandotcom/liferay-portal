@@ -126,12 +126,18 @@
 				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
 			</liferay-util:buffer>
 
+			<%
+			LayoutRevision layoutRevision = LayoutRevisionLocalServiceUtil.fetchLayoutRevision(layoutSetBranchId, true, plid);
+			%>
+
 			<liferay-util:buffer var="publishOnLayoutLink">
-				<li class="control-menu-nav-item">
-					<button class="btn btn-default btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>'>
-						<liferay-ui:message key="publish-to-live" />
-					</button>
-				</li>
+				<c:if test="<%= Validator.isNotNull(layoutRevision) && layoutRevision.isApproved() %>">
+					<li class="control-menu-nav-item">
+						<button class="btn btn-default btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>'>
+							<liferay-ui:message key="publish-to-live" />
+						</button>
+					</li>
+				</c:if>
 			</liferay-util:buffer>
 
 			<c:choose>

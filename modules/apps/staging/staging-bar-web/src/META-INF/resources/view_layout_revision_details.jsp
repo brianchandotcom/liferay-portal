@@ -202,9 +202,11 @@ else {
 			}
 			%>
 
-			<a href="<%= taglibURL %>" id="submitLink">
-				<liferay-ui:message key="<%= label %>" />
-			</a>
+			<c:if test="<%= Validator.isNotNull(taglibURL) %>">
+				<a href="<%= taglibURL %>" id="submitLink">
+					<liferay-ui:message key="<%= label %>" />
+				</a>
+			</c:if>
 
 			<c:if test="<%= workflowEnabled && !pendingLayoutRevisions.isEmpty() %>">
 

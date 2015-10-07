@@ -61,8 +61,6 @@ buildLexicon {
 		delete lexiconDestinationDir
 	}
 
-	eachFile new ReplaceLeadingPathAction("scss": "", "fonts" : "fonts")
-
 	eachFile {
 		if (name in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
 			filter {

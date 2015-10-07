@@ -62,13 +62,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The service context of the <![CDATA[<code>actionJsp</code>]]>.</description>
+			<description>The service context of the <![CDATA[<code>actionJsp</code>]]></description>
 			<name>actionJspServletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to display the image as a background image.</description>
+			<description>Whether to display the image as a background image</description>
 			<name>backgroundImage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -80,7 +80,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the checkbox input.</description>
+			<description>A CSS class for styling the checkbox input</description>
 			<name>checkboxCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -98,25 +98,25 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>An ID for the checkbox input.</description>
+			<description>An ID for the checkbox input</description>
 			<name>checkboxId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A name for the checkbox input.</description>
+			<description>A name for the checkbox input</description>
 			<name>checkboxName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A value for the checkbox input.</description>
+			<description>A value for the checkbox input</description>
 			<name>checkboxValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the card's main container.</description>
+			<description>A CSS class for styling the card's main container</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -128,13 +128,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add to the card text zone footer, if the card is vertical.</description>
+			<description>Text to add to the card text zone footer, if the card is vertical</description>
 			<name>footer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add to the card text zone header, if the card is vertical.</description>
+			<description>Text to add to the card text zone header, if the card is vertical</description>
 			<name>header</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -146,13 +146,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the card image.</description>
+			<description>A CSS class for styling the card image</description>
 			<name>imageCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A URL for the card's image.</description>
+			<description>A URL for the card's image</description>
 			<name>imageUrl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -176,31 +176,31 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the small image.</description>
+			<description>A CSS class for styling the small image</description>
 			<name>smallImageCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A URL for the card's small image, if the card is vertical.</description>
+			<description>A URL for the card's small image, if the card is vertical</description>
 			<name>smallImageUrl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add as a subtitle in the text zone, if the card is vertical.</description>
+			<description>Text to add as a subtitle in the text zone, if the card is vertical</description>
 			<name>subtitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A title for the card.</description>
+			<description>A title for the card</description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A URL to view the full content.</description>
+			<description>A URL to view the full content</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

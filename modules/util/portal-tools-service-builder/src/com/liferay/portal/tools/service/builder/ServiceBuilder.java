@@ -726,9 +726,7 @@ public class ServiceBuilder {
 								entity, _SESSION_TYPE_REMOTE);
 							_createServiceWrapper(entity, _SESSION_TYPE_REMOTE);
 
-							if (Validator.isNotNull(_remotingFileName)) {
-								_createServiceHttp(entity);
-							}
+							_createServiceHttp(entity);
 
 							_createServiceJson(entity);
 
@@ -750,9 +748,7 @@ public class ServiceBuilder {
 								entity, _SESSION_TYPE_REMOTE);
 							_removeServiceWrapper(entity, _SESSION_TYPE_REMOTE);
 
-							if (Validator.isNotNull(_remotingFileName)) {
-								_removeServiceHttp(entity);
-							}
+							_removeServiceHttp(entity);
 
 							_removeServiceSoap(entity);
 						}
@@ -775,10 +771,6 @@ public class ServiceBuilder {
 				_createServiceClpMessageListener();
 				_createServiceClpSerializer(exceptionList);
 				_createServicePropsUtil();
-
-				if (Validator.isNotNull(_remotingFileName)) {
-					_createRemotingXml();
-				}
 
 				_createSQLIndexes();
 				_createSQLTables();

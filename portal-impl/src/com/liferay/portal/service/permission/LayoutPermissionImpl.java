@@ -139,6 +139,14 @@ public class LayoutPermissionImpl
 			return true;
 		}
 
+		if (actionId.equals(ActionKeys.CUSTOMIZE) &&
+			(layout instanceof VirtualLayout)) {
+
+			VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+			layout = virtualLayout.getWrappedModel();
+		}
+
 		if (isAttemptToModifyLockedLayout(layout, actionId)) {
 			return false;
 		}

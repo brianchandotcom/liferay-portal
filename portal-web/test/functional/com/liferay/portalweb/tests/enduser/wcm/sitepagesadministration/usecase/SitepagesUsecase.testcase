@@ -280,7 +280,7 @@
 
 		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -537,11 +537,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="Blogs#addEntryWithPermissions">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="viewableBy" value="true" />
-			<var name="viewableBySelection" value="Site Members" />
+			<var name="viewableBy" value="Site Members" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -570,17 +569,17 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Blogs Post" />
-			<var name="gmailMailTableMessageTitle" value="New Blogs Post" />
-			<var name="gmailMessageBody" value="Test Test created a new blog entry titled Blogs Entry Title." />
+			<var name="gmailAssetType" value="Blogs" />
+			<var name="gmailMailTableMessageTitle" value="Blogs Entry Title" />
+			<var name="gmailMessageBody" value="Blogs Entry Title" />
 			<var name="gmailMessageBodyClosing" value="Sincerely" />
 			<var name="gmailMessageBodyGreeting" value="Joe Bloggs" />
-			<var name="gmailMessageTitle" value="New Blogs Post by Test Test" />
+			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title&quot; on Liferay Blogs" />
 		</execute>
 
-		<execute macro="Gmail#openMessageLink">
+		<execute macro="Gmail#openMessageContinueReadingButton">
 			<var name="contentTitle" value="Blogs Entry Title" />
-			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="gmailAssetType" value="Blogs" />
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
@@ -597,7 +596,7 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMailTableMessageTitle" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
@@ -623,8 +622,8 @@
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var method="TestPropsUtil#get('email.address.1')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -634,16 +633,16 @@
 		</execute>
 
 		<execute macro="User#viewLoginPG" />
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE" />
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
 
 		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 
 		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="4">
@@ -762,11 +761,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="Blogs#addEntryWithPermissions">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="viewableBy" value="true" />
-			<var name="viewableBySelection" value="Site Members" />
+			<var name="viewableBy" value="Site Members" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -822,7 +820,7 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMailTableMessageTitle" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
@@ -865,7 +863,7 @@
 			<var name="pageNameList" value="Private Page" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE" />
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
 
 		<execute function="Open" locator1="${blogEntryURL}" />
@@ -1004,11 +1002,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="Blogs#addEntryWithPermissions">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="viewableBy" value="true" />
-			<var name="viewableBySelection" value="Site Members" />
+			<var name="viewableBy" value="Site Members" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1064,7 +1061,7 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMailTableMessageTitle" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
@@ -1107,7 +1104,7 @@
 
 		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1115,7 +1112,7 @@
 
 		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">

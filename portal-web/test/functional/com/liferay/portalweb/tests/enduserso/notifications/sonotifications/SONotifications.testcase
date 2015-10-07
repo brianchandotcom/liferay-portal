@@ -1384,7 +1384,9 @@
 	</command>
 
 	<command name="ViewAllNotificationsFromControlPanel" priority="3">
-		<execute macro="Page#gotoCP" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
 
 		<execute macro="Notifications#gotoDockbar" />
 

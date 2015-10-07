@@ -911,6 +911,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"ResourceBundle.getBundle: " + fileName);
 		}
 
+		// LPS-59076
+
+		if (_checkModulesServiceUtil && isModulesFile(absolutePath) &&
+			newContent.contains("@Component") &&
+			newContent.contains("ServiceUtil.")) {
+
+			processErrorMessage(
+				fileName,
+				"OSGI Component should not call ServiceUtil: " + fileName);
+		}
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(
@@ -949,6 +960,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (portalSource) {
 			fileNames = getPortalJavaFiles();
 
+			_checkModulesServiceUtil = GetterUtil.getBoolean(
+				System.getProperty(
+					"source.formatter.check.modules.service.util"));
 			_checkUnprocessedExceptions = GetterUtil.getBoolean(
 				System.getProperty(
 					"source.formatter.check.unprocessed.exceptions"));
@@ -3221,6 +3235,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
+	private boolean _checkModulesServiceUtil;
 	private boolean _checkUnprocessedExceptions;
 	private Pattern _combinedLinesPattern1 = Pattern.compile(
 		"\n(\t*).+(=|\\]) (\\{)\n");

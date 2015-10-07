@@ -18,6 +18,8 @@ import com.liferay.marketplace.store.web.oauth.util.OAuthManager;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -50,6 +52,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.scribe.model.OAuthConstants;
 import org.scribe.model.OAuthRequest;
@@ -212,6 +215,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			oAuthService.signRequest(token, oAuthRequest);
 		}
 
+		oAuthRequest.setFollowRedirects(false);
+
 		return oAuthRequest.send();
 	}
 
@@ -248,7 +253,23 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		addOAuthParameter(
 			oAuthRequest, "p_p_state", WindowState.NORMAL.toString());
 
-		getResponse(themeDisplay.getUser(), oAuthRequest);
+		Response response = getResponse(themeDisplay.getUser(), oAuthRequest);
+
+		if (response.getCode() == HttpServletResponse.SC_FOUND) {
+			String redirectLocation = response.getHeader(HttpHeaders.LOCATION);
+
+			actionResponse.sendRedirect(redirectLocation);
+		}
+		else {
+			HttpServletResponse httpServletResponse =
+				PortalUtil.getHttpServletResponse(actionResponse);
+
+			httpServletResponse.setContentType(
+				response.getHeader(HttpHeaders.CONTENT_TYPE));
+
+			ServletResponseUtil.write(
+				httpServletResponse, response.getStream());
+		}
 	}
 
 	protected void remoteRender(
@@ -304,12 +325,12 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		addOAuthParameter(oAuthRequest, "clientAuthToken", clientAuthToken);
 
-		addOAuthParameter(
-			oAuthRequest, "clientPortletNamespace",
-			portletResponse.getNamespace());
-		addOAuthParameter(
-			oAuthRequest, "clientURL",
-			PortalUtil.getCurrentURL(portletRequest));
+		addOAuthParameter(oAuthRequest, "clientPortletId", getPortletName());
+
+		String clientURL = PortalUtil.getCurrentCompleteURL(httpServletRequest);
+
+		addOAuthParameter(oAuthRequest, "clientURL", clientURL);
+
 		addOAuthParameter(oAuthRequest, "p_p_id", getServerPortletId());
 	}
 

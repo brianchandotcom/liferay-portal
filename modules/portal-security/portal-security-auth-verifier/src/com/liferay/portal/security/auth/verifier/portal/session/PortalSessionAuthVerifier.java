@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier;
+package com.liferay.portal.security.auth.verifier.portal.session;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -27,18 +27,9 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Tomas Polesovsky
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.PortalSessionAuthVerifier.hosts.allowed=",
-		"auth.verifier.PortalSessionAuthVerifier.urls.includes=/api/json/*,/api/jsonws/*,/c/portal/json_service/*"
-	}
-)
 public class PortalSessionAuthVerifier implements AuthVerifier {
 
 	public static final String AUTH_TYPE = HttpServletRequest.FORM_AUTH;

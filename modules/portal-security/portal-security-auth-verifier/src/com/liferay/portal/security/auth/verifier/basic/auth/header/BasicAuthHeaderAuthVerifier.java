@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
@@ -28,21 +29,9 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Tomas Polesovsky
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.BasicAuthHeaderAuthVerifier.basic_auth=false",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.hosts.allowed=",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.urls.excludes=/api/liferay/*",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/api/*,/xmlrpc/*"
-	},
-	service = AuthVerifier.class
-)
 public class BasicAuthHeaderAuthVerifier
 	extends BasicAuthHeaderAutoLogin implements AuthVerifier {
 
@@ -70,11 +59,13 @@ public class BasicAuthHeaderAuthVerifier
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}
 			else {
-
-				// Deprecated
-
 				boolean forcedBasicAuth = MapUtil.getBoolean(
 					accessControlContext.getSettings(), "basic_auth");
+
+				if (!forcedBasicAuth) {
+					forcedBasicAuth = GetterUtil.getBoolean(
+						properties.getProperty("basic_auth"));
+				}
 
 				if (forcedBasicAuth) {
 					HttpAuthorizationHeader httpAuthorizationHeader =

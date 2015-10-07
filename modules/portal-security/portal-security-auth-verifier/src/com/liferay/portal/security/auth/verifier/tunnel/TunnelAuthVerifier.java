@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier;
+package com.liferay.portal.security.auth.verifier.tunnel;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,22 +35,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Zsolt Berentey
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=255.255.255.255",
-		"auth.verifier.TunnelingServletAuthVerifier.urls.excludes=",
-		"auth.verifier.TunnelingServletAuthVerifier.urls.includes=/api/liferay/do",
-		"service.access.policy.name=DEFAULT_USER"
-	}
-)
-public class TunnelingServletAuthVerifier implements AuthVerifier {
+public class TunnelAuthVerifier implements AuthVerifier {
 
 	@Activate
 	@Modified
@@ -79,7 +69,7 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 
 				String serviceAccessPolicyName = (String)_properties.get(
-					"service.access.policy.name");
+					"service.access.profile.name");
 
 				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
 					serviceAccessPolicyName);
@@ -129,7 +119,7 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TunnelingServletAuthVerifier.class);
+		TunnelAuthVerifier.class);
 
 	private Map<String, Object> _properties;
 

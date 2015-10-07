@@ -114,7 +114,7 @@
 <!--CONTROL_PANEL_USERS_USER_GROUPS_GENERAL_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_USER_GROUPS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX</td>
-	<td>//input[@value='127ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@
 <!--CONTROL_PANEL_USERS_USER_GROUPS_RESOURCE_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_USER_GROUPS_RESOURCE_PERMISSIONS_USER_GROUP_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.UserGroupVIEW']</td>
+	<td>//input[contains(@value,'UserGroupVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,7 +136,7 @@
 <!--CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX</td>
-	<td>//input[@value='128ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL']</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,12 +147,12 @@
 <!--CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.RoleVIEW']</td>
+	<td>//input[contains(@value,'RoleVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_ASSIGN_MEMBERS_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.RoleASSIGN_MEMBERS']</td>
+	<td>//input[contains(@value,'RoleASSIGN_MEMBERS')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -163,7 +163,7 @@
 <!--CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX</td>
-	<td>//input[@value='134ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,32 +174,32 @@
 <!--CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>//input[contains(@value,'GroupMANAGE_LAYOUTS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_PREVIEW_IN_DEVICE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupPREVIEW_IN_DEVICE']</td>
+	<td>//input[contains(@value,'GroupPREVIEW_IN_DEVICE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupVIEW']</td>
+	<td>//input[contains(@value,'GroupVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_STAGING_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupVIEW_STAGING']</td>
+	<td>//input[contains(@value,'GroupVIEW_STAGING')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_ASSIGN_MEMBERS_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupASSIGN_MEMBERS']</td>
+	<td>//input[contains(@value,'GroupASSIGN_MEMBERS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_ASSIGN_USER_ROLES_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupASSIGN_USER_ROLES']</td>
+	<td>//input[contains(@value,'GroupASSIGN_USER_ROLES')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,7 +215,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='156ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -231,32 +231,32 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_ADD_SITE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupADD_COMMUNITY']</td>
+	<td>//input[contains(@value,'GroupADD_COMMUNITY')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupVIEW_SITE_ADMINISTRATION']</td>
+	<td>//input[contains(@value,'GroupVIEW_SITE_ADMINISTRATION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_ANNOUNCEMENTS_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_ANNOUNCEMENTS']</td>
+	<td>//input[contains(@value,'GroupMANAGE_ANNOUNCEMENTS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>//input[contains(@value,'GroupMANAGE_LAYOUTS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_SUBSITES_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_SUBGROUPS']</td>
+	<td>//input[contains(@value,'GroupMANAGE_SUBGROUPS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_UPDATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.GroupUPDATE']</td>
+	<td>//input[contains(@value,'GroupUPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -272,12 +272,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_CUSTOMIZE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portal.model.LayoutCUSTOMIZE']</td>
+	<td>//input[contains(@value,'LayoutCUSTOMIZE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_CUSTOMIZE_CHECKBOX</td>
-	<td>xpath=(//input[@value='com.liferay.portal.model.LayoutCUSTOMIZE'])</td>
+	<td>xpath=(//input[contains(@value,'LayoutCUSTOMIZE')])</td>
 	<td></td>
 </tr>
 <tr>
@@ -336,27 +336,27 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_FOLDER_CHECKBOX</td>
-	<td>//input[@value='com.liferay.journalADD_FOLDER']</td>
+	<td>//input[contains(@value,'journalADD_FOLDER')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_STRUCTURE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.journalADD_STRUCTURE']</td>
+	<td>//input[contains(@value,'journalADD_STRUCTURE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_TEMPLATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.journalADD_TEMPLATE']</td>
+	<td>//input[contains(@value,'journalADD_TEMPLATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX</td>
-	<td>//input[@value='com.liferay.journalADD_ARTICLE']</td>
+	<td>//input[contains(@value,'journalADD_ARTICLE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.journalVIEW']</td>
+	<td>//input[contains(@value,'journalVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -427,12 +427,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='199ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[@value='199VIEW']</td>
+	<td>//input[contains(@value,'VIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -443,28 +443,28 @@
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
+	<td>//input[contains(@value,'documentlibraryADD_DOCUMENT')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_FOLDER_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibraryADD_FOLDER']</td>
+	<td>//input[contains(@value,'documentlibraryADD_FOLDER')]</td>
 	<td></td>
 </tr>
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFolderADD_DOCUMENT']</td>
+	<td>//input[contains(@value,'DLFolderADD_DOCUMENT')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_ADD_SUBFOLDER_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFolderADD_SUBFOLDER']</td>
+	<td>//input[contains(@value,'DLFolderADD_SUBFOLDER')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_UPDATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFolderUPDATE']</td>
+	<td>//input[contains(@value,'DLFolderUPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -475,12 +475,12 @@
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_DELETE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryDELETE']</td>
+	<td>//input[contains(@value,'DLFileEntryDELETE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_UPDATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryUPDATE']</td>
+	<td>//input[contains(@value,'DLFileEntryUPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -491,17 +491,17 @@
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_DELETE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryTypeDELETE']</td>
+	<td>//input[contains(@value,'DLFileEntryTypeDELETE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_UPDATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryTypeUPDATE']</td>
+	<td>//input[contains(@value,'DLFileEntryTypeUPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryTypeVIEW']</td>
+	<td>//input[contains(@value,'DLFileEntryTypeVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -533,7 +533,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>//input[contains(@value,'blogsADD_ENTRY')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -548,12 +548,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogsPERMISSIONS']</td>
+	<td>//input[contains(@value,'blogsPERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogsSUBSCRIBE']</td>
+	<td>//input[contains(@value,'blogsSUBSCRIBE')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -569,37 +569,37 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryADD_DISCUSSION']</td>
+	<td>//input[contains(@value,'BlogsEntryADD_DISCUSSION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_DELETE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE']</td>
+	<td>//input[contains(@value,'BlogsEntryDELETE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE_DISCUSSION']</td>
+	<td>//input[contains(@value,'BlogsEntryDELETE_DISCUSSION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_PERMISSIONS_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryPERMISSIONS']</td>
+	<td>//input[contains(@value,'BlogsEntryPERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_UPDATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryUPDATE']</td>
+	<td>//input[contains(@value,'BlogsEntryUPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryUPDATE_DISCUSSION']</td>
+	<td>//input[contains(@value,'BlogsEntryUPDATE_DISCUSSION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']</td>
+	<td>//input[contains(@value,'BlogsEntryVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -647,7 +647,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='162ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -658,17 +658,17 @@
 <!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_ADD_CATEGORY_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.messageboardsADD_CATEGORY']</td>
+	<td>//input[contains(@value,'messageboardsADD_CATEGORY')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_ADD_MESSAGE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.messageboardsADD_MESSAGE']</td>
+	<td>//input[contains(@value,'messageboardsADD_MESSAGE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.messageboardsVIEW']</td>
+	<td>//input[contains(@value,'messageboardsVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -679,12 +679,12 @@
 <!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGE_BOARDS_CATEGORY-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGE_BOARDS_CATEGORY_ADD_MESSAGE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_MESSAGE']</td>
+	<td>//input[contains(@value,'MBCategoryADD_MESSAGE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGE_BOARDS_CATEGORY_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryVIEW']</td>
+	<td>//input[contains(@value,'MBCategoryVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -695,7 +695,7 @@
 <!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGE_BOARDS_MESSAGE-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGE_BOARDS_MESSAGE_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.messageboards.model.MBMessageVIEW']</td>
+	<td>//input[contains(@value,'MBMessageVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -743,17 +743,17 @@
 <!--SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.assetADD_CATEGORY']</td>
+	<td>//input[contains(@value,'assetADD_CATEGORY')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.assetADD_VOCABULARY']</td>
+	<td>//input[contains(@value,'assetADD_VOCABULARY')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_TAG_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.assetADD_TAG']</td>
+	<td>//input[contains(@value,'assetADD_TAG')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -764,7 +764,7 @@
 <!--SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_VOCABULARY-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_VOCABULARY_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.asset.model.AssetVocabularyVIEW']</td>
+	<td>//input[contains(@value,'AssetVocabularyVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -775,7 +775,7 @@
 <!--SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_ADD_CATEGORY_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.asset.model.AssetCategoryADD_CATEGORY']</td>
+	<td>//input[contains(@value,'AssetCategoryADD_CATEGORY')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -786,17 +786,17 @@
 <!--SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_RESOURCE_PERMISSIONS_DYNAMIC_DATA_LISTS_RECORD_SET-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_RESOURCE_PERMISSIONS_DYNAMIC_DATA_LISTS_RECORD_SET_ADD_RECORD_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.dynamicdatalists.model.DDLRecordSetADD_RECORD']</td>
+	<td>//input[contains(@value,'DDLRecordSetADD_RECORD')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_RESOURCE_PERMISSIONS_DYNAMIC_DATA_LISTS_RECORD_SET_UPDATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.dynamicdatalists.model.DDLRecordSetUPDATE']</td>
+	<td>//input[contains(@value,'DDLRecordSetUPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_RESOURCE_PERMISSIONS_DYNAMIC_DATA_LISTS_RECORD_SET_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.dynamicdatalists.model.DDLRecordSetVIEW']</td>
+	<td>//input[contains(@value,'DDLRecordSetVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -844,22 +844,22 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM</td>
-	<td>//input[@value='com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessCOMPLETE_FORM']</td>
+	<td>//input[contains(@value,'KaleoProcessCOMPLETE_FORM')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT</td>
-	<td>//input[@value='com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSUBMIT']</td>
+	<td>//input[contains(@value,'KaleoProcessSUBMIT')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE</td>
-	<td>//input[@value='com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessUPDATE']</td>
+	<td>//input[contains(@value,'KaleoProcessUPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW</td>
-	<td>//input[@value='com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessVIEW']</td>
+	<td>//input[contains(@value,'KaleoProcessVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -896,12 +896,12 @@
 <!--SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.bookmarks.model.BookmarksEntryVIEW']</td>
+	<td>//input[contains(@value,'BookmarksEntryVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHANGE_LINK</td>
-	<td>//a[contains(@id,'comliferaybookmarksmodelBookmarksEntryVIEW')]/span[contains(.,'Change')]</td>
+	<td>//a[contains(@id,'BookmarksEntryVIEW')]/span[contains(.,'Change')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -943,12 +943,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
+	<td>//input[contains(@value,'documentlibraryADD_DOCUMENT')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibraryADD_REPOSITORY']</td>
+	<td>//input[contains(@value,'documentlibraryADD_REPOSITORY')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -964,7 +964,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryVIEW']</td>
+	<td>//input[contains(@value,'DLFileEntryVIEW')]</td>
 	<td></td>
 </tr>
 <tr>

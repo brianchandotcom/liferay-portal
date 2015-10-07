@@ -135,11 +135,6 @@ public class VerifyProcessTracker {
 			VerifyProcessTrackerConfiguration.class, properties);
 
 		try {
-			_releases = ServiceTrackerMapFactory.singleValueMap(
-				bundleContext, Release.class, "release.bundle.symbolic.name");
-
-			_releases.open();
-
 			VerifyServiceTrackerMapListener verifyServiceTrackerMapListener =
 				null;
 
@@ -170,8 +165,6 @@ public class VerifyProcessTracker {
 
 	@Deactivate
 	protected void deactivate() {
-		_releases.close();
-
 		_verifyProcesses.close();
 	}
 
@@ -263,7 +256,6 @@ public class VerifyProcessTracker {
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
-	private ServiceTrackerMap<String, Release> _releases;
 	private ServiceTrackerMap<String, VerifyProcess> _verifyProcesses;
 	private VerifyProcessTrackerConfiguration
 		_verifyProcessTrackerConfiguration;
@@ -278,7 +270,7 @@ public class VerifyProcessTracker {
 			String key, VerifyProcess serviceVerifyProcess,
 			VerifyProcess contentVerifyProcess) {
 
-			Release release = _releases.getService(key);
+			Release release = _releaseLocalService.fetchRelease(key);
 
 			if ((release == null) || release.isVerified()) {
 				return;

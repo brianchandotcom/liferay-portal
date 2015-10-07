@@ -1,5 +1,8 @@
 dependencies {
-	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
+	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
 	compile project(":apps:blogs:blogs-web")
 	compile project(":apps:document-library:document-library-web")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
@@ -13,6 +16,8 @@ dependencies {
 	compile project(":apps:message-boards:message-boards-web")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-service")
+
+	testCompile group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
 }
 
 liferay {

@@ -11,7 +11,7 @@
 		<tag-class>com.liferay.taglib.aui.ButtonItemTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[Whether to track the active state of the button.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+			<description><![CDATA[Whether to track the active state of the button<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 			<name>activeState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -20,14 +20,14 @@
 		<attribute>
 			<description><![CDATA[The outermost DOM node for the Widget, used for sizing and positioning
 	of a Widget as well as a containing element for any decorator elements used
-	for skinning.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	for skinning<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 			<name>boundingBox</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An object map of the CSS class names to use for the different interaction states.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
+			<description><![CDATA[An object map of the CSS class names to use for the different interaction states<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
 			<name>classNames</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -35,14 +35,14 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[A DOM node that is a direct descendant of a Widget's bounding box that
-	houses its content.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	houses its content<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 			<name>contentBox</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[CSS class to be automatically added to the <code>boundingBox</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+			<description><![CDATA[CSS class to be automatically added to the <code>boundingBox</code><!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -57,7 +57,7 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[Number representing the depth of this Widget relative to
-	the root Widget in the object heirarchy.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"-1"}-->]]></description>
+	the root Widget in the object heirarchy<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"-1"}-->]]></description>
 			<name>depth</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -65,7 +65,7 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[Flag indicating whether or not this object
-	has been through the destroy lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	has been through the destroy lifecycle phase<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 			<name>destroyed</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -81,7 +81,7 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[Boolean indicating if the Widget, or one of its descendants,
-	has focus.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	has focus<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 			<name>focused</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -111,14 +111,14 @@
 		<attribute>
 			<description><![CDATA[css class added to hide the <code>boundingBox</code> when
 	<a href="Component.html#config_visible">visible</a> is set to
-	<code>false</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"aui-hide"}-->]]></description>
+	<code>false</code><!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"aui-hide"}-->]]></description>
 			<name>hideClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to track the hover interaction state of the button.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+			<description><![CDATA[Whether to track the hover interaction state of the button<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
 			<name>hoverState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -149,7 +149,7 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[Number representing the Widget's ordinal position in its
-	parent Widget.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"0"}-->]]></description>
+	parent Widget<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"0"}-->]]></description>
 			<name>index</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -157,14 +157,14 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[Flag indicating whether or not this object
-	has been through the init lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	has been through the init lifecycle phase<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 			<name>initialized</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to use inside of the button.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+			<description><![CDATA[Text to use inside of the button<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -180,7 +180,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Retrieves the parent of the Widget in the object hierarchy.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+			<description><![CDATA[Retrieves the parent of the Widget in the object hierarchy<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
 			<name>buttonitemParent</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -188,7 +188,7 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[If <code>true</code> the render phase will be autimatically invoked
-	preventing the <code>.render()</code> manual call.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false,"defaultValue":"false"}-->]]></description>
+	preventing the <code>.render()</code> manual call<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false,"defaultValue":"false"}-->]]></description>
 			<name>render</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -196,7 +196,7 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[Flag indicating whether or not this Widget
-	has been through the render lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	has been through the render lifecycle phase<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 			<name>rendered</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -232,7 +232,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Collection of strings used to label elements of the Widget's UI.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
+			<description><![CDATA[Collection of strings used to label elements of the Widget's UI<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
 			<name>strings</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -251,14 +251,14 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to use as the title attribute of the button.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+			<description><![CDATA[Text to use as the title attribute of the button<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Button type.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"button"}-->]]></description>
+			<description><![CDATA[Button type<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"button"}-->]]></description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -266,14 +266,14 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[Boolean indicating if use of the WAI-ARIA Roles and States should be
-	enabled for the Widget.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+	enabled for the Widget<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
 			<name>useARIA</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Boolean indicating weather or not the Widget is visible.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+			<description><![CDATA[Boolean indicating weather or not the Widget is visible<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
 			<name>visible</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -898,7 +898,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -912,7 +912,7 @@
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A URL to navigate to when the link is clicked.]]></description>
+			<description><![CDATA[A URL to navigate to when the link is clicked]]></description>
 			<name>href</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -925,21 +925,21 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text for the anchor's label.]]></description>
+			<description><![CDATA[Text for the anchor's label]]></description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A language to associate with the anchor component, to assist search engines and web browsers in finding and rendering the anchor appropriately.]]></description>
+			<description><![CDATA[A language to associate with the anchor component, to assist search engines and web browsers in finding and rendering the anchor appropriately]]></description>
 			<name>lang</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -953,7 +953,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A function to be called on a user clicking the anchor.]]></description>
+			<description><![CDATA[A function to be called on a user clicking the anchor]]></description>
 			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -967,7 +967,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A title for the anchor.]]></description>
+			<description><![CDATA[A title for the anchor]]></description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1098,7 +1098,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A URL to navigate to when the button is clicked.]]></description>
+			<description><![CDATA[A URL to navigate to when the button is clicked]]></description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1119,21 +1119,21 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the button.]]></description>
+			<description><![CDATA[A name for the button]]></description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A function to be called on a user clicking the button.]]></description>
+			<description><![CDATA[A function to be called on a user clicking the button]]></description>
 			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1168,7 +1168,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display on the button.]]></description>
+			<description><![CDATA[Text to display on the button]]></description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1182,14 +1182,14 @@
 		<tag-class>com.liferay.taglib.aui.ButtonRowTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1203,14 +1203,14 @@
 		<tag-class>com.liferay.taglib.aui.ColTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1269,7 +1269,7 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1283,7 +1283,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1370,7 +1370,7 @@
 		<tag-class>com.liferay.taglib.aui.ContainerTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1384,7 +1384,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1398,7 +1398,7 @@
 		<tag-class>com.liferay.taglib.aui.FieldWrapperTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1419,7 +1419,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon.]]></description>
+			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon]]></description>
 			<name>helpMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1440,7 +1440,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text for the wrapper's label.]]></description>
+			<description><![CDATA[Text for the wrapper's label]]></description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1461,14 +1461,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the field wrapper.]]></description>
+			<description><![CDATA[A name for the field wrapper]]></description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to mark the wrapped fields as required.]]></description>
+			<description><![CDATA[Whether to mark the wrapped fields as required]]></description>
 			<name>required</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1481,35 +1481,35 @@
 		<tag-class>com.liferay.taglib.aui.FieldsetTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[Whether to display the field set as a column instead of a row.]]></description>
+			<description><![CDATA[Whether to display the field set as a column instead of a row]]></description>
 			<name>column</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon.]]></description>
+			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon]]></description>
 			<name>helpMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text for the field set's label and renders it as a legend, with a horizontal rule, above the fieldset.]]></description>
+			<description><![CDATA[Text for the field set's label and renders it as a legend, with a horizontal rule, above the fieldset]]></description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1530,14 +1530,14 @@
 		<tag-class>com.liferay.taglib.aui.FormTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[Where to send the form data when the form is submitted.]]></description>
+			<description><![CDATA[Where to send the form data when the form is submitted]]></description>
 			<name>action</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1572,7 +1572,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A function to be called on submitting the form.]]></description>
+			<description><![CDATA[A function to be called on submitting the form]]></description>
 			<name>onSubmit</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1614,7 +1614,7 @@
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1628,7 +1628,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display alongside the icon.]]></description>
+			<description><![CDATA[Text to display alongside the icon]]></description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1648,7 +1648,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A URL navigated to when the icon is clicked.]]></description>
+			<description><![CDATA[A URL navigated to when the icon is clicked]]></description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1662,21 +1662,21 @@
 		<tag-class>com.liferay.taglib.aui.InputTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[Whether to focus on the input component by default.]]></description>
+			<description><![CDATA[Whether to focus on the input component by default]]></description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to autosize the input component.]]></description>
+			<description><![CDATA[Whether to autosize the input component]]></description>
 			<name>autoSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A bean to associate with the input component.]]></description>
+			<description><![CDATA[A bean to associate with the input component]]></description>
 			<name>bean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1711,7 +1711,7 @@
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1731,7 +1731,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The default language ID for the component.]]></description>
+			<description><![CDATA[The default language ID for the component]]></description>
 			<name>defaultLanguageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1751,28 +1751,28 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A variable name to refer to the <code>field</code> of the component.]]></description>
+			<description><![CDATA[A variable name to refer to the <code>field</code> of the component]]></description>
 			<name>fieldParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the input component should be the first element of the form.]]></description>
+			<description><![CDATA[Whether the input component should be the first element of the form]]></description>
 			<name>first</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the form.]]></description>
+			<description><![CDATA[A name for the form]]></description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon.]]></description>
+			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon]]></description>
 			<name>helpMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1786,7 +1786,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1834,7 +1834,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the component should be the last element of the form.]]></description>
+			<description><![CDATA[Whether the component should be the last element of the form]]></description>
 			<name>last</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1855,7 +1855,7 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A class for the bean object.]]></description>
+			<description><![CDATA[A class for the bean object]]></description>
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1875,70 +1875,70 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the component.]]></description>
+			<description><![CDATA[A name for the component]]></description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A function to be called when the input's value changes.]]></description>
+			<description><![CDATA[A function to be called when the input's value changes]]></description>
 			<name>onChange</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A function to be called on a user clicking the input.]]></description>
+			<description><![CDATA[A function to be called on a user clicking the input]]></description>
 			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Placeholder text for the input's field.]]></description>
+			<description><![CDATA[Placeholder text for the input's field]]></description>
 			<name>placeholder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display before the input.]]></description>
+			<description><![CDATA[Text to display before the input]]></description>
 			<name>prefix</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to mark the input as required.]]></description>
+			<description><![CDATA[Whether to mark the input as required]]></description>
 			<name>required</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to make the input's field resizeable, if the input is of type <code>textarea</code>.]]></description>
+			<description><![CDATA[Whether to make the input's field resizeable, if the input is of type <code>textarea</code>]]></description>
 			<name>resizable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to show the input's required label, if an input value is required.]]></description>
+			<description><![CDATA[Whether to show the input's required label, if an input value is required]]></description>
 			<name>showRequiredLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display after the input.]]></description>
+			<description><![CDATA[Text to display after the input]]></description>
 			<name>suffix</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A title for the input.]]></description>
+			<description><![CDATA[A title for the input]]></description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1959,7 +1959,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A value for the input.]]></description>
+			<description><![CDATA[A value for the input]]></description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1973,7 +1973,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the <code>div</code> that wraps the input component.]]></description>
+			<description><![CDATA[A CSS class for styling the <code>div</code> that wraps the input component]]></description>
 			<name>wrapperCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1987,7 +1987,7 @@
 		<tag-class>com.liferay.taglib.aui.LayoutTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2001,21 +2001,21 @@
 		<tag-class>com.liferay.taglib.aui.ModelContextTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A bean associated with the model object.]]></description>
+			<description><![CDATA[A bean associated with the model object]]></description>
 			<name>bean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The default language ID for the component.]]></description>
+			<description><![CDATA[The default language ID for the component]]></description>
 			<name>defaultLanguageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A class for the bean object.]]></description>
+			<description><![CDATA[A class for the bean object]]></description>
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2028,7 +2028,7 @@
 		<tag-class>com.liferay.taglib.aui.NavTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A name for the navigation component for assistive technologies to interpret.]]></description>
+			<description><![CDATA[A name for the navigation component for assistive technologies to interpret]]></description>
 			<name>ariaLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2048,7 +2048,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2061,14 +2061,14 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A search container for the navigation component to use.]]></description>
+			<description><![CDATA[A search container for the navigation component to use]]></description>
 			<name>searchContainer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2089,14 +2089,14 @@
 		<tag-class>com.liferay.taglib.aui.NavBarTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2116,14 +2116,14 @@
 		<tag-class>com.liferay.taglib.aui.NavBarSearchTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2136,7 +2136,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A search container for the navigation bar to use.]]></description>
+			<description><![CDATA[A search container for the navigation bar to use]]></description>
 			<name>searchContainer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2150,7 +2150,7 @@
 		<tag-class>com.liferay.taglib.aui.NavItemTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the link set in the <code>href</code> attribute.]]></description>
+			<description><![CDATA[A CSS class for styling the link set in the <code>href</code> attribute]]></description>
 			<name>anchorCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2164,14 +2164,14 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the instance of the navigation item's link, set in the <code>href</code> attribute.]]></description>
+			<description><![CDATA[An ID for the instance of the navigation item's link, set in the <code>href</code> attribute]]></description>
 			<name>anchorId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the navigation item for assistive technologies to interpret.]]></description>
+			<description><![CDATA[A name for the navigation item for assistive technologies to interpret]]></description>
 			<name>ariaLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2185,7 +2185,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2206,14 +2206,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A URL navigated to when the navigation item is clicked.]]></description>
+			<description><![CDATA[A URL navigated to when the navigation item is clicked]]></description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the navigation item's icon.]]></description>
+			<description><![CDATA[A CSS class for styling the navigation item's icon]]></description>
 			<name>iconCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2226,14 +2226,14 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display for the navigation item.]]></description>
+			<description><![CDATA[Text to display for the navigation item]]></description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2266,7 +2266,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Sets the navigation item's title.]]></description>
+			<description><![CDATA[Sets the navigation item's title]]></description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2306,7 +2306,7 @@
 		<tag-class>com.liferay.taglib.aui.OptionTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2327,7 +2327,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display as the option in the select form.]]></description>
+			<description><![CDATA[Text to display as the option in the select form]]></description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2410,14 +2410,14 @@
 		<tag-class>com.liferay.taglib.aui.RowTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2431,7 +2431,7 @@
 		<tag-class>com.liferay.taglib.aui.ScriptTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A position for the script.]]></description>
+			<description><![CDATA[A position for the script]]></description>
 			<name>position</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2463,7 +2463,7 @@
 		<tag-class>com.liferay.taglib.aui.SelectTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A bean associated with the select component.]]></description>
+			<description><![CDATA[A bean associated with the select component]]></description>
 			<name>bean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2477,7 +2477,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2505,7 +2505,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon.]]></description>
+			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon]]></description>
 			<name>helpMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2539,7 +2539,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A label for the select field that is displayed above the field.]]></description>
+			<description><![CDATA[A label for the select field that is displayed above the field]]></description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2587,21 +2587,21 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A function to be called when the select field's value changes.]]></description>
+			<description><![CDATA[A function to be called when the select field's value changes]]></description>
 			<name>onChange</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A function to be called on users clicking the select field.]]></description>
+			<description><![CDATA[A function to be called on users clicking the select field]]></description>
 			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display before the select field.]]></description>
+			<description><![CDATA[Text to display before the select field]]></description>
 			<name>prefix</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2629,14 +2629,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display after the select field.]]></description>
+			<description><![CDATA[Text to display after the select field]]></description>
 			<name>suffix</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A title for the select field.]]></description>
+			<description><![CDATA[A title for the select field]]></description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2656,7 +2656,7 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the <code>div</code> that wraps the select field.]]></description>
+			<description><![CDATA[A CSS class for styling the <code>div</code> that wraps the select field]]></description>
 			<name>wrapperCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2676,14 +2676,14 @@
 		<tag-class>com.liferay.taglib.aui.TranslationManagerTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[Available locales of translation languages from which to choose.]]></description>
+			<description><![CDATA[Available locales of translation languages from which to choose]]></description>
 			<name>availableLocales</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Locale[]</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The language ID to which the translation manager defaults when no other translations are available in the user's language.]]></description>
+			<description><![CDATA[The language ID to which the translation manager defaults when no other translations are available in the user's language]]></description>
 			<name>defaultLanguageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2696,7 +2696,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2723,7 +2723,7 @@
 		<tag-class>com.liferay.taglib.aui.ValidatorTagImpl</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A custom error message to replace the default validation error message.]]></description>
+			<description><![CDATA[A custom error message to replace the default validation error message]]></description>
 			<name>errorMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2809,21 +2809,21 @@
 		<tag-class>com.liferay.taglib.aui.WorkflowStatusTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A bean associated with the workflow status component.]]></description>
+			<description><![CDATA[A bean associated with the workflow status component]]></description>
 			<name>bean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon.]]></description>
+			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon]]></description>
 			<name>helpMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2836,7 +2836,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A class for the bean object.]]></description>
+			<description><![CDATA[A class for the bean object]]></description>
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2864,14 +2864,14 @@
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A workflow status message that overrides the existing one.]]></description>
+			<description><![CDATA[A workflow status message that overrides the existing one]]></description>
 			<name>statusMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A version for the workflow status that is displayed in a label next to the workflow status.]]></description>
+			<description><![CDATA[A version for the workflow status that is displayed in a label next to the workflow status]]></description>
 			<name>version</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

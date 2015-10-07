@@ -175,7 +175,6 @@ public class ServiceBuilder {
 			GetterUtil.getString(
 				arguments.get("service.read.only.prefixes"),
 				StringUtil.merge(ServiceBuilderArgs.READ_ONLY_PREFIXES)));
-		String remotingFileName = arguments.get("service.remoting.file");
 		String[] resourceActionsConfigs = StringUtil.split(
 			GetterUtil.getString(
 				arguments.get("service.resource.actions.configs"),
@@ -210,10 +209,10 @@ public class ServiceBuilder {
 				apiDirName, autoImportDefaultReferences, autoNamespaceTables,
 				beanLocatorUtil, buildNumber, buildNumberIncrement, hbmFileName,
 				implDirName, inputFileName, modelHintsFileName, osgiModule,
-				pluginName, propsUtil, readOnlyPrefixes, remotingFileName,
-				resourceActionModels, resourcesDirName, springFileName,
-				springNamespaces, sqlDirName, sqlFileName, sqlIndexesFileName,
-				sqlSequencesFileName, targetEntityName, testDirName, true);
+				pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
+				resourcesDirName, springFileName, springNamespaces, sqlDirName,
+				sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
+				targetEntityName, testDirName, true);
 
 			String modifiedFileNames = StringUtil.merge(
 				serviceBuilder.getModifiedFileNames());
@@ -241,7 +240,6 @@ public class ServiceBuilder {
 				"\tservice.plugin.name=\n" +
 				"\tservice.props.util=com.liferay.portal.util.PropsUtil\n" +
 				"\tservice.read.only.prefixes=" + StringUtil.merge(ServiceBuilderArgs.READ_ONLY_PREFIXES) + "\n" +
-				"\tservice.remoting.file=${basedir}/../portal-web/docroot/WEB-INF/remoting-servlet.xml\n" +
 				"\tservice.resource.actions.configs=" + StringUtil.merge(ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS) + "\n" +
 				"\tservice.resources.dir=${basedir}/src\n" +
 				"\tservice.spring.file=${basedir}/src/META-INF/portal-spring.xml\n" +
@@ -284,7 +282,6 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.persistence_impl=" + _TPL_ROOT + "persistence_impl.ftl\n"+
 				"\t-Dservice.tpl.persistence_util=" + _TPL_ROOT + "persistence_util.ftl\n"+
 				"\t-Dservice.tpl.props=" + _TPL_ROOT + "props.ftl\n"+
-				"\t-Dservice.tpl.remoting_xml=" + _TPL_ROOT + "remoting_xml.ftl\n"+
 				"\t-Dservice.tpl.service=" + _TPL_ROOT + "service.ftl\n"+
 				"\t-Dservice.tpl.service_base_impl=" + _TPL_ROOT + "service_base_impl.ftl\n"+
 				"\t-Dservice.tpl.service_clp=" + _TPL_ROOT + "service_clp.ftl\n"+
@@ -421,12 +418,11 @@ public class ServiceBuilder {
 			long buildNumber, boolean buildNumberIncrement, String hbmFileName,
 			String implDirName, String inputFileName, String modelHintsFileName,
 			boolean osgiModule, String pluginName, String propsUtil,
-			String[] readOnlyPrefixes, String remotingFileName,
-			Set<String> resourceActionModels, String resourcesDirName,
-			String springFileName, String[] springNamespaces, String sqlDirName,
-			String sqlFileName, String sqlIndexesFileName,
-			String sqlSequencesFileName, String targetEntityName,
-			String testDirName, boolean build)
+			String[] readOnlyPrefixes, Set<String> resourceActionModels,
+			String resourcesDirName, String springFileName,
+			String[] springNamespaces, String sqlDirName, String sqlFileName,
+			String sqlIndexesFileName, String sqlSequencesFileName,
+			String targetEntityName, String testDirName, boolean build)
 		throws Exception {
 
 		_tplBadAliasNames = _getTplProperty(
@@ -465,7 +461,6 @@ public class ServiceBuilder {
 		_tplPersistenceUtil = _getTplProperty(
 			"persistence_util", _tplPersistenceUtil);
 		_tplProps = _getTplProperty("props", _tplProps);
-		_tplRemotingXml = _getTplProperty("remoting_xml", _tplRemotingXml);
 		_tplService = _getTplProperty("service", _tplService);
 		_tplServiceBaseImpl = _getTplProperty(
 			"service_base_impl", _tplServiceBaseImpl);
@@ -500,7 +495,6 @@ public class ServiceBuilder {
 			_pluginName = GetterUtil.getString(pluginName);
 			_propsUtil = propsUtil;
 			_readOnlyPrefixes = readOnlyPrefixes;
-			_remotingFileName = remotingFileName;
 			_resourceActionModels = resourceActionModels;
 			_resourcesDirName = resourcesDirName;
 			_springFileName = springFileName;
@@ -807,10 +801,10 @@ public class ServiceBuilder {
 			String hbmFileName, String implDir, String inputFileName,
 			String modelHintsFileName, boolean osgiModule, String pluginName,
 			String propsUtil, String[] readOnlyPrefixes,
-			String remotingFileName, Set<String> resourceActionModels,
-			String resourcesDir, String springFileName,
-			String[] springNamespaces, String sqlDir, String sqlFileName,
-			String sqlIndexesFileName, String sqlSequencesFileName,
+			Set<String> resourceActionModels, String resourcesDir,
+			String springFileName, String[] springNamespaces, String sqlDir,
+			String sqlFileName, String sqlIndexesFileName,
+			String sqlSequencesFileName,
 			String targetEntityName, String testDir)
 		throws Exception {
 
@@ -818,8 +812,8 @@ public class ServiceBuilder {
 			apiDir, autoImportDefaultReferences, autoNamespaceTables,
 			beanLocatorUtil, 1, true, hbmFileName, implDir, inputFileName,
 			modelHintsFileName, osgiModule, pluginName, propsUtil,
-			readOnlyPrefixes, remotingFileName, resourceActionModels,
-			resourcesDir, springFileName, springNamespaces, sqlDir, sqlFileName,
+			readOnlyPrefixes, resourceActionModels, resourcesDir,
+			springFileName, springNamespaces, sqlDir, sqlFileName,
 			sqlIndexesFileName, sqlSequencesFileName, targetEntityName, testDir,
 			true);
 	}
@@ -1079,10 +1073,9 @@ public class ServiceBuilder {
 			_beanLocatorUtil, _buildNumber, _buildNumberIncrement, _hbmFileName,
 			_implDirName, refFile.getAbsolutePath(), _modelHintsFileName,
 			_osgiModule, _pluginName, _propsUtil, _readOnlyPrefixes,
-			_remotingFileName, _resourceActionModels, _resourcesDirName,
-			_springFileName, _springNamespaces, _sqlDirName, _sqlFileName,
-			_sqlIndexesFileName, _sqlSequencesFileName, _targetEntityName,
-			_testDirName, false);
+			_resourceActionModels, _resourcesDirName, _springFileName,
+			_springNamespaces, _sqlDirName, _sqlFileName, _sqlIndexesFileName,
+			_sqlSequencesFileName, _targetEntityName, _testDirName, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -2693,92 +2686,6 @@ public class ServiceBuilder {
 		// Write file
 
 		ToolsUtil.writeFileRaw(propsFile, content, _modifiedFileNames);
-	}
-
-	private void _createRemotingXml() throws Exception {
-		StringBundler sb = new StringBundler();
-
-		SAXReader saxReader = _getSAXReader();
-
-		Document document = saxReader.read(new File(_springFileName));
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> beanElements = rootElement.elements("bean");
-
-		for (Element beanElement : beanElements) {
-			String beanId = beanElement.attributeValue("id");
-
-			if (beanId.endsWith("Service") &&
-				!beanId.endsWith("LocalService")) {
-
-				String entityName = beanId;
-
-				entityName = StringUtil.replaceLast(
-					entityName, ".service.", ".");
-
-				int pos = entityName.lastIndexOf("Service");
-
-				entityName = entityName.substring(0, pos);
-
-				Entity entity = getEntity(entityName);
-
-				String serviceName = beanId;
-
-				String serviceMapping = serviceName;
-
-				serviceMapping = StringUtil.replaceLast(
-					serviceMapping, ".service.", ".service.spring.");
-				serviceMapping = StringUtil.replace(
-					serviceMapping, StringPool.PERIOD, StringPool.UNDERLINE);
-
-				Map<String, Object> context = _getContext();
-
-				context.put("entity", entity);
-				context.put("serviceName", serviceName);
-				context.put("serviceMapping", serviceMapping);
-
-				sb.append(_processTemplate(_tplRemotingXml, context));
-			}
-		}
-
-		File outputFile = new File(_remotingFileName);
-
-		if (!outputFile.exists()) {
-			return;
-		}
-
-		String content = _read(outputFile);
-		String newContent = content;
-
-		int x = content.indexOf("<bean ");
-		int y = content.lastIndexOf("</bean>") + 8;
-
-		if (x != -1) {
-			newContent =
-				content.substring(0, x - 1) + sb.toString() +
-					content.substring(y);
-		}
-		else {
-			x = content.indexOf("</beans>");
-
-			if (x != -1) {
-				newContent =
-					content.substring(0, x) + sb.toString() +
-						content.substring(x);
-			}
-			else {
-				x = content.indexOf("<beans/>");
-				y = x + 8;
-
-				newContent =
-					content.substring(0, x) + "<beans>" + sb.toString() +
-						"</beans>" + content.substring(y);
-			}
-		}
-
-		ToolsUtil.writeFileRaw(
-			outputFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createService(Entity entity, int sessionType)
@@ -5276,7 +5183,6 @@ public class ServiceBuilder {
 	private String _portletShortName = StringPool.BLANK;
 	private String _propsUtil;
 	private String[] _readOnlyPrefixes;
-	private String _remotingFileName;
 	private Set<String> _resourceActionModels = new HashSet<>();
 	private String _resourcesDirName;
 	private String _serviceOutputPath;
@@ -5322,7 +5228,6 @@ public class ServiceBuilder {
 	private String _tplPersistenceTest = _TPL_ROOT + "persistence_test.ftl";
 	private String _tplPersistenceUtil = _TPL_ROOT + "persistence_util.ftl";
 	private String _tplProps = _TPL_ROOT + "props.ftl";
-	private String _tplRemotingXml = _TPL_ROOT + "remoting_xml.ftl";
 	private String _tplService = _TPL_ROOT + "service.ftl";
 	private String _tplServiceBaseImpl = _TPL_ROOT + "service_base_impl.ftl";
 	private String _tplServiceClp = _TPL_ROOT + "service_clp.ftl";

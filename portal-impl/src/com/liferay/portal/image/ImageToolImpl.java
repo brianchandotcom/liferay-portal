@@ -664,7 +664,34 @@ public class ImageToolImpl implements ImageTool {
 		return _imageMagick;
 	}
 
-	protected void orderImageReaderServiceProviders() {
+	protected byte[] toMultiByte(int intValue) {
+		int numBits = 32;
+		int mask = 0x80000000;
+
+		while ((mask != 0) && ((intValue & mask) == 0)) {
+			numBits--;
+			mask >>>= 1;
+		}
+
+		int numBitsLeft = numBits;
+		byte[] multiBytes = new byte[(numBitsLeft + 6) / 7];
+
+		int maxIndex = multiBytes.length - 1;
+
+		for (int b = 0; b <= maxIndex; b++) {
+			multiBytes[b] = (byte)((intValue >>> ((maxIndex - b) * 7)) & 0x7f);
+
+			if (b != maxIndex) {
+				multiBytes[b] |= (byte)0x80;
+			}
+		}
+
+		return multiBytes;
+	}
+
+	private ImageToolImpl() {
+		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
+
 		IIORegistry defaultInstance = IIORegistry.getDefaultInstance();
 
 		ImageReaderSpi firstProvider = null;
@@ -694,37 +721,6 @@ public class ImageToolImpl implements ImageTool {
 			defaultInstance.setOrdering(
 				ImageReaderSpi.class, firstProvider, secondProvider);
 		}
-	}
-
-	protected byte[] toMultiByte(int intValue) {
-		int numBits = 32;
-		int mask = 0x80000000;
-
-		while ((mask != 0) && ((intValue & mask) == 0)) {
-			numBits--;
-			mask >>>= 1;
-		}
-
-		int numBitsLeft = numBits;
-		byte[] multiBytes = new byte[(numBitsLeft + 6) / 7];
-
-		int maxIndex = multiBytes.length - 1;
-
-		for (int b = 0; b <= maxIndex; b++) {
-			multiBytes[b] = (byte)((intValue >>> ((maxIndex - b) * 7)) & 0x7f);
-
-			if (b != maxIndex) {
-				multiBytes[b] |= (byte)0x80;
-			}
-		}
-
-		return multiBytes;
-	}
-
-	private ImageToolImpl() {
-		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
-
-		orderImageReaderServiceProviders();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);

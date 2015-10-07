@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,7 +94,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ps.setString(
 				14,
 				JournalConverterManagerUtil.getDDMXSD(
-					xsd, getDefaultLocale(name)));
+					xsd, getCompanyDefaultLocale(companyId)));
 			ps.setString(15, storageType);
 			ps.setInt(16, type);
 
@@ -227,6 +226,35 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		super.doUpgrade();
 	}
 
+	protected Locale getCompanyDefaultLocale(long companyId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select languageId FROM User_ WHERE defaultUser = 1 and " +
+					"companyId = ?");
+
+			ps.setLong(1, companyId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				String languageId = rs.getString("languageId");
+
+				return LocaleUtil.fromLanguageId(languageId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return LocaleUtil.getSiteDefault();
+	}
+
 	protected long getCompanyGroupId(long companyId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -307,12 +335,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		long groupId, String structureId, boolean warn) {
 
 		return getDDMStructureId(groupId, 0, structureId, warn);
-	}
-
-	protected Locale getDefaultLocale(String xml) {
-		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(xml);
-
-		return LocaleUtil.fromLanguageId(defaultLanguageId);
 	}
 
 	@Override

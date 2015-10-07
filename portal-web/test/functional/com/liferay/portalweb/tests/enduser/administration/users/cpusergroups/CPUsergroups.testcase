@@ -123,7 +123,7 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 	</command>
 
@@ -388,18 +388,16 @@
 	</command>
 
 	<command name="SearchUserGroup" priority="4">
-		<var name="userGroupName" value="UG UserGroup Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
 
 		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="UserGroup#searchCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 	</command>
 

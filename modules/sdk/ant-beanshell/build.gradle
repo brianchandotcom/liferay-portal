@@ -25,6 +25,6 @@ deployJar {
 	into "../../../lib/development"
 
 	rename {
-		project.name + ".jar"
+		archivesBaseName + ".jar"
 	}
 }

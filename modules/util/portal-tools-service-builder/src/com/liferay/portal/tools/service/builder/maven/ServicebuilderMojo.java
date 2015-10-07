@@ -134,10 +134,6 @@ public class ServicebuilderMojo extends AbstractMojo {
 		_serviceBuilderArgs.setReadOnlyPrefixes(readOnlyPrefixes);
 	}
 
-	public void setRemotingFileName(String remotingFileName) {
-		_serviceBuilderArgs.setRemotingFileName(remotingFileName);
-	}
-
 	public void setResourceActionsConfigs(String resourceActionsConfigs) {
 		_serviceBuilderArgs.setResourceActionsConfigs(resourceActionsConfigs);
 	}

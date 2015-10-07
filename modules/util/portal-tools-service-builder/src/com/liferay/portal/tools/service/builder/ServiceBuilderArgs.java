@@ -82,10 +82,6 @@ public class ServiceBuilderArgs {
 		return _readOnlyPrefixes;
 	}
 
-	public String getRemotingFileName() {
-		return _remotingFileName;
-	}
-
 	public String[] getResourceActionsConfigs() {
 		return _resourceActionsConfigs;
 	}
@@ -242,10 +238,6 @@ public class ServiceBuilderArgs {
 		_setReadOnlyPrefixes(readOnlyPrefixes);
 	}
 
-	public void setRemotingFileName(String remotingFileName) {
-		_remotingFileName = remotingFileName;
-	}
-
 	public void setResourceActionsConfigs(String resourceActionsConfigs) {
 		setResourceActionsConfigs(_split(resourceActionsConfigs));
 	}
@@ -362,7 +354,6 @@ public class ServiceBuilderArgs {
 	private String _propsUtil = "com.liferay.portal.util.PropsUtil";
 	private String[] _readOnlyPrefixes = READ_ONLY_PREFIXES;
 	private boolean _readOnlyPrefixesSet;
-	private String _remotingFileName;
 	private String[] _resourceActionsConfigs = RESOURCE_ACTION_CONFIGS;
 	private boolean _resourceActionsConfigsSet;
 	private String _resourcesDirName = "src";

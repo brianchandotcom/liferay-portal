@@ -796,8 +796,8 @@ public class ServiceBuilder {
 			Set<String> resourceActionModels, String resourcesDir,
 			String springFileName, String[] springNamespaces, String sqlDir,
 			String sqlFileName, String sqlIndexesFileName,
-			String sqlSequencesFileName,
-			String targetEntityName, String testDir)
+			String sqlSequencesFileName, String targetEntityName,
+			String testDir)
 		throws Exception {
 
 		this(

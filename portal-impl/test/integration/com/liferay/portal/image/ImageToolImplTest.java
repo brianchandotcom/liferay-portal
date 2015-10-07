@@ -198,25 +198,16 @@ public class ImageToolImplTest {
 			expectedDataBuffer instanceof DataBufferInt);
 
 		if (expectedDataBuffer instanceof DataBufferByte) {
-			DataBufferByte expectedDataBufferByte =
-				(DataBufferByte)expectedDataBuffer;
-			DataBufferByte resultDataBufferByte =
-				(DataBufferByte)resultDataBuffer;
-
 			Assert.assertTrue(
 				Arrays.deepEquals(
-					expectedDataBufferByte.getBankData(),
-					resultDataBufferByte.getBankData()));
+					((DataBufferByte)expectedDataBuffer).getBankData(),
+					((DataBufferByte)resultDataBuffer).getBankData()));
 		}
 		else if (expectedDataBuffer instanceof DataBufferInt) {
-			DataBufferInt expectedDataBufferInt =
-				(DataBufferInt)expectedDataBuffer;
-			DataBufferInt resultDataBufferInt = (DataBufferInt)resultDataBuffer;
-
 			Assert.assertTrue(
 				Arrays.deepEquals(
-					expectedDataBufferInt.getBankData(),
-					resultDataBufferInt.getBankData()));
+					((DataBufferInt)expectedDataBuffer).getBankData(),
+					((DataBufferInt)resultDataBuffer).getBankData()));
 		}
 	}
 

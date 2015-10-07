@@ -19,10 +19,11 @@
 <%
 long templateId = ParamUtil.getLong(request, "templateId");
 
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
-String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
+String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");
 
 DDMStructure structure = null;
 
@@ -43,6 +44,23 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 	<portlet:param name="eventName" value="<%= eventName %>" />
 </liferay-portlet:renderURL>
 
+<%
+SearchContainer templateSearch = new TemplateSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
+%>
+
+<c:if test="<%= showToolbar %>">
+
+	<%
+	request.setAttribute(WebKeys.SEARCH_CONTAINER, templateSearch);
+	%>
+
+	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="redirect" value="<%= currentURL %>" />
+		<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+		<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	</liferay-util:include>
+</c:if>
+
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectTemplateFm">
 	<c:if test="<%= !showToolbar %>">
 		<liferay-ui:header
@@ -51,75 +69,71 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 		/>
 	</c:if>
 
-	<liferay-ui:search-container
-		searchContainer="<%= new TemplateSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED) %>"
-	>
-		<c:if test="<%= showToolbar %>">
-
-			<%
-			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-			%>
-
-			<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="redirect" value="<%= currentURL %>" />
-				<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-				<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			</liferay-util:include>
-		</c:if>
-
-		<div class="separator"><!-- --></div>
-
-		<liferay-ui:search-container-results>
-			<%@ include file="/template_search_results.jspf" %>
-		</liferay-ui:search-container-results>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
-			keyProperty="templateId"
-			modelVar="template"
+	<div class="container-fluid-1280">
+		<liferay-ui:search-container
+			searchContainer="<%= templateSearch %>"
 		>
 
-			<liferay-ui:search-container-column-text
-				name="id"
-				value="<%= String.valueOf(template.getTemplateId()) %>"
-			/>
+			<liferay-ui:search-container-results>
+				<%@ include file="/template_search_results.jspf" %>
+			</liferay-ui:search-container-results>
 
-			<liferay-ui:search-container-column-text
-				name="name"
-				value="<%= HtmlUtil.escape(template.getName(locale)) %>"
-			/>
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
+				keyProperty="templateId"
+				modelVar="template"
+			>
 
-			<liferay-ui:search-container-column-jsp
-				name="description"
-				path="/template_description.jsp"
-			/>
+				<liferay-ui:search-container-column-text
+					name="id"
+					value="<%= String.valueOf(template.getTemplateId()) %>"
+				/>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= template.getModifiedDate() %>"
-			/>
+				<liferay-ui:search-container-column-text
+					name="name"
+					value="<%= HtmlUtil.escape(template.getName(locale)) %>"
+				/>
 
-			<liferay-ui:search-container-column-text>
-				<c:if test="<%= template.getTemplateId() != templateId %>">
+				<liferay-ui:search-container-column-jsp
+					name="description"
+					path="/template_description.jsp"
+				/>
 
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
+				<liferay-ui:search-container-column-date
+					name="modified-date"
+					value="<%= template.getModifiedDate() %>"
+				/>
 
-					data.put("ddmtemplateid", template.getTemplateId());
-					data.put("ddmtemplatekey", template.getTemplateKey());
-					data.put("description", template.getDescription(locale));
-					data.put("imageurl", template.getTemplateImageURL(themeDisplay));
-					data.put("name", template.getName(locale));
-					%>
+				<liferay-ui:search-container-column-text>
+					<c:if test="<%= template.getTemplateId() != templateId %>">
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+						data.put("ddmtemplateid", template.getTemplateId());
+						data.put("ddmtemplatekey", template.getTemplateKey());
+						data.put("description", template.getDescription(locale));
+						data.put("imageurl", template.getTemplateImageURL(themeDisplay));
+						data.put("name", template.getName(locale));
+						%>
+
+						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					</c:if>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" />
+		</liferay-ui:search-container>
+	</div>
 </aui:form>
+
+<liferay-util:include page="/template_add_buttons.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="redirect" value="<%= currentURL %>" />
+	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+</liferay-util:include>
 
 <aui:script>
 	Liferay.Util.focusFormField(document.<portlet:namespace />selectTemplateFm.<portlet:namespace />keywords);

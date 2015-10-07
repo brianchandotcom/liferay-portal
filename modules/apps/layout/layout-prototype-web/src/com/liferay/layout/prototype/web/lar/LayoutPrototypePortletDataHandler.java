@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.impl.LayoutPrototypeImpl;
-import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -78,7 +78,7 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		LayoutPrototypeLocalServiceUtil.deleteNondefaultLayoutPrototypes(
+		_layoutPrototypeLocalService.deleteNondefaultLayoutPrototypes(
 			portletDataContext.getCompanyId());
 
 		return portletPreferences;
@@ -98,7 +98,7 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			LayoutPrototypeLocalServiceUtil.getExportActionableDynamicQuery(
+			_layoutPrototypeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -135,15 +135,24 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery layoutPrototypeExportActionableDynamicQuery =
-			LayoutPrototypeLocalServiceUtil.getExportActionableDynamicQuery(
+			_layoutPrototypeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		layoutPrototypeExportActionableDynamicQuery.performCount();
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

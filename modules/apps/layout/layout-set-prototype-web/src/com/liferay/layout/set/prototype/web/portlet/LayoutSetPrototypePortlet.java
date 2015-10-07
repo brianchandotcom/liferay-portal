@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
@@ -91,7 +91,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "layoutSetPrototypeIds"), 0L);
 
 		for (long layoutSetPrototypeId : layoutSetPrototypeIds) {
-			LayoutSetPrototypeServiceUtil.deleteLayoutSetPrototype(
+			_layoutSetPrototypeService.deleteLayoutSetPrototype(
 				layoutSetPrototypeId);
 		}
 	}
@@ -104,7 +104,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			actionRequest, "layoutSetPrototypeId");
 
 		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+			_layoutSetPrototypeService.getLayoutSetPrototype(
 				layoutSetPrototypeId);
 
 		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
@@ -135,7 +135,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			// Add layout prototoype
 
 			layoutSetPrototype =
-				LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(
+				_layoutSetPrototypeService.addLayoutSetPrototype(
 					nameMap, descriptionMap, active, layoutsUpdateable,
 					serviceContext);
 
@@ -149,7 +149,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			// Update layout prototoype
 
 			layoutSetPrototype =
-				LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
+				_layoutSetPrototypeService.updateLayoutSetPrototype(
 					layoutSetPrototypeId, nameMap, descriptionMap, active,
 					layoutsUpdateable, serviceContext);
 		}
@@ -166,7 +166,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			"customJspServletContextName", customJspServletContextName);
 
 		layoutSetPrototype =
-			LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
+			_layoutSetPrototypeService.updateLayoutSetPrototype(
 				layoutSetPrototype.getLayoutSetPrototypeId(),
 				settingsProperties.toString());
 
@@ -215,6 +215,13 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setLayoutSetPrototypeService(
+		LayoutSetPrototypeService layoutSetPrototypeService) {
+
+		_layoutSetPrototypeService = layoutSetPrototypeService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutSetPrototypeWebUpgrade(
 		LayoutSetPrototypeWebUpgrade layoutSetPrototypeWebUpgrade) {
 	}
@@ -231,6 +238,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
+	private LayoutSetPrototypeService _layoutSetPrototypeService;
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
 

@@ -264,7 +264,7 @@
 		<execute function="AssertClick" locator1="MenuItem#DEFINE_PERMISSIONS" value1="Define Permissions" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="Message#INFO" />
+			<condition function="IsElementPresent#isVisible" locator1="Message#INFO" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="This role does not have any permissions." />
 			</then>

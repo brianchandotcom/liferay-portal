@@ -294,6 +294,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE_DOCS</td>
+	<td>//a[@role='menuitem' and contains(.,'Google Docs')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMPERSONATE_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Impersonate User')]</td>
 	<td></td>

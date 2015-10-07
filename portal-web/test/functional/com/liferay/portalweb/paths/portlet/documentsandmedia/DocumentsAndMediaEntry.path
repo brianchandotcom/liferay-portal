@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>DocumentsAndMediaEntry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaEntry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SELECTED_DOCUMENT_TITLE</td>
+	<td>//span[contains(@id,'pickButtonTitle') and contains(.,'${key_dmDocumentTitle}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

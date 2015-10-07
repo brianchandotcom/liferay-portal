@@ -1063,7 +1063,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-13522" name="AddListRecordWithGeolocationField" priority="4">
+	<command name="AddListRecordWithGeolocationField" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -3550,7 +3550,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51926" name="ImportLAR" priority="4">
+	<command name="ImportLAR" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -3791,7 +3791,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52567" name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="4">
+	<command name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="4">
 		<var name="character1"><![CDATA[`]]></var>
 		<var name="character2"><![CDATA[~]]></var>
 		<var name="character3"><![CDATA[!]]></var>

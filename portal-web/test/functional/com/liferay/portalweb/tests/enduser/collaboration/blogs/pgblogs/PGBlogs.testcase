@@ -152,7 +152,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56528" name="AddBlogsEntryScheduled" priority="4">
+	<command name="AddBlogsEntryScheduled" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

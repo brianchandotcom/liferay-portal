@@ -1717,7 +1717,7 @@
 		<execute function="AssertTextNotPresent" value1="${userName3}" />
 	</command>
 
-	<command known-issues="SOS-2266,SOS-2267" name="ViewDeletedSiteActivities" priority="4">
+	<command name="ViewDeletedSiteActivities" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -1859,7 +1859,7 @@
 		<execute function="AssertTextNotPresent" value1="FrontPage" />
 	</command>
 
-	<command known-issues="SOS-2370" name="ViewEditedSiteActivities" priority="4">
+	<command name="ViewEditedSiteActivities" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryDescriptionEdit" value="Bookmarks Entry Description Edit" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
@@ -2059,7 +2059,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2179" name="ViewPrivateRestrictedSiteActivitiesProfileByNonMember" priority="4">
+	<command name="ViewPrivateRestrictedSiteActivitiesProfileByNonMember" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />
@@ -2175,7 +2175,7 @@
 		<execute function="AssertTextNotPresent" value1="${wikiPageContentEdit}" />
 	</command>
 
-	<command known-issues="SOS-2179" name="ViewPrivateSiteActivitiesProfileByNonMember" priority="4">
+	<command name="ViewPrivateSiteActivitiesProfileByNonMember" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />

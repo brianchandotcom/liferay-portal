@@ -340,7 +340,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14061" name="SearchChildArticleViaSearchPortletPG" priority="4">
+	<command name="SearchChildArticleViaSearchPortletPG" priority="4">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[
 				{"facets": [
@@ -436,7 +436,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14061" name="SearchKBArticleInFolderViaSearchPortlet" priority="4">
+	<command name="SearchKBArticleInFolderViaSearchPortlet" priority="4">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[
 				{"facets": [
@@ -610,7 +610,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54717" name="SearchKBArticleViaSearchPortlet" priority="4">
+	<command name="SearchKBArticleViaSearchPortlet" priority="4">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[
 				{"facets": [
@@ -696,7 +696,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14061" name="SearchKBArticleWithSpecialCharactersViaSearchPortletPG" priority="4">
+	<command name="SearchKBArticleWithSpecialCharactersViaSearchPortletPG" priority="4">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[
 				{"facets": [

@@ -17,7 +17,7 @@
 		</execute>
 	</tear-down>
 
-	<command known-issues="sales-demo" name="IFrameDemo" priority="4">
+	<command name="IFrameDemo" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="IFrame Page" />
 			<var name="pageType" value="1 Column" />
@@ -46,7 +46,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="IFramePortlet#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
 	</command>
 
-	<command known-issues="LRQA-15769" name="SalesDemo" priority="4">
+	<command name="SalesDemo" priority="4">
 		<var name="webContentContent" value="DHS Content" />
 		<var name="webContentTitle" value="DHS Title" />
 

@@ -416,7 +416,7 @@
 		<execute macro="SOProfile#editSocialNetworkNull" />
 	</command>
 
-	<command known-issues="SOS-2420" name="EditTag" priority="4">
+	<command name="EditTag" priority="4">
 		<var name="userTag" value="tag1" />
 		<var name="userTagEdit" value="tag2" />
 

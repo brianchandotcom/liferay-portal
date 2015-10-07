@@ -533,7 +533,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57228" name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
+	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoConfigurationCP">

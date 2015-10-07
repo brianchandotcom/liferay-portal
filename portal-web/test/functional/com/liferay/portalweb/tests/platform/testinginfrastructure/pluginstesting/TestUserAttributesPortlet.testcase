@@ -10,7 +10,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="Ignore" name="ViewUserAttributes" priority="4">
+	<command name="ViewUserAttributes" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test User Attributes Page" />
 		</execute>

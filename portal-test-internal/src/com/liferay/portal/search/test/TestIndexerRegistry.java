@@ -28,10 +28,9 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -68,10 +67,8 @@ public class TestIndexerRegistry implements IndexerRegistry {
 	}
 
 	@Override
-	public List<Indexer<?>> getIndexers() {
-		List<Indexer<?>> indexers = new ArrayList<>(_indexers.values());
-
-		return Collections.unmodifiableList(indexers);
+	public Set<Indexer<?>> getIndexers() {
+		return new HashSet<>(_indexers.values());
 	}
 
 	@Override

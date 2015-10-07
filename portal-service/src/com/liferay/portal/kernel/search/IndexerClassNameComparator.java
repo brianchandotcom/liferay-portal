@@ -14,27 +14,39 @@
 
 package com.liferay.portal.kernel.search;
 
-import java.util.Set;
+import java.util.Comparator;
 
 /**
- * @author Michael C. Han
+ * @author Preston Crary
  */
-public interface IndexerRegistry {
+public class IndexerClassNameComparator implements Comparator<Indexer<?>> {
 
-	public <T> Indexer<T> getIndexer(Class<T> clazz);
+	public IndexerClassNameComparator() {
+		this(false);
+	}
 
-	public <T> Indexer<T> getIndexer(String className);
+	public IndexerClassNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
 
-	public Set<Indexer<?>> getIndexers();
+	@Override
+	public int compare(Indexer<?> indexer1, Indexer<?> indexer2) {
+		String className1 = indexer1.getClassName();
+		String className2 = indexer2.getClassName();
 
-	public <T> Indexer<T> nullSafeGetIndexer(Class<T> clazz);
+		int value = className1.compareTo(className2);
 
-	public <T> Indexer<T> nullSafeGetIndexer(String className);
+		if (_ascending) {
+			return value;
+		}
 
-	public void register(Indexer<?> indexer);
+		return -value;
+	}
 
-	public void unregister(Indexer<?> indexer);
+	public boolean isAscending() {
+		return _ascending;
+	}
 
-	public void unregister(String className);
+	private final boolean _ascending;
 
 }

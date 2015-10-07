@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -92,11 +91,9 @@ public class SearchEngineInitializer implements Runnable {
 
 			SearchEngineUtil.initialize(_companyId);
 
-			List<Indexer<?>> indexers = IndexerRegistryUtil.getIndexers();
-
 			Set<String> searchEngineIds = new HashSet<>();
 
-			for (Indexer<?> indexer : indexers) {
+			for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
 				String searchEngineId = indexer.getSearchEngineId();
 
 				if (searchEngineIds.add(searchEngineId)) {

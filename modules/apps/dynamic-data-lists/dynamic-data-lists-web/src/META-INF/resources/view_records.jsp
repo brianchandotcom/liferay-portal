@@ -32,7 +32,7 @@ boolean hasDeletePermission = false;
 boolean hasUpdatePermission = false;
 boolean showAddRecordButton = false;
 
-if (editable || portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
+if (editable || ddlDisplayContext.isAdminPortlet()) {
 	hasDeletePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.DELETE);
 	hasUpdatePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
 	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD);
@@ -82,7 +82,7 @@ recordSearchContainer.setOrderByType(orderByType);
 </portlet:renderURL>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<c:if test="<%= showAddRecordButton && portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY) %>">
+	<c:if test="<%= showAddRecordButton && ddlDisplayContext.isDisplayPortlet() %>">
 		<aui:nav cssClass="navbar-nav" searchContainer="<%= recordSearchContainer %>">
 			<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
 		</aui:nav>
@@ -185,7 +185,7 @@ recordSearchContainer.setOrderByType(orderByType);
 	</aui:form>
 </div>
 
-<c:if test="<%= showAddRecordButton && portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS) %>">
+<c:if test="<%= showAddRecordButton && ddlDisplayContext.isAdminPortlet() %>">
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' url="<%= addRecordURL.toString() %>" />
 	</liferay-frontend:add-menu>

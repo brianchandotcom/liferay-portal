@@ -1116,6 +1116,37 @@
 		</run-batch-test>
 	</target>
 
+	<target name="sass-compiler-ruby">
+		<echo file="build.${env.HOSTNAME}.properties">sass.compiler.class.name=ruby</echo>
+
+		<antcall target="setup-sdk" inheritAll="false" />
+
+		<record action="start" name="${project.dir}/sass-compiler-log" />
+
+		<gradle-execute dir="modules" task="buildCSS" />
+
+		<ant dir="portal-web" target="build-css" inheritAll="false" />
+
+		<record action="stop" name="${project.dir}/sass-compiler-log" />
+
+		<fail message="The sass compiler is not using ruby.">
+			<condition>
+				<and>
+					<not>
+						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Using ruby Sass compiler" />
+					</not>
+					<or>
+						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Unable to load Ruby compiler, falling back to native" />
+						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Using native Sass compiler" />
+					</or>
+				</and>
+			</condition>
+		</fail>
+
+		<delete file="${project.dir}/sass-compiler-log" />
+		<delete file="build.${env.HOSTNAME}.properties" />
+	</target>
+
 	<target name="service-builder">
 		<property name="testray.main.component.name" value="Service Builder" />
 		<property name="testray.testcase.priority" value="4" />

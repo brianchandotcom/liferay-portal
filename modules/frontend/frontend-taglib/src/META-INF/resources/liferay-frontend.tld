@@ -27,6 +27,7 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.AddMenuItemTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>anchorData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -367,8 +367,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	}
 
 	protected void whenGetID(
-		ExtendedAttributeDefinition extendedAttributeDefinition,
-		String id) {
+		ExtendedAttributeDefinition extendedAttributeDefinition, String id) {
 
 		when(
 			extendedAttributeDefinition.getID()

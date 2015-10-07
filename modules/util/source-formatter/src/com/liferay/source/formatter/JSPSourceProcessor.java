@@ -376,6 +376,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkPrincipalException(newContent);
 
+		newContent = formatLogFileName(absolutePath, newContent);
+
 		Matcher matcher = _javaClassPattern.matcher(newContent);
 
 		if (matcher.find()) {
@@ -992,6 +994,53 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		content = beforeImports + imports + "\n" + afterImports;
 
 		return content;
+	}
+
+	protected String formatLogFileName(String absolutePath, String content) {
+		if (!isModulesFile(absolutePath) &&
+			!absolutePath.contains("/portal-web/")) {
+
+			return content;
+		}
+
+		Matcher matcher = _logPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String logFileName = StringUtil.replace(
+			absolutePath, StringPool.PERIOD, StringPool.UNDERLINE);
+
+		logFileName = StringUtil.replace(
+			logFileName, StringPool.SLASH, StringPool.PERIOD);
+
+		logFileName = StringUtil.replace(
+			logFileName, StringPool.DASH, StringPool.UNDERLINE);
+
+		int x = logFileName.lastIndexOf(".portal_web.");
+
+		if (x != -1) {
+			logFileName = logFileName.substring(x + 1);
+		}
+		else {
+			x = Math.max(
+				logFileName.lastIndexOf(".docroot."),
+				logFileName.lastIndexOf(".src.META_INF.resources."));
+
+			x = logFileName.lastIndexOf(StringPool.PERIOD, x - 1);
+
+			logFileName = "com_liferay_" + logFileName.substring(x + 1);
+
+			logFileName = StringUtil.replace(
+				logFileName,
+				new String[] {".docroot.", ".src.META_INF.resources."},
+				new String[] {StringPool.PERIOD, StringPool.PERIOD});
+		}
+
+		return StringUtil.replace(
+			content, matcher.group(),
+			"Log _log = LogFactoryUtil.getLog(\"" + logFileName + "\")");
 	}
 
 	@Override
@@ -1618,6 +1667,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"('|\")<%= (.+?) %>('|\")");
 	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
+	private final Pattern _logPattern = Pattern.compile(
+		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(

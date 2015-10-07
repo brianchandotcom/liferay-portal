@@ -177,7 +177,7 @@ public class GetterUtil {
 			}
 
 			try {
-				return new BigDecimal(valueString.trim());
+				return new BigDecimal(StringUtil.trim(valueString));
 			}
 			catch (NumberFormatException nfe) {
 				return defaultValue;
@@ -246,8 +246,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		value = value.toLowerCase();
-		value = value.trim();
+		value = StringUtil.trim(value.toLowerCase());
 
 		if (value.equals(BOOLEANS[0]) || value.equals(BOOLEANS[1]) ||
 			value.equals(BOOLEANS[2]) || value.equals(BOOLEANS[3]) ||
@@ -268,7 +267,7 @@ public class GetterUtil {
 		}
 
 		try {
-			Date date = dateFormat.parse(value.trim());
+			Date date = dateFormat.parse(StringUtil.trim(value));
 
 			if (date != null) {
 				return date;
@@ -289,7 +288,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		value = value.trim();
+		value = StringUtil.trim(value);
 
 		if (locale == null) {
 			try {
@@ -323,7 +322,7 @@ public class GetterUtil {
 		}
 
 		try {
-			return Float.parseFloat(value.trim());
+			return Float.parseFloat(StringUtil.trim(value));
 		}
 		catch (Exception e) {
 		}
@@ -336,7 +335,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		return _parseInt(value.trim(), defaultValue);
+		return _parseInt(StringUtil.trim(value), defaultValue);
 	}
 
 	public static long get(String value, long defaultValue) {
@@ -344,7 +343,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		return _parseLong(value.trim(), defaultValue);
+		return _parseLong(StringUtil.trim(value), defaultValue);
 	}
 
 	public static short get(String value, short defaultValue) {
@@ -352,7 +351,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		return _parseShort(value.trim(), defaultValue);
+		return _parseShort(StringUtil.trim(value), defaultValue);
 	}
 
 	public static String get(String value, String defaultValue) {
@@ -360,7 +359,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		value = value.trim();
+		value = StringUtil.trim(value);
 
 		if (value.indexOf(CharPool.RETURN) != -1) {
 			value = value.replaceAll(

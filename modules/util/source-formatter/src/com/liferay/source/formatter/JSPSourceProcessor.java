@@ -613,6 +613,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						"LanguageUtil.get(request,");
 				}
 
+				if (!fileName.endsWith("test.jsp") &&
+					line.contains("System.out.print")) {
+
+					processErrorMessage(
+						fileName,
+						"System.out.print: " + fileName + " " + lineCount);
+				}
+
 				if (!trimmedLine.equals("%>") && line.contains("%>") &&
 					!line.contains("--%>") && !line.contains(" %>")) {
 

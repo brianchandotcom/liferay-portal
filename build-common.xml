@@ -893,27 +893,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="artifact.name" />
 
 		<sequential>
-			<local name="artifact.file" />
-
-			<if>
-				<equals arg1="@{artifact.name}" arg2="portal-web" />
-				<then>
-					<property name="artifact.file" value="@{artifact.dir}/@{artifact.name}.war" />
-				</then>
-				<else>
-					<property name="artifact.file" value="@{artifact.dir}/@{artifact.name}.jar" />
-				</else>
-			</if>
-
-			<if>
-				<not>
-					<available file="${artifact.file}" />
-				</not>
-				<then>
-					<ant dir="@{artifact.dir}" target="jar" />
-				</then>
-			</if>
-
 			<artifact:pom
 				artifactId="@{artifact.name}"
 				groupId="com.liferay.portal"
@@ -926,7 +905,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<artifact:pom file="@{artifact.dir}/pom.xml" id="@{artifact.name}" />
 
-			<artifact:install pomRefId="@{artifact.name}" file="${artifact.file}" />
+			<if>
+				<equals arg1="@{artifact.name}" arg2="portal-web" />
+				<then>
+					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.dir}/@{artifact.name}.war" />
+				</then>
+				<else>
+					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.dir}/@{artifact.name}.jar" />
+				</else>
+			</if>
 
 			<delete file="@{artifact.dir}/pom.xml" />
 		</sequential>

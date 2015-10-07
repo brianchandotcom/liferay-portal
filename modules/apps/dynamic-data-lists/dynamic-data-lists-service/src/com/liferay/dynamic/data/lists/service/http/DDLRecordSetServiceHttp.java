@@ -16,14 +16,14 @@ package com.liferay.dynamic.data.lists.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
-
-import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
 
 /**
  * Provides the HTTP utility for the

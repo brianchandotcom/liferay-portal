@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.polls.service.http;
+package com.liferay.marketplace.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.polls.service.PollsQuestionServiceUtil;
+import com.liferay.marketplace.service.AppServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +27,7 @@ import com.liferay.portal.service.http.TunnelUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link PollsQuestionServiceUtil} service utility. The
+ * {@link AppServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
  * {@link HttpPrincipal} parameter.
@@ -47,31 +47,22 @@ import com.liferay.portal.service.http.TunnelUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author Brian Wing Shun Chan
- * @see PollsQuestionServiceSoap
+ * @author Ryan Park
+ * @see AppServiceSoap
  * @see HttpPrincipal
- * @see PollsQuestionServiceUtil
+ * @see AppServiceUtil
  * @generated
  */
 @ProviderType
-public class PollsQuestionServiceHttp {
-	public static com.liferay.polls.model.PollsQuestion addQuestion(
-		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+public class AppServiceHttp {
+	public static com.liferay.marketplace.model.App deleteApp(
+		HttpPrincipal httpPrincipal, long appId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
-					"addQuestion", _addQuestionParameterTypes0);
+			MethodKey methodKey = new MethodKey(AppServiceUtil.class,
+					"deleteApp", _deleteAppParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					titleMap, descriptionMap, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, choices, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, appId);
 
 			Object returnObj = null;
 
@@ -86,7 +77,7 @@ public class PollsQuestionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.polls.model.PollsQuestion)returnObj;
+			return (com.liferay.marketplace.model.App)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -95,15 +86,14 @@ public class PollsQuestionServiceHttp {
 		}
 	}
 
-	public static void deleteQuestion(HttpPrincipal httpPrincipal,
-		long questionId)
+	public static void installApp(HttpPrincipal httpPrincipal, long remoteAppId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
-					"deleteQuestion", _deleteQuestionParameterTypes1);
+			MethodKey methodKey = new MethodKey(AppServiceUtil.class,
+					"installApp", _installAppParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					questionId);
+					remoteAppId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -123,15 +113,42 @@ public class PollsQuestionServiceHttp {
 		}
 	}
 
-	public static com.liferay.polls.model.PollsQuestion getQuestion(
-		HttpPrincipal httpPrincipal, long questionId)
+	public static void uninstallApp(HttpPrincipal httpPrincipal,
+		long remoteAppId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
-					"getQuestion", _getQuestionParameterTypes2);
+			MethodKey methodKey = new MethodKey(AppServiceUtil.class,
+					"uninstallApp", _uninstallAppParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					questionId);
+					remoteAppId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.marketplace.model.App updateApp(
+		HttpPrincipal httpPrincipal, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AppServiceUtil.class,
+					"updateApp", _updateAppParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, file);
 
 			Object returnObj = null;
 
@@ -146,7 +163,7 @@ public class PollsQuestionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.polls.model.PollsQuestion)returnObj;
+			return (com.liferay.marketplace.model.App)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -155,62 +172,17 @@ public class PollsQuestionServiceHttp {
 		}
 	}
 
-	public static com.liferay.polls.model.PollsQuestion updateQuestion(
-		HttpPrincipal httpPrincipal, long questionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
-					"updateQuestion", _updateQuestionParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					questionId, titleMap, descriptionMap, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, choices, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.polls.model.PollsQuestion)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(PollsQuestionServiceHttp.class);
-	private static final Class<?>[] _addQuestionParameterTypes0 = new Class[] {
-			java.util.Map.class, java.util.Map.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class, java.util.List.class,
-			com.liferay.portal.service.ServiceContext.class
-		};
-	private static final Class<?>[] _deleteQuestionParameterTypes1 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(AppServiceHttp.class);
+	private static final Class<?>[] _deleteAppParameterTypes0 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getQuestionParameterTypes2 = new Class[] {
+	private static final Class<?>[] _installAppParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateQuestionParameterTypes3 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, int.class,
-			int.class, int.class, int.class, int.class, boolean.class,
-			java.util.List.class,
-			com.liferay.portal.service.ServiceContext.class
+	private static final Class<?>[] _uninstallAppParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateAppParameterTypes3 = new Class[] {
+			java.io.File.class
 		};
 }

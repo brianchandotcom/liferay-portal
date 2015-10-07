@@ -58,6 +58,7 @@
 
 	<command name="_viewEmailHeader">
 		<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
+
 		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#HEADER_TITLE" value1="${header}" />
 
 		<execute function="AssertClick" locator1="CalendarEditCalendar#NAVIGATION_NOTIFICATION_TEMPLATES_TAB" value1="Notification Templates" />

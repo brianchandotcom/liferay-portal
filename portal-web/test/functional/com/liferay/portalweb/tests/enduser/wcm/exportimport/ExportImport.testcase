@@ -325,7 +325,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportDMRootFolder" priority="4">
+	<command name="ExportImportDMRootFolder" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -416,7 +416,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportPortletWithADT" priority="4">
+	<command name="ExportImportPortletWithADT" priority="3">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Application Display Template" />
 		</execute>
@@ -618,7 +618,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportSmoke" priority="4">
+	<command name="ExportImportSmoke" priority="5">
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -778,7 +778,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWSRPUnitConverter" priority="4">
+	<command name="ExportImportWSRPUnitConverter" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="WSRP Admin" />
 		</execute>
@@ -893,7 +893,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchExportTemplate" priority="3">
+	<command name="SearchExportTemplate" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Export/Import" />
 		</execute>

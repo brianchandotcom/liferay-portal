@@ -172,7 +172,7 @@
 		</execute>
 	</command>
 
-	<command name="ActivateRemoteStaging" priority="4">
+	<command name="ActivateRemoteStaging" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<var name="siteID" value="${siteID}" />
@@ -218,7 +218,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDMDocumentStagingLocalLive" priority="4">
+	<command name="AddDMDocumentStagingLocalLive" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -387,7 +387,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertEditWebContentStaging" priority="4">
+	<command name="AssertEditWebContentStaging" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -449,7 +449,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertNoEditLink" priority="4">
+	<command name="AssertNoEditLink" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Blogs Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -553,7 +553,7 @@
 		</execute>
 	</command>
 
-	<command name="BlogsOrganizationWorkflowStaging" priority="4">
+	<command name="BlogsOrganizationWorkflowStaging" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -1068,7 +1068,7 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
-	<command name="PublishWCIncludingTextsAndImages" priority="4">
+	<command name="PublishWCIncludingTextsAndImages" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteName" value="Liferay" />
@@ -1167,7 +1167,7 @@
 		</execute>
 	</command>
 
-	<command name="PublishWCViaRemoteStaging" priority="4">
+	<command name="PublishWCViaRemoteStaging" priority="3">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -1205,7 +1205,7 @@
 		</execute>
 	</command>
 
-	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="4">
+	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="3">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -1338,7 +1338,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingPublishPortlet" priority="4">
+	<command name="StagingPublishPortlet" priority="5">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />

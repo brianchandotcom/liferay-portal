@@ -115,9 +115,11 @@ import java.util.Set;
 
 import jodd.bean.BeanUtil;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * <p>
@@ -131,6 +133,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Alexander Chow
  * @author Mate Thurzo
  */
+@Component(immediate = true)
 public class PortletDataContextImpl implements PortletDataContext {
 
 	public PortletDataContextImpl() {
@@ -2041,6 +2044,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeXStreamConfigurator"
+	)
+	protected void addXStreamConfigurator(
+		XStreamConfigurator xStreamConfigurator) {
+
+		_xStreamConfigurators.add(xStreamConfigurator);
+	}
+
 	protected ServiceContext createServiceContext(
 		Element element, String path, ClassedModel classedModel,
 		Class<?> clazz) {
@@ -2524,14 +2539,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return true;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setXStreamConfigurators(
-		List<XStreamConfigurator> xStreamConfigurators) {
+	protected void removeXSteamConfigurator(
+		XStreamConfigurator xStreamConfigurator) {
 
-		_xStreamConfigurators = xStreamConfigurators;
+		_xStreamConfigurators.remove(xStreamConfigurator);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -2580,7 +2591,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
 	private transient XStream _xStream;
-	private transient List<XStreamConfigurator> _xStreamConfigurators;
+	private transient final List<XStreamConfigurator> _xStreamConfigurators =
+		new ArrayList<>();
 	private transient ZipReader _zipReader;
 	private transient ZipWriter _zipWriter;
 

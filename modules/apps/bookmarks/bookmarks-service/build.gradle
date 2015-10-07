@@ -11,6 +11,7 @@ dependencies {
 	compile project(":apps:bookmarks:bookmarks-api")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
+	compile project(":portal:portal-upgrade")
 }
 
 liferay {

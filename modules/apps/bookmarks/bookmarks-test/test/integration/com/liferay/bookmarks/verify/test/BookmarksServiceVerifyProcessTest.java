@@ -69,8 +69,8 @@ public class BookmarksServiceVerifyProcessTest
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&((verify.process.name=com.liferay.bookmarks.service))" +
-				"(objectClass=" + VerifyProcess.class.getName() + "))");
+			"(&((verify.process.name=com.liferay.bookmarks.service)" +
+				"(objectClass=" + VerifyProcess.class.getName() + ")))");
 
 		_serviceTracker = registry.trackServices(filter);
 

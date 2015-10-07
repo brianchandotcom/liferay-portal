@@ -61,6 +61,8 @@ buildLexicon {
 		delete lexiconDestinationDir
 	}
 
+	eachFile new StripPathSegmentsAction(1)
+
 	eachFile {
 		if (name in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
 			filter {
@@ -102,9 +104,11 @@ buildLexicon {
 		}
 	}
 
-	from zipTree(lexiconZipFile)
-	includeEmptyDirs = false
-	into lexiconDestinationDir
+	into (lexiconDestinationDir.name) {
+		from zipTree(lexiconZipFile)
+		includeEmptyDirs = false
+		destinationDir lexiconDestinationDir
+	}
 
 	onlyIf {
 		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinationDir)

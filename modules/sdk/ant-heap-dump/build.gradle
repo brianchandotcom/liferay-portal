@@ -1,5 +1,7 @@
 dependencies {
 	compile group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 }
 
 liferay {

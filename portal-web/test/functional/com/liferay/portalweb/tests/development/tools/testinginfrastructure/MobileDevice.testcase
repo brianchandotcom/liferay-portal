@@ -1,5 +1,5 @@
 <definition component-name="portal-tools">
-	<property name="mobile.device.type" value="android" />
+	<property name="browser.type" value="android" />
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="BrowseGoogle" priority="4">

@@ -61,15 +61,18 @@
 			<if>
 				<not>
 					<or>
+						<equals arg1="${browser.type}" arg2="android" />
+						<equals arg1="${browser.type}" arg2="androidchrome" />
 						<equals arg1="${browser.type}" arg2="chrome" />
 						<equals arg1="${browser.type}" arg2="edge" />
 						<equals arg1="${browser.type}" arg2="firefox" />
 						<equals arg1="${browser.type}" arg2="internetexplorer" />
+						<equals arg1="${browser.type}" arg2="iossafari" />
 						<equals arg1="${browser.type}" arg2="safari" />
 					</or>
 				</not>
 				<then>
-					<fail>Please set "browser.type" to one of the following:${line.separator}chrome, edge, firefox, internetexplorer, safari.</fail>
+					<fail>Please set "browser.type" to one of the following:${line.separator}android, androidchrome, chrome, edge, firefox, internetexplorer, iossafari, or safari.</fail>
 				</then>
 			</if>
 
@@ -541,7 +544,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-testcase-property property.name="mobile.device.type" />
+			<get-testcase-property property.name="browser.type" />
 
 			<get-testcase-property property.name="testcase.url" />
 
@@ -551,7 +554,11 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<var name="test.url" value="${test.url}" />
 				</then>
 				<elseif>
-					<isset property="mobile.device.type" />
+					<or>
+						<equals arg1="${browser.type}" arg2="android" />
+						<equals arg1="${browser.type}" arg2="androidchrome" />
+						<equals arg1="${browser.type}" arg2="iossafari" />
+					</or>
 					<then>
 						<get-ip-address />
 
@@ -2260,8 +2267,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<if>
 				<or>
-					<equals arg1="${mobile.device.type}" arg2="android" />
-					<equals arg1="${mobile.device.type}" arg2="androidchrome" />
+					<equals arg1="${browser.type}" arg2="android" />
+					<equals arg1="${browser.type}" arg2="androidchrome" />
 				</or>
 				<then>
 					<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
@@ -2285,7 +2292,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</parallel>
 				</then>
 				<elseif>
-					<equals arg1="${mobile.device.type}" arg2="ios" />
+					<equals arg1="${browser.type}" arg2="iossafari" />
 					<then>
 						<parallel>
 							<daemons>
@@ -3077,7 +3084,7 @@ go]]></replacevalue>
 
 	<target name="clean-up-mobile-device">
 		<if>
-			<equals arg1="${mobile.device.type}" arg2="android" />
+			<equals arg1="${browser.type}" arg2="android" />
 			<then>
 				<stop-android-device />
 			</then>
@@ -3100,7 +3107,11 @@ go]]></replacevalue>
 		</if>
 
 		<if>
-			<isset property="mobile.device.type" />
+			<or>
+				<equals arg1="${browser.type}" arg2="android" />
+				<equals arg1="${browser.type}" arg2="androidchrome" />
+				<equals arg1="${browser.type}" arg2="iossafari" />
+			</or>
 			<then>
 				<stop-appium />
 			</then>
@@ -4154,7 +4165,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 	<target name="prepare-mobile-device">
 		<if>
-			<equals arg1="${mobile.device.type}" arg2="android" />
+			<equals arg1="${browser.type}" arg2="android" />
 			<then>
 				<start-android-device />
 			</then>
@@ -4296,19 +4307,6 @@ portal.security.manager.strategy=liferay</echo>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
 javascript.fast.load=false</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="mobile.device.type" />
-
-		<if>
-			<isset property="mobile.device.type" />
-			<then>
-				<get-ip-address />
-
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}</echo>
 			</then>
 		</if>
 
@@ -4737,11 +4735,9 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<antcall target="prepare-selenium-app-server-properties" />
-		<antcall target="prepare-selenium-browser-properties" />
+		<antcall target="prepare-selenium-browser" />
 		<antcall target="prepare-selenium-database-properties" />
-		<antcall target="prepare-selenium-driver" />
 		<antcall target="prepare-selenium-email-properties" />
-		<antcall target="prepare-selenium-mobile-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
@@ -4920,19 +4916,87 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
-	<target name="prepare-selenium-browser-properties">
+	<target name="prepare-selenium-browser">
 		<echo append="true" file="${test.ext.properties.file}">
 			browser.type=${browser.type}
-			selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
-			selenium.chrome.driver.version=${selenium.chrome.driver.version}
-			selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
-			selenium.desired.capabilities.version=${selenium.desired.capabilities.version}
-			selenium.executable.dir.name=${selenium.executable.dir.name}
-			selenium.ie.driver.executable=${selenium.ie.driver.executable}
-			selenium.ie.driver.version=${selenium.ie.driver.version}
-			selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
-			selenium.remote.driver.hub=${selenium.remote.driver.hub}
 		</echo>
+
+		<if>
+			<or>
+				<equals arg1="${browser.type}" arg2="android" />
+				<equals arg1="${browser.type}" arg2="androidchrome" />
+				<equals arg1="${browser.type}" arg2="iossafari" />
+			</or>
+			<then>
+				<start-appium />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					mobile.android.home=${mobile.android.home}
+					mobile.browser=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="androidchrome" />
+			<then>
+				<exec executable="/bin/bash" outputproperty="mobile.device.name" os="${os.apple},${os.unix}">
+					<arg value="-c" />
+					<arg value="${mobile.android.home}/platform-tools/adb devices" />
+				</exec>
+
+				<propertyregex input="${mobile.device.name}" override="true" property="mobile.device.name" regexp=".*\n([A-z0-9]*)" select="\1" />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					mobile.device.name=${mobile.device.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="chrome" />
+			<then>
+				<prepare-chrome-driver />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
+					selenium.chrome.driver.version=${selenium.chrome.driver.version}
+					selenium.executable.dir.name=${selenium.executable.dir.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="internetexplorer" />
+			<then>
+				<prepare-ie-driver />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					selenium.executable.dir.name=${selenium.executable.dir.name}
+					selenium.ie.driver.executable=${selenium.ie.driver.executable}
+					selenium.ie.driver.version=${selenium.ie.driver.version}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="safari" />
+			<then>
+				<prepare-safari-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${selenium.remote.driver.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
+					selenium.desired.capabilities.version=${selenium.desired.capabilities.version}
+					selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
+					selenium.remote.driver.hub=${selenium.remote.driver.hub}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-selenium-database-properties">
@@ -5158,36 +5222,6 @@ module.framework.properties.osgi.console=11312</echo>
 				<echo append="true" file="${test.ext.properties.file}">
 					database.type=${database.type}
 				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-driver">
-		<if>
-			<equals arg1="${browser.type}" arg2="chrome" />
-			<then>
-				<prepare-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="internetexplorer" />
-			<then>
-				<prepare-ie-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="safari" />
-			<then>
-				<prepare-safari-driver />
-			</then>
-		</if>
-
-		<if>
-			<isset property="mobile.device.type" />
-			<then>
-				<start-appium />
 			</then>
 		</if>
 	</target>
@@ -5455,31 +5489,6 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
-	<target name="prepare-selenium-mobile-properties">
-		<if>
-			<equals arg1="${mobile.device.type}" arg2="androidchrome" />
-			<then>
-				<exec executable="/bin/bash" outputproperty="mobile.device.name" os="${os.apple},${os.unix}">
-					<arg value="-c" />
-					<arg value="${mobile.android.home}/platform-tools/adb devices" />
-				</exec>
-
-				<propertyregex input="${mobile.device.name}" override="true" property="mobile.device.name" regexp=".*\n([A-z0-9]*)" select="\1" />
-			</then>
-		</if>
-
-		<if>
-			<isset property="mobile.device.type" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					mobile.android.home=${mobile.android.home}
-					mobile.device.name=${mobile.device.name}
-					mobile.device.type=${mobile.device.type}
-				</echo>
-			</then>
-		</if>
-	</target>
-
 	<target name="prepare-selenium-required-properties">
 		<get-test-url />
 
@@ -5492,6 +5501,35 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium-testcase-properties">
+		<get-testcase-property property.name="browser.type" />
+
+		<if>
+			<or>
+				<equals arg1="${browser.type}" arg2="android" />
+				<equals arg1="${browser.type}" arg2="androidchrome" />
+				<equals arg1="${browser.type}" arg2="iossafari" />
+			</or>
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					mobile.browser=true
+				</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="cmis.repository.type" />
+
+		<if>
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
+				</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="ignore.errors" />
 
 		<if>
@@ -5510,31 +5548,6 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					ignore.errors.delimiter=${ignore.errors.delimiter}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="mobile.device.type" />
-
-		<if>
-			<isset property="mobile.device.type" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					mobile.device.type=${mobile.device.type}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="cmis.repository.type" />
-
-		<if>
-			<or>
-				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
-				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
-			</or>
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
 				</echo>
 			</then>
 		</if>

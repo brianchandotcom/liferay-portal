@@ -87,7 +87,6 @@ public class BuildServiceTask extends JavaExec {
 		args.add(
 			"service.read.only.prefixes=" +
 				StringUtil.merge(getReadOnlyPrefixes(), ","));
-		args.add("service.remoting.file=" + getRemotingFileName());
 		args.add(
 			"service.resource.actions.configs=" +
 				StringUtil.merge(getResourceActionsConfigs(), ","));
@@ -168,10 +167,6 @@ public class BuildServiceTask extends JavaExec {
 
 	public String[] getReadOnlyPrefixes() {
 		return _serviceBuilderArgs.getReadOnlyPrefixes();
-	}
-
-	public String getRemotingFileName() {
-		return _serviceBuilderArgs.getRemotingFileName();
 	}
 
 	public String[] getResourceActionsConfigs() {
@@ -321,10 +316,6 @@ public class BuildServiceTask extends JavaExec {
 
 	public void setReadOnlyPrefixes(String[] readOnlyPrefixes) {
 		_serviceBuilderArgs.setReadOnlyPrefixes(readOnlyPrefixes);
-	}
-
-	public void setRemotingFileName(String remotingFileName) {
-		_serviceBuilderArgs.setRemotingFileName(remotingFileName);
 	}
 
 	public void setResourceActionsConfigs(String[] resourceActionsConfigs) {

@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.polls.service.http;
+package com.liferay.portal.background.task.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.polls.service.PollsVoteServiceUtil;
-
+import com.liferay.portal.background.task.service.BackgroundTaskServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -27,7 +26,7 @@ import com.liferay.portal.service.http.TunnelUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link PollsVoteServiceUtil} service utility. The
+ * {@link BackgroundTaskServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
  * {@link HttpPrincipal} parameter.
@@ -48,23 +47,23 @@ import com.liferay.portal.service.http.TunnelUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see PollsVoteServiceSoap
+ * @see BackgroundTaskServiceSoap
  * @see HttpPrincipal
- * @see PollsVoteServiceUtil
+ * @see BackgroundTaskServiceUtil
  * @generated
  */
 @ProviderType
-public class PollsVoteServiceHttp {
-	public static com.liferay.polls.model.PollsVote addVote(
-		HttpPrincipal httpPrincipal, long questionId, long choiceId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+public class BackgroundTaskServiceHttp {
+	public static int getBackgroundTasksCount(HttpPrincipal httpPrincipal,
+		long groupId, java.lang.String taskExecutorClassName,
+		java.lang.String completed) {
 		try {
-			MethodKey methodKey = new MethodKey(PollsVoteServiceUtil.class,
-					"addVote", _addVoteParameterTypes0);
+			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
+					"getBackgroundTasksCount",
+					_getBackgroundTasksCountParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					questionId, choiceId, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					taskExecutorClassName, completed);
 
 			Object returnObj = null;
 
@@ -72,14 +71,10 @@ public class PollsVoteServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.polls.model.PollsVote)returnObj;
+			return ((Integer)returnObj).intValue();
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -88,9 +83,39 @@ public class PollsVoteServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PollsVoteServiceHttp.class);
-	private static final Class<?>[] _addVoteParameterTypes0 = new Class[] {
-			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+	public static java.lang.String getBackgroundTaskStatusJSON(
+		HttpPrincipal httpPrincipal, long backgroundTaskId) {
+		try {
+			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
+					"getBackgroundTaskStatusJSON",
+					_getBackgroundTaskStatusJSONParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					backgroundTaskId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.lang.String)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(BackgroundTaskServiceHttp.class);
+	private static final Class<?>[] _getBackgroundTasksCountParameterTypes0 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getBackgroundTaskStatusJSONParameterTypes1 = new Class[] {
+			long.class
 		};
 }

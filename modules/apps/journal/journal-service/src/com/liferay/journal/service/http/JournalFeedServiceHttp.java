@@ -15,13 +15,15 @@
 package com.liferay.journal.service.http;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.journal.service.JournalFeedServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
-import com.liferay.journal.service.JournalFeedServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,15 +56,15 @@ import com.liferay.journal.service.JournalFeedServiceUtil;
 @ProviderType
 public class JournalFeedServiceHttp {
 	public static com.liferay.journal.model.JournalFeed addFeed(
-		HttpPrincipal httpPrincipal, long groupId, String feedId,
-		boolean autoFeedId, String name,
-		String description, String ddmStructureKey,
-		String ddmTemplateKey,
-		String ddmRendererTemplateKey, int delta,
-		String orderByCol, String orderByType,
-		String targetLayoutFriendlyUrl,
-		String targetPortletId, String contentField,
-		String feedType, double feedVersion,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String feedId,
+		boolean autoFeedId, java.lang.String name,
+		java.lang.String description, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey,
+		java.lang.String ddmRendererTemplateKey, int delta,
+		java.lang.String orderByCol, java.lang.String orderByType,
+		java.lang.String targetLayoutFriendlyUrl,
+		java.lang.String targetPortletId, java.lang.String contentField,
+		java.lang.String feedType, double feedVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -151,7 +153,7 @@ public class JournalFeedServiceHttp {
 	}
 
 	public static void deleteFeed(HttpPrincipal httpPrincipal, long groupId,
-		String feedId)
+		java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
@@ -242,7 +244,7 @@ public class JournalFeedServiceHttp {
 	}
 
 	public static com.liferay.journal.model.JournalFeed getFeed(
-		HttpPrincipal httpPrincipal, long groupId, String feedId)
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
@@ -274,14 +276,14 @@ public class JournalFeedServiceHttp {
 	}
 
 	public static com.liferay.journal.model.JournalFeed updateFeed(
-		HttpPrincipal httpPrincipal, long groupId, String feedId,
-		String name, String description,
-		String ddmStructureKey, String ddmTemplateKey,
-		String ddmRendererTemplateKey, int delta,
-		String orderByCol, String orderByType,
-		String targetLayoutFriendlyUrl,
-		String targetPortletId, String contentField,
-		String feedType, double feedVersion,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String feedId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.lang.String ddmRendererTemplateKey, int delta,
+		java.lang.String orderByCol, java.lang.String orderByType,
+		java.lang.String targetLayoutFriendlyUrl,
+		java.lang.String targetPortletId, java.lang.String contentField,
+		java.lang.String feedType, double feedVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -318,13 +320,13 @@ public class JournalFeedServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(JournalFeedServiceHttp.class);
 	private static final Class<?>[] _addFeedParameterTypes0 = new Class[] {
-			long.class, String.class, boolean.class,
-			String.class, String.class,
-			String.class, String.class,
-			String.class, int.class, String.class,
-			String.class, String.class,
-			String.class, String.class,
-			String.class, double.class,
+			long.class, java.lang.String.class, boolean.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, int.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, double.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFeedParameterTypes1 = new Class[] {
@@ -334,7 +336,7 @@ public class JournalFeedServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _deleteFeedParameterTypes3 = new Class[] {
-			long.class, String.class
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getFeedParameterTypes4 = new Class[] {
 			long.class
@@ -343,15 +345,15 @@ public class JournalFeedServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _getFeedParameterTypes6 = new Class[] {
-			long.class, String.class
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateFeedParameterTypes7 = new Class[] {
-			long.class, String.class, String.class,
-			String.class, String.class,
-			String.class, String.class, int.class,
-			String.class, String.class,
-			String.class, String.class,
-			String.class, String.class, double.class,
+			long.class, java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, int.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, double.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

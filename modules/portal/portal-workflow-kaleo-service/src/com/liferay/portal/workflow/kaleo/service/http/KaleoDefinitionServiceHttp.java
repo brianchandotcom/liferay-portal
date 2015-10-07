@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.polls.service.http;
+package com.liferay.portal.workflow.kaleo.service.http;
 
 import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.polls.service.PollsVoteServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,10 +22,11 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link PollsVoteServiceUtil} service utility. The
+ * {@link KaleoDefinitionServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
  * {@link HttpPrincipal} parameter.
@@ -48,23 +47,21 @@ import com.liferay.portal.service.http.TunnelUtil;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see PollsVoteServiceSoap
+ * @see KaleoDefinitionServiceSoap
  * @see HttpPrincipal
- * @see PollsVoteServiceUtil
+ * @see KaleoDefinitionServiceUtil
  * @generated
  */
 @ProviderType
-public class PollsVoteServiceHttp {
-	public static com.liferay.polls.model.PollsVote addVote(
-		HttpPrincipal httpPrincipal, long questionId, long choiceId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+public class KaleoDefinitionServiceHttp {
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
+		HttpPrincipal httpPrincipal, int start, int end) {
 		try {
-			MethodKey methodKey = new MethodKey(PollsVoteServiceUtil.class,
-					"addVote", _addVoteParameterTypes0);
+			MethodKey methodKey = new MethodKey(KaleoDefinitionServiceUtil.class,
+					"getKaleoDefinitions", _getKaleoDefinitionsParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					questionId, choiceId, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, start,
+					end);
 
 			Object returnObj = null;
 
@@ -72,14 +69,10 @@ public class PollsVoteServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.polls.model.PollsVote)returnObj;
+			return (java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -88,9 +81,38 @@ public class PollsVoteServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PollsVoteServiceHttp.class);
-	private static final Class<?>[] _addVoteParameterTypes0 = new Class[] {
-			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
+		HttpPrincipal httpPrincipal, long companyId, int start, int end) {
+		try {
+			MethodKey methodKey = new MethodKey(KaleoDefinitionServiceUtil.class,
+					"getKaleoDefinitions", _getKaleoDefinitionsParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(KaleoDefinitionServiceHttp.class);
+	private static final Class<?>[] _getKaleoDefinitionsParameterTypes0 = new Class[] {
+			int.class, int.class
+		};
+	private static final Class<?>[] _getKaleoDefinitionsParameterTypes1 = new Class[] {
+			long.class, int.class, int.class
 		};
 }

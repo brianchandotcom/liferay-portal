@@ -1195,7 +1195,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildServiceOsgiModule(buildServiceTask);
 		configureTaskBuildServicePluginName(buildServiceTask);
 		configureTaskBuildServicePropsUtil(buildServiceTask);
-		configureTaskBuildServiceRemotingFileName(buildServiceTask);
 		configureTaskBuildServiceResourcesDirName(buildServiceTask);
 		configureTaskBuildServiceSpringFileName(buildServiceTask);
 		configureTaskBuildServiceSpringNamespaces(buildServiceTask);
@@ -1314,12 +1313,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setPropsUtil("com.liferay.util.service.ServiceProps");
-	}
-
-	protected void configureTaskBuildServiceRemotingFileName(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setRemotingFileName("");
 	}
 
 	protected void configureTaskBuildServiceResourcesDirName(

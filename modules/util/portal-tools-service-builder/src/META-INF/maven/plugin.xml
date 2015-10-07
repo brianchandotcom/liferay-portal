@@ -144,13 +144,6 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>remotingFileName</name>
-					<type>java.lang.String</type>
-					<required>false</required>
-					<editable>true</editable>
-					<description/>
-				</parameter>
-				<parameter>
 					<name>resourceActionsConfigs</name>
 					<type>java.lang.String</type>
 					<required>false</required>

@@ -1612,7 +1612,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected String sortHTMLAttributes(
 		String line, String value, String attributeAndValue) {
 
-		if (!value.matches("([-a-z]+ )+[-a-z]+")) {
+		if (!value.matches("([-a-z0-9]+ )+[-a-z0-9]+")) {
 			return line;
 		}
 

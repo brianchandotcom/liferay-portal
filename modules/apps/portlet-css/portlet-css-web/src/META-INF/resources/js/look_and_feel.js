@@ -1313,8 +1313,10 @@ AUI.add(
 							if (portletLanguage == instance._currentLanguage) {
 								portletTitle.html(cruft);
 
-								var portletTitleText = portletTitle.one('.portlet-title-text');
+								var portletNameText = portletTitle.one('.portlet-name-text');
+								var portletTitleText = instance._curPortlet.one('.portlet-title-text');
 
+								portletNameText.text(value);
 								portletTitleText.text(value);
 							}
 

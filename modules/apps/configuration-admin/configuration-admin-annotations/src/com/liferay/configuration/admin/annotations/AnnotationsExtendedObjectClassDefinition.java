@@ -133,7 +133,7 @@ public class AnnotationsExtendedObjectClassDefinition
 
 			map.put("category", configurationAdmin.category());
 
-			_extensionAttributes.put(ConfigurationAdmin.NS, map);
+			_extensionAttributes.put(ConfigurationAdmin.XML_NAMESPACE, map);
 		}
 	}
 

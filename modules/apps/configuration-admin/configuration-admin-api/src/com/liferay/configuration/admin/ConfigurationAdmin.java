@@ -27,17 +27,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @XMLAttribute(
-	embedIn = ConfigurationAdmin.EMBED_IN, namespace = ConfigurationAdmin.NS,
-	prefix = ConfigurationAdmin.PREFIX
+	embedIn = "*", namespace = ConfigurationAdmin.XML_NAMESPACE,
+	prefix = ConfigurationAdmin.XML_ATTRIBUTE_PREFIX
 )
 public @interface ConfigurationAdmin {
 
-	public static final String EMBED_IN = "*";
+	public static final String XML_ATTRIBUTE_PREFIX = "cf";
 
-	public static final String NS =
-		"http://www.liferay.com/xsd/meta-type-hints_7_0_0";
-
-	public static final String PREFIX = "mh";
+	public static final String XML_NAMESPACE =
+		"http://www.liferay.com/xsd/meta-type-hints/configuration-admin_7_0_0";
 
 	public String category() default "";
 

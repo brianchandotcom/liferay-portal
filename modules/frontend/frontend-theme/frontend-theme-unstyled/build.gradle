@@ -64,7 +64,7 @@ buildLexicon {
 	eachFile new StripPathSegmentsAction(1)
 
 	eachFile {
-		if (name in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
+		if (path in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
 			filter {
 				String line ->
 
@@ -78,7 +78,7 @@ buildLexicon {
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
 @import \"../../aui_variables\";
-@import \"fonts/alloy-font-awesome/scss/font-awesome\";"""
+@import \"../alloy-font-awesome/scss/font-awesome\";"""
 				}
 
 				return line
@@ -87,14 +87,14 @@ buildLexicon {
 	}
 
 	eachFile {
-		if (name in ["atlas-variables.scss", "lexicon-base-variables.scss"]) {
+		if (path in ["atlas-variables.scss", "lexicon-base-variables.scss"]) {
 			filter {
 				String line ->
 
 				if (line == "// INSERT CUSTOM BASE VARS") {
 					line = """\
 @import \"../../aui_variables\";
-@import \"fonts/alloy-font-awesome/scss/variables\";"""
+@import \"../alloy-font-awesome/scss/variables\";"""
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
@@ -107,11 +107,10 @@ buildLexicon {
 		}
 	}
 
-	into (lexiconDestinationDir.name) {
-		from zipTree(lexiconZipFile)
-		includeEmptyDirs = false
-		destinationDir lexiconDestinationDir
-	}
+	from zipTree(lexiconZipFile)
+	include "scss/**"
+	includeEmptyDirs = false
+	into lexiconDestinationDir
 
 	onlyIf {
 		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinationDir)

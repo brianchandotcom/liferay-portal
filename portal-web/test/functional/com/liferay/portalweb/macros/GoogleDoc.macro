@@ -1,0 +1,71 @@
+<definition>
+	<command name="addCategorization">
+		<if>
+			<condition function="IsVisible" locator1="AssetCategorization#CATEGORIZATION_PANEL_COLLAPSED" />
+			<then>
+				<execute function="AssertClick" locator1="AssetCategorization#CATEGORIZATION_PANEL_EXPANDED" value1="Categorization" />
+			</then>
+		</if>
+
+		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
+
+		<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
+
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
+	</command>
+
+	<command name="publish">
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="selectDocument">
+		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
+
+		<execute function="SelectFrame" locator1="GoogleDrive#GOOGLE_DRIVE_IFRAME" />
+
+		<if>
+			<condition function="IsVisible" locator1="GoogleDrive#LIST_VIEW_BUTTON" />
+			<then>
+				<execute function="AssertClick" locator1="GoogleDrive#LIST_VIEW_BUTTON" value1="List view" />
+			</then>
+		</if>
+
+		<var name="key_googleDocName" value="${googleDocName}" />
+
+		<execute function="AssertClick" locator1="GoogleDrive#LIST_VIEW_DOCUMENT" value1="${googleDocName}" />
+
+		<execute function="AssertClick" locator1="GoogleDrive#SELECT_BUTTON" value1="Select" />
+
+		<var name="key_dmDocumentTitle" value="${googleDocName}" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaEntry#SELECTED_DOCUMENT_TITLE" value1="${googleDocName}" />
+	</command>
+
+	<command name="selectRelatedAsset">
+		<if>
+			<condition function="IsElementNotPresent" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" />
+			<then>
+				<execute function="Click" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
+				<execute function="AssertElementPresent" locator1="AssetRelatedAssets#HEADER_EXPANDED" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT_MENULIST_ASSET" value1="${assetType}" />
+
+		<execute function="SelectFrame" locator1="AssetRelatedAssets#SELECT_ASSET_IFRAME" />
+
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="Choose" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+</definition>

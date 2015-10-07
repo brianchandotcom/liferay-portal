@@ -59,15 +59,11 @@ import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
-import javax.imageio.spi.IIORegistry;
-import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
 import net.jmge.gif.Gif89Encoder;
 
 import org.im4java.core.IMOperation;
-
-import org.monte.media.jpeg.CMYKJPEGImageReaderSpi;
 
 /**
  * @author Brian Wing Shun Chan
@@ -520,9 +516,7 @@ public class ImageToolImpl implements ImageTool {
 		else if (formatName.contains(TYPE_GIF)) {
 			type = TYPE_GIF;
 		}
-		else if (formatName.contains("jpeg") ||
-				 StringUtil.equalsIgnoreCase(type, "jpeg")) {
-
+		else if (formatName.contains("jpeg") || type.equals("jpeg")) {
 			type = TYPE_JPEG;
 		}
 		else if (formatName.contains(TYPE_PNG)) {
@@ -691,36 +685,6 @@ public class ImageToolImpl implements ImageTool {
 
 	private ImageToolImpl() {
 		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
-
-		IIORegistry defaultInstance = IIORegistry.getDefaultInstance();
-
-		ImageReaderSpi firstProvider = null;
-		ImageReaderSpi secondProvider = null;
-
-		Iterator<ImageReaderSpi> serviceProviders =
-			defaultInstance.getServiceProviders(ImageReaderSpi.class, true);
-
-		while (serviceProviders.hasNext()) {
-			ImageReaderSpi serviceProvider = serviceProviders.next();
-
-			if (serviceProvider instanceof CMYKJPEGImageReaderSpi) {
-				secondProvider = serviceProvider;
-			}
-			else {
-				String[] formatNames = serviceProvider.getFormatNames();
-
-				if (ArrayUtil.contains(formatNames, TYPE_JPEG, true) ||
-					ArrayUtil.contains(formatNames, "jpeg", true)) {
-
-					firstProvider = serviceProvider;
-				}
-			}
-		}
-
-		if ((firstProvider != null) && (secondProvider != null)) {
-			defaultInstance.setOrdering(
-				ImageReaderSpi.class, firstProvider, secondProvider);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);

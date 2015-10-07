@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
@@ -115,7 +115,7 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 
 		if (className.equals(AssetVocabulary.class.getName())) {
 			AssetVocabulary assetVocabulary =
-				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+				_assetVocabularyLocalService.fetchAssetVocabulary(
 					primaryKeyLong);
 
 			if (assetVocabulary != null) {
@@ -162,6 +162,20 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortletDisplayTemplateExportCapability(
 		PortletDisplayTemplateExportCapability
 			portletDisplayTemplateExportCapability) {
@@ -179,12 +193,19 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			portletDisplayTemplateImportCapability;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String portletId)
 		throws Exception {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			portletDataContext.getCompanyId(), portletId);
 
 		Enumeration<String> enu = portletPreferences.getNames();
@@ -207,7 +228,7 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Company company = CompanyLocalServiceUtil.getCompanyById(
+		Company company = _companyLocalService.getCompanyById(
 			portletDataContext.getCompanyId());
 
 		Group companyGroup = company.getGroup();
@@ -227,9 +248,12 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private CompanyLocalService _companyLocalService;
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
 	private PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
+	private PortletLocalService _portletLocalService;
 
 }

@@ -34,8 +34,8 @@ import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTemplateConstants;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutTemplateLocalService;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -122,7 +122,7 @@ public class NestedPortletsPortlet extends MVCPortlet {
 			Theme theme = themeDisplay.getTheme();
 
 			LayoutTemplate layoutTemplate =
-				LayoutTemplateLocalServiceUtil.getLayoutTemplate(
+				_layoutTemplateLocalService.getLayoutTemplate(
 					layoutTemplateId, false, theme.getThemeId());
 
 			String content = layoutTemplate.getContent();
@@ -228,7 +228,7 @@ public class NestedPortletsPortlet extends MVCPortlet {
 			layout.setTypeSettingsProperties(typeSettingsProperties);
 
 			try {
-				LayoutLocalServiceUtil.updateLayout(
+				_layoutLocalService.updateLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),
 					layout.getLayoutId(), layout.getTypeSettings());
 			}
@@ -238,6 +238,20 @@ public class NestedPortletsPortlet extends MVCPortlet {
 				}
 			}
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutTemplateLocalService(
+		LayoutTemplateLocalService layoutTemplateLocalService) {
+
+		_layoutTemplateLocalService = layoutTemplateLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -253,6 +267,8 @@ public class NestedPortletsPortlet extends MVCPortlet {
 	private static final Pattern _processColumnPattern = Pattern.compile(
 		"(processColumn[(]\")(.*?)(\"(?:, *\"(?:.*?)\")?[)])", Pattern.DOTALL);
 
+	private LayoutLocalService _layoutLocalService;
+	private LayoutTemplateLocalService _layoutTemplateLocalService;
 	private volatile NestedPortletsConfiguration _nestedPortletsConfiguration;
 
 }

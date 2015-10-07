@@ -16,7 +16,7 @@ package com.liferay.asset.publisher.web;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,11 +24,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.PortletPreferences;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.SubscriptionLocalService;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
@@ -56,16 +57,16 @@ public class AssetPublisherPortletLayoutListener
 		throws PortletLayoutListenerException {
 
 		try {
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Layout layout = _layoutLocalService.getLayout(plid);
 
 			if (AssetUtil.isDefaultAssetPublisher(
 					layout, portletId, StringPool.BLANK)) {
 
-				JournalArticleLocalServiceUtil.deleteLayoutArticleReferences(
+				_journalArticleLocalService.deleteLayoutArticleReferences(
 					layout.getGroupId(), layout.getUuid());
 			}
 
-			SubscriptionLocalServiceUtil.deleteSubscriptions(
+			_subscriptionLocalService.deleteSubscriptions(
 				layout.getCompanyId(), PortletPreferences.class.getName(),
 				AssetPublisherUtil.getSubscriptionClassPK(plid, portletId));
 		}
@@ -93,5 +94,30 @@ public class AssetPublisherPortletLayoutListener
 				StringPool.BLANK);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+
+	private JournalArticleLocalService _journalArticleLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

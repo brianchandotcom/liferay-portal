@@ -37,9 +37,9 @@ import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutRevisionLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -49,7 +49,7 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateQueryRuleException;
 import com.liferay.portlet.asset.model.AssetQueryRule;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.util.ContentUtil;
@@ -232,7 +232,7 @@ public class AssetPublisherConfigurationAction
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
+		Group selectedGroup = _groupLocalService.fetchGroup(groupId);
 
 		String scopeId = AssetPublisherUtil.getScopeId(
 			selectedGroup, themeDisplay.getScopeGroupId());
@@ -469,6 +469,32 @@ public class AssetPublisherConfigurationAction
 		preferences.setValues("assetEntryXml", newEntries);
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetTagLocalService(
+		AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutRevisionLocalService(
+		LayoutRevisionLocalService layoutRevisionLocalService) {
+
+		_layoutRevisionLocalService = layoutRevisionLocalService;
+	}
+
 	protected void setScopes(
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
@@ -542,7 +568,7 @@ public class AssetPublisherConfigurationAction
 			}
 		}
 
-		layout = LayoutLocalServiceUtil.updateLayout(
+		layout = _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
@@ -559,8 +585,7 @@ public class AssetPublisherConfigurationAction
 				request, layoutSetBranchId, layout.getPlid());
 
 			LayoutRevision layoutRevision =
-				LayoutRevisionLocalServiceUtil.getLayoutRevision(
-					layoutRevisionId);
+				_layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
 
 			PortletPreferencesImpl portletPreferences =
 				(PortletPreferencesImpl)actionRequest.getPreferences();
@@ -654,7 +679,7 @@ public class AssetPublisherConfigurationAction
 		String name = queryRule.getName();
 
 		if (name.equals("assetTags")) {
-			AssetTagLocalServiceUtil.checkTags(
+			_assetTagLocalService.checkTags(
 				userId, groupId, queryRule.getValues());
 		}
 
@@ -664,5 +689,10 @@ public class AssetPublisherConfigurationAction
 				queryRule.getName());
 		}
 	}
+
+	private AssetTagLocalService _assetTagLocalService;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 }

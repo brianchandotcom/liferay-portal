@@ -143,14 +143,14 @@
 	<portlet>
 		<portlet-name>98</portlet-name>
 		<display-name>Software Repository</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.softwarecatalog.portlet.SoftwareCatalogPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/software_catalog/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/software_catalog/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/software_catalog/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

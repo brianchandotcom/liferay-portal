@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -30,6 +30,7 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -73,7 +74,7 @@ public class AssetPublisherAddPortletProvider extends BasePortletProvider
 		portletPreferences.setValue("showAssetTitle", Boolean.FALSE.toString());
 		portletPreferences.setValue("showExtraInfo", Boolean.FALSE.toString());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
 
 		AssetPublisherUtil.addSelection(
@@ -85,5 +86,14 @@ public class AssetPublisherAddPortletProvider extends BasePortletProvider
 	protected long getPlid(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPlid();
 	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.asset.publisher.web.exportimport.portlet.preferences.process
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
@@ -41,21 +41,21 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.OrganizationLocalService;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetCategoryLocalService;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -143,7 +143,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		if (className.equals(AssetCategory.class.getName())) {
 			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchCategory(primaryKeyLong);
+				_assetCategoryLocalService.fetchCategory(primaryKeyLong);
 
 			if (assetCategory != null) {
 				uuid = assetCategory.getUuid();
@@ -155,7 +155,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		else if (className.equals(AssetVocabulary.class.getName())) {
 			AssetVocabulary assetVocabulary =
-				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+				_assetVocabularyLocalService.fetchAssetVocabulary(
 					primaryKeyLong);
 
 			if (assetVocabulary != null) {
@@ -168,7 +168,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		else if (className.equals(DDMStructure.class.getName())) {
 			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(primaryKeyLong);
+				_ddmStructureLocalService.fetchStructure(primaryKeyLong);
 
 			if (ddmStructure != null) {
 				uuid = ddmStructure.getUuid();
@@ -180,8 +180,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		else if (className.equals(DLFileEntryType.class.getName())) {
 			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
-					primaryKeyLong);
+				_dlFileEntryTypeLocalService.fetchFileEntryType(primaryKeyLong);
 
 			if (dlFileEntryType != null) {
 				uuid = dlFileEntryType.getUuid();
@@ -193,7 +192,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		else if (className.equals(Organization.class.getName())) {
 			Organization organization =
-				OrganizationLocalServiceUtil.fetchOrganization(primaryKeyLong);
+				_organizationLocalService.fetchOrganization(primaryKeyLong);
 
 			if (organization != null) {
 				uuid = organization.getUuid();
@@ -286,7 +285,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 					if (preloaded) {
 						dlFileEntryType =
-							DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
+							_dlFileEntryTypeLocalService.fetchFileEntryType(
 								companyGroupId, fileEntryTypeKey);
 					}
 				}
@@ -305,7 +304,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
+		Layout layout = _layoutLocalService.getLayout(
 			portletDataContext.getPlid());
 
 		PortletPreferences originalPortletPreferences =
@@ -316,6 +315,13 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			name, new String[] {StringPool.BLANK});
 
 		portletPreferences.setValues(name, values);
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetCategoryLocalService(
+		AssetCategoryLocalService assetCategoryLocalService) {
+
+		_assetCategoryLocalService = assetCategoryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -334,6 +340,55 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		_assetPublisherPortletDisplayTemplateImportCapability =
 			assetPublisherPortletDisplayTemplateImportCapability;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryTypeLocalService(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
 	}
 
 	protected void updateExportClassNameIds(
@@ -392,7 +447,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			anyAssetTypeClassName = PortalUtil.getClassName(anyAssetType);
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			portletDataContext.getCompanyId(), portletId);
 
 		Enumeration<String> enu = portletPreferences.getNames();
@@ -434,7 +489,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				long assetVocabularyId = GetterUtil.getLong(value);
 
 				AssetVocabulary assetVocabulary =
-					AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+					_assetVocabularyLocalService.fetchAssetVocabulary(
 						assetVocabularyId);
 
 				if (assetVocabulary != null) {
@@ -455,7 +510,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 					portletPreferences.getValue("queryValues" + index, null));
 
 				AssetCategory assetCategory =
-					AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					_assetCategoryLocalService.fetchAssetCategory(
 						assetCategoryId);
 
 				if (assetCategory != null) {
@@ -488,7 +543,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			return;
 		}
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		String companyGroupScopeId =
 			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
@@ -514,7 +569,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 				long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
 
-				Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
+				Layout scopeIdLayout = _layoutLocalService.getLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),
 					scopeIdLayoutId);
 
@@ -581,7 +636,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, AssetCategory.class);
 
-		Company company = CompanyLocalServiceUtil.getCompanyById(
+		Company company = _companyLocalService.getCompanyById(
 			portletDataContext.getCompanyId());
 
 		Group companyGroup = company.getGroup();
@@ -663,7 +718,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			return;
 		}
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		String companyGroupScopeId =
 			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + companyGroupId;
@@ -718,9 +773,17 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherExportImportPortletPreferencesProcessor.class);
 
+	private AssetCategoryLocalService _assetCategoryLocalService;
 	private AssetPublisherPortletDisplayTemplateExportCapability
 		_assetPublisherPortletDisplayTemplateExportCapability;
 	private AssetPublisherPortletDisplayTemplateImportCapability
 		_assetPublisherPortletDisplayTemplateImportCapability;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private CompanyLocalService _companyLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private OrganizationLocalService _organizationLocalService;
+	private PortletLocalService _portletLocalService;
 
 }

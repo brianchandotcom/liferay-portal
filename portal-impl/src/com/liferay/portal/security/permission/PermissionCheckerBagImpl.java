@@ -82,13 +82,13 @@ public class PermissionCheckerBagImpl
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
 
-		Boolean value = _contentReviewers.get(group.getCompanyId());
+		Boolean value = _contentReviewers.get(group.getGroupId());
 
 		if (value == null) {
 			value = Boolean.valueOf(
 				isContentReviewerImpl(permissionChecker, group));
 
-			_contentReviewers.put(group.getCompanyId(), value);
+			_contentReviewers.put(group.getGroupId(), value);
 		}
 
 		return value.booleanValue();

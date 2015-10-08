@@ -810,8 +810,19 @@ public class CalendarBookingLocalServiceImpl
 		calendarBooking.setGroupId(calendar.getGroupId());
 		calendarBooking.setModifiedDate(serviceContext.getModifiedDate(null));
 		calendarBooking.setCalendarId(calendarId);
-		calendarBooking.setTitleMap(titleMap);
-		calendarBooking.setDescriptionMap(descriptionMap);
+
+		Map<Locale, String> updatedTitleMap = calendarBooking.getTitleMap();
+
+		updatedTitleMap.putAll(titleMap);
+
+		calendarBooking.setTitleMap(updatedTitleMap);
+
+		Map<Locale, String> updatedDescriptionMap =
+			calendarBooking.getDescriptionMap();
+
+		updatedDescriptionMap.putAll(descriptionMap);
+
+		calendarBooking.setDescriptionMap(updatedDescriptionMap);
 		calendarBooking.setLocation(location);
 		calendarBooking.setStartTime(startTimeJCalendar.getTimeInMillis());
 		calendarBooking.setEndTime(endTimeJCalendar.getTimeInMillis());
@@ -930,12 +941,21 @@ public class CalendarBookingLocalServiceImpl
 			recurrence = StringPool.BLANK;
 		}
 
+		Map<Locale, String> updatedTitleMap = calendarBooking.getTitleMap();
+
+		updatedTitleMap.putAll(titleMap);
+
+		Map<Locale, String> updatedDescriptionMap =
+			calendarBooking.getDescriptionMap();
+
+		updatedDescriptionMap.putAll(descriptionMap);
+
 		return addCalendarBooking(
 			userId, calendarId, childCalendarIds,
 			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-			titleMap, descriptionMap, location, startTime, endTime, allDay,
-			recurrence, firstReminder, firstReminderType, secondReminder,
-			secondReminderType, serviceContext);
+			updatedTitleMap, updatedDescriptionMap, location, startTime,
+			endTime, allDay, recurrence, firstReminder, firstReminderType,
+			secondReminder, secondReminderType, serviceContext);
 	}
 
 	@Override

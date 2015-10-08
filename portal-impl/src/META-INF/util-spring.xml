@@ -603,6 +603,8 @@
 	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
 	</bean>
+	<bean id="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCActionCommand" />
+	<bean id="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCRenderCommand" />
 	<bean id="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" class="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil">
 		<property name="socialActivityPermission">
 			<bean class="com.liferay.portlet.social.service.permission.SocialActivityPermissionImpl" />

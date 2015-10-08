@@ -539,8 +539,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<c:if test="<%= showAddFrameworkVersionButton || showPermissionsButton %>">
 			<div class="btn-toolbar">
 				<c:if test="<%= showAddFrameworkVersionButton %>">
-					<portlet:renderURL var="addFrameworkURL">
-						<portlet:param name="struts_action" value="/software_catalog/edit_framework_version" />
+					<portlet:renderURL name="/software_catalog/edit_framework_version" var="addFrameworkURL">
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 

@@ -183,11 +183,6 @@
 
 		<!-- Software Catalog -->
 
-		<action path="/software_catalog/edit_framework_version" type="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionAction">
-			<forward name="portlet.software_catalog.edit_framework_version" path="portlet.software_catalog.edit_framework_version" />
-			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />
-		</action>
-
 		<action path="/software_catalog/edit_license" type="com.liferay.portlet.softwarecatalog.action.EditLicenseAction">
 			<forward name="portlet.software_catalog.edit_license" path="portlet.software_catalog.edit_license" />
 			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />

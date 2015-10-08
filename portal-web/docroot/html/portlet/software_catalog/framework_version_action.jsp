@@ -26,8 +26,7 @@ String frameworkVersionId = String.valueOf(frameworkVersion.getFrameworkVersionI
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= SCFrameworkVersionPermission.contains(permissionChecker, frameworkVersion, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/software_catalog/edit_framework_version" />
+		<portlet:renderURL name="/software_catalog/edit_framework_version" var="editURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="frameworkVersionId" value="<%= frameworkVersionId %>" />
 		</portlet:renderURL>
@@ -58,8 +57,7 @@ String frameworkVersionId = String.valueOf(frameworkVersion.getFrameworkVersionI
 	</c:if>
 
 	<c:if test="<%= SCFrameworkVersionPermission.contains(permissionChecker, frameworkVersion, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/software_catalog/edit_framework_version" />
+		<portlet:actionURL name="/software_catalog/edit_framework_version" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="frameworkVersionId" value="<%= frameworkVersionId %>" />

@@ -210,10 +210,6 @@
 
 	<definition name="portlet.software_catalog" extends="portlet" />
 
-	<definition name="portlet.software_catalog.edit_framework_version" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/edit_framework_version.jsp" />
-	</definition>
-
 	<definition name="portlet.software_catalog.edit_license" extends="portlet.software_catalog">
 		<put name="portlet_content" value="/portlet/software_catalog/edit_license.jsp" />
 	</definition>

@@ -14,99 +14,51 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.softwarecatalog.FrameworkVersionNameException;
-import com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionServiceUtil;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Jorge Ferrer
+ * @author Philip Jones
  */
-public class EditFrameworkVersionAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.SOFTWARE_CATALOG,
+		"mvc.command.name=/software_catalog/edit_framework_version"
+	},
+	service = MVCActionCommand.class
+)
+public class EditFrameworkVersionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateFrameworkVersion(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteFrameworkVersion(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
+		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			updateFrameworkVersion(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFrameworkVersionException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.software_catalog.error");
-			}
-			else if (e instanceof FrameworkVersionNameException) {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
+		else if (cmd.equals(Constants.DELETE)) {
+			deleteFrameworkVersion(actionRequest);
 		}
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getFrameworkVersion(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFrameworkVersionException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.software_catalog.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.software_catalog.edit_framework_version"));
-	}
-
+	
 	protected void deleteFrameworkVersion(ActionRequest actionRequest)
 		throws Exception {
 

@@ -38,8 +38,17 @@ import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+
+<#if osgiModule>
+	import com.liferay.portal.kernel.dao.orm.EntityCache;
+	import com.liferay.portal.kernel.dao.orm.FinderCache;
+<#else>
+	import com.liferay.portal.kernel.dao.orm.EntityCache;
+	import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+	import com.liferay.portal.kernel.dao.orm.FinderCache;
+	import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+</#if>
+
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -77,6 +86,10 @@ import com.liferay.portal.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.service.persistence.impl.PersistenceNestedSetsTreeManager;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
+
+<#if osgiModule>
+	import com.liferay.portal.spring.extender.service.ServiceReference;
+</#if>
 
 import java.io.Serializable;
 
@@ -218,12 +231,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public void cacheResult(${entity.name} ${entity.varName}) {
-		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
+		entityCache.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
 
 		<#list entity.getUniqueFinderList() as finder>
 			<#assign finderColsList = finder.getColumns()>
 
-			FinderCacheUtil.putResult(
+			finderCache.putResult(
 				FINDER_PATH_FETCH_BY_${finder.name?upper_case},
 				new Object[] {
 					<#list finderColsList as finderCol>
@@ -248,7 +261,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	@Override
 	public void cacheResult(List<${entity.name}> ${entity.varNames}) {
 		for (${entity.name} ${entity.varName} : ${entity.varNames}) {
-			if (EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey()) == null) {
+			if (entityCache.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey()) == null) {
 				cacheResult(${entity.varName});
 			}
 			else {
@@ -266,11 +279,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(${entity.name}Impl.class);
+		entityCache.clearCache(${entity.name}Impl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
@@ -282,10 +295,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public void clearCache(${entity.name} ${entity.varName}) {
-		EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+		entityCache.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		<#if entity.getUniqueFinderList()?size &gt; 0>
 			clearUniqueFindersCache((${entity.name}ModelImpl)${entity.varName});
@@ -294,11 +307,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	@Override
 	public void clearCache(List<${entity.name}> ${entity.varNames}) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (${entity.name} ${entity.varName} : ${entity.varNames}) {
-			EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+			entityCache.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
 
 			<#if entity.getUniqueFinderList()?size &gt; 0>
 				clearUniqueFindersCache((${entity.name}ModelImpl)${entity.varName});
@@ -325,8 +338,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						</#list>
 					};
 
-					FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args, Long.valueOf(1));
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args, ${entity.varName}ModelImpl);
+					finderCache.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args, Long.valueOf(1));
+					finderCache.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args, ${entity.varName}ModelImpl);
 				</#list>
 			}
 			else {
@@ -344,8 +357,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							</#list>
 						};
 
-						FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args, Long.valueOf(1));
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args, ${entity.varName}ModelImpl);
+						finderCache.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args, Long.valueOf(1));
+						finderCache.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args, ${entity.varName}ModelImpl);
 					}
 				</#list>
 			}
@@ -368,8 +381,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					</#list>
 				};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
 
 				if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
 					args = new Object[] {
@@ -382,8 +395,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						</#list>
 					};
 
-					FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
+					finderCache.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+					finderCache.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
 				}
 			</#list>
 		}
@@ -693,7 +706,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew
 			<#if columnBitmaskEnabled>
@@ -701,7 +714,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 			) {
 
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		<#if collectionFinderList?size != 0>
@@ -745,8 +758,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							</#list>
 						};
 
-						FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
-						FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+						finderCache.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+						finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
 
 						args = new Object[] {
 							<#list finderColsList as finderCol>
@@ -758,8 +771,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							</#list>
 						};
 
-						FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
-						FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+						finderCache.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+						finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
 					}
 				</#if>
 			</#list>
@@ -769,7 +782,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#if>
 
-		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName}, false);
+		entityCache.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName}, false);
 
 		<#if uniqueFinderList?size &gt; 0>
 			clearUniqueFindersCache(${entity.varName}ModelImpl);
@@ -848,7 +861,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public ${entity.name} fetchByPrimaryKey(Serializable primaryKey) {
-		${entity.name} ${entity.varName} = (${entity.name})EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
+		${entity.name} ${entity.varName} = (${entity.name})entityCache.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
 
 		if (${entity.varName} == _null${entity.name}) {
 			return null;
@@ -866,11 +879,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					cacheResult(${entity.varName});
 				}
 				else {
-					EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, _null${entity.name});
+					entityCache.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, _null${entity.name});
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
+				entityCache.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -929,7 +942,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			Set<Serializable> uncachedPrimaryKeys = null;
 
 			for (Serializable primaryKey : primaryKeys) {
-				${entity.name} ${entity.varName} = (${entity.name})EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
+				${entity.name} ${entity.varName} = (${entity.name})entityCache.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
 
 				if (${entity.varName} == null) {
 					if (uncachedPrimaryKeys == null) {
@@ -989,7 +1002,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 
 				for (Serializable primaryKey : uncachedPrimaryKeys) {
-					EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, _null${entity.name});
+					entityCache.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, _null${entity.name});
 				}
 			}
 			catch (Exception e) {
@@ -1078,7 +1091,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		List<${entity.name}> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
+			list = (List<${entity.name}>)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1122,10 +1135,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1155,7 +1168,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1167,10 +1180,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -1465,16 +1478,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public long countAncestors(${entity.name} ${entity.varName}) {
 			Object[] finderArgs = new Object[] {${entity.varName}.get${scopeColumn.methodName}(), ${entity.varName}.getLeft${pkColumn.methodName}(), ${entity.varName}.getRight${pkColumn.methodName}()};
 
-			Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs, this);
+			Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs, this);
 
 			if (count == null) {
 				try {
 					count = nestedSetsTreeManager.countAncestors(${entity.varName});
 
-					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs, count);
+					finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs, count);
 				}
 				catch (SystemException se) {
-					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs);
+					finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs);
 
 					throw se;
 				}
@@ -1487,16 +1500,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public long countDescendants(${entity.name} ${entity.varName}) {
 			Object[] finderArgs = new Object[] {${entity.varName}.get${scopeColumn.methodName}(), ${entity.varName}.getLeft${pkColumn.methodName}(), ${entity.varName}.getRight${pkColumn.methodName}()};
 
-			Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs, this);
+			Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs, this);
 
 			if (count == null) {
 				try {
 					count = nestedSetsTreeManager.countDescendants(${entity.varName});
 
-					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs, count);
+					finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs, count);
 				}
 				catch (SystemException se) {
-					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs);
+					finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs);
 
 					throw se;
 				}
@@ -1509,7 +1522,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public List<${entity.name}> getAncestors(${entity.name} ${entity.varName}) {
 			Object[] finderArgs = new Object[] {${entity.varName}.get${scopeColumn.methodName}(), ${entity.varName}.getLeft${pkColumn.methodName}(), ${entity.varName}.getRight${pkColumn.methodName}()};
 
-			List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs, this);
+			List<${entity.name}> list = (List<${entity.name}>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (${entity.name} temp${entity.name} : list) {
@@ -1527,10 +1540,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs, list);
+					finderCache.putResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs, list);
 				}
 				catch (SystemException se) {
-					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs);
+					finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs);
 
 					throw se;
 				}
@@ -1543,7 +1556,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public List<${entity.name}> getDescendants(${entity.name} ${entity.varName}) {
 			Object[] finderArgs = new Object[] {${entity.varName}.get${scopeColumn.methodName}(), ${entity.varName}.getLeft${pkColumn.methodName}(), ${entity.varName}.getRight${pkColumn.methodName}()};
 
-			List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs, this);
+			List<${entity.name}> list = (List<${entity.name}>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (${entity.name} temp${entity.name} : list) {
@@ -1561,10 +1574,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs, list);
+					finderCache.putResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs, list);
 				}
 				catch (SystemException se) {
-					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs);
+					finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs);
 
 					throw se;
 				}
@@ -1698,10 +1711,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(${entity.name}Impl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(${entity.name}Impl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		<#list entity.columnList as column>
 			<#if column.isCollection() && column.isMappingManyToMany()>
@@ -1852,6 +1865,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 
 		};
+	</#if>
+
+	<#if osgiModule>
+		@ServiceReference(type = EntityCache.class)
+		protected EntityCache entityCache;
+
+		@ServiceReference(type = FinderCache.class)
+		protected FinderCache finderCache;
+	<#else>
+		protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+		protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	</#if>
 
 }

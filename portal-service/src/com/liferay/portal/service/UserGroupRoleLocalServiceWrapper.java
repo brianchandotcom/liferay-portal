@@ -107,6 +107,12 @@ public class UserGroupRoleLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteUserGroupRoles(long groupId, int roleType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userGroupRoleLocalService.deleteUserGroupRoles(groupId, roleType);
+	}
+
+	@Override
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds) {
 		_userGroupRoleLocalService.deleteUserGroupRoles(userId, groupId, roleIds);
 	}

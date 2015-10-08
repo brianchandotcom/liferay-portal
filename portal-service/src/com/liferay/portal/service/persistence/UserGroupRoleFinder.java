@@ -22,6 +22,9 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface UserGroupRoleFinder {
+	public java.util.List<com.liferay.portal.model.UserGroupRole> findByGroupRoleType(
+		long groupId, int roleType);
+
 	public java.util.List<com.liferay.portal.model.UserGroupRole> findByUserUserGroupGroupRole(
 		long userId, long groupId);
 }

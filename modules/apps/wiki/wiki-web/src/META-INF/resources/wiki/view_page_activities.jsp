@@ -14,15 +14,15 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="history" />
 </liferay-util:include>
 
-<liferay-util:include page="/html/portlet/wiki/page_tabs_history.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/wiki/page_tabs_history.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs3" value="activities" />
 </liferay-util:include>
 
@@ -259,14 +259,14 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 					<liferay-ui:search-container-column-jsp
 						align="right"
 						cssClass="entry-action"
-						path="/html/portlet/wiki/page_activity_attachment_action.jsp"
+						path="/wiki/page_activity_attachment_action.jsp"
 					/>
 				</c:when>
 				<c:when test="<%= (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) || (socialActivity.getType() == WikiActivityKeys.ADD_PAGE) || (socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE) %>">
 					<liferay-ui:search-container-column-jsp
 						align="right"
 						cssClass="entry-action"
-						path="/html/portlet/wiki/page_activity_page_action.jsp"
+						path="/wiki/page_activity_page_action.jsp"
 					/>
 				</c:when>
 				<c:otherwise>

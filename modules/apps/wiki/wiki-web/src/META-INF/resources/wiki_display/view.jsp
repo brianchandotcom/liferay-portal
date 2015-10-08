@@ -14,6 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki_display/init.jsp" %>
+<%@ include file="/wiki_display/init.jsp" %>
 
-<liferay-util:include page="/html/portlet/wiki/view.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/wiki/view.jsp" servletContext="<%= application %>" />

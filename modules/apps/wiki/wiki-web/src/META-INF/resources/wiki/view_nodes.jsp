@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
@@ -92,7 +92,7 @@ searchContainer.setResults(results);
 
 		// Action
 
-		row.addJSP("/html/portlet/wiki/node_action.jsp", "entry-action", application, request, response);
+		row.addJSP("/wiki/node_action.jsp", "entry-action", application, request, response);
 
 		// Add result row
 

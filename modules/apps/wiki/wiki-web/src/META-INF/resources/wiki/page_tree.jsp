@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 WikiPage parentPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT);
@@ -44,7 +44,7 @@ for (WikiPage childPage : childPages) {
 		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH, depth + 1);
 %>
 
-		<liferay-util:include page="/html/portlet/wiki/page_tree.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/wiki/page_tree.jsp" servletContext="<%= application %>" />
 
 <%
 	}

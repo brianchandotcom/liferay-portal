@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
 page import="com.liferay.wiki.exception.NoSuchNodeException" %><%@
@@ -33,4 +33,4 @@ long nodeId = GetterUtil.getLong(portletPreferences.getValue("nodeId", StringPoo
 String title = GetterUtil.getString(portletPreferences.getValue("title", wikiGroupServiceConfiguration.frontPageName()));
 %>
 
-<%@ include file="/html/portlet/wiki_display/init-ext.jsp" %>
+<%@ include file="/wiki_display/init-ext.jsp" %>

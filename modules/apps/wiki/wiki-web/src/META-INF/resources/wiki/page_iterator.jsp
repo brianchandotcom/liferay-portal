@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
@@ -357,12 +357,12 @@ for (int i = 0; i < results.size(); i++) {
 			row.addText(StringPool.BLANK);
 		}
 		else {
-			row.addJSP("/html/portlet/wiki/page_history_action.jsp", "entry-action", application, request, response);
+			row.addJSP("/wiki/page_history_action.jsp", "entry-action", application, request, response);
 		}
 	}
 
 	if (type.equals("all_pages") || type.equals("categorized_pages") || type.equals("draft_pages") || type.equals("orphan_pages") || type.equals("recent_changes") || type.equals("tagged_pages")) {
-		row.addJSP("/html/portlet/wiki/page_action.jsp", "entry-action", application, request, response);
+		row.addJSP("/wiki/page_action.jsp", "entry-action", application, request, response);
 	}
 
 	// Add result row

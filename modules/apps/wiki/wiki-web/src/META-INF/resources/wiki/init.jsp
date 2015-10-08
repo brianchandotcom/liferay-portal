@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
 page import="com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration" %><%@
@@ -78,4 +78,4 @@ WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebComponentPr
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<%@ include file="/html/portlet/wiki/init-ext.jsp" %>
+<%@ include file="/wiki/init-ext.jsp" %>

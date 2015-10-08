@@ -14,19 +14,19 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:header
 	title="recent-changes"
 />
 
-<liferay-util:include page="/html/portlet/wiki/page_iterator.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="type" value="recent_changes" />
 </liferay-util:include>
 

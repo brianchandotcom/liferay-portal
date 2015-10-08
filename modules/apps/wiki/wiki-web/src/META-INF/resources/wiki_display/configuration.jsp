@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki_display/init.jsp" %>
+<%@ include file="/wiki_display/init.jsp" %>
 
 <%
 nodeId = ParamUtil.getLong(request, "nodeId", nodeId);

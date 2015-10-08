@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -73,7 +73,7 @@ if (WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.U
 }
 %>
 
-<%@ include file="/html/portlet/wiki/page_name.jspf" %>
+<%@ include file="/wiki/page_name.jspf" %>
 
 <liferay-ui:tabs
 	names="<%= StringUtil.merge(tabs1Names) %>"

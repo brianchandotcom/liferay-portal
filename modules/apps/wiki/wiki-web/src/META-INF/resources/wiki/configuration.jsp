@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
@@ -31,7 +31,7 @@
 		<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
 
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/wiki/display_settings.jspf" %>
+			<%@ include file="/wiki/display_settings.jspf" %>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 

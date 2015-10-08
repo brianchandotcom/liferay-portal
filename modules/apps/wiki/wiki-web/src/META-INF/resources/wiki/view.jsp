@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 boolean followRedirect = ParamUtil.getBoolean(request, "followRedirect", true);
@@ -149,7 +149,7 @@ if (wikiPage != null) {
 	</c:otherwise>
 </c:choose>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <%
 List entries = new ArrayList();
@@ -259,7 +259,7 @@ contextObjects.put("wikiPortletInstanceOverriddenConfiguration", wikiPortletInst
 	</div>
 
 	<div>
-		<%@ include file="/html/portlet/wiki/view_page_content.jspf" %>
+		<%@ include file="/wiki/view_page_content.jspf" %>
 	</div>
 
 	<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">

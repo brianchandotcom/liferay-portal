@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
@@ -46,9 +46,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), viewPageURL.t
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details"), currentURL);
 %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="details" />
 </liferay-util:include>
 

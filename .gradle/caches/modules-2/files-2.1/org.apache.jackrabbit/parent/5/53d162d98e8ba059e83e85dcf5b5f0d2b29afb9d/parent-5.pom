@@ -279,7 +279,7 @@
       </roles>
     </developer>
     <developer>
-      <name>Claus KÃ¶ll</name>
+      <name>Claus Köll</name>
       <id>ckoell</id>
       <roles>
         <role>committer</role>
@@ -380,7 +380,7 @@
       <timezone>+1</timezone>
     </developer>
     <developer>
-      <name>Michael DÃ¼rig</name>
+      <name>Michael Dürig</name>
       <id>mduerig</id>
       <organization>Day Software</organization>
       <organizationUrl>http://www.day.com/</organizationUrl>
@@ -424,7 +424,7 @@
       <timezone>-8</timezone>
     </developer>
     <developer>
-      <name>SÃ©bastien Launay</name>
+      <name>Sébastien Launay</name>
       <id>sebastien</id>
       <organization>Anyware Technologies</organization>
       <organizationUrl>http://www.anyware-tech.com/</organizationUrl>
@@ -464,7 +464,7 @@
       <timezone>+1</timezone>
     </developer>
     <developer>
-      <name>Thomas MÃ¼ller</name>
+      <name>Thomas Müller</name>
       <id>thomasm</id>
       <organization>Day Software</organization>
       <organizationUrl>http://www.day.com/</organizationUrl>

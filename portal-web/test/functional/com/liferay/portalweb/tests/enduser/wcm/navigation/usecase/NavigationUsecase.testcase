@@ -43,7 +43,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation" />
+			<var name="portletName" value="Navigation Menu" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -161,7 +161,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation" />
+			<var name="portletName" value="Navigation Menu" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

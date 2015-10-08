@@ -35,15 +35,19 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.gradle.api.AntBuilder;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.file.FileCollection;
 
 /**
  * @author Andrea Di Giorgi
@@ -68,6 +72,24 @@ public class FileUtil {
 				}
 			}
 		}
+	}
+
+	public static String createTempFileName(String prefix, String extension) {
+		StringBuilder sb = new StringBuilder();
+
+		if (Validator.isNotNull(prefix)) {
+			sb.append(prefix);
+		}
+
+		sb.append(System.currentTimeMillis());
+		sb.append(UUID.randomUUID());
+
+		if (Validator.isNotNull(extension)) {
+			sb.append('.');
+			sb.append(extension);
+		}
+
+		return sb.toString();
 	}
 
 	public static boolean exists(Project project, String fileName) {
@@ -152,6 +174,18 @@ public class FileUtil {
 		return absolutePath.replace('\\', '/');
 	}
 
+	public static char getDriveLetter(File file) {
+		if (!OSDetector.isWindows()) {
+			throw new UnsupportedOperationException();
+		}
+
+		String absolutePath = getAbsolutePath(file);
+
+		char driveLetter = absolutePath.charAt(0);
+
+		return Character.toLowerCase(driveLetter);
+	}
+
 	public static boolean isChild(File file, File parentFile) {
 		Path path = file.toPath();
 
@@ -204,12 +238,26 @@ public class FileUtil {
 			@SuppressWarnings("unused")
 			public void doCall(AntBuilder antBuilder) {
 				_invokeAntMethodJar(
-					antBuilder, destinationFile, duplicate, update, filesets);
+					antBuilder, destinationFile, duplicate, update, filesets,
+					null);
 			}
 
 		};
 
 		project.ant(closure);
+	}
+
+	public static String merge(Iterable<File> files, String separator) {
+		StringBuilder sb = new StringBuilder();
+
+		for (File file : files) {
+			sb.append(getAbsolutePath(file));
+			sb.append(separator);
+		}
+
+		sb.setLength(sb.length() - separator.length());
+
+		return sb.toString();
 	}
 
 	public static String read(String resourceName) throws IOException {
@@ -277,6 +325,57 @@ public class FileUtil {
 		return new File(fileName);
 	}
 
+	public static FileCollection shrinkClasspath(
+		Project project, FileCollection fileCollection) {
+
+		if (!OSDetector.isWindows()) {
+			return fileCollection;
+		}
+
+		List<File> shrunkClasspath = new ArrayList<>();
+
+		Map<Character, File> driveJarDirs = new HashMap<>();
+
+		driveJarDirs.put(getDriveLetter(_TMP_DIR), _TMP_DIR);
+		driveJarDirs.put(
+			getDriveLetter(project.getBuildDir()), project.getBuildDir());
+
+		char curDriveLetter = 0;
+		List<File> curDriveFiles = new ArrayList<>();
+
+		for (File file : fileCollection) {
+			char driveLetter = getDriveLetter(file);
+
+			if (curDriveLetter != driveLetter) {
+				File jarFile = _createClasspathJar(
+					project, curDriveFiles, driveJarDirs.get(curDriveLetter));
+
+				if (jarFile != null) {
+					shrunkClasspath.add(jarFile);
+				}
+
+				curDriveLetter = driveLetter;
+				curDriveFiles.clear();
+			}
+
+			if (driveJarDirs.containsKey(driveLetter)) {
+				curDriveFiles.add(file);
+			}
+			else {
+				shrunkClasspath.add(file);
+			}
+		}
+
+		File jarFile = _createClasspathJar(
+			project, curDriveFiles, driveJarDirs.get(curDriveLetter));
+
+		if (jarFile != null) {
+			shrunkClasspath.add(jarFile);
+		}
+
+		return project.files(shrunkClasspath);
+	}
+
 	public static String stripExtension(String fileName) {
 		int index = fileName.lastIndexOf('.');
 
@@ -303,6 +402,53 @@ public class FileUtil {
 				}
 			}
 		}
+	}
+
+	private static File _createClasspathJar(
+		Project project, List<File> files, File jarDir) {
+
+		if (files.isEmpty()) {
+			return null;
+		}
+
+		if (files.size() == 1) {
+			return files.get(0);
+		}
+
+		AntBuilder antBuilder = project.createAntBuilder();
+
+		jarDir.mkdirs();
+
+		File jarFile = new File(jarDir, createTempFileName("classpath", "jar"));
+
+		jarFile.deleteOnExit();
+
+		String manifestClasspathProperty =
+			"manifest.classpath." + jarFile.getName();
+
+		_invokeAntMethodManifestClasspath(
+			antBuilder, files, jarFile, manifestClasspathProperty);
+
+		String manifestClasspath = String.valueOf(
+			antBuilder.getProperty(manifestClasspathProperty));
+
+		File manifestFile = new File(
+			jarFile.getParentFile(), jarFile.getName() + ".manifest");
+
+		try {
+			_invokeAntMethodManifest(
+				antBuilder, manifestFile,
+				Collections.singletonMap("Class-Path", manifestClasspath));
+
+			_invokeAntMethodJar(
+				antBuilder, jarFile, null, false, new String[0][0],
+				manifestFile);
+		}
+		finally {
+			project.delete(manifestFile);
+		}
+
+		return jarFile;
 	}
 
 	private static void _get(
@@ -366,6 +512,28 @@ public class FileUtil {
 		return new File(userHome, ".liferay/mirrors");
 	}
 
+	private static void _invokeAntMethod(
+		AntBuilder antBuilder, String name, String argKey, Object argValue) {
+
+		antBuilder.invokeMethod(
+			name, Collections.singletonMap(argKey, argValue));
+	}
+
+	private static void _invokeAntMethodClasspath(
+		final AntBuilder antBuilder, final String path) {
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall() {
+				_invokeAntMethod(antBuilder, "pathelement", "path", path);
+			}
+
+		};
+
+		antBuilder.invokeMethod("classpath", closure);
+	}
+
 	private static void _invokeAntMethodFileset(
 		AntBuilder antBuilder, String[] fileset) {
 
@@ -379,12 +547,20 @@ public class FileUtil {
 
 	private static void _invokeAntMethodJar(
 		final AntBuilder antBuilder, File destinationFile, String duplicate,
-		boolean update, final String[][] filesets) {
+		boolean update, final String[][] filesets, File manifestFile) {
 
 		Map<String, Object> args = new HashMap<>();
 
 		args.put("destfile", destinationFile);
-		args.put("duplicate", duplicate);
+
+		if (Validator.isNotNull(duplicate)) {
+			args.put("duplicate", duplicate);
+		}
+
+		if (manifestFile != null) {
+			args.put("manifest", manifestFile);
+		}
+
 		args.put("update", update);
 
 		Closure<Void> closure = new Closure<Void>(null) {
@@ -400,5 +576,57 @@ public class FileUtil {
 
 		antBuilder.invokeMethod("jar", new Object[] {args, closure});
 	}
+
+	private static void _invokeAntMethodManifest(
+		final AntBuilder antBuilder, File file,
+		final Map<String, String> attributes) {
+
+		Map<String, File> args = Collections.singletonMap("file", file);
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall() {
+				Map<String, String> args = new HashMap<>();
+
+				for (Map.Entry<String, String> entry : attributes.entrySet()) {
+					args.put("name", entry.getKey());
+					args.put("value", entry.getValue());
+
+					antBuilder.invokeMethod("attribute", args);
+				}
+			}
+
+		};
+
+		antBuilder.invokeMethod("manifest", new Object[] {args, closure});
+	}
+
+	private static void _invokeAntMethodManifestClasspath(
+		final AntBuilder antBuilder, final Iterable<File> files, File jarFile,
+		String property) {
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("jarfile", jarFile);
+		args.put("maxParentLevels", 99);
+		args.put("property", property);
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall() {
+				_invokeAntMethodClasspath(
+					antBuilder, merge(files, File.pathSeparator));
+			}
+
+		};
+
+		antBuilder.invokeMethod(
+			"manifestclasspath", new Object[] {args, closure});
+	}
+
+	private static final File _TMP_DIR = new File(
+		System.getProperty("java.io.tmpdir"));
 
 }

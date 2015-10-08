@@ -79,7 +79,7 @@ public class SynchronousDestinationTestCallback
 		Sync sync = testClass.getAnnotation(Sync.class);
 
 		if (sync != null) {
-			return _applySyncHandler(sync);
+			return _createSyncHandler(sync);
 		}
 
 		boolean hasSyncedMethod = false;
@@ -120,7 +120,7 @@ public class SynchronousDestinationTestCallback
 			return null;
 		}
 
-		return _applySyncHandler(sync);
+		return _createSyncHandler(sync);
 	}
 
 	public static class SyncHandler {
@@ -258,7 +258,7 @@ public class SynchronousDestinationTestCallback
 	protected SynchronousDestinationTestCallback() {
 	}
 
-	private SyncHandler _applySyncHandler(Sync sync) {
+	private SyncHandler _createSyncHandler(Sync sync) {
 		SyncHandler syncHandler = new SyncHandler();
 
 		syncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());

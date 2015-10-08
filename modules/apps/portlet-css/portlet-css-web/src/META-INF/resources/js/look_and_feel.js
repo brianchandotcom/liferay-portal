@@ -1294,7 +1294,9 @@ AUI.add(
 							return;
 						}
 
-						var portletTitle = instance._curPortlet.one('.portlet-title, .portlet-title-default');
+						var curPorlet = instance._curPortlet;
+
+						var portletTitle = curPorlet.one('.portlet-title, .portlet-title-default');
 
 						if (portletTitle) {
 							var cruft = portletTitle.html().match(/<\/?[^>]+>|\n|\r|\t/gim);
@@ -1314,10 +1316,16 @@ AUI.add(
 								portletTitle.html(cruft);
 
 								var portletNameText = portletTitle.one('.portlet-name-text');
-								var portletTitleText = instance._curPortlet.one('.portlet-title-text');
 
-								portletNameText.text(value);
-								portletTitleText.text(value);
+								if (portletNameText) {
+									portletNameText.text(value);
+								}
+
+								var portletTitleText = curPorlet.one('.portlet-title-text');
+
+								if (portletTitleText) {
+									portletTitleText.text(value);
+								}
 							}
 
 							portletData.title = value;

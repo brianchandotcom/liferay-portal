@@ -14,17 +14,10 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
-import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -70,100 +63,6 @@ public class PermissionCheckerBagImpl
 		}
 
 		return _roleIds;
-	}
-
-	@Override
-	public boolean isGroupOwner(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception {
-
-		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
-			permissionChecker.getUserId(), group.getGroupId(),
-			RoleConstants.SITE_OWNER);
-
-		try {
-			if (value == null) {
-				value = isGroupOwnerImpl(permissionChecker, group);
-
-				PermissionCacheUtil.putUserPrimaryKeyRole(
-					getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER,
-					value);
-			}
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeUserPrimaryKeyRole(
-				getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER);
-
-			throw e;
-		}
-
-		return value;
-	}
-
-	protected boolean isGroupOwnerImpl(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		if (group.isSite()) {
-			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-					getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER,
-					true)) {
-
-				return true;
-			}
-		}
-
-		if (group.isLayoutPrototype()) {
-			if (LayoutPrototypePermissionUtil.contains(
-					permissionChecker, group.getClassPK(), ActionKeys.UPDATE)) {
-
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else if (group.isLayoutSetPrototype()) {
-			if (LayoutSetPrototypePermissionUtil.contains(
-					permissionChecker, group.getClassPK(), ActionKeys.UPDATE)) {
-
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else if (group.isOrganization()) {
-			long organizationId = group.getOrganizationId();
-
-			while (organizationId !=
-						OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
-
-				Organization organization =
-					OrganizationLocalServiceUtil.getOrganization(
-						organizationId);
-
-				long organizationGroupId = organization.getGroupId();
-
-				if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-						getUserId(), organizationGroupId,
-						RoleConstants.ORGANIZATION_OWNER, true)) {
-
-					return true;
-				}
-
-				organizationId = organization.getParentOrganizationId();
-			}
-		}
-		else if (group.isUser()) {
-			long groupUserId = group.getClassPK();
-
-			if (getUserId() == groupUserId) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private long[] _roleIds;

@@ -1382,6 +1382,69 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
+	protected boolean isGroupOwnerImpl(Group group) throws PortalException {
+		if (group.isSite()) {
+			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER,
+					true)) {
+
+				return true;
+			}
+		}
+
+		if (group.isLayoutPrototype()) {
+			if (LayoutPrototypePermissionUtil.contains(
+					this, group.getClassPK(), ActionKeys.UPDATE)) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (group.isLayoutSetPrototype()) {
+			if (LayoutSetPrototypePermissionUtil.contains(
+					this, group.getClassPK(), ActionKeys.UPDATE)) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (group.isOrganization()) {
+			long organizationId = group.getOrganizationId();
+
+			while (organizationId !=
+						OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+				Organization organization =
+					OrganizationLocalServiceUtil.getOrganization(
+						organizationId);
+
+				long organizationGroupId = organization.getGroupId();
+
+				if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+						getUserId(), organizationGroupId,
+						RoleConstants.ORGANIZATION_OWNER, true)) {
+
+					return true;
+				}
+
+				organizationId = organization.getParentOrganizationId();
+			}
+		}
+		else if (group.isUser()) {
+			long groupUserId = group.getClassPK();
+
+			if (getUserId() == groupUserId) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isGroupOwnerImpl(long groupId) throws Exception {
 		if (!signedIn) {
 			return false;
@@ -1401,18 +1464,26 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		PermissionCheckerBag bag = getUserBag(user.getUserId(), groupId);
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER);
 
-		if (bag == null) {
-			_log.error("Bag should never be null");
+		try {
+			if (value == null) {
+				value = isGroupOwnerImpl(group);
+
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER,
+					value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER);
+
+			throw e;
 		}
 
-		if (bag.isGroupOwner(this, group)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return value;
 	}
 
 	protected boolean isOrganizationAdminImpl(long organizationId)

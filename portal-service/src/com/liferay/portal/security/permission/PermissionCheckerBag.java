@@ -16,8 +16,6 @@ package com.liferay.portal.security.permission;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Group;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -25,9 +23,5 @@ import com.liferay.portal.model.Group;
 public interface PermissionCheckerBag extends UserPermissionCheckerBag {
 
 	public long[] getRoleIds();
-
-	public boolean isGroupOwner(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception;
 
 }

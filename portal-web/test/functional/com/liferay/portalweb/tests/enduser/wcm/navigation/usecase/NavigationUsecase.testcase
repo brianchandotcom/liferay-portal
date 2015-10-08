@@ -61,14 +61,14 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="AssertTextEquals" locator1="NavigationConfiguration#PREVIEW_BREADCRUMB_HEADER2_ENTRY" value1="Navigation Display Test Page" />
-		<execute function="Select" locator1="Select#DISPLAY_STYLE" value1="Custom" />
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Custom" />
 		<execute function="AssertSelectedLabel" locator1="Select#HEADER" value1="Root Page" />
 		<execute function="AssertSelectedLabel" locator1="Select#ROOT_PAGE" value1="Parent at Level" />
 		<execute function="AssertSelectedLabel" locator1="Select#ROOT_PAGE_LEVEL" value1="1" />
 		<execute function="AssertSelectedLabel" locator1="Select#INCLUDED_PAGES" value1="Auto" />
 		<execute function="AssertSelectedLabel" locator1="Select#NESTED_CHILDREN" value1="Yes" />
-		<execute function="AssertClick" locator1="PGNavigationConfiguration#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGNavigationConfiguration#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
@@ -178,9 +178,9 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-		<execute function="Select" locator1="Select#DISPLAY_STYLE" value1="Relative with Breadcrumb" />
-		<execute function="AssertClick" locator1="PGNavigationConfiguration#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGNavigationConfiguration#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Relative with Breadcrumb" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">

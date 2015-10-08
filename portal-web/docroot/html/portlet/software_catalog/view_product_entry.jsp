@@ -39,7 +39,7 @@ addProductVersionURL.setParameter("productEntryId", String.valueOf(productEntryI
 
 PortletURL editProductEntryURL = renderResponse.createRenderURL();
 
-editProductEntryURL.setParameter("struts_action", "/software_catalog/edit_product_entry");
+editProductEntryURL.setParameter("mvcRenderName", "/software_catalog/edit_product_entry");
 editProductEntryURL.setParameter("tabs2", tabs2);
 editProductEntryURL.setParameter("redirect", currentURL);
 editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId));

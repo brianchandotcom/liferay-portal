@@ -449,7 +449,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<c:if test="<%= showAddProductEntryButton %>">
 			<div class="btn-toolbar">
 				<portlet:renderURL var="addProductURL">
-					<portlet:param name="struts_action" value="/software_catalog/edit_product_entry" />
+					<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
@@ -677,7 +677,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 <aui:script>
 	function <portlet:namespace />addProduct() {
-		var url = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
+		var url = '<portlet:renderURL name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
 
 		if (document.<portlet:namespace />fm.<portlet:namespace />keywords) {
 			url += '&<portlet:namespace />name=' + document.<portlet:namespace />fm.<portlet:namespace />keywords.value;

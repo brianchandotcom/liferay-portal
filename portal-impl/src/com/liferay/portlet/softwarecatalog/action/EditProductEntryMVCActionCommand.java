@@ -14,7 +14,17 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -23,122 +33,48 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.softwarecatalog.DuplicateProductEntryModuleIdException;
-import com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
-import com.liferay.portlet.softwarecatalog.ProductEntryAuthorException;
-import com.liferay.portlet.softwarecatalog.ProductEntryLicenseException;
-import com.liferay.portlet.softwarecatalog.ProductEntryNameException;
-import com.liferay.portlet.softwarecatalog.ProductEntryPageURLException;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.softwarecatalog.ProductEntryScreenshotsException;
-import com.liferay.portlet.softwarecatalog.ProductEntryShortDescriptionException;
-import com.liferay.portlet.softwarecatalog.ProductEntryTypeException;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.service.SCProductEntryServiceUtil;
 import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil;
 
-import java.io.InputStream;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Jorge Ferrer
+ * @author Philip Jones
  */
-public class EditProductEntryAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.SOFTWARE_CATALOG,
+		"mvc.command.name=/software_catalog/edit_product_entry"
+	},
+	service = MVCActionCommand.class
+)
+public class EditProductEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateProductEntry(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteProductEntry(actionRequest);
-			}
-
-			if (Validator.isNotNull(cmd)) {
-				sendRedirect(actionRequest, actionResponse);
-			}
+		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			updateProductEntry(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchProductEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.software_catalog.error");
-			}
-			else if (e instanceof DuplicateProductEntryModuleIdException ||
-					 e instanceof ProductEntryAuthorException ||
-					 e instanceof ProductEntryNameException ||
-					 e instanceof ProductEntryLicenseException ||
-					 e instanceof ProductEntryPageURLException ||
-					 e instanceof ProductEntryScreenshotsException ||
-					 e instanceof ProductEntryShortDescriptionException ||
-					 e instanceof ProductEntryTypeException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getProductEntry(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchProductEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.software_catalog.error");
-			}
-			else {
-				throw e;
-			}
+		else if (cmd.equals(Constants.DELETE)) {
+			deleteProductEntry(actionRequest);
 		}
 
-		return actionMapping.findForward(
-			getForward(
-				renderRequest, "portlet.software_catalog.edit_product_entry"));
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		sendRedirect(actionRequest, actionResponse, redirect);
+
 	}
 
 	protected void deleteProductEntry(ActionRequest actionRequest)

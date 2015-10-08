@@ -26,8 +26,7 @@ long productEntryId = productEntry.getProductEntryId();
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= SCProductEntryPermission.contains(permissionChecker, productEntry, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/software_catalog/edit_product_entry" />
+		<portlet:renderURL name="/software_catalog/edit_product_entry" var="editURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="productEntryId" value="<%= String.valueOf(productEntryId) %>" />
 		</portlet:renderURL>
@@ -58,8 +57,7 @@ long productEntryId = productEntry.getProductEntryId();
 	</c:if>
 
 	<c:if test="<%= SCProductEntryPermission.contains(permissionChecker, productEntry, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/software_catalog/edit_product_entry" />
+		<portlet:actionURL name="/software_catalog/edit_product_entry" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="productEntryId" value="<%= String.valueOf(productEntryId) %>" />

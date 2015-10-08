@@ -44,13 +44,7 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		boolean validationDisabled = GetterUtil.getBoolean(
-				serviceContext.getAttribute("validationDisabled"),
-				Boolean.FALSE);
-
-		if (!validationDisabled) {
-			validate(ddmFormValues);
-		}
+		validate(ddmFormValues, serviceContext);
 
 		long classNameId = PortalUtil.getClassNameId(
 			DDMContent.class.getName());
@@ -76,7 +70,7 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		validate(ddmFormValues);
+		validate(ddmFormValues, serviceContext);
 
 		DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(classPK);
 
@@ -135,7 +129,17 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		return ddmFormValues;
 	}
 
-	protected void validate(DDMFormValues ddmFormValues) throws Exception {
+	protected void validate(
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws Exception {
+
+		boolean validationDisabled = GetterUtil.getBoolean(
+			serviceContext.getAttribute("validationDisabled"));
+
+		if (validationDisabled) {
+			return;
+		}
+
 		ddmFormValuesValidator.validate(ddmFormValues);
 	}
 

@@ -77,7 +77,7 @@
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 	</command>
 
-	<command known-issues="SOS-2108" name="DeleteMessageBySOUser" priority="4">
+	<command name="DeleteMessageBySOUser" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -261,7 +261,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2108" name="DeleteMessageDetails" priority="4">
+	<command name="DeleteMessageDetails" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -462,7 +462,7 @@
 		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_UNREAD" />
 	</command>
 
-	<command known-issues="SOS-2108" name="MarkAsUnreadMessageDetails" priority="4">
+	<command name="MarkAsUnreadMessageDetails" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -1584,7 +1584,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2377" name="SendMessagePortalNonSOUsers" priority="4">
+	<command name="SendMessagePortalNonSOUsers" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Private Messaging Page" />

@@ -1085,7 +1085,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56528" name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
+	<command name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
 		<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

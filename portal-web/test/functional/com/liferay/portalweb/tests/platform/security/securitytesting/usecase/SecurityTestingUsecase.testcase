@@ -50,7 +50,7 @@
 		<execute function="AssertElementNotPresent" locator1="JSONWS#SECURITY_TEST_PAGE_POPULATED" />
 	</command>
 
-	<command known-issues="LPS-49848" name="ValidateCannotStealAdminAccount" priority="4">
+	<command name="ValidateCannotStealAdminAccount" priority="4">
 		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.UserServiceUtil&amp;serviceMethodName=updateStatus&amp;serviceParameters=[userId,status]&amp;userId=10202&amp;status=6&amp;p_auth=" />
 
 		<execute macro="Api#gotoPAuthURL" />
@@ -110,7 +110,7 @@
 		<execute function="AssertTextEquals" locator1="Portlet#H1_HEADER" value1="To-Do List" />
 	</command>
 
-	<command known-issues="LPS-47697" name="ViewUpdateUserViaJSONWS" priority="4">
+	<command name="ViewUpdateUserViaJSONWS" priority="4">
 		<property name="custom.properties" value="company.security.strangers.verify=true" />
 
 		<execute macro="Api#apiJsonwsUserView" />

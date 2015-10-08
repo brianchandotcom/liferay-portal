@@ -10,7 +10,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="Ignore" name="ViewHook" priority="4">
+	<command name="ViewHook" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Hook Page" />
 		</execute>

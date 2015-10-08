@@ -1546,7 +1546,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51167" name="ViewCategoryThread75CharactersNotification" priority="4">
+	<command name="ViewCategoryThread75CharactersNotification" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="pageName" value="Forums" />
 		<var name="siteDescription" value="Open Site Description" />
@@ -2386,7 +2386,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-50589" name="ViewFolderDocumentNotifications" priority="4">
+	<command name="ViewFolderDocumentNotifications" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -4436,7 +4436,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="SOS-2479" name="ViewNoMessageNotificationViaEmail" priority="4">
+	<command name="ViewNoMessageNotificationViaEmail" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
 		<var name="messageSubject" value="Message Subject" />
@@ -5897,7 +5897,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51167" name="ViewSOSiteAnnouncements75CharactersEntryNotification" priority="4">
+	<command name="ViewSOSiteAnnouncements75CharactersEntryNotification" priority="4">
 		<var name="entryContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra tortor nec volutpat convallis. Integer quis dignissim turpis, iaculis tempor diam. Sed tempus pretium tellus, id venenatis nibh consequat a. Sed cursus felis a tempor euismod. Nullam ut rutrum nisi, quis condimentum nulla. Vestibulum imperdiet laoreet dui eu cursus. Praesent ut blandit nulla, eu tincidunt nunc. Etiam ac lorem urna. Duis aliquet, neque sed elementum eleifend, sapien nisl consectetur turpis, vitae sollicitudin mi velit in mi. Praesent facilisis, purus eu ultrices auctor, massa nisl tincidunt mauris, et fermentum urna tortor quis sapien. Morbi iaculis viverra tellus egestas imperdiet. Integer hendrerit feugiat risus a porttitor. Vivamus ornare, dui sed laoreet dictum, mauris tellus eleifend dolor, eu iaculis arcu orci et erat. Integer in rhoncus nisl, et tempus dui. Phasellus et hendrerit dolor. Curabitur ornare erat vel purus vestibulum luctus. Donec condimentum placerat lectus in dignissim. Vivamus libero ipsum, sodales vel pellentesque sit amet, posuere a justo. Nulla quis dolor aliquet, hendrerit tellus ac, accumsan dui. Nullam quis mattis mauris. Integer laoreet sit amet lacus nec porttitor. Maecenas vestibulum in tortor in interdum. Vivamus blandit quis purus laoreet dictum. In lacinia magna eget imperdiet interdum. Etiam arcu augue, auctor eget mattis eu, consequat ac tellus. Aenean id neque vitae massa porta sollicitudin vel sed ante.</var>
 		<var name="entryTitle" value="|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||" />
 		<var name="entryURL" value="http://www.google.com" />

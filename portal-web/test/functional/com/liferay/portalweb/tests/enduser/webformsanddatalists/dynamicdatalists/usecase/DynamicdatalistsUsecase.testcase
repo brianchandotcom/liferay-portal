@@ -273,7 +273,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51620" name="AddRepeatableFieldAndAssertOrderInTranslation" priority="4">
+	<command name="AddRepeatableFieldAndAssertOrderInTranslation" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
@@ -1266,7 +1266,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49957" name="FormTemplate" priority="4">
+	<command name="FormTemplate" priority="4">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
@@ -1687,7 +1687,7 @@
 		<execute macro="DDLTemplate#saveFormTemplateCP" />
 	</command>
 
-	<command known-issues="LPS-51620" name="RemoveRepeatableFieldAndAssertOrderInTranslation" priority="4">
+	<command name="RemoveRepeatableFieldAndAssertOrderInTranslation" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>

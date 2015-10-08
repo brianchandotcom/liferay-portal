@@ -2,7 +2,7 @@
 	<property name="setup.wizard.enabled" value="true" />
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
-	<command known-issues="LPS-54934" name="HSQLtoDB2" priority="4">
+	<command name="HSQLtoDB2" priority="4">
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
@@ -32,7 +32,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command known-issues="LPS-54934" name="HSQLtoDB2SampleDataDisabled" priority="4">
+	<command name="HSQLtoDB2SampleDataDisabled" priority="4">
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
@@ -239,7 +239,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command known-issues="LPS-52571" name="HSQLtoSybase" priority="4">
+	<command name="HSQLtoSybase" priority="4">
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
@@ -259,7 +259,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command known-issues="LPS-52571" name="HSQLtoSybaseSampleDataDisabled" priority="4">
+	<command name="HSQLtoSybaseSampleDataDisabled" priority="4">
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />
 			<var name="administratorEmail" value="test@liferay.com" />

@@ -206,7 +206,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54205" name="ApplicationAdapter" priority="4">
+	<command name="ApplicationAdapter" priority="4">
 		<property name="hook.plugins.includes" value="sample-application-adapter-hook" />
 
 		<execute macro="Page#gotoCP">
@@ -598,7 +598,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51074" name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="4">
+	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="4">
 		<property name="custom.properties" value="layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true" />
 
 		<execute macro="Page#gotoCP">
@@ -957,7 +957,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51074" name="SitesDemoSiteManagement" priority="4">
+	<command name="SitesDemoSiteManagement" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

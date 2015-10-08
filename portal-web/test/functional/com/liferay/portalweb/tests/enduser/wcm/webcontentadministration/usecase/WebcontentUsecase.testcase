@@ -23,7 +23,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="LPS-55073" name="AddAudioViaWebContent" priority="4">
+	<command name="AddAudioViaWebContent" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
@@ -101,7 +101,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command known-issues="LPS-58915,WCM-260" name="AddContentWithTitleAndAllFieldsNull" priority="4">
+	<command name="AddContentWithTitleAndAllFieldsNull" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -245,7 +245,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14590" name="AddWebContentRemoveGuestViewPermission" priority="4">
+	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
 		<property name="custom.properties" value="journal.article.view.permission.check.enabled=true" />
 
 		<var name="portletOption" value="Configuration" />
@@ -385,7 +385,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
+	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -499,7 +499,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55128" name="DeleteTemplateAndStructureWithReferencedWebContent" priority="4">
+	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -803,7 +803,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-58915" name="EditWebContentTemplate" priority="4">
+	<command name="EditWebContentTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1497,7 +1497,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56572" name="WebcontentAdministrationTemplateValidation" priority="4">
+	<command name="WebcontentAdministrationTemplateValidation" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

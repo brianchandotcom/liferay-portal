@@ -11,7 +11,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="LPS-45835" name="ViewResourcesImporter" priority="4">
+	<command name="ViewResourcesImporter" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Resources Importer Page" />
 		</execute>

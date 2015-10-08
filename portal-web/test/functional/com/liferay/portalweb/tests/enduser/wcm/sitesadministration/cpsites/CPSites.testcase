@@ -352,7 +352,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51074" name="EditSiteFriendlyURLInvalid" priority="4">
+	<command name="EditSiteFriendlyURLInvalid" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -412,7 +412,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParent" priority="4">
+	<command name="SiteCannotBeItsOwnParent" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -432,7 +432,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParentStaging" priority="4">
+	<command name="SiteCannotBeItsOwnParentStaging" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -739,7 +739,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2314" name="ViewRemoveCalendarViewPermissionsActivities" priority="4">
+	<command name="ViewRemoveCalendarViewPermissionsActivities" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="pageName" value="Calendar" />

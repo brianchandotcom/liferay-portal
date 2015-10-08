@@ -1178,7 +1178,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49497" name="AddMBCategoryThreadSticky" priority="3">
+	<command name="AddMBCategoryThreadSticky" priority="3">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadPriority" value="Sticky" />
@@ -1309,7 +1309,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49497" name="AddMBCategoryThreadUrgent" priority="3">
+	<command name="AddMBCategoryThreadUrgent" priority="3">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadPriority" value="Urgent" />
@@ -1442,7 +1442,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-25584" name="AddMBCategoryThreadViewableBySiteMembers" priority="4">
+	<command name="AddMBCategoryThreadViewableBySiteMembers" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody1" value="MB Category Thread 1 Message Body" />
 		<var name="threadBody2" value="MB Category Thread 2 Message Body" />
@@ -3477,7 +3477,7 @@
 		<execute function="AssertTextNotPresent" value1="${threadSubject2}" />
 	</command>
 
-	<command known-issues="LPS-25584" name="ViewMBCategoryThreadAsGuest" priority="4">
+	<command name="ViewMBCategoryThreadAsGuest" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="postCount" value="1" />
 		<var name="threadBody1" value="MB Category Thread 1 Message Body" />

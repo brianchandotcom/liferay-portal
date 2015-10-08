@@ -49,7 +49,7 @@
 				<equals arg1="${dmFolder}" arg2="Invalid" />
 				<then>
 					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid name." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The Folder Name cannot contain the following invalid characters: \ // : * ? &quot; &lt; &gt; | ../ /..." />
 				</then>
 			</elseif>
 			<else>

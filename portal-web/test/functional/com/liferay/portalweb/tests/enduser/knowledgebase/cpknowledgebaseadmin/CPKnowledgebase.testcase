@@ -306,12 +306,6 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#gotoCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbAuthor" value="Test Test" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
-
 		<execute function="Pause" value1="5000" />
 
 		<execute macro="KBArticle#viewCP">

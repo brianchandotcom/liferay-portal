@@ -74,19 +74,12 @@
 	<command name="UserGroupPrivatePageInheritance" priority="4">
 		<property name="custom.properties" value="layout.user.private.layouts.auto.create=false${line.separator}user.groups.copy.layouts.to.user.personal.site=true" />
 
-		<var name="sitePageName" value="Test User Group Page 1" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userGroupName" value="UG UserGroup Name" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
 
 		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -94,9 +87,9 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePageName" value="Test User Group Page 1" />
 			<var name="sitePagePrivacy" value="Private" />
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -104,10 +97,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -115,8 +108,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -125,52 +118,49 @@
 
 		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="userfn" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<var name="key_userScreenName" value="usersn" />
 
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_PAGES" value1="Manage Pages" />
 
 		<execute function="AssertClick" locator1="CPUsersandorganizationsManagepages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
 		<execute function="Click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
-		<execute function="AssertElementNotPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute function="AssertElementNotPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" value1="Test User Group Page 1" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
 
 		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="${userGroupName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
 
 		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="${sitePageName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="Test User Group Page 1" />
 
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 
 	<command name="UserGroupSiteOwnerPermissions" priority="4">
-		<var name="roleType" value="Regular" />
-		<var name="siteName" value="Site Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -358,9 +348,9 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<var name="key_siteName" value="${siteName}" />
+		<var name="key_siteName" value="Site Name" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="Site Name" />
 
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS" value1="Users" />
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
@@ -399,9 +389,9 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<var name="key_siteName" value="${siteName}" />
+		<var name="key_siteName" value="Site Name" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME_UNVIEWABLE" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME_UNVIEWABLE" value1="Site Name" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -416,6 +406,7 @@
 
 		<execute macro="Role#addCP">
 			<var name="roleName" value="Test UserGroup Role" />
+			<var name="roleType" value="Regular" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -451,9 +442,9 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<var name="key_siteName" value="${siteName}" />
+		<var name="key_siteName" value="Site Name" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="Site Name" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -603,8 +594,6 @@
 	</command>
 
 	<command name="ViewUserGroupPermissionsNoAsUser" priority="4">
-		<var name="userGroupName" value="UG UserGroup Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -749,9 +738,9 @@
 			<var name="portletName" value="User Groups" />
 		</execute>
 
-		<var name="key_userGroupName" value="${userGroupName}" />
+		<var name="key_userGroupName" value="UG UserGroup Name" />
 
-		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="UG UserGroup Name" />
 		<execute function="AssertElementNotPresent" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS" />
 
 		<execute macro="User#logoutUserPG" />

@@ -148,7 +148,7 @@
 	</command>
 
 	<command name="viewDefaultPG">
-		<var name="key_portletName" value="${portletName}" />
+		<var name="key_portletName" value="Documents and Media" />
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Documents and Media" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />

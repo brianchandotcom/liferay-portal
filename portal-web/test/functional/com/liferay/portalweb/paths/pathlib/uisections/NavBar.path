@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACTIONS</td>
+	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD</td>
 	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Add')]</td>
 	<td></td>

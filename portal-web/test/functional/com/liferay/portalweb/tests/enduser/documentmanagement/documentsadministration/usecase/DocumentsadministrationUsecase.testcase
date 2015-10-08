@@ -714,7 +714,7 @@
 		</execute>
 
 		<execute macro="ServerAdministration#executeServerResourcesActions">
-			<var name="actionsDescription" value="Clean Up Permissions" />
+			<var name="actionsDescription" value="Clean up permissions." />
 		</execute>
 
 		<execute macro="Page#gotoCP">

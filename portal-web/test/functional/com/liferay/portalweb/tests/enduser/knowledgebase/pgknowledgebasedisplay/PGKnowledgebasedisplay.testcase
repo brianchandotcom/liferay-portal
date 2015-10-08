@@ -250,7 +250,7 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseSelectParent#BREADCRUMB_HOME" />
-		<execute function="AssertElementNotPresent" locator1="//div[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
+		<execute function="AssertElementNotPresent" locator1="//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
 	</command>
 
 	<command name="ChangeSocialBookmarkSitesForKBArticle" priority="4">

@@ -187,6 +187,7 @@
 		<execute macro="Role#definePermissionCmdCP">
 			<var name="permissionDefinitionKeys" value="${permissionDefinitionKeys}" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleUser" value="${roleUser}" />
 		</execute>
 	</command>
 

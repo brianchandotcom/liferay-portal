@@ -657,8 +657,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<c:if test="<%= hasAddLicensePermission %>">
 			<div class="btn-toolbar">
-				<portlet:renderURL var="addLicenseURL">
-					<portlet:param name="struts_action" value="/software_catalog/edit_license" />
+				<portlet:renderURL name="/software_catalog/edit_license" var="addLicenseURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 

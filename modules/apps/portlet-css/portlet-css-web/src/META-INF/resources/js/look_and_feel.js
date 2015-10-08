@@ -824,8 +824,8 @@ AUI.add(
 					portletData: {
 						customTitle: EMPTY,
 						language: 'en_US',
-						portletLinksTarget: EMPTY,
 						portletDecoratorId: EMPTY,
+						portletLinksTarget: EMPTY,
 						title: EMPTY,
 						titles: {},
 						useCustomTitle: false
@@ -1271,8 +1271,8 @@ AUI.add(
 				var customTitleInput = instance._customTitleInput;
 				var language = instance._portletLanguage;
 				var portletData = instance._objData.portletData;
-				var portletLinksTarget = instance._portletLinksTarget;
 				var portletDecorator = instance._portletDecorator;
+				var portletLinksTarget = instance._portletLinksTarget;
 
 				// Use custom title
 

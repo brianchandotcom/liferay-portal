@@ -42,32 +42,6 @@ import java.util.Set;
 public class PermissionCheckerBagImpl
 	extends UserPermissionCheckerBagImpl implements PermissionCheckerBag {
 
-	public PermissionCheckerBagImpl() {
-		super(
-			UserConstants.USER_ID_DEFAULT, Collections.<Group>emptySet(),
-			Collections.<Organization>emptyList(),
-			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
-			Collections.<Role>emptySet());
-	}
-
-	public PermissionCheckerBagImpl(long userId) {
-		super(
-			userId, Collections.<Group>emptySet(),
-			Collections.<Organization>emptyList(),
-			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
-			Collections.<Role>emptySet());
-	}
-
-	public PermissionCheckerBagImpl(
-		long userId, Set<Group> userGroups, List<Organization> userOrgs,
-		Set<Group> userOrgGroups, List<Group> userUserGroupGroups,
-		Set<Role> roles) {
-
-		super(
-			userId, userGroups, userOrgs, userOrgGroups, userUserGroupGroups,
-			roles);
-	}
-
 	public PermissionCheckerBagImpl(long userId, Set<Role> roles) {
 		super(
 			userId, Collections.<Group>emptySet(),
@@ -101,32 +75,6 @@ public class PermissionCheckerBagImpl
 		}
 
 		return _roleIds;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link
-	 *             #isGroupAdmin(PermissionChecker, Group)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isCommunityAdmin(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception {
-
-		return isGroupAdmin(permissionChecker, group);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link
-	 *             #isGroupOwner(PermissionChecker, Group)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isCommunityOwner(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception {
-
-		return isGroupOwner(permissionChecker, group);
 	}
 
 	@Override

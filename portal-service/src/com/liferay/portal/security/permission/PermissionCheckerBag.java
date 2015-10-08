@@ -27,24 +27,6 @@ public interface PermissionCheckerBag extends UserPermissionCheckerBag {
 
 	public long[] getRoleIds();
 
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link
-	 *             #isGroupAdmin(PermissionChecker, Group)}
-	 */
-	@Deprecated
-	public boolean isCommunityAdmin(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception;
-
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link
-	 *             #isGroupOwner(PermissionChecker, Group)}
-	 */
-	@Deprecated
-	public boolean isCommunityOwner(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception;
-
 	public boolean isContentReviewer(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;

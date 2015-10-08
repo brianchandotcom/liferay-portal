@@ -135,7 +135,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 	@Override
 	public void deleteCalendarBookingInstance(
-			long calendarBookingId, long startTime, boolean allFollowing)
+			long calendarBookingId, int instanceIndex, boolean allFollowing)
 		throws PortalException {
 
 		CalendarBooking calendarBooking =
@@ -144,6 +144,22 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		CalendarPermission.check(
 			getPermissionChecker(), calendarBooking.getCalendarId(),
 			CalendarActionKeys.MANAGE_BOOKINGS);
+
+		calendarBookingLocalService.deleteCalendarBookingInstance(
+			calendarBooking, instanceIndex, allFollowing);
+	}
+
+	@Override
+	public void deleteCalendarBookingInstance(
+			long calendarBookingId, long startTime, boolean allFollowing)
+		throws PortalException {
+
+		CalendarBooking calendarBooking =
+			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
+
+		CalendarPermission.check(
+				getPermissionChecker(), calendarBooking.getCalendarId(),
+				CalendarActionKeys.MANAGE_BOOKINGS);
 
 		calendarBookingLocalService.deleteCalendarBookingInstance(
 			calendarBookingId, startTime, allFollowing);

@@ -156,6 +156,19 @@ public class CalendarBookingServiceSoap {
 	}
 
 	public static void deleteCalendarBookingInstance(long calendarBookingId,
+		int instanceIndex, boolean allFollowing) throws RemoteException {
+		try {
+			CalendarBookingServiceUtil.deleteCalendarBookingInstance(calendarBookingId,
+				instanceIndex, allFollowing);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCalendarBookingInstance(long calendarBookingId,
 		long startTime, boolean allFollowing) throws RemoteException {
 		try {
 			CalendarBookingServiceUtil.deleteCalendarBookingInstance(calendarBookingId,

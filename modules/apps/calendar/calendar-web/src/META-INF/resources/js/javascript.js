@@ -323,7 +323,7 @@ AUI.add(
 						'/calendar.calendarbooking/delete-calendar-booking-instance': {
 							allFollowing: allFollowing,
 							calendarBookingId: schedulerEvent.get('calendarBookingId'),
-							startTime: CalendarUtil.toUTC(schedulerEvent.get('startDate')).getTime()
+							instanceIndex: schedulerEvent.get('instanceIndex')
 						}
 					},
 					{

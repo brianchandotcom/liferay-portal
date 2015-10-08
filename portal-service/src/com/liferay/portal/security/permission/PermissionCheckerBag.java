@@ -17,7 +17,6 @@ package com.liferay.portal.security.permission;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
 
 /**
  * @author Brian Wing Shun Chan
@@ -33,10 +32,6 @@ public interface PermissionCheckerBag extends UserPermissionCheckerBag {
 
 	public boolean isGroupOwner(
 			PermissionChecker permissionChecker, Group group)
-		throws Exception;
-
-	public boolean isOrganizationAdmin(
-			PermissionChecker permissionChecker, Organization organization)
 		throws Exception;
 
 }

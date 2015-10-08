@@ -1344,19 +1344,52 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		PermissionCheckerBag bag = getUserBag(
-			user.getUserId(), organization.getGroupId());
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), organization.getOrganizationId(),
+			RoleConstants.ORGANIZATION_ADMINISTRATOR);
 
-		if (bag == null) {
-			_log.error("Bag should never be null");
+		try {
+			if (value == null) {
+				value = isOrganizationAdminImpl(organization);
+
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), organization.getOrganizationId(),
+					RoleConstants.ORGANIZATION_ADMINISTRATOR, value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), organization.getOrganizationId(),
+				RoleConstants.ORGANIZATION_ADMINISTRATOR);
+
+			throw e;
 		}
 
-		if (bag.isOrganizationAdmin(this, organization)) {
-			return true;
+		return value;
+	}
+
+	protected boolean isOrganizationAdminImpl(Organization organization)
+		throws PortalException {
+
+		while (organization != null) {
+			long organizationGroupId = organization.getGroupId();
+
+			long userId = getUserId();
+
+			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					userId, organizationGroupId,
+					RoleConstants.ORGANIZATION_ADMINISTRATOR, true) ||
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					userId, organizationGroupId,
+					RoleConstants.ORGANIZATION_OWNER, true)) {
+
+				return true;
+			}
+
+			organization = organization.getParentOrganization();
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isOrganizationOwnerImpl(long organizationId)

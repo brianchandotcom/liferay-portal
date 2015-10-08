@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_PAGE_LINK</td>
-	<td>//div[contains(@class,'breadcrumb')]/ul/li/a[@href='${key_URL}']</td>
+	<td>//div[contains(@id,'breadcrumb')]/ul/li/a[@href='${key_URL}']</td>
 	<td></td>
 </tr>
 <tr>

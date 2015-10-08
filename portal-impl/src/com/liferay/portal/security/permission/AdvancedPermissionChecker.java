@@ -466,12 +466,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			user.getUserId(), signedIn, groupId, name, primKey, actionId);
 
 		if (value != null) {
-			return value.booleanValue();
+			return value;
 		}
 
 		try {
-			value = Boolean.valueOf(
-				hasPermissionImpl(groupId, name, primKey, actionId));
+			value = hasPermissionImpl(groupId, name, primKey, actionId);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -491,7 +490,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			throw e;
 		}
 
-		return value.booleanValue();
+		return value;
 	}
 
 	@Override

@@ -31,9 +31,7 @@ import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -82,16 +80,28 @@ public class PermissionCheckerBagImpl
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
 
-		Boolean value = _contentReviewers.get(group.getGroupId());
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			permissionChecker.getUserId(), group.getGroupId(),
+			RoleConstants.SITE_CONTENT_REVIEWER);
 
-		if (value == null) {
-			value = Boolean.valueOf(
-				isContentReviewerImpl(permissionChecker, group));
+		try {
+			if (value == null) {
+				value = isContentReviewerImpl(permissionChecker, group);
 
-			_contentReviewers.put(group.getGroupId(), value);
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), group.getGroupId(),
+					RoleConstants.SITE_CONTENT_REVIEWER, value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				permissionChecker.getUserId(), group.getGroupId(),
+				RoleConstants.SITE_CONTENT_REVIEWER);
+
+			throw e;
 		}
 
-		return value.booleanValue();
+		return value;
 	}
 
 	@Override
@@ -99,15 +109,28 @@ public class PermissionCheckerBagImpl
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
 
-		Boolean value = _groupAdmins.get(group.getGroupId());
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			permissionChecker.getUserId(), group.getGroupId(),
+			RoleConstants.SITE_ADMINISTRATOR);
 
-		if (value == null) {
-			value = Boolean.valueOf(isGroupAdminImpl(permissionChecker, group));
+		try {
+			if (value == null) {
+				value = isGroupAdminImpl(permissionChecker, group);
 
-			_groupAdmins.put(group.getGroupId(), value);
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), group.getGroupId(),
+					RoleConstants.SITE_ADMINISTRATOR, value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				permissionChecker.getUserId(), group.getGroupId(),
+				RoleConstants.SITE_ADMINISTRATOR);
+
+			throw e;
 		}
 
-		return value.booleanValue();
+		return value;
 	}
 
 	@Override
@@ -115,15 +138,27 @@ public class PermissionCheckerBagImpl
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
 
-		Boolean value = _groupOwners.get(group.getGroupId());
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			permissionChecker.getUserId(), group.getGroupId(),
+			RoleConstants.SITE_OWNER);
 
-		if (value == null) {
-			value = Boolean.valueOf(isGroupOwnerImpl(permissionChecker, group));
+		try {
+			if (value == null) {
+				value = isGroupOwnerImpl(permissionChecker, group);
 
-			_groupOwners.put(group.getGroupId(), value);
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER,
+					value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER);
+
+			throw e;
 		}
 
-		return value.booleanValue();
+		return value;
 	}
 
 	@Override
@@ -131,17 +166,29 @@ public class PermissionCheckerBagImpl
 			PermissionChecker permissionChecker, Organization organization)
 		throws Exception {
 
-		Boolean value = _organizationAdmins.get(
-			organization.getOrganizationId());
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			permissionChecker.getUserId(), organization.getOrganizationId(),
+			RoleConstants.ORGANIZATION_ADMINISTRATOR);
 
-		if (value == null) {
-			value = Boolean.valueOf(
-				isOrganizationAdminImpl(permissionChecker, organization));
+		try {
+			if (value == null) {
+				value = isOrganizationAdminImpl(
+					permissionChecker, organization);
 
-			_organizationAdmins.put(organization.getOrganizationId(), value);
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), organization.getOrganizationId(),
+					RoleConstants.ORGANIZATION_ADMINISTRATOR, value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), organization.getOrganizationId(),
+				RoleConstants.ORGANIZATION_ADMINISTRATOR);
+
+			throw e;
 		}
 
-		return value.booleanValue();
+		return value;
 	}
 
 	@Override
@@ -149,17 +196,29 @@ public class PermissionCheckerBagImpl
 			PermissionChecker permissionChecker, Organization organization)
 		throws Exception {
 
-		Boolean value = _organizationOwners.get(
-			organization.getOrganizationId());
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), organization.getOrganizationId(),
+			RoleConstants.ORGANIZATION_OWNER);
 
-		if (value == null) {
-			value = Boolean.valueOf(
-				isOrganizationOwnerImpl(permissionChecker, organization));
+		try {
+			if (value == null) {
+				value = isOrganizationOwnerImpl(
+					permissionChecker, organization);
 
-			_organizationOwners.put(organization.getOrganizationId(), value);
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), organization.getOrganizationId(),
+					RoleConstants.ORGANIZATION_OWNER, value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), organization.getOrganizationId(),
+				RoleConstants.ORGANIZATION_OWNER);
+
+			throw e;
 		}
 
-		return value.booleanValue();
+		return value;
 	}
 
 	protected boolean isContentReviewerImpl(
@@ -387,11 +446,6 @@ public class PermissionCheckerBagImpl
 		return false;
 	}
 
-	private final Map<Long, Boolean> _contentReviewers = new HashMap<>();
-	private final Map<Long, Boolean> _groupAdmins = new HashMap<>();
-	private final Map<Long, Boolean> _groupOwners = new HashMap<>();
-	private final Map<Long, Boolean> _organizationAdmins = new HashMap<>();
-	private final Map<Long, Boolean> _organizationOwners = new HashMap<>();
 	private long[] _roleIds;
 
 }

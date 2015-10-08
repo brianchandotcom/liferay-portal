@@ -36,16 +36,19 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerBag;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ResourceBlockLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.UserGroupRoleLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.Portal;
 
 import java.util.ArrayList;
@@ -221,6 +224,18 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
+
+		if ((user == null) || user.getUserId() != userId) {
+			user = _userLocalService.fetchUser(userId);
+
+			if (user == null) {
+				return booleanFilter;
+			}
+
+			permissionChecker = PermissionCheckerFactoryUtil.create(user);
+		}
 
 		if (permissionChecker.getGuestUserBag() == null) {
 			return booleanFilter;
@@ -490,6 +505,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserGroupRoleLocalService(
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
@@ -505,6 +525,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
+	private UserLocalService _userLocalService;
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

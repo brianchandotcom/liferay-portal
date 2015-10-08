@@ -17,7 +17,9 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchMembershipRequestException;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -189,7 +191,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		List<MembershipRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MembershipRequest>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -255,10 +257,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -549,8 +551,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -574,10 +575,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -696,7 +697,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		List<MembershipRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MembershipRequest>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -762,10 +763,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1056,8 +1057,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 		Object[] finderArgs = new Object[] { userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1081,10 +1081,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1215,7 +1215,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		List<MembershipRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MembershipRequest>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1286,10 +1286,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1597,8 +1597,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 		Object[] finderArgs = new Object[] { groupId, statusId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1626,10 +1625,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1772,7 +1771,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		List<MembershipRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MembershipRequest>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1848,10 +1847,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2177,8 +2176,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 		Object[] finderArgs = new Object[] { groupId, userId, statusId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -2210,10 +2208,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2240,7 +2238,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public void cacheResult(MembershipRequest membershipRequest) {
-		EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestImpl.class, membershipRequest.getPrimaryKey(),
 			membershipRequest);
 
@@ -2255,7 +2253,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	@Override
 	public void cacheResult(List<MembershipRequest> membershipRequests) {
 		for (MembershipRequest membershipRequest : membershipRequests) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 						MembershipRequestImpl.class,
 						membershipRequest.getPrimaryKey()) == null) {
@@ -2271,41 +2269,41 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 * Clears the cache for all membership requests.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(MembershipRequestImpl.class);
+		entityCache.clearCache(MembershipRequestImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the membership request.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(MembershipRequest membershipRequest) {
-		EntityCacheUtil.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestImpl.class, membershipRequest.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<MembershipRequest> membershipRequests) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (MembershipRequest membershipRequest : membershipRequests) {
-			EntityCacheUtil.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 				MembershipRequestImpl.class, membershipRequest.getPrimaryKey());
 		}
 	}
@@ -2440,10 +2438,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !MembershipRequestModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2453,14 +2451,14 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						membershipRequestModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { membershipRequestModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -2470,14 +2468,14 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						membershipRequestModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] { membershipRequestModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 
@@ -2488,8 +2486,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						membershipRequestModelImpl.getOriginalStatusId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
 
 				args = new Object[] {
@@ -2497,8 +2495,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						membershipRequestModelImpl.getStatusId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
 			}
 
@@ -2510,8 +2508,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						membershipRequestModelImpl.getOriginalStatusId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
 					args);
 
 				args = new Object[] {
@@ -2520,13 +2518,13 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						membershipRequestModelImpl.getStatusId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestImpl.class, membershipRequest.getPrimaryKey(),
 			membershipRequest, false);
 
@@ -2606,7 +2604,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByPrimaryKey(Serializable primaryKey) {
-		MembershipRequest membershipRequest = (MembershipRequest)EntityCacheUtil.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+		MembershipRequest membershipRequest = (MembershipRequest)entityCache.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 				MembershipRequestImpl.class, primaryKey);
 
 		if (membershipRequest == _nullMembershipRequest) {
@@ -2626,13 +2624,13 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 					cacheResult(membershipRequest);
 				}
 				else {
-					EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 						MembershipRequestImpl.class, primaryKey,
 						_nullMembershipRequest);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 					MembershipRequestImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2682,7 +2680,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MembershipRequest membershipRequest = (MembershipRequest)EntityCacheUtil.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipRequest membershipRequest = (MembershipRequest)entityCache.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 					MembershipRequestImpl.class, primaryKey);
 
 			if (membershipRequest == null) {
@@ -2734,7 +2732,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 					MembershipRequestImpl.class, primaryKey,
 					_nullMembershipRequest);
 			}
@@ -2828,7 +2826,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		List<MembershipRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MembershipRequest>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -2877,10 +2875,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2910,7 +2908,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2923,11 +2921,11 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2952,10 +2950,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(MembershipRequestImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(MembershipRequestImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST = "SELECT membershipRequest FROM MembershipRequest membershipRequest";
@@ -2998,4 +2996,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			return _nullMembershipRequest;
 		}
 	}
+
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 }

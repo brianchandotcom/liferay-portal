@@ -16,7 +16,9 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -201,7 +203,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -281,10 +283,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -585,8 +587,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -624,10 +625,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -717,7 +718,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -771,7 +772,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				List<MBMessage> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -784,14 +785,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					if ((mbMessage.getUuid() == null) ||
 							!mbMessage.getUuid().equals(uuid) ||
 							(mbMessage.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, mbMessage);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -836,8 +836,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -879,10 +878,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1013,7 +1012,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1098,10 +1097,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1422,8 +1421,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1465,10 +1463,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1588,7 +1586,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1654,10 +1652,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2252,8 +2250,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2277,10 +2274,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2447,7 +2444,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2513,10 +2510,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2805,8 +2802,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2830,10 +2826,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2950,7 +2946,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -3016,10 +3012,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3306,8 +3302,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -3331,10 +3326,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3452,7 +3447,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -3518,10 +3513,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3808,8 +3803,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { threadId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -3833,10 +3827,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3955,7 +3949,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -4021,10 +4015,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4314,8 +4308,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { threadId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -4339,10 +4332,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4469,7 +4462,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -4540,10 +4533,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5171,8 +5164,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId, userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5200,10 +5192,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5385,7 +5377,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -5456,10 +5448,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6088,8 +6080,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId, categoryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -6117,10 +6108,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6301,7 +6292,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -6372,10 +6363,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7002,8 +6993,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -7031,10 +7021,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7215,7 +7205,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -7286,10 +7276,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7596,8 +7586,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { companyId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -7625,10 +7614,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7761,7 +7750,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -7832,10 +7821,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8222,7 +8211,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C,
+			list = (List<MBMessage>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -8297,11 +8286,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C,
 					finderArgs);
 
 				throw processException(e);
@@ -8341,8 +8330,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { userId, classNameId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -8370,10 +8358,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8405,7 +8393,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				userId, StringUtil.merge(classNameIds)
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C,
 				finderArgs, this);
 
 		if (count == null) {
@@ -8445,11 +8433,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C,
 					finderArgs);
 
 				throw processException(e);
@@ -8580,7 +8568,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -8651,10 +8639,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8961,8 +8949,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -8990,10 +8977,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9122,7 +9109,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -9193,10 +9180,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9503,8 +9490,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { threadId, parentMessageId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -9532,10 +9518,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9663,7 +9649,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -9734,10 +9720,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10044,8 +10030,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { threadId, answer };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -10073,10 +10058,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10204,7 +10189,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -10275,10 +10260,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10585,8 +10570,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { threadId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -10614,10 +10598,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10745,7 +10729,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -10816,10 +10800,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11126,8 +11110,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { threadId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -11155,10 +11138,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11299,7 +11282,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -11375,10 +11358,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -12039,8 +12022,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId, userId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -12072,10 +12054,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -12275,7 +12257,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -12351,10 +12333,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13016,8 +12998,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId, categoryId, threadId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -13049,10 +13030,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13254,7 +13235,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -13330,10 +13311,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13995,8 +13976,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId, categoryId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -14028,10 +14008,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -14231,7 +14211,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -14307,10 +14287,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -14635,8 +14615,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { userId, classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -14668,10 +14647,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -14822,7 +14801,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -14898,10 +14877,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -15313,7 +15292,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_S,
+			list = (List<MBMessage>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_S,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -15395,11 +15374,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_S,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_S,
 					finderArgs);
 
 				throw processException(e);
@@ -15441,8 +15420,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { userId, classNameId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -15474,10 +15452,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -15510,7 +15488,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				userId, StringUtil.merge(classNameIds), status
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_S,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_S,
 				finderArgs, this);
 
 		if (count == null) {
@@ -15556,11 +15534,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_S,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_S,
 					finderArgs);
 
 				throw processException(e);
@@ -15707,7 +15685,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -15783,10 +15761,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -16111,8 +16089,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { classNameId, classPK, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -16144,10 +16121,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -16299,7 +16276,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -16380,10 +16357,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -17085,8 +17062,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId, categoryId, threadId, answer };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -17122,10 +17098,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -17342,7 +17318,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -17423,10 +17399,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18128,8 +18104,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { groupId, categoryId, threadId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -18165,10 +18140,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18385,7 +18360,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -18466,10 +18441,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18814,8 +18789,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		Object[] finderArgs = new Object[] { userId, classNameId, classPK, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -18851,10 +18825,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18882,10 +18856,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public void cacheResult(MBMessage mbMessage) {
-		EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageImpl.class, mbMessage.getPrimaryKey(), mbMessage);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { mbMessage.getUuid(), mbMessage.getGroupId() },
 			mbMessage);
 
@@ -18900,8 +18874,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public void cacheResult(List<MBMessage> mbMessages) {
 		for (MBMessage mbMessage : mbMessages) {
-			if (EntityCacheUtil.getResult(
-						MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 						MBMessageImpl.class, mbMessage.getPrimaryKey()) == null) {
 				cacheResult(mbMessage);
 			}
@@ -18915,43 +18888,43 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 * Clears the cache for all message-boards messages.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(MBMessageImpl.class);
+		entityCache.clearCache(MBMessageImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the message-boards message.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(MBMessage mbMessage) {
-		EntityCacheUtil.removeResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageImpl.class, mbMessage.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((MBMessageModelImpl)mbMessage);
 	}
 
 	@Override
 	public void clearCache(List<MBMessage> mbMessages) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (MBMessage mbMessage : mbMessages) {
-			EntityCacheUtil.removeResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 				MBMessageImpl.class, mbMessage.getPrimaryKey());
 
 			clearUniqueFindersCache((MBMessageModelImpl)mbMessage);
@@ -18966,9 +18939,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					mbMessageModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				mbMessageModelImpl);
 		}
 		else {
@@ -18979,9 +18952,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					mbMessageModelImpl);
 			}
 		}
@@ -18993,8 +18966,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				mbMessageModelImpl.getUuid(), mbMessageModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((mbMessageModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -19003,8 +18976,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					mbMessageModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 	}
 
@@ -19194,10 +19167,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !MBMessageModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -19207,14 +19180,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { mbMessageModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -19225,8 +19198,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -19234,8 +19207,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -19245,14 +19218,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { mbMessageModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -19262,16 +19235,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { mbMessageModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -19281,14 +19252,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] { mbMessageModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 
@@ -19298,14 +19269,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalThreadId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,
 					args);
 
 				args = new Object[] { mbMessageModelImpl.getThreadId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,
 					args);
 			}
 
@@ -19315,16 +19286,16 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalThreadId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADREPLIES,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_THREADREPLIES,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADREPLIES,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADREPLIES,
 					args);
 
 				args = new Object[] { mbMessageModelImpl.getThreadId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADREPLIES,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_THREADREPLIES,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADREPLIES,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADREPLIES,
 					args);
 			}
 
@@ -19335,8 +19306,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
 					args);
 
 				args = new Object[] {
@@ -19344,8 +19315,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
 					args);
 			}
 
@@ -19356,8 +19327,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalCategoryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
 
 				args = new Object[] {
@@ -19365,8 +19336,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getCategoryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
 			}
 
@@ -19377,8 +19348,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
 
 				args = new Object[] {
@@ -19386,8 +19357,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
 			}
 
@@ -19398,8 +19369,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
 					args);
 
 				args = new Object[] {
@@ -19407,8 +19378,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
 					args);
 			}
 
@@ -19419,8 +19390,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C,
 					args);
 
 				args = new Object[] {
@@ -19428,8 +19399,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C,
 					args);
 			}
 
@@ -19440,8 +19411,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 
 				args = new Object[] {
@@ -19449,8 +19420,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 			}
 
@@ -19461,8 +19432,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalParentMessageId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P,
 					args);
 
 				args = new Object[] {
@@ -19470,8 +19441,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getParentMessageId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P,
 					args);
 			}
 
@@ -19482,8 +19453,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalAnswer()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
 					args);
 
 				args = new Object[] {
@@ -19491,8 +19462,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getAnswer()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
 					args);
 			}
 
@@ -19503,8 +19474,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
 					args);
 
 				args = new Object[] {
@@ -19512,8 +19483,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
 					args);
 			}
 
@@ -19524,8 +19495,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TR_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TR_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_TR_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TR_S,
 					args);
 
 				args = new Object[] {
@@ -19533,8 +19504,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TR_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TR_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_TR_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TR_S,
 					args);
 			}
 
@@ -19546,8 +19517,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
 					args);
 
 				args = new Object[] {
@@ -19556,8 +19527,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
 					args);
 			}
 
@@ -19569,8 +19540,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalThreadId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T,
 					args);
 
 				args = new Object[] {
@@ -19579,8 +19550,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getThreadId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T,
 					args);
 			}
 
@@ -19592,8 +19563,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_S,
 					args);
 
 				args = new Object[] {
@@ -19602,8 +19573,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_S,
 					args);
 			}
 
@@ -19615,8 +19586,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C,
 					args);
 
 				args = new Object[] {
@@ -19625,8 +19596,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C,
 					args);
 			}
 
@@ -19638,8 +19609,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_S,
 					args);
 
 				args = new Object[] {
@@ -19648,8 +19619,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_S,
 					args);
 			}
 
@@ -19661,8 +19632,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_S,
 					args);
 
 				args = new Object[] {
@@ -19671,8 +19642,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_S,
 					args);
 			}
 
@@ -19685,8 +19656,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalAnswer()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_T_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_A,
 					args);
 
 				args = new Object[] {
@@ -19696,8 +19667,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getAnswer()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_T_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_A,
 					args);
 			}
 
@@ -19710,8 +19681,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_S,
 					args);
 
 				args = new Object[] {
@@ -19721,8 +19692,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_S,
 					args);
 			}
 
@@ -19735,8 +19706,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C_S,
 					args);
 
 				args = new Object[] {
@@ -19746,13 +19717,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageImpl.class, mbMessage.getPrimaryKey(), mbMessage, false);
 
 		clearUniqueFindersCache(mbMessageModelImpl);
@@ -19848,7 +19819,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByPrimaryKey(Serializable primaryKey) {
-		MBMessage mbMessage = (MBMessage)EntityCacheUtil.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+		MBMessage mbMessage = (MBMessage)entityCache.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 				MBMessageImpl.class, primaryKey);
 
 		if (mbMessage == _nullMBMessage) {
@@ -19868,12 +19839,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					cacheResult(mbMessage);
 				}
 				else {
-					EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 						MBMessageImpl.class, primaryKey, _nullMBMessage);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 					MBMessageImpl.class, primaryKey);
 
 				throw processException(e);
@@ -19923,7 +19894,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MBMessage mbMessage = (MBMessage)EntityCacheUtil.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessage mbMessage = (MBMessage)entityCache.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 					MBMessageImpl.class, primaryKey);
 
 			if (mbMessage == null) {
@@ -19975,7 +19946,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 					MBMessageImpl.class, primaryKey, _nullMBMessage);
 			}
 		}
@@ -20068,7 +20039,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		List<MBMessage> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<MBMessage>)FinderCacheUtil.getResult(finderPath,
+			list = (List<MBMessage>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -20117,10 +20088,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -20150,7 +20121,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -20163,11 +20134,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -20197,10 +20168,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(MBMessageImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(MBMessageImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_MBMESSAGE = "SELECT mbMessage FROM MBMessage mbMessage";
@@ -20243,4 +20214,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				return _nullMBMessage;
 			}
 		};
+
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 }

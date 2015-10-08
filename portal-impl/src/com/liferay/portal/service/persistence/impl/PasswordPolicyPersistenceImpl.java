@@ -17,7 +17,9 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchPasswordPolicyException;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -195,7 +197,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		List<PasswordPolicy> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<PasswordPolicy>)FinderCacheUtil.getResult(finderPath,
+			list = (List<PasswordPolicy>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -275,10 +277,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -917,8 +919,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -956,10 +957,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1156,7 +1157,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		List<PasswordPolicy> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<PasswordPolicy>)FinderCacheUtil.getResult(finderPath,
+			list = (List<PasswordPolicy>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1241,10 +1242,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1917,8 +1918,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1960,10 +1960,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2157,7 +2157,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		List<PasswordPolicy> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<PasswordPolicy>)FinderCacheUtil.getResult(finderPath,
+			list = (List<PasswordPolicy>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2223,10 +2223,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2827,8 +2827,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2852,10 +2851,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2991,7 +2990,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_DP,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_DP,
 					finderArgs, this);
 		}
 
@@ -3031,7 +3030,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 				List<PasswordPolicy> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DP,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_DP,
 						finderArgs, list);
 				}
 				else {
@@ -3050,14 +3049,13 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 					if ((passwordPolicy.getCompanyId() != companyId) ||
 							(passwordPolicy.getDefaultPolicy() != defaultPolicy)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DP,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_DP,
 							finderArgs, passwordPolicy);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_DP,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_DP, finderArgs);
 
 				throw processException(e);
 			}
@@ -3102,8 +3100,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		Object[] finderArgs = new Object[] { companyId, defaultPolicy };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3131,10 +3128,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3223,7 +3220,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_N,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_N,
 					finderArgs, this);
 		}
 
@@ -3277,8 +3274,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 				List<PasswordPolicy> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, finderArgs,
+						list);
 				}
 				else {
 					PasswordPolicy passwordPolicy = list.get(0);
@@ -3290,14 +3287,13 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					if ((passwordPolicy.getCompanyId() != companyId) ||
 							(passwordPolicy.getName() == null) ||
 							!passwordPolicy.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
 							finderArgs, passwordPolicy);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, finderArgs);
 
 				throw processException(e);
 			}
@@ -3342,8 +3338,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		Object[] finderArgs = new Object[] { companyId, name };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3385,10 +3380,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3416,16 +3411,16 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public void cacheResult(PasswordPolicy passwordPolicy) {
-		EntityCacheUtil.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyImpl.class, passwordPolicy.getPrimaryKey(),
 			passwordPolicy);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DP,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_DP,
 			new Object[] {
 				passwordPolicy.getCompanyId(), passwordPolicy.getDefaultPolicy()
 			}, passwordPolicy);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] { passwordPolicy.getCompanyId(), passwordPolicy.getName() },
 			passwordPolicy);
 
@@ -3440,7 +3435,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	@Override
 	public void cacheResult(List<PasswordPolicy> passwordPolicies) {
 		for (PasswordPolicy passwordPolicy : passwordPolicies) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 						PasswordPolicyImpl.class, passwordPolicy.getPrimaryKey()) == null) {
 				cacheResult(passwordPolicy);
@@ -3455,43 +3450,43 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 * Clears the cache for all password policies.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(PasswordPolicyImpl.class);
+		entityCache.clearCache(PasswordPolicyImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the password policy.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(PasswordPolicy passwordPolicy) {
-		EntityCacheUtil.removeResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyImpl.class, passwordPolicy.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((PasswordPolicyModelImpl)passwordPolicy);
 	}
 
 	@Override
 	public void clearCache(List<PasswordPolicy> passwordPolicies) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (PasswordPolicy passwordPolicy : passwordPolicies) {
-			EntityCacheUtil.removeResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 				PasswordPolicyImpl.class, passwordPolicy.getPrimaryKey());
 
 			clearUniqueFindersCache((PasswordPolicyModelImpl)passwordPolicy);
@@ -3506,9 +3501,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					passwordPolicyModelImpl.getDefaultPolicy()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_DP, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_DP, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DP, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_DP, args,
 				passwordPolicyModelImpl);
 
 			args = new Object[] {
@@ -3516,9 +3511,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					passwordPolicyModelImpl.getName()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
 				passwordPolicyModelImpl);
 		}
 		else {
@@ -3529,9 +3524,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						passwordPolicyModelImpl.getDefaultPolicy()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_DP, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_DP, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DP, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_DP, args,
 					passwordPolicyModelImpl);
 			}
 
@@ -3542,9 +3537,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						passwordPolicyModelImpl.getName()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
 					passwordPolicyModelImpl);
 			}
 		}
@@ -3557,8 +3552,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 				passwordPolicyModelImpl.getDefaultPolicy()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_DP, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_DP, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_DP, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_DP, args);
 
 		if ((passwordPolicyModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_DP.getColumnBitmask()) != 0) {
@@ -3567,8 +3562,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					passwordPolicyModelImpl.getOriginalDefaultPolicy()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_DP, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_DP, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_DP, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_DP, args);
 		}
 
 		args = new Object[] {
@@ -3576,8 +3571,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 				passwordPolicyModelImpl.getName()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 
 		if ((passwordPolicyModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
@@ -3586,8 +3581,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					passwordPolicyModelImpl.getOriginalName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 		}
 	}
 
@@ -3754,10 +3749,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !PasswordPolicyModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -3767,14 +3762,14 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						passwordPolicyModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { passwordPolicyModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -3785,8 +3780,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						passwordPolicyModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -3794,8 +3789,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						passwordPolicyModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -3805,21 +3800,19 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						passwordPolicyModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { passwordPolicyModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyImpl.class, passwordPolicy.getPrimaryKey(),
 			passwordPolicy, false);
 
@@ -3926,7 +3919,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy fetchByPrimaryKey(Serializable primaryKey) {
-		PasswordPolicy passwordPolicy = (PasswordPolicy)EntityCacheUtil.getResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+		PasswordPolicy passwordPolicy = (PasswordPolicy)entityCache.getResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 				PasswordPolicyImpl.class, primaryKey);
 
 		if (passwordPolicy == _nullPasswordPolicy) {
@@ -3946,13 +3939,13 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					cacheResult(passwordPolicy);
 				}
 				else {
-					EntityCacheUtil.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 						PasswordPolicyImpl.class, primaryKey,
 						_nullPasswordPolicy);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 					PasswordPolicyImpl.class, primaryKey);
 
 				throw processException(e);
@@ -4002,7 +3995,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			PasswordPolicy passwordPolicy = (PasswordPolicy)EntityCacheUtil.getResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+			PasswordPolicy passwordPolicy = (PasswordPolicy)entityCache.getResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 					PasswordPolicyImpl.class, primaryKey);
 
 			if (passwordPolicy == null) {
@@ -4054,7 +4047,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 					PasswordPolicyImpl.class, primaryKey, _nullPasswordPolicy);
 			}
 		}
@@ -4147,7 +4140,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		List<PasswordPolicy> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<PasswordPolicy>)FinderCacheUtil.getResult(finderPath,
+			list = (List<PasswordPolicy>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -4196,10 +4189,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4229,7 +4222,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -4242,11 +4235,11 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -4276,10 +4269,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(PasswordPolicyImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(PasswordPolicyImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_PASSWORDPOLICY = "SELECT passwordPolicy FROM PasswordPolicy passwordPolicy";
@@ -4335,4 +4328,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			return _nullPasswordPolicy;
 		}
 	}
+
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 }

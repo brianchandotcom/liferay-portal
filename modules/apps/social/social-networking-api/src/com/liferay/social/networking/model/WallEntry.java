@@ -16,6 +16,7 @@ package com.liferay.social.networking.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface WallEntry extends WallEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.social.networking.model.impl.WallEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<WallEntry, Long> WALL_ENTRY_ID_ACCESSOR = new Accessor<WallEntry, Long>() {
+			@Override
+			public Long get(WallEntry wallEntry) {
+				return wallEntry.getWallEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<WallEntry> getTypeClass() {
+				return WallEntry.class;
+			}
+		};
 }

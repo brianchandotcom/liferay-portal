@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -196,7 +197,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		List<DDMStructureVersion> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructureVersion>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructureVersion>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -262,10 +263,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -558,8 +559,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 		Object[] finderArgs = new Object[] { structureId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -583,10 +583,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -676,7 +676,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_S_V,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_S_V,
 					finderArgs, this);
 		}
 
@@ -730,8 +730,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 				List<DDMStructureVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_S_V,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_S_V, finderArgs,
+						list);
 				}
 				else {
 					DDMStructureVersion ddmStructureVersion = list.get(0);
@@ -743,14 +743,13 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 					if ((ddmStructureVersion.getStructureId() != structureId) ||
 							(ddmStructureVersion.getVersion() == null) ||
 							!ddmStructureVersion.getVersion().equals(version)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_S_V,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_S_V,
 							finderArgs, ddmStructureVersion);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_S_V,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_S_V, finderArgs);
 
 				throw processException(e);
 			}
@@ -795,8 +794,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 		Object[] finderArgs = new Object[] { structureId, version };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -838,10 +836,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -975,7 +973,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		List<DDMStructureVersion> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructureVersion>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructureVersion>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1046,10 +1044,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1358,8 +1356,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 		Object[] finderArgs = new Object[] { structureId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1387,10 +1384,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1416,11 +1413,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 */
 	@Override
 	public void cacheResult(DDMStructureVersion ddmStructureVersion) {
-		EntityCacheUtil.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureVersionImpl.class, ddmStructureVersion.getPrimaryKey(),
 			ddmStructureVersion);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_S_V,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_S_V,
 			new Object[] {
 				ddmStructureVersion.getStructureId(),
 				ddmStructureVersion.getVersion()
@@ -1437,7 +1434,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	@Override
 	public void cacheResult(List<DDMStructureVersion> ddmStructureVersions) {
 		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 						DDMStructureVersionImpl.class,
 						ddmStructureVersion.getPrimaryKey()) == null) {
@@ -1453,43 +1450,43 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 * Clears the cache for all d d m structure versions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(DDMStructureVersionImpl.class);
+		entityCache.clearCache(DDMStructureVersionImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the d d m structure version.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(DDMStructureVersion ddmStructureVersion) {
-		EntityCacheUtil.removeResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureVersionImpl.class, ddmStructureVersion.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((DDMStructureVersionModelImpl)ddmStructureVersion);
 	}
 
 	@Override
 	public void clearCache(List<DDMStructureVersion> ddmStructureVersions) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
-			EntityCacheUtil.removeResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureVersionImpl.class,
 				ddmStructureVersion.getPrimaryKey());
 
@@ -1505,9 +1502,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 					ddmStructureVersionModelImpl.getVersion()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_S_V, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_S_V, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_S_V, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_S_V, args,
 				ddmStructureVersionModelImpl);
 		}
 		else {
@@ -1518,9 +1515,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 						ddmStructureVersionModelImpl.getVersion()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_S_V, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_S_V, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_S_V, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_S_V, args,
 					ddmStructureVersionModelImpl);
 			}
 		}
@@ -1533,8 +1530,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 				ddmStructureVersionModelImpl.getVersion()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_V, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_S_V, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_S_V, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_S_V, args);
 
 		if ((ddmStructureVersionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_S_V.getColumnBitmask()) != 0) {
@@ -1543,8 +1540,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 					ddmStructureVersionModelImpl.getOriginalVersion()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_V, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_S_V, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_S_V, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_S_V, args);
 		}
 	}
 
@@ -1680,10 +1677,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !DDMStructureVersionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1693,18 +1690,16 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 						ddmStructureVersionModelImpl.getOriginalStructureId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
 					args);
 
 				args = new Object[] {
 						ddmStructureVersionModelImpl.getStructureId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
 					args);
 			}
 
@@ -1715,8 +1710,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 						ddmStructureVersionModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_S_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S,
 					args);
 
 				args = new Object[] {
@@ -1724,13 +1719,13 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 						ddmStructureVersionModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_S_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureVersionImpl.class, ddmStructureVersion.getPrimaryKey(),
 			ddmStructureVersion, false);
 
@@ -1820,7 +1815,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 */
 	@Override
 	public DDMStructureVersion fetchByPrimaryKey(Serializable primaryKey) {
-		DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)EntityCacheUtil.getResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+		DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)entityCache.getResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureVersionImpl.class, primaryKey);
 
 		if (ddmStructureVersion == _nullDDMStructureVersion) {
@@ -1840,13 +1835,13 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 					cacheResult(ddmStructureVersion);
 				}
 				else {
-					EntityCacheUtil.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 						DDMStructureVersionImpl.class, primaryKey,
 						_nullDDMStructureVersion);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureVersionImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1896,7 +1891,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)EntityCacheUtil.getResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)entityCache.getResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureVersionImpl.class, primaryKey);
 
 			if (ddmStructureVersion == null) {
@@ -1949,7 +1944,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureVersionImpl.class, primaryKey,
 					_nullDDMStructureVersion);
 			}
@@ -2043,7 +2038,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		List<DDMStructureVersion> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructureVersion>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructureVersion>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -2092,10 +2087,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2125,7 +2120,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2138,11 +2133,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2172,10 +2167,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(DDMStructureVersionImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(DDMStructureVersionImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion";
@@ -2209,4 +2204,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 				return _nullDDMStructureVersion;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -45,6 +45,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -193,7 +194,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -273,10 +274,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -577,8 +578,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -616,10 +616,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -709,7 +709,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -763,7 +763,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				List<DDMStructure> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -776,14 +776,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					if ((ddmStructure.getUuid() == null) ||
 							!ddmStructure.getUuid().equals(uuid) ||
 							(ddmStructure.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, ddmStructure);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -828,8 +827,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -871,10 +869,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1004,7 +1002,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1089,10 +1087,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1414,8 +1412,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1457,10 +1454,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1583,7 +1580,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1649,10 +1646,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2459,7 +2456,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
+			list = (List<DDMStructure>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2526,11 +2523,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
 					finderArgs);
 
 				throw processException(e);
@@ -2568,8 +2565,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2593,10 +2589,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2625,7 +2621,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { StringUtil.merge(groupIds) };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
 				finderArgs, this);
 
 		if (count == null) {
@@ -2659,11 +2655,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
 					finderArgs);
 
 				throw processException(e);
@@ -2901,7 +2897,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2967,10 +2963,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3261,8 +3257,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { parentStructureId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -3286,10 +3281,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3410,7 +3405,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -3476,10 +3471,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3769,8 +3764,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { classNameId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -3794,10 +3788,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3921,7 +3915,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -4002,10 +3996,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4309,8 +4303,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { structureKey };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -4348,10 +4341,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4480,7 +4473,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -4551,10 +4544,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5188,8 +5181,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { groupId, parentStructureId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5217,10 +5209,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5405,7 +5397,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -5476,10 +5468,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6335,7 +6327,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C,
+			list = (List<DDMStructure>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -6411,11 +6403,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C,
 					finderArgs);
 
 				throw processException(e);
@@ -6455,8 +6447,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { groupId, classNameId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -6484,10 +6475,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6519,7 +6510,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				StringUtil.merge(groupIds), classNameId
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C,
 				finderArgs, this);
 
 		if (count == null) {
@@ -6561,11 +6552,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C,
 					finderArgs);
 
 				throw processException(e);
@@ -6821,7 +6812,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -6892,10 +6883,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7203,8 +7194,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { companyId, classNameId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -7232,10 +7222,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7339,7 +7329,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C_S,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_S,
 					finderArgs, this);
 		}
 
@@ -7399,7 +7389,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				List<DDMStructure> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_S,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_S,
 						finderArgs, list);
 				}
 				else {
@@ -7413,14 +7403,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 							(ddmStructure.getClassNameId() != classNameId) ||
 							(ddmStructure.getStructureKey() == null) ||
 							!ddmStructure.getStructureKey().equals(structureKey)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_S,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_S,
 							finderArgs, ddmStructure);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_S,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -7468,8 +7457,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { groupId, classNameId, structureKey };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -7515,10 +7503,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7664,7 +7652,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -7769,10 +7757,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8521,8 +8509,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		Object[] finderArgs = new Object[] { groupId, name, description };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -8582,10 +8569,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8702,14 +8689,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public void cacheResult(DDMStructure ddmStructure) {
-		EntityCacheUtil.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureImpl.class, ddmStructure.getPrimaryKey(), ddmStructure);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { ddmStructure.getUuid(), ddmStructure.getGroupId() },
 			ddmStructure);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_S,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_S,
 			new Object[] {
 				ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
 				ddmStructure.getStructureKey()
@@ -8726,7 +8713,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public void cacheResult(List<DDMStructure> ddmStructures) {
 		for (DDMStructure ddmStructure : ddmStructures) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 						DDMStructureImpl.class, ddmStructure.getPrimaryKey()) == null) {
 				cacheResult(ddmStructure);
@@ -8741,43 +8728,43 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 * Clears the cache for all d d m structures.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(DDMStructureImpl.class);
+		entityCache.clearCache(DDMStructureImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the d d m structure.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(DDMStructure ddmStructure) {
-		EntityCacheUtil.removeResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureImpl.class, ddmStructure.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((DDMStructureModelImpl)ddmStructure);
 	}
 
 	@Override
 	public void clearCache(List<DDMStructure> ddmStructures) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			EntityCacheUtil.removeResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureImpl.class, ddmStructure.getPrimaryKey());
 
 			clearUniqueFindersCache((DDMStructureModelImpl)ddmStructure);
@@ -8792,9 +8779,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					ddmStructureModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				ddmStructureModelImpl);
 
 			args = new Object[] {
@@ -8803,9 +8790,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					ddmStructureModelImpl.getStructureKey()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_S, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_S, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_S, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_S, args,
 				ddmStructureModelImpl);
 		}
 		else {
@@ -8816,9 +8803,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					ddmStructureModelImpl);
 			}
 
@@ -8830,9 +8817,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getStructureKey()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_S, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_S, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_S, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_S, args,
 					ddmStructureModelImpl);
 			}
 		}
@@ -8845,8 +8832,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				ddmStructureModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((ddmStructureModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -8855,8 +8842,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					ddmStructureModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -8865,8 +8852,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				ddmStructureModelImpl.getStructureKey()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_S, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_S, args);
 
 		if ((ddmStructureModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_C_S.getColumnBitmask()) != 0) {
@@ -8876,8 +8863,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					ddmStructureModelImpl.getOriginalStructureKey()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_S, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_S, args);
 		}
 	}
 
@@ -9043,10 +9030,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !DDMStructureModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -9056,14 +9043,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { ddmStructureModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -9074,8 +9061,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -9083,8 +9070,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -9094,14 +9081,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { ddmStructureModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -9111,16 +9098,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalParentStructureId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PARENTSTRUCTUREID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_PARENTSTRUCTUREID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTSTRUCTUREID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTSTRUCTUREID,
 					args);
 
 				args = new Object[] { ddmStructureModelImpl.getParentStructureId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PARENTSTRUCTUREID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_PARENTSTRUCTUREID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTSTRUCTUREID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTSTRUCTUREID,
 					args);
 			}
 
@@ -9130,16 +9117,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
 
 				args = new Object[] { ddmStructureModelImpl.getClassNameId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
 			}
 
@@ -9149,16 +9134,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalStructureKey()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREKEY,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREKEY,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREKEY, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREKEY,
 					args);
 
 				args = new Object[] { ddmStructureModelImpl.getStructureKey() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREKEY,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREKEY,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREKEY, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREKEY,
 					args);
 			}
 
@@ -9169,8 +9152,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalParentStructureId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
 					args);
 
 				args = new Object[] {
@@ -9178,8 +9161,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getParentStructureId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
 					args);
 			}
 
@@ -9190,8 +9173,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
 
 				args = new Object[] {
@@ -9199,8 +9182,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
 			}
 
@@ -9211,8 +9194,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 
 				args = new Object[] {
@@ -9220,8 +9203,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 			}
 
@@ -9233,8 +9216,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalDescription()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_D,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_D,
 					args);
 
 				args = new Object[] {
@@ -9243,13 +9226,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getDescription()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_D,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_D,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureImpl.class, ddmStructure.getPrimaryKey(), ddmStructure,
 			false);
 
@@ -9340,7 +9323,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByPrimaryKey(Serializable primaryKey) {
-		DDMStructure ddmStructure = (DDMStructure)EntityCacheUtil.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+		DDMStructure ddmStructure = (DDMStructure)entityCache.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureImpl.class, primaryKey);
 
 		if (ddmStructure == _nullDDMStructure) {
@@ -9360,12 +9343,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					cacheResult(ddmStructure);
 				}
 				else {
-					EntityCacheUtil.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 						DDMStructureImpl.class, primaryKey, _nullDDMStructure);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureImpl.class, primaryKey);
 
 				throw processException(e);
@@ -9415,7 +9398,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDMStructure ddmStructure = (DDMStructure)EntityCacheUtil.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructure ddmStructure = (DDMStructure)entityCache.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureImpl.class, primaryKey);
 
 			if (ddmStructure == null) {
@@ -9467,7 +9450,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureImpl.class, primaryKey, _nullDDMStructure);
 			}
 		}
@@ -9560,7 +9543,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		List<DDMStructure> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -9609,10 +9592,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9642,7 +9625,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -9655,11 +9638,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -9689,10 +9672,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(DDMStructureImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(DDMStructureImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_DDMSTRUCTURE = "SELECT ddmStructure FROM DDMStructure ddmStructure";
@@ -9735,4 +9718,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				return _nullDDMStructure;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

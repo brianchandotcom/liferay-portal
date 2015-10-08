@@ -17,7 +17,9 @@ package com.liferay.portlet.softwarecatalog.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -200,7 +202,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		List<SCFrameworkVersion> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SCFrameworkVersion>)FinderCacheUtil.getResult(finderPath,
+			list = (List<SCFrameworkVersion>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -266,10 +268,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -874,8 +876,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -899,10 +900,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1072,7 +1073,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		List<SCFrameworkVersion> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SCFrameworkVersion>)FinderCacheUtil.getResult(finderPath,
+			list = (List<SCFrameworkVersion>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1138,10 +1139,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1433,8 +1434,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1458,10 +1458,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1592,7 +1592,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		List<SCFrameworkVersion> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SCFrameworkVersion>)FinderCacheUtil.getResult(finderPath,
+			list = (List<SCFrameworkVersion>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1663,10 +1663,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2300,8 +2300,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		Object[] finderArgs = new Object[] { groupId, active };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2329,10 +2328,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2412,7 +2411,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public void cacheResult(SCFrameworkVersion scFrameworkVersion) {
-		EntityCacheUtil.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 			SCFrameworkVersionImpl.class, scFrameworkVersion.getPrimaryKey(),
 			scFrameworkVersion);
 
@@ -2427,7 +2426,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	@Override
 	public void cacheResult(List<SCFrameworkVersion> scFrameworkVersions) {
 		for (SCFrameworkVersion scFrameworkVersion : scFrameworkVersions) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 						SCFrameworkVersionImpl.class,
 						scFrameworkVersion.getPrimaryKey()) == null) {
@@ -2443,41 +2442,41 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 * Clears the cache for all s c framework versions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(SCFrameworkVersionImpl.class);
+		entityCache.clearCache(SCFrameworkVersionImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the s c framework version.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(SCFrameworkVersion scFrameworkVersion) {
-		EntityCacheUtil.removeResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 			SCFrameworkVersionImpl.class, scFrameworkVersion.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<SCFrameworkVersion> scFrameworkVersions) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (SCFrameworkVersion scFrameworkVersion : scFrameworkVersions) {
-			EntityCacheUtil.removeResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 				SCFrameworkVersionImpl.class, scFrameworkVersion.getPrimaryKey());
 		}
 	}
@@ -2640,10 +2639,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !SCFrameworkVersionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2653,14 +2652,14 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 						scFrameworkVersionModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { scFrameworkVersionModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -2670,16 +2669,14 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 						scFrameworkVersionModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { scFrameworkVersionModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -2690,8 +2687,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 						scFrameworkVersionModelImpl.getOriginalActive()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
 					args);
 
 				args = new Object[] {
@@ -2699,13 +2696,13 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 						scFrameworkVersionModelImpl.getActive()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 			SCFrameworkVersionImpl.class, scFrameworkVersion.getPrimaryKey(),
 			scFrameworkVersion, false);
 
@@ -2785,7 +2782,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion fetchByPrimaryKey(Serializable primaryKey) {
-		SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)EntityCacheUtil.getResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+		SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)entityCache.getResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 				SCFrameworkVersionImpl.class, primaryKey);
 
 		if (scFrameworkVersion == _nullSCFrameworkVersion) {
@@ -2805,13 +2802,13 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 					cacheResult(scFrameworkVersion);
 				}
 				else {
-					EntityCacheUtil.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 						SCFrameworkVersionImpl.class, primaryKey,
 						_nullSCFrameworkVersion);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 					SCFrameworkVersionImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2861,7 +2858,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)EntityCacheUtil.getResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+			SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)entityCache.getResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 					SCFrameworkVersionImpl.class, primaryKey);
 
 			if (scFrameworkVersion == null) {
@@ -2914,7 +2911,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 					SCFrameworkVersionImpl.class, primaryKey,
 					_nullSCFrameworkVersion);
 			}
@@ -3008,7 +3005,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		List<SCFrameworkVersion> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SCFrameworkVersion>)FinderCacheUtil.getResult(finderPath,
+			list = (List<SCFrameworkVersion>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -3057,10 +3054,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3090,7 +3087,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -3103,11 +3100,11 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -3422,10 +3419,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(SCFrameworkVersionImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(SCFrameworkVersionImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		TableMapperFactory.removeTableMapper("SCFrameworkVersi_SCProductVers");
 	}
@@ -3474,4 +3471,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 				return _nullSCFrameworkVersion;
 			}
 		};
+
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 }

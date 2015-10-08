@@ -17,7 +17,9 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchUserNotificationDeliveryException;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -189,7 +191,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		List<UserNotificationDelivery> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<UserNotificationDelivery>)FinderCacheUtil.getResult(finderPath,
+			list = (List<UserNotificationDelivery>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -255,10 +257,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -551,8 +553,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 		Object[] finderArgs = new Object[] { userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -576,10 +577,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -705,7 +706,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 					finderArgs, this);
 		}
 
@@ -775,7 +776,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 				List<UserNotificationDelivery> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 						finderArgs, list);
 				}
 				else {
@@ -792,13 +793,13 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 							(userNotificationDelivery.getClassNameId() != classNameId) ||
 							(userNotificationDelivery.getNotificationType() != notificationType) ||
 							(userNotificationDelivery.getDeliveryType() != deliveryType)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 							finderArgs, userNotificationDelivery);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 					finderArgs);
 
 				throw processException(e);
@@ -855,8 +856,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 				userId, portletId, classNameId, notificationType, deliveryType
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(6);
@@ -910,10 +910,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -944,11 +944,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(UserNotificationDelivery userNotificationDelivery) {
-		EntityCacheUtil.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationDeliveryImpl.class,
 			userNotificationDelivery.getPrimaryKey(), userNotificationDelivery);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 			new Object[] {
 				userNotificationDelivery.getUserId(),
 				userNotificationDelivery.getPortletId(),
@@ -969,7 +969,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	public void cacheResult(
 		List<UserNotificationDelivery> userNotificationDeliveries) {
 		for (UserNotificationDelivery userNotificationDelivery : userNotificationDeliveries) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 						UserNotificationDeliveryImpl.class,
 						userNotificationDelivery.getPrimaryKey()) == null) {
@@ -985,33 +985,33 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * Clears the cache for all user notification deliveries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(UserNotificationDeliveryImpl.class);
+		entityCache.clearCache(UserNotificationDeliveryImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the user notification delivery.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(UserNotificationDelivery userNotificationDelivery) {
-		EntityCacheUtil.removeResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationDeliveryImpl.class,
 			userNotificationDelivery.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((UserNotificationDeliveryModelImpl)userNotificationDelivery);
 	}
@@ -1019,11 +1019,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	public void clearCache(
 		List<UserNotificationDelivery> userNotificationDeliveries) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (UserNotificationDelivery userNotificationDelivery : userNotificationDeliveries) {
-			EntityCacheUtil.removeResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 				UserNotificationDeliveryImpl.class,
 				userNotificationDelivery.getPrimaryKey());
 
@@ -1043,9 +1043,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 					userNotificationDeliveryModelImpl.getDeliveryType()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args,
 				userNotificationDeliveryModelImpl);
 		}
 		else {
@@ -1059,9 +1059,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 						userNotificationDeliveryModelImpl.getDeliveryType()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args,
 					userNotificationDeliveryModelImpl);
 			}
 		}
@@ -1077,8 +1077,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 				userNotificationDeliveryModelImpl.getDeliveryType()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args);
 
 		if ((userNotificationDeliveryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_P_C_N_D.getColumnBitmask()) != 0) {
@@ -1090,8 +1090,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 					userNotificationDeliveryModelImpl.getOriginalDeliveryType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args);
 		}
 	}
 
@@ -1227,10 +1227,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !UserNotificationDeliveryModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1240,21 +1240,21 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 						userNotificationDeliveryModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] {
 						userNotificationDeliveryModelImpl.getUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationDeliveryImpl.class,
 			userNotificationDelivery.getPrimaryKey(), userNotificationDelivery,
 			false);
@@ -1337,7 +1337,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public UserNotificationDelivery fetchByPrimaryKey(Serializable primaryKey) {
-		UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)EntityCacheUtil.getResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+		UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)entityCache.getResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 				UserNotificationDeliveryImpl.class, primaryKey);
 
 		if (userNotificationDelivery == _nullUserNotificationDelivery) {
@@ -1357,13 +1357,13 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 					cacheResult(userNotificationDelivery);
 				}
 				else {
-					EntityCacheUtil.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 						UserNotificationDeliveryImpl.class, primaryKey,
 						_nullUserNotificationDelivery);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 					UserNotificationDeliveryImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1414,7 +1414,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)EntityCacheUtil.getResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)entityCache.getResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 					UserNotificationDeliveryImpl.class, primaryKey);
 
 			if (userNotificationDelivery == null) {
@@ -1467,7 +1467,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 					UserNotificationDeliveryImpl.class, primaryKey,
 					_nullUserNotificationDelivery);
 			}
@@ -1561,7 +1561,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		List<UserNotificationDelivery> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<UserNotificationDelivery>)FinderCacheUtil.getResult(finderPath,
+			list = (List<UserNotificationDelivery>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -1610,10 +1610,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1643,7 +1643,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1656,11 +1656,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -1685,10 +1685,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(UserNotificationDeliveryImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(UserNotificationDeliveryImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_USERNOTIFICATIONDELIVERY = "SELECT userNotificationDelivery FROM UserNotificationDelivery userNotificationDelivery";
@@ -1732,4 +1732,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			return _nullUserNotificationDelivery;
 		}
 	}
+
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 }

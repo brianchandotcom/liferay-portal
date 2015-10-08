@@ -22,8 +22,8 @@ import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
 import com.liferay.bookmarks.model.impl.BookmarksFolderModelImpl;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -42,6 +42,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -206,7 +207,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -272,10 +273,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -566,8 +567,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { resourceBlockId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -591,10 +591,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -714,7 +714,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -794,10 +794,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1100,8 +1100,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1139,10 +1138,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1233,7 +1232,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -1287,7 +1286,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				List<BookmarksFolder> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -1300,14 +1299,13 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 					if ((bookmarksFolder.getUuid() == null) ||
 							!bookmarksFolder.getUuid().equals(uuid) ||
 							(bookmarksFolder.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, bookmarksFolder);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -1352,8 +1350,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1395,10 +1392,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1533,7 +1530,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1618,10 +1615,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1943,8 +1940,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1986,10 +1982,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2112,7 +2108,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2178,10 +2174,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2723,8 +2719,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2748,10 +2743,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2920,7 +2915,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2986,10 +2981,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3279,8 +3274,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -3304,10 +3298,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3438,7 +3432,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -3509,10 +3503,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4088,8 +4082,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { groupId, parentFolderId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4117,10 +4110,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4287,7 +4280,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -4358,10 +4351,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4669,8 +4662,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { companyId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4698,10 +4690,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4847,7 +4839,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -4923,10 +4915,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5536,8 +5528,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { groupId, parentFolderId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -5569,10 +5560,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5756,7 +5747,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -5832,10 +5823,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6450,8 +6441,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		Object[] finderArgs = new Object[] { groupId, parentFolderId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -6483,10 +6473,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6677,7 +6667,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -6758,10 +6748,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6952,8 +6942,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				folderId, companyId, parentFolderId, status
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -6989,10 +6978,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7020,11 +7009,11 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public void cacheResult(BookmarksFolder bookmarksFolder) {
-		EntityCacheUtil.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey(),
 			bookmarksFolder);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { bookmarksFolder.getUuid(), bookmarksFolder.getGroupId() },
 			bookmarksFolder);
 
@@ -7039,7 +7028,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public void cacheResult(List<BookmarksFolder> bookmarksFolders) {
 		for (BookmarksFolder bookmarksFolder : bookmarksFolders) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 						BookmarksFolderImpl.class,
 						bookmarksFolder.getPrimaryKey()) == null) {
@@ -7055,43 +7044,43 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 * Clears the cache for all bookmarks folders.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(BookmarksFolderImpl.class);
+		entityCache.clearCache(BookmarksFolderImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the bookmarks folder.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(BookmarksFolder bookmarksFolder) {
-		EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((BookmarksFolderModelImpl)bookmarksFolder);
 	}
 
 	@Override
 	public void clearCache(List<BookmarksFolder> bookmarksFolders) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (BookmarksFolder bookmarksFolder : bookmarksFolders) {
-			EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 				BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey());
 
 			clearUniqueFindersCache((BookmarksFolderModelImpl)bookmarksFolder);
@@ -7106,9 +7095,9 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 					bookmarksFolderModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				bookmarksFolderModelImpl);
 		}
 		else {
@@ -7119,9 +7108,9 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					bookmarksFolderModelImpl);
 			}
 		}
@@ -7134,8 +7123,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				bookmarksFolderModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((bookmarksFolderModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -7144,8 +7133,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 					bookmarksFolderModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 	}
 
@@ -7311,10 +7300,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !BookmarksFolderModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -7324,18 +7313,18 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getOriginalResourceBlockId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
 					args);
 
 				args = new Object[] {
 						bookmarksFolderModelImpl.getResourceBlockId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
 					args);
 			}
 
@@ -7345,14 +7334,14 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { bookmarksFolderModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -7363,8 +7352,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -7372,8 +7361,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -7383,14 +7372,14 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { bookmarksFolderModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -7400,16 +7389,14 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { bookmarksFolderModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -7420,8 +7407,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getOriginalParentFolderId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
 					args);
 
 				args = new Object[] {
@@ -7429,8 +7416,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getParentFolderId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
 					args);
 			}
 
@@ -7442,8 +7429,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_S,
 					args);
 
 				args = new Object[] {
@@ -7452,13 +7439,13 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolderModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey(),
 			bookmarksFolder, false);
 
@@ -7547,7 +7534,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByPrimaryKey(Serializable primaryKey) {
-		BookmarksFolder bookmarksFolder = (BookmarksFolder)EntityCacheUtil.getResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+		BookmarksFolder bookmarksFolder = (BookmarksFolder)entityCache.getResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 				BookmarksFolderImpl.class, primaryKey);
 
 		if (bookmarksFolder == _nullBookmarksFolder) {
@@ -7567,13 +7554,13 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 					cacheResult(bookmarksFolder);
 				}
 				else {
-					EntityCacheUtil.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 						BookmarksFolderImpl.class, primaryKey,
 						_nullBookmarksFolder);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 					BookmarksFolderImpl.class, primaryKey);
 
 				throw processException(e);
@@ -7623,7 +7610,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			BookmarksFolder bookmarksFolder = (BookmarksFolder)EntityCacheUtil.getResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+			BookmarksFolder bookmarksFolder = (BookmarksFolder)entityCache.getResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 					BookmarksFolderImpl.class, primaryKey);
 
 			if (bookmarksFolder == null) {
@@ -7675,7 +7662,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 					BookmarksFolderImpl.class, primaryKey, _nullBookmarksFolder);
 			}
 		}
@@ -7768,7 +7755,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		List<BookmarksFolder> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<BookmarksFolder>)FinderCacheUtil.getResult(finderPath,
+			list = (List<BookmarksFolder>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -7817,10 +7804,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7850,7 +7837,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -7863,11 +7850,11 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -7897,10 +7884,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(BookmarksFolderImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(BookmarksFolderImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_BOOKMARKSFOLDER = "SELECT bookmarksFolder FROM BookmarksFolder bookmarksFolder";
@@ -7936,4 +7923,9 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				return _nullBookmarksFolder;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

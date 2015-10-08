@@ -16,8 +16,8 @@ package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -33,6 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeImpl;
@@ -189,7 +190,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		List<KaleoNode> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<KaleoNode>)FinderCacheUtil.getResult(finderPath,
+			list = (List<KaleoNode>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -255,10 +256,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -547,8 +548,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -572,10 +572,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -699,7 +699,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		List<KaleoNode> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<KaleoNode>)FinderCacheUtil.getResult(finderPath,
+			list = (List<KaleoNode>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -765,10 +765,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1058,8 +1058,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 		Object[] finderArgs = new Object[] { kaleoDefinitionId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1083,10 +1082,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1214,7 +1213,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		List<KaleoNode> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<KaleoNode>)FinderCacheUtil.getResult(finderPath,
+			list = (List<KaleoNode>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1285,10 +1284,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1596,8 +1595,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 		Object[] finderArgs = new Object[] { companyId, kaleoDefinitionId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1625,10 +1623,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1654,7 +1652,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 */
 	@Override
 	public void cacheResult(KaleoNode kaleoNode) {
-		EntityCacheUtil.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoNodeImpl.class, kaleoNode.getPrimaryKey(), kaleoNode);
 
 		kaleoNode.resetOriginalValues();
@@ -1668,8 +1666,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	@Override
 	public void cacheResult(List<KaleoNode> kaleoNodes) {
 		for (KaleoNode kaleoNode : kaleoNodes) {
-			if (EntityCacheUtil.getResult(
-						KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoNodeImpl.class, kaleoNode.getPrimaryKey()) == null) {
 				cacheResult(kaleoNode);
 			}
@@ -1683,41 +1680,41 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * Clears the cache for all kaleo nodes.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(KaleoNodeImpl.class);
+		entityCache.clearCache(KaleoNodeImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the kaleo node.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(KaleoNode kaleoNode) {
-		EntityCacheUtil.removeResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoNodeImpl.class, kaleoNode.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<KaleoNode> kaleoNodes) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (KaleoNode kaleoNode : kaleoNodes) {
-			EntityCacheUtil.removeResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoNodeImpl.class, kaleoNode.getPrimaryKey());
 		}
 	}
@@ -1872,10 +1869,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !KaleoNodeModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1885,16 +1882,14 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 						kaleoNodeModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { kaleoNodeModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -1904,16 +1899,16 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 						kaleoNodeModelImpl.getOriginalKaleoDefinitionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEODEFINITIONID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEODEFINITIONID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID,
 					args);
 
 				args = new Object[] { kaleoNodeModelImpl.getKaleoDefinitionId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEODEFINITIONID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEODEFINITIONID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID,
 					args);
 			}
 
@@ -1924,8 +1919,8 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 						kaleoNodeModelImpl.getOriginalKaleoDefinitionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_KDI, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_KDI,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_KDI, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_KDI,
 					args);
 
 				args = new Object[] {
@@ -1933,13 +1928,13 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 						kaleoNodeModelImpl.getKaleoDefinitionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_KDI, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_KDI,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_KDI, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_KDI,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoNodeImpl.class, kaleoNode.getPrimaryKey(), kaleoNode, false);
 
 		kaleoNode.resetOriginalValues();
@@ -2020,7 +2015,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 */
 	@Override
 	public KaleoNode fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoNode kaleoNode = (KaleoNode)EntityCacheUtil.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+		KaleoNode kaleoNode = (KaleoNode)entityCache.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoNodeImpl.class, primaryKey);
 
 		if (kaleoNode == _nullKaleoNode) {
@@ -2040,12 +2035,12 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 					cacheResult(kaleoNode);
 				}
 				else {
-					EntityCacheUtil.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoNodeImpl.class, primaryKey, _nullKaleoNode);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoNodeImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2095,7 +2090,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoNode kaleoNode = (KaleoNode)EntityCacheUtil.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+			KaleoNode kaleoNode = (KaleoNode)entityCache.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoNodeImpl.class, primaryKey);
 
 			if (kaleoNode == null) {
@@ -2147,7 +2142,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoNodeImpl.class, primaryKey, _nullKaleoNode);
 			}
 		}
@@ -2240,7 +2235,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		List<KaleoNode> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<KaleoNode>)FinderCacheUtil.getResult(finderPath,
+			list = (List<KaleoNode>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -2289,10 +2284,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2322,7 +2317,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2335,11 +2330,11 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2369,10 +2364,10 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(KaleoNodeImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(KaleoNodeImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_KALEONODE = "SELECT kaleoNode FROM KaleoNode kaleoNode";
@@ -2405,4 +2400,9 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 				return _nullKaleoNode;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

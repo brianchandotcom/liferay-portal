@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.DDMContentTable;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.DDMStructureTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.upgrade.UpgradeMVCC;
 
 import java.sql.SQLException;
 
@@ -33,8 +32,6 @@ public class UpgradeSchema extends UpgradeProcess {
 			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
 
 		runSQLTemplateString(template, false, false);
-
-		upgrade(UpgradeMVCC.class);
 
 		try {
 			runSQL("alter_column_name DDMContent xml data_ TEXT null");

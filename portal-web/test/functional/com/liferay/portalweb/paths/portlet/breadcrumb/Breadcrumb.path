@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>BREADCRUMB_ENTRY</td>
-	<td>//div[@class='portlet-content']//ul[@aria-label='Breadcrumb']</td>
+	<td>//ul[@aria-label='Breadcrumb']</td>
 	<td></td>
 </tr>
 <tr>

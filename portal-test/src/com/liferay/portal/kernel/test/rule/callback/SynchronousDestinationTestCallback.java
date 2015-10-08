@@ -55,9 +55,7 @@ public class SynchronousDestinationTestCallback
 		new SynchronousDestinationTestCallback();
 
 	@Override
-	public void doAfterClass(Description description, SyncHandler syncHandler)
-		throws Exception {
-
+	public void doAfterClass(Description description, SyncHandler syncHandler) {
 		if (syncHandler != null) {
 			syncHandler.restorePreviousSync();
 		}
@@ -78,28 +76,27 @@ public class SynchronousDestinationTestCallback
 
 		Sync sync = testClass.getAnnotation(Sync.class);
 
-		if (sync == null) {
-			boolean hasSyncedMethod = false;
+		if (sync != null) {
+			return _applySyncHandler(sync);
+		}
 
-			for (Method method : testClass.getMethods()) {
-				if ((method.getAnnotation(Sync.class) != null) &&
-					(method.getAnnotation(Test.class) != null)) {
+		boolean hasSyncedMethod = false;
 
-					hasSyncedMethod = true;
+		for (Method method : testClass.getMethods()) {
+			if ((method.getAnnotation(Sync.class) != null) &&
+				(method.getAnnotation(Test.class) != null)) {
 
-					break;
-				}
-			}
+				hasSyncedMethod = true;
 
-			if (!hasSyncedMethod) {
-				throw new AssertionError(
-					testClass + " uses " +
-						SynchronousDestinationTestRule.class +
-							" without any usage of " + Sync.class);
+				break;
 			}
 		}
-		else {
-			return _applySyncHandler(sync);
+
+		if (!hasSyncedMethod) {
+			throw new AssertionError(
+				testClass + " uses " +
+					SynchronousDestinationTestRule.class +
+						" without any usage of " + Sync.class);
 		}
 
 		return super.doBeforeClass(description);

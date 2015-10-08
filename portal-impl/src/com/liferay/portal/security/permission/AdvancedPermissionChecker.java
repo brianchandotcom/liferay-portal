@@ -15,6 +15,7 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
@@ -1093,6 +1095,32 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return value;
 	}
 
+	protected boolean isContentReviewerImpl(Group group)
+		throws PortalException {
+
+		if (isCompanyAdmin() || isGroupAdmin(group.getGroupId())) {
+			return true;
+		}
+
+		if (RoleLocalServiceUtil.hasUserRole(
+				getUserId(), group.getCompanyId(),
+				RoleConstants.PORTAL_CONTENT_REVIEWER, true)) {
+
+			return true;
+		}
+
+		if (group.isSite()) {
+			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					getUserId(), group.getGroupId(),
+					RoleConstants.SITE_CONTENT_REVIEWER, true)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isContentReviewerImpl(long companyId, long groupId)
 		throws Exception {
 
@@ -1116,20 +1144,30 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		PermissionCheckerBag bag = getUserBag(user.getUserId(), groupId);
-
-		if (bag == null) {
-			_log.error("Bag should never be null");
-		}
-
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		if (bag.isContentReviewer(this, group)) {
-			return true;
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), group.getGroupId(),
+			RoleConstants.SITE_CONTENT_REVIEWER);
+
+		try {
+			if (value == null) {
+				value = isContentReviewerImpl(group);
+
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), group.getGroupId(),
+					RoleConstants.SITE_CONTENT_REVIEWER, value);
+			}
 		}
-		else {
-			return false;
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), group.getGroupId(),
+				RoleConstants.SITE_CONTENT_REVIEWER);
+
+			throw e;
 		}
+
+		return value;
 	}
 
 	protected boolean isGroupAdminImpl(long groupId) throws Exception {

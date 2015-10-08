@@ -24,7 +24,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
@@ -73,35 +72,6 @@ public class PermissionCheckerBagImpl
 		}
 
 		return _roleIds;
-	}
-
-	@Override
-	public boolean isContentReviewer(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception {
-
-		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
-			permissionChecker.getUserId(), group.getGroupId(),
-			RoleConstants.SITE_CONTENT_REVIEWER);
-
-		try {
-			if (value == null) {
-				value = isContentReviewerImpl(permissionChecker, group);
-
-				PermissionCacheUtil.putUserPrimaryKeyRole(
-					getUserId(), group.getGroupId(),
-					RoleConstants.SITE_CONTENT_REVIEWER, value);
-			}
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeUserPrimaryKeyRole(
-				permissionChecker.getUserId(), group.getGroupId(),
-				RoleConstants.SITE_CONTENT_REVIEWER);
-
-			throw e;
-		}
-
-		return value;
 	}
 
 	@Override
@@ -219,35 +189,6 @@ public class PermissionCheckerBagImpl
 		}
 
 		return value;
-	}
-
-	protected boolean isContentReviewerImpl(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		if (permissionChecker.isCompanyAdmin() ||
-			permissionChecker.isGroupAdmin(group.getGroupId())) {
-
-			return true;
-		}
-
-		if (RoleLocalServiceUtil.hasUserRole(
-				getUserId(), group.getCompanyId(),
-				RoleConstants.PORTAL_CONTENT_REVIEWER, true)) {
-
-			return true;
-		}
-
-		if (group.isSite()) {
-			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-					getUserId(), group.getGroupId(),
-					RoleConstants.SITE_CONTENT_REVIEWER, true)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected boolean isGroupAdminImpl(

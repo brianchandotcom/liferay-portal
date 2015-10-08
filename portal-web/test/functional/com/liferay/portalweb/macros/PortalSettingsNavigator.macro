@@ -6,4 +6,8 @@
 	<command name="gotoMenuAuthentication">
 		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 	</command>
+
+	<command name="gotoMenuGoogleApps">
+		<execute function="AssertClick" locator1="NavListItem#GOOGLE_APPS" value1="Google Apps" />
+	</command>
 </definition>

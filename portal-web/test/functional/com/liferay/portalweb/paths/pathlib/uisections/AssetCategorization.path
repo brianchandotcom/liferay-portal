@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORIZATION_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='dlFileEntryCategorizationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='dlFileEntryCategorizationPanel']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY</td>
 	<td>//div[contains(@class,'categoriesselector')]/ul/li/span[contains(.,'${key_categoryName}')]</td>
 	<td></td>

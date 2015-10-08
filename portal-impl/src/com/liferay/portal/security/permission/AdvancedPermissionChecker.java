@@ -1334,10 +1334,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
 
-		if (userPermissionCheckerBag == null) {
-			_log.error("Bag should never be null");
-		}
-
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			doGetRoleIds(getUserId(), groupId));
 

@@ -2102,7 +2102,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 
 		if ((userGroupIds != null) &&
-			(!addUserGroupIds.isEmpty() || !removeGroupIds.isEmpty())) {
+			(!addUserGroupIds.isEmpty() || !removeUserGroupIds.isEmpty())) {
 
 			UserGroupMembershipPolicyUtil.propagateMembership(
 				new long[] {user.getUserId()},

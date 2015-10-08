@@ -493,7 +493,6 @@
 
 	<command name="searchCP">
 		<var name="key_orgName" value="${orgName}" />
-		<var name="searchTerm" value="${orgName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />

@@ -1214,13 +1214,26 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		PermissionCheckerBag bag = getUserBag(user.getUserId(), groupId);
+		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
 
-		if (bag == null) {
+		if (userPermissionCheckerBag == null) {
 			_log.error("Bag should never be null");
 		}
 
-		if (bag.isGroupMember(this, group)) {
+		PermissionCheckerBag permissionCheckerBag = getUserBag(
+			getUserId(), groupId);
+
+		for (Role role : permissionCheckerBag.getRoles()) {
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
+				return true;
+			}
+		}
+
+		Set<Group> groups = userPermissionCheckerBag.getUserGroups();
+
+		if (groups.contains(group)) {
 			return true;
 		}
 		else {

@@ -22,7 +22,6 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -161,28 +160,6 @@ public class PermissionCheckerBagImpl
 		}
 
 		return value.booleanValue();
-	}
-
-	@Override
-	public boolean isGroupMember(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception {
-
-		for (Role role : getRoles()) {
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
-				return true;
-			}
-		}
-
-		Set<Group> userGroups = getUserGroups();
-
-		if (userGroups.contains(group)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

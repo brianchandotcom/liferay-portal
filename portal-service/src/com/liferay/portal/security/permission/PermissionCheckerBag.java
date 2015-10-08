@@ -53,10 +53,6 @@ public interface PermissionCheckerBag extends UserPermissionCheckerBag {
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;
 
-	public boolean isGroupMember(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception;
-
 	public boolean isGroupOwner(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;

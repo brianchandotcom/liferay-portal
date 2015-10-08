@@ -260,6 +260,10 @@ public interface TeamLocalService extends BaseLocalService,
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Team> getRecursiveUserTeams(
+		long userId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Team getTeam(long groupId,
 		java.lang.String name) throws PortalException;
 

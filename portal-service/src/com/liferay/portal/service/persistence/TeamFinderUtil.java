@@ -57,6 +57,12 @@ public class TeamFinderUtil {
 			obc);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Team> findByUserId(
+		long userId, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> obc) {
+		return getFinder().findByUserId(userId, groupId, start, end, obc);
+	}
+
 	public static TeamFinder getFinder() {
 		if (_finder == null) {
 			_finder = (TeamFinder)PortalBeanLocatorUtil.locate(TeamFinder.class.getName());

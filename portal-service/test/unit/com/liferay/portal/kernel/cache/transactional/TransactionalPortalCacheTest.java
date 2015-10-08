@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.transactional.TransactionalPortalCacheHelper.PortalCacheMap;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -36,6 +34,9 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -80,9 +81,12 @@ public class TransactionalPortalCacheTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		EntityCacheUtil entityCacheUtil = new EntityCacheUtil();
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
-		entityCacheUtil.setEntityCache(
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(
+			EntityCache.class,
 			(EntityCache)ProxyUtil.newProxyInstance(
 				EntityCache.class.getClassLoader(),
 				new Class<?>[] {EntityCache.class},
@@ -97,9 +101,8 @@ public class TransactionalPortalCacheTest {
 
 				}));
 
-		FinderCacheUtil finderCacheUtil = new FinderCacheUtil();
-
-		finderCacheUtil.setFinderCache(
+		registry.registerService(
+			FinderCache.class,
 			(FinderCache)ProxyUtil.newProxyInstance(
 				FinderCache.class.getClassLoader(),
 				new Class<?>[] {FinderCache.class},

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.json;
 
-import com.liferay.portal.dao.orm.common.EntityCacheImpl;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -121,7 +119,7 @@ public class JSONFactoryTest {
 	@Test
 	public void testLooseDeserialize() {
 		Object object = JSONFactoryUtil.looseDeserialize(
-			"{\"class\":\"" + EntityCacheUtil.class.getName() + "\"}");
+			"{\"class\":\"" + JSONFactoryUtil.class.getName() + "\"}");
 
 		Assert.assertTrue(object instanceof Map);
 
@@ -145,34 +143,33 @@ public class JSONFactoryTest {
 		Assert.assertTrue(((Map<?, ?>)object).containsKey("class"));
 
 		JSONFactoryUtil.looseDeserialize(
-			"{\"class\":\"" + EntityCacheUtil.class.getName() + "\"}");
+			"{\"class\":\"" + JSONFactoryUtil.class.getName() + "\"}");
 
 		Map<?, ?> map = (Map<?, ?>)JSONFactoryUtil.looseDeserialize(
-			"{\"class\":\"" + EntityCacheUtil.class.getName() +
+			"{\"class\":\"" + JSONFactoryUtil.class.getName() +
 				"\",\"foo\": \"boo\"}");
 
 		Assert.assertNotNull(map);
 		Assert.assertEquals(2, map.size());
 		Assert.assertEquals(
-			"com.liferay.portal.kernel.dao.orm.EntityCacheUtil",
-			map.get("class"));
+			"com.liferay.portal.kernel.json.JSONFactoryUtil", map.get("class"));
 		Assert.assertEquals("boo", map.get("foo"));
 
 		map = (Map<?, ?>)JSONFactoryUtil.looseDeserialize(
-			"{\"class\":\"" + EntityCacheUtil.class.getName() +
-				"\",\"foo\": \"boo\",\"entityCache\":{\"class\":\"" +
-				EntityCacheImpl.class.getName() + "\"}}");
+			"{\"class\":\"" + JSONFactoryUtil.class.getName() +
+				"\",\"foo\": \"boo\",\"jsonFactory\":{\"class\":\"" +
+				JSONFactoryImpl.class.getName() + "\"}}");
 
 		Assert.assertNotNull(map);
 		Assert.assertEquals(3, map.size());
-		Assert.assertEquals( EntityCacheUtil.class.getName(), map.get("class"));
+		Assert.assertEquals( JSONFactoryUtil.class.getName(), map.get("class"));
 		Assert.assertEquals("boo", map.get("foo"));
 
-		map = (Map<?, ?>)map.get("entityCache");
+		map = (Map<?, ?>)map.get("jsonFactory");
 
 		Assert.assertNotNull(map);
 		Assert.assertEquals(1, map.size());
-		Assert.assertEquals(EntityCacheImpl.class.getName(), map.get("class"));
+		Assert.assertEquals(JSONFactoryImpl.class.getName(), map.get("class"));
 	}
 
 	@Test

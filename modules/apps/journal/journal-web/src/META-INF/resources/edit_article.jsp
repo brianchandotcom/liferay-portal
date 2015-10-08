@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String backURL = ParamUtil.getString(request, "backURL");
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
@@ -135,7 +133,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	<aui:form action="<%= editArticleActionURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
 		<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 		<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

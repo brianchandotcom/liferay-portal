@@ -268,7 +268,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 				rowURL.setParameter("mvcPath", "/edit_article.jsp");
 				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("backURL", currentURL);
 				rowURL.setParameter("referringPortletResource", referringPortletResource);
 				rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 				rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));

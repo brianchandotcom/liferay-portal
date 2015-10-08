@@ -32,12 +32,27 @@ JournalArticle article = ActionUtil.getArticle(request);
 <c:choose>
 	<c:when test="<%= article == null %>">
 		<div class="alert alert-danger">
-			<%= LanguageUtil.get(request, "the-selected-web-content-no-longer-exists") %>
+			<liferay-ui:message key="the-selected-web-content-no-longer-exists" />
 		</div>
 	</c:when>
 	<c:otherwise>
 
+		<portlet:renderURL var="backURL">
+			<portlet:param name="mvcPath" value="/edit_article.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</portlet:renderURL>
+
 		<%
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(backURL);
+
+		renderResponse.setTitle(article.getTitle(locale));
+
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_article_history.jsp");
@@ -83,8 +98,6 @@ JournalArticle article = ActionUtil.getArticle(request);
 				</c:if>
 			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>
-
-		<liferay-util:include page="/article_header.jsp" servletContext="<%= application %>" />
 
 		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 			<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />

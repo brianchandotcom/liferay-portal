@@ -132,7 +132,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	 * @return the permission checker bag for the guest user
 	 * @throws Exception if an exception occurred
 	 */
-	@Override
 	public PermissionCheckerBag getGuestUserBag() throws Exception {
 		Group guestGroup = GroupLocalServiceUtil.getGroup(
 			getCompanyId(), GroupConstants.GUEST);
@@ -308,6 +307,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
+	@Override
 	public UserPermissionCheckerBag getUserBag() throws Exception {
 		UserPermissionCheckerBag userPermissionCheckerBag =
 			PermissionCacheUtil.getUserBag(user.getUserId());
@@ -371,7 +371,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	 * @throws Exception if a user or group with the primary key could not be
 	 *         found
 	 */
-	@Override
 	public PermissionCheckerBag getUserBag(long userId, long groupId)
 		throws Exception {
 

@@ -25,14 +25,7 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 	}
 
 	@Override
-	public PermissionCheckerBag getGuestUserBag() throws Exception {
-		return null;
-	}
-
-	@Override
-	public PermissionCheckerBag getUserBag(long userId, long groupId)
-		throws Exception {
-
+	public UserPermissionCheckerBag getUserBag() {
 		return null;
 	}
 

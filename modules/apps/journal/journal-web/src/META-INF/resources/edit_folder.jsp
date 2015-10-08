@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-JournalFolder folder = ActionUtil.getFolder(request);
+JournalFolder folder = journalDisplayContext.getFolder();
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 

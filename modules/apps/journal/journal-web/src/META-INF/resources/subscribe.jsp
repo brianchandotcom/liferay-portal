@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 long ddmStructureId = 0;
@@ -40,10 +38,10 @@ if (Validator.isNotNull(ddmStructureKey)) {
 		boolean unsubscribable = true;
 
 		if (Validator.isNull(ddmStructureKey)) {
-			subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
+			subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), journalDisplayContext.getFolderId());
 
 			if (subscribed) {
-				if (!JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
+				if (!JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), journalDisplayContext.getFolderId(), false)) {
 					unsubscribable = false;
 				}
 			}
@@ -62,7 +60,7 @@ if (Validator.isNotNull(ddmStructureKey)) {
 
 							<c:choose>
 								<c:when test="<%= Validator.isNull(ddmStructureKey) %>">
-									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+									<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
 								</c:when>
 								<c:otherwise>
 									<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />
@@ -90,7 +88,7 @@ if (Validator.isNotNull(ddmStructureKey)) {
 
 					<c:choose>
 						<c:when test="<%= Validator.isNull(ddmStructureKey) %>">
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
 						</c:when>
 						<c:otherwise>
 							<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />

@@ -1169,6 +1169,14 @@ that may or may not be enforced with a unique index at the database level. Case
 								<#else>
 									ArrayUtil.unique(${finderCol.names});
 								</#if>
+
+							if (${finderCol.names}.length > 1) {
+								<#if finderCol.type == "String">
+									Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
+								<#else>
+									Arrays.sort(${finderCol.names});
+								</#if>
+							}
 						}
 					</#if>
 				</#list>
@@ -1483,6 +1491,14 @@ that may or may not be enforced with a unique index at the database level. Case
 							<#else>
 								ArrayUtil.unique(${finderCol.names});
 							</#if>
+
+						if (${finderCol.names}.length > 1) {
+							<#if finderCol.type == "String">
+								Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
+							<#else>
+								Arrays.sort(${finderCol.names});
+							</#if>
+						}
 					}
 				</#if>
 			</#list>

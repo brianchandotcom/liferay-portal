@@ -13,7 +13,7 @@
 		<execute macro="MessageboardsPortlet#tearDownConfigurationGeneralCP" />
 	</tear-down>
 
-	<command name="AddMBCategory" priority="4">
+	<command name="AddMBCategory" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -56,7 +56,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBThread" priority="4">
+	<command name="AddMBThread" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -80,7 +80,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThreadBody" priority="4">
+	<command name="EditMBThreadBody" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>
@@ -113,7 +113,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThreadSubject" priority="4">
+	<command name="EditMBThreadSubject" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>
@@ -146,7 +146,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThreadSubjectAndBody" priority="4">
+	<command name="EditMBThreadSubjectAndBody" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>
@@ -180,7 +180,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveToRecycleBinMBThread" priority="4">
+	<command name="MoveToRecycleBinMBThread" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -210,7 +210,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAnonymousPostingAllowedCheckboxConfiguration" priority="4">
+	<command name="ViewAnonymousPostingAllowedCheckboxConfiguration" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>

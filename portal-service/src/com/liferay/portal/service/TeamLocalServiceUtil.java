@@ -377,6 +377,11 @@ public class TeamLocalServiceUtil {
 		return getService().getTeams(start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Team> getTeamsByUser(
+		long userId, long groupId) {
+		return getService().getTeamsByUser(userId, groupId);
+	}
+
 	/**
 	* Returns all the teams matching the UUID and company.
 	*

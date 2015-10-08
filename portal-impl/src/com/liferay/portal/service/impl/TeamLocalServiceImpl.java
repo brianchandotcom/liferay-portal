@@ -146,6 +146,11 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		return teamPersistence.findByG_N(groupId, name);
 	}
 
+	public List<Team> getTeamsByUser(long userId, long groupId) {
+		return teamFinder.findByUserId(
+			userId, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
 	@Override
 	public List<Team> getUserTeams(long userId, long groupId) {
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();

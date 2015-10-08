@@ -582,7 +582,7 @@ THE SOFTWARE.
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
       </dependency>
-    <!-- Overriding Staplerâ€™s 1.1.3 version to diagnose JENKINS-20618: -->
+    <!-- Overriding Stapler’s 1.1.3 version to diagnose JENKINS-20618: -->
     <dependency>
       <groupId>com.jcraft</groupId>
       <artifactId>jzlib</artifactId>

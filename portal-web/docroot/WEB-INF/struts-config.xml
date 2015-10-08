@@ -182,11 +182,6 @@
 		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
 
 		<!-- Software Catalog -->
-		<action path="/software_catalog/edit_product_version" type="com.liferay.portlet.softwarecatalog.action.EditProductVersionAction">
-			<forward name="portlet.software_catalog.edit_product_version" path="portlet.software_catalog.edit_product_version" />
-			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />
-		</action>
-
 		<action path="/software_catalog/view" forward="portlet.software_catalog.view" />
 
 		<action path="/software_catalog/view_product_entry" type="com.liferay.portlet.softwarecatalog.action.ViewProductEntryAction">

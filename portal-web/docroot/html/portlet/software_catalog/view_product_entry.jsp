@@ -31,7 +31,7 @@ SCProductVersion latestProductVersion = productEntry.getLatestVersion();
 
 PortletURL addProductVersionURL = renderResponse.createRenderURL();
 
-addProductVersionURL.setParameter("struts_action", "/software_catalog/edit_product_version");
+addProductVersionURL.setParameter("mvcRenderName", "/software_catalog/edit_product_version");
 addProductVersionURL.setParameter(Constants.CMD, Constants.ADD);
 addProductVersionURL.setParameter("tabs2", tabs2);
 addProductVersionURL.setParameter("redirect", currentURL);

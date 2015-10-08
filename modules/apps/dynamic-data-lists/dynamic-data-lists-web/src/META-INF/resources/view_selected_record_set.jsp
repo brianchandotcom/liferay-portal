@@ -20,6 +20,10 @@
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
 
 DDLRecordSet recordSet = ddlDisplayContext.getRecordSet();
+
+if (recordSet != null) {
+	renderResponse.setTitle(recordSet.getName(locale));
+}
 %>
 
 <c:choose>

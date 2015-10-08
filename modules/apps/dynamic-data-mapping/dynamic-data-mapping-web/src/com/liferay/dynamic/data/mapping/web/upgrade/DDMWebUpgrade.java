@@ -12,14 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.upgrade;
+package com.liferay.dynamic.data.mapping.web.upgrade;
 
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeClassNames;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.dynamic.data.mapping.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -30,26 +25,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marcellus Tavares
+ * @author Miguel Pastor
  */
 @Component(immediate = true)
-public class DDMServiceUpgrade implements UpgradeStepRegistrator {
+public class DDMWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.dynamic.data.mapping.service", "0.0.1", "1.0.0",
-			Arrays.<UpgradeStep>asList(
-				new UpgradeSchema(), new UpgradeClassNames(),
-				new UpgradeDynamicDataMapping(), new UpgradeLastPublishDate()));
+			"com.liferay.dynamic.data.mapping.web", "0.0.1", "1.0.0",
+			Arrays.<UpgradeStep>asList(new UpgradePortletId()));
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMServiceUpgrade.class);
 
 }

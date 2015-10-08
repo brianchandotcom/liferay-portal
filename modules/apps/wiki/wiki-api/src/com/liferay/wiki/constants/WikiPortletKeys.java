@@ -19,10 +19,13 @@ package com.liferay.wiki.constants;
  */
 public class WikiPortletKeys {
 
-	public static final String WIKI = "36_WAR_wikiweb";
+	public static final String WIKI =
+		"com_liferay_wiki_web_portlet_WikiPortlet";
 
-	public static final String WIKI_ADMIN = "154_WAR_wikiweb";
+	public static final String WIKI_ADMIN =
+		"com_liferay_wiki_web_portlet_WikiAdminPortlet";
 
-	public static final String WIKI_DISPLAY = "54_WAR_wikiweb";
+	public static final String WIKI_DISPLAY =
+		"com_liferay_wiki_web_portlet_WikiDisplayPortlet";
 
 }

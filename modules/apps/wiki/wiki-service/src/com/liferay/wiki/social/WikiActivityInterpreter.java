@@ -28,17 +28,25 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Samuel Kong
  * @author Ryan Park
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"javax.portlet.name=" + WikiPortletKeys.WIKI},
+	service = SocialActivityInterpreter.class
+)
 public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override

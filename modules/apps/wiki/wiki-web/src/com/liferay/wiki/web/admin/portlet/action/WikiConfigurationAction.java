@@ -12,26 +12,39 @@
  * details.
  */
 
-package com.liferay.wiki.notifications;
+package com.liferay.wiki.web.admin.portlet.action;
 
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Roberto Díaz
+ * @author Iván Zaera
  */
 @Component(
 	immediate = true, property = {"javax.portlet.name=" + WikiPortletKeys.WIKI},
-	service = UserNotificationHandler.class
+	service = ConfigurationAction.class
 )
-public class WikiUserNotificationHandler
-	extends BaseModelUserNotificationHandler {
+public class WikiConfigurationAction
+	extends BaseJSPSettingsConfigurationAction {
 
-	public WikiUserNotificationHandler() {
-		setPortletId(WikiPortletKeys.WIKI);
+	@Override
+	public String getJspPath(HttpServletRequest request) {
+		return "/wiki/configuration.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

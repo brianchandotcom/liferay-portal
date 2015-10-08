@@ -1,12 +1,16 @@
 dependencies {
-	compile group: "javax.jcr", name: "jcr", version: "2.0"
-	compile group: "org.apache.jackrabbit", name: "jackrabbit-api", version: "2.1.6"
-	compile group: "org.apache.jackrabbit", name: "jackrabbit-core", version: "2.1.6"
-	compile group: "org.apache.jackrabbit", name: "jackrabbit-jcr-commons", version: "2.1.6"
-	compile group: "org.apache.jackrabbit", name: "jackrabbit-spi", version: "2.1.6"
-	compile group: "org.apache.jackrabbit", name: "jackrabbit-spi-commons", version: "2.1.6"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "commons-lang", name: "commons-lang", version: "2.6"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	provided group: "javax.jcr", name: "jcr", version: "2.0"
+	provided group: "org.apache.jackrabbit", name: "jackrabbit-api", version: "2.1.6"
+	provided group: "org.apache.jackrabbit", name: "jackrabbit-core", version: "2.1.6"
+	provided group: "org.apache.jackrabbit", name: "jackrabbit-jcr-commons", version: "2.1.6"
+	provided group: "org.apache.jackrabbit", name: "jackrabbit-spi", version: "2.1.6"
+	provided group: "org.apache.jackrabbit", name: "jackrabbit-spi-commons", version: "2.1.6"
 }
 
 liferay {

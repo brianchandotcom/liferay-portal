@@ -5792,7 +5792,7 @@ public class JournalArticleLocalServiceImpl
 
 		int oldStatus = article.getStatus();
 
-		Date modifiedDate = serviceContext.getModifiedDate();
+		Date modifiedDate = serviceContext.getModifiedDate(now);
 
 		article.setModifiedDate(modifiedDate);
 

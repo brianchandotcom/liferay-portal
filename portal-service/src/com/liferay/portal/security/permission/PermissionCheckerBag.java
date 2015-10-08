@@ -26,10 +26,6 @@ public interface PermissionCheckerBag extends UserPermissionCheckerBag {
 
 	public long[] getRoleIds();
 
-	public boolean isGroupAdmin(
-			PermissionChecker permissionChecker, Group group)
-		throws Exception;
-
 	public boolean isGroupOwner(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;

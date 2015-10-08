@@ -28,6 +28,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Resource;
@@ -49,6 +50,8 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
+import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.util.ArrayList;
@@ -1170,6 +1173,86 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return value;
 	}
 
+	protected boolean isGroupAdminImpl(Group group) throws PortalException {
+		if (group.isLayout()) {
+			long parentGroupId = group.getParentGroupId();
+
+			if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+				return false;
+			}
+
+			group = GroupLocalServiceUtil.getGroup(parentGroupId);
+		}
+
+		if (group.isSite()) {
+			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					getUserId(), group.getGroupId(),
+					RoleConstants.SITE_ADMINISTRATOR, true) ||
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER,
+					true)) {
+
+				return true;
+			}
+		}
+
+		if (group.isCompany()) {
+			if (isCompanyAdmin()) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (group.isLayoutPrototype()) {
+			if (LayoutPrototypePermissionUtil.contains(
+					this, group.getClassPK(), ActionKeys.UPDATE)) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (group.isLayoutSetPrototype()) {
+			if (LayoutSetPrototypePermissionUtil.contains(
+					this, group.getClassPK(), ActionKeys.UPDATE)) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (group.isOrganization()) {
+			long organizationId = group.getOrganizationId();
+
+			while (organizationId !=
+						OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+				Organization organization =
+					OrganizationLocalServiceUtil.getOrganization(
+						organizationId);
+
+				long organizationGroupId = organization.getGroupId();
+
+				if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+						getUserId(), organizationGroupId,
+						RoleConstants.ORGANIZATION_ADMINISTRATOR, true) ||
+					UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+						getUserId(), organizationGroupId,
+						RoleConstants.ORGANIZATION_OWNER, true)) {
+
+					return true;
+				}
+
+				organizationId = organization.getParentOrganizationId();
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isGroupAdminImpl(long groupId) throws Exception {
 		if (!signedIn) {
 			return false;
@@ -1189,13 +1272,27 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		PermissionCheckerBag bag = getUserBag(user.getUserId(), groupId);
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), group.getGroupId(), RoleConstants.SITE_ADMINISTRATOR);
 
-		if (bag == null) {
-			_log.error("Bag should never be null");
+		try {
+			if (value == null) {
+				value = isGroupAdminImpl(group);
+
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), group.getGroupId(),
+					RoleConstants.SITE_ADMINISTRATOR, value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), group.getGroupId(),
+				RoleConstants.SITE_ADMINISTRATOR);
+
+			throw e;
 		}
 
-		if (bag.isGroupAdmin(this, group)) {
+		if (value) {
 			return true;
 		}
 

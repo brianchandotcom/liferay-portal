@@ -187,7 +187,7 @@
 			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
+		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="NAVIGATION DISPLAY TEST PAGE" />
 	</command>
 
 	<command name="ViewNoAddPagePermissionsPG" priority="4">

@@ -60,6 +60,7 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="AssertTextEquals" locator1="NavigationConfiguration#PREVIEW_BREADCRUMB_HEADER2_ENTRY" value1="Navigation Display Test Page" />
 		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Custom" />
 		<execute function="AssertSelectedLabel" locator1="Select#HEADER" value1="Root Page" />
@@ -178,6 +179,7 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Relative with Breadcrumb" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />

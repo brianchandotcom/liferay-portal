@@ -39,8 +39,4 @@ public interface PermissionCheckerBag extends UserPermissionCheckerBag {
 			PermissionChecker permissionChecker, Organization organization)
 		throws Exception;
 
-	public boolean isOrganizationOwner(
-			PermissionChecker permissionChecker, Organization organization)
-		throws Exception;
-
 }

@@ -1385,19 +1385,49 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		PermissionCheckerBag bag = getUserBag(
-			user.getUserId(), organization.getGroupId());
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), organization.getOrganizationId(),
+			RoleConstants.ORGANIZATION_OWNER);
 
-		if (bag == null) {
-			_log.error("Bag should never be null");
+		try {
+			if (value == null) {
+				value = isOrganizationOwnerImpl(organization);
+
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), organization.getOrganizationId(),
+					RoleConstants.ORGANIZATION_OWNER, value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), organization.getOrganizationId(),
+				RoleConstants.ORGANIZATION_OWNER);
+
+			throw e;
 		}
 
-		if (bag.isOrganizationOwner(this, organization)) {
-			return true;
+		return value;
+	}
+
+	protected boolean isOrganizationOwnerImpl(Organization organization)
+		throws PortalException {
+
+		while (organization != null) {
+			long organizationGroupId = organization.getGroupId();
+
+			long userId = getUserId();
+
+			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					userId, organizationGroupId,
+					RoleConstants.ORGANIZATION_OWNER, true)) {
+
+				return true;
+			}
+
+			organization = organization.getParentOrganization();
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void logHasUserPermission(

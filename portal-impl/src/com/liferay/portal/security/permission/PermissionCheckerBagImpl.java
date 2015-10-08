@@ -161,36 +161,6 @@ public class PermissionCheckerBagImpl
 		return value;
 	}
 
-	@Override
-	public boolean isOrganizationOwner(
-			PermissionChecker permissionChecker, Organization organization)
-		throws Exception {
-
-		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
-			getUserId(), organization.getOrganizationId(),
-			RoleConstants.ORGANIZATION_OWNER);
-
-		try {
-			if (value == null) {
-				value = isOrganizationOwnerImpl(
-					permissionChecker, organization);
-
-				PermissionCacheUtil.putUserPrimaryKeyRole(
-					getUserId(), organization.getOrganizationId(),
-					RoleConstants.ORGANIZATION_OWNER, value);
-			}
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeUserPrimaryKeyRole(
-				getUserId(), organization.getOrganizationId(),
-				RoleConstants.ORGANIZATION_OWNER);
-
-			throw e;
-		}
-
-		return value;
-	}
-
 	protected boolean isGroupAdminImpl(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
@@ -353,28 +323,6 @@ public class PermissionCheckerBagImpl
 					userId, organizationGroupId,
 					RoleConstants.ORGANIZATION_ADMINISTRATOR, true) ||
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-					userId, organizationGroupId,
-					RoleConstants.ORGANIZATION_OWNER, true)) {
-
-				return true;
-			}
-
-			organization = organization.getParentOrganization();
-		}
-
-		return false;
-	}
-
-	protected boolean isOrganizationOwnerImpl(
-			PermissionChecker permissionChecker, Organization organization)
-		throws PortalException {
-
-		while (organization != null) {
-			long organizationGroupId = organization.getGroupId();
-
-			long userId = getUserId();
-
-			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					userId, organizationGroupId,
 					RoleConstants.ORGANIZATION_OWNER, true)) {
 

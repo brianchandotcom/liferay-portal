@@ -53,8 +53,11 @@
 		<var name="key_pageName" value="Navigation Display Test Page" />
 
 		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
-		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_ICON" value1="Options" />
-		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Navigation Menu" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="AssertTextEquals" locator1="NavigationConfiguration#PREVIEW_BREADCRUMB_HEADER2_ENTRY" value1="Navigation Display Test Page" />
@@ -168,8 +171,11 @@
 		<var name="key_pageName" value="Navigation Display Test Page" />
 
 		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
-		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_ICON" value1="Options" />
-		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Navigation Menu" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="Select" locator1="Select#DISPLAY_STYLE" value1="Relative with Breadcrumb" />

@@ -50,6 +50,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersis
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -6183,8 +6184,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -6346,8 +6349,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		if (folderIds.length == 1) {
@@ -6548,8 +6553,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		Object[] finderArgs = new Object[] { groupId, StringUtil.merge(folderIds) };
@@ -6680,8 +6687,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -8770,8 +8779,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -8945,8 +8956,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		if (folderIds.length == 1) {
@@ -9161,8 +9174,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -9305,8 +9320,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -11120,8 +11137,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -11297,8 +11316,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		if (folderIds.length == 1) {
@@ -11515,8 +11536,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -11663,8 +11686,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		StringBundler query = new StringBundler();

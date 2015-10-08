@@ -52,6 +52,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -6669,8 +6670,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types == null) {
 			types = new int[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.unique(types);
+
+			Arrays.sort(types);
 		}
 
 		StringBundler query = new StringBundler();
@@ -6830,8 +6833,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types == null) {
 			types = new int[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.unique(types);
+
+			Arrays.sort(types);
 		}
 
 		if (types.length == 1) {
@@ -7030,8 +7035,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types == null) {
 			types = new int[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.unique(types);
+
+			Arrays.sort(types);
 		}
 
 		Object[] finderArgs = new Object[] { companyId, StringUtil.merge(types) };
@@ -7161,8 +7168,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types == null) {
 			types = new int[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.unique(types);
+
+			Arrays.sort(types);
 		}
 
 		StringBundler query = new StringBundler();

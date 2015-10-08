@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.sql.Timestamp;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -3396,8 +3397,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -3560,8 +3563,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (categoryIds.length == 1) {
@@ -3762,8 +3767,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -3896,8 +3903,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -8838,8 +8847,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -9014,8 +9025,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (categoryIds.length == 1) {
@@ -9232,8 +9245,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -9378,8 +9393,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -10330,8 +10347,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -10506,8 +10525,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (categoryIds.length == 1) {
@@ -10724,8 +10745,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -10871,8 +10894,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();

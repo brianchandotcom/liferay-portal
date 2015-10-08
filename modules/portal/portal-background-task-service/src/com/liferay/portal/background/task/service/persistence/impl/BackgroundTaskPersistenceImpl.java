@@ -45,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -2202,9 +2203,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -2441,9 +2444,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -3664,9 +3669,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -3904,9 +3911,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -5321,9 +5330,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -5579,9 +5590,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -6317,9 +6330,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -6575,9 +6590,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {

@@ -57,6 +57,7 @@ import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistenc
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -8183,8 +8184,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		if (classNameIds == null) {
 			classNameIds = new long[0];
 		}
-		else {
+		else if (classNameIds.length > 1) {
 			classNameIds = ArrayUtil.unique(classNameIds);
+
+			Arrays.sort(classNameIds);
 		}
 
 		if (classNameIds.length == 1) {
@@ -8385,8 +8388,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		if (classNameIds == null) {
 			classNameIds = new long[0];
 		}
-		else {
+		else if (classNameIds.length > 1) {
 			classNameIds = ArrayUtil.unique(classNameIds);
+
+			Arrays.sort(classNameIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -15262,8 +15267,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		if (classNameIds == null) {
 			classNameIds = new long[0];
 		}
-		else {
+		else if (classNameIds.length > 1) {
 			classNameIds = ArrayUtil.unique(classNameIds);
+
+			Arrays.sort(classNameIds);
 		}
 
 		if (classNameIds.length == 1) {
@@ -15480,8 +15487,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		if (classNameIds == null) {
 			classNameIds = new long[0];
 		}
-		else {
+		else if (classNameIds.length > 1) {
 			classNameIds = ArrayUtil.unique(classNameIds);
+
+			Arrays.sort(classNameIds);
 		}
 
 		Object[] finderArgs = new Object[] {

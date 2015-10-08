@@ -62,7 +62,7 @@ public class PermissionCacheUtil {
 		}
 
 		_userRolePortalCache.removeAll();
-		_permissionCheckerBagPortalCache.removeAll();
+		_userGroupRoleIdsPortalCache.removeAll();
 		_permissionPortalCache.removeAll();
 		_resourceBlockIdsBagCache.removeAll();
 		_userPermissionCheckerBagPortalCache.removeAll();
@@ -77,7 +77,7 @@ public class PermissionCacheUtil {
 		for (long userId : userIds) {
 			_userPermissionCheckerBagPortalCache.remove(userId);
 
-			_permissionCheckerBagPortalCacheIndexer.removeKeys(userId);
+			_userGroupRoleIdsPortalCacheIndexer.removeKeys(userId);
 			_userPrimaryKeyRolePortalCacheUserIdIndexer.removeKeys(userId);
 			_userRolePortalCacheIndexer.removeKeys(userId);
 		}
@@ -131,12 +131,6 @@ public class PermissionCacheUtil {
 		}
 	}
 
-	public static PermissionCheckerBag getBag(long userId, long groupId) {
-		BagKey bagKey = new BagKey(userId, groupId);
-
-		return _permissionCheckerBagPortalCache.get(bagKey);
-	}
-
 	public static Boolean getPermission(
 		long userId, boolean signedIn, long groupId, String name,
 		String primKey, String actionId) {
@@ -158,6 +152,13 @@ public class PermissionCacheUtil {
 
 	public static UserPermissionCheckerBag getUserBag(long userId) {
 		return _userPermissionCheckerBagPortalCache.get(userId);
+	}
+
+	public static long[] getUserGroupRoleIds(long userId, long groupId) {
+		UserGroupRoleIdsKey userGroupRoleIdsKey = new UserGroupRoleIdsKey(
+			userId, groupId);
+
+		return _userGroupRoleIdsPortalCache.get(userGroupRoleIdsKey);
 	}
 
 	public static Boolean getUserPrimaryKeyRole(
@@ -189,18 +190,6 @@ public class PermissionCacheUtil {
 		_userRolePortalCache.put(userRoleKey, userRole);
 
 		return userRole;
-	}
-
-	public static void putBag(
-		long userId, long groupId, PermissionCheckerBag bag) {
-
-		if (bag == null) {
-			return;
-		}
-
-		BagKey bagKey = new BagKey(userId, groupId);
-
-		_permissionCheckerBagPortalCache.put(bagKey, bag);
 	}
 
 	public static void putPermission(
@@ -235,6 +224,19 @@ public class PermissionCacheUtil {
 			userId, userPermissionCheckerBag);
 	}
 
+	public static void putUserGroupRoleIds(
+		long userId, long groupId, long[] roleIds) {
+
+		if (roleIds == null) {
+			return;
+		}
+
+		UserGroupRoleIdsKey userGroupRoleIdsKey = new UserGroupRoleIdsKey(
+			userId, groupId);
+
+		_userGroupRoleIdsPortalCache.put(userGroupRoleIdsKey, roleIds);
+	}
+
 	public static void putUserPrimaryKeyRole(
 		long userId, long primaryKey, String roleName, Boolean value) {
 
@@ -256,12 +258,6 @@ public class PermissionCacheUtil {
 		UserRoleKey userRoleKey = new UserRoleKey(userId, role.getRoleId());
 
 		_userRolePortalCache.put(userRoleKey, value);
-	}
-
-	public static void removeBag(long userId, long groupId) {
-		BagKey bagKey = new BagKey(userId, groupId);
-
-		_permissionCheckerBagPortalCache.remove(bagKey);
 	}
 
 	public static void removePermission(
@@ -287,6 +283,13 @@ public class PermissionCacheUtil {
 		_userPermissionCheckerBagPortalCache.remove(userId);
 	}
 
+	public static void removeUserGroupRoleIds(long userId, long groupId) {
+		UserGroupRoleIdsKey userGroupRoleIdsKey = new UserGroupRoleIdsKey(
+			userId, groupId);
+
+		_userGroupRoleIdsPortalCache.remove(userGroupRoleIdsKey);
+	}
+
 	public static void removeUserPrimaryKeyRole(
 		long userId, long primaryKey, String roleName) {
 
@@ -296,13 +299,6 @@ public class PermissionCacheUtil {
 		_userPrimaryKeyRolePortalCache.remove(userPrimaryKeyRoleKey);
 	}
 
-	private static final PortalCache<BagKey, PermissionCheckerBag>
-		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getPortalCache(
-			PERMISSION_CHECKER_BAG_CACHE_NAME,
-			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
-	private static final PortalCacheIndexer<Long, BagKey, PermissionCheckerBag>
-		_permissionCheckerBagPortalCacheIndexer = new PortalCacheIndexer<>(
-			new BagKeyIndexEncoder(), _permissionCheckerBagPortalCache);
 	private static final PortalCache<PermissionKey, Boolean>
 		_permissionPortalCache = MultiVMPoolUtil.getPortalCache(
 			PERMISSION_CACHE_NAME,
@@ -323,6 +319,14 @@ public class PermissionCacheUtil {
 			_resourceBlockIdsBagCacheIndexer = new PortalCacheIndexer<>(
 				new ResourceBlockIdsBagKeyIndexEncoder(),
 				_resourceBlockIdsBagCache);
+	private static final PortalCache<UserGroupRoleIdsKey, long[]>
+		_userGroupRoleIdsPortalCache = MultiVMPoolUtil.getPortalCache(
+			PERMISSION_CHECKER_BAG_CACHE_NAME,
+			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static final PortalCacheIndexer<Long, UserGroupRoleIdsKey, long[]>
+		_userGroupRoleIdsPortalCacheIndexer = new PortalCacheIndexer<>(
+			new UserGroupRoleIdsKeyIndexEncoder(),
+			_userGroupRoleIdsPortalCache);
 	private static final PortalCache<Long, UserPermissionCheckerBag>
 		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getPortalCache(
 			USER_PERMISSION_CHECKER_BAG_CACHE_NAME,
@@ -344,48 +348,6 @@ public class PermissionCacheUtil {
 	private static final PortalCacheIndexer<Long, UserRoleKey, Boolean>
 		_userRolePortalCacheIndexer = new PortalCacheIndexer<>(
 			new UserRoleKeyIndexEncoder(), _userRolePortalCache);
-
-	private static class BagKey implements Serializable {
-
-		@Override
-		public boolean equals(Object obj) {
-			BagKey bagKey = (BagKey)obj;
-
-			if ((bagKey._userId == _userId) && (bagKey._groupId == _groupId)) {
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			int hashCode = HashUtil.hash(0, _userId);
-
-			return HashUtil.hash(hashCode, _groupId);
-		}
-
-		private BagKey(long userId, long groupId) {
-			_userId = userId;
-			_groupId = groupId;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final long _groupId;
-		private final long _userId;
-
-	}
-
-	private static class BagKeyIndexEncoder
-		implements IndexEncoder<Long, BagKey> {
-
-		@Override
-		public Long encode(BagKey bagKey) {
-			return bagKey._userId;
-		}
-
-	}
 
 	private static class PermissionKey implements Serializable {
 
@@ -533,6 +495,50 @@ public class PermissionCacheUtil {
 			return encode(
 				resourceBlockIdsBagKey._companyId,
 				resourceBlockIdsBagKey._groupId, resourceBlockIdsBagKey._name);
+		}
+
+	}
+
+	private static class UserGroupRoleIdsKey implements Serializable {
+
+		@Override
+		public boolean equals(Object obj) {
+			UserGroupRoleIdsKey userGroupRoleIdsKey = (UserGroupRoleIdsKey)obj;
+
+			if ((userGroupRoleIdsKey._userId == _userId) &&
+				(userGroupRoleIdsKey._groupId == _groupId)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _userId);
+
+			return HashUtil.hash(hashCode, _groupId);
+		}
+
+		private UserGroupRoleIdsKey(long userId, long groupId) {
+			_userId = userId;
+			_groupId = groupId;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final long _groupId;
+		private final long _userId;
+
+	}
+
+	private static class UserGroupRoleIdsKeyIndexEncoder
+		implements IndexEncoder<Long, UserGroupRoleIdsKey> {
+
+		@Override
+		public Long encode(UserGroupRoleIdsKey userGroupRoleIdsKey) {
+			return userGroupRoleIdsKey._userId;
 		}
 
 	}

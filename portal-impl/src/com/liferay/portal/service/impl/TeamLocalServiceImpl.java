@@ -142,6 +142,12 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Team> getRecursiveUserTeams(long userId, long groupId) {
+		return teamFinder.findByUserId(
+			userId, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	@Override
 	public Team getTeam(long groupId, String name) throws PortalException {
 		return teamPersistence.findByG_N(groupId, name);
 	}

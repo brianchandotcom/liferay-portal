@@ -50,6 +50,9 @@ public class PermissionCacheUtil {
 	public static final String USER_PERMISSION_CHECKER_BAG_CACHE_NAME =
 		PermissionCacheUtil.class.getName() + "_USER_PERMISSION_CHECKER_BAG";
 
+	public static final String USER_PRIMARY_KEY_ROLE_CACHE_NAME =
+		PermissionCacheUtil.class.getName() + "_USER_PRIMARY_KEY_ROLE";
+
 	public static final String USER_ROLE_CACHE_NAME =
 		PermissionCacheUtil.class.getName() + "_USER_ROLE";
 
@@ -63,6 +66,7 @@ public class PermissionCacheUtil {
 		_permissionPortalCache.removeAll();
 		_resourceBlockIdsBagCache.removeAll();
 		_userPermissionCheckerBagPortalCache.removeAll();
+		_userPrimaryKeyRolePortalCache.removeAll();
 	}
 
 	public static void clearCache(long... userIds) {
@@ -74,6 +78,7 @@ public class PermissionCacheUtil {
 			_userPermissionCheckerBagPortalCache.remove(userId);
 
 			_permissionCheckerBagPortalCacheIndexer.removeKeys(userId);
+			_userPrimaryKeyRolePortalCacheUserIdIndexer.removeKeys(userId);
 			_userRolePortalCacheIndexer.removeKeys(userId);
 		}
 
@@ -155,6 +160,15 @@ public class PermissionCacheUtil {
 		return _userPermissionCheckerBagPortalCache.get(userId);
 	}
 
+	public static Boolean getUserPrimaryKeyRole(
+		long userId, long primaryKey, String roleName) {
+
+		UserPrimaryKeyRoleKey userPrimaryKeyRoleKey = new UserPrimaryKeyRoleKey(
+			userId, primaryKey, roleName);
+
+		return _userPrimaryKeyRolePortalCache.get(userPrimaryKeyRoleKey);
+	}
+
 	public static Boolean getUserRole(long userId, Role role) {
 		UserRoleKey userRoleKey = new UserRoleKey(userId, role.getRoleId());
 
@@ -221,6 +235,19 @@ public class PermissionCacheUtil {
 			userId, userPermissionCheckerBag);
 	}
 
+	public static void putUserPrimaryKeyRole(
+		long userId, long primaryKey, String roleName, Boolean value) {
+
+		if (value == null) {
+			return;
+		}
+
+		UserPrimaryKeyRoleKey userPrimaryKeyRoleKey = new UserPrimaryKeyRoleKey(
+			userId, primaryKey, roleName);
+
+		_userPrimaryKeyRolePortalCache.put(userPrimaryKeyRoleKey, value);
+	}
+
 	public static void putUserRole(long userId, Role role, Boolean value) {
 		if (value == null) {
 			return;
@@ -260,6 +287,15 @@ public class PermissionCacheUtil {
 		_userPermissionCheckerBagPortalCache.remove(userId);
 	}
 
+	public static void removeUserPrimaryKeyRole(
+		long userId, long primaryKey, String roleName) {
+
+		UserPrimaryKeyRoleKey userPrimaryKeyRoleKey = new UserPrimaryKeyRoleKey(
+			userId, primaryKey, roleName);
+
+		_userPrimaryKeyRolePortalCache.remove(userPrimaryKeyRoleKey);
+	}
+
 	private static final PortalCache<BagKey, PermissionCheckerBag>
 		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getPortalCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,
@@ -291,6 +327,16 @@ public class PermissionCacheUtil {
 		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getPortalCache(
 			USER_PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static final PortalCache<UserPrimaryKeyRoleKey, Boolean>
+		_userPrimaryKeyRolePortalCache = MultiVMPoolUtil.getPortalCache(
+			USER_PRIMARY_KEY_ROLE_CACHE_NAME,
+			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static final PortalCacheIndexer
+		<Long, UserPrimaryKeyRoleKey, Boolean>
+			_userPrimaryKeyRolePortalCacheUserIdIndexer =
+				new PortalCacheIndexer<>(
+					new UserGroupRoleKeyUserIdEncoder(),
+					_userPrimaryKeyRolePortalCache);
 	private static final PortalCache<UserRoleKey, Boolean>
 		_userRolePortalCache = MultiVMPoolUtil.getPortalCache(
 			USER_ROLE_CACHE_NAME,
@@ -488,6 +534,59 @@ public class PermissionCacheUtil {
 				resourceBlockIdsBagKey._companyId,
 				resourceBlockIdsBagKey._groupId, resourceBlockIdsBagKey._name);
 		}
+
+	}
+
+	private static class UserGroupRoleKeyUserIdEncoder
+		implements IndexEncoder<Long, UserPrimaryKeyRoleKey> {
+
+		@Override
+		public Long encode(UserPrimaryKeyRoleKey key) {
+			return key._userId;
+		}
+
+	}
+
+	private static class UserPrimaryKeyRoleKey implements Serializable {
+
+		@Override
+		public boolean equals(Object obj) {
+			UserPrimaryKeyRoleKey UserPrimaryKeyRoleKey =
+				(UserPrimaryKeyRoleKey)obj;
+
+			if ((UserPrimaryKeyRoleKey._userId == _userId) &&
+				(UserPrimaryKeyRoleKey._primaryKey == _primaryKey) &&
+				Validator.equals(UserPrimaryKeyRoleKey._name, _name)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _userId);
+
+			hashCode = HashUtil.hash(hashCode, _primaryKey);
+			hashCode = HashUtil.hash(hashCode, _name);
+
+			return hashCode;
+		}
+
+		private UserPrimaryKeyRoleKey(
+			long userId, long primaryKey, String name) {
+
+			_userId = userId;
+			_primaryKey = primaryKey;
+			_name = name;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final String _name;
+		private final long _primaryKey;
+		private final long _userId;
 
 	}
 

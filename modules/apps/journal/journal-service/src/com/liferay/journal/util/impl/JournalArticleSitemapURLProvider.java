@@ -65,10 +65,10 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		Set<String> processedArticleIds = new HashSet<>();
 
 		for (JournalArticle journalArticle : journalArticles) {
-			if (processedArticleIds.contains(
-					journalArticle.getArticleId()) ||
+			if (processedArticleIds.contains(journalArticle.getArticleId()) ||
 				(journalArticle.getStatus() !=
-					WorkflowConstants.STATUS_APPROVED)) {
+					WorkflowConstants.STATUS_APPROVED) ||
+				!JournalUtil.isHead(journalArticle)) {
 
 				continue;
 			}

@@ -27,6 +27,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.util.JournalContentUtil;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -521,9 +522,9 @@ public class JournalArticleIndexer
 		document.addKeyword(
 			"ddmTemplateKey", journalArticle.getDDMTemplateKey());
 		document.addDate("displayDate", journalArticle.getDisplayDate());
-		document.addKeyword("head", isHead(journalArticle));
+		document.addKeyword("head", JournalUtil.isHead(journalArticle));
 
-		boolean headListable = isHeadListable(journalArticle);
+		boolean headListable = JournalUtil.isHeadListable(journalArticle);
 
 		document.addKeyword("headListable", headListable);
 
@@ -774,46 +775,6 @@ public class JournalArticleIndexer
 		}
 
 		return content;
-	}
-
-	protected boolean isHead(JournalArticle article) {
-		JournalArticle latestArticle =
-			_journalArticleLocalService.fetchLatestArticle(
-				article.getResourcePrimKey(),
-				new int[] {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_IN_TRASH
-				});
-
-		if ((latestArticle != null) && !latestArticle.isIndexable()) {
-			return false;
-		}
-		else if ((latestArticle != null) &&
-				 (article.getId() == latestArticle.getId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isHeadListable(JournalArticle article) {
-		JournalArticle latestArticle =
-			_journalArticleLocalService.fetchLatestArticle(
-				article.getResourcePrimKey(),
-				new int[] {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_IN_TRASH,
-					WorkflowConstants.STATUS_SCHEDULED
-				});
-
-		if ((latestArticle != null) &&
-			(article.getId() == latestArticle.getId())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void reindexArticles(long companyId) throws PortalException {

@@ -52,6 +52,7 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
@@ -145,6 +146,69 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, exportedStagedModel);
+	}
+
+	public void testLastPublishDate() throws Exception {
+
+		// Temporary solution to not fail on Staged Models don't have repository
+		// support yet
+
+		if (!supportLastPublishDateUpdate()) {
+			return;
+		}
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			new HashMap<>();
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		Assert.assertNull(stagedModel.getLastPublishDate());
+
+		initExport();
+
+		// Update last publish date
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		parameterMap.put(
+			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
+			new String[] {Boolean.TRUE.toString()});
+
+		try {
+			ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, stagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+
+		Assert.assertEquals(
+			portletDataContext.getEndDate(), stagedModel.getLastPublishDate());
+
+		// Do not update last publish date
+
+		Date originalLastPublishDate = stagedModel.getLastPublishDate();
+
+		parameterMap.put(
+			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
+			new String[] {Boolean.TRUE.toString()});
+
+		try {
+			ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, stagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+
+		Assert.assertEquals(
+			originalLastPublishDate, stagedModel.getLastPublishDate());
 	}
 
 	@Test
@@ -513,6 +577,10 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				stagedModelPath);
 
 		return exportedStagedModel;
+	}
+
+	protected boolean supportLastPublishDateUpdate() {
+		return false;
 	}
 
 	protected StagedModelAssets updateAssetEntry(

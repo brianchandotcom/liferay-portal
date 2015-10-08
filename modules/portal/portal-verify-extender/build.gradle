@@ -1,5 +1,6 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile project(":core:osgi-service-tracker-map")
 	compile project(":portal:portal-output-stream-container")
 }

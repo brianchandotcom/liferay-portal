@@ -1,7 +1,9 @@
 dependencies {
-	compile group: "org.codehaus.janino", name: "janino", version: "2.7.8"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	provided group: "org.codehaus.janino", name: "janino", version: "2.7.8"
 }
 
 liferay {

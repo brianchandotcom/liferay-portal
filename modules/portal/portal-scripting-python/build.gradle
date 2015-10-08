@@ -1,8 +1,7 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compile group: "org.python", name: "jython-standalone", version: "2.5.3"
 	compile project(":portal:portal-scripting-api")
+
+	provided group: "org.python", name: "jython-standalone", version: "2.5.3"
 }
 
 liferay {

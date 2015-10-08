@@ -51,12 +51,10 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -1072,18 +1070,27 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		Boolean value = companyAdmins.get(companyId);
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), companyId, RoleConstants.ADMINISTRATOR);
 
-		if (value == null) {
-			boolean hasAdminRole = RoleLocalServiceUtil.hasUserRole(
-				user.getUserId(), companyId, RoleConstants.ADMINISTRATOR, true);
+		try {
+			if (value == null) {
+				value = RoleLocalServiceUtil.hasUserRole(
+					user.getUserId(), companyId, RoleConstants.ADMINISTRATOR,
+					true);
 
-			value = Boolean.valueOf(hasAdminRole);
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), companyId, RoleConstants.ADMINISTRATOR, value);
+			}
+		}
+		catch (Exception e) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), companyId, RoleConstants.ADMINISTRATOR);
 
-			companyAdmins.put(companyId, value);
+			throw e;
 		}
 
-		return value.booleanValue();
+		return value;
 	}
 
 	protected boolean isContentReviewerImpl(long companyId, long groupId)
@@ -1374,8 +1381,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	 */
 	@Deprecated
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
-
-	protected Map<Long, Boolean> companyAdmins = new HashMap<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedPermissionChecker.class);

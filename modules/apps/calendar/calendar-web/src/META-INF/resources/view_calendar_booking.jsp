@@ -208,6 +208,12 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		var endValue = 'never';
 		var untilDate = null;
 
+		<%
+		Recurrence recurrence = calendarBooking.getRecurrenceObj();
+
+		java.util.Calendar untilJCalendar = recurrence.getUntilJCalendar();
+		%>
+
 		<c:choose>
 			<c:when test="<%= (untilJCalendar != null) %>">
 				endValue = 'on';
@@ -221,6 +227,12 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 
 		<%
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		List<Weekday> weekdays = new ArrayList<Weekday>();
+
+		for (PositionalWeekday positionalWeekday : recurrence.getPositionalWeekdays()) {
+			weekdays.add(positionalWeekday.getWeekday());
+		}
 		%>
 
 		var recurrence = {

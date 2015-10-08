@@ -55,13 +55,11 @@ Import-Package:\
 	org.apache.struts.util,\
 	*
 Include-Resource:\
-	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
-	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Require-Capability:\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0"
 Web-ContextPath: /wiki-web
--donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
--wab: docroot

@@ -50,6 +50,7 @@
 			<condition function="IsElementNotPresent" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" />
 			<then>
 				<execute function="Click" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
+
 				<execute function="AssertElementPresent" locator1="AssetRelatedAssets#HEADER_EXPANDED" />
 			</then>
 		</if>

@@ -22,7 +22,9 @@ import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.counter.model.impl.CounterModelImpl;
 import com.liferay.counter.service.persistence.CounterPersistence;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -92,7 +94,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 */
 	@Override
 	public void cacheResult(Counter counter) {
-		EntityCacheUtil.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 			CounterImpl.class, counter.getPrimaryKey(), counter);
 
 		counter.resetOriginalValues();
@@ -106,8 +108,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	@Override
 	public void cacheResult(List<Counter> counters) {
 		for (Counter counter : counters) {
-			if (EntityCacheUtil.getResult(
-						CounterModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 						CounterImpl.class, counter.getPrimaryKey()) == null) {
 				cacheResult(counter);
 			}
@@ -121,41 +122,41 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * Clears the cache for all counters.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(CounterImpl.class);
+		entityCache.clearCache(CounterImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the counter.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(Counter counter) {
-		EntityCacheUtil.removeResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 			CounterImpl.class, counter.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<Counter> counters) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Counter counter : counters) {
-			EntityCacheUtil.removeResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 				CounterImpl.class, counter.getPrimaryKey());
 		}
 	}
@@ -286,13 +287,13 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
-		EntityCacheUtil.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 			CounterImpl.class, counter.getPrimaryKey(), counter, false);
 
 		counter.resetOriginalValues();
@@ -360,7 +361,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 */
 	@Override
 	public Counter fetchByPrimaryKey(Serializable primaryKey) {
-		Counter counter = (Counter)EntityCacheUtil.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+		Counter counter = (Counter)entityCache.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 				CounterImpl.class, primaryKey);
 
 		if (counter == _nullCounter) {
@@ -379,12 +380,12 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 					cacheResult(counter);
 				}
 				else {
-					EntityCacheUtil.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 						CounterImpl.class, primaryKey, _nullCounter);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 					CounterImpl.class, primaryKey);
 
 				throw processException(e);
@@ -434,7 +435,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Counter counter = (Counter)EntityCacheUtil.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+			Counter counter = (Counter)entityCache.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 					CounterImpl.class, primaryKey);
 
 			if (counter == null) {
@@ -488,7 +489,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 					CounterImpl.class, primaryKey, _nullCounter);
 			}
 		}
@@ -580,8 +581,8 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		List<Counter> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Counter>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Counter>)finderCache.getResult(finderPath, finderArgs,
+					this);
 		}
 
 		if (list == null) {
@@ -629,10 +630,10 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -662,7 +663,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -675,11 +676,11 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -704,10 +705,10 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(CounterImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(CounterImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_COUNTER = "SELECT counter FROM Counter counter";
@@ -734,4 +735,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 				return _nullCounter;
 			}
 		};
+
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 }

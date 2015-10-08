@@ -43,6 +43,7 @@ import com.liferay.social.networking.service.persistence.MeetupsRegistrationUtil
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -62,8 +63,9 @@ import java.util.Set;
  */
 @RunWith(Arquillian.class)
 public class MeetupsRegistrationPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -419,11 +421,13 @@ public class MeetupsRegistrationPersistenceTest {
 
 		MeetupsRegistration existingMeetupsRegistration = _persistence.findByPrimaryKey(newMeetupsRegistration.getPrimaryKey());
 
-		Assert.assertEquals(existingMeetupsRegistration.getUserId(),
-			ReflectionTestUtil.invoke(existingMeetupsRegistration,
+		Assert.assertEquals(Long.valueOf(
+				existingMeetupsRegistration.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingMeetupsRegistration,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingMeetupsRegistration.getMeetupsEntryId(),
-			ReflectionTestUtil.invoke(existingMeetupsRegistration,
+		Assert.assertEquals(Long.valueOf(
+				existingMeetupsRegistration.getMeetupsEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingMeetupsRegistration,
 				"getOriginalMeetupsEntryId", new Class<?>[0]));
 	}
 

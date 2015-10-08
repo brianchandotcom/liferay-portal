@@ -17,7 +17,9 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchContactException;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -187,8 +189,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		List<Contact> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Contact>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Contact contact : list) {
@@ -253,10 +255,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -543,8 +545,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -568,10 +569,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -688,8 +689,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		List<Contact> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Contact>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Contact contact : list) {
@@ -754,10 +755,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1044,8 +1045,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 		Object[] finderArgs = new Object[] { accountId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1069,10 +1069,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1199,8 +1199,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		List<Contact> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Contact>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Contact contact : list) {
@@ -1270,10 +1270,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1580,8 +1580,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 		Object[] finderArgs = new Object[] { classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1609,10 +1608,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1638,7 +1637,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	@Override
 	public void cacheResult(Contact contact) {
-		EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactImpl.class, contact.getPrimaryKey(), contact);
 
 		contact.resetOriginalValues();
@@ -1652,8 +1651,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	@Override
 	public void cacheResult(List<Contact> contacts) {
 		for (Contact contact : contacts) {
-			if (EntityCacheUtil.getResult(
-						ContactModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 						ContactImpl.class, contact.getPrimaryKey()) == null) {
 				cacheResult(contact);
 			}
@@ -1667,41 +1665,41 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 * Clears the cache for all contacts.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(ContactImpl.class);
+		entityCache.clearCache(ContactImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the contact.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(Contact contact) {
-		EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactImpl.class, contact.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<Contact> contacts) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Contact contact : contacts) {
-			EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 				ContactImpl.class, contact.getPrimaryKey());
 		}
 	}
@@ -1856,10 +1854,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !ContactModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1869,16 +1867,14 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 						contactModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { contactModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -1888,16 +1884,14 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 						contactModelImpl.getOriginalAccountId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACCOUNTID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCOUNTID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCOUNTID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCOUNTID,
 					args);
 
 				args = new Object[] { contactModelImpl.getAccountId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACCOUNTID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCOUNTID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCOUNTID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCOUNTID,
 					args);
 			}
 
@@ -1908,8 +1902,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 						contactModelImpl.getOriginalClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 
 				args = new Object[] {
@@ -1917,13 +1911,13 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 						contactModelImpl.getClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactImpl.class, contact.getPrimaryKey(), contact, false);
 
 		contact.resetOriginalValues();
@@ -2024,7 +2018,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	@Override
 	public Contact fetchByPrimaryKey(Serializable primaryKey) {
-		Contact contact = (Contact)EntityCacheUtil.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+		Contact contact = (Contact)entityCache.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 				ContactImpl.class, primaryKey);
 
 		if (contact == _nullContact) {
@@ -2043,12 +2037,12 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 					cacheResult(contact);
 				}
 				else {
-					EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 						ContactImpl.class, primaryKey, _nullContact);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 					ContactImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2098,7 +2092,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Contact contact = (Contact)EntityCacheUtil.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+			Contact contact = (Contact)entityCache.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 					ContactImpl.class, primaryKey);
 
 			if (contact == null) {
@@ -2150,7 +2144,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 					ContactImpl.class, primaryKey, _nullContact);
 			}
 		}
@@ -2242,8 +2236,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		List<Contact> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Contact>)finderCache.getResult(finderPath, finderArgs,
+					this);
 		}
 
 		if (list == null) {
@@ -2291,10 +2285,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2324,7 +2318,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2337,11 +2331,11 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2366,10 +2360,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(ContactImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(ContactImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_CONTACT = "SELECT contact FROM Contact contact";
@@ -2411,4 +2405,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			return _nullContact;
 		}
 	}
+
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 }

@@ -17,7 +17,9 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchResourceActionException;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -188,7 +190,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		List<ResourceAction> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<ResourceAction>)FinderCacheUtil.getResult(finderPath,
+			list = (List<ResourceAction>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -268,10 +270,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -573,8 +575,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 		Object[] finderArgs = new Object[] { name };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -612,10 +613,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -705,7 +706,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_N_A,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_N_A,
 					finderArgs, this);
 		}
 
@@ -773,8 +774,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 				List<ResourceAction> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_N_A, finderArgs,
+						list);
 				}
 				else {
 					ResourceAction resourceAction = list.get(0);
@@ -787,14 +788,13 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 							!resourceAction.getName().equals(name) ||
 							(resourceAction.getActionId() == null) ||
 							!resourceAction.getActionId().equals(actionId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_N_A,
 							finderArgs, resourceAction);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_N_A, finderArgs);
 
 				throw processException(e);
 			}
@@ -839,8 +839,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 		Object[] finderArgs = new Object[] { name, actionId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -896,10 +895,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -929,11 +928,11 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public void cacheResult(ResourceAction resourceAction) {
-		EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
 			resourceAction);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_N_A,
 			new Object[] { resourceAction.getName(), resourceAction.getActionId() },
 			resourceAction);
 
@@ -948,7 +947,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	@Override
 	public void cacheResult(List<ResourceAction> resourceActions) {
 		for (ResourceAction resourceAction : resourceActions) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 						ResourceActionImpl.class, resourceAction.getPrimaryKey()) == null) {
 				cacheResult(resourceAction);
@@ -963,43 +962,43 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * Clears the cache for all resource actions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(ResourceActionImpl.class);
+		entityCache.clearCache(ResourceActionImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the resource action.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(ResourceAction resourceAction) {
-		EntityCacheUtil.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceActionImpl.class, resourceAction.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((ResourceActionModelImpl)resourceAction);
 	}
 
 	@Override
 	public void clearCache(List<ResourceAction> resourceActions) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (ResourceAction resourceAction : resourceActions) {
-			EntityCacheUtil.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceActionImpl.class, resourceAction.getPrimaryKey());
 
 			clearUniqueFindersCache((ResourceActionModelImpl)resourceAction);
@@ -1014,9 +1013,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 					resourceActionModelImpl.getActionId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_N_A, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_N_A, args,
 				resourceActionModelImpl);
 		}
 		else {
@@ -1027,9 +1026,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 						resourceActionModelImpl.getActionId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_N_A, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_N_A, args,
 					resourceActionModelImpl);
 			}
 		}
@@ -1042,8 +1041,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 				resourceActionModelImpl.getActionId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_N_A, args);
 
 		if ((resourceActionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_N_A.getColumnBitmask()) != 0) {
@@ -1052,8 +1051,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 					resourceActionModelImpl.getOriginalActionId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_N_A, args);
 		}
 	}
 
@@ -1187,10 +1186,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !ResourceActionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1200,19 +1199,19 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 						resourceActionModelImpl.getOriginalName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
 					args);
 
 				args = new Object[] { resourceActionModelImpl.getName() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
 			resourceAction, false);
 
@@ -1288,7 +1287,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public ResourceAction fetchByPrimaryKey(Serializable primaryKey) {
-		ResourceAction resourceAction = (ResourceAction)EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+		ResourceAction resourceAction = (ResourceAction)entityCache.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceActionImpl.class, primaryKey);
 
 		if (resourceAction == _nullResourceAction) {
@@ -1308,13 +1307,13 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 					cacheResult(resourceAction);
 				}
 				else {
-					EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 						ResourceActionImpl.class, primaryKey,
 						_nullResourceAction);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourceActionImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1364,7 +1363,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ResourceAction resourceAction = (ResourceAction)EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceAction resourceAction = (ResourceAction)entityCache.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourceActionImpl.class, primaryKey);
 
 			if (resourceAction == null) {
@@ -1416,7 +1415,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourceActionImpl.class, primaryKey, _nullResourceAction);
 			}
 		}
@@ -1509,7 +1508,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		List<ResourceAction> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<ResourceAction>)FinderCacheUtil.getResult(finderPath,
+			list = (List<ResourceAction>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -1558,10 +1557,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1591,7 +1590,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1604,11 +1603,11 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -1633,10 +1632,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(ResourceActionImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(ResourceActionImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_RESOURCEACTION = "SELECT resourceAction FROM ResourceAction resourceAction";
@@ -1679,4 +1678,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			return _nullResourceAction;
 		}
 	}
+
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 }

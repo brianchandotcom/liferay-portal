@@ -232,7 +232,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		List<${entity.name}> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
+			list = (List<${entity.name}>)finderCache.getResult(finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (${entity.name} ${entity.varName} : list) {
@@ -286,10 +286,10 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1575,7 +1575,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			List<${entity.name}> list = null;
 
 			if (retrieveFromCache) {
-				list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case}, finderArgs, this);
+				list = (List<${entity.name}>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case}, finderArgs, this);
 
 				if ((list != null) && !list.isEmpty()) {
 					for (${entity.name} ${entity.varName} : list) {
@@ -1637,10 +1637,10 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case}, finderArgs, list);
+					finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case}, finderArgs, list);
 				}
 				catch (Exception e) {
-					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case}, finderArgs);
+					finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case}, finderArgs);
 
 					throw processException(e);
 				}
@@ -1780,7 +1780,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, this);
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, this);
 		}
 
 		if (result instanceof ${entity.name}) {
@@ -1826,7 +1826,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				List<${entity.name}> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, list);
 				}
 				else {
 					<#if !finder.isUnique()>
@@ -1854,12 +1854,12 @@ that may or may not be enforced with a unique index at the database level. Case
 							</#if>
 						</#list>
 					) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, ${entity.varName});
+						finderCache.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs, ${entity.varName});
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, finderArgs);
 
 				throw processException(e);
 			}

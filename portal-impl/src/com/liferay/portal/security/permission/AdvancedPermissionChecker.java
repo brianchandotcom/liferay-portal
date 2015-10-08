@@ -1155,7 +1155,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return value;
 	}
 
-	protected boolean isGroupAdminImpl(Group group) throws PortalException {
+	protected boolean isGroupAdminImpl(Group group) throws Exception {
 		if (group.isLayout()) {
 			long parentGroupId = group.getParentGroupId();
 
@@ -1175,6 +1175,25 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					true)) {
 
 				return true;
+			}
+
+			StopWatch stopWatch = new StopWatch();
+
+			stopWatch.start();
+
+			while (!group.isRoot()) {
+				Group parentGroup = group.getParentGroup();
+
+				if (doCheckPermission(
+						parentGroup.getCompanyId(), parentGroup.getGroupId(),
+						Group.class.getName(),
+						String.valueOf(parentGroup.getGroupId()),
+						ActionKeys.MANAGE_SUBGROUPS, stopWatch)) {
+
+					return true;
+				}
+
+				group = parentGroup;
 			}
 		}
 
@@ -1230,6 +1249,32 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 				organizationId = organization.getParentOrganizationId();
 			}
+
+			StopWatch stopWatch = new StopWatch();
+
+			stopWatch.start();
+
+			Organization organization =
+				OrganizationLocalServiceUtil.getOrganization(
+					group.getOrganizationId());
+
+			while (!organization.isRoot()) {
+				Organization parentOrganization =
+					organization.getParentOrganization();
+
+				Group parentGroup = parentOrganization.getGroup();
+
+				if (doCheckPermission(
+						parentGroup.getCompanyId(), parentGroup.getGroupId(),
+						Organization.class.getName(),
+						String.valueOf(parentOrganization.getOrganizationId()),
+						ActionKeys.MANAGE_SUBORGANIZATIONS, stopWatch)) {
+
+					return true;
+				}
+
+				organization = parentOrganization;
+			}
 		}
 
 		return false;
@@ -1274,56 +1319,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			throw e;
 		}
 
-		if (value) {
-			return true;
-		}
-
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
-
-		if (group.isOrganization()) {
-			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(
-					group.getOrganizationId());
-
-			while (!organization.isRoot()) {
-				Organization parentOrganization =
-					organization.getParentOrganization();
-
-				Group parentGroup = parentOrganization.getGroup();
-
-				if (doCheckPermission(
-						parentGroup.getCompanyId(), parentGroup.getGroupId(),
-						Organization.class.getName(),
-						String.valueOf(parentOrganization.getOrganizationId()),
-						ActionKeys.MANAGE_SUBORGANIZATIONS, stopWatch)) {
-
-					return true;
-				}
-
-				organization = parentOrganization;
-			}
-		}
-
-		if (group.isSite()) {
-			while (!group.isRoot()) {
-				Group parentGroup = group.getParentGroup();
-
-				if (doCheckPermission(
-						parentGroup.getCompanyId(), parentGroup.getGroupId(),
-						Group.class.getName(),
-						String.valueOf(parentGroup.getGroupId()),
-						ActionKeys.MANAGE_SUBGROUPS, stopWatch)) {
-
-					return true;
-				}
-
-				group = parentGroup;
-			}
-		}
-
-		return false;
+		return value;
 	}
 
 	protected boolean isGroupMemberImpl(long groupId) throws Exception {

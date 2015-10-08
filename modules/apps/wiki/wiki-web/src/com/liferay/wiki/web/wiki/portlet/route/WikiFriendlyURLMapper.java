@@ -15,18 +15,29 @@
 package com.liferay.wiki.web.wiki.portlet.route;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.escape.WikiEscapeUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Shinn Lok
  * @author Levente Hudák
  */
+@Component(
+	property = {
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
+		"javax.portlet.name=" + WikiPortletKeys.WIKI
+	},
+	service = FriendlyURLMapper.class
+)
 public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override
@@ -50,6 +61,11 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 			friendlyURLPath);
 
 		return friendlyURLPath;
+	}
+
+	@Override
+	public String getMapping() {
+		return _MAPPING;
 	}
 
 	protected void addParameter(
@@ -81,5 +97,7 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		super.populateParams(parameterMap, namespace, routeParameters);
 	}
+
+	private static final String _MAPPING = "wiki";
 
 }

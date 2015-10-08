@@ -16,6 +16,7 @@ package com.liferay.wiki.web.wiki.portlet.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,9 +34,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Juan Fernández
  */
+@Component(
+	immediate = true, property = {"javax.portlet.name="+ WikiPortletKeys.WIKI},
+	service = TemplateHandler.class
+)
 public class WikiPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 

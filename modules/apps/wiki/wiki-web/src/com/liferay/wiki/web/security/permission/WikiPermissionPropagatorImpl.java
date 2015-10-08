@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.BasePermissionPropagator;
+import com.liferay.portal.security.permission.PermissionPropagator;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -26,10 +28,21 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Hugo Huijser
  * @author Angelo Jefferson
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY
+	},
+	service = PermissionPropagator.class
+)
 public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 
 	@Override

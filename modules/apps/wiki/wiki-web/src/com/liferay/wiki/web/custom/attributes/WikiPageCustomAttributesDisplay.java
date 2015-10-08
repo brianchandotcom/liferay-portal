@@ -16,11 +16,19 @@ package com.liferay.wiki.web.custom.attributes;
 
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true, property = {"javax.portlet.name=" + WikiPortletKeys.WIKI},
+	service = CustomAttributesDisplay.class
+)
 public class WikiPageCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -26,13 +26,13 @@ String title = wikiPage.getTitle();
 String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:error exception="<%= DuplicatePageException.class %>" message="there-is-already-a-page-with-the-specified-title" />
 
 <liferay-ui:error exception="<%= PageTitleException.class %>" message="please-enter-a-valid-title" />
 
-<%@ include file="/html/portlet/wiki/page_name.jspf" %>
+<%@ include file="/wiki/page_name.jspf" %>
 
 <portlet:actionURL var="movePageURL">
 	<portlet:param name="struts_action" value="/wiki/move_page" />
@@ -62,10 +62,13 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 		%>
 
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/wiki/rename_page.jspf" %>
+			<%@ include file="/wiki/rename_page.jspf" %>
 		</liferay-ui:section>
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/wiki/change_page_parent.jspf" %>
+			<%@ include file="/wiki/change_page_parent.jspf" %>
+		</liferay-ui:section>
+		<liferay-ui:section>
+			<%@ include file="/wiki/change_page_node.jspf" %>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 </aui:form>

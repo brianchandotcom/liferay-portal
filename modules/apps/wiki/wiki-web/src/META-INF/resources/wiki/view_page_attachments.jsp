@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -51,9 +51,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 	<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
 </c:if>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="attachments" />
 </liferay-util:include>
 
@@ -206,7 +206,7 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 		<liferay-ui:search-container-column-jsp
 			align="right"
 			cssClass="entry-action"
-			path="/html/portlet/wiki/page_attachment_action.jsp"
+			path="/wiki/page_attachment_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

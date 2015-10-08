@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);

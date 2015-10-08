@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/item/selector/init.jsp" %>
+<%@ include file="/item/selector/init.jsp" %>
 
 <%
 WikiAttachmentItemSelectorViewDisplayContext wikiAttachmentItemSelectorViewDisplayContext = (WikiAttachmentItemSelectorViewDisplayContext)request.getAttribute(WikiAttachmentItemSelectorView.WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);

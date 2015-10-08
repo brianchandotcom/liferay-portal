@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -121,16 +121,16 @@ if (Validator.isNull(redirect)) {
 }
 %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test="<%= !newPage %>">
-		<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp" servletContext="<%= application %>">
+		<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="tabs1" value="content" />
 		</liferay-util:include>
 	</c:when>
 	<c:otherwise>
-		<%@ include file="/html/portlet/wiki/page_name.jspf" %>
+		<%@ include file="/wiki/page_name.jspf" %>
 	</c:otherwise>
 </c:choose>
 
@@ -160,7 +160,7 @@ if (Validator.isNull(redirect)) {
 		String formattedContent = null;
 		%>
 
-		<%@ include file="/html/portlet/wiki/view_page_content.jspf" %>
+		<%@ include file="/wiki/view_page_content.jspf" %>
 	</div>
 
 	<br />

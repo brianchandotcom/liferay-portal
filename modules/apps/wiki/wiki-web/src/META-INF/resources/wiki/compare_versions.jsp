@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");
@@ -28,13 +28,13 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 %>
 
 <c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-	<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-	<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp" servletContext="<%= application %>">
+	<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="history" />
 	</liferay-util:include>
 
-	<liferay-util:include page="/html/portlet/wiki/page_tabs_history.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/wiki/page_tabs_history.jsp" servletContext="<%= application %>" />
 
 	<liferay-ui:header
 		backURL="<%= backURL %>"

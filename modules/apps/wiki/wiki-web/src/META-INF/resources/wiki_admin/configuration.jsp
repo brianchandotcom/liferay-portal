@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHelper);

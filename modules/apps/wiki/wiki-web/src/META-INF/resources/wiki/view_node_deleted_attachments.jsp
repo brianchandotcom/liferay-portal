@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -108,7 +108,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 		<liferay-ui:search-container-column-jsp
 			align="right"
 			cssClass="entry-action"
-			path="/html/portlet/wiki/page_attachment_action.jsp"
+			path="/wiki/page_attachment_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

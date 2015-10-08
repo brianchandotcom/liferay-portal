@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/wiki/init.jsp" %>
 
 <liferay-portlet:actionURL varImpl="restoreURL">
 	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />

@@ -463,11 +463,9 @@ AUI.add(
 		};
 
 		LiferayFieldSupport.prototype._randomString = function(length) {
-			var random = Math.random();
+			var randomString = Liferay.Util.randomInt().toString(36);
 
-			var randomString = random.toString(36);
-
-			return randomString.substring(length);
+			return randomString.substring(0, length);
 		};
 
 		var LocalizableFieldSupport = function() {

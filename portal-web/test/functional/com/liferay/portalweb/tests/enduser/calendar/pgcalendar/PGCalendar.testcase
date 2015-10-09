@@ -3528,7 +3528,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchCalendarEventInSearchPortletWithTag" priority="3">
+	<command name="SearchCalendarEventInSearchPortletWithTag" priority="4">
 		<description message="This is a use case for LPS-54548." />
 
 		<execute macro="Page#gotoPG">

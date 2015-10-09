@@ -49,6 +49,8 @@ public class CacheStatisticsUtil {
 			names.add(objectName.getKeyProperty("name"));
 		}
 
+		Collections.sort(names);
+
 		return names;
 	}
 

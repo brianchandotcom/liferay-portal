@@ -32,7 +32,8 @@ public abstract class BaseAuthVerifierPublisher {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		Boolean enabled = (Boolean)properties.get("enabled");
+		Boolean enabled = Boolean.parseBoolean(
+			(String)properties.get("enabled"));
 
 		if ((enabled == null) || !enabled) {
 			return;

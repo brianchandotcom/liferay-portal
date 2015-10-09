@@ -487,7 +487,7 @@ public interface LayoutService extends BaseService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultPlid(long groupId, long scopeGroupId,
 		java.lang.String portletId) throws PortalException;

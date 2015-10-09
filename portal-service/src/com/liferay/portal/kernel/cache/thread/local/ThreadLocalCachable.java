@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.kernel.cache.thread.local;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

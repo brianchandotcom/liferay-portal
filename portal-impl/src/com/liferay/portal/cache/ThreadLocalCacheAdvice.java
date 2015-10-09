@@ -14,10 +14,10 @@
 
 package com.liferay.portal.cache;
 
-import com.liferay.portal.kernel.cache.Lifecycle;
-import com.liferay.portal.kernel.cache.ThreadLocalCachable;
-import com.liferay.portal.kernel.cache.ThreadLocalCache;
-import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;

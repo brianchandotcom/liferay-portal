@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.kernel.cache.thread.local;
 
 import com.liferay.portal.kernel.transaction.NewTransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;

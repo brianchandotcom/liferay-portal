@@ -14,8 +14,8 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.kernel.cache.Lifecycle;
-import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;

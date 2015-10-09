@@ -579,7 +579,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param classPK the primary key of the entity
 	* @return the asset tags of the entity
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		java.lang.String className, long classPK);

@@ -17,6 +17,23 @@ package com.liferay.sync.engine.upgrade.v3_0_10;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.upgrade.UpgradeProcess;
+import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
+import com.liferay.sync.engine.util.PropsValues;
+import com.liferay.sync.engine.util.StreamUtil;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author Dennis Ju
@@ -31,6 +48,74 @@ public class UpgradeProcess_3_0_10 extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws Exception {
+		upgradeLogger();
+		upgradeTable();
+	}
+
+	protected void upgradeLogger() throws Exception {
+		Path logsFolderPath = Paths.get(
+			PropsValues.SYNC_CONFIGURATION_DIRECTORY, "logs");
+
+		Path archiveFilePath = logsFolderPath.resolve("archive");
+
+		Files.createDirectories(archiveFilePath);
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.DAY_OF_MONTH, -7);
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		Path archiveZipFilePath = archiveFilePath.resolve(
+			"sync-" + dateFormat.format(calendar.getTime()) + ".log.zip");
+
+		FileOutputStream fileOutputStream = new FileOutputStream(
+			archiveZipFilePath.toFile());
+
+		ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+
+		try (DirectoryStream<Path> filePaths =
+				Files.newDirectoryStream(logsFolderPath)) {
+
+			for (Path filePath : filePaths) {
+				if (filePath.equals(archiveFilePath)) {
+					continue;
+				}
+
+				ZipEntry zipEntry = new ZipEntry(
+					String.valueOf(filePath.getFileName()));
+
+				zipOutputStream.putNextEntry(zipEntry);
+
+				InputStream inputStream = Files.newInputStream(filePath);
+
+				byte[] buffer = new byte[4096];
+
+				int length = 0;
+
+				while ((length = inputStream.read(buffer)) > 0) {
+					zipOutputStream.write(buffer, 0, length);
+				}
+
+				zipOutputStream.closeEntry();
+
+				StreamUtil.cleanUp(inputStream);
+
+				Files.delete(filePath);
+			}
+
+			zipOutputStream.close();
+		}
+		catch (Exception e) {
+		}
+		finally {
+			StreamUtil.cleanUp(zipOutputStream);
+		}
+
+		UpgradeUtil.copyLoggerConfiguration();
+	}
+
+	protected void upgradeTable() throws Exception {
 		SyncFilePersistence syncFilePersistence =
 			SyncFileService.getSyncFilePersistence();
 

@@ -3,6 +3,8 @@
 <configuration>
 	<property resource="sync.properties" />
 
+	<property name="sync.logs.directory" value="${sync.configuration.directory}/logs" />
+
 	<appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
 		<encoder>
 			<charset>UTF-8</charset>
@@ -12,10 +14,12 @@
 	</appender>
 
 	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="SYNC_LOG_FILE">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${sync.configuration.directory}/logs/sync-%d{yyyy-MM-dd}.log</fileNamePattern>
+		<file>${sync.logs.directory}/sync.log</file>
 
-			<maxHistory>9</maxHistory>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${sync.logs.directory}/sync-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+
+			<maxHistory>60</maxHistory>
 		</rollingPolicy>
 
 		<encoder>
@@ -26,10 +30,12 @@
 	</appender>
 
 	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="WATCHER_EVENTS_LOG_FILE">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${sync.configuration.directory}/logs/watcher-events-%d{yyyy-MM-dd}.log</fileNamePattern>
+		<file>${sync.logs.directory}/watcher-events.log</file>
 
-			<maxHistory>9</maxHistory>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${sync.logs.directory}/watcher-events-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+
+			<maxHistory>60</maxHistory>
 		</rollingPolicy>
 
 		<encoder>

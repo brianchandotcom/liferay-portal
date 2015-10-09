@@ -17,14 +17,7 @@ package com.liferay.sync.engine.upgrade.v3_0_8;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.upgrade.UpgradeProcess;
-import com.liferay.sync.engine.util.PropsValues;
-
-import java.io.InputStream;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 
 /**
  * @author Dennis Ju
@@ -39,27 +32,9 @@ public class UpgradeProcess_3_0_8 extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws Exception {
-		upgradeLoggerConfiguration();
+		UpgradeUtil.copyLoggerConfiguration();
+
 		upgradeTable();
-	}
-
-	protected void upgradeLoggerConfiguration() throws Exception {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			PropsValues.SYNC_LOGGER_CONFIGURATION_FILE);
-
-		Path configurationFilePath = Paths.get(
-			PropsValues.SYNC_CONFIGURATION_DIRECTORY);
-
-		Path loggerConfigurationFilePath = configurationFilePath.resolve(
-			PropsValues.SYNC_LOGGER_CONFIGURATION_FILE);
-
-		Files.copy(
-			inputStream, loggerConfigurationFilePath,
-			StandardCopyOption.REPLACE_EXISTING);
 	}
 
 	protected void upgradeTable() throws Exception {

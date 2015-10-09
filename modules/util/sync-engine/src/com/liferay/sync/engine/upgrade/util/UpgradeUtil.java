@@ -41,6 +41,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,21 @@ import org.slf4j.LoggerFactory;
  * @author Shinn Lok
  */
 public class UpgradeUtil {
+
+	public static void copyLoggerConfiguration() throws Exception {
+		ClassLoader classLoader = LoggerUtil.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			PropsValues.SYNC_LOGGER_CONFIGURATION_FILE);
+
+		Path loggerConfigurationFilePath = Paths.get(
+			PropsValues.SYNC_CONFIGURATION_DIRECTORY,
+			PropsValues.SYNC_LOGGER_CONFIGURATION_FILE);
+
+		Files.copy(
+			inputStream, loggerConfigurationFilePath,
+			StandardCopyOption.REPLACE_EXISTING);
+	}
 
 	public static void upgrade() throws Exception {
 		int buildNumber = SyncPropService.getInteger("buildNumber");
@@ -68,12 +84,7 @@ public class UpgradeUtil {
 				PropsValues.SYNC_LOGGER_CONFIGURATION_FILE);
 
 			if (!Files.exists(loggerConfigurationFilePath)) {
-				ClassLoader classLoader = LoggerUtil.class.getClassLoader();
-
-				InputStream inputStream = classLoader.getResourceAsStream(
-					PropsValues.SYNC_LOGGER_CONFIGURATION_FILE);
-
-				Files.copy(inputStream, loggerConfigurationFilePath);
+				copyLoggerConfiguration();
 			}
 
 			SyncPropService.updateSyncProp(

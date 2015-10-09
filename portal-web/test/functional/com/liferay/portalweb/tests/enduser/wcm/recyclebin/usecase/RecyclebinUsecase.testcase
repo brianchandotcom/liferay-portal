@@ -1100,8 +1100,15 @@
 			<var name="threadSubject" value="MB Subject" />
 		</execute>
 
-		<execute macro="MessageboardsCategory#deleteCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
 			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#deleteCP">
+			<var name="assetType" value="Message Boards Category" />
+			<var name="siteScopeName" value="Site Name" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1134,7 +1141,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
+			<var name="mbAttachmentFile" value="1 Recently Removed Attachment" />
 			<var name="postsNumber" value="2" />
 			<var name="threadBody" value="MB Body" />
 			<var name="threadSubject" value="MB Subject" />
@@ -1152,7 +1159,6 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewReplyCP">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
 			<var name="postsNumber" value="2" />
 			<var name="threadBody" value="MB Body" />
 			<var name="threadBody2" value="MB Body Reply" />

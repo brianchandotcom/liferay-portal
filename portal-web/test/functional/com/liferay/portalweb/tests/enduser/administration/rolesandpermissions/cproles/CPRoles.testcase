@@ -12,16 +12,13 @@
 	</tear-down>
 
 	<command name="AddOrganizationRole" priority="5">
-		<var name="roleName" value="Roles Orgrole Name" />
-		<var name="roleType" value="Organization" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
+			<var name="roleName" value="Roles Orgrole Name" />
+			<var name="roleType" value="Organization" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -29,21 +26,18 @@
 		</execute>
 
 		<execute macro="Role#viewCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
+			<var name="roleName" value="Roles Orgrole Name" />
+			<var name="roleType" value="Organization" />
 		</execute>
 	</command>
 
 	<command name="AddRegularRole" priority="5">
-		<var name="roleName" value="Roles Regrole Name" />
-		<var name="roleType" value="Regular" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Orgrole Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -51,22 +45,19 @@
 		</execute>
 
 		<execute macro="Role#viewCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
+			<var name="roleName" value="Roles Orgrole Name" />
+			<var name="roleType" value="Regular" />
 		</execute>
 	</command>
 
 	<command name="AddSiteRole" priority="5">
-		<var name="roleName" value="Roles Siterole Name" />
-		<var name="roleType" value="Site" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -74,8 +65,8 @@
 		</execute>
 
 		<execute macro="Role#viewCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
 		</execute>
 	</command>
 

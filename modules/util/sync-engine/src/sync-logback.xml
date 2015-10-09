@@ -17,7 +17,7 @@
 		<file>${sync.logs.directory}/sync.log</file>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${sync.logs.directory}/sync-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+			<fileNamePattern>${sync.logs.directory}/archive/sync-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
 
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>
@@ -33,7 +33,7 @@
 		<file>${sync.logs.directory}/watcher-events.log</file>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${sync.logs.directory}/watcher-events-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+			<fileNamePattern>${sync.logs.directory}/archive/watcher-events-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
 
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>

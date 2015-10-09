@@ -285,7 +285,6 @@
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -322,7 +321,6 @@
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -386,7 +384,6 @@
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -411,7 +408,6 @@
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 

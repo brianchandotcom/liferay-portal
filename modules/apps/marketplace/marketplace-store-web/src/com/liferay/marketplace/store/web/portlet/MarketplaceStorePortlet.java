@@ -165,6 +165,9 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			oAuthRequest, serverNamespace.concat("bundledApps"),
 			jsonObject.toString());
 
+		addOAuthParameter(
+			oAuthRequest, serverNamespace.concat("compatibility"),
+			String.valueOf(ReleaseInfo.getBuildNumber()));
 		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "1");
 		addOAuthParameter(
 			oAuthRequest, "p_p_state", WindowState.NORMAL.toString());

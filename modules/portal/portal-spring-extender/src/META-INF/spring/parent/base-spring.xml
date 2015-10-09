@@ -37,7 +37,7 @@
 		<property name="defaultDestinationName" value="liferay/async_service" />
 		<property name="nextMethodInterceptor" ref="threadLocalCacheAdvice" />
 	</bean>
-	<bean id="threadLocalCacheAdvice" class="com.liferay.portal.cache.ThreadLocalCacheAdvice">
+	<bean id="threadLocalCacheAdvice" class="com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice">
 		<property name="nextMethodInterceptor" ref="bufferedIncrementAdvice" />
 	</bean>
 	<bean id="bufferedIncrementAdvice" class="com.liferay.portal.increment.BufferedIncrementAdvice">

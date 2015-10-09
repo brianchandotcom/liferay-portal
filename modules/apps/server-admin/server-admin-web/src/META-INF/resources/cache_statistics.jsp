@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-numberFormat = NumberFormat.getInstance(locale);
+List<String> cacheManagerNames = CacheStatisticsUtil.getCacheManagerNames();
 
-NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
-
-percentFormat.setMaximumFractionDigits(3);
+if (Validator.isNull(tabs3) && !cacheManagerNames.isEmpty()) {
+	tabs3 = cacheManagerNames.get(0);
+}
 
 String keywords = ParamUtil.getString(request, "keywords");
 
@@ -32,11 +32,11 @@ serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);
 
-List<String> cacheManagerNames = CacheStatisticsUtil.getCacheManagerNames();
+numberFormat = NumberFormat.getInstance(locale);
 
-if (Validator.isNull(tabs3) && !cacheManagerNames.isEmpty()) {
-	tabs3 = cacheManagerNames.get(0);
-}
+NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
+
+percentFormat.setMaximumFractionDigits(3);
 %>
 
 <liferay-ui:tabs

@@ -824,8 +824,8 @@ AUI.add(
 					portletData: {
 						customTitle: EMPTY,
 						language: 'en_US',
-						portletLinksTarget: EMPTY,
 						portletDecoratorId: EMPTY,
+						portletLinksTarget: EMPTY,
 						title: EMPTY,
 						titles: {},
 						useCustomTitle: false
@@ -1271,8 +1271,8 @@ AUI.add(
 				var customTitleInput = instance._customTitleInput;
 				var language = instance._portletLanguage;
 				var portletData = instance._objData.portletData;
-				var portletLinksTarget = instance._portletLinksTarget;
 				var portletDecorator = instance._portletDecorator;
+				var portletLinksTarget = instance._portletLinksTarget;
 
 				// Use custom title
 
@@ -1294,7 +1294,9 @@ AUI.add(
 							return;
 						}
 
-						var portletTitle = instance._curPortlet.one('.portlet-title, .portlet-title-default');
+						var curPorlet = instance._curPortlet;
+
+						var portletTitle = curPorlet.one('.portlet-title, .portlet-title-default');
 
 						if (portletTitle) {
 							var cruft = portletTitle.html().match(/<\/?[^>]+>|\n|\r|\t/gim);
@@ -1313,9 +1315,17 @@ AUI.add(
 							if (portletLanguage == instance._currentLanguage) {
 								portletTitle.html(cruft);
 
-								var portletTitleText = portletTitle.one('.portlet-title-text');
+								var portletNameText = portletTitle.one('.portlet-name-text');
 
-								portletTitleText.text(value);
+								if (portletNameText) {
+									portletNameText.text(value);
+								}
+
+								var portletTitleText = curPorlet.one('.portlet-title-text');
+
+								if (portletTitleText) {
+									portletTitleText.text(value);
+								}
 							}
 
 							portletData.title = value;

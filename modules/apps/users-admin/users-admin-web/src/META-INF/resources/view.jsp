@@ -231,6 +231,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		PortletURL showUsersURL = renderResponse.createRenderURL();
 
 		showUsersURL.setParameter("mvcRenderCommandName", "/users_admin/view");
+		showUsersURL.setParameter("toolbarItem", toolbarItem);
 		showUsersURL.setParameter("usersListView", usersListView);
 
 		long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);

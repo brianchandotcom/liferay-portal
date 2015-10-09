@@ -226,20 +226,37 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		</c:choose>
 
 		<%
+		Frequency frequency = recurrence.getFrequency();
+
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		List<Weekday> weekdays = new ArrayList<Weekday>();
 
-		for (PositionalWeekday positionalWeekday : recurrence.getPositionalWeekdays()) {
-			weekdays.add(positionalWeekday.getWeekday());
+		PositionalWeekday positionalWeekday = null;
+
+		for (PositionalWeekday curPositionalWeekday : recurrence.getPositionalWeekdays()) {
+			weekdays.add(curPositionalWeekday.getWeekday());
+
+			positionalWeekday = curPositionalWeekday;
 		}
 		%>
+
+		var positionalWeekday = null;
+
+		<c:if test="<%= (frequency == Frequency.MONTHLY || frequency == Frequency.YEARLY) && positionalWeekday != null %>">
+			positionalWeekday = {
+				month: <%= startTimeJCalendar.get(java.util.Calendar.MONTH) %>,
+				position: <%= positionalWeekday.getPosition() %>,
+				weekday: '<%= positionalWeekday.getWeekday() %>'
+			};
+		</c:if>
 
 		var recurrence = {
 			count: <%= recurrence.getCount() %>,
 			endValue: endValue,
-			frequency: '<%= String.valueOf(recurrence.getFrequency()) %>',
+			frequency: '<%= String.valueOf(frequency) %>',
 			interval: <%= recurrence.getInterval() %>,
+			positionalWeekday: positionalWeekday,
 			untilDate: untilDate,
 			weekdays: <%= jsonSerializer.serialize(weekdays) %>
 		};

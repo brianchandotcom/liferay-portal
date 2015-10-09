@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.kernel.cache.thread.local;
 
 /**
  * @author Shuyang Zhou

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.cache.transactional;
 
-import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -206,8 +206,7 @@ public class TransactionalPortalCacheHelper {
 
 		uncommittedBuffer.put(
 			key,
-			new ValueEntry(
-				value, ttl, AggregatedPortalCacheListener.isRemoteInvoke()));
+			new ValueEntry(value, ttl, SkipReplicationThreadLocal.isEnabled()));
 	}
 
 	protected static <K extends Serializable, V> void removeAll(
@@ -223,8 +222,7 @@ public class TransactionalPortalCacheHelper {
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
 
-		uncommittedBuffer.removeAll(
-			AggregatedPortalCacheListener.isRemoteInvoke());
+		uncommittedBuffer.removeAll(SkipReplicationThreadLocal.isEnabled());
 	}
 
 	protected static class PortalCacheMap

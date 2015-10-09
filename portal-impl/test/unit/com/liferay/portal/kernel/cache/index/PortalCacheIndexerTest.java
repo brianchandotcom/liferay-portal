@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.cache.index;
 
-import com.liferay.portal.cache.test.TestPortalCache;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.concurrent.test.MappedMethodCallableInvocationHandler;
@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
@@ -44,13 +46,20 @@ public class PortalCacheIndexerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_portalCache = new TestPortalCache<>(RandomTestUtil.randomString());
+		ToolDependencies.wireCaches();
+
+		_portalCache = MultiVMPoolUtil.getPortalCache(
+			RandomTestUtil.randomString());
 
 		_portalCacheIndexer = new PortalCacheIndexer<>(
 			_indexEncoder, _portalCache);
 
-		_cacheListener = ReflectionTestUtil.getFieldValue(
-			_portalCache, "aggregatedPortalCacheListener");
+		List<PortalCacheListener<?, ?>> portalCacheListeners =
+			ReflectionTestUtil.getFieldValue(
+				_portalCache, "_portalCacheListeners");
+
+		_cacheListener =
+			(PortalCacheListener<TestKey, String>)portalCacheListeners.get(0);
 
 		_mappedMethodCallableInvocationHandler =
 			new MappedMethodCallableInvocationHandler(
@@ -115,7 +124,8 @@ public class PortalCacheIndexerTest {
 
 	@Test
 	public void testConstructor() {
-		_portalCache = new TestPortalCache<>(RandomTestUtil.randomString());
+		_portalCache = MultiVMPoolUtil.getPortalCache(
+			RandomTestUtil.randomString());
 
 		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
 

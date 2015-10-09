@@ -3,7 +3,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="ControlMenu#USER_NAME" />
+				<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
 
 				<execute function="Click" locator1="ControlMenu#USER_SIGN_OUT" />
 			</then>

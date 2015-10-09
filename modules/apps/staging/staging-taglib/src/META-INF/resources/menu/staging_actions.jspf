@@ -132,7 +132,7 @@
 				LayoutRevision layoutRevision = LayoutRevisionLocalServiceUtil.fetchLayoutRevision(layoutSetBranchId, true, plid);
 				%>
 
-				<c:if test="<%= (layoutRevision != null) && layoutRevision.isApproved() %>">
+				<c:if test="<%= (layoutSetBranch == null) || ((layoutRevision != null) && layoutRevision.isApproved()) %>">
 					<li class="control-menu-nav-item">
 						<button class="btn btn-default btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>'>
 							<liferay-ui:message key="publish-to-live" />

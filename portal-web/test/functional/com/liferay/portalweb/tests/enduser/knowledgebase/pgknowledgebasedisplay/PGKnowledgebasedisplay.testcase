@@ -65,7 +65,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleContentNull" priority="4">
+	<command name="AddKBArticleContentNull" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -126,7 +126,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleTitleNull" priority="4">
+	<command name="AddKBArticleTitleNull" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -217,7 +217,7 @@
 		</execute>
 	</command>
 
-	<command name="CannotViewDuplicateBreadcrumbsWhenAddingParentArticle" priority="4" >
+	<command name="CannotViewDuplicateBreadcrumbsWhenAddingParentArticle" priority="3" >
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -717,7 +717,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleViaNavigationLinks" priority="4">
+	<command name="ViewKBArticleViaNavigationLinks" priority="3">
 		<var name="kbArticleCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoContentCP">
@@ -828,7 +828,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="4">
+	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="3">
 		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
 
 		<var name="socialBookmarkSites" value="twitter,facebook,plusone,addthis,blinklist,delicious,digg,evernote,linkedin,newsvine,reddit,slashdot,stumbleupon,technorati,tuenti" />
@@ -866,7 +866,7 @@
 		</for>
 	</command>
 
-	<command name="ViewKBArticleWithBlogsEntryRelatedAsset" priority="4">
+	<command name="ViewKBArticleWithBlogsEntryRelatedAsset" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -909,7 +909,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithEditedStarRatings" priority="4">
+	<command name="ViewKBArticleWithEditedStarRatings" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -1104,7 +1104,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithXSSCodeInjectedTitle" priority="4">
+	<command name="ViewKBArticleWithXSSCodeInjectedTitle" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -1165,7 +1165,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoDuplicateKBSuggestionAfterRefresh" priority="4">
+	<command name="ViewNoDuplicateKBSuggestionAfterRefresh" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>

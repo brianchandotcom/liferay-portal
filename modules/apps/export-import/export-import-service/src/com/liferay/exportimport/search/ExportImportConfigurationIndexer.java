@@ -91,10 +91,10 @@ public class ExportImportConfigurationIndexer
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, true);
+		addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(
 			searchQuery, searchContext, "exportImportConfigurationId", false);
-		addSearchTerm(searchQuery, searchContext, Field.NAME, true);
+		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
 	}
 
 	@Activate

@@ -28,17 +28,17 @@ public class CacheStatistics {
 	public CacheStatistics(MBeanServer mBeanServer, ObjectName objectName)
 		throws JMException {
 
-		_name = objectName.getKeyProperty("name");
-		_objectCount = GetterUtil.getInteger(
-			mBeanServer.getAttribute(objectName, "ObjectCount"));
-		_cacheHits = GetterUtil.getInteger(
-			mBeanServer.getAttribute(objectName, "CacheHits"));
 		_cacheHitPercentage = GetterUtil.getDouble(
 			mBeanServer.getAttribute(objectName, "CacheHitPercentage"));
+		_cacheHits = GetterUtil.getInteger(
+			mBeanServer.getAttribute(objectName, "CacheHits"));
 		_cacheMisses = GetterUtil.getInteger(
 			mBeanServer.getAttribute(objectName, "CacheMisses"));
 		_cacheMissPercentage = GetterUtil.getDouble(
 			mBeanServer.getAttribute(objectName, "CacheMissPercentage"));
+		_name = objectName.getKeyProperty("name");
+		_objectCount = GetterUtil.getInteger(
+			mBeanServer.getAttribute(objectName, "ObjectCount"));
 	}
 
 	public double getCacheHitPercentage() {

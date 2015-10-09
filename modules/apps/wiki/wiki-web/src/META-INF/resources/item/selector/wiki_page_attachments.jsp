@@ -92,5 +92,5 @@ searchContainer.setResults(results);
 />
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_wiki_web_item_selector_wiki_page_attachments_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_wiki_web.item.selector.wiki_page_attachments_jsp");
 %>

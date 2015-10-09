@@ -16,6 +16,8 @@ package com.liferay.server.admin.web.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.management.ManagementFactory;
@@ -27,6 +29,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
@@ -37,21 +40,13 @@ import javax.management.ObjectName;
 public class CacheStatisticsUtil {
 
 	public static List<String> getCacheManagerNames() {
-		List<String> names = null;
+		Set<ObjectName> objectNames = _mBeanServer.queryNames(
+			null, _cacheManagerObjectName);
 
-		try {
-			Set<ObjectName> objectNames = _mBeanServer.queryNames(
-				null,
-				new ObjectName("net.sf.ehcache:type=CacheManager,name=*"));
+		List<String> names = new ArrayList<>(objectNames.size());
 
-			names = new ArrayList<>(objectNames.size());
-
-			for (ObjectName objectName : objectNames) {
-				names.add(objectName.getKeyProperty("name"));
-			}
-		}
-		catch (MalformedObjectNameException mone) {
-			throw new SystemException(mone);
+		for (ObjectName objectName : objectNames) {
+			names.add(objectName.getKeyProperty("name"));
 		}
 
 		return names;
@@ -60,18 +55,12 @@ public class CacheStatisticsUtil {
 	public static List<CacheStatistics> getCacheStatistics(
 		String cacheManagerName, String keywords) {
 
-		List<CacheStatistics> cacheManagerStatistics = null;
-
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("net.sf.ehcache:type=CacheStatistics,CacheManager=");
 		sb.append(cacheManagerName);
-		sb.append(",name=*");
-
-		if (_isValidKeywords(keywords)) {
-			sb.append(keywords);
-			sb.append("*");
-		}
+		sb.append(",name=");
+		sb.append(_getKeywords(keywords));
 
 		try {
 			Set<ObjectName> objectNames = _mBeanServer.queryNames(
@@ -82,35 +71,50 @@ public class CacheStatisticsUtil {
 
 			Collections.sort(cacheStatisticsNames);
 
-			cacheManagerStatistics = new ArrayList<>(
+			List<CacheStatistics> cacheManagerStatistics = new ArrayList<>(
 				cacheStatisticsNames.size());
 
 			for (ObjectName objectName : cacheStatisticsNames) {
 				cacheManagerStatistics.add(
 					new CacheStatistics(_mBeanServer, objectName));
 			}
-		}
-		catch (MalformedObjectNameException mone) {
-			throw new SystemException(mone);
-		}
 
-		return cacheManagerStatistics;
+			return cacheManagerStatistics;
+		}
+		catch (JMException jme) {
+			throw new SystemException(jme);
+		}
 	}
 
-	private static boolean _isValidKeywords(String keywords) {
+	private static String _getKeywords(String keywords) {
 		if (Validator.isNull(keywords)) {
-			return false;
+			return StringPool.STAR;
 		}
 
 		Matcher matcher = _VALID_KEYWORD_PATTERN.matcher(keywords);
 
-		return matcher.matches();
+		if (!matcher.matches()) {
+			return StringPool.STAR;
+		}
+
+		return StringUtil.quote(keywords, StringPool.STAR);
 	}
 
 	private static final Pattern _VALID_KEYWORD_PATTERN = Pattern.compile(
 		"[A-Za-z0-9.*]+");
 
+	private static final ObjectName _cacheManagerObjectName;
 	private static final MBeanServer _mBeanServer =
 		ManagementFactory.getPlatformMBeanServer();
+
+	static {
+		try {
+			_cacheManagerObjectName = new ObjectName(
+				"net.sf.ehcache:type=CacheManager,name=*");
+		}
+		catch (MalformedObjectNameException mone) {
+			throw new ExceptionInInitializerError(mone);
+		}
+	}
 
 }

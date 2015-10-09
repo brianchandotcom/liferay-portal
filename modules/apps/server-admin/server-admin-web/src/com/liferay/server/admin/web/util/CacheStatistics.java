@@ -16,6 +16,7 @@ package com.liferay.server.admin.web.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
@@ -24,21 +25,20 @@ import javax.management.ObjectName;
  */
 public class CacheStatistics {
 
-	public CacheStatistics(MBeanServer mBeanServer, ObjectName objectName) {
+	public CacheStatistics(MBeanServer mBeanServer, ObjectName objectName)
+		throws JMException {
+
 		_name = objectName.getKeyProperty("name");
-
 		_objectCount = GetterUtil.getInteger(
-			_getAttribute(mBeanServer, objectName, "ObjectCount"));
-
+			mBeanServer.getAttribute(objectName, "ObjectCount"));
 		_cacheHits = GetterUtil.getInteger(
-			_getAttribute(mBeanServer, objectName, "CacheHits"));
+			mBeanServer.getAttribute(objectName, "CacheHits"));
 		_cacheHitPercentage = GetterUtil.getDouble(
-			_getAttribute(mBeanServer, objectName, "CacheHitPercentage"));
-
+			mBeanServer.getAttribute(objectName, "CacheHitPercentage"));
 		_cacheMisses = GetterUtil.getInteger(
-			_getAttribute(mBeanServer, objectName, "CacheMisses"));
+			mBeanServer.getAttribute(objectName, "CacheMisses"));
 		_cacheMissPercentage = GetterUtil.getDouble(
-			_getAttribute(mBeanServer, objectName, "CacheMissPercentage"));
+			mBeanServer.getAttribute(objectName, "CacheMissPercentage"));
 	}
 
 	public double getCacheHitPercentage() {
@@ -63,17 +63,6 @@ public class CacheStatistics {
 
 	public int getObjectCount() {
 		return _objectCount;
-	}
-
-	private Object _getAttribute(
-		MBeanServer mBeanServer, ObjectName objectName, String name) {
-
-		try {
-			return mBeanServer.getAttribute(objectName, name);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private final double _cacheHitPercentage;

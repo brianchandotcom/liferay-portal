@@ -280,7 +280,7 @@ testIntegration {
 
 			String fileTitle = FileUtil.stripExtension(file.name)
 
-			ant.xmltask(dest: new File(file.parentFile, "TEST-${fileTitle}-${databaseType}.xml"), source: file) {
+			ant.xmltask(dest: new File(file.parentFile, "${fileTitle}-${databaseType}.xml"), source: file) {
 				replace path: "/testsuite/@name", withText: "${fileTitle}-${databaseType}"
 			}
 

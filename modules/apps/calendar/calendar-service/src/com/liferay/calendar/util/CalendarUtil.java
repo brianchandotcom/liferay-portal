@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.ArrayList;
@@ -257,6 +258,13 @@ public class CalendarUtil {
 
 		jsonObject.put(
 			"hasChildCalendarBookings", childCalendarBookings.size() > 1);
+
+		jsonObject.put(
+			"hasWorkflowInstanceLink",
+			WorkflowInstanceLinkLocalServiceUtil.hasWorkflowInstanceLink(
+				themeDisplay.getCompanyId(), calendarBooking.getGroupId(),
+				CalendarBooking.class.getName(),
+				calendarBooking.getCalendarBookingId()));
 
 		jsonObject.put("instanceIndex", calendarBooking.getInstanceIndex());
 		jsonObject.put("location", calendarBooking.getLocation());

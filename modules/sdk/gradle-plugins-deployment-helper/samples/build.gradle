@@ -1,0 +1,28 @@
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.deployment.helper", version: "latest.release"
+	}
+}
+
+apply plugin: "com.liferay.deployment.helper"
+
+buildDeploymentHelper {
+	deploymentFiles = ["license.xml"]
+	deploymentPath = "deploy"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}

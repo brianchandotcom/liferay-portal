@@ -34,7 +34,7 @@ if (!useNamespace) {
 String value = ParamUtil.getString(request, name);
 %>
 
-<div class="<%= cssClass %> taglib-input-search input-group">
+<div class="<%= cssClass %> input-group taglib-input-search">
 	<label class="hide-accessible" for="<%= namespace + id %>"><%= title %></label>
 
 	<input class="form-control search-query" id="<%= namespace + id %>" name="<%= namespace + name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />

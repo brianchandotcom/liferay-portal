@@ -24,21 +24,13 @@
 	</tear-down>
 
 	<command name="EditDefaultUserAssociationsOrganizationSites" priority="4">
-		<var name="orgName" value="Organization Name" />
-		<var name="orgType" value="Regular Organization" />
-		<var name="siteName" value="Organization Name" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -46,7 +38,7 @@
 		</execute>
 
 		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="${orgName}" />
+			<var name="orgName" value="Organization Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -54,7 +46,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
-			<var name="orgName" value="${orgName}" />
+			<var name="orgName" value="Organization Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -62,7 +54,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
-			<var name="orgName" value="${orgName}" />
+			<var name="orgName" value="Organization Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -70,10 +62,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -85,24 +77,18 @@
 		</execute>
 
 		<execute macro="User#viewUserInfomationOrganizationSitesCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="orgName" value="Organization Name" />
+			<var name="siteName" value="Organization Name" />
 		</execute>
 	</command>
 
 	<command name="EditDefaultUserAssociationsRoles" priority="4">
-		<var name="roleName" value="Roles Regrole Name" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -110,7 +96,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsRolesCP">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -118,7 +104,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsRolesCP">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -126,10 +112,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -141,23 +127,17 @@
 		</execute>
 
 		<execute macro="User#viewUserInfomationRolesCP">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Regrole Name" />
 		</execute>
 	</command>
 
 	<command name="EditDefaultUserAssociationsSites" priority="4">
-		<var name="siteName" value="Site Name" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -165,7 +145,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsSitesCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -173,7 +153,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsSitesCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -181,10 +161,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -192,27 +172,21 @@
 		</execute>
 
 		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="User#viewUserInfomationSitesCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 	</command>
 
 	<command name="EditDefaultUserAssociationsUserGroups" priority="4">
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userGroupName" value="UG UserGroup Name" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
 
 		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -220,7 +194,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsUserGroupsCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -228,7 +202,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsUserGroupsCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -236,10 +210,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -247,26 +221,21 @@
 		</execute>
 
 		<execute macro="User#gotoEditCP">
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="User#viewUserInfomationUserGroupsCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 	</command>
 
 	<command name="EnterReservedEmailAddress" priority="4">
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#enterReservedEmailAddressCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -274,25 +243,20 @@
 		</execute>
 
 		<execute macro="User#addReservedEmailAddressCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 
 	<command name="EnterReservedScreenName" priority="4">
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#enterReservedScreenNameCP">
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -300,10 +264,10 @@
 		</execute>
 
 		<execute macro="User#addReservedScreenNameCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 
@@ -364,19 +328,6 @@
 	</command>
 
 	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="4">
-		<var name="childSiteName" value="Child SiteName" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="pageName1" value="AP Test Page" />
-		<var name="pageName2" value="WC Test Page" />
-		<var name="parentSite" value="Site Name" />
-		<var name="portletName1" value="Asset Publisher" />
-		<var name="portletName2" value="Web Content Display" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="siteScopeName" value="Child SiteName" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>
@@ -394,7 +345,7 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${parentSite}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -402,8 +353,8 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="${parentSite}" />
-			<var name="siteName" value="${childSiteName}" />
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -411,18 +362,18 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${parentSite}" />
-			<var name="sitePageName" value="${pageName1}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="AP Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName1}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -430,9 +381,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${childSiteName}" />
-			<var name="sitePageName" value="${pageName2}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Child SiteName" />
+			<var name="sitePageName" value="WC Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -441,26 +392,26 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName2}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteName" value="${childSiteName}" />
+			<var name="siteName" value="Child SiteName" />
 			<var name="siteScopeType" value="Child Site" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -473,26 +424,26 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewContentSharingPG">
-			<var name="assetContent" value="${webContentContent}" />
-			<var name="assetTitle" value="${webContentTitle}" />
-			<var name="siteScope1" value="${parentSite}" />
-			<var name="siteScope2" value="${childSiteName}" />
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+			<var name="siteScope1" value="Site Name" />
+			<var name="siteScope2" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Blogs#addViaAP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="siteScope" value="${parentSite}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="siteScope" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -501,16 +452,16 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName1}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteName" value="${parentSite}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteScopeType" value="Parent Site" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -528,10 +479,10 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewContentSharingPG">
-			<var name="assetContent" value="${entryContent}" />
-			<var name="assetTitle" value="${entryTitle}" />
-			<var name="siteScope1" value="${parentSite}" />
-			<var name="siteScope2" value="${childSiteName}" />
+			<var name="assetContent" value="Blogs Entry Content" />
+			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="siteScope1" value="Site Name" />
+			<var name="siteScope2" value="Child SiteName" />
 		</execute>
 	</command>
 
@@ -561,7 +512,7 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -569,22 +520,22 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${pageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="AP Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -597,29 +548,29 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Blogs#addViaAP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#openURL" />
 
 		<execute macro="Page#addPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="pageName" value="AP Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="AP Test Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
@@ -632,23 +583,23 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="AP Test Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteScopeType" value="Site" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="AP Test Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewContentSharingPG">
-			<var name="assetContent" value="${entryContent}" />
-			<var name="assetTitle" value="${entryTitle}" />
-			<var name="siteScope1" value="${siteName}" />
-			<var name="siteScope2" value="${liferaySiteName}" />
+			<var name="assetContent" value="Blogs Entry Content" />
+			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="siteScope1" value="Site Name" />
+			<var name="siteScope2" value="Liferay" />
 		</execute>
 	</command>
 

@@ -41,7 +41,7 @@ public class TransactionalPortalCache<K extends Serializable, V>
 
 			result = TransactionalPortalCacheHelper.get(portalCache, key);
 
-			if (result == NULL_HOLDER) {
+			if (result == TransactionalPortalCacheHelper.getNullHolder()) {
 				return null;
 			}
 		}
@@ -89,7 +89,9 @@ public class TransactionalPortalCache<K extends Serializable, V>
 			}
 
 			TransactionalPortalCacheHelper.put(
-				portalCache, key, (V)NULL_HOLDER, DEFAULT_TIME_TO_LIVE);
+				portalCache, key,
+				(V)TransactionalPortalCacheHelper.getNullHolder(),
+				DEFAULT_TIME_TO_LIVE);
 		}
 		else {
 			portalCache.remove(key);
@@ -105,7 +107,5 @@ public class TransactionalPortalCache<K extends Serializable, V>
 			portalCache.removeAll();
 		}
 	}
-
-	protected static Serializable NULL_HOLDER = "NULL_HOLDER";
 
 }

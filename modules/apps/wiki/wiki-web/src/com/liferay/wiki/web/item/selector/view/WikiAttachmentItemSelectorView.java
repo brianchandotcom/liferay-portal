@@ -105,7 +105,7 @@ public class WikiAttachmentItemSelectorView
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(
-				"/html/item/selector/wiki_page_attachments.jsp");
+				"/item/selector/wiki_page_attachments.jsp");
 
 		requestDispatcher.include(request, response);
 	}

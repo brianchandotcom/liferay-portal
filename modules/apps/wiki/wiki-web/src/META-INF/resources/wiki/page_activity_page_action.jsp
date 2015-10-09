@@ -33,8 +33,7 @@ WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.ge
 <c:if test="<%= socialActivityWikiPage != null %>">
 	<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 		<c:if test="<%= (version != wikiPage.getVersion()) && socialActivityWikiPage.isApproved() && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
-			<portlet:actionURL var="revertURL">
-				<portlet:param name="struts_action" value="/wiki/edit_page" />
+			<portlet:actionURL name="/wiki/edit_page" var="revertURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
@@ -50,7 +49,7 @@ WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.ge
 		</c:if>
 
 		<portlet:renderURL var="compareVersionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/wiki/select_version" />
+			<portlet:param name="mvcRenderCommandName" value="/wiki/select_version" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 			<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />

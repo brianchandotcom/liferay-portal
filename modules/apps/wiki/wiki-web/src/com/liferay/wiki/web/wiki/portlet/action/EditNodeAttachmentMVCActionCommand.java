@@ -15,11 +15,13 @@
 package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
@@ -30,24 +32,28 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-public class EditNodeAttachmentAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"mvc.command.name=/wiki/edit_node_attachment",
+		"mvc.command.name=/wiki/view_node_deleted_attachments"
+	},
+	service = MVCActionCommand.class
+)
+public class EditNodeAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -56,8 +62,6 @@ public class EditNodeAttachmentAction extends PortletAction {
 			if (cmd.equals(Constants.EMPTY_TRASH)) {
 				emptyTrash(actionRequest);
 			}
-
-			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||
@@ -65,41 +69,11 @@ public class EditNodeAttachmentAction extends PortletAction {
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.wiki.error");
 			}
 			else {
 				throw e;
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getNode(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.wiki.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest, "portlet.wiki.view_node_deleted_attachments"));
 	}
 
 	protected void emptyTrash(ActionRequest actionRequest) throws Exception {

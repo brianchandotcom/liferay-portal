@@ -33,16 +33,16 @@ if (wikiPage != null) {
 }
 
 if (type.equals("all_pages")) {
-	portletURL.setParameter("struts_action", "/wiki/view_all_pages");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-pages"), portletURL.toString());
 }
 else if (type.equals("categorized_pages")) {
-	portletURL.setParameter("struts_action", "/wiki/view_categorized_pages");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_categorized_pages");
 	portletURL.setParameter("categoryId", String.valueOf(categoryId));
 }
 else if (type.equals("draft_pages")) {
-	portletURL.setParameter("struts_action", "/wiki/view_draft_pages");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_draft_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "draft-pages"), portletURL.toString());
 }
@@ -50,49 +50,49 @@ else if (type.equals("history")) {
 	PortletURL viewPageHistoryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
 	if (wikiPage != null) {
-		portletURL.setParameter("struts_action", "/wiki/view");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 
 		PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.toString());
 	}
 
-	viewPageHistoryURL.setParameter("struts_action", "/wiki/view_page_activities");
+	viewPageHistoryURL.setParameter("mvcRenderCommandName", "/wiki/view_page_activities");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history"), viewPageHistoryURL.toString());
 }
 else if (type.equals("incoming_links")) {
 	if (wikiPage != null) {
-		portletURL.setParameter("struts_action", "/wiki/view");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 
 		PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.toString());
 	}
 
-	portletURL.setParameter("struts_action", "/wiki/view_page_incoming_links");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_page_incoming_links");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "incoming-links"), portletURL.toString());
 }
 else if (type.equals("orphan_pages")) {
-	portletURL.setParameter("struts_action", "/wiki/view_orphan_pages");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_orphan_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "orphan-pages"), portletURL.toString());
 }
 else if (type.equals("outgoing_links")) {
 	if (wikiPage != null) {
-		portletURL.setParameter("struts_action", "/wiki/view");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 
 		PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.toString());
 	}
 
-	portletURL.setParameter("struts_action", "/wiki/view_page_outgoing_links");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_page_outgoing_links");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "outgoing-links"), portletURL.toString());
 }
 else if (type.equals("recent_changes")) {
-	portletURL.setParameter("struts_action", "/wiki/view_recent_changes");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_recent_changes");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recent-changes"), portletURL.toString());
 }
 else if (type.equals("tagged_pages")) {
-	portletURL.setParameter("struts_action", "/wiki/view_tagged_pages");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages");
 	portletURL.setParameter("tag", tagName);
 }
 
@@ -277,17 +277,17 @@ for (int i = 0; i < results.size(); i++) {
 
 	if (!curWikiPage.isNew() && !type.equals("draft_pages") && !type.equals("pending_pages")) {
 		if (portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
-			rowURL.setParameter("struts_action", "/wiki/view_page");
+			rowURL.setParameter("mvcRenderCommandName", "/wiki/view_page");
 		}
 		else {
-			rowURL.setParameter("struts_action", "/wiki/view");
+			rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
 		}
 
 		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("nodeName", curWikiPage.getNode().getName());
 	}
 	else {
-		rowURL.setParameter("struts_action", "/wiki/edit_page");
+		rowURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("nodeId", String.valueOf(curWikiPage.getNodeId()));
 	}
@@ -453,7 +453,7 @@ for (int i = 0; i < results.size(); i++) {
 				'click',
 				function(event) {
 					<portlet:renderURL var="compareVersionURL">
-						<portlet:param name="struts_action" value="/wiki/compare_versions" />
+						<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="tabs3" value="versions" />
 						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />

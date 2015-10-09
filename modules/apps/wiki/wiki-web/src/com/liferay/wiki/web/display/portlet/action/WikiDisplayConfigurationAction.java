@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.admin.portlet.action;
+package com.liferay.wiki.web.display.portlet.action;
 
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -28,15 +28,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true, property = {"javax.portlet.name=" + WikiPortletKeys.WIKI},
+	immediate = true,
+	property = {"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY},
 	service = ConfigurationAction.class
 )
-public class WikiConfigurationAction
+public class WikiDisplayConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
-		return "/wiki/configuration.jsp";
+		return "/wiki_display/configuration.jsp";
 	}
 
 	@Override

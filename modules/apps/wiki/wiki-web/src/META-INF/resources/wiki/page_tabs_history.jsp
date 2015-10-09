@@ -22,20 +22,20 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 PortletURL viewPageURL = renderResponse.createRenderURL();
 
-viewPageURL.setParameter("struts_action", "/wiki/view");
+viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 viewPageURL.setParameter("nodeName", node.getName());
 viewPageURL.setParameter("title", wikiPage.getTitle());
 
 PortletURL viewPageHistoryURL = renderResponse.createRenderURL();
 
-viewPageHistoryURL.setParameter("struts_action", "/wiki/view_page_history");
+viewPageHistoryURL.setParameter("mvcRenderCommandName", "/wiki/view_page_history");
 viewPageHistoryURL.setParameter("redirect", viewPageURL.toString());
 viewPageHistoryURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 viewPageHistoryURL.setParameter("title", wikiPage.getTitle());
 
 PortletURL viewPageActivitiesURL = PortletURLUtil.clone(viewPageHistoryURL, renderResponse);
 
-viewPageActivitiesURL.setParameter("struts_action", "/wiki/view_page_activities");
+viewPageActivitiesURL.setParameter("mvcRenderCommandName", "/wiki/view_page_activities");
 %>
 
 <liferay-ui:tabs

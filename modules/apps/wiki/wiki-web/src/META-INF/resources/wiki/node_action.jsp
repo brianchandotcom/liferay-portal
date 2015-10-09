@@ -25,7 +25,7 @@ WikiNode node = (WikiNode)row.getObject();
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/wiki/edit_node" />
+			<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 		</portlet:renderURL>
@@ -57,7 +57,7 @@ WikiNode node = (WikiNode)row.getObject();
 
 	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.IMPORT) %>">
 		<portlet:renderURL var="importURL">
-			<portlet:param name="struts_action" value="/wiki/import_pages" />
+			<portlet:param name="mvcRenderCommandName" value="/wiki/import_pages" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 		</portlet:renderURL>
@@ -81,8 +81,7 @@ WikiNode node = (WikiNode)row.getObject();
 	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
-				<portlet:actionURL var="unsubscribeURL">
-					<portlet:param name="struts_action" value="/wiki/edit_node" />
+				<portlet:actionURL name="/wiki/edit_node" var="unsubscribeURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
@@ -95,8 +94,7 @@ WikiNode node = (WikiNode)row.getObject();
 				/>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="/wiki/edit_node" />
+				<portlet:actionURL name="/wiki/edit_node" var="subscribeURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
@@ -113,7 +111,7 @@ WikiNode node = (WikiNode)row.getObject();
 
 	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="viewDeletedAttachmentsURL">
-			<portlet:param name="struts_action" value="/wiki/view_node_deleted_attachments" />
+			<portlet:param name="mvcRenderCommandName" value="/wiki/view_node_deleted_attachments" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 			<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
@@ -127,8 +125,7 @@ WikiNode node = (WikiNode)row.getObject();
 	</c:if>
 
 	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.DELETE) && (WikiNodeServiceUtil.getNodesCount(scopeGroupId) > 1) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/wiki/edit_node" />
+		<portlet:actionURL name="/wiki/edit_node" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= (TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />

@@ -31,13 +31,13 @@ WikiPage initialPage = (WikiPage)WikiPageLocalServiceUtil.getPages(wikiPage.getN
 
 PortletURL viewPageURL = renderResponse.createRenderURL();
 
-viewPageURL.setParameter("struts_action", "/wiki/view");
+viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 viewPageURL.setParameter("nodeName", node.getName());
 viewPageURL.setParameter("title", wikiPage.getTitle());
 
 PortletURL editPageURL = renderResponse.createRenderURL();
 
-editPageURL.setParameter("struts_action", "/wiki/edit_page");
+editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 editPageURL.setParameter("redirect", currentURL);
 editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 editPageURL.setParameter("title", wikiPage.getTitle());
@@ -113,7 +113,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 
 	PortletURL exportPageURL = renderResponse.createActionURL();
 
-	exportPageURL.setParameter("struts_action", "/wiki/export_page");
+	exportPageURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/export_page");
 	exportPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 	exportPageURL.setParameter("nodeName", node.getName());
 	exportPageURL.setParameter("title", wikiPage.getTitle());
@@ -182,8 +182,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 								<liferay-ui:message key="you-are-subscribed-to-this-page" />
 							</td>
 							<td>
-								<portlet:actionURL var="unsubscribeURL">
-									<portlet:param name="struts_action" value="/wiki/edit_page" />
+								<portlet:actionURL name="/wiki/edit_page" var="unsubscribeURL">
 									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
@@ -203,8 +202,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 								<liferay-ui:message key="you-are-not-subscribed-to-this-page" />
 							</td>
 							<td>
-								<portlet:actionURL var="subscribeURL">
-									<portlet:param name="struts_action" value="/wiki/edit_page" />
+								<portlet:actionURL name="/wiki/edit_page" var="subscribeURL">
 									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
@@ -231,8 +229,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 								<liferay-ui:message key="you-are-subscribed-to-this-wiki" />
 							</td>
 							<td>
-								<portlet:actionURL var="unsubscribeURL">
-									<portlet:param name="struts_action" value="/wiki/edit_node" />
+								<portlet:actionURL name="/wiki/edit_node" var="unsubscribeURL">
 									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
@@ -251,8 +248,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 								<liferay-ui:message key="you-are-not-subscribed-to-this-wiki" />
 							</td>
 							<td>
-								<portlet:actionURL var="subscribeURL">
-									<portlet:param name="struts_action" value="/wiki/edit_node" />
+								<portlet:actionURL name="/wiki/edit_node" var="subscribeURL">
 									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
@@ -306,7 +302,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					<%
 					PortletURL copyPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-					copyPageURL.setParameter("struts_action", "/wiki/edit_page");
+					copyPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 					copyPageURL.setParameter("redirect", viewPageURL.toString());
 					copyPageURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
 					copyPageURL.setParameter("title", StringPool.BLANK);
@@ -328,7 +324,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					<%
 					PortletURL movePageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-					movePageURL.setParameter("struts_action", "/wiki/move_page");
+					movePageURL.setParameter("mvcRenderCommandName", "/wiki/move_page");
 					movePageURL.setParameter("redirect", viewPageURL.toString());
 					%>
 

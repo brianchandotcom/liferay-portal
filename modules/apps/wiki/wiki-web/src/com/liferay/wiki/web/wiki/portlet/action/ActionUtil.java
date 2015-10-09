@@ -16,6 +16,8 @@ package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,7 +51,12 @@ import com.liferay.wiki.web.util.WikiWebComponentProvider;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,6 +65,27 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jorge Ferrer
  */
 public class ActionUtil {
+
+	public static void compareVersions(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
+		String title = ParamUtil.getString(renderRequest, "title");
+		double sourceVersion = ParamUtil.getDouble(
+			renderRequest, "sourceVersion");
+		double targetVersion = ParamUtil.getDouble(
+			renderRequest, "targetVersion");
+
+		String htmlDiffResult = getHtmlDiffResult(
+			sourceVersion, targetVersion, renderRequest, renderResponse);
+
+		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
+		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
+		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
+		renderRequest.setAttribute(WebKeys.TITLE, title);
+		renderRequest.setAttribute(WikiWebKeys.WIKI_NODE_ID, nodeId);
+	}
 
 	public static WikiNode getFirstNode(PortletRequest portletRequest)
 		throws PortalException {
@@ -192,6 +220,47 @@ public class ActionUtil {
 		return page;
 	}
 
+	public static String getHtmlDiffResult(
+			double sourceVersion, double targetVersion,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long nodeId = ParamUtil.getLong(portletRequest, "nodeId");
+		String title = ParamUtil.getString(portletRequest, "title");
+
+		WikiPage sourcePage = WikiPageServiceUtil.getPage(
+			nodeId, title, sourceVersion);
+		WikiPage targetPage = WikiPageServiceUtil.getPage(
+			nodeId, title, targetVersion);
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(portletResponse);
+
+		PortletURL viewPageURL = liferayPortletResponse.createRenderURL();
+
+		viewPageURL.setParameter("mvcRenderCommandName", "wiki/view");
+
+		WikiNode sourceNode = sourcePage.getNode();
+
+		viewPageURL.setParameter("nodeName", sourceNode.getName());
+
+		PortletURL editPageURL = liferayPortletResponse.createRenderURL();
+
+		editPageURL.setParameter("mvcRenderCommandName", "wiki/edit_page");
+		editPageURL.setParameter("nodeId", String.valueOf(nodeId));
+		editPageURL.setParameter("title", title);
+
+		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
+
+		return WikiUtil.diffHtml(
+			sourcePage, targetPage, viewPageURL, editPageURL,
+			attachmentURLPrefix);
+	}
+
 	public static WikiNode getNode(PortletRequest portletRequest)
 		throws Exception {
 
@@ -280,6 +349,38 @@ public class ActionUtil {
 		}
 
 		request.setAttribute(WikiWebKeys.WIKI_PAGE, page);
+	}
+
+	public static String viewNode(
+			RenderRequest renderRequest, String defaultForward)
+		throws PortletException {
+
+		try {
+			WikiNode node = ActionUtil.getNode(renderRequest);
+
+			ActionUtil.getFirstVisiblePage(node.getNodeId(), renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchNodeException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/wiki/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
+		long categoryId = ParamUtil.getLong(renderRequest, "categoryId");
+
+		if (categoryId > 0) {
+			return "/wiki/view_categorized_pages.jsp";
+		}
+		else {
+			return defaultForward;
+		}
 	}
 
 }

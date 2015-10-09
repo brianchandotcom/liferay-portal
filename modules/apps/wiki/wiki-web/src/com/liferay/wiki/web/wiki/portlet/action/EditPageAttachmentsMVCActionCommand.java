@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -41,8 +43,6 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -66,6 +66,7 @@ import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.util.RestoreEntryUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.service.WikiPageServiceUtil;
@@ -80,125 +81,27 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-public class EditPageAttachmentsAction extends PortletAction {
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				if (uploadException.isExceededSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
-				}
-
-				throw new PortalException(uploadException.getCause());
-			}
-			else if (cmd.equals(Constants.ADD)) {
-				addAttachment(actionRequest);
-			}
-			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
-				addMultipleFileEntries(
-					portletConfig, actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.ADD_TEMP)) {
-				addTempAttachment(actionRequest);
-			}
-			else if (cmd.equals(Constants.CHECK)) {
-				JSONObject jsonObject = RestoreEntryUtil.checkEntry(
-					actionRequest);
-
-				writeJSON(actionRequest, actionResponse, jsonObject);
-
-				return;
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteAttachment(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.DELETE_TEMP)) {
-				deleteTempAttachment(actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.EMPTY_TRASH)) {
-				emptyTrash(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteAttachment(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RENAME)) {
-				restoreRename(actionRequest);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				restoreEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.OVERRIDE)) {
-				restoreOverride(actionRequest);
-			}
-
-			if (cmd.equals(Constants.ADD_TEMP) ||
-				cmd.equals(Constants.DELETE_TEMP)) {
-
-				setForward(actionRequest, ActionConstants.COMMON_NULL);
-			}
-			else {
-				sendRedirect(actionRequest, actionResponse);
-			}
-		}
-		catch (NoSuchNodeException | NoSuchPageException |
-			   PrincipalException e) {
-
-			SessionErrors.add(actionRequest, e.getClass());
-
-			setForward(actionRequest, "portlet.wiki.error");
-		}
-		catch (Exception e) {
-			handleUploadException(
-				portletConfig, actionRequest, actionResponse, cmd, e);
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getNode(renderRequest);
-			ActionUtil.getPage(renderRequest);
-		}
-		catch (NoSuchNodeException | NoSuchPageException |
-			   PrincipalException e) {
-
-			SessionErrors.add(renderRequest, e.getClass());
-
-			return actionMapping.findForward("portlet.wiki.error");
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.wiki.edit_page_attachment"));
-	}
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"mvc.command.name=/wiki/edit_page_attachment",
+		"mvc.command.name=/wiki_admin/edit_page_attachment",
+		"mvc.command.name=/wiki_display/edit_page_attachment"
+	},
+	service = MVCActionCommand.class
+)
+public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void addAttachment(ActionRequest actionRequest) throws Exception {
 		UploadPortletRequest uploadPortletRequest =
@@ -440,7 +343,89 @@ public class EditPageAttachmentsAction extends PortletAction {
 			jsonObject.put("errorMessage", errorMessage);
 		}
 
-		writeJSON(actionRequest, actionResponse, jsonObject);
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		PortletConfig portletConfig = getPortletConfig(actionRequest);
+
+		try {
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				if (uploadException.isExceededSizeLimit()) {
+					throw new FileSizeException(uploadException.getCause());
+				}
+
+				throw new PortalException(uploadException.getCause());
+			}
+			else if (cmd.equals(Constants.ADD)) {
+				addAttachment(actionRequest);
+			}
+			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
+				addMultipleFileEntries(
+					portletConfig, actionRequest, actionResponse);
+			}
+			else if (cmd.equals(Constants.ADD_TEMP)) {
+				addTempAttachment(actionRequest);
+			}
+			else if (cmd.equals(Constants.CHECK)) {
+				JSONObject jsonObject = RestoreEntryUtil.checkEntry(
+					actionRequest);
+
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
+
+				return;
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteAttachment(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
+				deleteTempAttachment(actionRequest, actionResponse);
+			}
+			else if (cmd.equals(Constants.EMPTY_TRASH)) {
+				emptyTrash(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteAttachment(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RENAME)) {
+				restoreRename(actionRequest);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.OVERRIDE)) {
+				restoreOverride(actionRequest);
+			}
+
+			if (cmd.equals(Constants.ADD_TEMP) ||
+				cmd.equals(Constants.DELETE_TEMP)) {
+
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/common/null.jsp");
+			}
+		}
+		catch (NoSuchNodeException | NoSuchPageException |
+			PrincipalException e) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter("mvcPath", "/wiki/error.jsp");
+		}
+		catch (Exception e) {
+			handleUploadException(
+				portletConfig, actionRequest, actionResponse, cmd, e);
+		}
 	}
 
 	protected void emptyTrash(ActionRequest actionRequest) throws Exception {
@@ -767,6 +752,6 @@ public class EditPageAttachmentsAction extends PortletAction {
 	}
 
 	private static final String _TEMP_FOLDER_NAME =
-		EditPageAttachmentsAction.class.getName();
+		EditPageAttachmentsMVCActionCommand.class.getName();
 
 }

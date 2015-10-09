@@ -232,7 +232,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 
 			if (!containerModel) {
 				portletURL.setParameter(
-					"struts_action", "/wiki_admin/view_all_pages");
+					"mvcRenderCommandName", "/wiki_admin/view_all_pages");
 			}
 		}
 		else {
@@ -242,7 +242,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 
 			if (!containerModel) {
 				portletURL.setParameter(
-					"struts_action", "/wiki/view_all_pages");
+					"mvcRenderCommandName", "/wiki/view_all_pages");
 			}
 		}
 

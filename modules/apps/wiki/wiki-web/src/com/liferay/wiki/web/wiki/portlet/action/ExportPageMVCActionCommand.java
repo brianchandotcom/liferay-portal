@@ -17,6 +17,8 @@ package com.liferay.wiki.web.wiki.portlet.action;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -25,14 +27,13 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.util.WikiUtil;
@@ -52,20 +53,29 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Bruno Farache
  */
-public class ExportPageAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"mvc.command.name=/wiki/export_page"
+	},
+	service = MVCActionCommand.class
+)
+public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		PortletConfig portletConfig = getPortletConfig(actionRequest);
 
 		try {
 			long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
@@ -83,7 +93,7 @@ public class ExportPageAction extends PortletAction {
 				actionRequest, portletConfig.getPortletName(),
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-			viewPageURL.setParameter("struts_action", "/wiki/view");
+			viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 			viewPageURL.setParameter("nodeName", nodeName);
 			viewPageURL.setParameter("title", title);
 			viewPageURL.setPortletMode(PortletMode.VIEW);
@@ -93,7 +103,7 @@ public class ExportPageAction extends PortletAction {
 				actionRequest, portletConfig.getPortletName(),
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-			editPageURL.setParameter("struts_action", "/wiki/edit_page");
+			editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 			editPageURL.setParameter("nodeId", String.valueOf(nodeId));
 			editPageURL.setParameter("title", title);
 			editPageURL.setPortletMode(PortletMode.VIEW);
@@ -108,7 +118,8 @@ public class ExportPageAction extends PortletAction {
 				nodeId, title, version, targetExtension, viewPageURL,
 				editPageURL, themeDisplay, request, response);
 
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/common/null.jsp");
 		}
 		catch (Exception e) {
 			String host = PrefsPropsUtil.getString(
@@ -208,18 +219,11 @@ public class ExportPageAction extends PortletAction {
 			request, response, fileName, is, contentType);
 	}
 
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
-
 	private static final String _LOCALHOST = "localhost";
 
 	private static final String _LOCALHOST_IP = "127.0.0.1";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExportPageAction.class);
+		ExportPageMVCActionCommand.class);
 
 }

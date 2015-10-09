@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"importer=MediaWiki", "page=/html/portlet/wiki/import/mediawiki.jsp"
+		"importer=MediaWiki", "page=/wiki/import/mediawiki.jsp"
 	},
 	service = WikiImporter.class
 )

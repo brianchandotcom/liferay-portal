@@ -14,28 +14,34 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.web.upload.PageAttachmentWikiUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  */
-public class UploadPageAttachmentAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"mvc.command.name=/wiki/upload_page_attachment"
+	},
+	service = MVCActionCommand.class
+)
+public class UploadPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long resourcePrimKey = ParamUtil.getLong(

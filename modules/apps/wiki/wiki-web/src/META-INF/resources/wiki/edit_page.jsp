@@ -105,13 +105,13 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 
 PortletURL viewPageURL = renderResponse.createRenderURL();
 
-viewPageURL.setParameter("struts_action", "/wiki/view");
+viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 viewPageURL.setParameter("nodeName", node.getName());
 viewPageURL.setParameter("title", title);
 
 PortletURL editPageURL = renderResponse.createRenderURL();
 
-editPageURL.setParameter("struts_action", "/wiki/edit_page");
+editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 editPageURL.setParameter("redirect", currentURL);
 editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 editPageURL.setParameter("title", title);
@@ -166,9 +166,12 @@ if (Validator.isNull(redirect)) {
 	<br />
 </c:if>
 
-<portlet:actionURL var="editPageActionURL">
-	<portlet:param name="struts_action" value="/wiki/edit_page" />
-</portlet:actionURL>
+<portlet:actionURL name="/wiki/edit_page" var="editPageActionURL" />
+
+<portlet:renderURL var="editPageRenderURL" >
+	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
+</portlet:renderURL>
+
 
 <aui:form action="<%= editPageActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -497,6 +500,8 @@ if (Validator.isNull(redirect)) {
 				form.fm('content').val(editor.getHTML());
 			}
 
+			form.attr('action', '<%= editPageRenderURL %>');
+
 			submitForm(form, null, null, false);
 		}
 	);
@@ -521,7 +526,7 @@ if (Validator.isNull(redirect)) {
 		form.fm('<%= Constants.CMD %>').val('<%= Constants.MOVE_TO_TRASH %>');
 
 		<portlet:renderURL var="nodeURL">
-			<portlet:param name="struts_action" value="/wiki/view" />
+			<portlet:param name="mvcRenderCommandName" value="/wiki/view" />
 			<portlet:param name="title" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
 			<portlet:param name="tag" value="<%= StringPool.BLANK %>" />
 		</portlet:renderURL>
@@ -534,6 +539,7 @@ if (Validator.isNull(redirect)) {
 	function <portlet:namespace />previewPage() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
+		form.attr('action', '<%= editPageRenderURL %>');
 		form.fm('<%= Constants.CMD %>').val('');
 		form.fm('preview').val('true');
 

@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -21,7 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -32,24 +34,42 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-public class MovePageAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"mvc.command.name=/wiki/move_page"
+	},
+	service = MVCActionCommand.class
+)
+public class MovePageMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void changeParentPage(ActionRequest actionRequest)
+		throws Exception {
+
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String title = ParamUtil.getString(actionRequest, "title");
+		String newParentTitle = ParamUtil.getString(
+			actionRequest, "newParentTitle");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			WikiPage.class.getName(), actionRequest);
+
+		WikiPageServiceUtil.changeParent(
+			nodeId, title, newParentTitle, serviceContext);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -74,8 +94,6 @@ public class MovePageAction extends PortletAction {
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.wiki.error");
 			}
 			else if (e instanceof DuplicatePageException ||
 					 e instanceof PageContentException ||
@@ -89,56 +107,6 @@ public class MovePageAction extends PortletAction {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getNode(renderRequest);
-			ActionUtil.getPage(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PageTitleException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.wiki.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.wiki.move_page"));
-	}
-
-	protected void changeParentPage(ActionRequest actionRequest)
-		throws Exception {
-
-		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
-		String title = ParamUtil.getString(actionRequest, "title");
-		String newParentTitle = ParamUtil.getString(
-			actionRequest, "newParentTitle");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			WikiPage.class.getName(), actionRequest);
-
-		WikiPageServiceUtil.changeParent(
-			nodeId, title, newParentTitle, serviceContext);
-	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
 	protected void renamePage(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
@@ -149,7 +117,5 @@ public class MovePageAction extends PortletAction {
 
 		WikiPageServiceUtil.renamePage(nodeId, title, newTitle, serviceContext);
 	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 }

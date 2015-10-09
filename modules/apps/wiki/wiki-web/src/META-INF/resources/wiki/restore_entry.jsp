@@ -16,9 +16,7 @@
 
 <%@ include file="/wiki/init.jsp" %>
 
-<liferay-portlet:actionURL varImpl="restoreURL">
-	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
-</liferay-portlet:actionURL>
+<liferay-portlet:actionURL name="/wiki/edit_page_attachment" varImpl="restoreURL" />
 
 <liferay-ui:restore-entry
 	overrideMessage="overwrite-the-existing-attachment-with-the-removed-one"

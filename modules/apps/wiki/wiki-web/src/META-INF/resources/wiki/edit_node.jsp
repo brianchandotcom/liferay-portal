@@ -24,9 +24,7 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 %>
 
-<portlet:actionURL var="editNodeURL">
-	<portlet:param name="struts_action" value="/wiki/edit_node" />
-</portlet:actionURL>
+<portlet:actionURL name="/wiki/edit_node" var="editNodeURL" />
 
 <aui:form action="<%= editNodeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveNode();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

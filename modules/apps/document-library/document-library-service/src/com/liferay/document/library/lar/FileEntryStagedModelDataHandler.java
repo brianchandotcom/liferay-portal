@@ -381,10 +381,7 @@ public class FileEntryStagedModelDataHandler
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			if (existingFileEntry == null) {
-				if (portletDataContext.isDataStrategyMirrorWithOverwriting() &&
-					(fileEntry.getGroupId() ==
-						portletDataContext.getSourceGroupId())) {
-
+				if (portletDataContext.isDataStrategyMirrorWithOverwriting()) {
 					FileEntry existingTitleFileEntry =
 						FileEntryUtil.fetchByR_F_T(
 							portletDataContext.getScopeGroupId(), folderId,

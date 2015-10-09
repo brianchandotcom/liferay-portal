@@ -112,6 +112,7 @@ configurations {
 	portal
 	portalEclipse
 	portalTest
+	xmltask
 
 	alloyTaglib {
 		extendsFrom configurations.runtime
@@ -161,6 +162,7 @@ dependencies {
 	upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
 	wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "default"
+	xmltask rootProject.files("../lib/development/xmltask.jar")
 }
 
 eclipse {
@@ -255,6 +257,32 @@ sourceSets {
 
 tasks.eclipse {
 	dependsOn cleanEclipse
+}
+
+testIntegration {
+	doLast {
+		String databaseType = System.properties["database.type"]
+
+		if (!databaseType) {
+			return
+		}
+
+		FileTree fileTree = fileTree(dir: reports.junitXml.destination, exclude: "TEST-*-*.xml", include: "TEST-*.xml")
+
+		ant.taskdef classname: "com.oopsconsultancy.xmltask.ant.XmlTask", classpath: configurations.xmltask.asPath, name: "xmltask"
+
+		fileTree.each {
+			File file ->
+
+			String fileTitle = FileUtil.stripExtension(file.name)
+
+			ant.xmltask(dest: new File(file.parentFile, "TEST-${fileTitle}-${databaseType}.xml"), source: file) {
+				replace path: "/testsuite/@name", withText: "${fileTitle}-${databaseType}"
+			}
+
+			delete file
+		}
+	}
 }
 
 whip {

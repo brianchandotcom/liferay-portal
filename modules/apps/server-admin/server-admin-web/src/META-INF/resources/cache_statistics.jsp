@@ -76,13 +76,14 @@ if (Validator.isNull(tabs3) && !cacheManagerNames.isEmpty()) {
 	<liferay-ui:search-container-results>
 
 		<%
-		String orderByCol = ParamUtil.getString(request, "orderByCol");
-		String orderByType = ParamUtil.getString(request, "orderByType");
-
 		List<CacheStatistics> cacheStatisticsList = CacheStatisticsUtil.getCacheStatisticsList(tabs3, keywords);
+
+		String orderByCol = ParamUtil.getString(request, "orderByCol");
 
 		if (Validator.isNotNull(orderByCol)) {
 			Collections.sort(cacheStatisticsList, new BeanComparator(orderByCol));
+
+			String orderByType = ParamUtil.getString(request, "orderByType");
 
 			if (StringUtil.equalsIgnoreCase(orderByType, "asc")) {
 				Collections.reverse(cacheStatisticsList);

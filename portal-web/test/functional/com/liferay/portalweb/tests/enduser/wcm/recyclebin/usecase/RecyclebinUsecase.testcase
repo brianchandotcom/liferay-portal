@@ -1240,7 +1240,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreWebContentWithArticleVersions" priority="4">
+	<command name="RestoreWebContentWithArticleVersions" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />

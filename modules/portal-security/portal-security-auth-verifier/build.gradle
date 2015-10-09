@@ -7,3 +7,14 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }
+
+task deployConfigs(type: Copy)
+
+deployConfigs {
+	from "configs"
+	into new File(liferay.liferayHome, "osgi/configs")
+}
+
+deploy {
+	finalizedBy deployConfigs
+}

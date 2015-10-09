@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalFolder folder = ActionUtil.getFolder(request);
-
-long folderId = BeanParamUtil.getLong(folder, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+JournalFolder folder = journalDisplayContext.getFolder();
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFolder");
 
@@ -43,11 +41,11 @@ if (folder != null) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("mvcPath", "/select_folder.jsp");
-	portletURL.setParameter("folderId", String.valueOf(folderId));
+	portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
 	%>
 
 	<%
-	boolean hasAddFolderPermission = JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER);
+	boolean hasAddFolderPermission = JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER);
 	%>
 
 	<aui:button-row>
@@ -55,7 +53,7 @@ if (folder != null) {
 			<portlet:renderURL var="editFolderURL">
 				<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
+				<portlet:param name="parentFolderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
 			</portlet:renderURL>
 
 			<aui:button href="<%= editFolderURL %>" value='<%= (folder == null) ? "add-folder" : "add-subfolder" %>' />
@@ -64,7 +62,7 @@ if (folder != null) {
 		<%
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put("folderid", String.valueOf(folderId));
+		data.put("folderid", String.valueOf(journalDisplayContext.getFolderId()));
 		data.put("foldername", HtmlUtil.escape(folderName));
 		%>
 
@@ -75,10 +73,10 @@ if (folder != null) {
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
-		total="<%= JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folderId) %>"
+		total="<%= JournalFolderServiceUtil.getFoldersCount(scopeGroupId, journalDisplayContext.getFolderId()) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= JournalFolderServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= JournalFolderServiceUtil.getFolders(scopeGroupId, journalDisplayContext.getFolderId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

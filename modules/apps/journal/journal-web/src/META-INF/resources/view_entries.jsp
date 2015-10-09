@@ -19,18 +19,11 @@
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-String currentFolder = ParamUtil.getString(request, "curFolder");
-String deltaFolder = ParamUtil.getString(request, "deltaFolder");
-
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("curFolder", currentFolder);
-portletURL.setParameter("deltaFolder", deltaFolder);
-portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
 
 ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
@@ -89,10 +82,10 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)articleSearchContainer.g
 <%
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)articleSearchContainer.getSearchTerms();
 
-if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+if (journalDisplayContext.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	List<Long> folderIds = new ArrayList<Long>(1);
 
-	folderIds.add(folderId);
+	folderIds.add(journalDisplayContext.getFolderId());
 
 	searchTerms.setFolderIds(folderIds);
 }
@@ -106,7 +99,7 @@ if (Validator.isNotNull(displayTerms.getDDMStructureKey())) {
 
 searchTerms.setVersion(-1);
 
-if (displayTerms.isNavigationRecent()) {
+if (journalDisplayContext.isNavigationRecent()) {
 	articleSearchContainer.setOrderByCol("create-date");
 	articleSearchContainer.setOrderByType(orderByType);
 }
@@ -122,22 +115,20 @@ int total = 0;
 %>
 
 <c:choose>
-	<c:when test='<%= displayTerms.getNavigation().equals("mine") || displayTerms.isNavigationRecent() %>'>
+	<c:when test="<%= journalDisplayContext.isNavigationMine() || journalDisplayContext.isNavigationRecent() %>">
 
 		<%
 		boolean includeOwner = true;
 
-		if (displayTerms.getNavigation().equals("mine")) {
+		if (journalDisplayContext.isNavigationMine()) {
 			includeOwner = false;
-
-			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner);
+		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), journalDisplayContext.getStatus(), includeOwner);
 
 		articleSearchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), journalDisplayContext.getStatus(), includeOwner, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
@@ -166,7 +157,7 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status);
+		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), journalDisplayContext.getStatus());
 
 		articleSearchContainer.setTotal(total);
 
@@ -185,7 +176,7 @@ int total = 0;
 			folderOrderByComparator = new FolderArticleModifiedDateComparator(orderByAsc);
 		}
 
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), folderOrderByComparator);
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), journalDisplayContext.getStatus(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), folderOrderByComparator);
 		%>
 
 	</c:otherwise>

@@ -104,6 +104,45 @@
 		</execute>
 	</command>
 
+	<command name="signInPortalInstance">
+		<execute macro="SignIn#signInSpecificURL">
+			<var name="url" value="http://localhost:8080" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Button#I_AGREE" />
+			<then>
+				<execute macro="SignIn#agreeToTermsOfUse" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Select#QUESTION" />
+			<then>
+				<execute macro="SignIn#setPasswordReminder" />
+			</then>
+		</if>
+
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
+		</execute>
+
+		<var name="portalURL" property-value="portal.url" />
+
+		<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
+		<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
+
+		<execute macro="PortalInstances#addCP">
+			<var name="mailDomain" value="liferay.com" />
+			<var name="virtualHost" value="${portalURL}" />
+			<var name="webId" value="${portalURL}" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SignIn#signInTestSetup" />
+	</command>
+
 	<command name="signInSite">
 		<execute macro="Navigator#openSiteURL" />
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cache;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
-
 import java.io.Serializable;
 
 import java.util.Collections;
@@ -28,14 +26,6 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class AggregatedPortalCacheListener<K extends Serializable, V>
 	implements PortalCacheListener<K, V> {
-
-	public static boolean isRemoteInvoke() {
-		return _remoteInvokeThreadLocal.get();
-	}
-
-	public static void setRemoteInvoke(boolean remoteInvoke) {
-		_remoteInvokeThreadLocal.set(remoteInvoke);
-	}
 
 	public void addPortalCacheListener(
 		PortalCacheListener<K, V> portalCacheListener) {
@@ -189,7 +179,7 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		PortalCacheListener<K, V> portalCacheListener,
 		PortalCacheListenerScope portalCacheListenerScope) {
 
-		if (_remoteInvokeThreadLocal.get()) {
+		if (SkipReplicationThreadLocal.isEnabled()) {
 			if (portalCacheListener instanceof PortalCacheReplicator) {
 				return false;
 			}
@@ -212,11 +202,6 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 
 		return false;
 	}
-
-	private static final ThreadLocal<Boolean> _remoteInvokeThreadLocal =
-		new InitialThreadLocal<>(
-			AggregatedPortalCacheListener.class + "._remoteInvokeThreadLocal",
-			false);
 
 	private final ConcurrentMap
 		<PortalCacheListener<K, V>, PortalCacheListenerScope>

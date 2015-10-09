@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.cluster;
 
-import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
+import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
 
 import java.io.Serializable;
 
@@ -49,16 +49,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 
 	@Override
 	public void put(Element element, boolean doNotNotifyCacheReplicators) {
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean enabled = SkipReplicationThreadLocal.isEnabled();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		SkipReplicationThreadLocal.setEnabled(doNotNotifyCacheReplicators);
 
 		try {
 			super.put(element, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			SkipReplicationThreadLocal.setEnabled(enabled);
 		}
 	}
 
@@ -66,31 +65,29 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public Element putIfAbsent(
 		Element element, boolean doNotNotifyCacheReplicators) {
 
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean enabled = SkipReplicationThreadLocal.isEnabled();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		SkipReplicationThreadLocal.setEnabled(doNotNotifyCacheReplicators);
 
 		try {
 			return super.putIfAbsent(element, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			SkipReplicationThreadLocal.setEnabled(enabled);
 		}
 	}
 
 	@Override
 	public boolean remove(Object key, boolean doNotNotifyCacheReplicators) {
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean enabled = SkipReplicationThreadLocal.isEnabled();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		SkipReplicationThreadLocal.setEnabled(doNotNotifyCacheReplicators);
 
 		try {
 			return super.remove(key, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			SkipReplicationThreadLocal.setEnabled(enabled);
 		}
 	}
 
@@ -103,16 +100,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 
 	@Override
 	public void removeAll(boolean doNotNotifyCacheReplicators) {
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean enabled = SkipReplicationThreadLocal.isEnabled();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		SkipReplicationThreadLocal.setEnabled(doNotNotifyCacheReplicators);
 
 		try {
 			super.removeAll(doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			SkipReplicationThreadLocal.setEnabled(enabled);
 		}
 	}
 
@@ -120,16 +116,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public void removeAll(
 		Collection<?> keys, boolean doNotNotifyCacheReplicators) {
 
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean enabled = SkipReplicationThreadLocal.isEnabled();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		SkipReplicationThreadLocal.setEnabled(doNotNotifyCacheReplicators);
 
 		try {
 			super.removeAll(keys, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			SkipReplicationThreadLocal.setEnabled(enabled);
 		}
 	}
 

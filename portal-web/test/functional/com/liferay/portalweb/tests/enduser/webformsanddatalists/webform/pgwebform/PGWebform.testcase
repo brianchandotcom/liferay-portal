@@ -243,7 +243,7 @@
 		<execute function="AssertElementPresent" locator1="//fieldset/div/div[contains(@class,'form-group')]/textarea" />
 	</command>
 
-	<command name="EditWebFormAndViewOptionalCheckBoxField" priority="4">
+	<command name="EditWebFormAndViewOptionalCheckBoxField" priority="3">
 		<execute macro="WebForm#viewPG">
 			<var name="wfInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
 			<var name="wfInformationTitle" value="Suggestions" />
@@ -392,7 +392,7 @@
 		<execute macro="WebForm#sendPG" />
 	</command>
 
-	<command name="EditWebFormAndViewOptionalTextBoxField" priority="4">
+	<command name="EditWebFormAndViewOptionalTextBoxField" priority="3">
 		<execute macro="WebForm#viewPG">
 			<var name="wfInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
 			<var name="wfInformationTitle" value="Suggestions" />
@@ -490,7 +490,7 @@
 		<execute macro="WebForm#sendPG" />
 	</command>
 
-	<command name="EditWebFormAndViewRequiredCheckBoxField" priority="4">
+	<command name="EditWebFormAndViewRequiredCheckBoxField" priority="3">
 		<execute macro="WebForm#viewPG">
 			<var name="wfInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
 			<var name="wfInformationTitle" value="Suggestions" />
@@ -614,7 +614,7 @@
 		<execute macro="WebForm#sendPG" />
 	</command>
 
-	<command name="EditWebFormAndViewRequiredRadioField" priority="4">
+	<command name="EditWebFormAndViewRequiredRadioField" priority="3">
 		<execute macro="WebForm#viewPG">
 			<var name="wfInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
 			<var name="wfInformationTitle" value="Suggestions" />
@@ -671,7 +671,7 @@
 		<execute macro="WebForm#sendPG" />
 	</command>
 
-	<command name="EditWebFormAndViewRequiredTextBoxField" priority="4">
+	<command name="EditWebFormAndViewRequiredTextBoxField" priority="3">
 		<execute macro="WebForm#viewPG">
 			<var name="wfInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
 			<var name="wfInformationTitle" value="Suggestions" />

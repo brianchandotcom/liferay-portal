@@ -533,7 +533,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
+	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="3">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -672,7 +672,7 @@
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
 	</command>
 
-	<command name="ViewWebContentConfigurationCP" priority="4">
+	<command name="ViewWebContentConfigurationCP" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

@@ -200,7 +200,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithContactsPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithContactsPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Contacts" />
 
 		<execute macro="Page#gotoContentCP">
@@ -298,7 +298,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithEventsPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithEventsPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Events" />
 
 		<execute macro="Page#gotoContentCP">
@@ -378,7 +378,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithInventoryPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithInventoryPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Inventory" />
 
 		<execute macro="Page#gotoContentCP">
@@ -452,7 +452,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithIssuesTrackingPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithIssuesTrackingPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Issues Tracking" />
 
 		<execute macro="Page#gotoContentCP">
@@ -544,7 +544,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithMeetingMinutesPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithMeetingMinutesPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Meeting Minutes" />
 
 		<execute macro="Page#gotoContentCP">
@@ -1832,7 +1832,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinition" priority="4">
+	<command name="CopyDataDefinition" priority="3">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -1911,7 +1911,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinitionWithCopyDisplayTemplates" priority="4">
+	<command name="CopyDataDefinitionWithCopyDisplayTemplates" priority="3">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2001,7 +2001,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinitionWithCopyFormTemplates" priority="4">
+	<command name="CopyDataDefinitionWithCopyFormTemplates" priority="3">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -3397,7 +3397,7 @@
 		</execute>
 	</command>
 
-	<command name="EditRadioFieldOptionsWithUTF8Characters" priority="4">
+	<command name="EditRadioFieldOptionsWithUTF8Characters" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Radio" />
 		<var name="fieldFieldLabel" value="Radio" />
@@ -3499,7 +3499,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSelectFieldOptionsWithUTF8Characters" priority="4">
+	<command name="EditSelectFieldOptionsWithUTF8Characters" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Select" />
 		<var name="fieldFieldLabel" value="Select" />
@@ -3665,7 +3665,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBooleanFieldPredefinedValue" priority="4">
+	<command name="ViewBooleanFieldPredefinedValue" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="No" />
@@ -3791,7 +3791,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="4">
+	<command name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="3">
 		<var name="character1"><![CDATA[`]]></var>
 		<var name="character2"><![CDATA[~]]></var>
 		<var name="character3"><![CDATA[!]]></var>
@@ -3854,7 +3854,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewFormTemplateFieldReadOnlyWithEditMode" priority="4">
+	<command name="ViewFormTemplateFieldReadOnlyWithEditMode" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -3920,7 +3920,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewFormTemplateFields" priority="4">
+	<command name="ViewFormTemplateFields" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -3989,7 +3989,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewFormTemplateFieldsAfterSaveAndContinue" priority="4">
+	<command name="ViewFormTemplateFieldsAfterSaveAndContinue" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -4128,7 +4128,7 @@
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
-	<command name="ViewNoDuplicatesInOriginalAfterCopy" priority="4">
+	<command name="ViewNoDuplicatesInOriginalAfterCopy" priority="3">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />

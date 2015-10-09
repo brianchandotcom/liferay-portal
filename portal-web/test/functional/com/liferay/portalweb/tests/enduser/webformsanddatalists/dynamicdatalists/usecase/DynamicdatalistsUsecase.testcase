@@ -25,7 +25,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddDataDefinitionWithoutANameAndAssertErrorMessage" priority="4">
+	<command name="AddDataDefinitionWithoutANameAndAssertErrorMessage" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
@@ -45,7 +45,7 @@
 		<execute macro="Alert#viewRequiredFieldAlert" />
 	</command>
 
-	<command name="AddListWithoutDataDefinitionAndAssertErrorMessage" priority="4">
+	<command name="AddListWithoutDataDefinitionAndAssertErrorMessage" priority="3">
 		<var name="ddlDataDefinitionName" value="To Do" />
 		<var name="ddlListName" value="List Name" />
 
@@ -171,7 +171,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRecordBlankDateField" priority="4">
+	<command name="AddRecordBlankDateField" priority="3">
 		<description message="This is a use case for LPS-51513." />
 
 		<execute macro="Page#gotoContentCP">
@@ -446,7 +446,7 @@
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 	</command>
 
-	<command name="AssertDecimalFieldInvalidDataErrorMessage" priority="4">
+	<command name="AssertDecimalFieldInvalidDataErrorMessage" priority="3">
 		<var name="ddlDataDefinitionName" value="Decimal Invalid Value Data Definition Name" />
 		<var name="ddlInvalidRecordFieldData" value="0.987a" />
 		<var name="ddlListName" value="List Name" />
@@ -515,7 +515,7 @@
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
-	<command name="AssertFieldAfterNavigatingToManageTemplates" priority="4">
+	<command name="AssertFieldAfterNavigatingToManageTemplates" priority="3">
 		<description message="This is a use case for LPS-48736." />
 
 		<var name="ddlDataDefinitionName" value="Data Definition Title" />
@@ -747,7 +747,7 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
-	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="4">
+	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="3">
 		<var name="ddlDataDefinitionName" value="Integer Invalid Value Data Definition Name" />
 		<var name="ddlInvalidRecordFieldData" value="aaaa" />
 		<var name="ddlListName" value="List Name" />
@@ -1183,7 +1183,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteStructure" priority="4">
+	<command name="DeleteStructure" priority="3">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />
@@ -1266,7 +1266,7 @@
 		</execute>
 	</command>
 
-	<command name="FormTemplate" priority="4">
+	<command name="FormTemplate" priority="3">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
@@ -1687,7 +1687,7 @@
 		<execute macro="DDLTemplate#saveFormTemplateCP" />
 	</command>
 
-	<command name="RemoveRepeatableFieldAndAssertOrderInTranslation" priority="4">
+	<command name="RemoveRepeatableFieldAndAssertOrderInTranslation" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
@@ -1801,7 +1801,7 @@
 		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
 	</command>
 
-	<command name="TemplateAddDeletedField" priority="4">
+	<command name="TemplateAddDeletedField" priority="3">
 		<description message="This is a use case for LPS-48743." />
 
 		<execute macro="Page#gotoContentCP">
@@ -2064,7 +2064,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNestedFieldDoesNotDisplayInRecordTable" priority="4">
+	<command name="ViewNestedFieldDoesNotDisplayInRecordTable" priority="3">
 		<description message="This is a use case for LPS-51538." />
 
 		<execute macro="Page#gotoContentCP">
@@ -2142,7 +2142,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNestedFieldEntryWithBlankParentField" priority="4">
+	<command name="ViewNestedFieldEntryWithBlankParentField" priority="3">
 		<description message="This is a use case for LPS-48969." />
 
 		<execute macro="Page#gotoContentCP">

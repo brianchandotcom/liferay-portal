@@ -1162,7 +1162,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreWebContentFromFolderCP" priority="4">
+	<command name="RestoreWebContentFromFolderCP" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -1225,7 +1225,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

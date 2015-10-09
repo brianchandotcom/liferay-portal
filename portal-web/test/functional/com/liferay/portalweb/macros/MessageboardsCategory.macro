@@ -121,10 +121,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
 		<var name="key_assetType" value="${assetType}" />
 
 		<if>

@@ -124,13 +124,13 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 						if (HtmlUtil.escapeAttribute(orderByType).equals("desc")) {
 							cssClass += " table-sorted-desc";
 						}
+					}
 
-						if (orderByType.equals("asc")) {
-							orderByType = "desc";
-						}
-						else {
-							orderByType = "asc";
-						}
+					if (Validator.equals(orderByType, "asc")) {
+						orderByType = "desc";
+					}
+					else {
+						orderByType = "asc";
 					}
 				%>
 

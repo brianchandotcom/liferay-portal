@@ -284,6 +284,8 @@
 
 		<execute function="Pause" locator1="120000" />
 
+		<execute function="Refresh" />
+
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="Web Content Title" />
 		</execute>

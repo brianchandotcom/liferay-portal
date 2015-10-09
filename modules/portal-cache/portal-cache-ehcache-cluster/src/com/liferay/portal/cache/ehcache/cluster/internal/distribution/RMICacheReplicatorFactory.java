@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.cluster.internal.distribution;
 
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
+import com.liferay.portal.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Properties;

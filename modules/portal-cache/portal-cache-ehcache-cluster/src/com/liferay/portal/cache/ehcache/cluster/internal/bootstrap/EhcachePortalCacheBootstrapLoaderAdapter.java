@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.ehcache.cluster.internal.bootstrap;
 
+import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.cache.ehcache.EhcacheUnwrapUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.log.Log;

@@ -19,37 +19,23 @@
 	</tear-down>
 
 	<command name="AddOrganizationRoleRegRole" priority="4">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
-		<var name="permissionDefinition1Value" value="Add Role" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-		<var name="permissionDefinition2Value" value="Access in Control Panel" />
-		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
-		<var name="permissionDefinition3Value" value="View" />
-		<var name="roleName" value="Regrole Name" />
-		<var name="roleName1" value="Orgrole1 Name" />
-		<var name="roleType1" value="Organization" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -59,19 +45,19 @@
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Role" />
+			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -79,24 +65,24 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName1}" />
-			<var name="roleType" value="${roleType1}" />
+			<var name="roleName" value="Orgrole1 Name" />
+			<var name="roleType" value="Organization" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Role" />
+			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -107,36 +93,23 @@
 	</command>
 
 	<command name="AddRegularRoleRegRole" priority="4">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
-		<var name="permissionDefinition1Value" value="Add Role" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-		<var name="permissionDefinition2Value" value="Access in Control Panel" />
-		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
-		<var name="permissionDefinition3Value" value="View" />
-		<var name="roleName" value="Regrole Name" />
-		<var name="roleName1" value="Regrole1 Name" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -146,19 +119,19 @@
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Role" />
+			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -166,23 +139,23 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName1}" />
+			<var name="roleName" value="Regrole1 Name" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Role" />
+			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -193,37 +166,23 @@
 	</command>
 
 	<command name="AddSiteRoleRegRole" priority="4">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
-		<var name="permissionDefinition1Value" value="Add Role" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-		<var name="permissionDefinition2Value" value="Access in Control Panel" />
-		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
-		<var name="permissionDefinition3Value" value="View" />
-		<var name="roleName" value="Regrole Name" />
-		<var name="roleName1" value="Siterole1 Name" />
-		<var name="roleType1" value="Site" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -233,19 +192,19 @@
 		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Role" />
+			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -253,24 +212,24 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName1}" />
-			<var name="roleType" value="${roleType1}" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="roleType" value="Site" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Role" />
+			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

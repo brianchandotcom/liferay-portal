@@ -381,7 +381,7 @@
 		<execute function="AssertElementPresent" locator1="TextInput#KEYWORDS" />
 		<execute function="AssertElementPresent" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertElementPresent" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
-		<execute function="AssertElementPresent" locator1="UserGroups#OPTIONS_ICON" />
+		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertElementPresent" locator1="Message#INFO" value1="No user groups were found." />
 	</command>
 

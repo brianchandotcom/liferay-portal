@@ -291,149 +291,67 @@
 		</execute>
 	</command>
 
-	<command name="RecycleBinGeneralRestoring" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+	<command name="RecycleBinRestoreDuplicate" priority="4">
+		<for list="1,2" param="wcNumber">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentNavigator#gotoAddCP" />
+
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="WC Content ${wcNumber}" />
+				<var name="webContentTitle" value="WC Title ${wcNumber}" />
+			</execute>
+
+			<execute macro="WebContent#publish" />
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="Document Description 1" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document Title 1" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="Document Description 2" />
-			<var name="dmDocumentFile" value="Document_2.doc" />
-			<var name="dmDocumentTitle" value="Document Title 2" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="Document Description 3" />
-			<var name="dmDocumentFile" value="Document_3.doc" />
-			<var name="dmDocumentTitle" value="Document Title 3" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#editPG">
-			<var name="dmDocumentTitle" value="Document Title 2" />
-			<var name="dmDocumentTitleEdit" value="Document Title 2 Edit" />
-		</execute>
-
-		<execute macro="Page#openURL" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentVersionNumberPG">
-			<var name="dmDocumentTitle" value="Document Title 2 Edit" />
-			<var name="dmDocumentVersionNumber" value="1.1" />
-		</execute>
-
-		<execute macro="Page#openURL" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#checkoutPG">
-			<var name="dmDocumentTitle" value="Document Title 3" />
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
+			<var name="webContentContent" value="WC Content 1" />
+			<var name="webContentTitle" value="WC Title 1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Documents and Media" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="DMDocument#moveToRecycleBinCP">
-			<var name="assetType" value="Document" />
-			<var name="dmDocumentTitle" value="Document Title 1" />
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC Title 2" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#editPG">
-			<var name="dmDocumentTitle" value="Document Title 2 Edit" />
-			<var name="dmDocumentTitleEdit" value="Document Title 1" />
+		<execute macro="WebContent#editCP">
+			<var name="webContentTitle" value="WC Title 2" />
+			<var name="webContentTitleEdit" value="WC Title 1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="RecycleBin#restoreWarningCP">
-			<var name="assetName" value="Document Title 1" />
+			<var name="assetName" value="WC Title 1" />
 			<var name="assetRestoreLocation" value="Home" />
-			<var name="assetType" value="Document" />
-			<var name="newAssetName" value="Document Title 4" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="Document Description 1" />
-			<var name="dmDocumentTitle" value="Document Title 4" />
+			<var name="assetType" value="Web Content Article" />
+			<var name="newAssetName" value="WC Title 2" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Documents and Media" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="DMDocument#moveToRecycleBinCP">
-			<var name="assetType" value="Document" />
-			<var name="dmDocumentTitle" value="Document Title 3" />
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC Title 2" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="WebContent#viewCP">
+			<var name="webContentTitle" value="WC Title 2" />
 		</execute>
-
-		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="RecycleBinMBAttachment" priority="3">

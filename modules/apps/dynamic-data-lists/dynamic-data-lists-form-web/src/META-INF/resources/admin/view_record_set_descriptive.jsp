@@ -25,7 +25,7 @@ DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 DDMStructureVersion ddmStructureVersion = ddmStructure.getStructureVersion();
 
-String rowURL = (String)request.getAttribute("rowURL");
+String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 %>
 
 <liferay-ui:app-view-entry
@@ -47,6 +47,6 @@ String rowURL = (String)request.getAttribute("rowURL");
 	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= HtmlUtil.escape(ddlRecordSet.getName(locale)) %>"
-	url="<%= rowURL %>"
+	url="<%= href %>"
 	version="<%= ddmStructureVersion.getVersion() %>"
 />

@@ -279,11 +279,6 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getBundledApps() {
-		return _appLocalService.getBundledApps();
-	}
-
-	@Override
 	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps() {
 		return _appLocalService.getInstalledApps();
 	}
@@ -299,6 +294,11 @@ public class AppLocalServiceWrapper implements AppLocalService,
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _appLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getPrepackagedApps() {
+		return _appLocalService.getPrepackagedApps();
 	}
 
 	@Override

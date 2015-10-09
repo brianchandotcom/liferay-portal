@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache;
 
 import java.io.Serializable;
 
@@ -21,9 +21,9 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public interface PortalCacheListenerFactory {
+public interface PortalCacheReplicatorFactory {
 
-	public <K extends Serializable, V> PortalCacheListener<K, V> create(
-		Properties properties);
+	public <K extends Serializable, V extends Serializable>
+		PortalCacheReplicator<K, V> create(Properties properties);
 
 }

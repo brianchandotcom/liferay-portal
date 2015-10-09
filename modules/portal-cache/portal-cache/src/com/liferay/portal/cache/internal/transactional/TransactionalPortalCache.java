@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.transactional;
+package com.liferay.portal.cache.internal.transactional;
 
+import com.liferay.portal.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheWrapper;
+import com.liferay.portal.kernel.cache.transactional.TransactionalPortalCacheHelper;
 
 import java.io.Serializable;
 

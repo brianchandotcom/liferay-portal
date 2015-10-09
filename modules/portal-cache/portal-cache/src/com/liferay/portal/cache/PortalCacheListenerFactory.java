@@ -12,37 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache;
 
-import com.liferay.portal.kernel.nio.intraband.proxy.annotation.Proxy;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 
 import java.io.Serializable;
+
+import java.util.Properties;
 
 /**
  * @author Tina Tian
  */
-public interface LowLevelCache<K extends Serializable, V>
-	extends PortalCache<K, V> {
+public interface PortalCacheListenerFactory {
 
-	@Proxy
-	public V putIfAbsent(K key, V value);
-
-	@Proxy
-	public V putIfAbsent(K key, V value, int timeToLive);
-
-	@Proxy
-	public boolean remove(K key, V value);
-
-	@Proxy
-	public V replace(K key, V value);
-
-	@Proxy
-	public V replace(K key, V value, int timeToLive);
-
-	@Proxy
-	public boolean replace(K key, V oldValue, V newValue);
-
-	@Proxy
-	public boolean replace(K key, V oldValue, V newValue, int timeToLive);
+	public <K extends Serializable, V> PortalCacheListener<K, V> create(
+		Properties properties);
 
 }

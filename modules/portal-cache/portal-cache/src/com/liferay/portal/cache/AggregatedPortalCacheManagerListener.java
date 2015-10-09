@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache;
+
+import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 
 import java.util.Collections;
 import java.util.Set;

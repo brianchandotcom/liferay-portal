@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache;
+
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 
 import java.io.Serializable;
 

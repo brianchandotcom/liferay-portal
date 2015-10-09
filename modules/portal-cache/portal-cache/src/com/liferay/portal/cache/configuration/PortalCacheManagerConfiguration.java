@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.configuration;
+package com.liferay.portal.cache.configuration;
 
 import java.util.Collections;
 import java.util.HashSet;

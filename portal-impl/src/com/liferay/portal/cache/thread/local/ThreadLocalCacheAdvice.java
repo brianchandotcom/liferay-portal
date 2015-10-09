@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache;
+package com.liferay.portal.cache.thread.local;
 
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;

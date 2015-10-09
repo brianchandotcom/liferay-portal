@@ -556,60 +556,6 @@
 		</execute>
 	</command>
 
-	<command name="SearchKBArticlesViaKBSearchPG" priority="4">
-		<var name="kbArticleCounterList" value="1,2" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base" />
-		</execute>
-
-		<for list="${kbArticleCounterList}" param="kbCount">
-			<execute macro="KBArticle#addCP">
-				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
-				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
-			</execute>
-		</for>
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Search" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="KBArticle#searchPGViaKBSearch">
-			<var name="searchTerm" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewSearchResultsPG">
-			<var name="kbArticleTitleList" value="Knowledge Base Article Title 1,Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoPGViaKBSearchResult">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewPGViaKBSearch">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#goBackToSearchResultsPG" />
-
-		<execute macro="KBArticle#viewSearchResultsPG">
-			<var name="kbArticleTitleList" value="Knowledge Base Article Title 1,Knowledge Base Article Title 2" />
-		</execute>
-	</command>
-
 	<command name="SearchKBArticleViaSearchPortlet" priority="4">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[

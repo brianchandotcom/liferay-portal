@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache;
+
+import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 
 import java.util.Properties;
 
 /**
  * @author Tina Tian
  */
-public interface PortalCacheBootstrapLoaderFactory {
+public interface PortalCacheManagerListenerFactory
+	<T extends PortalCacheManager<?, ?>> {
 
-	public PortalCacheBootstrapLoader create(Properties properties);
+	public PortalCacheManagerListener create(
+		T portalCacheManager, Properties properties);
 
 }

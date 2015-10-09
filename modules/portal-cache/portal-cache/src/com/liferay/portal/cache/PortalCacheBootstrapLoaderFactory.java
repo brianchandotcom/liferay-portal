@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache;
+
+import java.util.Properties;
 
 /**
  * @author Tina Tian
  */
-public interface PortalCacheBootstrapLoader {
+public interface PortalCacheBootstrapLoaderFactory {
 
-	public boolean isAsynchronous();
-
-	public void loadPortalCache(
-		String portalCacheManagerName, String portalCacheName);
+	public PortalCacheBootstrapLoader create(Properties properties);
 
 }

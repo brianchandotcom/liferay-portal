@@ -1162,7 +1162,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						if (${finderCol.names} == null) {
 							${finderCol.names} = new ${finderCol.type}[0];
 						}
-						else {
+						else if (${finderCol.names}.length > 1) {
 							${finderCol.names} =
 								<#if finderCol.type == "String">
 									ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
@@ -1170,13 +1170,11 @@ that may or may not be enforced with a unique index at the database level. Case
 									ArrayUtil.unique(${finderCol.names});
 								</#if>
 
-							if (${finderCol.names}.length > 1) {
-								<#if finderCol.type == "String">
-									Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
-								<#else>
-									Arrays.sort(${finderCol.names});
-								</#if>
-							}
+							<#if finderCol.type == "String">
+								Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
+							<#else>
+								Arrays.sort(${finderCol.names});
+							</#if>
 						}
 					</#if>
 				</#list>
@@ -1484,7 +1482,7 @@ that may or may not be enforced with a unique index at the database level. Case
 					if (${finderCol.names} == null) {
 						${finderCol.names} = new ${finderCol.type}[0];
 					}
-					else {
+					else if (${finderCol.names}.length > 1) {
 						${finderCol.names} =
 							<#if finderCol.type == "String">
 								ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
@@ -1492,13 +1490,11 @@ that may or may not be enforced with a unique index at the database level. Case
 								ArrayUtil.unique(${finderCol.names});
 							</#if>
 
-						if (${finderCol.names}.length > 1) {
-							<#if finderCol.type == "String">
-								Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
-							<#else>
-								Arrays.sort(${finderCol.names});
-							</#if>
-						}
+						<#if finderCol.type == "String">
+							Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
+						<#else>
+							Arrays.sort(${finderCol.names});
+						</#if>
 					}
 				</#if>
 			</#list>

@@ -92,7 +92,7 @@ public class CacheStatisticsUtil {
 			return StringPool.STAR;
 		}
 
-		Matcher matcher = _VALID_KEYWORD_PATTERN.matcher(keywords);
+		Matcher matcher = _pattern.matcher(keywords);
 
 		if (!matcher.matches()) {
 			return StringPool.STAR;
@@ -101,12 +101,10 @@ public class CacheStatisticsUtil {
 		return StringUtil.quote(keywords, StringPool.STAR);
 	}
 
-	private static final Pattern _VALID_KEYWORD_PATTERN = Pattern.compile(
-		"[A-Za-z0-9.*]+");
-
 	private static final ObjectName _cacheManagerObjectName;
 	private static final MBeanServer _mBeanServer =
 		ManagementFactory.getPlatformMBeanServer();
+	private static final Pattern _pattern = Pattern.compile("[A-Za-z0-9.*]+");
 
 	static {
 		try {

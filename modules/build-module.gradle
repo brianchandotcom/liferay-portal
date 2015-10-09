@@ -260,6 +260,10 @@ tasks.eclipse {
 }
 
 testIntegration {
+	File testIntegrationResultsDir = file("test-results/integration")
+
+	binResultsDir = new File(testIntegrationResultsDir, "binary/testIntegration")
+
 	doLast {
 		String databaseType = System.properties["database.type"]
 
@@ -283,6 +287,8 @@ testIntegration {
 			delete file
 		}
 	}
+
+	reports.junitXml.destination = testIntegrationResultsDir
 }
 
 whip {

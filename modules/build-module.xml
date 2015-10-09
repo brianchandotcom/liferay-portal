@@ -145,7 +145,36 @@
 	</target>
 
 	<target name="test-class">
-		<print-gradle-alternative args="test (or testIntegration) --tests com.liferay.some.package.SomeClass" />
+		<if>
+			<not>
+				<isset property="test.class" />
+			</not>
+			<then>
+				<fail>Use "ant test-class -Dtest.class=StringUtilTest".</fail>
+			</then>
+		</if>
+
+		<if>
+			<resourcecount count="1">
+				<fileset dir="test/integration" erroronmissingdir="false" includes="**/${test.class}.java" />
+			</resourcecount>
+			<then>
+				<var name="test.task" value="testIntegration" />
+			</then>
+			<elseif>
+				<resourcecount count="1">
+					<fileset dir="test/unit" erroronmissingdir="false" includes="**/${test.class}.java" />
+				</resourcecount>
+				<then>
+					<var name="test.task" value="test" />
+				</then>
+			</elseif>
+			<else>
+				<fail>Test class ${test.class} cannot be found.</fail>
+			</else>
+		</if>
+
+		<print-gradle-alternative args="${test.task} --tests *.${test.class}" />
 	</target>
 
 	<target name="test-integration">

@@ -96,7 +96,9 @@
 	</command>
 
 	<command name="addSiteCP">
-		<execute macro="UserGroup#gotoActionsCmd" />
+		<execute macro="UserGroup#gotoActionsCmd">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 

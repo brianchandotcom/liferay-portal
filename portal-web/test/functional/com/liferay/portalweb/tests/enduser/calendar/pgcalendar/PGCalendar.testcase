@@ -4385,7 +4385,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewInactiveResourceNotPresent" priority="4">
+	<command name="ViewInactiveResourceNotPresent" priority="2">
 		<description message="This is a use case for LPS-55171." />
 
 		<execute macro="Page#gotoCP">

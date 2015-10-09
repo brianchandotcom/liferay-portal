@@ -22,6 +22,7 @@ long messageId = 0;
 long categoryId = messageDisplay.getMessage().getCategoryId();
 long threadId = messageDisplay.getMessage().getThreadId();
 long parentMessageId = messageDisplay.getMessage().getMessageId();
+double priority = messageDisplay.getMessage().getPriority();
 
 String subject = BeanParamUtil.getString(replyMessage, request, "subject");
 
@@ -61,6 +62,7 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="threadId" type="hidden" value="<%= threadId %>" />
 	<aui:input name="parentMessageId" type="hidden" value="<%= parentMessageId %>" />
+	<aui:input name="priority" type="hidden" value="<%= priority %>" />
 	<aui:input name="subject" type="hidden" value="<%= subject %>" />
 	<aui:input name="propagatePermissions" type="hidden" value="<%= true %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />

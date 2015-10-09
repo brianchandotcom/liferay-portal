@@ -231,6 +231,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
 										<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 										<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+										<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
 									</portlet:renderURL>
 
 									<liferay-ui:icon
@@ -247,6 +248,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
 										<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 										<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+										<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
 										<portlet:param name="quote" value="<%= Boolean.TRUE.toString() %>" />
 									</portlet:renderURL>
 

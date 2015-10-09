@@ -71,6 +71,8 @@ page import="com.liferay.portlet.documentlibrary.model.DLFileVersion" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %><%@
+page import="com.liferay.server.admin.web.util.CacheStatistics" %><%@
+page import="com.liferay.server.admin.web.util.CacheStatisticsUtil" %><%@
 page import="com.liferay.util.log4j.Levels" %>
 
 <%@ page import="java.text.NumberFormat" %>
@@ -90,7 +92,8 @@ page import="javax.portlet.PortletPreferences" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
-<%@ page import="org.apache.log4j.Level" %><%@
+<%@ page import="org.apache.commons.beanutils.BeanComparator" %><%@
+page import="org.apache.log4j.Level" %><%@
 page import="org.apache.log4j.LogManager" %><%@
 page import="org.apache.log4j.Logger" %>
 

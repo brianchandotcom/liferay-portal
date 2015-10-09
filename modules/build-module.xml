@@ -6,6 +6,8 @@
 
 	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew" />
 
+	<taskdef classpath="${modules.dir}/../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
+
 	<macrodef name="print-gradle-alternative">
 		<attribute name="args" />
 
@@ -151,7 +153,36 @@
 	</target>
 
 	<target name="test-package">
-		<print-gradle-alternative args="test (or testIntegration) --tests com.liferay.some.package.*" />
+		<if>
+			<not>
+				<isset property="test.package" />
+			</not>
+			<then>
+				<fail>Use "ant test-package -Dtest.package=com.liferay.portal.kernel.util".</fail>
+			</then>
+		</if>
+
+		<propertyregex
+			global="true"
+			input="${test.package}"
+			property="test.package.dir"
+			regexp="\."
+			replace="/"
+		/>
+
+		<if>
+			<available file="test/integration/${test.package.dir}" type="dir" />
+			<then>
+				<print-gradle-alternative args="testIntegration --tests ${test.package}.*" />
+			</then>
+		</if>
+
+		<if>
+			<available file="test/unit/${test.package.dir}" type="dir" />
+			<then>
+				<print-gradle-alternative args="test --tests ${test.package}.*" />
+			</then>
+		</if>
 	</target>
 
 	<target name="test-unit">

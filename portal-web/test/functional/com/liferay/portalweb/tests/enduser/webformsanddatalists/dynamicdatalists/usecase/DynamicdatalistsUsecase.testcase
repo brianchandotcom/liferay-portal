@@ -441,7 +441,7 @@
 		<execute function="AssertTextEquals" locator1="BasePortlet#MINIMIZE" value1="Minimize" />
 		<execute function="AssertTextEquals" locator1="BasePortlet#OPTION_MENULIST_REMOVE" value1="Remove" />
 
-		<execute function="Click" locator1="DDL#TOOLBAR_SELECT_LIST" value1="Select List" />
+		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_SELECT_LIST" value1="Select List" />
 
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 	</command>

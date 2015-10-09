@@ -22,7 +22,7 @@
 	</command>
 
 	<command name="addViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#TOOLBAR_ADD_LIST" value1="Add List" />
+		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_LIST" value1="Add List" />
 
 		<execute function="SelectFrame" locator1="PGDynamicdatalistsAddlist#IFRAME" />
 
@@ -116,7 +116,7 @@
 	</command>
 
 	<command name="selectViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#TOOLBAR_SELECT_LIST" value1="Select List" />
+		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_SELECT_LIST" value1="Select List" />
 
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Type" locator1="DDLConfiguration#SEARCH_FIELD" value1="${ddlListName}" />

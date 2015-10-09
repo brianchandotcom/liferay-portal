@@ -125,37 +125,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--TOOLBAR-->
-<tr>
-	<td>TOOLBAR_ADD_FORM_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Form Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Display Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_EDIT_FORM_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Edit Form Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SELECT_LIST</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select List')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD_LIST</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add List')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
@@ -185,6 +154,37 @@
 <tr>
 	<td>LIST_TABLE_ELLIPSIS_1</td>
 	<td>xpath=//td[contains(@class,'entry-action')]/div/a/span[contains(@class,'icon-ellipsis-vertical')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PORTLET_ACTIONS-->
+<tr>
+	<td>PORTLET_ACTIONS_ADD_FORM_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Form Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ACTIONS_ADD_DISPLAY_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Display Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ACTIONS_EDIT_FORM_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Edit Form Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ACTIONS_SELECT_LIST</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select List')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ACTIONS_ADD_LIST</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add List')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -31,14 +31,6 @@
 			<var name="pageName" value="Elasticsearch Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Elasticsearch Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>
@@ -58,8 +50,8 @@
 			<var name="dmDocumentTitle" value="Apple" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#executeServerResourcesActions">

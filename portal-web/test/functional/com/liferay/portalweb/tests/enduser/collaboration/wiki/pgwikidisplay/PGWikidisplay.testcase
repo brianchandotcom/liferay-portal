@@ -30,7 +30,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWikiFrontPageChildPage" priority="4">
+	<command name="AddWikiFrontPageChildPage" priority="5">
 		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
 		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />

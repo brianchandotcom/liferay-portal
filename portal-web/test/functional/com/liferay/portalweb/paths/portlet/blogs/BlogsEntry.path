@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ENTRY_COVER_IMAGE</td>
-	<td>//div[contains(@class,'cover-image-container')]</td>
+	<td>//div[contains(@class,'cover-image-container') and contains(@style,'${key_uploadFileName}')] | //div[contains(@class,'cover-image')]//img[contains(@src,'${key_uploadFileName}')]</td>
 	<td></td>
 </tr>
 <tr>

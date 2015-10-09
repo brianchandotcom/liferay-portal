@@ -679,6 +679,12 @@
 		<execute function="AssertClick" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 	</command>
 
+	<command name="gotoPagePanelPortlet">
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute function="AssertClick" locator1="Panel#MENU_ITEM" value1="${portletName}" />
+	</command>
+
 	<command name="gotoPagesCP">
 		<description message="Navigate to Site Administration > Pages > ${portletName}." />
 

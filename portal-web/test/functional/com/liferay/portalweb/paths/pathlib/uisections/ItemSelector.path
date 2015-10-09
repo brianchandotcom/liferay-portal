@@ -14,33 +14,48 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_SELECTOR_MODAL_FOOTER</td>
+	<td>//div[contains(@id,'selectImage')]//div[contains(@class,'modal-footer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BUTTON</td>
+	<td>//div[contains(@class,'modal-footer')]//button[@id='addButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--NAVIGATION-->
 <tr>
-	<td>BLOG_IMAGES</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Blog Images')]</td>
+	<td>NAVIGATION_SPECIFIC_TAB</td>
+	<td>//ul[contains(@class,'navbar')]//span[contains(.,'${key_navTab}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENTS_AND_MEDIA</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Documents and Media')]</td>
+	<td>NAVIGATION_BLOG_IMAGES</td>
+	<td>//ul[contains(@class,'navbar')]//span[contains(.,'Blog Images')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>UPLOAD_IMAGE</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Upload Image')]</td>
+	<td>NAVIGATION_DOCUMENTS_AND_MEDIA</td>
+	<td>//ul[contains(@class,'navbar')]//span[contains(.,'Documents and Media')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>URL</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'URL')]</td>
+	<td>NAVIGATION_UPLOAD_IMAGE</td>
+	<td>//ul[contains(@class,'navbar')]//span[contains(.,'Upload Image')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NAVIGATE_BACK</td>
+	<td>NAVIGATION_URL</td>
+	<td>//ul[contains(@class,'navbar')]//span[contains(.,'Blogs')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_BACK</td>
 	<td>//button[contains(@class,'close') and not(contains(@hidden,'hidden'))]//span[contains(@class,'glyphicon')]</td>
 	<td></td>
 </tr>
@@ -51,8 +66,8 @@
 </tr>
 <!--SELECT_FILE-->
 <tr>
-	<td>SELECT_FILE_BLOG_IMAGES</td>
-	<td>//div[contains(@id,'ItemSelectorPortlet') and not(@class='hide')]//a[@title='${key_imageFileName}']</td>
+	<td>SELECT_FILE_IMAGE_PREVIEW</td>
+	<td>//div[contains(@class,'item-preview')]//div[contains(@style,'${key_imageFileName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +76,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_FILE_DOCUMENTS_AND_MEDIA</td>
+	<td>SELECT_FILE_DM_UPLOAD</td>
 	<td>//div[contains(@id,'ItemSelectorContainer')]//label[contains(.,'Select File')]</td>
 	<td></td>
 </tr>

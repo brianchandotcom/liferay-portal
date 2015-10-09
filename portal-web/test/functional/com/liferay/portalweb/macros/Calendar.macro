@@ -867,11 +867,11 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
-		<var name="nodePort" value="${nodePort}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="soDashboard" value="${soDashboard}" />
-		<var name="soPage" value="${soPage}" />
-</execute>
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<execute macro="Calendar#chooseOtherCalendarMenulistOption">
 			<var name="calendarName" value="${calendarName}" />
@@ -886,11 +886,11 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
-		<var name="nodePort" value="${nodePort}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="soDashboard" value="${soDashboard}" />
-		<var name="soPage" value="${soPage}" />
-</execute>
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<execute macro="Calendar#chooseOtherCalendarMenulistOption">
 			<var name="calendarName" value="${calendarName}" />
@@ -905,11 +905,11 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
-		<var name="nodePort" value="${nodePort}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="soDashboard" value="${soDashboard}" />
-		<var name="soPage" value="${soPage}" />
-</execute>
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<execute macro="Calendar#chooseOtherCalendarMenulistOption">
 			<var name="calendarName" value="${calendarName}" />
@@ -918,11 +918,11 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
-		<var name="nodePort" value="${nodePort}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="soDashboard" value="${soDashboard}" />
-		<var name="soPage" value="${soPage}" />
-</execute>
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<execute macro="Calendar#viewCalendarColorPicker">
 			<var name="calendarName" value="${calendarName}" />
@@ -931,11 +931,11 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
-		<var name="nodePort" value="${nodePort}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="soDashboard" value="${soDashboard}" />
-		<var name="soPage" value="${soPage}" />
-</execute>
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<execute macro="Calendar#chooseOtherCalendarMenulistOption">
 			<var name="calendarName" value="${calendarName}" />

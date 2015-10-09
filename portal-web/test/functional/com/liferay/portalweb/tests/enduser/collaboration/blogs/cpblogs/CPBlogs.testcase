@@ -731,6 +731,39 @@
 		</execute>
 	</command>
 
+	<command name="ViewBlogsEntryDraftWithCoverImage" priority="3">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithUploadedCoverImage">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="navTab" value="Upload Image" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="BlogsEntry#saveAsDraft" />
+
+		<execute function="Click" locator1="Icon#BACK" />
+
+		<execute macro="Blogs#viewDraftStatusViaAdmin">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+	</command>
+
 	<command name="ViewBlogsEntryViewCount" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

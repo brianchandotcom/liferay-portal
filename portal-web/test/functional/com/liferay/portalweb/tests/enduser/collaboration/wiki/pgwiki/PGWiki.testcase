@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWikiFrontPage" priority="4">
+	<command name="AddWikiFrontPage" priority="5">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
 		<execute macro="Page#gotoPG">
@@ -429,7 +429,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPage" priority="4">
+	<command name="AddWikiPage" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 
@@ -461,7 +461,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPageChildPage" priority="4">
+	<command name="AddWikiPageChildPage" priority="5">
 		<var name="wikiChildPageContent" value="Wiki Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki Child Page Title" />
 		<var name="wikiPageContent" value="Wiki Page Content" />
@@ -510,7 +510,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPageFormatHTML" priority="4">
+	<command name="AddWikiPageFormatHTML" priority="5">
 		<var name="welcomeToLiferay">
 			<![CDATA[
 				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
@@ -593,7 +593,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPages" priority="4">
+	<command name="AddWikiPages" priority="5">
 		<var name="wikiPageCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
@@ -628,7 +628,7 @@
 		</for>
 	</command>
 
-	<command name="CancelAddPage" priority="4">
+	<command name="CancelAddPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -652,7 +652,7 @@
 		</execute>
 	</command>
 
-	<command name="CancelEditPage" priority="4">
+	<command name="CancelEditPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -832,7 +832,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWikiPage" priority="4">
+	<command name="DeleteWikiPage" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 
@@ -868,7 +868,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDraftPage" priority="4">
+	<command name="EditDraftPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1093,7 +1093,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveRedirectLinkFromWikiPage" priority="4">
+	<command name="RemoveRedirectLinkFromWikiPage" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

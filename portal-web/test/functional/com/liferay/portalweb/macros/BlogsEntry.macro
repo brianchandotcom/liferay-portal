@@ -1483,6 +1483,7 @@
 		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entrySubtitle" value="${entrySubtitle}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
+		<var name="key_uploadFileName" value="${uploadFileName}" />
 
 		<execute function="Pause" locator1="3000" />
 
@@ -1492,6 +1493,13 @@
 			<isset var="entrySubtitle" />
 			<then>
 				<execute function="AssertTextEquals" locator1="BlogsEntry#SUBTITLE" value1="${entrySubtitle}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="uploadFileName" />
+			<then>
+				<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE" />
 			</then>
 		</if>
 

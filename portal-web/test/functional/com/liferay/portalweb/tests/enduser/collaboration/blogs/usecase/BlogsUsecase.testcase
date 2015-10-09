@@ -1175,6 +1175,78 @@
 		</execute>
 	</command>
 
+	<command name="ViewBlogsEntryWithImageUploadedToDM" priority="3">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithUploadedCoverImage">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="Document_1.jpg" />
+		</execute>
+	</command>
+
+	<command name="ViewBlogsEntryWithUploadedCoverImage" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntryWithUploadedCoverImage">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="navTab" value="Upload Image" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
 	<command name="ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration" priority="4">
 		<var name="orgName1" value="Organization1 Name" />
 		<var name="orgName2" value="Organization2 Name" />

@@ -2,7 +2,9 @@
 	<command name="addFromURL">
 		<var name="key_imageSourceURL" value="${imageSourceURL}" />
 
-		<execute function="AssertClick" locator1="ItemSelector#URL" value1="URL" />
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_URL" value1="URL" />
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#URL_LABEL" />
 
@@ -12,36 +14,54 @@
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#URL_IMAGE_SOURCE" value1="${imageSourceURL}" />
 
-		<execute function="AssertClick" locator1="Button#ADD" value1="ADD" />
-	</command>
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-	<command name="dmSelectFile">
-		<execute function="AssertClick" locator1="ItemSelector#DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
+		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
 
-		<execute function="AssertClick" locator1="ItemSelector#SELECT_FILE_UPLOAD_IMAGE" value1="Select File" />
-
-		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${uploadFileName}" />
-
-		<execute function="AssertTextEquals" locator1="ItemSelector#CAPTION" value1="${uploadFileName}" />
-
-		<execute function="AssertClick" locator1="Button#ADD" value1="ADD" />
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="selectBlogImage">
 		<var name="key_imageFileName" value="${imageFileName}" />
 		<var name="key_uploadFileName" value="${imageFileName}" />
 
-		<execute function="AssertClick" locator1="ItemSelector#BLOG_IMAGES" value1="Blog Images" />
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-		<execute function="AssertClick" locator1="ItemSelector#SELECT_FILE_BLOG_IMAGES" value1="${imageFileName}" />
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_BLOG_IMAGES" value1="Blog Images" />
+
+		<execute function="AssertClick" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
 
 		<execute function="AssertTextEquals" locator1="ItemSelector#CAPTION" value1="${imageFileName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
-	<command name="uploadImage">
-		<execute function="AssertClick" locator1="ItemSelector#UPLOAD_IMAGE" value1="Upload Image" />
+	<command name="selectDMImage">
+		<var name="key_imageFileName" value="${imageFileName}" />
+		<var name="key_uploadFileName" value="${imageFileName}" />
+
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
+
+		<execute function="AssertClick" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+
+		<execute function="AssertTextEquals" locator1="ItemSelector#CAPTION" value1="${imageFileName}" />
+
+		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="uploadFile">
+		<var name="key_navTab" value="${navTab}" />
+		<var name="key_uploadFileName" value="${uploadFileName}" />
+
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="${navTab}" />
 
 		<execute function="AssertClick" locator1="ItemSelector#SELECT_FILE_UPLOAD_IMAGE" value1="Select File" />
 
@@ -49,14 +69,20 @@
 
 		<execute function="AssertTextEquals" locator1="ItemSelector#CAPTION" value1="${uploadFileName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD" value1="ADD" />
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_MODAL_FOOTER" />
+
+		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewItemDetail">
 		<var name="key_fileDetail" value="${fileDetail}" />
-		<var name="key_uploadFileName" value="${uploadFileName}" />
+		<var name="key_imageFileName" value="${uploadFileName}" />
 
-		<execute function="Click" locator1="ItemSelector#SELECT_FILE_BLOG_IMAGES" />
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${uploadFileName}" />
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_IMAGE_PREVIEW" />
 		<execute function="AssertTextEquals" locator1="ItemSelector#CAPTION" value1="${uploadFileName}" />
@@ -65,5 +91,7 @@
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#SIDEBAR_HEADER" />
 		<execute function="AssertTextEquals" locator1="ItemSelector#SIDEBAR_CONTENT" value1="${fileDetail}" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 </definition>

@@ -221,24 +221,20 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="configurePortalWorkflow">
-		<execute function="Select" locator1="CPPortalWorkflowconfigurationDefaultconfiguration#${workflowResourceKey}" value1="${workflowDefinition}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
-	<command name="configureSiteWorkflow">
-		<execute function="Select" locator1="CPSiteWorkflowconfiguration#${workflowResourceKey}" value1="${workflowDefinition}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
 	<command name="configureWebContentWorkflow">
 		<execute function="Click" locator1="Icon#INFO" />
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="configureWorkflow">
+		<execute function="Select" locator1="WorkflowConfiguration#${workflowResourceKey}" value1="${workflowDefinition}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -445,8 +441,9 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<var name="noWorkflow" value="No Workflow" />
+		<var name="noWorkflow" value="Default: No Workflow" />
 
+		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_CALENDAR_EVENT_SELECT" value1="${defaultWorkflow}" />
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${noWorkflow}" />
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_USER_SELECT" value1="${noWorkflow}" />
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="${noWorkflow}" />
@@ -461,15 +458,16 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<var name="defaultWorkflow" value="No Workflow" />
+		<var name="defaultWorkflow" value="Default: No Workflow" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="CPSiteWorkflowconfiguration#RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" />
+			<condition function="IsElementPresent" locator1="WorkflowConfiguration#RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" />
 			<then>
-				<execute function="Select" locator1="CPSiteWorkflowconfiguration#RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" value1="${defaultWorkflow}" />
+				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" value1="${defaultWorkflow}" />
 			</then>
 		</if>
 
+		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_CALENDAR_EVENT_SELECT" value1="${defaultWorkflow}" />
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${defaultWorkflow}" />
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="${defaultWorkflow}" />
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_COMMENTS_SELECT" value1="${defaultWorkflow}" />

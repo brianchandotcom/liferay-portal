@@ -1970,7 +1970,7 @@
 			<var name="siteScopeName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
@@ -2014,7 +2014,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
@@ -2199,7 +2199,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
@@ -2674,7 +2674,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
 		</execute>

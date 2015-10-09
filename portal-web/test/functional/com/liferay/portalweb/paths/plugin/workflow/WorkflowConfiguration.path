@@ -10,6 +10,11 @@
 <tbody>
 <!--RESOURCE_TABLE-->
 <tr>
+	<td>RESOURCE_TABLE_CALENDAR_EVENT_SELECT</td>
+	<td>//select[contains(@id,'Calendar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESOURCE_TABLE_PAGE_REVISION</td>
 	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'Page Revision')]/td[1]</td>
 	<td></td>
@@ -57,6 +62,16 @@
 <tr>
 	<td>RESOURCE_TABLE_COMMENTS_SELECT</td>
 	<td>//select[contains(@id,'MBDiscussion')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE</td>
+	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'Knowledge Base Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT</td>
+	<td>//select[contains(@id,'KBArticle')]</td>
 	<td></td>
 </tr>
 <tr>

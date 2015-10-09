@@ -10,7 +10,7 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 		</execute>
@@ -44,7 +44,7 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Join Xor (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 		</execute>

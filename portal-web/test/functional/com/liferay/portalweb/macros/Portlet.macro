@@ -79,6 +79,8 @@
 			<then>
 				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
+				<execute function="Pause" locator1="30000" />
+
 				<echo message="The PORTLET could not be found. Refreshing the page. Attempt number ${i}..." />
 
 				<execute function="Refresh" />

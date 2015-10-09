@@ -267,7 +267,7 @@
 		<execute macro="WikiPage#viewCommentRatingGood" />
 	</command>
 
-	<command name="RatePage" priority="4">
+	<command name="RatePage" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
@@ -444,7 +444,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCKEditorResizerAfterEditing" priority="4">
+	<command name="ViewCKEditorResizerAfterEditing" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -473,7 +473,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoWikiXSSviaAddPage" priority="4">
+	<command name="ViewNoWikiXSSviaAddPage" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>

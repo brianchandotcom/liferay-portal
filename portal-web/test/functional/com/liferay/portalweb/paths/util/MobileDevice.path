@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>MOBILE_DEVICE_SCREENSHOT</td>
-	<td>mobile/screenshots/mobile_device_screenshot.png</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_DEVICE_FAMILY_BUTTON</td>
 	<td>//li/a/span[contains(.,'Add Device Family')]</td>
 	<td></td>

@@ -298,9 +298,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Teams" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesUsers">
+			<var name="portlet" value="Site Teams" />
 		</execute>
 
 		<execute macro="Team#addCP">

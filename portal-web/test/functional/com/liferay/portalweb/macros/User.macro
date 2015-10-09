@@ -1363,17 +1363,6 @@
 	</command>
 
 	<command name="firstLoginPG" summary="Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first">
-		<echo message="Checking to see if Mobile Device is enabled..." />
-
-		<var method="selenium#isMobileDeviceEnabled()" name="mobileDeviceEnabled" />
-
-		<if>
-			<equals arg1="${mobileDeviceEnabled}" arg2="true" />
-			<then>
-				<execute macro="MobileDevice#selectMobileDevice" />
-			</then>
-		</if>
-
 		<echo message="Checking to see if TCat is enabled..." />
 
 		<var method="selenium#isTCatEnabled()" name="tcatEnabled" />

@@ -121,14 +121,20 @@ public class WebDriverHelper {
 			return;
 		}
 
-		WebElement webElement = getWebElement(webDriver, "//body");
+		List<JavaScriptError> javaScriptErrors;
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+		try {
+			WebElement webElement = getWebElement(webDriver, "//body");
 
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-		List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(
-			wrappedWebDriver);
+			WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+			javaScriptErrors = JavaScriptError.readErrors(wrappedWebDriver);
+		}
+		catch (Exception e) {
+			javaScriptErrors = new ArrayList<>();
+		}
 
 		List<Exception> exceptions = new ArrayList<>();
 

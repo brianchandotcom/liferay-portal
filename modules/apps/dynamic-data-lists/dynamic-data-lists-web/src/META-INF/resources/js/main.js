@@ -146,6 +146,41 @@ AUI.add(
 						scrollableElement.set('scrollLeft', scrollTo);
 					},
 
+					_normalizeFieldData: function(item, index, record, fieldsDisplayValues, normalized) {
+						var instance = this;
+
+						var type = item.type;
+						var value = record.get(item.name);
+
+						if (type === 'ddm-link-to-page') {
+							value = FormBuilder.Util.parseJSON(value);
+
+							delete value.name;
+
+							value = JSON.stringify(value);
+						}
+						else if (type === 'radio' || type === 'select') {
+							if (!isArray(value)) {
+								value = AArray(value);
+							}
+
+							value = JSON.stringify(value);
+						}
+
+						normalized[item.name] = instance._normalizeValue(value);
+
+						fieldsDisplayValues.push(item.name + FIELDS_DISPLAY_INSTANCE_SEPARATOR + instance._randomString(8));
+
+						if (item.fields && isArray(item.fields)) {
+							item.fields.forEach(
+								function(item, index) {
+									instance._normalizeFieldData(item, index, record, fieldsDisplayValues, normalized);
+								}
+							);
+						}
+
+					},
+
 					_normalizeRecordData: function(record) {
 						var instance = this;
 
@@ -156,27 +191,7 @@ AUI.add(
 
 						structure.forEach(
 							function(item, index) {
-								var type = item.type;
-								var value = record.get(item.name);
-
-								if (type === 'ddm-link-to-page') {
-									value = FormBuilder.Util.parseJSON(value);
-
-									delete value.name;
-
-									value = JSON.stringify(value);
-								}
-								else if (type === 'radio' || type === 'select') {
-									if (!isArray(value)) {
-										value = AArray(value);
-									}
-
-									value = JSON.stringify(value);
-								}
-
-								normalized[item.name] = instance._normalizeValue(value);
-
-								fieldsDisplayValues.push(item.name + FIELDS_DISPLAY_INSTANCE_SEPARATOR + instance._randomString(8));
+								instance._normalizeFieldData(item, index, record, fieldsDisplayValues, normalized);
 							}
 						);
 

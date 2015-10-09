@@ -34,9 +34,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 <%@ include file="/wiki/page_name.jspf" %>
 
-<portlet:actionURL var="movePageURL">
-	<portlet:param name="struts_action" value="/wiki/move_page" />
-</portlet:actionURL>
+<portlet:actionURL name="/wiki/move_page" var="movePageURL" />
 
 <aui:form action="<%= movePageURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "changeParent();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

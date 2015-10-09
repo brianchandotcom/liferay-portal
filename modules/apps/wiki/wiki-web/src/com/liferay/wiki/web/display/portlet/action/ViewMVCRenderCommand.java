@@ -14,16 +14,17 @@
 
 package com.liferay.wiki.web.display.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -33,26 +34,30 @@ import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"mvc.command.name=/", "mvc.command.name=/wiki_display/view"
+	},
+	service = MVCRenderCommand.class
+)
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		try {
 			PortletPreferences portletPreferences =
@@ -92,24 +97,24 @@ public class ViewAction extends PortletAction {
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 
-			return actionMapping.findForward("portlet.wiki_display.view");
+			return "/wiki_display/view.jsp";
 		}
 		catch (NoSuchNodeException nsne) {
-			return actionMapping.findForward(
-				"portlet.wiki_display.portlet_not_setup");
+			return "/wiki_display/portlet_not_setup.jsp";
 		}
 		catch (NoSuchPageException nspe) {
-			return actionMapping.findForward(
-				"portlet.wiki_display.portlet_not_setup");
+			return "/wiki_display/portlet_not_setup.jsp";
 		}
-		catch (PrincipalException pe) {
+		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());
 
-			return actionMapping.findForward("portlet.wiki_display.error");
+			return "/wiki_display/error.jsp";
 		}
 	}
 
-	protected WikiNode getNode(RenderRequest renderRequest) throws Exception {
+	protected WikiNode getNode(RenderRequest renderRequest)
+		throws PortalException {
+
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

@@ -37,14 +37,14 @@
 
 	PortletURL searchURL = renderResponse.createRenderURL();
 
-	searchURL.setParameter("struts_action", "/wiki/search");
+	searchURL.setParameter("mvcRenderCommandName", "/wiki/search");
 	searchURL.setParameter("redirect", currentURL);
 	searchURL.setParameter("nodeId", String.valueOf(nodeId));
 	searchURL.setParameter("keywords", title);
 
 	PortletURL editPageURL = renderResponse.createRenderURL();
 
-	editPageURL.setParameter("struts_action", "/wiki/edit_page");
+	editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 	editPageURL.setParameter("redirect", currentURL);
 	editPageURL.setParameter("nodeId", String.valueOf(nodeId));
 	editPageURL.setParameter("title", title);

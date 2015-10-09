@@ -25,6 +25,7 @@ import com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -78,7 +79,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			WikiPortletKeys.WIKI);
 
 		portletURL.setParameter(
-			"struts_action", "/wiki/upload_page_attachment");
+			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
 		portletURL.setParameter(
 			"resourcePrimKey",
 			String.valueOf(

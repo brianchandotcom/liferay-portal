@@ -21,7 +21,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/wiki/view_nodes");
+portletURL.setParameter("mvcPath", "/wiki/view_nodes");
 
 List<String> headerNames = new ArrayList<String>();
 
@@ -41,8 +41,7 @@ List results = WikiNodeServiceUtil.getNodes(scopeGroupId, searchContainer.getSta
 searchContainer.setResults(results);
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/wiki/edit_node" />
+<portlet:actionURL name="/wiki/edit_node" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -67,7 +66,7 @@ searchContainer.setResults(results);
 
 		PortletURL rowURL = renderResponse.createRenderURL();
 
-		rowURL.setParameter("struts_action", "/wiki/view_all_pages");
+		rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
 		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
@@ -108,7 +107,7 @@ searchContainer.setResults(results);
 			<aui:button-row>
 				<c:if test="<%= showAddNodeButton %>">
 					<portlet:renderURL var="addNodeURL">
-						<portlet:param name="struts_action" value="/wiki/edit_node" />
+						<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="nodeId" value="0" />
 					</portlet:renderURL>

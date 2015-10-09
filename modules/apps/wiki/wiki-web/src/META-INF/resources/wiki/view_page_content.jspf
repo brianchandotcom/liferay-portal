@@ -28,7 +28,7 @@ try {
 
 				<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 					<portlet:renderURL var="removeRedirectURL">
-						<portlet:param name="struts_action" value="/wiki/edit_page" />
+						<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 						<portlet:param name="title" value="<%= title %>" />
 						<portlet:param name="removeRedirect" value="true" />
@@ -85,5 +85,5 @@ catch (Exception e) {
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_wiki_web.html.portlet.wiki.view_page_content_jspf");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_wiki_web.wiki.view_page_content_jspf");
 %>

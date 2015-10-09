@@ -35,8 +35,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 				TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), attachmentsFileEntry.getFileEntryId());
 				%>
 
-				<portlet:actionURL var="restoreEntryURL">
-					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+				<portlet:actionURL name="/wiki/edit_page_attachment" var="restoreEntryURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
@@ -55,8 +54,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 			</c:if>
 
 			<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), wikiPage.getTitle(), ActionKeys.DELETE) %>">
-				<portlet:actionURL var="deleteURL">
-					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+				<portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
@@ -71,8 +69,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), wikiPage.getTitle(), ActionKeys.DELETE) %>">
-				<portlet:actionURL var="deleteURL">
-					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+				<portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />

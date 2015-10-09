@@ -36,14 +36,12 @@ if (Validator.isNull(tabs2)) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/wiki/import_pages");
+portletURL.setParameter("mvcRenderCommandName", "/wiki/import_pages");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("nodeId", String.valueOf(nodeId));
 %>
 
-<portlet:actionURL var="importPagesURL">
-	<portlet:param name="struts_action" value="/wiki/import_pages" />
-</portlet:actionURL>
+<portlet:actionURL name="/wiki/import_pages" var="importPagesURL" />
 
 <aui:form action="<%= importPagesURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "importPages();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

@@ -25,19 +25,19 @@ List<FileEntry> attachmentsFileEntries = node.getDeletedAttachmentsFiles();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/wiki/view_all_pages");
+portletURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
 PortalUtil.addPortletBreadcrumbEntry(request, node.getName(), portletURL.toString());
 
-portletURL.setParameter("struts_action", "/wiki/view_node_deleted_attachments");
+portletURL.setParameter("mvcRenderCommandName", "/wiki/view_node_deleted_attachments");
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachments-recycle-bin"), portletURL.toString());
 
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
-iteratorURL.setParameter("struts_action", "/wiki/view_node_deleted_attachments");
+iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_node_deleted_attachments");
 iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
@@ -48,8 +48,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 	title="removed-attachments"
 />
 
-<portlet:actionURL var="emptyTrashURL">
-	<portlet:param name="struts_action" value="/wiki/edit_node_attachment" />
+<portlet:actionURL name="/wiki/edit_node_attachment" var="emptyTrashURL">
 	<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
 </portlet:actionURL>
 
@@ -115,13 +114,12 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<portlet:actionURL var="checkEntryURL">
+<portlet:actionURL name="/wiki/edit_page_attachment" var="checkEntryURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />
-	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 </portlet:actionURL>
 
 <portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/wiki/restore_entry" />
+	<portlet:param name="mvcRenderCommandName" value="/wiki/restore_entry" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:renderURL>
 

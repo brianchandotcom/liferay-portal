@@ -37,7 +37,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/wiki/search");
+portletURL.setParameter("mvcRenderCommandName", "/wiki/search");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("nodeId", String.valueOf(nodeId));
 portletURL.setParameter("keywords", keywords);
@@ -104,7 +104,7 @@ portletURL.setParameter("keywords", keywords);
 			%>
 
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="struts_action" value="/wiki/view" />
+				<portlet:param name="mvcRenderCommandName" value="/wiki/view" />
 				<portlet:param name="nodeName" value="<%= curNode.getName() %>" />
 				<portlet:param name="title" value="<%= title %>" />
 			</portlet:renderURL>
@@ -125,8 +125,7 @@ portletURL.setParameter("keywords", keywords);
 	</liferay-ui:search-container>
 
 	<c:if test="<%= createNewPage %>">
-		<portlet:actionURL var="addPageURL">
-			<portlet:param name="struts_action" value="/wiki/edit_page" />
+		<portlet:actionURL name="/wiki/edit_page" var="addPageURL">
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
 			<portlet:param name="title" value="<%= keywords %>" />

@@ -24,7 +24,7 @@ String eventName = ParamUtil.getString(request, "eventName", renderResponse.getN
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/wiki/select_version");
+portletURL.setParameter("mvcRenderCommandName", "/wiki/select_version");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
 portletURL.setParameter("title", HtmlUtil.unescape(wikiPage.getTitle()));

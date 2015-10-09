@@ -52,10 +52,10 @@ boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT)
 PortletURL viewPageURL = renderResponse.createRenderURL();
 
 if (portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
-	viewPageURL.setParameter("struts_action", "/wiki/view_page");
+	viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view_page");
 }
 else {
-	viewPageURL.setParameter("struts_action", "/wiki/view");
+	viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 }
 
 viewPageURL.setParameter("nodeName", node.getName());
@@ -73,7 +73,7 @@ if (Validator.isNotNull(parentTitle)) {
 
 PortletURL addPageURL = renderResponse.createRenderURL();
 
-addPageURL.setParameter("struts_action", "/wiki/edit_page");
+addPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 addPageURL.setParameter("redirect", currentURL);
 addPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 addPageURL.setParameter("title", StringPool.BLANK);
@@ -85,7 +85,7 @@ if (wikiPage != null) {
 
 PortletURL editPageURL = renderResponse.createRenderURL();
 
-editPageURL.setParameter("struts_action", "/wiki/edit_page");
+editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 editPageURL.setParameter("redirect", currentURL);
 editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 editPageURL.setParameter("title", title);
@@ -97,17 +97,17 @@ printPageURL.setWindowState(LiferayWindowState.POP_UP);
 
 PortletURL categorizedPagesURL = renderResponse.createRenderURL();
 
-categorizedPagesURL.setParameter("struts_action", "/wiki/view_categorized_pages");
+categorizedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_categorized_pages");
 categorizedPagesURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
 PortletURL taggedPagesURL = renderResponse.createRenderURL();
 
-taggedPagesURL.setParameter("struts_action", "/wiki/view_tagged_pages");
+taggedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages");
 taggedPagesURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
 PortletURL viewAttachmentsURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-viewAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments");
+viewAttachmentsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_attachments");
 viewAttachmentsURL.setParameter("redirect", currentURL);
 
 AssetEntryServiceUtil.incrementViewCounter(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
@@ -196,7 +196,7 @@ contextObjects.put("wikiPortletInstanceOverriddenConfiguration", wikiPortletInst
 			<%
 			PortletURL viewPageDetailsURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-			viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details");
+			viewPageDetailsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_details");
 			viewPageDetailsURL.setParameter("redirect", currentURL);
 			%>
 
@@ -222,7 +222,7 @@ contextObjects.put("wikiPortletInstanceOverriddenConfiguration", wikiPortletInst
 		<%
 		PortletURL originalViewPageURL = renderResponse.createRenderURL();
 
-		originalViewPageURL.setParameter("struts_action", "/wiki/view");
+		originalViewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 		originalViewPageURL.setParameter("nodeName", node.getName());
 		originalViewPageURL.setParameter("title", originalPage.getTitle());
 		originalViewPageURL.setParameter("followRedirect", "false");

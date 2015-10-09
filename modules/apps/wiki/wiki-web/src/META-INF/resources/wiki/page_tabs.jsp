@@ -26,43 +26,43 @@ String title = wikiPage.getTitle();
 
 PortletURL viewPageURL = renderResponse.createRenderURL();
 
-viewPageURL.setParameter("struts_action", "/wiki/view");
+viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 viewPageURL.setParameter("nodeName", node.getName());
 viewPageURL.setParameter("title", wikiPage.getTitle());
 
 PortletURL editPageURL = renderResponse.createRenderURL();
 
-editPageURL.setParameter("struts_action", "/wiki/edit_page");
+editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 editPageURL.setParameter("redirect", viewPageURL.toString());
 editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 editPageURL.setParameter("title", title);
 
 PortletURL viewPageDetailsURL = renderResponse.createRenderURL();
 
-viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details");
+viewPageDetailsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_details");
 viewPageDetailsURL.setParameter("redirect", viewPageURL.toString());
 viewPageDetailsURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 viewPageDetailsURL.setParameter("title", wikiPage.getTitle());
 
 PortletURL viewPageHistoryURL = PortletURLUtil.clone(viewPageDetailsURL, renderResponse);
 
-viewPageHistoryURL.setParameter("struts_action", "/wiki/view_page_activities");
+viewPageHistoryURL.setParameter("mvcRenderCommandName", "/wiki/view_page_activities");
 
 PortletURL viewPageIncomingLinksURL = PortletURLUtil.clone(viewPageDetailsURL, renderResponse);
 
-viewPageIncomingLinksURL.setParameter("struts_action", "/wiki/view_page_incoming_links");
+viewPageIncomingLinksURL.setParameter("mvcRenderCommandName", "/wiki/view_page_incoming_links");
 
 PortletURL viewPageOutgoingLinksURL = PortletURLUtil.clone(viewPageDetailsURL, renderResponse);
 
-viewPageOutgoingLinksURL.setParameter("struts_action", "/wiki/view_page_outgoing_links");
+viewPageOutgoingLinksURL.setParameter("mvcRenderCommandName", "/wiki/view_page_outgoing_links");
 
 PortletURL viewPageAttachmentsURL = PortletURLUtil.clone(viewPageDetailsURL, renderResponse);
 
-viewPageAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments");
+viewPageAttachmentsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_attachments");
 
 PortletURL viewPageActivitiesURL = PortletURLUtil.clone(viewPageDetailsURL, renderResponse);
 
-viewPageActivitiesURL.setParameter("struts_action", "/wiki/view_page_activities");
+viewPageActivitiesURL.setParameter("mvcRenderCommandName", "/wiki/view_page_activities");
 
 String[] tabs1Names = {"details", "history", "incoming-links", "outgoing-links", "attachments"};
 String[] tabs1URLs = {viewPageDetailsURL.toString(), viewPageHistoryURL.toString(), viewPageIncomingLinksURL.toString(), viewPageOutgoingLinksURL.toString(), viewPageAttachmentsURL.toString()};

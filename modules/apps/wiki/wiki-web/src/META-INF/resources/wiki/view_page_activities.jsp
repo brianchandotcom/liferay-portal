@@ -37,14 +37,14 @@ portletURL.setParameter("title", wikiPage.getTitle());
 
 PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.toString());
 
-portletURL.setParameter("struts_action", "/wiki/view_page_history");
+portletURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/view_page_history");
 portletURL.setParameter("redirect", currentURL);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history"), portletURL.toString());
 
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
-iteratorURL.setParameter("struts_action", "/wiki/view_page_activities");
+iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_page_activities");
 iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 iteratorURL.setParameter("title", wikiPage.getTitle());
@@ -142,7 +142,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 						%>
 
 						<portlet:renderURL var="viewPageURL">
-							<portlet:param name="struts_action" value="/wiki/view" />
+							<portlet:param name="mvcRenderCommandName" value="/wiki/view" />
 							<portlet:param name="nodeName" value="<%= node.getName() %>" />
 							<portlet:param name="title" value="<%= socialActivityWikiPage.getTitle() %>" />
 						</portlet:renderURL>
@@ -162,7 +162,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 						%>
 
 						<portlet:renderURL var="viewPageURL">
-							<portlet:param name="struts_action" value="/wiki/view" />
+							<portlet:param name="mvcRenderCommandName" value="/wiki/view" />
 							<portlet:param name="nodeName" value="<%= node.getName() %>" />
 							<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 							<portlet:param name="version" value="<%= String.valueOf(version) %>" />
@@ -279,13 +279,12 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 	</liferay-ui:search-container>
 </div>
 
-<portlet:actionURL var="checkEntryURL">
+<portlet:actionURL name="/wiki/edit_page_attachment" var="checkEntryURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />
-	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 </portlet:actionURL>
 
 <portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/wiki/restore_entry" />
+	<portlet:param name="mvcRenderCommandName" value="/wiki/restore_entry" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:renderURL>
 
@@ -320,7 +319,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 				},
 				function(event) {
 					<portlet:renderURL var="compareVersionURL">
-						<portlet:param name="struts_action" value="/wiki/compare_versions" />
+						<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />

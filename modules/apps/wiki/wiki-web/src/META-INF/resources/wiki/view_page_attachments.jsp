@@ -33,18 +33,17 @@ PortletURL portletURL = renderResponse.createActionURL();
 portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 portletURL.setParameter("title", wikiPage.getTitle());
 
-portletURL.setParameter("struts_action", "/wiki/view");
+portletURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/view");
 
 PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.toString());
 
-portletURL.setParameter("struts_action", "/wiki/view_page_attachments");
+portletURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/view_page_attachments");
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachments"), portletURL.toString());
 %>
 
 <c:if test="<%= !viewTrashAttachments %>">
-	<portlet:actionURL var="undoTrashURL">
-		<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+	<portlet:actionURL name="/wiki/edit_page_attachment" var="undoTrashURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 	</portlet:actionURL>
 
@@ -67,8 +66,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 <c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
 	<c:choose>
 		<c:when test="<%= viewTrashAttachments %>">
-			<portlet:actionURL var="emptyTrashURL">
-				<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+			<portlet:actionURL name="/wiki/edit_page_attachment" var="emptyTrashURL">
 				<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
 				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 			</portlet:actionURL>
@@ -89,7 +87,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 
 			<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (deletedAttachmentsCount > 0) %>">
 				<portlet:renderURL var="viewTrashAttachmentsURL">
-					<portlet:param name="struts_action" value="/wiki/view_page_attachments" />
+					<portlet:param name="mvcRenderCommandName" value="/wiki/view_page_attachments" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
@@ -106,7 +104,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 			</c:if>
 
 			<portlet:renderURL var="addAttachmentsURL">
-				<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+				<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page_attachment" />
 				<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -136,7 +134,7 @@ else {
 
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
-iteratorURL.setParameter("struts_action", "/wiki/view_page_attachments");
+iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_page_attachments");
 iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 iteratorURL.setParameter("title", wikiPage.getTitle());
@@ -213,13 +211,12 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<portlet:actionURL var="checkEntryURL">
+<portlet:actionURL name="/wiki/edit_page_attachment" var="checkEntryURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />
-	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 </portlet:actionURL>
 
 <portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/wiki/restore_entry" />
+	<portlet:param name="mvcRenderCommandName" value="/wiki/restore_entry" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:renderURL>
 

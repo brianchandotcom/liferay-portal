@@ -43,14 +43,13 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 </c:if>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/wiki/compare_versions" />
+	<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
 	<portlet:param name="title" value="<%= title %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:resourceURL varImpl="resourceURL">
-	<portlet:param name="struts_action" value="/wiki/compare_versions" />
+<liferay-portlet:resourceURL id="/wiki/compare_versions" varImpl="resourceURL">
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
 	<portlet:param name="title" value="<%= title %>" />

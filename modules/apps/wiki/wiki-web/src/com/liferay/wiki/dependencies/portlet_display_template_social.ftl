@@ -58,7 +58,7 @@
 	<div class="page-categories">
 		<#assign viewCategorizedPagesURL = renderResponse.createRenderURL() />
 
-		${viewCategorizedPagesURL.setParameter("struts_action", "/wiki/view_categorized_pages")}
+		${viewCategorizedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_categorized_pages")}
 		${viewCategorizedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
 
 		<@liferay_ui["asset-categories-summary"]
@@ -71,7 +71,7 @@
 	<div class="page-tags">
 		<#assign viewTaggedPagesURL = renderResponse.createRenderURL() />
 
-		${viewTaggedPagesURL.setParameter("struts_action", "/wiki/view_tagged_pages")}
+		${viewTaggedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages")}
 		${viewTaggedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
 
 		<@liferay_ui["asset-tags-summary"]
@@ -105,7 +105,7 @@
 				<tr class="results-row">
 					<#assign viewPageURL = renderResponse.createRenderURL() />
 
-					${viewPageURL.setParameter("struts_action", "/wiki/view")}
+					${viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view")}
 
 					<#assign childNode = childPage.getNode() />
 
@@ -136,7 +136,7 @@
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
 		<#assign addPageURL = renderResponse.createRenderURL() />
 
-		${addPageURL.setParameter("struts_action", "/wiki/edit_page")}
+		${addPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page")}
 		${addPageURL.setParameter("redirect", currentURL)}
 		${addPageURL.setParameter("nodeId", entry.getNodeId()?string)}
 		${addPageURL.setParameter("title", "")}
@@ -155,7 +155,7 @@
 <#macro getAttatchmentsIcon>
 	<#assign viewPageAttachmentsURL = renderResponse.createRenderURL() />
 
-	${viewPageAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments") }
+	${viewPageAttachmentsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_attachments") }
 
 	<@liferay_ui["icon"]
 		iconCssClass="icon-paperclip"
@@ -171,7 +171,7 @@
 
 		<#assign discussionURL = renderResponse.createActionURL() />
 
-		${discussionURL.setParameter("struts_action", "/wiki/" + assetRenderer.getDiscussionPath())}
+		${discussionURL.setParameter("javax.portlet.action", "/wiki/" + assetRenderer.getDiscussionPath())}
 
 		<@liferay_ui["discussion"]
 			className=wikiPageClassName
@@ -190,7 +190,7 @@
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
 		<#assign editPageURL = renderResponse.createRenderURL() />
 
-		${editPageURL.setParameter("struts_action", "/wiki/edit_page")}
+		${editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page")}
 		${editPageURL.setParameter("redirect", currentURL)}
 		${editPageURL.setParameter("nodeId", entry.getNodeId()?string)}
 		${editPageURL.setParameter("title", entry.getTitle())}
@@ -206,7 +206,7 @@
 <#macro getPageDetailsIcon>
 	<#assign viewPageDetailsURL = renderResponse.createRenderURL() />
 
-	${viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details")}
+	${viewPageDetailsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_details")}
 	${viewPageDetailsURL.setParameter("redirect", currentURL)}
 
 	<@liferay_ui["icon"]

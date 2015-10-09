@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>DETAILS_STRUCTURE</td>
-	<td>//input[contains(@id,'structure')]</td>
+	<td>//input[contains(@id,'structure') and contains(@type,'text')]</td>
 	<td></td>
 </tr>
 <tr>

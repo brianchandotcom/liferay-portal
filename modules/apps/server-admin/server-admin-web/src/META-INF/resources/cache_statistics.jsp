@@ -79,18 +79,18 @@ if (Validator.isNull(tabs3) && !cacheManagerNames.isEmpty()) {
 		String orderByCol = ParamUtil.getString(request, "orderByCol");
 		String orderByType = ParamUtil.getString(request, "orderByType");
 
-		List<CacheStatistics> cacheManagerStatistics = CacheStatisticsUtil.getCacheStatistics(tabs3, keywords);
+		List<CacheStatistics> cacheStatisticsList = CacheStatisticsUtil.getCacheStatisticsList(tabs3, keywords);
 
 		if (Validator.isNotNull(orderByCol)) {
-			Collections.sort(cacheManagerStatistics, new BeanComparator(orderByCol));
+			Collections.sort(cacheStatisticsList, new BeanComparator(orderByCol));
 
 			if (StringUtil.equalsIgnoreCase(orderByType, "asc")) {
-				Collections.reverse(cacheManagerStatistics);
+				Collections.reverse(cacheStatisticsList);
 			}
 		}
 
-		pageContext.setAttribute("results", ListUtil.subList(cacheManagerStatistics, searchContainer.getStart(), searchContainer.getEnd()));
-		pageContext.setAttribute("total", cacheManagerStatistics.size());
+		pageContext.setAttribute("results", ListUtil.subList(cacheStatisticsList, searchContainer.getStart(), searchContainer.getEnd()));
+		pageContext.setAttribute("total", cacheStatisticsList.size());
 		%>
 
 	</liferay-ui:search-container-results>

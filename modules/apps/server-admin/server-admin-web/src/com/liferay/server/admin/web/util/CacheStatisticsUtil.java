@@ -54,7 +54,7 @@ public class CacheStatisticsUtil {
 		return names;
 	}
 
-	public static List<CacheStatistics> getCacheStatistics(
+	public static List<CacheStatistics> getCacheStatisticsList(
 		String cacheManagerName, String keywords) {
 
 		StringBundler sb = new StringBundler(4);
@@ -68,20 +68,19 @@ public class CacheStatisticsUtil {
 			Set<ObjectName> objectNames = _mBeanServer.queryNames(
 				null, new ObjectName(sb.toString()));
 
-			List<ObjectName> cacheStatisticsNames = new ArrayList<>(
-				objectNames);
+			objectNames = new ArrayList<>(objectNames);
 
-			Collections.sort(cacheStatisticsNames);
+			Collections.sort(objectNames);
 
-			List<CacheStatistics> cacheManagerStatistics = new ArrayList<>(
-				cacheStatisticsNames.size());
+			List<CacheStatistics> cacheStatisticsList = new ArrayList<>(
+				objectNames.size());
 
-			for (ObjectName objectName : cacheStatisticsNames) {
-				cacheManagerStatistics.add(
+			for (ObjectName objectName : objectNames) {
+				cacheStatisticsList.add(
 					new CacheStatistics(_mBeanServer, objectName));
 			}
 
-			return cacheManagerStatistics;
+			return cacheStatisticsList;
 		}
 		catch (JMException jme) {
 			throw new SystemException(jme);

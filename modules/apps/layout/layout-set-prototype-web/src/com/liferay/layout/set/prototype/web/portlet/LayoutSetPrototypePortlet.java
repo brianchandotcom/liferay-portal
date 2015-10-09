@@ -91,7 +91,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "layoutSetPrototypeIds"), 0L);
 
 		for (long layoutSetPrototypeId : layoutSetPrototypeIds) {
-			_layoutSetPrototypeService.deleteLayoutSetPrototype(
+			layoutSetPrototypeService.deleteLayoutSetPrototype(
 				layoutSetPrototypeId);
 		}
 	}
@@ -104,7 +104,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			actionRequest, "layoutSetPrototypeId");
 
 		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeService.getLayoutSetPrototype(
+			layoutSetPrototypeService.getLayoutSetPrototype(
 				layoutSetPrototypeId);
 
 		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
@@ -135,7 +135,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			// Add layout prototoype
 
 			layoutSetPrototype =
-				_layoutSetPrototypeService.addLayoutSetPrototype(
+				layoutSetPrototypeService.addLayoutSetPrototype(
 					nameMap, descriptionMap, active, layoutsUpdateable,
 					serviceContext);
 
@@ -149,7 +149,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			// Update layout prototoype
 
 			layoutSetPrototype =
-				_layoutSetPrototypeService.updateLayoutSetPrototype(
+				layoutSetPrototypeService.updateLayoutSetPrototype(
 					layoutSetPrototypeId, nameMap, descriptionMap, active,
 					layoutsUpdateable, serviceContext);
 		}
@@ -165,10 +165,9 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		settingsProperties.setProperty(
 			"customJspServletContextName", customJspServletContextName);
 
-		layoutSetPrototype =
-			_layoutSetPrototypeService.updateLayoutSetPrototype(
-				layoutSetPrototype.getLayoutSetPrototypeId(),
-				settingsProperties.toString());
+		layoutSetPrototype = layoutSetPrototypeService.updateLayoutSetPrototype(
+			layoutSetPrototype.getLayoutSetPrototypeId(),
+			settingsProperties.toString());
 
 		PortletURL siteAdministrationURL = PortalUtil.getControlPanelPortletURL(
 			actionRequest, layoutSetPrototype.getGroup(),
@@ -218,7 +217,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 	protected void setLayoutSetPrototypeService(
 		LayoutSetPrototypeService layoutSetPrototypeService) {
 
-		_layoutSetPrototypeService = layoutSetPrototypeService;
+		this.layoutSetPrototypeService = layoutSetPrototypeService;
 	}
 
 	@Reference(unbind = "-")
@@ -238,7 +237,8 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
-	private LayoutSetPrototypeService _layoutSetPrototypeService;
+	protected LayoutSetPrototypeService layoutSetPrototypeService;
+
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
 

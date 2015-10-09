@@ -129,7 +129,6 @@ if (FileUtil.exists(project, "docroot")) {
 
 dependencies {
 	alloyTaglib rootProject.files("../lib/development/alloy-taglib.jar", "../lib/development/org.freemarker-2.3.17.LIFERAY-PATCHED-1.jar")
-
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "default"
 	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
 	langBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "default"

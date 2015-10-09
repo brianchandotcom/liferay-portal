@@ -50,6 +50,7 @@ import com.liferay.portlet.messageboards.service.persistence.MBCategoryPersisten
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -3696,8 +3697,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -3860,8 +3863,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		if (parentCategoryIds.length == 1) {
@@ -4064,8 +4069,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -4198,8 +4205,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -6248,15 +6257,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -6441,15 +6454,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		if ((categoryIds.length == 1) && (parentCategoryIds.length == 1)) {
@@ -6680,15 +6697,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -6844,15 +6865,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -7838,8 +7863,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -8015,8 +8042,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		if (parentCategoryIds.length == 1) {
@@ -8233,8 +8262,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -8381,8 +8412,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -9018,15 +9051,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -9221,15 +9258,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		if ((categoryIds.length == 1) && (parentCategoryIds.length == 1)) {
@@ -9477,15 +9518,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -9655,15 +9700,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
-		else {
+		else if (categoryIds.length > 1) {
 			categoryIds = ArrayUtil.unique(categoryIds);
+
+			Arrays.sort(categoryIds);
 		}
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
-		else {
+		else if (parentCategoryIds.length > 1) {
 			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+
+			Arrays.sort(parentCategoryIds);
 		}
 
 		StringBundler query = new StringBundler();

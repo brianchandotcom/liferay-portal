@@ -51,6 +51,7 @@ import java.io.Serializable;
 
 import java.sql.Timestamp;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -3939,9 +3940,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (DDMStructureKeies == null) {
 			DDMStructureKeies = new String[0];
 		}
-		else {
+		else if (DDMStructureKeies.length > 1) {
 			DDMStructureKeies = ArrayUtil.distinct(DDMStructureKeies,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(DDMStructureKeies, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (DDMStructureKeies.length == 1) {
@@ -4163,9 +4166,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (DDMStructureKeies == null) {
 			DDMStructureKeies = new String[0];
 		}
-		else {
+		else if (DDMStructureKeies.length > 1) {
 			DDMStructureKeies = ArrayUtil.distinct(DDMStructureKeies,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(DDMStructureKeies, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] { StringUtil.merge(DDMStructureKeies) };
@@ -6985,8 +6990,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		if (statuses.length == 1) {
@@ -7189,8 +7196,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -9028,8 +9037,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -9193,8 +9204,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		if (folderIds.length == 1) {
@@ -9395,8 +9408,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		Object[] finderArgs = new Object[] { groupId, StringUtil.merge(folderIds) };
@@ -9527,8 +9542,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
-		else {
+		else if (folderIds.length > 1) {
 			folderIds = ArrayUtil.unique(folderIds);
+
+			Arrays.sort(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -18942,8 +18959,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		if (statuses.length == 1) {
@@ -19160,8 +19179,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -21131,8 +21152,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		StringBundler query = new StringBundler();
@@ -21307,8 +21330,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		if (statuses.length == 1) {
@@ -21523,8 +21548,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -21667,8 +21694,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		StringBundler query = new StringBundler();
@@ -26424,8 +26453,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		StringBundler query = new StringBundler();
@@ -26614,8 +26645,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		if (statuses.length == 1) {
@@ -26859,8 +26892,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -27032,8 +27067,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (statuses == null) {
 			statuses = new int[0];
 		}
-		else {
+		else if (statuses.length > 1) {
 			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
 		}
 
 		StringBundler query = new StringBundler();

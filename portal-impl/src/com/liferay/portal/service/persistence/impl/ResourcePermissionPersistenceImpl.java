@@ -45,6 +45,7 @@ import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -605,8 +606,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		if (scopes == null) {
 			scopes = new int[0];
 		}
-		else {
+		else if (scopes.length > 1) {
 			scopes = ArrayUtil.unique(scopes);
+
+			Arrays.sort(scopes);
 		}
 
 		if (scopes.length == 1) {
@@ -792,8 +795,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		if (scopes == null) {
 			scopes = new int[0];
 		}
-		else {
+		else if (scopes.length > 1) {
 			scopes = ArrayUtil.unique(scopes);
+
+			Arrays.sort(scopes);
 		}
 
 		Object[] finderArgs = new Object[] { StringUtil.merge(scopes) };
@@ -3436,8 +3441,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		if (roleIds == null) {
 			roleIds = new long[0];
 		}
-		else {
+		else if (roleIds.length > 1) {
 			roleIds = ArrayUtil.unique(roleIds);
+
+			Arrays.sort(roleIds);
 		}
 
 		if (roleIds.length == 1) {
@@ -3962,8 +3969,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		if (roleIds == null) {
 			roleIds = new long[0];
 		}
-		else {
+		else if (roleIds.length > 1) {
 			roleIds = ArrayUtil.unique(roleIds);
+
+			Arrays.sort(roleIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -4825,8 +4834,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		if (roleIds == null) {
 			roleIds = new long[0];
 		}
-		else {
+		else if (roleIds.length > 1) {
 			roleIds = ArrayUtil.unique(roleIds);
+
+			Arrays.sort(roleIds);
 		}
 
 		if (roleIds.length == 1) {
@@ -5115,8 +5126,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		if (roleIds == null) {
 			roleIds = new long[0];
 		}
-		else {
+		else if (roleIds.length > 1) {
 			roleIds = ArrayUtil.unique(roleIds);
+
+			Arrays.sort(roleIds);
 		}
 
 		Object[] finderArgs = new Object[] {

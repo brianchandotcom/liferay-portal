@@ -121,7 +121,7 @@ public class WebDriverHelper {
 			return;
 		}
 
-		List<JavaScriptError> javaScriptErrors;
+		List<JavaScriptError> javaScriptErrors = new ArrayList<>();
 
 		try {
 			WebElement webElement = getWebElement(webDriver, "//body");
@@ -130,10 +130,10 @@ public class WebDriverHelper {
 
 			WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
 
-			javaScriptErrors = JavaScriptError.readErrors(wrappedWebDriver);
+			javaScriptErrors.addAll(
+				JavaScriptError.readErrors(wrappedWebDriver));
 		}
 		catch (Exception e) {
-			javaScriptErrors = new ArrayList<>();
 		}
 
 		List<Exception> exceptions = new ArrayList<>();

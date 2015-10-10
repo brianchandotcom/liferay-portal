@@ -249,52 +249,6 @@
 		<execute function="AssertElementPresent" locator1="DDLSpreadsheet#SPREADSHEET_CONTAINER" />
 	</command>
 
-	<command name="DeleteList" priority="4">
-		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListName" value="List Name" />
-		<var name="field" value="Text" />
-		<var name="fieldFieldLabel" value="Text" />
-		<var name="fieldName" value="Text" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#saveCP" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLList#addCP">
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DDLList#saveCP" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DDLList#deleteViaDDLDisplayPG">
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
-	</command>
-
 	<command name="DeleteListRecord" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		<var name="ddlListName" value="List Name" />

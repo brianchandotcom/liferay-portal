@@ -25,6 +25,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_EDIT_LIST</td>
+	<td>//a[@title='Edit List']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_MANAGE_DATA_DEFINITIONS</td>
 	<td>//ul[contains(@aria-label,'Dynamic Data List')]//a[@role='menuitem']/span[contains(.,'Manage Data Definitions')]</td>
 	<td></td>

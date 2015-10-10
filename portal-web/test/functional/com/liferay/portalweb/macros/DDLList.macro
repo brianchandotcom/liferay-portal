@@ -87,14 +87,7 @@
 	</command>
 
 	<command name="editViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#TOOLBAR_SELECT_LIST" value1="Select List" />
-
-		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Type" locator1="DDLConfiguration#SEARCH_FIELD" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="DDLConfiguration#SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="Click" locator1="DDLConfiguration#LIST_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="DDLConfiguration#LIST_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="DDL#TOOLBAR_EDIT_LIST" value1="Edit List" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlListNameEdit}" />
 
@@ -106,18 +99,6 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Displaying List: ${ddlListNameEdit}" />
-		<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListNameEdit}" />
-
-		<if>
-			<isset var="ddlListDescription" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_DESCRIPTION_1" value1="${ddlListDescriptionEdit}" />
-			</then>
-		</if>
-
-		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="saveCmd">

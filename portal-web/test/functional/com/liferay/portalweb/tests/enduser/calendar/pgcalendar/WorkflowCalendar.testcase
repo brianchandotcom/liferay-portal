@@ -46,7 +46,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveEventWithInvitedUser" priority="5">
+	<command name="ApproveEventWithInvitedUser" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Calendar Page" />
 		</execute>
@@ -118,7 +118,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectEventWithInvitedUser" priority="5">
+	<command name="RejectEventWithInvitedUser" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Calendar Page" />
 		</execute>

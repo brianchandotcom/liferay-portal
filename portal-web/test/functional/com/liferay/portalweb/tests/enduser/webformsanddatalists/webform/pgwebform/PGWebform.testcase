@@ -169,7 +169,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWebFormAndViewMultipleFields" priority="3">
+	<command name="EditWebFormAndViewMultipleFields" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

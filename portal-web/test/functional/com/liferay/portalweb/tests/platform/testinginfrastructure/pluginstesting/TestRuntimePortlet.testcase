@@ -1,0 +1,30 @@
+<definition component-name="portal-test-plugins">
+	<property name="testray.main.component.name" value="Security" />
+	<property name="portlet.plugins.includes" value="test-runtime-action-portlet,test-runtime-parent-portlet" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Runtime Page" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command description="This is a test case for LPS-56769." name="Smoke" priority="5">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Runtime Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Runtime Parent" />
+		</execute>
+
+		<execute function="Click" locator1="Button#EXECUTE" />
+
+		<execute macro="Alert#viewSuccess" />
+	</command>
+</definition>

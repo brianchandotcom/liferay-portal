@@ -274,6 +274,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXECUTE</td>
+	<td>//button[contains(.,'Execute')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRE</td>
 	<td>//button[contains(.,'Expire')]</td>
 	<td></td>

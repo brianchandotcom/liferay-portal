@@ -425,15 +425,14 @@
 			<var name="portletName" value="${portletName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="childSiteName" value="${siteScopeName}" />
-			<var name="portletName" value="Site Pages" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${childSiteName}" />
 			<var name="sitePageName" value="${pageName2}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#openURL">

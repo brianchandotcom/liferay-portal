@@ -44,7 +44,7 @@ public class DeploymentHelper {
 
 		if (Validator.isNull(deploymentFileNames)) {
 			throw new IllegalArgumentException(
-				"The\"deployment.files\" argument is required");
+				"The \"deployment.files\" argument is required");
 		}
 
 		String deploymentPath = arguments.get("deployment.path");

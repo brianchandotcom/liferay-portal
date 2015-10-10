@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>ADD_PRODUCER</td>
-	<td>//button[contains(.,'Add Producer')]</td>
+	<td>//a[contains(.,'Add Producer')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_PORTLET</td>
-	<td>//button[contains(.,'Add Portlet')]</td>
+	<td>//a[contains(.,'Add Portlet')]</td>
 	<td></td>
 </tr>
 <tr>

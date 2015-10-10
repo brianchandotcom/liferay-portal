@@ -36,6 +36,12 @@
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 	</command>
 
+	<command name="gotoSite">
+		<var name="key_site" value="${site}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#SITE" value1="${site}" />
+	</command>
+
 	<command name="gotoSites">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 

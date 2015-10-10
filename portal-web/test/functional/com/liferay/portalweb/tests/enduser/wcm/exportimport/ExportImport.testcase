@@ -779,8 +779,10 @@
 	</command>
 
 	<command name="ExportImportWSRPUnitConverter" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+		<property name="portlet.plugins.includes" value="wsrp-portlet" />
+
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addProducerCP">
@@ -788,8 +790,8 @@
 			<var name="producerName" value="Producer Demo" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addConsumerCP">
@@ -797,8 +799,8 @@
 			<var name="producerName" value="Producer Demo" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addConsumerPortletCP">
@@ -853,8 +855,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -866,10 +868,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="WSRP Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WSRP#wsrpUnitConverterConvertPG">

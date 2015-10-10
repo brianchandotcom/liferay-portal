@@ -38,7 +38,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${producerName}" />
 		<execute function="Select" locator1="Select#VERSION" value1="2.0" />
-		<execute function="Select" locator1="Select#PORTLETS_AVAILABLE" value1="${portletsAvailableSelect}" />
+		<execute function="Select" locator1="Select#AVAILABLE" value1="${portletsAvailableSelect}" />
 		<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 

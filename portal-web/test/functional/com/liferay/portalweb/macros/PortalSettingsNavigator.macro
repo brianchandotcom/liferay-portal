@@ -1,6 +1,6 @@
 <definition>
 	<command name="gotoAuthenticationGoogle">
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_GOOGLE" value1="Google" />
+		<execute function="AssertClick" locator1="NavTab#GOOGLE" value1="Google" />
 	</command>
 
 	<command name="gotoMenuAuthentication">

@@ -540,7 +540,7 @@
 </tr>
 <tr>
 	<td>SELECT_SCOPE</td>
-	<td>//div[contains (@class,'btn-group')]/a[@title='Default']</td>
+	<td>//div[contains(@class,'btn-group')]/a[@title='Default']</td>
 	<td></td>
 </tr>
 <tr>

@@ -80,7 +80,7 @@
 	</command>
 
 	<command name="addFormTemplateViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#TOOLBAR_ADD_FORM_TEMPLATE" />
+		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_FORM_TEMPLATE" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 	</command>
@@ -210,7 +210,7 @@
 	</command>
 
 	<command name="editFormTemplatePG">
-		<execute function="Click" locator1="DDL#TOOLBAR_EDIT_FORM_TEMPLATE" />
+		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_EDIT_FORM_TEMPLATE" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateNameEdit}" />
 	</command>

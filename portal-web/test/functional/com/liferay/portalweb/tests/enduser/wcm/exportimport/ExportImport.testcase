@@ -418,7 +418,7 @@
 
 	<command name="ExportImportPortletWithADT" priority="3">
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Application Display Template" />
+			<var name="portletName" value="Application Display Templates" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addCP">

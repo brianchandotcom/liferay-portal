@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleViaTemplateCP" priority="4">
+	<command name="AddKBArticleViaTemplateCP" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -154,7 +154,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin" priority="4">
+	<command name="AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -244,7 +244,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleWithInvalidAttachmentSize" priority="4">
+	<command name="AddKBArticleWithInvalidAttachmentSize" priority="3">
 		<property name="custom.properties" value="com.liferay.portal.upload.UploadServletRequestImpl.max.size=1024" />
 
 		<execute macro="Page#gotoContentCP">
@@ -259,7 +259,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleWithoutRequiredCategory" priority="4">
+	<command name="AddKBArticleWithoutRequiredCategory" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -651,7 +651,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewChildArticleInKBArticleViaKBAdmin" priority="4">
+	<command name="ViewChildArticleInKBArticleViaKBAdmin" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -897,7 +897,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBTemplateViaAddKBArticleCP" priority="4">
+	<command name="ViewKBTemplateViaAddKBArticleCP" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -932,7 +932,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPendingKBArticleContent" priority="4">
+	<command name="ViewPendingKBArticleContent" priority="3">
 		<var name="kbArticleContent" value="Knowledge Base Article Content" />
 		<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 

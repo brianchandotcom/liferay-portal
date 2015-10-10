@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_TAB</td>
-	<td>//button[contains(@id,'Blogs') and contains (@id,'_settingsIcon')]</td>
+	<td>//button[contains(@id,'Blogs') and contains(@id,'_settingsIcon')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -987,15 +987,19 @@
 	<command name="deleteCP">
 		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
 
-		<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
-
 		<if>
-			<condition function="IsElementPresent" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
+			<condition function="IsElementPresent" locator1="Select#USER_STATUS" />
 			<then>
-				<execute function="Check" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
-				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
-				<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
+				<if>
+					<condition function="IsElementPresent" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
+					<then>
+						<execute function="Check" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
+						<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+						<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
+						<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					</then>
+				</if>
 			</then>
 		</if>
 

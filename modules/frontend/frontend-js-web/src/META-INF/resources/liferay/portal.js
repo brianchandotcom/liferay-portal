@@ -120,7 +120,10 @@
 					}
 				).render();
 
-				cached.after('visibleChange', A.bind('_syncUIPosAlign', cached));
+				cached.after(
+					'visibleChange',
+					A.bind('_syncUIPosAlign', cached)
+				);
 
 				instance._cached = cached;
 			}

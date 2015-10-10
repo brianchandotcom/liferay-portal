@@ -388,7 +388,7 @@
 		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 3'])" />
 	</command>
 
-	<command name="AssertConfigurationMenulist" priority="3">
+	<command name="AssertConfigurationMenulist" priority="2">
 		<var name="ddlDataDefinitionName" value="To Do" />
 		<var name="ddlListName" value="List Name" />
 		<var name="pageName" value="Dynamic Data Lists Display Page" />

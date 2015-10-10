@@ -862,7 +862,7 @@
 		<execute function="AssertChecked" locator1="DDLConfiguration#TEMPLATES_EDITABLE_CHECKBOX" />
 	</command>
 
-	<command name="ViewBooleanFieldPredefinedValue" priority="4">
+	<command name="ViewBooleanFieldPredefinedValue" priority="3">
 		<var name="ddlDataDefinitionName" value="Boolean Predefined Value Data Definition Name" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="No" />
@@ -965,7 +965,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDateFieldPredefinedValue" priority="4">
+	<command name="ViewDateFieldPredefinedValue" priority="3">
 		<var name="ddlDataDefinitionName" value="Date Predefined Value Data Definition Name" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="05/13/2017" />
@@ -1076,7 +1076,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDecimalFieldPredefinedValue" priority="4">
+	<command name="ViewDecimalFieldPredefinedValue" priority="3">
 		<var name="ddlDataDefinitionName" value="Decimal Predefined Value Data Definition Name" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="11.18" />
@@ -1267,7 +1267,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewIntegerFieldPredefinedValue" priority="4">
+	<command name="ViewIntegerFieldPredefinedValue" priority="3">
 		<var name="ddlDataDefinitionName" value="Integer Predefined Value Data Definition Name" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="4421" />
@@ -1542,7 +1542,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="4">
+	<command name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="3">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -1772,7 +1772,7 @@
 		<execute function="AssertTextPresent" locator1="//div[@class='portlet-body']/form" value1="Name2" />
 	</command>
 
-	<command name="ViewNumberFieldPredefinedValue" priority="4">
+	<command name="ViewNumberFieldPredefinedValue" priority="3">
 		<var name="ddlDataDefinitionName" value="Number Predefined Value Data Definition Name" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="5553" />
@@ -1877,7 +1877,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewTextBoxFieldPredefinedValue" priority="4">
+	<command name="ViewTextBoxFieldPredefinedValue" priority="3">
 		<var name="ddlDataDefinitionName" value="Text Box Predefined Value Data Definition Name" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Test 2" />

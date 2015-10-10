@@ -77,7 +77,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCommentToTaskAssignedToMyRoles" priority="4">
+	<command name="AddCommentToTaskAssignedToMyRoles" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowComment" value="Workflow Comment" />
@@ -111,7 +111,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCommentToTaskCompleted" priority="4">
+	<command name="AddCommentToTaskCompleted" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowComment" value="Workflow Comment" />
@@ -515,7 +515,7 @@
 		</execute>
 	</command>
 
-	<command name="ReviewerApproveResubmitTaskByActionsUser" priority="4">
+	<command name="ReviewerApproveResubmitTaskByActionsUser" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="userEmailAddress1" value="userea1@liferay.com" />

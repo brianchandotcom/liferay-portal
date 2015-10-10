@@ -102,6 +102,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SELECT-->
+<tr>
+	<td>SELECT_OPTION</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_LABEL</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -5,6 +5,10 @@
 #set ($portlet_title = $htmlUtil.escape($portlet_display.getTitle()))
 #set ($portlet_back_url = $htmlUtil.escapeHREF($portlet_display.getURLBack()))
 
+#if (!$portlet_name)
+	#set ($portlet_name = $portlet_title)
+#end
+
 #set ($portlet_toolbar = $portlet_display.getPortletToolbar())
 
 <section class="portlet" id="portlet_$portlet_id">

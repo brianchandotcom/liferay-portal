@@ -7,6 +7,10 @@
 <#assign portlet_title = htmlUtil.escape(portlet_display.getTitle()) />
 <#assign portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack()) />
 
+<#if !portlet_name>
+	<#assign portlet_name = portlet_title />
+</#if>
+
 <#assign portlet_toolbar = portlet_display.getPortletToolbar() />
 
 <section class="portlet" id="portlet_${portlet_id}">

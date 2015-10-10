@@ -44,7 +44,6 @@ import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -75,7 +74,6 @@ public class UserIndexer extends BaseIndexer<User> {
 			Field.ASSET_TAG_NAMES, Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
 			Field.SCOPE_GROUP_ID, Field.UID, Field.USER_ID);
-		setIndexerEnabled(PropsValues.USERS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);
 	}

@@ -64,11 +64,13 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -100,6 +102,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -422,8 +425,32 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		return _filterSearch;
 	}
 
+	@Override
 	public boolean isIndexerEnabled() {
-		return _indexerEnabled;
+		PortletPreferences portletPreferences =
+			PortalPreferencesLocalServiceUtil.getPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		String className = getClassName();
+
+		String indexerEnabled = portletPreferences.getValue(
+			className.concat("_indexerEnabled"), null);
+
+		if (indexerEnabled == null) {
+			if (_indexerEnabled == null) {
+				indexerEnabled = PropsUtil.get(
+					PropsKeys.INDEXER_ENABLED,
+					new com.liferay.portal.kernel.configuration.Filter(
+						className));
+
+				_indexerEnabled = GetterUtil.getBoolean(indexerEnabled, true);
+			}
+
+			return _indexerEnabled;
+		}
+
+		return GetterUtil.getBoolean(indexerEnabled, true);
 	}
 
 	@Override
@@ -681,6 +708,25 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	public void setCommitImmediately(boolean commitImmediately) {
 		_commitImmediately = commitImmediately;
+	}
+
+	@Override
+	public void setIndexerEnabled(boolean indexerEnabled) {
+		PortletPreferences portletPreferences =
+			PortalPreferencesLocalServiceUtil.getPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		try {
+			portletPreferences.setValue(
+				getClassName() + "_indexerEnabled",
+				String.valueOf(indexerEnabled));
+
+			portletPreferences.store();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	public void setSelectAllLocales(boolean selectAllLocales) {
@@ -1877,10 +1923,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		_filterSearch = filterSearch;
 	}
 
-	protected void setIndexerEnabled(boolean indexerEnabled) {
-		_indexerEnabled = indexerEnabled;
-	}
-
 	protected void setPermissionAware(boolean permissionAware) {
 		_permissionAware = permissionAware;
 	}
@@ -1898,7 +1940,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private final Document _document = new DocumentImpl();
 	private boolean _filterSearch;
-	private boolean _indexerEnabled = true;
+	private Boolean _indexerEnabled;
 	private IndexerPostProcessor[] _indexerPostProcessors =
 		new IndexerPostProcessor[0];
 	private boolean _permissionAware;

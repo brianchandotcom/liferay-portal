@@ -687,7 +687,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	public int searchCount(
 		long companyId, String keywords, LinkedHashMap<String, Object> params) {
 
-		if (!PropsValues.USER_GROUPS_INDEXER_ENABLED ||
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			UserGroup.class);
+
+		if (!indexer.isIndexerEnabled() ||
 			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
 			isUseCustomSQL(params)) {
 
@@ -711,9 +714,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		try {
-			Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				UserGroup.class);
-
 			SearchContext searchContext = buildSearchContext(
 				companyId, name, description, params, andOperator,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -745,7 +745,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		long companyId, String name, String description,
 		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		if (!PropsValues.USER_GROUPS_INDEXER_ENABLED ||
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			UserGroup.class);
+
+		if (!indexer.isIndexerEnabled() ||
 			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
 			isUseCustomSQL(params)) {
 
@@ -754,9 +757,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		try {
-			Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				UserGroup.class);
-
 			SearchContext searchContext = buildSearchContext(
 				companyId, name, description, params, true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);

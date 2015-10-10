@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalService;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
 
 import java.util.LinkedHashMap;
@@ -61,7 +60,6 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID);
-		setIndexerEnabled(PropsValues.USER_GROUPS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);
 	}

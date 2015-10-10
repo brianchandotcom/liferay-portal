@@ -1440,7 +1440,10 @@ public class OrganizationLocalServiceImpl
 		long companyId, long parentOrganizationId, String keywords, String type,
 		Long regionId, Long countryId, LinkedHashMap<String, Object> params) {
 
-		if (!PropsValues.ORGANIZATIONS_INDEXER_ENABLED ||
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
+
+		if (!indexer.isIndexerEnabled() ||
 			!PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX ||
 			isUseCustomSQL(params)) {
 
@@ -1477,9 +1480,6 @@ public class OrganizationLocalServiceImpl
 			if (params != null) {
 				params.put("keywords", keywords);
 			}
-
-			Indexer<Organization> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, parentOrganizationId, name, type, street, city, zip,
@@ -1527,7 +1527,10 @@ public class OrganizationLocalServiceImpl
 		String street, String city, String zip, Long regionId, Long countryId,
 		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		if (!PropsValues.ORGANIZATIONS_INDEXER_ENABLED ||
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
+
+		if (!indexer.isIndexerEnabled() ||
 			!PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX ||
 			isUseCustomSQL(params)) {
 
@@ -1546,9 +1549,6 @@ public class OrganizationLocalServiceImpl
 		}
 
 		try {
-			Indexer<Organization> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
-
 			SearchContext searchContext = buildSearchContext(
 				companyId, parentOrganizationId, name, type, street, city, zip,
 				regionId, countryId, params, andOperator, QueryUtil.ALL_POS,

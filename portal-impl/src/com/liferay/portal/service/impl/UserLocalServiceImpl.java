@@ -3013,7 +3013,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params, int start, int end,
 		OrderByComparator<User> obc) {
 
-		if (!PropsValues.USERS_INDEXER_ENABLED ||
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+
+		if (!indexer.isIndexerEnabled() ||
 			!PropsValues.USERS_SEARCH_WITH_INDEX || isUseCustomSQL(params)) {
 
 			return userFinder.findByKeywords(
@@ -3170,7 +3172,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params, boolean andSearch, int start,
 		int end, OrderByComparator<User> obc) {
 
-		if (!PropsValues.USERS_INDEXER_ENABLED ||
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+
+		if (!indexer.isIndexerEnabled() ||
 			!PropsValues.USERS_SEARCH_WITH_INDEX || isUseCustomSQL(params)) {
 
 			return userFinder.findByC_FN_MN_LN_SN_EA_S(
@@ -3281,7 +3285,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long companyId, String keywords, int status,
 		LinkedHashMap<String, Object> params) {
 
-		if (!PropsValues.USERS_INDEXER_ENABLED ||
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+
+		if (!indexer.isIndexerEnabled() ||
 			!PropsValues.USERS_SEARCH_WITH_INDEX || isUseCustomSQL(params)) {
 
 			return userFinder.countByKeywords(
@@ -3323,9 +3329,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				params.put("keywords", keywords);
 			}
 
-			Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				User.class);
-
 			SearchContext searchContext = buildSearchContext(
 				companyId, firstName, middleName, lastName, fullName,
 				screenName, emailAddress, street, city, zip, region, country,
@@ -3366,7 +3369,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String screenName, String emailAddress, int status,
 		LinkedHashMap<String, Object> params, boolean andSearch) {
 
-		if (!PropsValues.USERS_INDEXER_ENABLED ||
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+
+		if (!indexer.isIndexerEnabled() ||
 			!PropsValues.USERS_SEARCH_WITH_INDEX || isUseCustomSQL(params)) {
 
 			return userFinder.countByC_FN_MN_LN_SN_EA_S(
@@ -3375,9 +3380,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		try {
-			Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				User.class);
-
 			FullNameGenerator fullNameGenerator =
 				FullNameGeneratorFactory.getInstance();
 

@@ -19,12 +19,14 @@
 <%
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)request.getAttribute("liferay-ui:user-group-search-container-results:searchTerms");
 LinkedHashMap<String, Object> userGroupParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-group-search-container-results:userGroupParams");
+
+Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
 %>
 
 <liferay-ui:search-container searchContainer='<%= (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer") %>'>
 	<liferay-ui:search-container-results>
 		<c:choose>
-			<c:when test="<%= Validator.equals(themeDisplay.getPpid(), PortletKeys.DIRECTORY) && PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
+			<c:when test="<%= Validator.equals(themeDisplay.getPpid(), PortletKeys.DIRECTORY) && indexer.isIndexerEnabled() && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
 
 				<%
 				BaseModelSearchResult<UserGroup> baseModelSearchResult = null;

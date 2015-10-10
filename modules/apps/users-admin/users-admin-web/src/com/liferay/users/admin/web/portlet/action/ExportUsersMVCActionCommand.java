@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -207,9 +209,9 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 			params.put("usersUserGroups", Long.valueOf(userGroupId));
 		}
 
-		if (PropsValues.USERS_INDEXER_ENABLED &&
-			PropsValues.USERS_SEARCH_WITH_INDEX) {
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 
+		if (indexer.isIndexerEnabled() && PropsValues.USERS_SEARCH_WITH_INDEX) {
 			params.put("expandoAttributes", searchTerms.getKeywords());
 		}
 

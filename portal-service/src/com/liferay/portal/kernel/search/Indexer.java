@@ -92,6 +92,8 @@ public interface Indexer<T> {
 
 	public boolean isFilterSearch();
 
+	public boolean isIndexerEnabled();
+
 	public boolean isPermissionAware();
 
 	public boolean isStagingAware();
@@ -151,6 +153,8 @@ public interface Indexer<T> {
 		throws SearchException;
 
 	public long searchCount(SearchContext searchContext) throws SearchException;
+
+	public void setIndexerEnabled(boolean indexerEnabled);
 
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor);

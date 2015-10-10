@@ -268,10 +268,6 @@ public class AppLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static java.util.Map<java.lang.String, java.lang.String> getBundledApps() {
-		return getService().getBundledApps();
-	}
-
 	public static java.util.List<com.liferay.marketplace.model.App> getInstalledApps() {
 		return getService().getInstalledApps();
 	}
@@ -285,6 +281,10 @@ public class AppLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.Map<java.lang.String, java.lang.String> getPrepackagedApps() {
+		return getService().getPrepackagedApps();
 	}
 
 	public static void installApp(long remoteAppId)

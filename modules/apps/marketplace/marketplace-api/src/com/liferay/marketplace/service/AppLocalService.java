@@ -240,9 +240,6 @@ public interface AppLocalService extends BaseLocalService,
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<java.lang.String, java.lang.String> getBundledApps();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -253,6 +250,9 @@ public interface AppLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.String, java.lang.String> getPrepackagedApps();
 
 	public void installApp(long remoteAppId) throws PortalException;
 

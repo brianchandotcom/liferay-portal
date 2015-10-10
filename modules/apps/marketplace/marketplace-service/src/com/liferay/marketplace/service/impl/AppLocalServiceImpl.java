@@ -75,8 +75,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 	@Override
 	public void clearInstalledAppsCache() {
-		_bundledApps = null;
 		_installedApps = null;
+		_prepackagedApps = null;
 	}
 
 	@Override
@@ -126,57 +126,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	@Override
 	public List<App> getApps(String category) {
 		return appPersistence.findByCategory(category);
-	}
-
-	@Override
-	public Map<String, String> getBundledApps() {
-		if (_bundledApps != null) {
-			return _bundledApps;
-		}
-
-		Map<String, String> bundledApps = new HashMap<>();
-
-		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
-
-		for (Bundle bundle : bundles) {
-			InputStream inputStream = null;
-
-			try {
-				URL url = bundle.getResource(
-					"/META-INF/liferay-releng.changelog.md5");
-
-				if (url == null) {
-					url = bundle.getResource(
-						"/WEB-INF/liferay-releng.changelog.md5");
-				}
-
-				if (url == null) {
-					continue;
-				}
-
-				inputStream = url.openStream();
-
-				String relengHash = StringUtil.read(inputStream);
-
-				if (Validator.isNotNull(relengHash)) {
-					bundledApps.put(bundle.getSymbolicName(), relengHash);
-				}
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to read plugin package MD5 checksum for " +
-							bundle.getSymbolicName());
-				}
-			}
-			finally {
-				StreamUtil.cleanUp(inputStream);
-			}
-		}
-
-		_bundledApps = bundledApps;
-
-		return _bundledApps;
 	}
 
 	@Override
@@ -265,6 +214,57 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		}
 
 		return installedApps;
+	}
+
+	@Override
+	public Map<String, String> getPrepackagedApps() {
+		if (_prepackagedApps != null) {
+			return _prepackagedApps;
+		}
+
+		Map<String, String> prepackagedApps = new HashMap<>();
+
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
+
+		for (Bundle bundle : bundles) {
+			InputStream inputStream = null;
+
+			try {
+				URL url = bundle.getResource(
+					"/META-INF/liferay-releng.changelog.md5");
+
+				if (url == null) {
+					url = bundle.getResource(
+						"/WEB-INF/liferay-releng.changelog.md5");
+				}
+
+				if (url == null) {
+					continue;
+				}
+
+				inputStream = url.openStream();
+
+				String relengHash = StringUtil.read(inputStream);
+
+				if (Validator.isNotNull(relengHash)) {
+					prepackagedApps.put(bundle.getSymbolicName(), relengHash);
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to read plugin package MD5 checksum for " +
+							bundle.getSymbolicName());
+				}
+			}
+			finally {
+				StreamUtil.cleanUp(inputStream);
+			}
+		}
+
+		_prepackagedApps = prepackagedApps;
+
+		return _prepackagedApps;
 	}
 
 	@Override
@@ -615,7 +615,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AppLocalServiceImpl.class);
 
-	private Map<String, String> _bundledApps;
 	private List<App> _installedApps;
+	private Map<String, String> _prepackagedApps;
 
 }

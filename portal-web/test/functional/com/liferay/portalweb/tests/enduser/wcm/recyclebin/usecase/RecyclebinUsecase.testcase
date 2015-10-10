@@ -291,6 +291,64 @@
 		</execute>
 	</command>
 
+	<command name="RecycleBinMBAttachment" priority="3">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCPWithAttachment">
+			<var name="mbAttachmentFile" value="Document_1.doc" />
+			<var name="threadBody" value="MB Body" />
+			<var name="threadSubject" value="MB Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoCP">
+			<var name="threadSubject" value="MB Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editCP">
+			<var name="mbAttachmentFile" value="Document_1.doc" />
+			<var name="threadAttachmentRemove" value="true" />
+			<var name="threadBodyEdit" value="MB Body Edit" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="mbAttachmentFile" value="Recently Removed Attachment" />
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="MB Body Edit" />
+			<var name="threadSubject" value="MB Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#restoreMBAttachmentCP">
+			<var name="mbAttachmentFile" value="Document_1.doc" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="mbAttachmentFile" value="Document_1.doc" />
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="MB Body Edit" />
+			<var name="threadSubject" value="MB Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
 	<command name="RecycleBinRestoreDuplicate" priority="4">
 		<for list="1,2" param="wcNumber">
 			<execute macro="Page#gotoContentCP">
@@ -351,64 +409,6 @@
 
 		<execute macro="WebContent#viewCP">
 			<var name="webContentTitle" value="WC Title 2" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinMBAttachment" priority="3">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addCPWithAttachment">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-			<var name="threadBody" value="MB Body" />
-			<var name="threadSubject" value="MB Subject" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoCP">
-			<var name="threadSubject" value="MB Subject" />
-		</execute>
-
-		<execute macro="MessageboardsThread#editCP">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-			<var name="threadAttachmentRemove" value="true" />
-			<var name="threadBodyEdit" value="MB Body Edit" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="mbAttachmentFile" value="Recently Removed Attachment" />
-			<var name="postsNumber" value="1" />
-			<var name="threadBody" value="MB Body Edit" />
-			<var name="threadSubject" value="MB Subject" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="MessageboardsThread#restoreMBAttachmentCP">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="mbAttachmentFile" value="Document_1.doc" />
-			<var name="postsNumber" value="1" />
-			<var name="threadBody" value="MB Body Edit" />
-			<var name="threadSubject" value="MB Subject" />
-			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 
@@ -1107,8 +1107,8 @@
 
 		<execute macro="MessageboardsCategory#deleteCP">
 			<var name="assetType" value="Message Boards Category" />
-			<var name="siteScopeName" value="Site Name" />
 			<var name="categoryName" value="MB Category Name" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

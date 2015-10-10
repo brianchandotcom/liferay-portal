@@ -125,20 +125,24 @@
 		<execute function="AssertTextEquals" locator1="CPSitesEdit#DETAILS_NAME" value1="${siteName}" />
 
 		<if>
-			<equals arg1="${siteLimitMembership}" arg2="Yes" />
+			<isset var="siteLimitMembership" />
 			<then>
-				<execute function="Check" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+				<if>
+					<equals arg1="${siteLimitMembership}" arg2="Yes" />
+					<then>
+						<execute function="Check" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+					</then>
+					<elseif>
+						<equals arg1="${siteLimitMembership}" arg2="No" />
+						<then>
+							<execute function="Uncheck" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+						</then>
+					</elseif>
+				</if>
+					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
-			<elseif>
-				<equals arg1="${siteLimitMembership}" arg2="No" />
-				<then>
-					<execute function="Uncheck" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
-				</then>
-			</elseif>
 		</if>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addIntranetCP">

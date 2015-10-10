@@ -16,7 +16,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="DeleteConfiguredKBFolder" priority="4">
+	<command name="DeleteConfiguredKBFolder" priority="3">
 		<var name="kbArticleContent" value="Article Content" />
 		<var name="pageName" value="Knowledge Base Page" />
 
@@ -146,7 +146,7 @@
 		<execute macro="KBArticle#deleteCP" />
 	</command>
 
-	<command name="Demo" priority="4">
+	<command name="Demo" priority="1">
 		<property name="portlet.properties.knowledge-base-portlet" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface${line.separator}admin.kb.article.default.sections=" />
 
 		<execute macro="Page#gotoContentCP">
@@ -436,7 +436,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchKBArticleInFolderViaSearchPortlet" priority="4">
+	<command name="SearchKBArticleInFolderViaSearchPortlet" priority="3">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[
 				{"facets": [
@@ -556,60 +556,6 @@
 		</execute>
 	</command>
 
-	<command name="SearchKBArticlesViaKBSearchPG" priority="4">
-		<var name="kbArticleCounterList" value="1,2" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base" />
-		</execute>
-
-		<for list="${kbArticleCounterList}" param="kbCount">
-			<execute macro="KBArticle#addCP">
-				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
-				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
-			</execute>
-		</for>
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Search" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="KBArticle#searchPGViaKBSearch">
-			<var name="searchTerm" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewSearchResultsPG">
-			<var name="kbArticleTitleList" value="Knowledge Base Article Title 1,Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoPGViaKBSearchResult">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewPGViaKBSearch">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#goBackToSearchResultsPG" />
-
-		<execute macro="KBArticle#viewSearchResultsPG">
-			<var name="kbArticleTitleList" value="Knowledge Base Article Title 1,Knowledge Base Article Title 2" />
-		</execute>
-	</command>
-
 	<command name="SearchKBArticleViaSearchPortlet" priority="4">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[
@@ -696,7 +642,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchKBArticleWithSpecialCharactersViaSearchPortletPG" priority="4">
+	<command name="SearchKBArticleWithSpecialCharactersViaSearchPortletPG" priority="3">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[
 				{"facets": [
@@ -778,7 +724,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewConfiguredKBArticleWithinFolderViaKBDisplay" priority="4">
+	<command name="ViewConfiguredKBArticleWithinFolderViaKBDisplay" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -838,7 +784,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDefaultFolderViaKBDisplay" priority="4">
+	<command name="ViewDefaultFolderViaKBDisplay" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -1094,7 +1040,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleFriendlyURL" priority="3">
+	<command name="ViewKBArticleFriendlyURL" priority="4">
 		<var name="kbArticleContent" value="KB Article Content" />
 		<var name="kbArticleContent2" value="KB Article 2 Content" />
 		<var name="kbArticleTitle" value="Article Title" />
@@ -1389,7 +1335,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticlesInDifferentScopesPerSite" priority="4">
+	<command name="ViewKBArticlesInDifferentScopesPerSite" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page 1" />
 		</execute>
@@ -1767,7 +1713,7 @@
 		<execute macro="KBArticleSuggestion#viewDefaultResolved" />
 	</command>
 
-	<command name="ViewKBArticleSuggestionsWorkflowNotificationInGmail" priority="4">
+	<command name="ViewKBArticleSuggestionsWorkflowNotificationInGmail" priority="3">
 		<var name="kbArticleContent" value="KB Article Content" />
 		<var name="kbArticleTitle" value="KB Article Title" />
 		<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
@@ -2218,7 +2164,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSuggestionsWithPermissions" priority="3">
+	<command name="ViewSuggestionsWithPermissions" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -2461,7 +2407,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewUnchangedKBArticlePriorityAfterEdit" priority="4">
+	<command name="ViewUnchangedKBArticlePriorityAfterEdit" priority="3">
 		<var name="kbArticleCounterList" value="1,2,3" />
 
 		<execute macro="Page#addPG">

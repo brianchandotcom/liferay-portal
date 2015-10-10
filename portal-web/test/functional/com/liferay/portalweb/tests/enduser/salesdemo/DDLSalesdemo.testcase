@@ -15,7 +15,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="Demo1" priority="4">
+	<command name="Demo1" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Company Picnic" />
 		</execute>

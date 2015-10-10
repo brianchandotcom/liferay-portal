@@ -66,7 +66,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentDraftCP" priority="4">
+	<command name="AddWebContentDraftCP" priority="3">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -113,7 +113,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command name="AddWebContentNoWorkflowCP" priority="4">
+	<command name="AddWebContentNoWorkflowCP" priority="3">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -153,7 +153,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command name="ApproveInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
+	<command name="ApproveInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="3">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
@@ -731,7 +731,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
+	<command name="RejectInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="3">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
@@ -836,7 +836,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
+	<command name="RejectInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="3">
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
@@ -1017,7 +1017,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInWebContentFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
+	<command name="RejectInWebContentFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="3">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
@@ -1132,7 +1132,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
+	<command name="RejectInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="3">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>

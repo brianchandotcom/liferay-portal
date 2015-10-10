@@ -112,7 +112,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveFolderWithWebContentToRecycleBin" priority="4">
+	<command name="MoveFolderWithWebContentToRecycleBin" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Liferay" />
@@ -330,7 +330,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDuplicateAssetNamesInRecycleBin" priority="4">
+	<command name="ViewDuplicateAssetNamesInRecycleBin" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Liferay" />

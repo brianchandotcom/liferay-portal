@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Google')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LDAP</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'LDAP')]</td>
 	<td></td>

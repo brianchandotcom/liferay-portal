@@ -4148,32 +4148,26 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	</target>
 
 	<target name="prepare-log4j-ext-xml">
+		<var name="dialect.detector.log.level" value="INFO" />
+
 		<if>
 			<equals arg1="${database.type}" arg2="hypersonic" />
 			<then>
-				<echo file="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+				<var name="dialect.detector.log.level" value="ERROR" />
+			</then>
+		</if>
+
+		<echo file="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 	<category name="com.liferay.portal.spring.hibernate.DialectDetector">
-		<priority value="ERROR" />
+		<priority value="${dialect.detector.log.level}" />
 	</category>
 	<category name="com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper">
 		<priority value="INFO" />
 	</category>
 </log4j:configuration>]]></echo>
-			</then>
-			<else>
-				<echo file="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper">
-		<priority value="INFO" />
-	</category>
-</log4j:configuration>]]></echo>
-			</else>
-		</if>
 	</target>
 
 	<target name="prepare-mobile-device">

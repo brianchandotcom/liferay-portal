@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.metadata.Metadata;
@@ -35,24 +36,6 @@ public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 
 	public static final TikaSafeRandomizerBumper INSTANCE =
 		new TikaSafeRandomizerBumper(null);
-
-	public static String byteArrayToString(byte[] byteArray) {
-		StringBundler sb = new StringBundler((byteArray.length * 3) + 2);
-
-		sb.append("{");
-
-		for (byte val : byteArray) {
-			sb.append("(byte)");
-			sb.append(val);
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append("}");
-
-		return sb.toString();
-	}
 
 	public TikaSafeRandomizerBumper(String contentType) {
 		_contentType = contentType;
@@ -97,6 +80,24 @@ public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 		catch (Throwable t) {
 			return false;
 		}
+	}
+
+	protected static String byteArrayToString(byte[] byteArray) {
+		StringBundler sb = new StringBundler((byteArray.length * 3) + 1);
+
+		sb.append(StringPool.OPEN_CURLY_BRACE);
+
+		for (byte b : byteArray) {
+			sb.append("(byte)");
+			sb.append(b);
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

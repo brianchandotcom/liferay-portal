@@ -16,8 +16,14 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -261,6 +267,39 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 					if (createDateCriterion != null) {
 						dynamicQuery.add(createDateCriterion);
 					}
+
+					DynamicQuery assetEntryDynamicQuery =
+						DynamicQueryFactoryUtil.forClass(
+							AssetEntry.class, "assetEntry", getClassLoader());
+
+					assetEntryDynamicQuery.setProjection(
+						ProjectionFactoryUtil.alias(
+							ProjectionFactoryUtil.property(
+								"assetEntry.entryId"),
+							"assetEntry.assetEntryId"));
+
+					Property groupIdProperty = PropertyFactoryUtil.forName(
+						"groupId");
+
+					Criterion groupIdCriterion = groupIdProperty.eq(
+						portletDataContext.getScopeGroupId());
+
+					assetEntryDynamicQuery.add(groupIdCriterion);
+
+					Disjunction disjunction =
+						RestrictionsFactoryUtil.disjunction();
+
+					Property entryId1Property = PropertyFactoryUtil.forName(
+						"entryId1");
+					Property entryId2Property = PropertyFactoryUtil.forName(
+						"entryId2");
+
+					disjunction.add(
+						entryId1Property.in(assetEntryDynamicQuery));
+					disjunction.add(
+						entryId2Property.in(assetEntryDynamicQuery));
+
+					dynamicQuery.add(disjunction);
 				}
 
 			});
@@ -269,8 +308,6 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		exportActionableDynamicQuery.setClassLoader(getClassLoader());
 		exportActionableDynamicQuery.setCompanyId(
 			portletDataContext.getCompanyId());
-		exportActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
 		exportActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
 

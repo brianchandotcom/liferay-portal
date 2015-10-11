@@ -49,7 +49,7 @@ public class EntriesChecker extends RowChecker {
 
 		_journalDisplayContext = new JournalDisplayContext(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest),
-			liferayPortletRequest.getPreferences());
+			liferayPortletResponse, liferayPortletRequest.getPreferences());
 
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -164,8 +164,8 @@ public class EntriesChecker extends RowChecker {
 			StringPool.BLANK);
 	}
 
+	private final JournalDisplayContext _journalDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;
-	private final JournalDisplayContext _journalDisplayContext;
 
 }

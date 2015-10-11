@@ -224,7 +224,7 @@ String currentURL = currentURLObj.toString();
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
-JournalDisplayContext journalDisplayContext = new JournalDisplayContext(request, portletPreferences);
+JournalDisplayContext journalDisplayContext = new JournalDisplayContext(request, liferayPortletResponse, portletPreferences);
 
 JournalWebRequestHelper journalWebRequestHelper = new JournalWebRequestHelper(request);
 

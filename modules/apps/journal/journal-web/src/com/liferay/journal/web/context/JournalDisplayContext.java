@@ -21,7 +21,9 @@ import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,6 +36,7 @@ import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,9 +46,12 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalDisplayContext {
 
 	public JournalDisplayContext(
-		HttpServletRequest request, PortletPreferences portletPreferences) {
+		HttpServletRequest request,
+		LiferayPortletResponse liferayPortletResponse,
+		PortletPreferences portletPreferences) {
 
 		_request = request;
+		_liferayPortletResponse = liferayPortletResponse;
 		_portletPreferences = portletPreferences;
 	}
 
@@ -101,6 +107,39 @@ public class JournalDisplayContext {
 		_navigation = ParamUtil.getString(_request, "navigation", "home");
 
 		return _navigation;
+	}
+
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
+
+		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", getDisplayStyle());
+		}
+
+		if (!isShowEditActions()) {
+			portletURL.setParameter(
+				"showEditActions", String.valueOf(isShowEditActions()));
+		}
+
+		String ddmStructureKey = ParamUtil.getString(
+			_request, "ddmStructureKey");
+
+		if (!ddmStructureKey.equals("0")) {
+			portletURL.setParameter("ddmStructureKey", ddmStructureKey);
+		}
+
+		String navigation = ParamUtil.getString(_request, "navigation");
+
+		if (Validator.isNotNull(navigation)) {
+			portletURL.setParameter(
+				"navigation", HtmlUtil.escapeJS(getNavigation()));
+		}
+
+		return portletURL;
 	}
 
 	public int getStatus() {
@@ -194,6 +233,7 @@ public class JournalDisplayContext {
 	private String[] _displayViews;
 	private JournalFolder _folder;
 	private Long _folderId;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;

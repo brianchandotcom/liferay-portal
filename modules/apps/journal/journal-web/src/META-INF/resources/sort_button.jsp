@@ -36,15 +36,9 @@ else {
 }
 %>
 
-<liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="navigation" value="<%= journalDisplayContext.getNavigation() %>" />
-	<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
-	<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
-</liferay-portlet:renderURL>
-
 <liferay-frontend:management-bar-sort
 	orderByCol="<%= orderByCol %>"
 	orderByType="<%= orderByType %>"
 	orderColumns='<%= new String[] {"display-date", "modified-date"} %>'
-	portletURL="<%= portletURL %>"
+	portletURL="<%= journalDisplayContext.getPortletURL() %>"
 />

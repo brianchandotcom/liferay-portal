@@ -21,10 +21,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
 
-PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
-portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
+PortletURL portletURL = journalDisplayContext.getPortletURL();
 
 ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
@@ -262,7 +259,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 				PortletURL rowURL = null;
 
 				if (journalDisplayContext.isShowEditActions()) {
-					rowURL = liferayPortletResponse.createRenderURL();
+					rowURL = journalDisplayContext.getPortletURL();
 
 					rowURL.setParameter("mvcPath", "/edit_article.jsp");
 					rowURL.setParameter("redirect", currentURL);
@@ -271,7 +268,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 					rowURL.setParameter("articleId", curArticle.getArticleId());
 					rowURL.setParameter("version", String.valueOf(curArticle.getVersion()));
-					rowURL.setParameter("displayStyle", displayStyle);
 				}
 				%>
 

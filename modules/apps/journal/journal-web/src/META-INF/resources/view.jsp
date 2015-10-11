@@ -52,9 +52,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 			</div>
 
 			<%
-			PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-			portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+			PortletURL portletURL = journalDisplayContext.getPortletURL();
 			%>
 
 			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">

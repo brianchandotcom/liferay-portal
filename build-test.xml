@@ -4164,7 +4164,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 </log4j:configuration>]]></echo>
 			</then>
 			<else>
-				<echo>${app.server.classes.portal.dir}</echo>
 				<echo file="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 

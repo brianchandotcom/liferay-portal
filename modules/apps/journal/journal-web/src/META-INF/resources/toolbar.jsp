@@ -26,7 +26,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 
 <liferay-frontend:management-bar
 	checkBoxContainerId="entriesContainer"
-	includeCheckBox="<%= !user.isDefaultUser() %>"
+	includeCheckBox="<%= !user.isDefaultUser() && journalDisplayContext.isShowEditActions() %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />

@@ -152,6 +152,17 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isShowEditActions() {
+		if (_showEditActions != null) {
+			return _showEditActions;
+		}
+
+		_showEditActions = ParamUtil.getBoolean(
+			_request, "showEditActions", true);
+
+		return _showEditActions;
+	}
+
 	protected String getDisplayStyle(
 		HttpServletRequest request, String[] displayViews) {
 
@@ -186,6 +197,7 @@ public class JournalDisplayContext {
 	private String _navigation;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
+	private Boolean _showEditActions;
 	private Integer _status;
 
 }

@@ -909,6 +909,7 @@
 							<antcall target="prepare-system-ext-properties" inheritAll="false" />
 
 							<gradle-execute dir="modules" task="testIntegration">
+								<arg value="-Ddatabase.type=@{database.type}" />
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
 							</gradle-execute>
 

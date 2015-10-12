@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.staging.configuration.web.portlet.action;
+package com.liferay.staging.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys;
+import com.liferay.staging.web.portlet.constants.StagingPortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" +
-			StagingConfigurationPortletKeys.STAGING_CONFIGURATION,
+		"javax.portlet.name=" + StagingPortletKeys.STAGING,
 		"mvc.command.name=staging"
 	},
 	service = MVCRenderCommand.class

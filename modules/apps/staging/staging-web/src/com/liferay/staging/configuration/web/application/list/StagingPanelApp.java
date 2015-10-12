@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.configuration.web.application.list;
+package com.liferay.staging.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys;
+import com.liferay.staging.web.portlet.constants.StagingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,12 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class StagingConfigurationPanelApp
-	extends BaseControlPanelEntryPanelApp {
+public class StagingPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return StagingConfigurationPortletKeys.STAGING_CONFIGURATION;
+		return StagingPortletKeys.STAGING;
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class StagingConfigurationPanelApp
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + StagingConfigurationPortletKeys.STAGING_CONFIGURATION + ")",
+		target = "(javax.portlet.name=" + StagingPortletKeys.STAGING + ")",
 		unbind = "-"
 	)
 	protected void setPortlet(Portlet portlet) {

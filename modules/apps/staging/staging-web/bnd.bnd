@@ -1,5 +1,5 @@
 Bundle-Name: Staging Configuration
-Bundle-SymbolicName: com.liferay.staging.configuration.web
+Bundle-SymbolicName: com.liferay.staging.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.configuration.web.portlet;
+package com.liferay.staging.web.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -25,7 +25,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.service.StagingLocalService;
 import com.liferay.portlet.exportimport.staging.StagingConstants;
-import com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys;
+import com.liferay.staging.web.portlet.constants.StagingPortletKeys;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=portlet-staging-configuration",
+		"com.liferay.portlet.css-class-wrapper=portlet-staging",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
@@ -52,18 +52,18 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.show-portlet-inactive=false",
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Staging Configuration",
+		"javax.portlet.display-name=Staging",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + StagingConfigurationPortletKeys.STAGING_CONFIGURATION,
+		"javax.portlet.name=" + StagingPortletKeys.STAGING,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class StagingConfigurationPortlet extends MVCPortlet {
+public class StagingPortlet extends MVCPortlet {
 
 	public void editStagingConfiguration(
 			ActionRequest actionRequest, ActionResponse actionResponse)

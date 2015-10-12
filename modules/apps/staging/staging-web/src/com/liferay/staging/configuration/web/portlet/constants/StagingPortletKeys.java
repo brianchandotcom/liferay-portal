@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.staging.configuration.web.portlet.constants;
+package com.liferay.staging.web.portlet.constants;
 
 /**
  * @author Levente Hudák
  */
-public class StagingConfigurationPortletKeys {
+public class StagingPortletKeys {
 
-	public static final String STAGING_CONFIGURATION =
-		"com_liferay_staging_configuration_web_portlet_" +
-			"StagingConfigurationPortlet";
+	public static final String STAGING =
+		"com_liferay_staging_web_portlet_StagingPortlet";
 
 }

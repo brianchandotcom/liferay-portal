@@ -9,7 +9,11 @@
 
 	<#if hasFieldValue>
 		<#if !disabled>
-			<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
+			<@aui.input
+				name=namespacedFieldName
+				type="hidden"
+				value=fieldValue
+			/>
 		</#if>
 
 		<#if fieldValue == "true">

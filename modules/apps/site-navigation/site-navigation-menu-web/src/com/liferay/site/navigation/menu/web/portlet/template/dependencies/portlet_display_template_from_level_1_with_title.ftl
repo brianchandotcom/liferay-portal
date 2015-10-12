@@ -12,6 +12,10 @@
 			</#if>
 		</h2>
 
-		<@displayChildNavigation childLayoutLevel=1 childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=false />
+		<@displayChildNavigation
+			childLayoutLevel=1
+			childNavigationItems=rootNavigationItem.getChildren()
+			includeAllChildEntries=false
+		/>
 	</div>
 </#if>

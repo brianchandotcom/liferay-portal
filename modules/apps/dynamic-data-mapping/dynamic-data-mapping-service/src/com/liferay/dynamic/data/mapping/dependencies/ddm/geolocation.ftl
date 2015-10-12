@@ -13,12 +13,21 @@
 </#if>
 
 <@aui["field-wrapper"] cssClass="geolocation-field" data=data label=label required=required>
-	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+	<@aui.input
+		name=namespacedFieldName
+		type="hidden"
+		value=fieldRawValue
+	/>
 
 	<div id="${portletNamespace}${namespacedFieldName}CoordinatesContainer">
 		<div class="glyphicon glyphicon-map-marker" id="${portletNamespace}${namespacedFieldName}Location"></div>
 
-		<@liferay_ui["map"] geolocation=true latitude=latitude longitude=longitude name=namespacedFieldName />
+		<@liferay_ui["map"]
+			geolocation=true
+			latitude=latitude
+			longitude=longitude
+			name=namespacedFieldName
+		/>
 	</div>
 
 	${fieldStructure.children}

@@ -428,6 +428,19 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-poshi-dir-name">
+		<sequential>
+			<var name="poshi.dir.name" unset="true" />
+
+			<get-poshi-test-name />
+
+			<antelope:stringutil property="poshi.dir.name" string="${poshi.test.name}">
+				<antelope:replace regex="," replacement="_" />
+				<antelope:replace regex="#" replacement="_" />
+			</antelope:stringutil>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-poshi-method-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -727,6 +740,33 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<property name="testray.logs.console" value="${testray.logs.dir}/console.txt" />
 			<property name="testray.logs.report" value="${testray.logs.dir}/report.html" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-logs-dir-name">
+		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<var name="batch.dir.name" value="functional-${app.server.type}-${database.type}" />
+
+					<get-poshi-dir-name />
+
+					<var name="test.dir.name" value="${poshi.dir.name}" />
+				</then>
+				<else>
+					<var name="batch.dir.name" value="job-${app.server.type}-${database.type}" />
+
+					<var name="test.dir.name" value="${env.JOB_NAME}" />
+				</else>
+			</if>
+
+			<antelope:stringutil property="test.dir.name" string="${test.dir.name}">
+				<antelope:replace regex="," replacement="_" />
+				<antelope:replace regex="#" replacement="_" />
+			</antelope:stringutil>
+
+			<var name="testray.logs.dir.name" value="${env.HOSTNAME}/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/${batch.dir.name}/${test.dir.name}" />
 		</sequential>
 	</macrodef>
 

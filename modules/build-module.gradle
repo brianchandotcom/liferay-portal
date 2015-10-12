@@ -27,7 +27,7 @@ File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 
 boolean addPortalDependencies = true
 
-if (project.path.startsWith(":core:") || project.path.startsWith(":frontend:") || project.path.startsWith(":sdk:") || project.path.startsWith(":test:") || project.path.startsWith(":third-party:") || project.path.startsWith(":util:")) {
+if (project.path.startsWith(":core:") || project.path.startsWith(":frontend:") || project.path.startsWith(":portal:") || project.path.startsWith(":sdk:") || project.path.startsWith(":test:") || project.path.startsWith(":third-party:") || project.path.startsWith(":util:")) {
 	addPortalDependencies = false
 }
 
@@ -111,7 +111,6 @@ configurations {
 
 	portal
 	portalEclipse
-	portalTest
 
 	alloyTaglib {
 		extendsFrom configurations.runtime
@@ -153,11 +152,12 @@ dependencies {
 	portalEclipse group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	portalEclipse group: "log4j", name: "log4j", version: "1.2.17"
 
-	portalTest group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
-	portalTest group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
-
 	serviceBuilder fileTree(dir: rootProject.file("../tools/sdk/tmp/portal-tools"), include: "*.jar")
 	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
+
+	testCompile group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
+	testCompile group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
+
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
 	upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
 	wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
@@ -244,13 +244,13 @@ sourceSets {
 	}
 
 	test {
-		compileClasspath = configurations.compile + configurations.portal + compileClasspath + configurations.portalTest
-		runtimeClasspath = configurations.compile + configurations.portal + runtimeClasspath + configurations.portalTest
+		compileClasspath = configurations.compile + configurations.portal + compileClasspath
+		runtimeClasspath = configurations.compile + configurations.portal + runtimeClasspath
 	}
 
 	testIntegration {
-		compileClasspath = configurations.portal + compileClasspath + configurations.portalTest
-		runtimeClasspath = configurations.portal + runtimeClasspath + configurations.portalTest
+		compileClasspath = configurations.portal + compileClasspath
+		runtimeClasspath = configurations.portal + runtimeClasspath
 	}
 }
 

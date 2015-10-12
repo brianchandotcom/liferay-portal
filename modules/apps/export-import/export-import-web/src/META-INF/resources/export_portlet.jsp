@@ -18,10 +18,6 @@
 
 <%
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
-
-PortletURL portletURL = currentURLObj;
-
-portletURL.setParameter("tabs3", "current-and-previous");
 %>
 
 <liferay-ui:tabs
@@ -45,10 +41,18 @@ portletURL.setParameter("tabs3", "current-and-previous");
 			<portlet:param name="mvcRenderCommandName" value="exportImport" />
 		</portlet:actionURL>
 
+		<liferay-portlet:renderURL var="exportPortletRedirectURL">
+			<portlet:param name="mvcRenderCommandName" value="exportImport" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+			<portlet:param name="tabs2" value="export" />
+			<portlet:param name="tabs3" value="current-and-previous" />
+			<portlet:param name="portletResource" value="<%= portletResource %>" />
+		</liferay-portlet:renderURL>
+
 		<aui:form action='<%= exportPortletURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 			<aui:input name="tabs1" type="hidden" value="export_import" />
 			<aui:input name="tabs2" type="hidden" value="export" />
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+			<aui:input name="redirect" type="hidden" value="<%= exportPortletRedirectURL %>" />
 			<aui:input name="plid" type="hidden" value="<%= exportableLayout.getPlid() %>" />
 			<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
@@ -142,7 +146,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								<li class="tree-item">
 									<div class="hide" id="<portlet:namespace />range">
 										<aui:fieldset cssClass="portlet-data-section" label="date-range">
-											<aui:input data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
+											<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
 
 											<aui:input data-name='<%= LanguageUtil.get(request, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
 

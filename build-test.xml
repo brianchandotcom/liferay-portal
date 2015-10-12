@@ -6356,9 +6356,9 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-testray-logs">
-		<antcall target="record-testray-console-log" />
+		<antcall target="record-testray-logs-jenkins-console" />
 
-		<antcall target="record-testray-poshi-log" />
+		<antcall target="record-testray-logs-poshi-report" />
 	</target>
 
 	<target name="record-testray-logs-jenkins-console">

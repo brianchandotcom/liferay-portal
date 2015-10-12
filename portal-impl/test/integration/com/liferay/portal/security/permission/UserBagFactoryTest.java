@@ -81,11 +81,11 @@ public class UserBagFactoryTest {
 
 		Set<Group> userOrgGroups = getUserOrgGroups();
 
-		List<Group> userUserGroupGroups = getUserUserGroupGroups();
+		Set<Group> userUserGroupGroups = getUserUserGroupGroups();
 
 		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
 
-		List<Group> groups = userPermissionCheckerBag.getGroups();
+		Set<Group> groups = userPermissionCheckerBag.getGroups();
 
 		Assert.assertTrue(groups.containsAll(userGroups));
 		Assert.assertTrue(groups.containsAll(userOrgGroups));
@@ -144,7 +144,7 @@ public class UserBagFactoryTest {
 
 	@Test
 	public void testGetUserOrgs() throws Exception {
-		List<Organization> organizations = getUserOrgs();
+		Set<Organization> organizations = getUserOrgs();
 
 		Assert.assertTrue(organizations.contains(_childOrganization));
 		Assert.assertTrue(organizations.contains(_parentOrganization));
@@ -152,7 +152,7 @@ public class UserBagFactoryTest {
 
 	@Test
 	public void testGetUserUserGroupGroups() throws Exception {
-		List<Group> groups = getUserUserGroupGroups();
+		Set<Group> groups = getUserUserGroupGroups();
 
 		Assert.assertTrue(groups.contains(_userGroup.getGroup()));
 	}
@@ -161,7 +161,7 @@ public class UserBagFactoryTest {
 	public void testUnmodifiableGroups() throws Exception {
 		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
 
-		List<Group> groups = userPermissionCheckerBag.getGroups();
+		Set<Group> groups = userPermissionCheckerBag.getGroups();
 
 		groups.clear();
 	}
@@ -197,7 +197,7 @@ public class UserBagFactoryTest {
 	public void testUnmodifiableUserOrgs() throws Exception {
 		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
 
-		List<Organization> userOrgs = userPermissionCheckerBag.getUserOrgs();
+		Set<Organization> userOrgs = userPermissionCheckerBag.getUserOrgs();
 
 		userOrgs.clear();
 	}
@@ -206,7 +206,7 @@ public class UserBagFactoryTest {
 	public void testUnmodifiableUserUserGroupsGroups() throws Exception {
 		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
 
-		List<Group> userUserGroupGroups =
+		Set<Group> userUserGroupGroups =
 			userPermissionCheckerBag.getUserUserGroupGroups();
 
 		userUserGroupGroups.clear();
@@ -233,7 +233,7 @@ public class UserBagFactoryTest {
 		return userPermissionCheckerBag.getUserOrgGroups();
 	}
 
-	protected List<Organization> getUserOrgs() throws Exception {
+	protected Set<Organization> getUserOrgs() throws Exception {
 		UserLocalServiceUtil.addOrganizationUser(
 			_childOrganization.getOrganizationId(), _user.getUserId());
 
@@ -242,7 +242,7 @@ public class UserBagFactoryTest {
 		return userPermissionCheckerBag.getUserOrgs();
 	}
 
-	protected List<Group> getUserUserGroupGroups() throws Exception {
+	protected Set<Group> getUserUserGroupGroups() throws Exception {
 		UserLocalServiceUtil.addUserGroupUser(
 			_userGroup.getUserGroupId(), _user.getUserId());
 

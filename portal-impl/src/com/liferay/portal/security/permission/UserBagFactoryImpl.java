@@ -25,7 +25,6 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -49,10 +48,13 @@ public class UserBagFactoryImpl implements UserBagFactory {
 			List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(
 				userId, true);
 
-			List<Organization> userOrgs = getUserOrgs(userId);
+			Set<Organization> userOrgs = getUserOrgs(userId);
 
-			Set<Group> userOrgGroups = SetUtil.fromList(
-				GroupLocalServiceUtil.getOrganizationsGroups(userOrgs));
+			Set<Group> userOrgGroups = new HashSet<>(userOrgs.size());
+
+			for (Organization organization : userOrgs) {
+				userOrgGroups.add(organization.getGroup());
+			}
 
 			List<UserGroup> userUserGroups =
 				UserGroupLocalServiceUtil.getUserUserGroups(userId);
@@ -75,7 +77,7 @@ public class UserBagFactoryImpl implements UserBagFactory {
 
 			userPermissionCheckerBag = new UserPermissionCheckerBagImpl(
 				userId, SetUtil.fromList(userGroups), userOrgs, userOrgGroups,
-				userUserGroupGroups, userRoles);
+				SetUtil.fromList(userUserGroupGroups), userRoles);
 
 			PermissionCacheUtil.putUserBag(userId, userPermissionCheckerBag);
 
@@ -88,14 +90,14 @@ public class UserBagFactoryImpl implements UserBagFactory {
 		}
 	}
 
-	protected List<Organization> getUserOrgs(long userId)
+	protected Set<Organization> getUserOrgs(long userId)
 		throws PortalException {
 
 		List<Organization> userOrgs =
 			OrganizationLocalServiceUtil.getUserOrganizations(userId);
 
 		if (userOrgs.isEmpty()) {
-			return userOrgs;
+			return new HashSet<>(userOrgs);
 		}
 
 		Set<Organization> organizations = new LinkedHashSet<>();
@@ -112,7 +114,7 @@ public class UserBagFactoryImpl implements UserBagFactory {
 			}
 		}
 
-		return new ArrayList<>(organizations);
+		return organizations;
 	}
 
 }

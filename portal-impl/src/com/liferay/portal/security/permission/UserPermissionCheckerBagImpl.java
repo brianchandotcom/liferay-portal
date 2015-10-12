@@ -18,9 +18,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -29,8 +28,8 @@ import java.util.Set;
 public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 
 	public UserPermissionCheckerBagImpl(
-		long userId, Set<Group> userGroups, List<Organization> userOrgs,
-		Set<Group> userOrgGroups, List<Group> userUserGroupGroups,
+		long userId, Set<Group> userGroups, Set<Organization> userOrgs,
+		Set<Group> userOrgGroups, Set<Group> userUserGroupGroups,
 		Set<Role> userRoles) {
 
 		_userId = userId;
@@ -42,7 +41,7 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	@Override
-	public List<Group> getGroups() {
+	public Set<Group> getGroups() {
 		if (_groups == null) {
 			Collection<Group>[] groupsArray = new Collection[3];
 
@@ -63,7 +62,7 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 				groupsSize += _userUserGroupGroups.size();
 			}
 
-			_groups = new ArrayList<>(groupsSize);
+			_groups = new HashSet<>(groupsSize);
 
 			for (Collection<Group> groupsItem : groupsArray) {
 				if (groupsItem != null) {
@@ -96,12 +95,12 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	@Override
-	public List<Organization> getUserOrgs() {
+	public Set<Organization> getUserOrgs() {
 		return _userOrgs;
 	}
 
 	@Override
-	public List<Group> getUserUserGroupGroups() {
+	public Set<Group> getUserUserGroupGroups() {
 		return _userUserGroupGroups;
 	}
 
@@ -110,12 +109,12 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 		return _userRoles.contains(role);
 	}
 
-	private List<Group> _groups;
+	private Set<Group> _groups;
 	private final Set<Group> _userGroups;
 	private final long _userId;
 	private final Set<Group> _userOrgGroups;
-	private final List<Organization> _userOrgs;
+	private final Set<Organization> _userOrgs;
 	private final Set<Role> _userRoles;
-	private final List<Group> _userUserGroupGroups;
+	private final Set<Group> _userUserGroupGroups;
 
 }

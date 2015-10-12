@@ -22,7 +22,6 @@ import com.liferay.portal.model.Role;
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,7 +30,7 @@ import java.util.Set;
 @ProviderType
 public interface UserPermissionCheckerBag extends Serializable {
 
-	public List<Group> getGroups();
+	public Set<Group> getGroups();
 
 	public Set<Role> getRoles();
 
@@ -41,9 +40,9 @@ public interface UserPermissionCheckerBag extends Serializable {
 
 	public Set<Group> getUserOrgGroups();
 
-	public List<Organization> getUserOrgs();
+	public Set<Organization> getUserOrgs();
 
-	public List<Group> getUserUserGroupGroups();
+	public Set<Group> getUserUserGroupGroups();
 
 	public boolean hasRole(Role role);
 

@@ -9,7 +9,11 @@
 
 	<#if hasFieldValue>
 		<#if !disabled>
-			<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+			<@aui.input
+				name=namespacedFieldName
+				type="hidden"
+				value=fieldRawValue
+			/>
 		</#if>
 
 		<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>

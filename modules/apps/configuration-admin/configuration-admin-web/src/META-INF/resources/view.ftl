@@ -44,14 +44,29 @@
 			modelVar="configurationModel"
 		>
 			<@portlet["renderURL"] varImpl="editURL">
-				<@portlet["param"] name="mvcPath" value="/edit_configuration.ftl" />
-				<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
-				<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
+				<@portlet["param"]
+					name="mvcPath"
+					value="/edit_configuration.ftl"
+				/>
+				<@portlet["param"]
+					name="factoryPid"
+					value="${configurationModel.getFactoryPid()}"
+				/>
+				<@portlet["param"]
+					name="pid"
+					value="${configurationModel.getID()}"
+				/>
 			</@>
 
 			<@portlet["renderURL"] varImpl="viewFactoryInstancesURL">
-				<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
-				<@portlet["param"] name="viewType" value="factoryInstances" />
+				<@portlet["param"]
+					name="factoryPid"
+					value="${configurationModel.getFactoryPid()}"
+				/>
+				<@portlet["param"]
+					name="viewType"
+					value="factoryInstances"
+				/>
 			</@>
 
 			<@liferay_ui["search-container-column-text"]
@@ -110,8 +125,14 @@
 						/>
 
 						<@portlet["renderURL"] varImpl="createFactoryConfigURL">
-							<@portlet["param"] name="mvcPath" value="/edit_configuration.ftl" />
-							<@portlet["param"] name="factoryPid" value="${configurationModel.getID()}" />
+							<@portlet["param"]
+								name="mvcPath"
+								value="/edit_configuration.ftl"
+							/>
+							<@portlet["param"]
+								name="factoryPid"
+								value="${configurationModel.getID()}"
+							/>
 						</@>
 
 						<@liferay_ui["icon"]
@@ -128,8 +149,14 @@
 
 						<#if configurationModel.getConfiguration()??>
 							<@portlet["actionURL"] name="deleteConfiguration" varImpl="deleteConfigActionURL">
-								<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
-								<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
+								<@portlet["param"]
+									name="factoryPid"
+									value="${configurationModel.getFactoryPid()}"
+								/>
+								<@portlet["param"]
+									name="pid"
+									value="${configurationModel.getID()}"
+								/>
 							</@>
 
 							<@liferay_ui["icon"]

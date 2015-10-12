@@ -21,8 +21,14 @@
 
 <#assign redirectURL = renderResponse.createRenderURL() />
 
-<@portlet["actionURL"] name="bindConfiguration" varImpl="bindConfigActionURL"/>
-<@portlet["actionURL"] name="deleteConfiguration" varImpl="deleteConfigActionURL"/>
+<@portlet["actionURL"]
+	name="bindConfiguration"
+	varImpl="bindConfigActionURL"
+/>
+<@portlet["actionURL"]
+	name="deleteConfiguration"
+	varImpl="deleteConfigActionURL"
+/>
 
 <#assign void = portletDisplay.setShowBackIcon(true) />
 <#assign void = portletDisplay.setURLBack(redirectURL) />
@@ -31,9 +37,21 @@
 
 <div class="container-fluid-1280">
 	<@aui["form"] action="${bindConfigActionURL}" method="post" name="fm">
-		<@aui["input"] name="redirect" type="hidden" value="${redirectURL}" />
-		<@aui["input"] name="pid" type="hidden" value="${configurationModel.getID()}" />
-		<@aui["input"] name="factoryPid" type="hidden" value="${configurationModel.getFactoryPid()}" />
+		<@aui["input"]
+			name="redirect"
+			type="hidden"
+			value="${redirectURL}"
+		/>
+		<@aui["input"]
+			name="pid"
+			type="hidden"
+			value="${configurationModel.getID()}"
+		/>
+		<@aui["input"]
+			name="factoryPid"
+			type="hidden"
+			value="${configurationModel.getFactoryPid()}"
+		/>
 
 		<div class="lfr-ddm-container" id="lfr-ddm-container">
 			${ddmFormHTML}
@@ -41,16 +59,29 @@
 
 		<@aui["button-row"]>
 			<#if configurationModel.getConfiguration()??>
-				<@aui["button"] value="update" type="submit" />
+				<@aui["button"]
+					value="update"
+					type="submit"
+				/>
 
 				<#assign deleteAttributesOnClickValue = renderResponse.getNamespace() + "deleteConfig();">
 
-				<@aui["button"] onClick=deleteAttributesOnClickValue value="delete" type="button" />
+				<@aui["button"]
+					onClick=deleteAttributesOnClickValue
+					value="delete"
+					type="button"
+				/>
 			<#else>
-				<@aui["button"] value="save" type="submit" />
+				<@aui["button"]
+					value="save"
+					type="submit"
+				/>
 			</#if>
 
-			<@aui["button"] href="${redirectURL}" type="cancel" />
+			<@aui["button"]
+				href="${redirectURL}"
+				type="cancel"
+			/>
 		</@>
 	</@>
 </div>

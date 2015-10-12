@@ -25,9 +25,7 @@ import com.liferay.registry.ServiceTracker;
  */
 public class UserBagFactoryUtil {
 
-	public static UserPermissionCheckerBag create(long userId)
-		throws PortalException {
-
+	public static UserBag create(long userId) throws PortalException {
 		return getUserBagFactory().create(userId);
 	}
 

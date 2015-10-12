@@ -25,9 +25,9 @@ import java.util.Set;
 /**
  * @author László Csontos
  */
-public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
+public class UserBagImpl implements UserBag {
 
-	public UserPermissionCheckerBagImpl(
+	public UserBagImpl(
 		long userId, Set<Group> userGroups, Set<Organization> userOrgs,
 		Set<Group> userOrgGroups, Set<Group> userUserGroupGroups,
 		Set<Role> userRoles) {

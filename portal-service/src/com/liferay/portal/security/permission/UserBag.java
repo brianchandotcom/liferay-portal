@@ -28,7 +28,7 @@ import java.util.Set;
  * @author László Csontos
  */
 @ProviderType
-public interface UserPermissionCheckerBag extends Serializable {
+public interface UserBag extends Serializable {
 
 	public Set<Group> getGroups();
 

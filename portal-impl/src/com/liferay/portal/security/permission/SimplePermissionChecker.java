@@ -25,7 +25,7 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 	}
 
 	@Override
-	public UserPermissionCheckerBag getUserBag() {
+	public UserBag getUserBag() {
 		return null;
 	}
 

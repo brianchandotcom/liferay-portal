@@ -21,6 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface UserBagFactory {
 
-	public UserPermissionCheckerBag create(long userId) throws PortalException;
+	public UserBag create(long userId) throws PortalException;
 
 }

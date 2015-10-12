@@ -83,9 +83,9 @@ public class UserBagFactoryTest {
 
 		Set<Group> userUserGroupGroups = getUserUserGroupGroups();
 
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		Set<Group> groups = userPermissionCheckerBag.getGroups();
+		Set<Group> groups = userBag.getGroups();
 
 		Assert.assertTrue(groups.containsAll(userGroups));
 		Assert.assertTrue(groups.containsAll(userOrgGroups));
@@ -107,9 +107,9 @@ public class UserBagFactoryTest {
 
 		UserLocalServiceUtil.addRoleUser(organizationRoleId, _user);
 
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		List<Role> roles = new ArrayList<>(userPermissionCheckerBag.getRoles());
+		List<Role> roles = new ArrayList<>(userBag.getRoles());
 
 		long[] roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
 
@@ -128,10 +128,9 @@ public class UserBagFactoryTest {
 
 	@Test
 	public void testGetUserId() throws Exception {
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		Assert.assertEquals(
-			_user.getUserId(), userPermissionCheckerBag.getUserId());
+		Assert.assertEquals(_user.getUserId(), userBag.getUserId());
 	}
 
 	@Test
@@ -159,96 +158,95 @@ public class UserBagFactoryTest {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testUnmodifiableGroups() throws Exception {
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		Set<Group> groups = userPermissionCheckerBag.getGroups();
+		Set<Group> groups = userBag.getGroups();
 
 		groups.clear();
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testUnmodifiableRoles() throws Exception {
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		Set<Role> roles = userPermissionCheckerBag.getRoles();
+		Set<Role> roles = userBag.getRoles();
 
 		roles.clear();
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testUnmodifiableUserGroups() throws Exception {
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		Set<Group> userGroups = userPermissionCheckerBag.getUserGroups();
+		Set<Group> userGroups = userBag.getUserGroups();
 
 		userGroups.clear();
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testUnmodifiableUserOrgGroups() throws Exception {
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		Set<Group> userOrgGroups = userPermissionCheckerBag.getUserOrgGroups();
+		Set<Group> userOrgGroups = userBag.getUserOrgGroups();
 
 		userOrgGroups.clear();
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testUnmodifiableUserOrgs() throws Exception {
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		Set<Organization> userOrgs = userPermissionCheckerBag.getUserOrgs();
+		Set<Organization> userOrgs = userBag.getUserOrgs();
 
 		userOrgs.clear();
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testUnmodifiableUserUserGroupsGroups() throws Exception {
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		Set<Group> userUserGroupGroups =
-			userPermissionCheckerBag.getUserUserGroupGroups();
+		Set<Group> userUserGroupGroups = userBag.getUserUserGroupGroups();
 
 		userUserGroupGroups.clear();
 	}
 
-	protected UserPermissionCheckerBag getUserBag() throws Exception {
+	protected UserBag getUserBag() throws Exception {
 		return UserBagFactoryUtil.create(_user.getUserId());
 	}
 
 	protected Set<Group> getUserGroups() throws Exception {
 		UserLocalServiceUtil.addGroupUser(_childGroup.getGroupId(), _user);
 
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		return userPermissionCheckerBag.getUserGroups();
+		return userBag.getUserGroups();
 	}
 
 	protected Set<Group> getUserOrgGroups() throws Exception {
 		UserLocalServiceUtil.addOrganizationUser(
 			_childOrganization.getOrganizationId(), _user.getUserId());
 
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		return userPermissionCheckerBag.getUserOrgGroups();
+		return userBag.getUserOrgGroups();
 	}
 
 	protected Set<Organization> getUserOrgs() throws Exception {
 		UserLocalServiceUtil.addOrganizationUser(
 			_childOrganization.getOrganizationId(), _user.getUserId());
 
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		return userPermissionCheckerBag.getUserOrgs();
+		return userBag.getUserOrgs();
 	}
 
 	protected Set<Group> getUserUserGroupGroups() throws Exception {
 		UserLocalServiceUtil.addUserGroupUser(
 			_userGroup.getUserGroupId(), _user.getUserId());
 
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
+		UserBag userBag = getUserBag();
 
-		return userPermissionCheckerBag.getUserUserGroupGroups();
+		return userBag.getUserUserGroupGroups();
 	}
 
 	@DeleteAfterTestRun

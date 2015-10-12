@@ -36,12 +36,11 @@ import java.util.Set;
 public class UserBagFactoryImpl implements UserBagFactory {
 
 	@Override
-	public UserPermissionCheckerBag create(long userId) throws PortalException {
-		UserPermissionCheckerBag userPermissionCheckerBag =
-			PermissionCacheUtil.getUserBag(userId);
+	public UserBag create(long userId) throws PortalException {
+		UserBag userBag = PermissionCacheUtil.getUserBag(userId);
 
-		if (userPermissionCheckerBag != null) {
-			return userPermissionCheckerBag;
+		if (userBag != null) {
+			return userBag;
 		}
 
 		try {
@@ -75,13 +74,13 @@ public class UserBagFactoryImpl implements UserBagFactory {
 				userRoles.addAll(RoleLocalServiceUtil.getUserRoles(userId));
 			}
 
-			userPermissionCheckerBag = new UserPermissionCheckerBagImpl(
+			userBag = new UserBagImpl(
 				userId, SetUtil.fromList(userGroups), userOrgs, userOrgGroups,
 				SetUtil.fromList(userUserGroupGroups), userRoles);
 
-			PermissionCacheUtil.putUserBag(userId, userPermissionCheckerBag);
+			PermissionCacheUtil.putUserBag(userId, userBag);
 
-			return userPermissionCheckerBag;
+			return userBag;
 		}
 		catch (Exception e) {
 			PermissionCacheUtil.removeUserBag(userId);

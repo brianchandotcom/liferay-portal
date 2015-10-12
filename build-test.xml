@@ -377,6 +377,37 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-master-hostname">
+		<attribute default="${env.JENKINS_URL}" name="jenkins.url" />
+
+		<sequential>
+			<var name="master.hostname" unset="true" />
+
+			<propertyregex
+				input="@{jenkins.url}"
+				override="true"
+				property="master.hostname"
+				regexp="https://(test-[0-9]+-[0-9]+).liferay.com/"
+				replace="\1"
+			/>
+
+			<if>
+				<not>
+					<isset property="master.hostname" />
+				</not>
+				<then>
+					<propertyregex
+						input="@{jenkins.url}"
+						override="true"
+						property="master.hostname"
+						regexp="https://test.liferay.com/([0-9]+)/"
+						replace="test-\1"
+					/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-poshi-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />

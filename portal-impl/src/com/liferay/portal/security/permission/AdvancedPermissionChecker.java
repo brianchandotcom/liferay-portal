@@ -1079,12 +1079,14 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return value;
 	}
 
-	protected boolean isContentReviewerImpl(Group group)
+	protected boolean isContentReviewerImpl(long groupId)
 		throws PortalException {
 
-		if (isCompanyAdmin() || isGroupAdmin(group.getGroupId())) {
+		if (isCompanyAdmin() || isGroupAdmin(groupId)) {
 			return true;
 		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		if (RoleLocalServiceUtil.hasUserRole(
 				getUserId(), group.getCompanyId(),
@@ -1095,8 +1097,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		if (group.isSite()) {
 			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-					getUserId(), group.getGroupId(),
-					RoleConstants.SITE_CONTENT_REVIEWER, true)) {
+					getUserId(), groupId, RoleConstants.SITE_CONTENT_REVIEWER,
+					true)) {
 
 				return true;
 			}
@@ -1128,25 +1130,21 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
 		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
-			getUserId(), group.getGroupId(),
-			RoleConstants.SITE_CONTENT_REVIEWER);
+			getUserId(), groupId, RoleConstants.SITE_CONTENT_REVIEWER);
 
 		try {
 			if (value == null) {
-				value = isContentReviewerImpl(group);
+				value = isContentReviewerImpl(groupId);
 
 				PermissionCacheUtil.putUserPrimaryKeyRole(
-					getUserId(), group.getGroupId(),
-					RoleConstants.SITE_CONTENT_REVIEWER, value);
+					getUserId(), groupId, RoleConstants.SITE_CONTENT_REVIEWER,
+					value);
 			}
 		}
 		catch (Exception e) {
 			PermissionCacheUtil.removeUserPrimaryKeyRole(
-				getUserId(), group.getGroupId(),
-				RoleConstants.SITE_CONTENT_REVIEWER);
+				getUserId(), groupId, RoleConstants.SITE_CONTENT_REVIEWER);
 
 			throw e;
 		}

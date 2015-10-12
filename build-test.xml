@@ -738,7 +738,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<property name="testray.logs.dir" value="${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
 
-			<property name="testray.logs.console" value="${testray.logs.dir}/console.txt" />
+			<property name="testray.logs.jenkins.console" value="${testray.logs.dir}/jenkins-console.txt" />
 			<property name="testray.logs.report" value="${testray.logs.dir}/report.html" />
 		</sequential>
 	</macrodef>
@@ -2883,7 +2883,7 @@ go]]></replacevalue>
 				<property name="test.case.attachments">
 					<![CDATA[
 						<attachments>
-							<file name="console.output" value="${testray.logs.console}" />
+							<file name="jenkins.console" value="${testray.logs.jenkins.console}" />
 							<file name="report.html" value="${testray.logs.report}" />
 						</attachments>
 					]]>
@@ -2893,7 +2893,7 @@ go]]></replacevalue>
 				<property name="test.case.attachments">
 					<![CDATA[
 						<attachments>
-							<file name="console.output" value="${testray.logs.console}" />
+							<file name="jenkins.console" value="${testray.logs.jenkins.console}" />
 						</attachments>
 					]]>
 				</property>
@@ -6397,6 +6397,43 @@ if (ppstate.equals("normal")) {
 						/>
 
 						<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+					</sequential>
+				</for>
+			</then>
+		</if>
+	</target>
+
+	<target name="record-testray-logs-jenkins-console">
+		<if>
+			<and>
+				<isset property="jenkins.testray.results.dir" />
+				<isset property="test.class" />
+			</and>
+			<then>
+				<get-testray-logs-dir-name />
+
+				<mkdir dir="testray-logs/${testray.logs.dir.name}" />
+
+				<propertyregex
+					input="${env.BUILD_URL}"
+					property="jenkins.build.url"
+					regexp="https:\/\/([^\.]+)\.[^\/]+"
+					replace="http://\1"
+				/>
+
+				<propertyregex
+					input="${jenkins.build.url}"
+					override="true"
+					property="jenkins.build.url"
+					regexp="http:\/\/([^\/]+)\/(\d+)"
+					replace="http://\1-\2/\2"
+				/>
+
+				<get dest="testray-logs/${testray.logs.dir.name}/jenkins-console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+
+				<for list="production,uat" param="testray.base.dir.name">
+					<sequential>
+						<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
 					</sequential>
 				</for>
 			</then>

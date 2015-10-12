@@ -1832,6 +1832,33 @@ ${tomcat-gc-log}
 		</sequential>
 	</macrodef>
 
+	<macrodef name="rsync">
+		<attribute name="rsync.dest" />
+		<attribute name="rsync.src" />
+
+		<sequential>
+			<get-master-hostname />
+
+			<var name="rsync.dest" unset="true" />
+
+			<antelope:stringutil property="rsync.dest" string="@{rsync.dest}">
+				<antelope:replace regex="\(" replacement="\\(" />
+				<antelope:replace regex="\)" replacement="\\)" />
+			</antelope:stringutil>
+
+			<var name="rsync.src" unset="true" />
+
+			<antelope:stringutil property="rsync.src" string="@{rsync.src}">
+				<antelope:replace regex="\(" replacement="\\(" />
+				<antelope:replace regex="\)" replacement="\\)" />
+			</antelope:stringutil>
+
+			<execute>
+				rsync -avz ${rsync.src} ${master.hostname}::${rsync.dest}
+			</execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-app-server-properties">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />

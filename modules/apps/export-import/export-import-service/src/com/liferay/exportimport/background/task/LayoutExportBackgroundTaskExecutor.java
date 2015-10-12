@@ -77,7 +77,7 @@ public class LayoutExportBackgroundTaskExecutor
 				exportImportConfiguration.getName(), StringPool.SPACE,
 				StringPool.UNDERLINE));
 		sb.append(StringPool.DASH);
-		sb.append(Time.getShortTimestamp());
+		sb.append(Time.getTimestamp());
 		sb.append(".lar");
 
 		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(

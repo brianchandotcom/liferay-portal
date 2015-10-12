@@ -50,6 +50,10 @@ public class ExportImportThreadLocal {
 		return false;
 	}
 
+	public static boolean isInitialLayoutStagingInProcess() {
+		return _initialLayoutStagingInProcess.get();
+	}
+
 	public static boolean isLayoutDataDeletionImportInProcess() {
 		return _layoutDataDeletionImportInProcess.get();
 	}
@@ -96,6 +100,12 @@ public class ExportImportThreadLocal {
 		}
 
 		return false;
+	}
+
+	public static void setInitialLayoutStagingInProcess(
+		boolean initialLayoutStagingInProcess) {
+
+		_initialLayoutStagingInProcess.set(initialLayoutStagingInProcess);
 	}
 
 	public static void setLayoutDataDeletionImportInProcess(
@@ -156,6 +166,10 @@ public class ExportImportThreadLocal {
 		_portletValidationInProcess.set(portletValidationInProcess);
 	}
 
+	private static final ThreadLocal<Boolean> _initialLayoutStagingInProcess =
+		new AutoResetThreadLocal<>(
+			ExportImportThreadLocal.class + "._initialLayoutStagingInProcess",
+			false);
 	private static final ThreadLocal<Boolean>
 		_layoutDataDeletionImportInProcess = new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class +

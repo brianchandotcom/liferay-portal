@@ -120,7 +120,7 @@
 
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Type" locator1="DDLConfiguration#SEARCH_FIELD" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="DDLConfiguration#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertClick" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Displaying List: ${ddlListName} (Modified)" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

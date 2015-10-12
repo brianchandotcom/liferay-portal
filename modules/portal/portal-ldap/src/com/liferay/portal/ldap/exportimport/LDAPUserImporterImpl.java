@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.ldap.ContactConverterKeys;
+import com.liferay.portal.ldap.UserConverterKeys;
 import com.liferay.portal.ldap.configuration.LDAPConfiguration;
 import com.liferay.portal.ldap.settings.LDAPConfigurationSettingsUtil;
 import com.liferay.portal.model.Company;
@@ -1291,7 +1293,19 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		Contact contact = user.getContact();
 
 		for (String propertyName : _CONTACT_PROPERTY_NAMES) {
-			if (!contactMappings.containsKey(propertyName) ||
+			String mappingPropertyName = propertyName;
+
+			if (propertyName.equals("male")) {
+				mappingPropertyName = ContactConverterKeys.GENDER;
+			}
+			else if (propertyName.equals("prefixId")) {
+				mappingPropertyName = ContactConverterKeys.PREFIX;
+			}
+			else if (propertyName.equals("suffixId")) {
+				mappingPropertyName = ContactConverterKeys.SUFFIX;
+			}
+
+			if (!contactMappings.containsKey(mappingPropertyName) ||
 				_ldapUserIgnoreAttributes.contains(propertyName)) {
 
 				setProperty(ldapContact, contact, propertyName);
@@ -1299,7 +1313,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 
 		for (String propertyName : _USER_PROPERTY_NAMES) {
-			if (!userMappings.containsKey(propertyName) ||
+			String mappingPropertyName = propertyName;
+
+			if (propertyName.equals("portraitId")) {
+				mappingPropertyName = UserConverterKeys.PORTRAIT;
+			}
+
+			if (!userMappings.containsKey(mappingPropertyName) ||
 				_ldapUserIgnoreAttributes.contains(propertyName) ) {
 
 				setProperty(ldapUser, user, propertyName);

@@ -1,5 +1,7 @@
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.ip.geocoder", version: "1.0.2"
+	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
+	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:social:social-networking-service")

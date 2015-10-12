@@ -5,15 +5,14 @@ buildService {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile group: "commons-lang", name: "commons-lang", version: "2.1"
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
+
+	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }
 
 liferay {

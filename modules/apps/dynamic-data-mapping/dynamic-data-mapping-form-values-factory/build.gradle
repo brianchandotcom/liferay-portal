@@ -1,8 +1,8 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
+	compile project(":core:osgi-service-tracker-map")
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"

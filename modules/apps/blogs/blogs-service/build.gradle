@@ -1,9 +1,8 @@
 dependencies {
-	compile group: "net.htmlparser.jericho", name: "jericho-html", version: "3.1"
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
+
+	provided group: "net.htmlparser.jericho", name: "jericho-html", version: "3.1"
 }
 
 liferay {

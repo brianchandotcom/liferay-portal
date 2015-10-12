@@ -1,11 +1,11 @@
 dependencies {
-	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
-	compile project(":apps:dynamic-data-lists:dynamic-data-lists-web")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
-	compile project(":apps:export-import:export-import-api")
-	compile project(":apps:export-import:export-import-service")
-
-	testCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
+	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
+	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-web")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
+	testCompile project(":apps:export-import:export-import-api")
+	testCompile project(":apps:export-import:export-import-service")
+
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"
 }

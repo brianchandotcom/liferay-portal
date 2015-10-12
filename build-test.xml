@@ -4025,9 +4025,9 @@ go]]></replacevalue>
 		<if>
 			<isset property="jenkins.testray.results.dir" />
 			<then>
-				<for list="${jenkins.testray.results.dir}" param="jenkins.testray.results.path">
+				<for list="production,uat" param="testray.base.dir.name">
 					<sequential>
-						<copy file="${jenkins.results.xml.suite.file}" todir="@{jenkins.testray.results.path}" />
+						<rsync rsync.dest="testray-results/@{testray.base.dir.name}" rsync.src="${jenkins.results.xml.suite.file}" />
 					</sequential>
 				</for>
 			</then>

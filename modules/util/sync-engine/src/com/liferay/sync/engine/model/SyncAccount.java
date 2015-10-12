@@ -101,6 +101,10 @@ public class SyncAccount extends StateAwareModel {
 		return password;
 	}
 
+	public String getPluginVersion() {
+		return pluginVersion;
+	}
+
 	public int getPollInterval() {
 		return pollInterval;
 	}
@@ -178,6 +182,10 @@ public class SyncAccount extends StateAwareModel {
 		this.password = password;
 	}
 
+	public void setPluginVersion(String pluginVersion) {
+		this.pluginVersion = pluginVersion;
+	}
+
 	public void setPollInterval(int pollInterval) {
 		this.pollInterval = pollInterval;
 	}
@@ -224,6 +232,9 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String password;
+
+	@DatabaseField(useGetSet = true)
+	protected String pluginVersion;
 
 	@DatabaseField(useGetSet = true)
 	protected int pollInterval;

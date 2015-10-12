@@ -354,7 +354,7 @@ public class SyncEngine {
 
 					FileEventUtil.getUpdates(
 						syncSite.getGroupId(), syncAccount.getSyncAccountId(),
-						syncSite);
+						syncSite, true);
 				}
 
 				BatchDownloadEvent batchDownloadEvent =

@@ -19,9 +19,27 @@ package com.liferay.sync.engine.util;
  */
 public class GetterUtil {
 
+	public static final boolean DEFAULT_BOOLEAN = false;
+
 	public static final int DEFAULT_INTEGER = 0;
 
 	public static final long DEFAULT_LONG = 0;
+
+	public static boolean getBoolean(Object value) {
+		return getBoolean(String.valueOf(value));
+	}
+
+	public static boolean getBoolean(String value) {
+		return getBoolean(value, DEFAULT_BOOLEAN);
+	}
+
+	public static boolean getBoolean(String value, boolean defaultValue) {
+		if (value == null) {
+			return defaultValue;
+		}
+
+		return Boolean.valueOf(value);
+	}
 
 	public static int getInteger(String value) {
 		return getInteger(value, DEFAULT_INTEGER);

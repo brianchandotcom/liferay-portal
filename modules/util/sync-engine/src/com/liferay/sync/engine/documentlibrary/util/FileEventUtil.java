@@ -36,6 +36,7 @@ import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.PropsValues;
+import com.liferay.sync.engine.util.ReleaseInfo;
 
 import java.io.IOException;
 
@@ -253,11 +254,17 @@ public class FileEventUtil {
 	}
 
 	public static void getUpdates(
-		long repositoryId, long syncAccountId, SyncSite syncSite) {
+		long repositoryId, long syncAccountId, SyncSite syncSite,
+		boolean retrieveFromCache) {
 
 		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put("repositoryId", repositoryId);
+
+		if (ReleaseInfo.isServerCompatible(syncAccountId, 5)) {
+			parameters.put("retrieveFromCache", retrieveFromCache);
+		}
+
 		parameters.put("syncSite", syncSite);
 
 		GetSyncDLObjectUpdateEvent getSyncDLObjectUpdateEvent =

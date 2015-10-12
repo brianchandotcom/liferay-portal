@@ -113,6 +113,8 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 
 		syncAccount.setMaxConnections(maxConnections);
 
+		syncAccount.setPluginVersion(syncContext.getPluginVersion());
+
 		int pollInterval = GetterUtil.getInteger(
 			portletPreferencesMap.get(SyncContext.PREFERENCE_KEY_POLL_INTERVAL),
 			5);

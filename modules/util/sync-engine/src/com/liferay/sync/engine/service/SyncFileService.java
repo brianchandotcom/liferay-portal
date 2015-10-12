@@ -583,6 +583,10 @@ public class SyncFileService {
 	}
 
 	public static SyncFile resyncFolder(SyncFile syncFile) throws Exception {
+		if (syncFile.getState() != SyncFile.STATE_UNSYNCED) {
+			return syncFile;
+		}
+
 		setStatuses(syncFile, SyncFile.STATE_SYNCED, SyncFile.UI_EVENT_NONE);
 
 		// Remote
@@ -623,12 +627,16 @@ public class SyncFileService {
 			long syncAccountId, SyncFile targetSyncFile)
 		throws Exception {
 
+		if (targetSyncFile.getState() == SyncFile.STATE_UNSYNCED) {
+			return targetSyncFile;
+		}
+
 		SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
 			targetSyncFile.getRepositoryId(), syncAccountId,
 			targetSyncFile.getParentFolderId());
 
 		if (parentSyncFile == null) {
-			return null;
+			return targetSyncFile;
 		}
 
 		String filePathName = FileUtil.getFilePathName(

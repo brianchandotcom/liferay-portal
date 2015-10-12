@@ -35,11 +35,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.io.FilenameUtils;
@@ -464,6 +464,18 @@ public class SyncWatchEventProcessor implements Runnable {
 			processSyncWatchEvent(syncWatchEvent);
 		}
 
+		for (Map.Entry<String, List<SyncWatchEvent>> entry :
+				_dependentSyncWatchEventsMaps.entrySet()) {
+
+			SyncFile syncFile = SyncFileService.fetchSyncFile(entry.getKey());
+
+			if ((syncFile != null) && (syncFile.getTypePK() > 0)) {
+				for (SyncWatchEvent syncWatchEvent : entry.getValue()) {
+					processSyncWatchEvent(syncWatchEvent);
+				}
+			}
+		}
+
 		SyncEngineUtil.fireSyncEngineStateChanged(
 			_syncAccountId, SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
 
@@ -778,7 +790,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncEngine.getEventProcessorExecutorService();
 
 	private final Map<String, List<SyncWatchEvent>>
-		_dependentSyncWatchEventsMaps = new HashMap<>();
+		_dependentSyncWatchEventsMaps = new ConcurrentHashMap<>();
 	private final Set<Long> _pendingTypePKSyncFileIds = new HashSet<>();
 	private final Set<Long> _processedSyncWatchEventIds = new HashSet<>();
 	private final long _syncAccountId;

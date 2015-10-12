@@ -18,6 +18,7 @@ import com.liferay.sync.engine.documentlibrary.handler.GetSyncDLObjectUpdateHand
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncSiteService;
+import com.liferay.sync.engine.util.ReleaseInfo;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -73,11 +74,16 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 
 		Map<String, Object> parameters = getParameters();
 
-		parameters.clear();
-
 		parameters.put("lastAccessTime", syncSite.getRemoteSyncTime());
 		parameters.put("max", 0);
 		parameters.put("repositoryId", syncSite.getGroupId());
+
+		if ((syncSite.getRemoteSyncTime() == -1) &&
+			ReleaseInfo.isServerCompatible(getSyncAccountId(), 5)) {
+
+			parameters.put("retrieveFromCache", false);
+		}
+
 		parameters.put("syncSite", syncSite);
 
 		executePost(_URL_PATH, parameters);

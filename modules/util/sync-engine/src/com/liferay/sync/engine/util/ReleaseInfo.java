@@ -15,7 +15,11 @@
 package com.liferay.sync.engine.util;
 
 import com.liferay.sync.engine.documentlibrary.model.SyncContext;
+import com.liferay.sync.engine.model.SyncAccount;
+import com.liferay.sync.engine.service.SyncAccountService;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,8 +36,34 @@ public class ReleaseInfo {
 		return _VERSION;
 	}
 
+	public static boolean isServerCompatible(
+		long syncAccountId, int minimumVersion) {
+
+		Boolean serverCompatible = _serverCompatibilityMap.get(
+			syncAccountId + "#" + minimumVersion);
+
+		if (serverCompatible != null) {
+			return serverCompatible;
+		}
+
+		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+			syncAccountId);
+
+		serverCompatible = isServerCompatible(
+			syncAccount.getPluginVersion(), minimumVersion);
+
+		_serverCompatibilityMap.put(
+			syncAccountId + "#" + minimumVersion, serverCompatible);
+
+		return serverCompatible;
+	}
+
 	public static boolean isServerCompatible(SyncContext syncContext) {
-		String pluginVersion = syncContext.getPluginVersion();
+		return isServerCompatible(syncContext.getPluginVersion(), 4);
+	}
+
+	protected static boolean isServerCompatible(
+		String pluginVersion, int minimumVersion) {
 
 		Matcher matcher = _pattern.matcher(pluginVersion);
 
@@ -42,7 +72,7 @@ public class ReleaseInfo {
 		}
 
 		if (pluginVersion.startsWith("6.2") &&
-			(Integer.parseInt(matcher.group(1)) < 4)) {
+			(Integer.parseInt(matcher.group(1)) < minimumVersion)) {
 
 			return false;
 		}
@@ -58,5 +88,7 @@ public class ReleaseInfo {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(?:[0-9]+\\.){3}([0-9]+)");
+	private static final Map<String, Boolean> _serverCompatibilityMap =
+		new HashMap<>();
 
 }

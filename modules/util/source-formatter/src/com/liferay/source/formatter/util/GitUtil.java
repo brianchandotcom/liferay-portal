@@ -38,7 +38,7 @@ public class GitUtil {
 		throws Exception {
 
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git log " + _WORKING_BRANCH_NAME + "..head");
+			"git log " + _WORKING_BRANCH_NAME + "..HEAD");
 
 		String line = null;
 

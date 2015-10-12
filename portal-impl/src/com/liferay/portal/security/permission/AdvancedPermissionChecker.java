@@ -1217,10 +1217,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
-
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			doGetRoleIds(getUserId(), groupId));
 
@@ -1231,6 +1227,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				return true;
 			}
 		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag();
 
 		Set<Group> groups = userPermissionCheckerBag.getUserGroups();
 

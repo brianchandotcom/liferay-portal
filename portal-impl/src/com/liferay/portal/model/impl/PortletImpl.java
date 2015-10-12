@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.application.type.ApplicationType;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -356,6 +357,16 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Adds an application type.
+	 *
+	 * @param applicationType an application type
+	 */
+	@Override
+	public void addSupportedApplicationType(ApplicationType applicationType) {
+		_applicationTypes.add(applicationType);
+	}
+
+	/**
 	 * Creates and returns a copy of this object.
 	 *
 	 * @return a copy of this object
@@ -409,8 +420,8 @@ public class PortletImpl extends PortletBaseImpl {
 			getPublishingEvents(), getPublicRenderParameters(),
 			getPortletApp());
 
+		portlet.setApplicationTypes(getApplicationTypes());
 		portlet.setId(getId());
-		portlet.setFullPageDisplayable(isFullPageDisplayable());
 		portlet.setUndeployedPortlet(isUndeployedPortlet());
 
 		return portlet;
@@ -537,6 +548,16 @@ public class PortletImpl extends PortletBaseImpl {
 		}
 
 		return allWindowStates;
+	}
+
+	/**
+	 * Returns the supported application types of the portlet.
+	 *
+	 * @return the supported application types of the portlet
+	 */
+	@Override
+	public Set<ApplicationType> getApplicationTypes() {
+		return _applicationTypes;
 	}
 
 	/**
@@ -2419,7 +2440,8 @@ public class PortletImpl extends PortletBaseImpl {
 
 	@Override
 	public boolean isFullPageDisplayable() {
-		return _fullPageDisplayable;
+		return _applicationTypes.contains(
+			ApplicationType.FULL_PAGE_APPLICATION);
 	}
 
 	/**
@@ -2810,6 +2832,19 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets the supported public render parameters of the portlet.
+	 *
+	 * @param applicationTypes the supported public render parameters of
+	 *        the portlet
+	 */
+	@Override
+	public void setApplicationTypes(Set<ApplicationType> applicationTypes) {
+		for (ApplicationType applicationType : applicationTypes) {
+			addSupportedApplicationType(applicationType);
+		}
+	}
+
+	/**
 	 * Sets the names of the classes that represent asset types associated with
 	 * the portlet.
 	 *
@@ -3061,11 +3096,6 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public void setFriendlyURLRoutes(String friendlyURLRoutes) {
 		_friendlyURLRoutes = friendlyURLRoutes;
-	}
-
-	@Override
-	public void setFullPageDisplayable(boolean fullPageDisplayable) {
-		_fullPageDisplayable = fullPageDisplayable;
 	}
 
 	/**
@@ -4030,6 +4060,11 @@ public class PortletImpl extends PortletBaseImpl {
 	private boolean _ajaxable = true;
 
 	/**
+	 * The supported application types of the portlet.
+	 */
+	private final Set<ApplicationType> _applicationTypes = new HashSet<>();
+
+	/**
 	 * The names of the classes that represents asset types associated with the
 	 * portlet.
 	 */
@@ -4147,12 +4182,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * portlet.
 	 */
 	private String _friendlyURLRoutes;
-
-	/**
-	 * <code>True</code> if the portlet can be displayed as a full page of the
-	 * view.
-	 */
-	private boolean _fullPageDisplayable;
 
 	/**
 	 * A list of CSS files that will be referenced from the page's header

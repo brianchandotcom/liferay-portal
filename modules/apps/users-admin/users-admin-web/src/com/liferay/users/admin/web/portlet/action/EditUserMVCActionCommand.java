@@ -445,8 +445,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 				boolean submittedPassword = false;
 
-				if (!Validator.isBlank(password1) ||
-					!Validator.isBlank(password2)) {
+				if (!(e instanceof UserPasswordException) &&
+					(!Validator.isBlank(password1) ||
+					 !Validator.isBlank(password2))) {
 
 					submittedPassword = true;
 				}

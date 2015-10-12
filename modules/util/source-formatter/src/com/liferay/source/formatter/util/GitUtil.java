@@ -23,7 +23,6 @@ import com.liferay.source.formatter.GitException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class GitUtil {
 		throws Exception {
 
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git log " + _WORKING_BRANCH_NAME + "..head");
+			"git log " + _WORKING_BRANCH_NAME + "..HEAD");
 
 		String line = null;
 

@@ -763,10 +763,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		File file = new File(fileName);
-
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		File file = new File(fileName);
 
 		String absolutePath = getAbsolutePath(file);
 

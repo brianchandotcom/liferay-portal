@@ -1357,6 +1357,46 @@
 				(Users_Teams.userId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.TeamFinder.findByUserId">
+		<![CDATA[
+			SELECT
+				DISTINCT Team.*
+			FROM
+				Team
+			WHERE
+				Team.groupId = ?
+			AND
+				Team.teamId IN
+					(
+						SELECT
+							Team.teamId
+						FROM
+							Team, UserGroup, UserGroups_Teams, Users_UserGroups
+						WHERE
+							Users_UserGroups.userId = ?
+						AND
+							Users_UserGroups.userGroupId = UserGroup.userGroupId
+						AND
+							UserGroup.userGroupId = UserGroups_Teams.userGroupId
+						AND
+							UserGroups_Teams.teamId = Team.teamId
+					)
+			OR
+				Team.teamId IN
+					(
+						SELECT
+							Team.teamId
+						FROM
+							Users_Teams, User_, Team
+						WHERE
+							User_.userId = ?
+						AND
+							User_.userId = Users_Teams.userId
+						AND
+							Users_Teams.teamId = Team.teamId
+					)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.countBySocialUsers">
 		<![CDATA[
 			SELECT

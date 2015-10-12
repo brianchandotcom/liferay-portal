@@ -19,6 +19,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,11 +34,11 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 		Set<Role> userRoles) {
 
 		_userId = userId;
-		_userGroups = userGroups;
-		_userOrgs = userOrgs;
-		_userOrgGroups = userOrgGroups;
-		_userUserGroupGroups = userUserGroupGroups;
-		_userRoles = userRoles;
+		_userGroups = Collections.unmodifiableSet(userGroups);
+		_userOrgs = Collections.unmodifiableSet(userOrgs);
+		_userOrgGroups = Collections.unmodifiableSet(userOrgGroups);
+		_userUserGroupGroups = Collections.unmodifiableSet(userUserGroupGroups);
+		_userRoles = Collections.unmodifiableSet(userRoles);
 	}
 
 	@Override
@@ -69,6 +70,8 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 					_groups.addAll(groupsItem);
 				}
 			}
+
+			_groups = Collections.unmodifiableSet(_groups);
 		}
 
 		return _groups;

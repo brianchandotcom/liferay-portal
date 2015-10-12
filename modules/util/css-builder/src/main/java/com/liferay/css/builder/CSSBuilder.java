@@ -324,8 +324,7 @@ public class CSSBuilder {
 		}
 
 		return _sassCompiler.compileString(
-			content, _portalCommonDirName + File.pathSeparator + cssBasePath,
-			StringPool.BLANK);
+			content, _portalCommonDirName + File.pathSeparator + cssBasePath);
 	}
 
 	private void _parseSassFile(SassFile sassFile) throws Exception {

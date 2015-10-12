@@ -736,6 +736,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<property name="testray.logs.jenkins.console" value="${testray.logs.dir.name}/jenkins-console.txt" />
 			<property name="testray.logs.poshi.report" value="${testray.logs.dir.name}/index.html" />
+			<property name="testray.logs.poshi.summary" value="${testray.logs.dir.name}/summary.html" />
 		</sequential>
 	</macrodef>
 
@@ -2881,6 +2882,7 @@ go]]></replacevalue>
 						<attachments>
 							<file name="jenkins.console" value="${testray.logs.jenkins.console}" />
 							<file name="poshi.report" value="${testray.logs.poshi.report}" />
+							<file name="poshi.summary" value="${testray.logs.poshi.summary}" />
 						</attachments>
 					]]>
 				</property>

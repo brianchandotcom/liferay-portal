@@ -17,11 +17,9 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.UserConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -29,22 +27,6 @@ import java.util.Set;
  * @author László Csontos
  */
 public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
-
-	public UserPermissionCheckerBagImpl() {
-		this(
-			UserConstants.USER_ID_DEFAULT, Collections.<Group>emptySet(),
-			Collections.<Organization>emptyList(),
-			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
-			Collections.<Role>emptySet());
-	}
-
-	public UserPermissionCheckerBagImpl(long userId) {
-		this(
-			userId, Collections.<Group>emptySet(),
-			Collections.<Organization>emptyList(),
-			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
-			Collections.<Role>emptySet());
-	}
 
 	public UserPermissionCheckerBagImpl(
 		long userId, Set<Group> userGroups, List<Organization> userOrgs,
@@ -57,17 +39,6 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 		_userOrgGroups = userOrgGroups;
 		_userUserGroupGroups = userUserGroupGroups;
 		_userRoles = userRoles;
-	}
-
-	public UserPermissionCheckerBagImpl(
-		UserPermissionCheckerBag userPermissionCheckerBag, Set<Role> roles) {
-
-		this(
-			userPermissionCheckerBag.getUserId(),
-			userPermissionCheckerBag.getUserGroups(),
-			userPermissionCheckerBag.getUserOrgs(),
-			userPermissionCheckerBag.getUserOrgGroups(),
-			userPermissionCheckerBag.getUserUserGroupGroups(), roles);
 	}
 
 	@Override

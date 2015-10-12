@@ -119,8 +119,8 @@ public class UpgradeProcess_3_0_10 extends UpgradeProcess {
 			SyncFileService.getSyncFilePersistence();
 
 		syncFilePersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN pluginVersion BEFORE " +
-				"pollInterval;");
+			"ALTER TABLE `SyncAccount` ADD COLUMN pluginVersion VARCHAR " +
+				"BEFORE pollInterval;");
 
 		syncFilePersistence.executeRaw(
 			"ALTER TABLE `SyncFile` ADD COLUMN localExtraSettings " +

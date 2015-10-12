@@ -101,7 +101,7 @@ public class IODeltaUtil {
 			Path sourceChecksumsFilePath = getChecksumsFilePath(sourceSyncFile);
 
 			if (Files.notExists(sourceChecksumsFilePath)) {
-				checksums(targetSyncFile);
+				checksums(sourceSyncFile);
 			}
 
 			Path targetChecksumsFilePath = getChecksumsFilePath(targetSyncFile);

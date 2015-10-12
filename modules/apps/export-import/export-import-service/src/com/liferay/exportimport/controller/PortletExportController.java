@@ -690,7 +690,7 @@ public class PortletExportController implements ExportController {
 		if (exportPortletData) {
 			javax.portlet.PortletPreferences jxPortletPreferences = null;
 
-			if (ExportImportThreadLocal.isInitialPublicationInProcess()) {
+			if (ExportImportThreadLocal.isInitialLayoutStagingInProcess()) {
 				Group liveGroup = layout.getGroup();
 
 				Group stagingGroup = liveGroup.getStagingGroup();

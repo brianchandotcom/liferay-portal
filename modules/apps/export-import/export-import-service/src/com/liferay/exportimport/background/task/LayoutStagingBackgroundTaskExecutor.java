@@ -101,7 +101,7 @@ public class LayoutStagingBackgroundTaskExecutor
 				Group stagingGroup = sourceGroup.getStagingGroup();
 
 				if (stagingGroup.getGroupId() == targetGroupId) {
-					ExportImportThreadLocal.setInitialPublicationInProcess(
+					ExportImportThreadLocal.setInitialLayoutStagingInProcess(
 						true);
 				}
 			}
@@ -129,7 +129,7 @@ public class LayoutStagingBackgroundTaskExecutor
 					exportImportConfiguration, file, sourceGroupId,
 					targetGroupId, userId));
 
-			ExportImportThreadLocal.setInitialPublicationInProcess(false);
+			ExportImportThreadLocal.setInitialLayoutStagingInProcess(false);
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
@@ -138,7 +138,7 @@ public class LayoutStagingBackgroundTaskExecutor
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {
-			ExportImportThreadLocal.setInitialPublicationInProcess(false);
+			ExportImportThreadLocal.setInitialLayoutStagingInProcess(false);
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(

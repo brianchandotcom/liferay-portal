@@ -25,7 +25,7 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 
 portletDisplay.setShowBackIcon(true);
 
-if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) && (article != null)) {
 	PortletURL backURL = liferayPortletResponse.createRenderURL();
 
 	backURL.setParameter("groupId", String.valueOf(article.getGroupId()));

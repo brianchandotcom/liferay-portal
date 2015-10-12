@@ -732,14 +732,10 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-testray-logs">
 		<sequential>
-			<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
-				<antelope:replace regex="," replacement="_" />
-			</antelope:stringutil>
+			<get-testray-logs-dir-name />
 
-			<property name="testray.logs.dir" value="${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
-
-			<property name="testray.logs.jenkins.console" value="${testray.logs.dir}/jenkins-console.txt" />
-			<property name="testray.logs.poshi.report" value="${testray.logs.dir}/index.html" />
+			<property name="testray.logs.jenkins.console" value="${testray.logs.dir.name}/jenkins-console.txt" />
+			<property name="testray.logs.poshi.report" value="${testray.logs.dir.name}/index.html" />
 		</sequential>
 	</macrodef>
 
@@ -6358,57 +6354,14 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-testray-logs">
-		<if>
-			<isset property="jenkins.testray.results.dir" />
-			<then>
-				<for list="${jenkins.testray.results.dir}" param="jenkins.testray.results.path">
-					<sequential>
-						<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
-							<antelope:replace regex="," replacement="_" />
-						</antelope:stringutil>
+		<antcall target="record-testray-console-log" />
 
-						<property name="testray.logs.dir" value="@{jenkins.testray.results.path}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
-
-						<mkdir dir="${testray.logs.dir}" />
-
-						<copy
-							failonerror="false"
-							file="portal-web/test-results/functional/report.html"
-							tofile="${testray.logs.dir}/report.html"
-						/>
-
-						<copy failonerror="false" todir="${testray.logs.dir}/screenshots">
-							<fileset dir="portal-web/test-results/functional/screenshots" />
-						</copy>
-
-						<propertyregex
-							input="${env.BUILD_URL}"
-							property="jenkins.build.url"
-							regexp="https:\/\/([^\.]+)\.[^\/]+"
-							replace="http://\1"
-						/>
-
-						<propertyregex
-							input="${jenkins.build.url}"
-							override="true"
-							property="jenkins.build.url"
-							regexp="http:\/\/([^\/]+)\/(\d+)"
-							replace="http://\1-\2/\2"
-						/>
-
-						<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
-					</sequential>
-				</for>
-			</then>
-		</if>
+		<antcall target="record-testray-poshi-log" />
 	</target>
 
 	<target name="record-testray-logs-jenkins-console">
 		<if>
-			<and>
-				<isset property="jenkins.testray.results.dir" />
-				<isset property="test.class" />
-			</and>
+			<isset property="jenkins.testray.results.dir" />
 			<then>
 				<get-testray-logs-dir-name />
 

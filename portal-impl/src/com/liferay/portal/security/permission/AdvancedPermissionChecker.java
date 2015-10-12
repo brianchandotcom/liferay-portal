@@ -277,29 +277,24 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			roleIds = doGetRoleIds(userId, groupId);
 		}
 		catch (Exception e) {
-		}
-
-		if (roleIds == null) {
 			return PermissionChecker.DEFAULT_ROLE_IDS;
 		}
 
-		if (checkGuest) {
-			Set<Long> roleIdSet = SetUtil.fromArray(roleIds);
-
-			try {
-				for (long roleId : getGuestUserRoleIds()) {
-					roleIdSet.add(roleId);
-				}
-			}
-			catch (Exception e) {
-			}
-
-			return ArrayUtil.toArray(
-				roleIdSet.toArray(new Long[roleIdSet.size()]));
-		}
-		else {
+		if (!checkGuest) {
 			return roleIds;
 		}
+
+		Set<Long> roleIdSet = SetUtil.fromArray(roleIds);
+
+		try {
+			for (long roleId : getGuestUserRoleIds()) {
+				roleIdSet.add(roleId);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return ArrayUtil.toArray(roleIdSet.toArray(new Long[roleIdSet.size()]));
 	}
 
 	@Override

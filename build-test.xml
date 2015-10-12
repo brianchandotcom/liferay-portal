@@ -739,7 +739,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 			<property name="testray.logs.dir" value="${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
 
 			<property name="testray.logs.jenkins.console" value="${testray.logs.dir}/jenkins-console.txt" />
-			<property name="testray.logs.report" value="${testray.logs.dir}/report.html" />
+			<property name="testray.logs.poshi.report" value="${testray.logs.dir}/index.html" />
 		</sequential>
 	</macrodef>
 
@@ -2884,7 +2884,7 @@ go]]></replacevalue>
 					<![CDATA[
 						<attachments>
 							<file name="jenkins.console" value="${testray.logs.jenkins.console}" />
-							<file name="report.html" value="${testray.logs.report}" />
+							<file name="poshi.report" value="${testray.logs.poshi.report}" />
 						</attachments>
 					]]>
 				</property>
@@ -6430,6 +6430,30 @@ if (ppstate.equals("normal")) {
 				/>
 
 				<get dest="testray-logs/${testray.logs.dir.name}/jenkins-console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+
+				<for list="production,uat" param="testray.base.dir.name">
+					<sequential>
+						<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
+					</sequential>
+				</for>
+			</then>
+		</if>
+	</target>
+
+	<target name="record-testray-logs-poshi-report">
+		<if>
+			<and>
+				<isset property="jenkins.testray.results.dir" />
+				<isset property="test.class" />
+			</and>
+			<then>
+				<get-poshi-dir-name />
+
+				<get-testray-logs-dir-name />
+
+				<copy todir="testray-logs/${testray.logs.dir.name}">
+					<fileset dir="portal-web/test-results/${poshi.dir.name}" erroronmissingdir="false" />
+				</copy>
 
 				<for list="production,uat" param="testray.base.dir.name">
 					<sequential>

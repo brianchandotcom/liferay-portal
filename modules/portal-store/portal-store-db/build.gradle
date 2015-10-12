@@ -1,5 +1,7 @@
 dependencies {
 	compile group: "aopalliance", name: "aopalliance", version: "1.0"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }

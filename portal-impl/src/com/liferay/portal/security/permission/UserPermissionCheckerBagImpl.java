@@ -18,7 +18,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,32 +43,11 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	@Override
 	public Set<Group> getGroups() {
 		if (_groups == null) {
-			Collection<Group>[] groupsArray = new Collection[3];
+			_groups = new HashSet<>();
 
-			int groupsSize = 0;
-
-			if (!_userGroups.isEmpty()) {
-				groupsArray[0] = _userGroups;
-				groupsSize += _userGroups.size();
-			}
-
-			if (!_userOrgGroups.isEmpty()) {
-				groupsArray[1] = _userOrgGroups;
-				groupsSize += _userOrgGroups.size();
-			}
-
-			if (!_userUserGroupGroups.isEmpty()) {
-				groupsArray[2] = _userUserGroupGroups;
-				groupsSize += _userUserGroupGroups.size();
-			}
-
-			_groups = new HashSet<>(groupsSize);
-
-			for (Collection<Group> groupsItem : groupsArray) {
-				if (groupsItem != null) {
-					_groups.addAll(groupsItem);
-				}
-			}
+			_groups.addAll(_userGroups);
+			_groups.addAll(_userOrgGroups);
+			_groups.addAll(_userUserGroupGroups);
 
 			_groups = Collections.unmodifiableSet(_groups);
 		}

@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.exportimport.lifecycle,\
 	com.liferay.exportimport.messaging,\
 	com.liferay.exportimport.portlet.preferences.processor.base,\
+	com.liferay.exportimport.portlet.preferences.processor.capability,\
 	com.liferay.exportimport.search,\
 	com.liferay.exportimport.staged.model.repository.base,\
 	com.liferay.exportimport.staging,\

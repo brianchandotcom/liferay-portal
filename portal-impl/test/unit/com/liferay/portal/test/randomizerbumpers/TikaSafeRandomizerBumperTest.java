@@ -14,8 +14,14 @@
 
 package com.liferay.portal.test.randomizerbumpers;
 
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ContentTypes;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -35,9 +41,14 @@ public class TikaSafeRandomizerBumperTest {
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
 			TikaSafeRandomizerBumper.INSTANCE;
 
-		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
-		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_TEXT_BYTE_ARRAY));
-		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_BROKEN_EXE_BYTES));
+		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, true, Level.OFF);
+		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, true, Level.OFF);
+		doAccept(tikaSafeRandomizerBumper, _BROKEN_EXE_BYTES, false, Level.OFF);
+
+		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, true, Level.INFO);
+		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, true, Level.INFO);
+		doAccept(
+			tikaSafeRandomizerBumper, _BROKEN_EXE_BYTES, false, Level.INFO);
 	}
 
 	@Test
@@ -45,9 +56,14 @@ public class TikaSafeRandomizerBumperTest {
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
 			new TikaSafeRandomizerBumper("application/x-msdownload");
 
-		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
-		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_TEXT_BYTE_ARRAY));
-		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_BROKEN_EXE_BYTES));
+		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, true, Level.OFF);
+		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, false, Level.OFF);
+		doAccept(tikaSafeRandomizerBumper, _BROKEN_EXE_BYTES, false, Level.OFF);
+
+		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, true, Level.INFO);
+		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, false, Level.INFO);
+		doAccept(
+			tikaSafeRandomizerBumper, _BROKEN_EXE_BYTES, false, Level.INFO);
 	}
 
 	@Test
@@ -55,9 +71,52 @@ public class TikaSafeRandomizerBumperTest {
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
 			new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
 
-		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_TEXT_BYTE_ARRAY));
-		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
-		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_BROKEN_EXE_BYTES));
+		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, true, Level.OFF);
+		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, false, Level.OFF);
+		doAccept(tikaSafeRandomizerBumper, _BROKEN_EXE_BYTES, false, Level.OFF);
+
+		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, true, Level.INFO);
+		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, false, Level.INFO);
+		doAccept(
+			tikaSafeRandomizerBumper, _BROKEN_EXE_BYTES, false, Level.INFO);
+	}
+
+	protected void doAccept(
+		TikaSafeRandomizerBumper tikaSafeRandomizerBumper, byte[] byteArray,
+		boolean accept, Level level) {
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					TikaSafeRandomizerBumper.class.getName(), level)) {
+
+			if (accept) {
+				Assert.assertTrue(tikaSafeRandomizerBumper.accept(byteArray));
+
+				List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+				if (level == Level.INFO) {
+					Assert.assertEquals(1, logRecords.size());
+
+					LogRecord logRecord = logRecords.get(0);
+
+					Assert.assertEquals(
+						"Accepted: " +
+							TikaSafeRandomizerBumper.byteArrayToString(
+								byteArray),
+						logRecord.getMessage());
+				}
+				else {
+					Assert.assertTrue(logRecords.isEmpty());
+				}
+			}
+			else {
+				Assert.assertFalse(tikaSafeRandomizerBumper.accept(byteArray));
+
+				List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+				Assert.assertTrue(logRecords.isEmpty());
+			}
+		}
 	}
 
 	private static final byte[] _BROKEN_EXE_BYTES = "MZ5gFGQt".getBytes();

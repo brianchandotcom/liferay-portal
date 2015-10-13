@@ -8,10 +8,10 @@
 		<if>
 			<equals arg1="${configureChecked}" arg2="false" />
 			<then>
-				<execute function="Uncheck" locator1="PGDynamicdatalistsConfiguration#${configureCheckBoxName}" />
+				<execute function="Uncheck" locator1="DDLConfiguration#${configureCheckBoxName}" />
 			</then>
 			<else>
-				<execute function="Check" locator1="PGDynamicdatalistsConfiguration#${configureCheckBoxName}" />
+				<execute function="Check" locator1="DDLConfiguration#${configureCheckBoxName}" />
 			</else>
 		</if>
 

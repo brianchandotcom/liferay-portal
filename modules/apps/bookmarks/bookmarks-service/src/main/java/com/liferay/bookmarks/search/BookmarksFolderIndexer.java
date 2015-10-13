@@ -18,6 +18,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -170,8 +171,8 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 	}
 
 	protected void reindexFolders(long companyId) throws PortalException {
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_bookmarksFolderLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			_bookmarksFolderLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(

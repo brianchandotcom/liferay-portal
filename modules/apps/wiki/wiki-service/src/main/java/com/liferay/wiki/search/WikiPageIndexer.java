@@ -17,6 +17,7 @@ package com.liferay.wiki.search;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -277,8 +278,8 @@ public class WikiPageIndexer
 	protected void reindexPages(long companyId, long groupId, final long nodeId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_wikiPageLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			_wikiPageLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

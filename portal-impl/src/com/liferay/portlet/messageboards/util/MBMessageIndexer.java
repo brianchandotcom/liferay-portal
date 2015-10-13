@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -408,8 +409,8 @@ public class MBMessageIndexer
 			long companyId, long groupId, final long categoryId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			MBMessageLocalServiceUtil.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			MBMessageLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

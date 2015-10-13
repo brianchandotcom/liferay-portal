@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -573,8 +574,8 @@ public class DLFileEntryIndexer
 			long companyId, final long groupId, final long dataRepositoryId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			DLFileEntryLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

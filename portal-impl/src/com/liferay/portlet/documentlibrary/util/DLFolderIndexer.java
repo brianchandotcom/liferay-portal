@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -173,8 +174,8 @@ public class DLFolderIndexer
 	}
 
 	protected void reindexFolders(final long companyId) throws PortalException {
-		final ActionableDynamicQuery actionableDynamicQuery =
-			DLFolderLocalServiceUtil.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			DLFolderLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

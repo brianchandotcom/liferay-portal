@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -224,8 +225,8 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 	protected void reindexCategories(final long companyId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			AssetCategoryLocalServiceUtil.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			AssetCategoryLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(

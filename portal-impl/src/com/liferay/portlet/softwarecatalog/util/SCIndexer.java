@@ -15,6 +15,7 @@
 package com.liferay.portlet.softwarecatalog.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -196,8 +197,8 @@ public class SCIndexer extends BaseIndexer<SCProductEntry> {
 	protected void reindexProductEntries(long companyId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			SCProductEntryLocalServiceUtil.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			SCProductEntryLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(

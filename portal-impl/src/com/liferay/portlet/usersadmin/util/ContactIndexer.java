@@ -15,6 +15,7 @@
 package com.liferay.portlet.usersadmin.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -178,8 +179,8 @@ public class ContactIndexer extends BaseIndexer<Contact> {
 	}
 
 	protected void reindexContacts(long companyId) throws PortalException {
-		final ActionableDynamicQuery actionableDynamicQuery =
-			ContactLocalServiceUtil.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			ContactLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(

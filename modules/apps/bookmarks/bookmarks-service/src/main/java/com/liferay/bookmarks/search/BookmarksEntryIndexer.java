@@ -22,6 +22,7 @@ import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -155,8 +156,8 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 			long companyId, final long groupId, final long folderId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_bookmarksEntryLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			_bookmarksEntryLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

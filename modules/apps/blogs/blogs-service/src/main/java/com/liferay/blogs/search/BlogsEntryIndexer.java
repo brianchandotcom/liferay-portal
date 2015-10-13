@@ -16,6 +16,7 @@ package com.liferay.blogs.search;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -153,8 +154,8 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 	}
 
 	protected void reindexEntries(long companyId) throws PortalException {
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_blogsEntryLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			_blogsEntryLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

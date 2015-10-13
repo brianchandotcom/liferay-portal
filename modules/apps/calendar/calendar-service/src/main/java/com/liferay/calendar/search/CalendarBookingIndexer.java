@@ -19,6 +19,7 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -203,8 +204,8 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 	protected void reindexCalendarBookings(long companyId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_calendarBookingLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			_calendarBookingLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

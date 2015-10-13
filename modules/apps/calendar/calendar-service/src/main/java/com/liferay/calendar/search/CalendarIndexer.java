@@ -19,6 +19,7 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -156,8 +157,8 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 	}
 
 	protected void reindexCalendars(long companyId) throws PortalException {
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_calendarLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			_calendarLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(

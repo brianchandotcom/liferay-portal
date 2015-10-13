@@ -29,6 +29,7 @@ import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -507,8 +508,8 @@ public class BookmarksEntryLocalServiceImpl
 			throw new IllegalArgumentException("Tree path is null");
 		}
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

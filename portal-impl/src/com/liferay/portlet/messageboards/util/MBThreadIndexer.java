@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -250,8 +251,8 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 			long companyId, long groupId, final long categoryId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			MBThreadLocalServiceUtil.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			MBThreadLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {

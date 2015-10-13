@@ -17,19 +17,14 @@ package com.liferay.portal.service.persistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
@@ -37,13 +32,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -65,16 +57,9 @@ public class TeamFinderTest {
 	public static void setUpClass() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
+		_userGroup = UserGroupTestUtil.addUserGroup();
 
 		GroupLocalServiceUtil.addUserGroup(_user.getUserId(), _group);
-
-		_organization = OrganizationTestUtil.addOrganization();
-		_organizationUser = UserTestUtil.addUser();
-
-		OrganizationLocalServiceUtil.addUserOrganization(
-			_organizationUser.getUserId(), _organization);
-
-		_userGroup = UserGroupTestUtil.addUserGroup();
 
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			_user.getUserId(), _userGroup);
@@ -84,41 +69,7 @@ public class TeamFinderTest {
 	public static void tearDownClass() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(_group);
 		UserLocalServiceUtil.deleteUser(_user);
-
-		UserLocalServiceUtil.deleteUser(_organizationUser);
-
-		OrganizationLocalServiceUtil.deleteOrganization(_organization);
-
 		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_inheritedUserGroupsParams = new LinkedHashMap<>();
-
-		_inheritedUserGroupsParams.put("inherit", Boolean.TRUE);
-		_inheritedUserGroupsParams.put(
-			"usersGroups",
-			new Long[] {
-				_group.getGroupId(), _organization.getGroupId(),
-				_userGroup.getGroupId()
-			});
-
-		_roleId = RoleTestUtil.addRegularRole(_group.getGroupId());
-
-		_inheritedUserRolesParams = new LinkedHashMap<>();
-
-		_inheritedUserRolesParams.put("inherit", Boolean.TRUE);
-		_inheritedUserRolesParams.put("usersRoles", _roleId);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		RoleLocalServiceUtil.deleteRole(_roleId);
-
-		GroupLocalServiceUtil.clearOrganizationGroups(
-			_organization.getOrganizationId());
-		GroupLocalServiceUtil.clearUserGroupGroups(_userGroup.getUserGroupId());
 	}
 
 	@Test
@@ -157,13 +108,7 @@ public class TeamFinderTest {
 	}
 
 	private static Group _group;
-	private static Organization _organization;
-	private static User _organizationUser;
 	private static User _user;
 	private static UserGroup _userGroup;
-
-	private LinkedHashMap<String, Object> _inheritedUserGroupsParams;
-	private LinkedHashMap<String, Object> _inheritedUserRolesParams;
-	private long _roleId;
 
 }

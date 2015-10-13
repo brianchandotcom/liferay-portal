@@ -1357,7 +1357,7 @@
 				(Users_Teams.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.TeamFinder.findByUserId">
+	<sql id="com.liferay.portal.service.persistence.TeamFinder.findByG_U">
 		<![CDATA[
 			SELECT
 				DISTINCT Team.*

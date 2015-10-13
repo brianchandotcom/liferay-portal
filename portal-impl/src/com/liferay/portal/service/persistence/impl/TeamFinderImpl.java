@@ -47,8 +47,8 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 	public static final String FIND_BY_G_N_D =
 		TeamFinder.class.getName() + ".findByG_N_D";
 
-	public static final String FIND_BY_USERID =
-		TeamFinder.class.getName() + ".findByUserId";
+	public static final String FIND_BY_G_U =
+		TeamFinder.class.getName() + ".findByG_U";
 
 	public static final String JOIN_BY_USERS_TEAMS =
 		TeamFinder.class.getName() + ".joinByUsersTeams";
@@ -93,11 +93,11 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 	}
 
 	@Override
-	public List<Team> findByUserId(
-		long userId, long groupId, int start, int end,
+	public List<Team> findByG_U(
+		long groupId, long userId, int start, int end,
 		OrderByComparator<Team> obc) {
 
-		return doFindByUserId(userId, groupId, start, end, obc);
+		return doFindByG_U(groupId, userId, start, end, obc);
 	}
 
 	protected int doCountByG_N_D(
@@ -204,8 +204,8 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 		}
 	}
 
-	protected List<Team> doFindByUserId(
-		long userId, long groupId, int start, int end,
+	protected List<Team> doFindByG_U(
+		long groupId, long userId, int start, int end,
 		OrderByComparator<Team> obc) {
 
 		Session session = null;
@@ -213,7 +213,7 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_USERID);
+			String sql = CustomSQLUtil.get(FIND_BY_G_U);
 
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 

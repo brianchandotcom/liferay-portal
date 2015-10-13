@@ -269,9 +269,9 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Team> getRecursiveUserTeams(long userId, long groupId) {
-		return teamFinder.findByUserId(
-			userId, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Team> getRecursiveUserTeams(long groupId, long userId) {
+		return teamFinder.findByG_U(
+			groupId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	@Override

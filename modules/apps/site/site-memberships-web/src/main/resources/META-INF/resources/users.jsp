@@ -175,7 +175,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			<%
 			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), group.getGroupId());
 
-			List<Team> teams = TeamLocalServiceUtil.getRecursiveUserTeams(user2.getUserId(), group.getGroupId());
+			List<Team> teams = TeamLocalServiceUtil.getRecursiveUserTeams(group.getGroupId(), user2.getUserId());
 
 			List<String> names = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
 

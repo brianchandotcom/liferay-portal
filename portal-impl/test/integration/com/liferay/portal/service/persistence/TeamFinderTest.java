@@ -86,7 +86,7 @@ public class TeamFinderTest {
 			_user.getUserId(), directTeam.getTeamId());
 
 		List<Team> justDirectTeam = TeamLocalServiceUtil.getRecursiveUserTeams(
-			_user.getUserId(), _group.getGroupId());
+			_group.getGroupId(), _user.getUserId());
 
 		Assert.assertEquals(1, justDirectTeam.size());
 		Assert.assertTrue(justDirectTeam.contains(directTeam));
@@ -100,7 +100,7 @@ public class TeamFinderTest {
 
 		List<Team> directAndGroupTeams =
 			TeamLocalServiceUtil.getRecursiveUserTeams(
-				_user.getUserId(), _group.getGroupId());
+				_group.getGroupId(), _user.getUserId());
 
 		Assert.assertEquals(2, directAndGroupTeams.size());
 		Assert.assertTrue(directAndGroupTeams.contains(directTeam));

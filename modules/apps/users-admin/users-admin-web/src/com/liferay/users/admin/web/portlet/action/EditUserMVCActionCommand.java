@@ -467,6 +467,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 					if (Validator.isNotNull(redirect)) {
 						sendRedirect(actionRequest, actionResponse, redirect);
+
+						return;
 					}
 				}
 			}

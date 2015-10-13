@@ -82,6 +82,8 @@
 	<command name="addFormTemplateViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_FORM_TEMPLATE" />
 
+		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 	</command>
 

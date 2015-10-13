@@ -45,7 +45,7 @@ public class PortalSettingsPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

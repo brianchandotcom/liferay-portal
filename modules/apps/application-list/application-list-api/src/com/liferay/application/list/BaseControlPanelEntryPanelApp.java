@@ -15,17 +15,11 @@
 package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.ControlPanelEntry;
-
-import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -35,32 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseControlPanelEntryPanelApp implements PanelApp {
-
-	@Override
-	public String getKey() {
-		Class<?> clazz = getClass();
-
-		return clazz.getName();
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			locale,
-			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-				getPortletId());
-	}
-
-	public Portlet getPortlet() {
-		if (_portlet != null) {
-			return _portlet;
-		}
-
-		_portlet = portletLocalService.getPortletById(getPortletId());
-
-		return _portlet;
-	}
+public abstract class BaseControlPanelEntryPanelApp extends BasePanelApp {
 
 	@Override
 	public PortletURL getPortletURL(HttpServletRequest request)
@@ -107,13 +76,5 @@ public abstract class BaseControlPanelEntryPanelApp implements PanelApp {
 	protected Group getGroup(HttpServletRequest request) {
 		return null;
 	}
-
-	protected void setPortlet(Portlet portlet) {
-		_portlet = portlet;
-	}
-
-	protected PortletLocalService portletLocalService;
-
-	private Portlet _portlet;
 
 }

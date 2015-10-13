@@ -79,7 +79,7 @@ public class GroupPagesPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

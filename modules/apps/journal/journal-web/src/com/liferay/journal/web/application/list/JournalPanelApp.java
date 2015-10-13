@@ -45,7 +45,7 @@ public class JournalPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

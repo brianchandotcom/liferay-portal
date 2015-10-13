@@ -12,37 +12,40 @@
  * details.
  */
 
-package com.liferay.marketplace.store.web.application.list;
+package com.liferay.application.list;
 
-import com.liferay.application.list.BaseControlPanelEntryPanelApp;
-import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Locale;
 
 /**
- * @author Ryan Park
- * @author Joan Kim
+ * @author Adolfo Pérez
  */
-@Component(
-	immediate = true,
-	property = {
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_APPS,
-		"service.ranking:Integer=100"
-	},
-	service = PanelApp.class
-)
-public class MarketplaceStorePanelApp extends BaseControlPanelEntryPanelApp {
+public abstract class BasePanelApp implements PanelApp {
 
 	@Override
-	public String getPortletId() {
-		return MarketplaceStorePortletKeys.MARKETPLACE_STORE;
+	public String getKey() {
+		Class<?> clazz = getClass();
+
+		return clazz.getName();
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(
+			locale,
+			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
+				getPortletId());
+	}
+
+	public Portlet getPortlet() {
+		return _portlet;
 	}
 
 	@Override
@@ -50,15 +53,14 @@ public class MarketplaceStorePanelApp extends BaseControlPanelEntryPanelApp {
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		return permissionChecker.isOmniadmin();
+		return true;
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=" + MarketplaceStorePortletKeys.MARKETPLACE_STORE + ")",
-		unbind = "-"
-	)
+	@Override
 	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
+		_portlet = portlet;
 	}
+
+	private Portlet _portlet;
 
 }

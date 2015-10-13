@@ -45,7 +45,7 @@ public class WorkflowDefinitionPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + WorkflowDefinitionPortletKeys.WORKFLOW_DEFINITION + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

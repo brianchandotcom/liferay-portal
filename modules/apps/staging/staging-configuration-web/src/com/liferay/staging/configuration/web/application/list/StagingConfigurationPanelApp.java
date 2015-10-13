@@ -61,7 +61,7 @@ public class StagingConfigurationPanelApp
 		target = "(javax.portlet.name=" + StagingConfigurationPortletKeys.STAGING_CONFIGURATION + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

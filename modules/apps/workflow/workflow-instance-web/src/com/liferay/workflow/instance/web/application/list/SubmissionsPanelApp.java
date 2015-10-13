@@ -45,7 +45,7 @@ public class SubmissionsPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

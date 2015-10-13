@@ -45,7 +45,7 @@ public class MBAdminPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

@@ -45,7 +45,7 @@ public class SocialActivityPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

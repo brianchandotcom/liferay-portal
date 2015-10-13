@@ -45,7 +45,7 @@ public class LicenseManagerPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + PortletKeys.LICENSE_MANAGER + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

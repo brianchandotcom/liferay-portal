@@ -826,7 +826,7 @@
 
 		<execute function="SelectFrame" locator1="SitesSelectSite#SELECT_SITE_IFRAME" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${parentSiteName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<if>
 			<equals arg1="${chooseButtonAvailable}" arg2="false" />

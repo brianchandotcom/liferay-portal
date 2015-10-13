@@ -18,7 +18,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
 import com.liferay.nested.portlets.web.display.context.NestedPortletsDisplayContext;
-import com.liferay.nested.portlets.web.upgrade.NestedPortletWebUpgrade;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -252,11 +251,6 @@ public class NestedPortletsPortlet extends MVCPortlet {
 		LayoutTemplateLocalService layoutTemplateLocalService) {
 
 		_layoutTemplateLocalService = layoutTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setNestedPortletWebUpgrade(
-		NestedPortletWebUpgrade nestedPortletWebUpgrade) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

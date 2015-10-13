@@ -348,7 +348,8 @@ public class FriendlyURLServlet extends HttpServlet {
 						}
 					}
 
-					if (i18nRedirect || !StringUtil.equalsIgnoreCase(
+					if (i18nRedirect ||
+						!StringUtil.equalsIgnoreCase(
 							layoutFriendlyURLCompositeFriendlyURL,
 							layout.getFriendlyURL(locale))) {
 

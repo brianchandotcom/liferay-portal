@@ -3399,8 +3399,9 @@ public class PortalImpl implements Portal {
 				requestURI, layoutFriendlyURL, layout.getFriendlyURL(locale));
 		}
 
-		String i18nPath = StringPool.SLASH + getI18nPathLanguageId(
-			locale, LocaleUtil.toLanguageId(locale));
+		String i18nPath =
+			StringPool.SLASH +
+				getI18nPathLanguageId(locale, LocaleUtil.toLanguageId(locale));
 
 		boolean appendI18nPath = true;
 

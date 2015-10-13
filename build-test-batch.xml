@@ -1117,7 +1117,7 @@
 	</target>
 
 	<target name="sass-compiler-ruby">
-		<echo file="build.${env.HOSTNAME}.properties">sass.compiler.class.name=ruby</echo>
+		<echo file="build.${user.name}.properties">sass.compiler.class.name=ruby</echo>
 
 		<antcall target="setup-sdk" inheritAll="false" />
 
@@ -1144,7 +1144,8 @@
 		</fail>
 
 		<delete file="${project.dir}/sass-compiler-log" />
-		<delete file="build.${env.HOSTNAME}.properties" />
+
+		<delete file="build.${user.name}.properties" />
 	</target>
 
 	<target name="service-builder">

@@ -24,10 +24,15 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -38,6 +43,10 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.test.MailServiceTestUtil;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
@@ -864,6 +873,76 @@ public class UserServiceTest {
 		}
 
 		private User _user;
+
+	}
+
+	public static class WhenUpdatingUser {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+
+		@Test
+		public void shouldNotRemoveChildSiteMembership() throws Exception {
+			User user = UserTestUtil.addUser(true);
+			List<Group> groups = new ArrayList<>();
+
+			Group parentGroup = GroupTestUtil.addGroup();
+			Group childGroup = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+			childGroup.setMembershipRestriction(
+				GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
+
+			GroupLocalServiceUtil.updateGroup(childGroup);
+
+			groups.add(parentGroup);
+			groups.add(childGroup);
+
+			GroupLocalServiceUtil.addUserGroups(user.getUserId(), groups);
+
+			user = updateUser(user);
+
+			Assert.assertEquals(groups, user.getGroups());
+		}
+
+		private User updateUser(User user) throws Exception {
+			Contact contact = user.getContact();
+
+			Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+
+			birthdayCal.setTime(contact.getBirthday());
+
+			int birthdayMonth = birthdayCal.get(Calendar.MONTH);
+			int birthdayDay = birthdayCal.get(Calendar.DATE);
+			int birthdayYear = birthdayCal.get(Calendar.YEAR);
+
+			long[] groupIds = null;
+			long[] organizationIds = null;
+			long[] roleIds = null;
+			List<UserGroupRole> userGroupRoles = null;
+			long[] userGroupIds = null;
+			ServiceContext serviceContext = new ServiceContext();
+
+			return UserServiceUtil.updateUser(
+				user.getUserId(), user.getPassword(), StringPool.BLANK,
+				StringPool.BLANK, user.isPasswordReset(),
+				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
+				user.getScreenName(), user.getEmailAddress(),
+				user.getFacebookId(), user.getOpenId(), user.getLanguageId(),
+				user.getTimeZoneId(), user.getGreeting(), user.getComments(),
+				contact.getFirstName(), contact.getMiddleName(),
+				contact.getLastName(), contact.getPrefixId(),
+				contact.getSuffixId(), contact.isMale(), birthdayMonth,
+				birthdayDay, birthdayYear, contact.getSmsSn(),
+				contact.getAimSn(), contact.getFacebookSn(), contact.getIcqSn(),
+				contact.getJabberSn(), contact.getMsnSn(),
+				contact.getMySpaceSn(), contact.getSkypeSn(),
+				contact.getTwitterSn(), contact.getYmSn(),
+				contact.getJobTitle(), groupIds, organizationIds, roleIds,
+				userGroupRoles, userGroupIds, serviceContext);
+		}
 
 	}
 

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
@@ -73,6 +74,37 @@ public class CalendarBookingLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
+	}
+
+	@Test
+	public void testAddCalendarBookingSetLanguageIdInServiceContext()
+		throws PortalException {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startTime = System.currentTimeMillis();
+
+		serviceContext.setLanguageId("fr_FR");
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime,
+				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+				serviceContext);
+
+		Assert.assertEquals(
+			"fr_FR",
+			LocalizationUtil.getDefaultLanguageId(calendarBooking.getTitle()));
 	}
 
 	@Test

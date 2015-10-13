@@ -137,7 +137,10 @@ AUI.add(
 							startTimeMonth: startDate.getMonth(),
 							startTimeYear: startDate.getFullYear(),
 							timeZoneId: instance.USER_TIME_ZONE,
-							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content')))
+							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content'))),
+							serviceContext: {
+								languageId: themeDisplay.getLanguageId()
+							}
 						}
 					},
 					{
@@ -767,7 +770,10 @@ AUI.add(
 							recurrence: schedulerEvent.get('recurrence'),
 							secondReminder: schedulerEvent.get('secondReminder'),
 							secondReminderType: schedulerEvent.get('secondReminderType'),
-							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content')))
+							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content'))),
+							serviceContext: {
+								languageId: themeDisplay.getLanguageId()
+							}
 						}
 					},
 					{
@@ -830,7 +836,10 @@ AUI.add(
 							startTimeMonth: startDate.getMonth(),
 							startTimeYear: startDate.getFullYear(),
 							timeZoneId: instance.USER_TIME_ZONE,
-							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content')))
+							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content'))),
+							serviceContext: {
+								languageId: themeDisplay.getLanguageId()
+							}
 						}
 					},
 					{

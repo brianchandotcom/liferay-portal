@@ -909,9 +909,11 @@ public class UsersAdminImpl implements UsersAdmin {
 			list, accessor, StringPool.COMMA_AND_SPACE);
 
 		if (list.size() < count) {
-			result += StringPool.SPACE + LanguageUtil.format(
-				locale, "and-x-more", String.valueOf(count - list.size()),
-				false);
+			result +=
+				StringPool.SPACE +
+					LanguageUtil.format(
+						locale, "and-x-more",
+						String.valueOf(count - list.size()), false);
 		}
 
 		return result;

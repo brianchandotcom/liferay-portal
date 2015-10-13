@@ -106,6 +106,87 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testChangeInviteAnswersAfterUpdate() throws PortalException {
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
+			_user.getUserId(), _user.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
+			false, false, serviceContext);
+
+		long startTime = System.currentTimeMillis();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(),
+				new long[] { invitedCalendar.getCalendarId() },
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime, startTime + 36000000,
+				false, null, 0, null, 0, null, serviceContext);
+
+		CalendarBooking childCalendarBooking = getChildCalendarBooking(
+			calendarBooking);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, childCalendarBooking.getStatus());
+
+		childCalendarBooking = CalendarBookingLocalServiceUtil.updateStatus(
+				_user.getUserId(), childCalendarBooking,
+				CalendarBookingWorkflowConstants.STATUS_MAYBE, serviceContext);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
+				_user.getUserId(), calendarBooking.getCalendarBookingId(),
+				calendarBooking.getCalendarId(),
+				new long[] { invitedCalendar.getCalendarId() },
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime, startTime + 36000000,
+				calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
+				calendarBooking.getFirstReminder(),
+				calendarBooking.getFirstReminderType(),
+				calendarBooking.getSecondReminder(),
+				calendarBooking.getSecondReminderType(), serviceContext);
+
+		childCalendarBooking = getChildCalendarBooking(calendarBooking);
+
+		Assert.assertEquals(
+				CalendarBookingWorkflowConstants.STATUS_MAYBE,
+				childCalendarBooking.getStatus());
+
+		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
+				_user.getUserId(), calendarBooking.getCalendarBookingId(),
+				calendarBooking.getCalendarId(),
+				new long[] { invitedCalendar.getCalendarId() },
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime, startTime + 37000000,
+				calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
+				calendarBooking.getFirstReminder(),
+				calendarBooking.getFirstReminderType(),
+				calendarBooking.getSecondReminder(),
+				calendarBooking.getSecondReminderType(), serviceContext);
+
+		childCalendarBooking = getChildCalendarBooking(calendarBooking);
+
+		Assert.assertNotEquals(
+				CalendarBookingWorkflowConstants.STATUS_MAYBE,
+				childCalendarBooking.getStatus());
+	}
+
+	@Test
 	public void testDeleteLastCalendarBookingInstanceDeletesCalendarBooking()
 		throws PortalException {
 

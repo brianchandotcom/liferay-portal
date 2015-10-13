@@ -237,6 +237,7 @@ public class FolderStagedModelDataHandlerTest
 	}
 
 	@Override
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	protected void deleteStagedModel(
 			StagedModel stagedModel,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
@@ -246,7 +247,6 @@ public class FolderStagedModelDataHandlerTest
 		List<StagedModel> fileEntryTypestagedModels =
 			dependentStagedModelsMap.get(DLFileEntryType.class.getSimpleName());
 
-		@SuppressWarnings("rawtypes")
 		StagedModelDataHandler stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				DLFileEntryType.class.getName());

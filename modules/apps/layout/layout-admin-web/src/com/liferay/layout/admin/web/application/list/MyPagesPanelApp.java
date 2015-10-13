@@ -60,11 +60,8 @@ public class MyPagesPanelApp extends GroupPagesPanelApp {
 		target = "(javax.portlet.name=" + LayoutAdminPortletKeys.MY_PAGES + ")",
 		unbind = "-"
 	)
-	protected final void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MyPagesPanelApp.class);
 
 }

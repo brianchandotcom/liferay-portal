@@ -45,7 +45,7 @@ public class ServerAdminPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + PortletKeys.SERVER_ADMIN + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

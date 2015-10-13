@@ -45,7 +45,7 @@ public class SiteMembershipsPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

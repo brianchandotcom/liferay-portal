@@ -63,7 +63,7 @@ public class ExportImportPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

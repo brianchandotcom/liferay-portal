@@ -45,7 +45,7 @@ public class BlogsPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

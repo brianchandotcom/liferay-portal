@@ -47,11 +47,8 @@ public class MyAccountPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT + ")",
 		unbind = "-"
 	)
-	protected final void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MyAccountPanelApp.class);
 
 }

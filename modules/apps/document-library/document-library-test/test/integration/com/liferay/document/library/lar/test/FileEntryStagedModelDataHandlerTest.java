@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
@@ -89,17 +90,17 @@ public class FileEntryStagedModelDataHandlerTest
 
 	@Test
 	public void testExportImportFileExtension() throws Exception {
-		String sourceFileName = RandomTestUtil.randomString() + ".pdf";
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
+		String fileName = "PDF_Test.pdf";
+
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName),
 			serviceContext);
 
 		exportImportStagedModel(fileEntry);

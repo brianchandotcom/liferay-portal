@@ -17,12 +17,10 @@ package com.liferay.bookmarks.lar;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -96,8 +94,6 @@ public class BookmarksEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, BookmarksEntry entry)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(entry.getUserUuid());
-
 		Map<Long, Long> folderIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				BookmarksFolder.class);
@@ -105,36 +101,23 @@ public class BookmarksEntryStagedModelDataHandler
 		long folderId = MapUtil.getLong(
 			folderIds, entry.getFolderId(), entry.getFolderId());
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			entry);
+		BookmarksEntry importedEntry = (BookmarksEntry)entry.clone();
 
-		BookmarksEntry importedEntry = null;
+		importedEntry.setGroupId(portletDataContext.getScopeGroupId());
+		importedEntry.setFolderId(folderId);
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksEntry existingEntry = fetchStagedModelByUuidAndGroupId(
-				entry.getUuid(), portletDataContext.getScopeGroupId());
+		BookmarksEntry existingEntry = fetchStagedModelByUuidAndGroupId(
+			entry.getUuid(), portletDataContext.getScopeGroupId());
 
-			if (existingEntry == null) {
-				serviceContext.setUuid(entry.getUuid());
-
-				importedEntry = BookmarksEntryLocalServiceUtil.addEntry(
-					userId, portletDataContext.getScopeGroupId(), folderId,
-					entry.getName(), entry.getUrl(), entry.getDescription(),
-					serviceContext);
-			}
-			else {
-				importedEntry = BookmarksEntryLocalServiceUtil.updateEntry(
-					userId, existingEntry.getEntryId(),
-					portletDataContext.getScopeGroupId(), folderId,
-					entry.getName(), entry.getUrl(), entry.getDescription(),
-					serviceContext);
-			}
+		if (existingEntry == null) {
+			importedEntry =_stagedModelRepository.addStagedModel(
+				portletDataContext, importedEntry);
 		}
 		else {
-			importedEntry = BookmarksEntryLocalServiceUtil.addEntry(
-				userId, portletDataContext.getScopeGroupId(), folderId,
-				entry.getName(), entry.getUrl(), entry.getDescription(),
-				serviceContext);
+			entry.setEntryId(existingEntry.getEntryId());
+
+			importedEntry = _stagedModelRepository.updateStagedModel(
+				portletDataContext, importedEntry);
 		}
 
 		portletDataContext.importClassedModel(entry, importedEntry);

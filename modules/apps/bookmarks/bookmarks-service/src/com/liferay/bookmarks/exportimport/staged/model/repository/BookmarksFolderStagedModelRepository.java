@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
@@ -41,6 +42,28 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BookmarksFolderStagedModelRepository
 	extends BaseStagedModelRepository<BookmarksFolder> {
+
+	@Override
+	public BookmarksFolder addStagedModel(
+			PortletDataContext portletDataContext,
+			BookmarksFolder bookmarksFolder)
+		throws PortalException {
+
+		long userId = portletDataContext.getUserId(
+			bookmarksFolder.getUserUuid());
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			bookmarksFolder);
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setUuid(bookmarksFolder.getUuid());
+		}
+
+		return _bookmarksFolderLocalService.addFolder(
+			userId, bookmarksFolder.getParentFolderId(),
+			bookmarksFolder.getName(), bookmarksFolder.getDescription(),
+			serviceContext);
+	}
 
 	@Override
 	public void deleteStagedModel(BookmarksFolder bookmarksFolder)
@@ -123,6 +146,32 @@ public class BookmarksFolderStagedModelRepository
 		catch (PortalException pe) {
 			throw new PortletDataException(pe);
 		}
+	}
+
+	@Override
+	public BookmarksFolder saveStagedModel(BookmarksFolder bookmarksFolder)
+		throws PortalException {
+
+		return _bookmarksFolderLocalService.updateBookmarksFolder(
+			bookmarksFolder);
+	}
+
+	@Override
+	public BookmarksFolder updateStagedModel(
+			PortletDataContext portletDataContext,
+			BookmarksFolder bookmarksFolder)
+		throws PortalException {
+
+		long userId = portletDataContext.getUserId(
+			bookmarksFolder.getUserUuid());
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			bookmarksFolder);
+
+		return _bookmarksFolderLocalService.updateFolder(
+			userId, bookmarksFolder.getFolderId(),
+			bookmarksFolder.getParentFolderId(), bookmarksFolder.getName(),
+			bookmarksFolder.getDescription(), serviceContext);
 	}
 
 	@Reference

@@ -34,7 +34,7 @@
 	<command name="delete">
 		<var name="key_entryComment" value="${entryComment}" />
 
-		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
+		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />
 
 		<execute function="AssertClickNoError" locator1="Comments#DELETE_LINK" value1="Delete" />
 

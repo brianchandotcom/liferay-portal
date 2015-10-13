@@ -739,8 +739,8 @@
 	<command name="UpdateDueDateTaskByActions" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="workflowDueDate" value="10/02/2015" />
-		<var name="workflowDueDateFormatted" value="10/2/15" />
+		<var name="workflowDueDate" value="10/02/2016" />
+		<var name="workflowDueDateFormatted" value="10/2/16" />
 		<var name="workflowDueDateTime" value="12:45 PM" />
 
 		<execute macro="Page#gotoContentCP">

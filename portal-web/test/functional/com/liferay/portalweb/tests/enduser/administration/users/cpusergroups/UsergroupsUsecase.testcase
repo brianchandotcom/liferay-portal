@@ -512,6 +512,8 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
+		<var name="key_pageName" value="Welcome" />
+
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
@@ -530,6 +532,8 @@
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
+
+		<var name="key_pageName" value="Welcome" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
@@ -565,6 +569,8 @@
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
+
+		<var name="key_pageName" value="Welcome" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />

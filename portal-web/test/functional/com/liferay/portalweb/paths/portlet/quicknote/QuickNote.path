@@ -14,18 +14,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTE_CONTENT_EDITABLE</td>
+	<td>//div[@class='note-content editable-hover']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTE_CONTENT_TEXTAREA</td>
 	<td>//textarea[contains(@class,'field-input')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMOVE_BUTTON</td>
-	<td>//button[contains(@class,'btn-default-content')]/span[@class='icon-remove']</td>
+	<td>//button[contains(@class,'btn-default')]/span[@class='icon-remove']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OK_BUTTON</td>
-	<td>//button[contains(@class,'btn-default-content')]/span[@class='icon-ok']</td>
+	<td>//button[contains(@class,'btn-default')]/span[@class='icon-ok']</td>
 	<td></td>
 </tr>
 <tr>

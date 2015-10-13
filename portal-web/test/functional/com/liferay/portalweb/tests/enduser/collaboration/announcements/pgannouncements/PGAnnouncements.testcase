@@ -101,7 +101,7 @@
 		</execute>
 	</command>
 
-	<command name="AddAnnouncementsEntryPastExpirationDate" priority="4">
+	<command name="AddAnnouncementsEntryPastExpirationDate" priority="3">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -167,7 +167,7 @@
 		</execute>
 	</command>
 
-	<command name="AddAnnouncementsEntrySite" priority="4">
+	<command name="AddAnnouncementsEntrySite" priority="3">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />

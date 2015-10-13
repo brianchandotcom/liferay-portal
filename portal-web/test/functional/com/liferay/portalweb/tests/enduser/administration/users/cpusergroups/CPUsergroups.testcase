@@ -326,7 +326,6 @@
 		</execute>
 
 		<execute macro="UserGroup#removeMemberCP">
-			<var name="userFirstName" value="userfn" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 			<var name="userScreenName" value="usersn" />
 		</execute>

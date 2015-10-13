@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>CATEGORY_NAME</td>
-	<td>//ul[@class='categories']/li/a[contains(.,'${key_categoryName}')]</td>
+	<td>//ul[contains(@class,'category')]//a[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VOCABULARY_NAME</td>
-	<td>//div[contains(@class,'asset-categories-navigation')]//div[contains(@class,'column-content')]//h3[contains(.,'${key_vocabularyName}')]</td>
+	<td>//div[contains(@class,'asset-categories-navigation')]//div[contains(@class,'panel-heading')]//span[contains(.,'${key_vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>

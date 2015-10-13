@@ -95,7 +95,7 @@
 		</execute>
 
 		<execute macro="WikiPortlet#viewConfigurationTabs">
-			<var name="isNotPresent" value="NAVIGATION_EMAIL_FROM, NAVIGATION_PAGE_ADDED_EMAIL, NAVIGATION_PAGE_UPDATED_EMAIL,SETUP_RSS" />
+			<var name="isNotPresent" value="NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,SETUP_RSS" />
 			<var name="isPresent" value="SETUP_DISPLAY_SETTINGS" />
 		</execute>
 
@@ -119,7 +119,7 @@
 		</execute>
 
 		<execute macro="WikiPortlet#configureDisplaySettings">
-			<var name="uncheckSetting" value="ENABLE_COMMENTS,ENABLE_COMMENTS_RATINGS,ENABLE_PAGE_RATINGS,ENABLE_RELATED_ASSETS" />
+			<var name="uncheckSetting" value="ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,ENABLE_RELATED_ASSETS" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -131,7 +131,7 @@
 		</execute>
 
 		<execute macro="WikiPortlet#viewDisplaySettings">
-			<var name="uncheckedSetting" value="ENABLE_COMMENTS,ENABLE_COMMENTS_RATINGS,ENABLE_PAGE_RATINGS,ENABLE_RELATED_ASSETS" />
+			<var name="uncheckedSetting" value="ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,ENABLE_RELATED_ASSETS" />
 		</execute>
 	</command>
 

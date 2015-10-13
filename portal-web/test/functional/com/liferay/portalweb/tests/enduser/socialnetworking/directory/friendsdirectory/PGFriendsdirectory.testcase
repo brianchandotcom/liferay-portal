@@ -32,7 +32,7 @@
 		</execute>
 	</tear-down>
 
-	<command name="SearchFriendsDirectory" priority="4">
+	<command name="SearchFriendsDirectory" priority="3">
 		<var name="pageName" value="${pageName}" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />

@@ -28,12 +28,12 @@
 	<command name="viewShowAllPG">
 		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_FIELD" />
 		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_BUTTON" />
-		<execute function="AssertElementPresent" locator1="MenuItem#PERMISSIONS" />
+		<execute function="AssertElementPresent" locator1="Link#PERMISSIONS" />
 		<execute function="AssertElementPresent" locator1="MenuItem#ADD_FOLDER" />
 		<execute function="AssertElementPresent" locator1="MenuItem#ADD_REPOSITORY" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_MULTIPLE_MEDIA" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ADD_MEDIA" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ADD_SHORTCUT" />
-		<execute function="AssertElementPresent" locator1="MenuItem#ACCESS_FROM_DESKTOP" />
+		<execute function="AssertElementPresent" locator1="Link#ACCESS_FROM_DESKTOP" />
 	</command>
 </definition>

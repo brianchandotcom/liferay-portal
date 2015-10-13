@@ -1362,7 +1362,7 @@
 	</command>
 
 	<command name="viewFrontPageDefaultADTPG">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER_2" value1="FrontPage" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="FrontPage" />
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
 		<execute function="AssertElementPresent" locator1="Wiki#LINK_ADD_CHILD_PAGE" />
 		<execute function="AssertElementPresent" locator1="Wiki#LINK_ATTACHMENTS" />

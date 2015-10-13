@@ -8,6 +8,8 @@
 		<var name="key_columnLineNumber" value="${columnLineNumber}" />
 		<var name="key_rowNumber" value="${rowNumber}" />
 
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_COLUMN_RIGHT" />
+
 		<execute function="DragAndDrop#dragAndDropToObjectNotVisible" locator1="Form#ADD_COLUMN_RIGHT" locator2="Form#ADD_COLUMN_LINE" value1="" />
 	</command>
 
@@ -36,7 +38,7 @@
 	<command name="gotoAddField">
 		<var name="key_columnSize" value="${columnSize}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Form#ADD_FIELD"  />
+		<execute function="Click#makeVisibleClickAt" locator1="Form#ADD_FIELD" />
 
 		<var name="key_fieldType" value="${fieldType}" />
 

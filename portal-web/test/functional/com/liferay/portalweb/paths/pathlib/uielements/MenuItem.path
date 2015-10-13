@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>ADT_TEMPLATE</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_adtType} Template')]</td>
+	<td>//a[contains(.,'${key_adtType} Template')]</td>
 	<td></td>
 </tr>
 <tr>

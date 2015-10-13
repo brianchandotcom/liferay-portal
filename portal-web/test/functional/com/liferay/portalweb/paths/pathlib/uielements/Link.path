@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACCESS_FROM_DESKTOP</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Access from Desktop')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_EMAIL_ADDRESS</td>
 	<td>//div/a[contains(.,'Change Email Address')]</td>
 	<td></td>

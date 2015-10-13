@@ -50,6 +50,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_RSS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -73,11 +78,6 @@
 <tr>
 	<td>SETUP_DISPLAY_SETTINGS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETUP_RSS</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <!--SETUP_DISPLAY_SETTINGS-->

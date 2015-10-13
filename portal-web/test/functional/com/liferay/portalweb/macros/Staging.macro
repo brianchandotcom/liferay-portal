@@ -765,17 +765,13 @@
 	</command>
 
 	<command name="submitForPublicationPageRevision">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			</then>
-		</if>
-
+		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />
 		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Draft" />
+
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-		<execute function="AssertElementPresent" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION_DISABLED" />
+
+		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH_TO_LIVE" />
+		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" />
 
 		<if>
 			<condition function="IsTextEqual" locator1="Message#STATUS" value1="Pending (Created)" />

@@ -206,7 +206,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDefaultNotificationsPortletDeliveryOptions" priority="4">
+	<command name="ViewDefaultNotificationsPortletDeliveryOptions" priority="3">
 		<execute macro="Notifications#gotoDockbar" />
 
 		<execute macro="Notifications#navigateToViewAllNotifications" />

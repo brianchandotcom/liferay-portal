@@ -627,7 +627,7 @@
 								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 								<execute function="Pause" value1="1000" />
 								<execute function="AssertClick" locator1="CalendarEditEvent#ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series"  />
-								<execute function="Pause" value1="2000" />
+								<execute function="Pause" value1="10000" />
 							</else>
 						</if>
 					</else>

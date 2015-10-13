@@ -203,7 +203,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_GENERIC</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved')]//div[@class='entry-body']/div</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved')]/div[contains(@class,'entry-body')]/p</td>
 	<td></td>
 </tr>
 <tr>

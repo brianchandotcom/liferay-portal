@@ -206,7 +206,7 @@
 		</execute>
 	</command>
 
-	<command name="ApplicationAdapter" priority="4">
+	<command name="ApplicationAdapter" priority="3">
 		<property name="hook.plugins.includes" value="sample-application-adapter-hook" />
 
 		<execute macro="Page#gotoCP">
@@ -318,7 +318,7 @@
 		<execute function="AssertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 	</command>
 
-	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="4">
+	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">
 		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount" >
 
 			<execute macro="Page#gotoCP">
@@ -364,7 +364,7 @@
 		</execute>
 	</command>
 
-	<command name="OnlySiteOwnersCanAssignSiteRolesToUserGroups" priority="4">
+	<command name="OnlySiteOwnersCanAssignSiteRolesToUserGroups" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -598,7 +598,7 @@
 		</execute>
 	</command>
 
-	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="4">
+	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="3">
 		<property name="custom.properties" value="layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true" />
 
 		<execute macro="Page#gotoCP">

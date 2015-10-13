@@ -43,7 +43,7 @@
 		<execute macro="ServerAdministration#tearDownMailServerSettings" />
 	</tear-down>
 
-	<command name="AddBlogsEntries" priority="4">
+	<command name="AddBlogsEntries" priority="5">
 		<var name="blogsEntryCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
@@ -74,7 +74,7 @@
 		</for>
 	</command>
 
-	<command name="AddBlogsEntry" priority="4">
+	<command name="AddBlogsEntry" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -516,8 +516,9 @@
 		<execute macro="Blogs#viewControlsPG" />
 	</command>
 
-	<command name="DeleteBlogsEntries" priority="4">
+	<command name="DeleteBlogsEntries" priority="5">
 		<var name="blogsEntryCounterList" value="1,2,3" />
+		<var name="blogsEntryCounterList2" value="3,2,1" />
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
 			<execute macro="Page#gotoPG">
@@ -546,17 +547,12 @@
 			</execute>
 		</for>
 
-		<for list="${blogsEntryCounterList}" param="entryCount" >
+		<for list="${blogsEntryCounterList2}" param="entryCount">
 			<execute macro="Page#gotoPG">
 				<var name="pageName" value="Blogs Page" />
 			</execute>
 
-			<execute macro="BlogsNavigator#gotoEntryPG">
-				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
-				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
-			</execute>
-
-			<execute macro="BlogsNavigator#moveToRecycleBinPG">
+			<execute macro="BlogsEntry#moveToRecycleBinPG">
 				<var name="assetType" value="Blogs Entry" />
 				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
 				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
@@ -595,7 +591,7 @@
 		</execute>
 
 		<execute macro="BlogsEntryComment#add">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryComment" value="${entryComment}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -789,7 +785,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveToRecycleBinBlogsEntry" priority="4">
+	<command name="MoveToRecycleBinBlogsEntry" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -822,24 +818,10 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsNavigator#moveToRecycleBinPG">
+		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="assetType" value="Blogs Entry" />
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="PreviewBlogsEntry" priority="4">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#previewPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 
@@ -887,7 +869,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveBlogsEntryDraft" priority="4">
+	<command name="SaveBlogsEntryDraft" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -903,17 +885,18 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryStatus" value="Draft" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewDraft">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
-	<command name="SaveBlogsEntryDraftAuto" priority="4">
+	<command name="SaveBlogsEntryDraftAuto" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -929,10 +912,11 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryStatus" value="Draft" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewDraft">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -1210,7 +1194,7 @@
 		</for>
 	</command>
 
-	<command name="SubscribeToBlogsEntryComment" priority="4">
+	<command name="SubscribeToBlogsEntryComment" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1306,7 +1290,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSubscribeToBlogsAndViewEntryInGmail" priority="4">
+	<command name="UserSubscribeToBlogsAndViewEntryInGmail" priority="3">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
 		<execute macro="Page#gotoCP">
@@ -1564,7 +1548,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryViewCount" priority="4">
+	<command name="ViewBlogsEntryViewCount" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -1588,7 +1572,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWithAbstractDisplayTemplate" priority="4">
+	<command name="ViewBlogsEntryWithAbstractDisplayTemplate" priority="3">
 		<var name="displayTemplate" value="Abstract" />
 		<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -1647,7 +1631,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWithDefaultScope" priority="4">
+	<command name="ViewBlogsEntryWithDefaultScope" priority="3">
 		<var name="contentScopeName" value="Default" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1817,7 +1801,7 @@
 		<execute macro="User#firstLoginPG" />
 	</command>
 
-	<command name="ViewBlogsEntryWithTitleDisplayTemplate" priority="4">
+	<command name="ViewBlogsEntryWithTitleDisplayTemplate" priority="3">
 		<var name="displayTemplate" value="Title" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

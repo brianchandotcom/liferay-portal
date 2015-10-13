@@ -92,22 +92,22 @@
 </tr>
 <tr>
 	<td>PAGE_VARIATION</td>
-	<td>//div[contains(@class,'page-variations-options')]//span[contains(.,'${key_pageVariationName}')]</td>
+	<td>//span[contains(.,'${key_pageVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION</td>
-	<td>//div[contains(@class,'site-pages-variation-options')]//span[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td>//span[contains(.,'${key_sitePagesVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION_DROPDOWN</td>
-	<td>//div[contains(@class,'site-pages-variation-options')]//span[contains(.,'${key_sitePagesVariationName}')]/following-sibling::i</td>
+	<td>//span[contains(.,'${key_sitePagesVariationName}')]/following-sibling::i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_VARIATION_DROPDOWN</td>
-	<td>//div[contains(@class,'page-variation-options')]//span[contains(.,'${key_pageVariationName}')]/following-sibling::i</td>
+	<td>//span[contains(.,'${key_pageVariationName}')]/following-sibling::i</td>
 	<td></td>
 </tr>
 <tr>

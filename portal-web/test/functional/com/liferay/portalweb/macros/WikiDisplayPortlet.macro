@@ -28,7 +28,7 @@
 
 	<command name="configureSetupPG">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="Wiki Display" />
+			<var name="portletName" value="Wiki Display" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

@@ -1,5 +1,5 @@
 <definition>
-	<command name="gotoControlPanelApps" summary="Navigate to Product Menu > Control Panel > Apps > ${portlet}.">
+	<command name="gotoControlPanelApps" summary="Navigate to Product Menu > Control Panel > Apps > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -11,7 +11,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoControlPanelConfiguration" summary="Navigate to Product Menu > Control Panel > Configuration > ${portlet}.">
+	<command name="gotoControlPanelConfiguration" summary="Navigate to Product Menu > Control Panel > Configuration > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -23,7 +23,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoControlPanelSites" summary="Navigate to Product Menu > Control Panel > Sites > ${portlet}.">
+	<command name="gotoControlPanelSites" summary="Navigate to Product Menu > Control Panel > Sites > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -35,7 +35,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoControlPanelSystem" summary="Navigate to Product Menu > Control Panel > System > ${portlet}.">
+	<command name="gotoControlPanelSystem" summary="Navigate to Product Menu > Control Panel > System > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -47,7 +47,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoControlPanelUsers" summary="Navigate to Product Menu > Control Panel > Users > ${portlet}.">
+	<command name="gotoControlPanelUsers" summary="Navigate to Product Menu > Control Panel > Users > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -59,7 +59,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoLocalizedControlPanel" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}.">
+	<command name="gotoLocalizedControlPanel" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
 		</execute>
@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoLocalizedMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}.">
+	<command name="gotoLocalizedMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
 		</execute>
@@ -87,7 +87,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}.">
+	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
 		</execute>
@@ -103,7 +103,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}.">
+	<command name="gotoMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoMySpace" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -115,7 +115,11 @@
 		</execute>
 	</command>
 
-	<command name="gotoSite" summary="Navigate to Product Menu > Sites > Back Arrow > ${site}.">
+	<command name="gotoPersonalSite" summary="Navigate to Product Menu > Profile" >
+		<execute function="Click" locator1="ProductMenu#USER_PROFILE" />
+	</command>
+
+	<command name="gotoSite" summary="Navigate to Product Menu > Sites > Back Arrow > ${site}">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<if>
@@ -130,7 +134,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesConfiguration" summary="Navigate to Product Menu > Sites > Configuration > ${portlet}.">
+	<command name="gotoSitesConfiguration" summary="Navigate to Product Menu > Sites > Configuration > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -142,7 +146,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesContent" summary="Navigate to Product Menu > Sites > Content > ${portlet}.">
+	<command name="gotoSitesContent" summary="Navigate to Product Menu > Sites > Content > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -154,7 +158,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Pages > ${portlet}.">
+	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Pages > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -166,7 +170,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesPublishingTools" summary="Navigate to Product Menu > Sites > Publishing Tools > ${portlet}.">
+	<command name="gotoSitesPublishingTools" summary="Navigate to Product Menu > Sites > Publishing Tools > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -178,7 +182,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesUsers" summary="Navigate to Product Menu > Sites > Users > ${portlet}.">
+	<command name="gotoSitesUsers" summary="Navigate to Product Menu > Sites > Users > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">

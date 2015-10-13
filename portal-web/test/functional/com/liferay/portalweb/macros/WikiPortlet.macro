@@ -30,8 +30,7 @@
 	</command>
 
 	<command name="gotoConfiguration">
-		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="Click" locator1="Icon#COG" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 	</command>
 

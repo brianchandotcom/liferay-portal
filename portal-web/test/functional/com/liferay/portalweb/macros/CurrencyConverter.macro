@@ -1,6 +1,5 @@
 <definition>
 	<command name="convertPG">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please select a currency." />
 		<execute function="Type" locator1="CurrencyConverter#NUMBER_FIELD" value1="${currencyValue}" />
 		<execute function="Select" locator1="CurrencyConverter#FROM_SELECT" value1="${currencyFrom}" />
 		<execute function="Select" locator1="CurrencyConverter#TO_SELECT" value1="${currencyTo}" />

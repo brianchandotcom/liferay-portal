@@ -100,8 +100,6 @@
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 
-		<var name="key_userGroupName" value="${userGroupName}" />
-
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
@@ -226,12 +224,14 @@
 	</command>
 
 	<command name="gotoActionsCmd">
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-
 		<var name="key_userGroupName" value="${userGroupName}" />
 
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userGroupName}" />
+
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+
 		<execute function="Click" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS" />
 	</command>
 

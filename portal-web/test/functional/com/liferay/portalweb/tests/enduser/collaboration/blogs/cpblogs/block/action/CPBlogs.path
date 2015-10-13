@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td[2]/a</td>
+	<td>//a[contains(.,'${key_entryTitle}')]/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,7 +101,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td/div/a</td>
+	<td>//div[contains(.,'${key_entryTitle}')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

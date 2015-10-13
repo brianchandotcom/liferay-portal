@@ -13,7 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="Demo1" priority="4">
+	<command name="Demo1" priority="3">
 		<property name="portlet.plugins.includes" value="opensocial-portlet,vimeo-portlet,web-form-portlet" />
 		<property name="theme.plugins.includes" value="zoe-healthcare-theme" />
 		<property name="web.plugins.includes" value="resources-importer-web" />

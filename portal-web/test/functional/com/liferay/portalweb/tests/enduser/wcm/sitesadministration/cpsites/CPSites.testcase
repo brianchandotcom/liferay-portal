@@ -79,7 +79,7 @@
 		</execute>
 	</command>
 
-	<command name="AddPublicVirtualHostsSiteURL" priority="4">
+	<command name="AddPublicVirtualHostsSiteURL" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -352,7 +352,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteFriendlyURLInvalid" priority="4">
+	<command name="EditSiteFriendlyURLInvalid" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -412,7 +412,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteCannotBeItsOwnParent" priority="4">
+	<command name="SiteCannotBeItsOwnParent" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -432,7 +432,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteCannotBeItsOwnParentStaging" priority="4">
+	<command name="SiteCannotBeItsOwnParentStaging" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

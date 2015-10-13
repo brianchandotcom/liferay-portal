@@ -28,7 +28,7 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 public interface TunnelAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {
 
-	@Meta.AD(deflt = "DEFAULT_USER", required = false)
+	@Meta.AD(deflt = "SYSTEM_USER_PASSWORD", required = false)
 	public String serviceAccessProfileName();
 
 }

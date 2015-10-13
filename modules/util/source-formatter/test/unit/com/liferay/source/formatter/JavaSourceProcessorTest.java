@@ -113,11 +113,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
-				"line break:", "line break:", "line break:"
+				"line break:", "line break:", "line break:", "line break:"
 			},
 			new Integer[] {
-				23, 27, 31, 38, 42, 46, 51, 55, 57, 60, 64, 67, 72, 78, 82, 88,
-				96, 99, 106
+				23, 27, 31, 38, 42, 46, 51, 55, 57, 60, 63, 67, 70, 75, 81, 85,
+				91, 99, 102, 109
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}

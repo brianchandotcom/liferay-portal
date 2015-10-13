@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -219,8 +220,9 @@ public class PortletFileRepositoryTest {
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(),
 			User.class.getName(), TestPropsValues.getUserId(), _portletId,
-			_folder.getFolderId(), RandomTestUtil.randomInputStream(), name,
-			ContentTypes.APPLICATION_OCTET_STREAM, false);
+			_folder.getFolderId(),
+			RandomTestUtil.randomInputStream(TikaSafeRandomizerBumper.INSTANCE),
+			name, ContentTypes.APPLICATION_OCTET_STREAM, false);
 	}
 
 	private Folder _addPortletFolder(String name) throws PortalException {

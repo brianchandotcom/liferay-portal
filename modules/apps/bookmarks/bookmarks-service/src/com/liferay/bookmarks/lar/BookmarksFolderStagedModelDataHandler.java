@@ -16,12 +16,10 @@ package com.liferay.bookmarks.lar;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -77,8 +75,6 @@ public class BookmarksFolderStagedModelDataHandler
 			PortletDataContext portletDataContext, BookmarksFolder folder)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(folder.getUserUuid());
-
 		Map<Long, Long> folderIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				BookmarksFolder.class);
@@ -86,32 +82,23 @@ public class BookmarksFolderStagedModelDataHandler
 		long parentFolderId = MapUtil.getLong(
 			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			folder);
+		BookmarksFolder importedFolder = (BookmarksFolder)folder.clone();
 
-		BookmarksFolder importedFolder = null;
+		importedFolder.setParentFolderId(parentFolderId);
+		importedFolder.setGroupId(portletDataContext.getScopeGroupId());
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksFolder existingFolder = fetchStagedModelByUuidAndGroupId(
-				folder.getUuid(), portletDataContext.getScopeGroupId());
+		BookmarksFolder existingFolder = fetchStagedModelByUuidAndGroupId(
+			folder.getUuid(), portletDataContext.getScopeGroupId());
 
-			if (existingFolder == null) {
-				serviceContext.setUuid(folder.getUuid());
-
-				importedFolder = BookmarksFolderLocalServiceUtil.addFolder(
-					userId, parentFolderId, folder.getName(),
-					folder.getDescription(), serviceContext);
-			}
-			else {
-				importedFolder = BookmarksFolderLocalServiceUtil.updateFolder(
-					userId, existingFolder.getFolderId(), parentFolderId,
-					folder.getName(), folder.getDescription(), serviceContext);
-			}
+		if (existingFolder == null) {
+			importedFolder = _stagedModelRepository.addStagedModel(
+				portletDataContext, importedFolder);
 		}
 		else {
-			importedFolder = BookmarksFolderLocalServiceUtil.addFolder(
-				userId, parentFolderId, folder.getName(),
-				folder.getDescription(), serviceContext);
+			folder.setFolderId(existingFolder.getFolderId());
+
+			importedFolder = _stagedModelRepository.updateStagedModel(
+				portletDataContext, importedFolder);
 		}
 
 		portletDataContext.importClassedModel(folder, importedFolder);

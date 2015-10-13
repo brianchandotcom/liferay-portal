@@ -45,7 +45,7 @@ public class ConfigurationAdminPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

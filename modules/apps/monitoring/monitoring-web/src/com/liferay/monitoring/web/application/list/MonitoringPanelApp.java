@@ -45,7 +45,7 @@ public class MonitoringPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + MonitoringPortletKeys.MONITORING + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

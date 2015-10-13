@@ -45,7 +45,7 @@ public class SiteSettingsPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

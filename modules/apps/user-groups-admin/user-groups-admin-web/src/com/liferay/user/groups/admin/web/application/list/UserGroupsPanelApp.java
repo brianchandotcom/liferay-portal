@@ -45,7 +45,7 @@ public class UserGroupsPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

@@ -45,7 +45,7 @@ public class SiteTeamsPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

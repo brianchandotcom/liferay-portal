@@ -45,7 +45,7 @@ public class CustomFieldsPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + ExpandoPortletKeys.EXPANDO + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

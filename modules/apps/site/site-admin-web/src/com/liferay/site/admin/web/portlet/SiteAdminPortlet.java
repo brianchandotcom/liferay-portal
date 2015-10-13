@@ -90,7 +90,6 @@ import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
-import com.liferay.site.admin.web.upgrade.SiteAdminWebUpgrade;
 
 import java.io.IOException;
 
@@ -501,11 +500,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteAdminWebUpgrade(
-		SiteAdminWebUpgrade siteAdminWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

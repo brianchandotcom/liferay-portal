@@ -15,57 +15,40 @@
 package com.liferay.asset.tags.compiler.web.upgrade;
 
 import com.liferay.asset.tags.compiler.web.constants.AssetTagsCompilerPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import java.util.Collections;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = AssetTagsCompilerWebUpgrade.class)
-public class AssetTagsCompilerWebUpgrade {
+@Component(immediate = true)
+public class AssetTagsCompilerWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.asset.tags.compiler.web", "0.0.1", "1.0.0",
+			new UpgradePortletId() {
+				@Override
+				protected String[][] getRenamePortletIdsArray() {
+					return new String[][] {
+						new String[] {
+							"103",
+							AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER
+						}
+					};
+				}
+
+			});
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"103", AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER
-					}
-				};
-			}
-
-		};
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.asset.tags.compiler.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

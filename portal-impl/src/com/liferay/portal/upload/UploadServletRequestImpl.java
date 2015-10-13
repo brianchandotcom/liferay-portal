@@ -170,6 +170,11 @@ public class UploadServletRequestImpl
 				if (uploadServletRequestSize + liferayFileItem.getSize() <
 					maxSize) {
 
+					String fieldName = liferayFileItem.getFieldName();
+
+					uploadServletRequestSize += fieldName.getBytes(
+						request.getCharacterEncoding()).length;
+
 					uploadServletRequestSize += liferayFileItem.getSize();
 
 					_fileParameters.put(

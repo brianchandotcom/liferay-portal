@@ -20,7 +20,6 @@ import com.liferay.iframe.web.configuration.IFrameConfiguration;
 import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
 import com.liferay.iframe.web.constants.IFrameWebKeys;
 import com.liferay.iframe.web.display.context.IFrameDisplayContext;
-import com.liferay.iframe.web.upgrade.IFrameWebUpgrade;
 import com.liferay.iframe.web.util.IFrameUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -44,7 +43,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -108,10 +106,6 @@ public class IFramePortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_iFrameConfiguration = Configurable.createConfigurable(
 			IFrameConfiguration.class, properties);
-	}
-
-	@Reference(unbind = "-")
-	protected void setIFrameWebUpgrade(IFrameWebUpgrade iFrameWebUpgrade) {
 	}
 
 	protected String transformSrc(

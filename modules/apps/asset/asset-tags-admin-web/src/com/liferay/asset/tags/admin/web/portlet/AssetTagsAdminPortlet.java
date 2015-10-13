@@ -15,7 +15,6 @@
 package com.liferay.asset.tags.admin.web.portlet;
 
 import com.liferay.asset.tags.admin.web.constants.AssetTagsAdminPortletKeys;
-import com.liferay.asset.tags.admin.web.upgrade.AssetTagsAdminWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -186,11 +185,6 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		AssetTagLocalService assetTagLocalService) {
 
 		_assetTagLocalService = assetTagLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetTagsAdminWebUpgrade(
-		AssetTagsAdminWebUpgrade assetTagsAdminWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

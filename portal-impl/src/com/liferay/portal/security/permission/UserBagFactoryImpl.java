@@ -102,9 +102,7 @@ public class UserBagFactoryImpl implements UserBagFactory {
 		Set<Organization> organizations = new LinkedHashSet<>();
 
 		for (Organization organization : userOrgs) {
-			if (!organizations.contains(organization)) {
-				organizations.add(organization);
-
+			if (organizations.add(organization)) {
 				List<Organization> ancestorOrganizations =
 					OrganizationLocalServiceUtil.getParentOrganizations(
 						organization.getOrganizationId());

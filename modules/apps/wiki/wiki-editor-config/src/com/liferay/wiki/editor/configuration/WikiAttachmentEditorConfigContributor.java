@@ -107,7 +107,7 @@ public class WikiAttachmentEditorConfigContributor
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "wiki"));
+				LanguageUtil.get(themeDisplay.getLocale(), "page-attachments"));
 
 		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
 			new ArrayList<>();

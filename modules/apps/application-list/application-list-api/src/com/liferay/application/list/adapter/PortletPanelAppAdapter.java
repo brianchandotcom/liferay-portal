@@ -14,7 +14,7 @@
 
 package com.liferay.application.list.adapter;
 
-import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.BasePanelApp;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.ControlPanelEntry;
@@ -41,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class PortletPanelAppAdapter implements PanelApp {
+public class PortletPanelAppAdapter extends BasePanelApp {
 
 	public PortletPanelAppAdapter(String portletId) {
 		_portletId = portletId;
@@ -84,10 +83,6 @@ public class PortletPanelAppAdapter implements PanelApp {
 		}
 
 		return key;
-	}
-
-	public Portlet getPortlet() {
-		return PortletLocalServiceUtil.getPortletById(getPortletId());
 	}
 
 	@Override

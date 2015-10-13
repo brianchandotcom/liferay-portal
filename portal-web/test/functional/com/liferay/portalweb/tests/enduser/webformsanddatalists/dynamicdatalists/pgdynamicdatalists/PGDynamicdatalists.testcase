@@ -408,6 +408,10 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
@@ -483,6 +487,10 @@
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -840,6 +848,10 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<var name="key_ddlDataDefinitionName" value="Add ${ddlDataDefinition1Name}" />
 
 		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinition1Name}" />
@@ -853,6 +865,10 @@
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="DDLList#selectViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlList2Name}" />

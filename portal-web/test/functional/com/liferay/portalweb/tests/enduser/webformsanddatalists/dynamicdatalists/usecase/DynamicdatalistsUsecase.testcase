@@ -416,6 +416,10 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DDLDisplayPortlet#configureListViewPG">
 			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
 			<var name="configureChecked" value="false" />

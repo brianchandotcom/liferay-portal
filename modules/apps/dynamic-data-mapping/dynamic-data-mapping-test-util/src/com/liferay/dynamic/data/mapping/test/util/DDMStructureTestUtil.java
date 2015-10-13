@@ -236,6 +236,54 @@ public class DDMStructureTestUtil {
 			"name", Collections.singletonList(contents), defaultLocale);
 	}
 
+	public static String getSampleStructuredContent(
+		Map<String, Map<Locale, String>> contentMap, Locale defaultLocale) {
+
+		StringBundler availableLocales = new StringBundler(
+			2 * contentMap.size());
+
+		for (Map<Locale, String> map : contentMap.values()) {
+			StringBundler sb = new StringBundler(2 * map.size());
+
+			for (Locale locale : map.keySet()) {
+				sb.append(LocaleUtil.toLanguageId(locale));
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			availableLocales.append(sb);
+		}
+
+		Document document = createDocumentContent(
+			availableLocales.toString(),
+			LocaleUtil.toLanguageId(defaultLocale));
+
+		Element rootElement = document.getRootElement();
+
+		for (String key : contentMap.keySet()) {
+			Map<Locale, String> map = contentMap.get(key);
+
+			Element dynamicElementElement = rootElement.addElement(
+				"dynamic-element");
+
+			dynamicElementElement.addAttribute("index-type", "keyword");
+			dynamicElementElement.addAttribute("name", key);
+			dynamicElementElement.addAttribute("type", "text");
+
+			for (Map.Entry<Locale, String> entry : map.entrySet()) {
+				Element element = dynamicElementElement.addElement(
+					"dynamic-content");
+
+				element.addAttribute(
+					"language-id", LocaleUtil.toLanguageId(entry.getKey()));
+				element.addCDATA(entry.getValue());
+			}
+		}
+
+		return document.asXML();
+	}
+
 	public static String getSampleStructuredContent(String keywords) {
 		return getSampleStructuredContent("name", keywords);
 	}

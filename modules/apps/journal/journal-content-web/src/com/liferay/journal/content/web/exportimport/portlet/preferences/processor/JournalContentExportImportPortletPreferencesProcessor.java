@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -69,7 +71,8 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return null;
+		return ListUtil.toList(
+			new Capability[] {_referencedStagedModelImporterCapability});
 	}
 
 	@Override
@@ -201,15 +204,6 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 		portletDataContext.setScopeGroupId(groupId);
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, DDMStructure.class);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, DDMTemplate.class);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, JournalArticle.class);
-
 		String articleId = portletPreferences.getValue("articleId", null);
 
 		try {
@@ -299,6 +293,15 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		_layoutLocalService = layoutLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setReferencedStagedModelImporterCapability(
+		ReferencedStagedModelImporterCapability
+			referencedStagedModelImporterCapability) {
+
+		_referencedStagedModelImporterCapability =
+			referencedStagedModelImporterCapability;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentExportImportPortletPreferencesProcessor.class);
 
@@ -306,5 +309,7 @@ public class JournalContentExportImportPortletPreferencesProcessor
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
 	private LayoutLocalService _layoutLocalService;
+	private ReferencedStagedModelImporterCapability
+		_referencedStagedModelImporterCapability;
 
 }

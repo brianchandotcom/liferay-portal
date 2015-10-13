@@ -16,6 +16,7 @@ package com.liferay.polls.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.lar.PollsPortletDataHandler;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -41,6 +43,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -60,7 +63,8 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return null;
+		return ListUtil.toList(
+			new Capability[] {_referencedStagedModelImporterCapability});
 	}
 
 	@Override
@@ -141,15 +145,6 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 				"Unable to import portlet permissions", pe);
 		}
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, PollsQuestion.class);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, PollsChoice.class);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, PollsVote.class);
-
 		long questionId = GetterUtil.getLong(
 			portletPreferences.getValue("questionId", StringPool.BLANK));
 
@@ -173,7 +168,19 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
+	@Reference(unbind = "-")
+	protected void setReferencedStagedModelImporterCapability(
+		ReferencedStagedModelImporterCapability
+			referencedStagedModelImporterCapability) {
+
+		_referencedStagedModelImporterCapability =
+			referencedStagedModelImporterCapability;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PollsDisplayExportImportPortletPreferencesProcessor.class);
+
+	private ReferencedStagedModelImporterCapability
+		_referencedStagedModelImporterCapability;
 
 }

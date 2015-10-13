@@ -16,6 +16,7 @@ package com.liferay.wiki.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
@@ -53,7 +54,10 @@ public class WikiExportImportPortletPreferencesProcessor
 	@Override
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.toList(
-			new Capability[] {_portletDisplayTemplateImportCapability});
+			new Capability[] {
+				_portletDisplayTemplateImportCapability,
+				_referencedStagedModelImporterCapability
+			});
 	}
 
 	@Override
@@ -95,9 +99,6 @@ public class WikiExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, WikiNode.class);
-
 		return portletPreferences;
 	}
 
@@ -119,9 +120,20 @@ public class WikiExportImportPortletPreferencesProcessor
 			portletDisplayTemplateImportCapability;
 	}
 
+	@Reference(unbind = "-")
+	protected void setReferencedStagedModelImporterCapability(
+		ReferencedStagedModelImporterCapability
+			referencedStagedModelImporterCapability) {
+
+		_referencedStagedModelImporterCapability =
+			referencedStagedModelImporterCapability;
+	}
+
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
 	private PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
+	private ReferencedStagedModelImporterCapability
+		_referencedStagedModelImporterCapability;
 
 }

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -392,6 +393,33 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 				</#if>
 
 				return actionableDynamicQuery;
+			}
+
+			@Override
+			public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+				IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+				indexableActionableDynamicQuery.setBaseLocalService(${packagePath}.service.${entity.name}LocalServiceUtil.getService());
+				indexableActionableDynamicQuery.setClass(${entity.name}.class);
+				indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+
+				<#if entity.hasPrimitivePK()>
+					indexableActionableDynamicQuery.setPrimaryKeyPropertyName("${entity.PKVarName}");
+				<#else>
+					<#assign pkList = entity.getPKList()>
+
+					<#assign pkColumn = pkList?first>
+
+					indexableActionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.${pkColumn.name}");
+
+					<#list entity.getPKList() as pkColumn>
+						<#if pkColumn.name == "groupId">
+							indexableActionableDynamicQuery.setGroupIdPropertyName("primaryKey.groupId");
+						</#if>
+					</#list>
+				</#if>
+
+				return indexableActionableDynamicQuery;
 			}
 
 			protected void initActionableDynamicQuery(ActionableDynamicQuery actionableDynamicQuery) {

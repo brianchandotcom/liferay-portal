@@ -224,6 +224,13 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		if (ddmStructure != null) {
+			long classNameId = classNameLocalService.getClassNameId(
+				DLFileEntryType.class);
+
+			DDMStructureLinkManagerUtil.deleteStructureLink(
+				classNameId, dlFileEntryType.getFileEntryTypeId(),
+				ddmStructure.getStructureId());
+
 			DDMStructureManagerUtil.deleteStructure(
 				ddmStructure.getStructureId());
 		}

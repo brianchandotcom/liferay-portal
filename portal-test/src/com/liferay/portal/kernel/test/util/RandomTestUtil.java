@@ -103,8 +103,11 @@ public class RandomTestUtil {
 		}
 	}
 
-	public static InputStream randomInputStream() {
-		return new ByteArrayInputStream(randomBytes());
+	@SafeVarargs
+	public static InputStream randomInputStream(
+		RandomizerBumper<byte[]>... randomizerBumpers) {
+
+		return new ByteArrayInputStream(randomBytes(randomizerBumpers));
 	}
 
 	public static int randomInt() {

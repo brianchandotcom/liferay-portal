@@ -156,8 +156,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 		Project project = buildWSDLTask.getProject();
 
-		String tmpDirName = "build-wsdl/" + FileUtil.stripExtension(
-			inputFile.getName());
+		String tmpDirName =
+			"build-wsdl/" + FileUtil.stripExtension(inputFile.getName());
 
 		File tmpDir = new File(project.getBuildDir(), tmpDirName);
 

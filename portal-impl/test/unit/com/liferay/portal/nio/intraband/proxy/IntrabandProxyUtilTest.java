@@ -2138,10 +2138,11 @@ public class IntrabandProxyUtilTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Field " + TestValidateClass1.class.getDeclaredField(
+				"Field " +
+					TestValidateClass1.class.getDeclaredField(
 						"PROXY_METHOD_SIGNATURES") +
-					" is expected to be of type " + String[].class +
-						" and static",
+							" is expected to be of type " + String[].class +
+								" and static",
 				iae.getMessage());
 		}
 
@@ -2160,10 +2161,11 @@ public class IntrabandProxyUtilTest {
 			}
 			catch (IllegalArgumentException iae) {
 				Assert.assertEquals(
-					"Field " + TestValidateClass2.class.getDeclaredField(
+					"Field " +
+						TestValidateClass2.class.getDeclaredField(
 							"_PROXY_METHODS_MAPPING") +
-						" is expected to be of type " + String.class +
-							" and static",
+								" is expected to be of type " + String.class +
+									" and static",
 					iae.getMessage());
 			}
 
@@ -2181,9 +2183,10 @@ public class IntrabandProxyUtilTest {
 			}
 			catch (IllegalArgumentException iae) {
 				Assert.assertEquals(
-					"Field " + TestValidateClass3.class.getDeclaredField(
-							"_log") + " is expected to be of type " +
-						Log.class + " and static",
+					"Field " +
+						TestValidateClass3.class.getDeclaredField("_log") +
+							" is expected to be of type " + Log.class +
+								" and static",
 					iae.getMessage());
 			}
 
@@ -2201,9 +2204,11 @@ public class IntrabandProxyUtilTest {
 			}
 			catch (IllegalArgumentException iae) {
 				Assert.assertEquals(
-					"Field " + TestValidateClass4.class.getDeclaredField(
-							"_targetLocator") + " is expected to be of type " +
-						TargetLocator.class + " and not static",
+					"Field " +
+						TestValidateClass4.class.getDeclaredField(
+							"_targetLocator") +
+								" is expected to be of type " +
+									TargetLocator.class + " and not static",
 					iae.getMessage());
 			}
 		}
@@ -2222,9 +2227,10 @@ public class IntrabandProxyUtilTest {
 			}
 			catch (IllegalArgumentException iae) {
 				Assert.assertEquals(
-					"Field " + TestValidateClass5.class.getDeclaredField(
+					"Field " +
+						TestValidateClass5.class.getDeclaredField(
 							"_proxyType") + " is expected to be of type " +
-						byte.class + " and static",
+								byte.class + " and static",
 					iae.getMessage());
 			}
 
@@ -2242,9 +2248,10 @@ public class IntrabandProxyUtilTest {
 			}
 			catch (IllegalArgumentException iae) {
 				Assert.assertEquals(
-					"Field " + TestValidateClass6.class.getDeclaredField(
-							"_id") + " is expected to be of type " +
-						String.class + " and not static",
+					"Field " +
+						TestValidateClass6.class.getDeclaredField("_id") +
+							" is expected to be of type " + String.class +
+								" and not static",
 					iae.getMessage());
 			}
 
@@ -2262,9 +2269,11 @@ public class IntrabandProxyUtilTest {
 			}
 			catch (IllegalArgumentException iae) {
 				Assert.assertEquals(
-					"Field " + TestValidateClass7.class.getDeclaredField(
-							"_intraband") + " is expected to be of type " +
-						Intraband.class + " and not static",
+					"Field " +
+						TestValidateClass7.class.getDeclaredField(
+							"_intraband") +
+								" is expected to be of type " +
+									Intraband.class + " and not static",
 					iae.getMessage());
 			}
 
@@ -2282,10 +2291,12 @@ public class IntrabandProxyUtilTest {
 			}
 			catch (IllegalArgumentException iae) {
 				Assert.assertEquals(
-					"Field " + TestValidateClass8.class.getDeclaredField(
+					"Field " +
+						TestValidateClass8.class.getDeclaredField(
 							"_registrationReference") +
-						" is expected to be of type " +
-							RegistrationReference.class + " and not static",
+								" is expected to be of type " +
+									RegistrationReference.class +
+										" and not static",
 					iae.getMessage());
 			}
 
@@ -2303,10 +2314,11 @@ public class IntrabandProxyUtilTest {
 			}
 			catch (IllegalArgumentException iae) {
 				Assert.assertEquals(
-					"Field " + TestValidateClass9.class.getDeclaredField(
+					"Field " +
+						TestValidateClass9.class.getDeclaredField(
 							"_exceptionHandler") +
-						" is expected to be of type " + ExceptionHandler.class +
-							" and not static",
+								" is expected to be of type " +
+									ExceptionHandler.class + " and not static",
 					iae.getMessage());
 			}
 		}

@@ -21,15 +21,18 @@ JournalFolder folder = journalDisplayContext.getFolder();
 %>
 
 <div class="sidebar-header">
-	<ul class="list-inline list-unstyled sidebar-header-actions">
-		<li>
-			<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
-		</li>
 
-		<li>
-			<liferay-util:include page="/folder_action.jsp" servletContext="<%= application %>" />
-		</li>
-	</ul>
+	<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
+		<ul class="list-inline list-unstyled sidebar-header-actions">
+			<li>
+				<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
+			</li>
+
+			<li>
+				<liferay-util:include page="/folder_action.jsp" servletContext="<%= application %>" />
+			</li>
+		</ul>
+	</c:if>
 
 	<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(request, "home") %></h4>
 

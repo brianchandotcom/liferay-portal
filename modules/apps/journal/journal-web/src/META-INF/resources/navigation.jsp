@@ -26,6 +26,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewArticlesHomeURL">
 			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item
@@ -37,6 +38,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 		<portlet:renderURL var="viewRecentArticlesURL">
 			<portlet:param name="navigation" value="recent" />
 			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item
@@ -48,6 +50,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 		<portlet:renderURL var="viewMyArticlesURL">
 			<portlet:param name="navigation" value="mine" />
 			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item
@@ -71,6 +74,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 					<portlet:param name="browseBy" value="structure" />
 					<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 					<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+					<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 				</portlet:renderURL>
 
 				<aui:nav-item
@@ -93,6 +97,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+		portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
 		%>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">

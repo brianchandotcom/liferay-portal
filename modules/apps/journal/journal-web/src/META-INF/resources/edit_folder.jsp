@@ -424,13 +424,13 @@ renderResponse.setTitle(title);
 
 <%
 if (folder != null) {
-	JournalPortletUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+	JournalPortletUtil.addPortletBreadcrumbEntries(folderId, request, journalDisplayContext.getPortletURL());
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
 	if (parentFolderId > 0) {
-		JournalPortletUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
+		JournalPortletUtil.addPortletBreadcrumbEntries(parentFolderId, request, journalDisplayContext.getPortletURL());
 	}
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);

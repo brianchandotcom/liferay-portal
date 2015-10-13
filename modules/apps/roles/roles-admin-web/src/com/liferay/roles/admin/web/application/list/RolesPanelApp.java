@@ -45,7 +45,7 @@ public class RolesPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

@@ -45,7 +45,7 @@ public class PageTemplatesPanelApp extends BaseControlPanelEntryPanelApp {
 		target = "(javax.portlet.name=" + LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

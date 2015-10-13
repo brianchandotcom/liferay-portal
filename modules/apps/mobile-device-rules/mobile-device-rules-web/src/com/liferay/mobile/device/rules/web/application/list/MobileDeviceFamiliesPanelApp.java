@@ -46,7 +46,7 @@ public class MobileDeviceFamiliesPanelApp
 		target = "(javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_RULES + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
 

@@ -270,13 +270,11 @@ public class UserTestUtil {
 			long userId, long groupId, String roleName)
 		throws Exception {
 
-		long[] userIds = {userId};
-
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), roleName);
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			userIds, groupId, role.getRoleId());
+			new long[] {userId}, groupId, role.getRoleId());
 	}
 
 	public static User getAdminUser(long companyId) throws PortalException {

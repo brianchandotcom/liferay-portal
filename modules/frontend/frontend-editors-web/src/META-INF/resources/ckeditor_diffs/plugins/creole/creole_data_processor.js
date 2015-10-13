@@ -199,9 +199,7 @@
 				if (!instance._skipParse) {
 					data = data.replace(REGEX_NEWLINE, STR_BLANK);
 
-					var header = instance._isParentNode(element, 'h1') || instance._isParentNode(element, 'h2') || instance._isParentNode(element, 'h3') || instance._isParentNode(element, 'h4') || instance._isParentNode(element, 'h5') || instance._isParentNode(element, 'h6');
-
-					if (!header) {
+					if (!instance._verbatim) {
 						data = data.replace(
 							REGEX_CREOLE_RESERVED_CHARACTERS,
 							function(match, p1, offset, string) {
@@ -270,6 +268,13 @@
 			}
 			else if (tagName == 'table') {
 				listTagsOut.push(NEW_LINE);
+			}
+			else {
+				var regexHeader = REGEX_HEADER.exec(tagName);
+
+				if (regexHeader) {
+					instance._verbatim = false;
+				}
 			}
 		},
 
@@ -352,6 +357,8 @@
 
 			listTagsIn.push(res, STR_SPACE);
 			listTagsOut.push(STR_SPACE, res, NEW_LINE);
+
+			instance._verbatim = true;
 		},
 
 		_handleHr: function(element, listTagsIn, listTagsOut) {
@@ -600,7 +607,9 @@
 
 		_listsStack: [],
 
-		_skipParse: false
+		_skipParse: false,
+
+		_verbatim: true
 	};
 
 	CKEDITOR.plugins.add(

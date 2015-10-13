@@ -14,10 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.EmbeddedElasticsearchConnection;
-
-import java.lang.reflect.Field;
 
 import org.elasticsearch.cluster.service.InternalClusterService;
 import org.elasticsearch.common.inject.Injector;
@@ -52,26 +51,16 @@ public class ClusterSettingsTest {
 			(EmbeddedElasticsearchConnection)
 				elasticsearchCluster.getElasticsearchConnection();
 
-		Field nodeField =
-			EmbeddedElasticsearchConnection.class.getDeclaredField("_node");
-
-		nodeField.setAccessible(true);
-
-		InternalNode internalNode = (InternalNode)nodeField.get(connection);
+		InternalNode internalNode = ReflectionTestUtil.getFieldValue(
+			connection, "_node");
 
 		Injector injector = internalNode.injector();
 
 		InternalClusterService internalClusterService = injector.getInstance(
 			InternalClusterService.class);
 
-		Field loggingThresholdField =
-			InternalClusterService.class.getDeclaredField(
-				"slowTaskLoggingThreshold");
-
-		loggingThresholdField.setAccessible(true);
-
-		TimeValue loggingThreshold = (TimeValue)loggingThresholdField.get(
-			internalClusterService);
+		TimeValue loggingThreshold = ReflectionTestUtil.getFieldValue(
+			internalClusterService, "slowTaskLoggingThreshold");
 
 		Assert.assertEquals("10m", loggingThreshold.toString());
 	}

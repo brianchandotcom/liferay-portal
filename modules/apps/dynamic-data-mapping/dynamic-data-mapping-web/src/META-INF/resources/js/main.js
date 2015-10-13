@@ -623,7 +623,7 @@ AUI.add(
 						}
 					}
 
-					str = Liferay.Util.camelize(str,' ');
+					str = Liferay.Util.camelize(str, STR_SPACE);
 				}
 
 				return str;

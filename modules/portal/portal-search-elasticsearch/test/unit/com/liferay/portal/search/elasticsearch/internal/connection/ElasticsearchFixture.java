@@ -134,6 +134,10 @@ public class ElasticsearchFixture {
 		return health.actionGet();
 	}
 
+	public ElasticsearchConnection getElasticsearchConnection() {
+		return _elasticsearchConnection;
+	}
+
 	public GetIndexResponse getIndex(String... indices) {
 		IndicesAdminClient indicesAdminClient = getIndicesAdminClient();
 
@@ -179,6 +183,23 @@ public class ElasticsearchFixture {
 
 	}
 
+	protected void addClusterLoggingThresholdContributor(
+		EmbeddedElasticsearchConnection embeddedElasticsearchConnection) {
+
+		embeddedElasticsearchConnection.addSettingsContributor(
+			new BaseSettingsContributor(0) {
+
+				@Override
+				public void populate(Builder builder) {
+					builder.put(
+						"cluster.service.cluster.service." +
+							"slow_task_logging_threshold",
+						"600s");
+				}
+
+			});
+	}
+
 	protected void addDiskThresholdSettingsContributor(
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection) {
 
@@ -219,6 +240,7 @@ public class ElasticsearchFixture {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			new EmbeddedElasticsearchConnection();
 
+		addClusterLoggingThresholdContributor(embeddedElasticsearchConnection);
 		addDiskThresholdSettingsContributor(embeddedElasticsearchConnection);
 		addUnicastSettingsContributor(embeddedElasticsearchConnection);
 

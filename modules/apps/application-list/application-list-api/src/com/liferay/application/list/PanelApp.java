@@ -33,4 +33,6 @@ public interface PanelApp extends PanelEntry {
 	public PortletURL getPortletURL(HttpServletRequest request)
 		throws PortalException;
 
+	public void setPortlet(Portlet portlet);
+
 }

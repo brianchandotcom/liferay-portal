@@ -166,9 +166,8 @@ public class UploadServletRequestImpl
 				long maxSize = PrefsPropsUtil.getLong(
 					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 
-
-				if (uploadServletRequestSize + liferayFileItem.getSize() <
-					maxSize) {
+				if ((uploadServletRequestSize + liferayFileItem.getSize()) <
+						maxSize) {
 
 					String fieldName = liferayFileItem.getFieldName();
 
@@ -190,8 +189,7 @@ public class UploadServletRequestImpl
 					UploadException uploadException = new UploadException(
 						sb.toString());
 
-					uploadException.setExceededLiferayFileItemSizeLimit(
-						false);
+					uploadException.setExceededLiferayFileItemSizeLimit(false);
 					uploadException.setExceededSizeLimit(true);
 
 					request.setAttribute(

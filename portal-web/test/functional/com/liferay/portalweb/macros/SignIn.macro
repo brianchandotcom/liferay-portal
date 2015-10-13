@@ -127,7 +127,7 @@
 			<var name="portlet" value="Portal Instances" />
 		</execute>
 
-		<var name="portalURL" property-value="portal.url" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
 		<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />

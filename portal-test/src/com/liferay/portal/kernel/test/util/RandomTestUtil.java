@@ -15,12 +15,12 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import java.util.Arrays;
@@ -107,7 +107,7 @@ public class RandomTestUtil {
 	public static InputStream randomInputStream(
 		RandomizerBumper<byte[]>... randomizerBumpers) {
 
-		return new ByteArrayInputStream(randomBytes(randomizerBumpers));
+		return new UnsyncByteArrayInputStream(randomBytes(randomizerBumpers));
 	}
 
 	public static int randomInt() {

@@ -15,7 +15,6 @@
 package com.liferay.layout.prototype.web.portlet;
 
 import com.liferay.layout.prototype.web.constants.LayoutPrototypePortletKeys;
-import com.liferay.layout.prototype.web.upgrade.LayoutPrototypeWebUpgrade;
 import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -176,11 +175,6 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 		LayoutPrototypeService layoutPrototypeService) {
 
 		_layoutPrototypeService = layoutPrototypeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutPrototypeWebUpgrade(
-		LayoutPrototypeWebUpgrade layoutPrototypeWebUpgrade) {
 	}
 
 	private LayoutPrototypeService _layoutPrototypeService;

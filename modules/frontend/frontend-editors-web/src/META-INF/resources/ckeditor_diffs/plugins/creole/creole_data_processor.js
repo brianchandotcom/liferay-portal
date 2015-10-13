@@ -240,7 +240,10 @@
 				tagName = tagName.toLowerCase();
 			}
 
-			if (tagName == TAG_PARAGRAPH) {
+			if (tagName == 'a') {
+				instance._verbatim = false;
+			}
+			else if (tagName == TAG_PARAGRAPH) {
 				if (!instance._isLastItemNewLine()) {
 					instance._endResult.push(NEW_LINE);
 				}
@@ -387,6 +390,8 @@
 		},
 
 		_handleLink: function(element, listTagsIn, listTagsOut) {
+			var instance = this;
+
 			var hrefAttribute = element.getAttribute('href');
 
 			if (hrefAttribute) {
@@ -398,7 +403,10 @@
 
 				listTagsIn.push('[[');
 
-				if (linkText !== hrefAttribute) {
+				if (linkText === hrefAttribute) {
+					instance._verbatim = true;
+				}
+				else {
 					listTagsIn.push(hrefAttribute, STR_PIPE);
 				}
 

@@ -9,6 +9,5 @@ dependencies {
 }
 
 liferay {
-	autoUpdateXml = true
 	deployDir = file("${liferayHome}/osgi/modules")
 }

@@ -15,10 +15,14 @@
 package com.liferay.social.networking.web.friends.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.social.networking.model.MeetupsRegistration;
+import com.liferay.social.networking.service.MeetupsEntryLocalService;
+import com.liferay.social.networking.service.WallEntryLocalService;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -42,4 +46,20 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class FriendsPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setMeetupsEntryLocalService(
+		MeetupsEntryLocalService meetupsEntryLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setMeetupsRegistrationLocalService(
+		MeetupsRegistration meetupsRegistrationLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setWallEntryLocalService(
+		WallEntryLocalService wallEntryLocalService) {
+	}
+
 }

@@ -11,3 +11,10 @@ liferay {
 	autoUpdateXml = true
 	deployDir = file("${liferayHome}/osgi/modules")
 }
+
+deploy {
+	from("lib") {
+		include "com.liferay.ip.geocoder.jar"
+		include "geoip-api.jar"
+	}
+}

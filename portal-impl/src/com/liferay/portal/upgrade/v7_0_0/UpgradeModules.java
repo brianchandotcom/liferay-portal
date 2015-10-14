@@ -117,6 +117,7 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.site.teams.web", "com.liferay.social.activities.web",
 		"com.liferay.social.activity.web",
 		"com.liferay.social.group.statistics.web",
+		"com.liferay.social.networking.service",
 		"com.liferay.social.requests.web",
 		"com.liferay.social.user.statistics.web", "com.liferay.staging.bar.web",
 		"com.liferay.translator.web", "com.liferay.trash.web",

@@ -34,6 +34,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.UserBag;
+import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.GroupServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -744,49 +746,42 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				groupLocalService.getCompanyGroup(user.getCompanyId()));
 		}
 
+		UserBag userBag = UserBagFactoryUtil.create(userId);
+
 		if (ArrayUtil.contains(classNames, Group.class.getName())) {
-			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+			for (Group group : userBag.getUserGroups()) {
+				if (group.isActive() &&
+					(group.hasPrivateLayouts() || group.hasPublicLayouts())) {
 
-			groupParams.put("active", true);
-			groupParams.put("usersGroups", userId);
-
-			List<Group> groups = groupLocalService.search(
-				user.getCompanyId(), null, null, groupParams,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (Group group : groups) {
-				if (group.hasPrivateLayouts() || group.hasPublicLayouts()) {
 					userSiteGroups.add(group);
 				}
 			}
 		}
 
 		if (ArrayUtil.contains(classNames, Organization.class.getName())) {
-			List<Organization> userOrgs =
-				organizationLocalService.getOrganizations(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
+				List<Organization> userOrgs =
+					organizationLocalService.getOrganizations(
+						userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-			for (Organization organization : userOrgs) {
-				Group group = organization.getGroup();
+				for (Organization organization : userOrgs) {
+					Group group = organization.getGroup();
 
-				if (group.isActive() &&
-					(group.hasPrivateLayouts() || group.hasPublicLayouts())) {
+					if (group.isActive() &&
+						(group.hasPrivateLayouts() ||
+						 group.hasPublicLayouts())) {
 
-					userSiteGroups.add(group);
+						userSiteGroups.add(group);
+					}
 				}
+			}
+			else {
+				for (Group group : userBag.getUserOrgGroups()) {
+					if (group.isActive() &&
+						(group.hasPrivateLayouts() ||
+						 group.hasPublicLayouts())) {
 
-				if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-					for (Organization ancestorOrganization :
-							organization.getAncestors()) {
-
-						Group ancestorGroup = ancestorOrganization.getGroup();
-
-						if (ancestorGroup.isActive() &&
-							(ancestorGroup.hasPrivateLayouts() ||
-							 ancestorGroup.hasPublicLayouts())) {
-
-							userSiteGroups.add(ancestorOrganization.getGroup());
-						}
+						userSiteGroups.add(group);
 					}
 				}
 			}

@@ -53,6 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -162,15 +163,31 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testUpdateDDMStructurePredefinedValues() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
+					LocaleUtil.US, LocaleUtil.BRAZIL, LocaleUtil.ITALY,
+					LocaleUtil.FRENCH);
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			availableLocales, LocaleUtil.US);
 
 		DDMFormField ddmFormField =
 			DDMFormTestUtil.createLocalizableTextDDMFormField("name");
 
+		LocalizedValue label = new LocalizedValue(LocaleUtil.US);
+
+		label.addString(LocaleUtil.US, "label us");
+		label.addString(LocaleUtil.BRAZIL, "label br");
+		label.addString(LocaleUtil.ITALY, "label es");
+		label.addString(LocaleUtil.FRENCH, "label fr");
+
+		ddmFormField.setLabel(label);
+
 		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
 
-		predefinedValue.addString(LocaleUtil.US, "Test1");
-		predefinedValue.getAvailableLocales();
+		predefinedValue.addString(LocaleUtil.US, "Test1 us");
+		predefinedValue.addString(LocaleUtil.BRAZIL, "Test1 br");
+		predefinedValue.addString(LocaleUtil.ITALY, "Test1 es");
+		predefinedValue.addString(LocaleUtil.FRENCH, "Test1 fr");
 
 		ddmFormField.setPredefinedValue(predefinedValue);
 
@@ -187,7 +204,10 @@ public class JournalArticleLocalServiceTest {
 
 		Map<Locale, String> values = new HashMap<>();
 
-		values.put(LocaleUtil.US, "Test2");
+		values.put(LocaleUtil.US, "Test2 us");
+		values.put(LocaleUtil.BRAZIL, "Test2 br");
+		values.put(LocaleUtil.ITALY, "Test2 es");
+		values.put(LocaleUtil.FRENCH, "Test2 fr");
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			values, LocaleUtil.US.toString());
@@ -224,8 +244,17 @@ public class JournalArticleLocalServiceTest {
 			actualDDMFormField.getPredefinedValue();
 
 		Assert.assertEquals(
-			"Test2",
+			"Test2 us",
 			actualDDMFormFieldPredefinedValue.getString(LocaleUtil.US));
+		Assert.assertEquals(
+			"Test2 br",
+			actualDDMFormFieldPredefinedValue.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+				"Test2 es",
+				actualDDMFormFieldPredefinedValue.getString(LocaleUtil.ITALY));
+		Assert.assertEquals(
+				"Test2 fr",
+				actualDDMFormFieldPredefinedValue.getString(LocaleUtil.FRENCH));
 	}
 
 	@DeleteAfterTestRun

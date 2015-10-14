@@ -799,18 +799,23 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			for (Organization organization : userOrgs) {
-				if (organization.hasPrivateLayouts() ||
-					organization.hasPublicLayouts()) {
+				Group group = organization.getGroup();
 
-					userSiteGroups.add(organization.getGroup());
+				if (group.isActive() &&
+					(group.hasPrivateLayouts() || group.hasPublicLayouts())) {
+
+					userSiteGroups.add(group);
 				}
 
 				if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
 					for (Organization ancestorOrganization :
 							organization.getAncestors()) {
 
-						if (ancestorOrganization.hasPrivateLayouts() ||
-							ancestorOrganization.hasPublicLayouts()) {
+						Group ancestorGroup = ancestorOrganization.getGroup();
+
+						if (ancestorGroup.isActive() &&
+							(ancestorGroup.hasPrivateLayouts() ||
+							 ancestorGroup.hasPublicLayouts())) {
 
 							userSiteGroups.add(ancestorOrganization.getGroup());
 						}

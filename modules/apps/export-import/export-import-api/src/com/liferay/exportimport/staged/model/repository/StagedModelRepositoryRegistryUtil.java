@@ -69,8 +69,8 @@ public class StagedModelRepositoryRegistryUtil {
 		return _stagedModelRepositories.get(className);
 	}
 
-	private static final StagedModelRepositoryRegistryUtil
-		_instance = new StagedModelRepositoryRegistryUtil();
+	private static final StagedModelRepositoryRegistryUtil _instance =
+		new StagedModelRepositoryRegistryUtil();
 
 	private final BundleContext _bundleContext;
 	private final ServiceTracker

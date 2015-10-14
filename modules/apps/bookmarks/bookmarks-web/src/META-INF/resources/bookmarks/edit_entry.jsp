@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/bookmarks/init.jsp" %>
+<%@ include file="/bookmarks/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -47,7 +47,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <portlet:actionURL var="editEntryURL">

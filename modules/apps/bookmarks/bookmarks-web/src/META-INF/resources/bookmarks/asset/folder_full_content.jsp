@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/bookmarks/init.jsp" %>
+<%@ include file="/bookmarks/init.jsp" %>
 
 <%
 BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER);

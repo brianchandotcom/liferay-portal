@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/bookmarks/init.jsp" %>
+<%@ include file="/bookmarks/init.jsp" %>
 
 <%
 String topLink = ParamUtil.getString(request, "topLink", "home");
@@ -74,7 +74,7 @@ if (folder != null) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
@@ -83,7 +83,7 @@ if (folder != null) {
 			portletURL="<%= portletURL %>"
 		/>
 
-		<%@ include file="/html/portlet/bookmarks/view_entries.jspf" %>
+		<%@ include file="/bookmarks/view_entries.jspf" %>
 
 	</c:when>
 	<c:when test='<%= topLink.equals("home") %>'>
@@ -160,7 +160,7 @@ if (folder != null) {
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 									</liferay-portlet:renderURL>
 
-									<%@ include file="/html/portlet/bookmarks/folder_columns.jspf" %>
+									<%@ include file="/bookmarks/folder_columns.jspf" %>
 								</liferay-ui:search-container-row>
 
 								<liferay-ui:search-iterator />
@@ -169,7 +169,7 @@ if (folder != null) {
 					</c:if>
 
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksEntriesListingPanel" persistState="<%= true %>" title="bookmarks">
-						<%@ include file="/html/portlet/bookmarks/view_entries.jspf" %>
+						<%@ include file="/bookmarks/view_entries.jspf" %>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>
 			</aui:col>
@@ -191,7 +191,7 @@ if (folder != null) {
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
-				<liferay-util:include page="/html/portlet/bookmarks/folder_action.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/bookmarks/folder_action.jsp" servletContext="<%= application %>" />
 			</aui:col>
 		</aui:row>
 
@@ -248,7 +248,7 @@ if (folder != null) {
 				}
 				%>
 
-				<%@ include file="/html/portlet/bookmarks/entry_columns.jspf" %>
+				<%@ include file="/bookmarks/entry_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator />

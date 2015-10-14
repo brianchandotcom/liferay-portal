@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/bookmarks/init.jsp" %>
+<%@ include file="/bookmarks/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -140,7 +140,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 					<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
 						<liferay-ui:search-container-column-jsp
 							cssClass="entry-action"
-							path="/html/portlet/bookmarks/entry_action.jsp"
+							path="/bookmarks/entry_action.jsp"
 						/>
 					</c:if>
 				</c:when>
@@ -195,7 +195,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 					<c:if test='<%= ArrayUtil.contains(folderColumns, "action") %>'>
 						<liferay-ui:search-container-column-jsp
 							cssClass="entry-action"
-							path="/html/portlet/bookmarks/folder_action.jsp"
+							path="/bookmarks/folder_action.jsp"
 						/>
 					</c:if>
 				</c:when>

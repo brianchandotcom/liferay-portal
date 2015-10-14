@@ -33,7 +33,7 @@ for (int j = 0; j < entryColumns.length; j++) {
 			<liferay-ui:search-container-column-jsp
 				align="<%= align %>"
 				cssClass="entry-action"
-				path="/html/portlet/bookmarks/entry_action.jsp"
+				path="/bookmarks/entry_action.jsp"
 			/>
 		</c:when>
 		<c:when test='<%= bookmarksEntryColumn.equals("modified-date") %>'>

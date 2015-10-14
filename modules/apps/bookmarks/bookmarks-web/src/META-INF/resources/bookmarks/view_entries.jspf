@@ -75,7 +75,7 @@ OrderByComparator<BookmarksEntry> orderByComparator = BookmarksUtil.getEntryOrde
 		modelVar="result"
 	>
 
-		<%@ include file="/html/portlet/bookmarks/cast_result.jspf" %>
+		<%@ include file="/bookmarks/cast_result.jspf" %>
 
 		<%
 		String rowHREF = null;
@@ -91,7 +91,7 @@ OrderByComparator<BookmarksEntry> orderByComparator = BookmarksUtil.getEntryOrde
 		}
 		%>
 
-		<%@ include file="/html/portlet/bookmarks/entry_columns.jspf" %>
+		<%@ include file="/bookmarks/entry_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

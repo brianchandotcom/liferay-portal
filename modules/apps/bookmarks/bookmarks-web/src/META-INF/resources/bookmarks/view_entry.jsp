@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/bookmarks/init.jsp" %>
+<%@ include file="/bookmarks/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -34,7 +34,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 %>
 
-<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test="<%= Validator.isNull(redirect) %>">
@@ -146,6 +146,6 @@ BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 		request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		%>
 
-		<liferay-util:include page="/html/portlet/bookmarks/entry_action.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/bookmarks/entry_action.jsp" servletContext="<%= application %>" />
 	</aui:col>
 </aui:row>

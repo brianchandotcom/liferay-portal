@@ -80,6 +80,10 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Company Picnic" />
+		</execute>
+
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>

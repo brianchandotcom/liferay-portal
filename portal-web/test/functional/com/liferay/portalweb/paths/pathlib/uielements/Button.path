@@ -610,7 +610,7 @@
 </tr>
 <tr>
 	<td>VIEW_HISTORY</td>
-	<td>//a[contains(.,'View History')]</td>
+	<td>//button[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

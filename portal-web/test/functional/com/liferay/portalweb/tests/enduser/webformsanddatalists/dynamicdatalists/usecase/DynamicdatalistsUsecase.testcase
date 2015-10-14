@@ -416,6 +416,10 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DDLDisplayPortlet#configureListViewPG">
 			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
 			<var name="configureChecked" value="false" />
@@ -1752,7 +1756,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="Content" />
+			<var name="ddlRecordFieldData" value="Content, Content 2, Content 3" />
 		</execute>
 
 		<execute macro="DDLRecord#addTranslation">
@@ -1761,6 +1765,7 @@
 
 		<execute macro="DDLRecord#populateTranslationFieldText">
 			<var name="ddlRecordFieldData" value="Contenido" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />
@@ -1771,7 +1776,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="Content" />
+			<var name="ddlRecordFieldData" value="Content, Content 2, Content 3" />
 		</execute>
 
 		<execute macro="DDLRecord#deleteRepeatableField">
@@ -1787,7 +1792,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="Content" />
+			<var name="ddlRecordFieldData" value="Content, Content 3" />
 		</execute>
 
 		<execute macro="DDLRecord#editTranslation">

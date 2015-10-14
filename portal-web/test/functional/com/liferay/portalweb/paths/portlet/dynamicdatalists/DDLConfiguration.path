@@ -100,7 +100,7 @@
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//div[contains(@class,'form-search')]//input[contains(@id,'keywords')]</td>
+	<td>//input[@title='Search' and contains(@id,'PortletConfiguration')]</td>
 	<td></td>
 </tr>
 <tr>

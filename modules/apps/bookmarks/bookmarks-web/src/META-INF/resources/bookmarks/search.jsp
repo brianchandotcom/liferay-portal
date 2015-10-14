@@ -33,7 +33,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/bookmarks/search" />
+	<portlet:param name="mvcPath" value="/bookmarks/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm">
@@ -50,7 +50,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/bookmarks/search");
+	portletURL.setParameter("mvcPath", "/bookmarks/search.jsp");
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
 	portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
@@ -153,7 +153,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 					%>
 
 					<liferay-portlet:renderURL var="rowURL">
-						<portlet:param name="struts_action" value="/bookmarks/view" />
+						<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</liferay-portlet:renderURL>

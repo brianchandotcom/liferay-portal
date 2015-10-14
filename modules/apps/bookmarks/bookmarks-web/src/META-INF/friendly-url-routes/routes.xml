@@ -4,25 +4,25 @@
 <routes>
 	<route>
 		<pattern></pattern>
+		<implicit-parameter name="mvcRenderCommandName">/bookmarks/view</implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/bookmarks/view</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/maximized</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/bookmarks/view</implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="struts_action">/bookmarks/view</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{entryId:\d+}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/bookmarks/view_entry</implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/bookmarks/view_entry</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{entryId:\d+}/{p_p_state}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/bookmarks/view_entry</implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-		<implicit-parameter name="struts_action">/bookmarks/view_entry</implicit-parameter>
 	</route>
 </routes>

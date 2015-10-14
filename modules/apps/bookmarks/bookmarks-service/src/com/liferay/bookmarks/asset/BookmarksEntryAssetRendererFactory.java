@@ -103,7 +103,8 @@ public class BookmarksEntryAssetRendererFactory
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			BookmarksPortletKeys.BOOKMARKS);
 
-		portletURL.setParameter("struts_action", "/bookmarks/edit_entry");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/edit_entry");
 		portletURL.setParameter(
 			"folderId",
 			String.valueOf(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID));

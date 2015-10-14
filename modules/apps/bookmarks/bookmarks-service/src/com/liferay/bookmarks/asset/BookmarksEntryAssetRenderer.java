@@ -143,7 +143,8 @@ public class BookmarksEntryAssetRenderer
 			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/bookmarks/edit_entry");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/edit_entry");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_entry.getFolderId()));
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
@@ -163,7 +164,8 @@ public class BookmarksEntryAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("struts_action", "/bookmarks/view_entry");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/view_entry");
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
 		portletURL.setWindowState(windowState);
 

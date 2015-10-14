@@ -52,9 +52,7 @@ else {
 	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<portlet:actionURL var="editFolderURL">
-	<portlet:param name="struts_action" value="/bookmarks/edit_folder" />
-</portlet:actionURL>
+<portlet:actionURL name="/bookmarks/edit_folder" var="editFolderURL" />
 
 <aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFolder();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -113,7 +111,7 @@ else {
 									},
 									id: '<portlet:namespace />selectFolder',
 									title: '<liferay-ui:message arguments="folder" key="select-x" />',
-									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
 								},
 								function(event) {
 									var folderData = {

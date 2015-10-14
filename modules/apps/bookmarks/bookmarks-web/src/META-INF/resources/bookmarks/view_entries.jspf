@@ -83,7 +83,7 @@ OrderByComparator<BookmarksEntry> orderByComparator = BookmarksUtil.getEntryOrde
 		if (BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.VIEW)) {
 			PortletURL tempRowURL = renderResponse.createRenderURL();
 
-			tempRowURL.setParameter("struts_action", "/bookmarks/view_entry");
+			tempRowURL.setParameter("mvcRenderCommandName", "/bookmarks/view_entry");
 			tempRowURL.setParameter("redirect", currentURL);
 			tempRowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 

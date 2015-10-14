@@ -14,48 +14,34 @@
 
 package com.liferay.bookmarks.web.portlet.action;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
+import org.osgi.service.component.annotations.Component;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
+		"mvc.command.name=/bookmarks/select_folder"
+	},
+	service = MVCRenderCommand.class
+)
+public class SelectFolderMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getFolder(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.bookmarks.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward("portlet.bookmarks.view");
+	protected String getPath() {
+		return "/bookmarks/select_folder.jsp";
 	}
 
 }

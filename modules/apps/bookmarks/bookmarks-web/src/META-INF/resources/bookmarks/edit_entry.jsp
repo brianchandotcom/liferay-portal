@@ -50,9 +50,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<portlet:actionURL var="editEntryURL">
-	<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL" />
 
 <aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -111,7 +109,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 									},
 									id: '<portlet:namespace />selectFolder',
 									title: '<liferay-ui:message arguments="folder" key="select-x" />',
-									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
 								},
 								function(event) {
 									var folderData = {

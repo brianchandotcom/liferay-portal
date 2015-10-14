@@ -76,7 +76,8 @@ public class BookmarksUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/bookmarks/view_entry");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/view_entry");
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
@@ -88,23 +89,24 @@ public class BookmarksUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String mvcRenderCommandName = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (strutsAction.equals("/bookmarks/select_folder")) {
+		if (mvcRenderCommandName.equals("/bookmarks/select_folder")) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			portletURL.setParameter(
-				"struts_action", "/bookmarks/select_folder");
+				"mvcRenderCommandName", "/bookmarks/select_folder");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString());
 		}
 		else {
-			portletURL.setParameter("struts_action", "/bookmarks/view");
+			portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
 		}
 
 		List<BookmarksFolder> ancestorFolders = folder.getAncestors();

@@ -39,7 +39,7 @@ BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 <c:choose>
 	<c:when test="<%= Validator.isNull(redirect) %>">
 		<portlet:renderURL var="backURL">
-			<portlet:param name="struts_action" value="/bookmarks/view" />
+			<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
 			<portlet:param name="folderId" value="<%= (folder != null) ? String.valueOf(folder.getFolderId()) : String.valueOf(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 		</portlet:renderURL>
 

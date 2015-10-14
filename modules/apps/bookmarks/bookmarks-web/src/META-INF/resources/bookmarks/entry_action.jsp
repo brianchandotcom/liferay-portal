@@ -51,7 +51,7 @@ else {
 <liferay-ui:icon-menu cssClass="<%= cssClass %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
 	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
+			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
@@ -87,8 +87,7 @@ else {
 	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) && (bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedEnabled() || bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksEntry.class.getName(), entry.getEntryId()) %>">
-				<portlet:actionURL var="unsubscribeURL">
-					<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
+				<portlet:actionURL name="/bookmarks/edit_entry" var="unsubscribeURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
@@ -102,8 +101,7 @@ else {
 				/>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
+				<portlet:actionURL name="/bookmarks/edit_entry" var="subscribeURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
@@ -121,12 +119,11 @@ else {
 
 	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="struts_action" value="/bookmarks/view" />
+			<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
 			<portlet:param name="folderId" value="<%= String.valueOf(entry.getFolderId()) %>" />
 		</portlet:renderURL>
 
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
+		<portlet:actionURL name="/bookmarks/edit_entry" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= view ? redirectURL : currentURL %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />

@@ -14,12 +14,15 @@
 
 package com.liferay.bookmarks.web.portlet.action;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.EntryURLException;
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -45,6 +48,7 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
@@ -52,18 +56,27 @@ import javax.portlet.WindowState;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Levente Hudák
  */
-public class EditEntryAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
+		"mvc.command.name=/bookmarks/edit_entry",
+		"mvc.command.name=/bookmarks/view_entry"
+	},
+	service = MVCActionCommand.class
+)
+public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -92,10 +105,7 @@ public class EditEntryAction extends PortletAction {
 
 			WindowState windowState = actionRequest.getWindowState();
 
-			if (!windowState.equals(LiferayWindowState.POP_UP)) {
-				sendRedirect(actionRequest, actionResponse);
-			}
-			else {
+			if (windowState.equals(LiferayWindowState.POP_UP)) {
 				String redirect = PortalUtil.escapeRedirect(
 					ParamUtil.getString(actionRequest, "redirect"));
 
@@ -125,7 +135,8 @@ public class EditEntryAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.bookmarks.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/bookmarks/error.jsp");
 			}
 			else if (e instanceof EntryURLException ||
 					 e instanceof NoSuchFolderException) {
@@ -141,33 +152,6 @@ public class EditEntryAction extends PortletAction {
 				throw e;
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getEntry(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.bookmarks.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.bookmarks.edit_entry"));
 	}
 
 	protected void deleteEntry(ActionRequest actionRequest, boolean moveToTrash)

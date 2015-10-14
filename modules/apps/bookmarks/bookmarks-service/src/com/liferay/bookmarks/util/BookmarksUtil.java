@@ -80,7 +80,7 @@ public class BookmarksUtil {
 			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/bookmarks/view");
+		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();

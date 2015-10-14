@@ -42,7 +42,7 @@ if (folder != null) {
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/bookmarks/select_folder");
+	portletURL.setParameter("mvcRenderCommandName", "/bookmarks/select_folder");
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 	portletURL.setParameter("eventName", eventName);
 	%>
@@ -69,7 +69,7 @@ if (folder != null) {
 			%>
 
 			<portlet:renderURL var="viewFolderURL">
-				<portlet:param name="struts_action" value="/bookmarks/select_folder" />
+				<portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" />
 				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 			</portlet:renderURL>
 
@@ -124,7 +124,7 @@ if (folder != null) {
 		<aui:button-row>
 			<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 				<portlet:renderURL var="editFolderURL">
-					<portlet:param name="struts_action" value="/bookmarks/edit_folder" />
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 				</portlet:renderURL>

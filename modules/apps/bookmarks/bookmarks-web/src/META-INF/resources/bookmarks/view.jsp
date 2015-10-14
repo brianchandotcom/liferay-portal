@@ -48,7 +48,7 @@ boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetT
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/bookmarks/view");
+portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
 portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("folderId", String.valueOf(folderId));
 
@@ -65,8 +65,7 @@ if (folder != null) {
 }
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
+<portlet:actionURL name="/bookmarks/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -155,7 +154,7 @@ if (folder != null) {
 									modelVar="curFolder"
 								>
 									<liferay-portlet:renderURL varImpl="rowURL">
-										<portlet:param name="struts_action" value="/bookmarks/view" />
+										<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
 										<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 									</liferay-portlet:renderURL>
@@ -240,7 +239,7 @@ if (folder != null) {
 				if (BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.VIEW)) {
 					PortletURL tempRowURL = renderResponse.createRenderURL();
 
-					tempRowURL.setParameter("struts_action", "/bookmarks/view_entry");
+					tempRowURL.setParameter("mvcRenderCommandName", "/bookmarks/view_entry");
 					tempRowURL.setParameter("redirect", currentURL);
 					tempRowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 

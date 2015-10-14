@@ -1621,8 +1621,16 @@ public class PortalImpl implements Portal {
 				false));
 
 		sb.append(getPathFriendlyURLPrivateGroup());
-		sb.append(group.getFriendlyURL());
-		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
+
+		Group controlPanelDisplayGroup = getControlPanelDisplayGroup(
+			group.getCompanyId(), PrincipalThreadLocal.getUserId(),
+			scopeGroupId, 0, ppid);
+
+		if (controlPanelDisplayGroup != null) {
+			sb.append(controlPanelDisplayGroup.getFriendlyURL());
+			sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
+		}
+
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 

@@ -2880,9 +2880,9 @@ go]]></replacevalue>
 				<property name="test.case.attachments">
 					<![CDATA[
 						<attachments>
-							<file name="jenkins.console" value="${testray.logs.jenkins.console}" />
-							<file name="poshi.report" value="${testray.logs.poshi.report}" />
-							<file name="poshi.summary" value="${testray.logs.poshi.summary}" />
+							<file name="console.output" value="${testray.logs.jenkins.console}" />
+							<file name="report.html" value="${testray.logs.poshi.report}" />
+							<file name="summary.html" value="${testray.logs.poshi.summary}" />
 						</attachments>
 					]]>
 				</property>
@@ -2891,7 +2891,7 @@ go]]></replacevalue>
 				<property name="test.case.attachments">
 					<![CDATA[
 						<attachments>
-							<file name="jenkins.console" value="${testray.logs.jenkins.console}" />
+							<file name="console.output" value="${testray.logs.jenkins.console}" />
 						</attachments>
 					]]>
 				</property>

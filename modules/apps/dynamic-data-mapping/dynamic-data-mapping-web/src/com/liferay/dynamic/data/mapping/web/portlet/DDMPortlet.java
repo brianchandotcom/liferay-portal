@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
 
@@ -53,6 +54,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -215,6 +217,15 @@ public class DDMPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE, template);
 		}
+	}
+
+	@Reference(
+		target =
+			"(&(release.bundle.symbolic.name=com.liferay.dynamic." +
+				"data.mapping.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);

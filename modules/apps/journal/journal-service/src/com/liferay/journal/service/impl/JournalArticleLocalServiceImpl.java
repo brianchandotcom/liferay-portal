@@ -7655,20 +7655,24 @@ public class JournalArticleLocalServiceImpl
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLanguageId(content));
 
-		if (!LanguageUtil.isAvailableLocale(groupId, articleDefaultLocale) &&
-			!ExportImportThreadLocal.isImportInProcess()) {
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			if (!LanguageUtil.isAvailableLocale(groupId, articleDefaultLocale)) {
+				LocaleException le = new LocaleException(
+					LocaleException.TYPE_CONTENT,
+					"The locale " + articleDefaultLocale +
+						" is not available in site with groupId" + groupId);
 
-			LocaleException le = new LocaleException(
-				LocaleException.TYPE_CONTENT,
-				"The locale " + articleDefaultLocale +
-					" is not available in site with groupId" + groupId);
+				le.setSourceAvailableLocales(
+					Collections.singleton(articleDefaultLocale));
+				le.setTargetAvailableLocales(
+					LanguageUtil.getAvailableLocales(groupId));
 
-			le.setSourceAvailableLocales(
-				Collections.singleton(articleDefaultLocale));
-			le.setTargetAvailableLocales(
-				LanguageUtil.getAvailableLocales(groupId));
+				throw le;
+			}
 
-			throw le;
+			if ((expirationDate != null) && expirationDate.before(new Date())) {
+				throw new ArticleExpirationDateException();
+			}
 		}
 
 		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
@@ -7701,12 +7705,6 @@ public class JournalArticleLocalServiceImpl
 		}
 		else if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 			throw new NoSuchTemplateException();
-		}
-
-		if ((expirationDate != null) && expirationDate.before(new Date()) &&
-			!ExportImportThreadLocal.isImportInProcess()) {
-
-			throw new ArticleExpirationDateException();
 		}
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(

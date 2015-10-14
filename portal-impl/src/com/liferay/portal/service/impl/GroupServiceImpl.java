@@ -739,14 +739,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				Group userGroup = user.getGroup();
 
 				userSiteGroups.add(userGroup);
-
-				if ((max != QueryUtil.ALL_POS) &&
-					(userSiteGroups.size() >= max)) {
-
-					return Collections.unmodifiableList(
-						ListUtil.subList(
-							ListUtil.unique(userSiteGroups), start, end));
-				}
 			}
 		}
 
@@ -760,12 +752,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 						classNameLocalService.getClassNameId(Company.class)
 					},
 					null, new LinkedHashMap<String, Object>(), start, end));
-
-			if ((max != QueryUtil.ALL_POS) && (userSiteGroups.size() >= max)) {
-				return Collections.unmodifiableList(
-					ListUtil.subList(
-						ListUtil.unique(userSiteGroups), start, end));
-			}
 		}
 
 		if ((classNames == null) ||
@@ -784,12 +770,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				if (group.hasPrivateLayouts() || group.hasPublicLayouts()) {
 					userSiteGroups.add(group);
 				}
-			}
-
-			if ((max != QueryUtil.ALL_POS) && (userSiteGroups.size() >= max)) {
-				return Collections.unmodifiableList(
-					ListUtil.subList(
-						ListUtil.unique(userSiteGroups), start, end));
 			}
 		}
 
@@ -822,14 +802,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 							userSiteGroups.add(ancestorOrganization.getGroup());
 						}
 					}
-				}
-
-				if ((max != QueryUtil.ALL_POS) &&
-					(userSiteGroups.size() >= max)) {
-
-					return Collections.unmodifiableList(
-						ListUtil.subList(
-							ListUtil.unique(userSiteGroups), start, end));
 				}
 			}
 		}

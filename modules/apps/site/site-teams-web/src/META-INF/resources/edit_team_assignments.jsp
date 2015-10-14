@@ -71,7 +71,7 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(HtmlUtil.escape(team.getName()));
+renderResponse.setTitle(team.getName());
 %>
 
 <div class="container-fluid-1280">

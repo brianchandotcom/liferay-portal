@@ -60,7 +60,7 @@ portletDisplay.setPortletDecorate(portletDecorate);
 String portletTitle = PortletConfigurationUtil.getPortletTitle(portletSetup, themeDisplay.getLanguageId());
 
 if (portletDisplay.isAccess() && portletDisplay.isActive() && (portletTitle == null)) {
-	portletTitle = HtmlUtil.extractText(renderResponseImpl.getTitle());
+	portletTitle = renderResponseImpl.getTitle();
 }
 
 if (portletTitle == null) {

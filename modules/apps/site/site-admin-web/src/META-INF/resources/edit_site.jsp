@@ -102,7 +102,7 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 		title = LanguageUtil.get(request, "new-site");
 	}
 
-	renderResponse.setTitle(HtmlUtil.escape(title));
+	renderResponse.setTitle(title);
 
 	if (group != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);

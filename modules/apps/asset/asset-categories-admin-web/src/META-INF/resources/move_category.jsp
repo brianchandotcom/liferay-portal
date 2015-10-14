@@ -48,7 +48,7 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(LanguageUtil.format(request, "move-x", HtmlUtil.escape(category.getTitle(locale))));
+renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle(locale)));
 %>
 
 <portlet:actionURL name="moveCategory" var="moveCategoryURL">

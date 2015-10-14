@@ -18,6 +18,7 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

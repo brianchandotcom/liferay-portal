@@ -29,9 +29,10 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletRequest;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Represents the trash handler for bookmarks entries entity.

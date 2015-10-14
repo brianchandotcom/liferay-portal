@@ -17,6 +17,7 @@ package com.liferay.bookmarks.web.portlet.route;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

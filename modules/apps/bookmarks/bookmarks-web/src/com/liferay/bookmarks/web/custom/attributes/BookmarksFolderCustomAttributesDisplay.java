@@ -19,6 +19,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

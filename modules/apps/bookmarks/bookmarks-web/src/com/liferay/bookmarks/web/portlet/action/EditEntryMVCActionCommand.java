@@ -33,7 +33,6 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -47,15 +46,8 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -73,6 +65,42 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteEntry(ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		long[] deleteEntryIds = null;
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
+		if (entryId > 0) {
+			deleteEntryIds = new long[] {entryId};
+		}
+		else {
+			deleteEntryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteEntryId : deleteEntryIds) {
+			if (moveToTrash) {
+				BookmarksEntry entry =
+					BookmarksEntryServiceUtil.moveEntryToTrash(deleteEntryId);
+
+				trashedModels.add(entry);
+			}
+			else {
+				BookmarksEntryServiceUtil.deleteEntry(deleteEntryId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -151,42 +179,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw e;
 			}
-		}
-	}
-
-	protected void deleteEntry(ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
-
-		long[] deleteEntryIds = null;
-
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
-
-		if (entryId > 0) {
-			deleteEntryIds = new long[] {entryId};
-		}
-		else {
-			deleteEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (long deleteEntryId : deleteEntryIds) {
-			if (moveToTrash) {
-				BookmarksEntry entry =
-					BookmarksEntryServiceUtil.moveEntryToTrash(deleteEntryId);
-
-				trashedModels.add(entry);
-			}
-			else {
-				BookmarksEntryServiceUtil.deleteEntry(deleteEntryId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

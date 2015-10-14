@@ -16,6 +16,7 @@ package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

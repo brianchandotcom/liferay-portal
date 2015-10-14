@@ -33,12 +33,14 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
-import org.osgi.service.component.annotations.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,6 +55,44 @@ import java.util.List;
 	service = MVCActionCommand.class
 )
 public class SelectFolderMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteFolders(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		long[] deleteFolderIds = null;
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		if (folderId > 0) {
+			deleteFolderIds = new long[] {folderId};
+		}
+		else {
+			deleteFolderIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "folderIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteFolderId : deleteFolderIds) {
+			if (moveToTrash) {
+				BookmarksFolder folder =
+					BookmarksFolderServiceUtil.moveFolderToTrash(
+						deleteFolderId);
+
+				trashedModels.add(folder);
+			}
+			else {
+				BookmarksFolderServiceUtil.deleteFolder(deleteFolderId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -96,44 +136,6 @@ public class SelectFolderMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw e;
 			}
-		}
-	}
-
-	protected void deleteFolders(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
-
-		long[] deleteFolderIds = null;
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		if (folderId > 0) {
-			deleteFolderIds = new long[] {folderId};
-		}
-		else {
-			deleteFolderIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "folderIds"), 0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (long deleteFolderId : deleteFolderIds) {
-			if (moveToTrash) {
-				BookmarksFolder folder =
-					BookmarksFolderServiceUtil.moveFolderToTrash(
-						deleteFolderId);
-
-				trashedModels.add(folder);
-			}
-			else {
-				BookmarksFolderServiceUtil.deleteFolder(deleteFolderId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

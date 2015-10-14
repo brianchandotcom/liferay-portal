@@ -17,6 +17,7 @@ package com.liferay.bookmarks.web.notifications;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

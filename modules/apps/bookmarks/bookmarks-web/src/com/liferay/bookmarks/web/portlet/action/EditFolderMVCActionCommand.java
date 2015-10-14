@@ -29,7 +29,6 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -40,13 +39,7 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -63,6 +56,44 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteFolders(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		long[] deleteFolderIds = null;
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		if (folderId > 0) {
+			deleteFolderIds = new long[] {folderId};
+		}
+		else {
+			deleteFolderIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "folderIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteFolderId : deleteFolderIds) {
+			if (moveToTrash) {
+				BookmarksFolder folder =
+					BookmarksFolderServiceUtil.moveFolderToTrash(
+						deleteFolderId);
+
+				trashedModels.add(folder);
+			}
+			else {
+				BookmarksFolderServiceUtil.deleteFolder(deleteFolderId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -106,44 +137,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw e;
 			}
-		}
-	}
-
-	protected void deleteFolders(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
-
-		long[] deleteFolderIds = null;
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		if (folderId > 0) {
-			deleteFolderIds = new long[] {folderId};
-		}
-		else {
-			deleteFolderIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "folderIds"), 0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (long deleteFolderId : deleteFolderIds) {
-			if (moveToTrash) {
-				BookmarksFolder folder =
-					BookmarksFolderServiceUtil.moveFolderToTrash(
-						deleteFolderId);
-
-				trashedModels.add(folder);
-			}
-			else {
-				BookmarksFolderServiceUtil.deleteFolder(deleteFolderId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

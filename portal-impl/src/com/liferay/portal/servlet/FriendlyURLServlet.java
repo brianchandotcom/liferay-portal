@@ -315,6 +315,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				Layout layout = layoutFriendlyURLComposite.getLayout();
 
+				request.setAttribute(WebKeys.LAYOUT, layout);
+
 				String layoutFriendlyURLCompositeFriendlyURL =
 					layoutFriendlyURLComposite.getFriendlyURL();
 

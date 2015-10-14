@@ -94,6 +94,14 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		runSQL("alter table LayoutFriendlyURL add lastPublishDate DATE null");
 
 		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "LayoutFriendlyURL");
+
+		runSQL("alter table LayoutPrototype add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "LayoutPrototype");
+
+		runSQL("alter table LayoutSetPrototype add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "LayoutSetPrototype");
 	}
 
 	protected void upgradeMessageBoards() throws Exception {

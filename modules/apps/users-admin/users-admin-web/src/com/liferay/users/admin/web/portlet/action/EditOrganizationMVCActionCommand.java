@@ -174,6 +174,8 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 					if (Validator.isNotNull(redirect)) {
 						sendRedirect(actionRequest, actionResponse, redirect);
+
+						return;
 					}
 				}
 			}

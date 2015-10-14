@@ -513,9 +513,9 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		throws PortalException {
 
 		String uniqueTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
-				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-				dlFileEntry.getFileEntryId(), dlFileEntry.getTitle(),
-				dlFileEntry.getExtension());
+			dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+			dlFileEntry.getFileEntryId(), dlFileEntry.getTitle(),
+			dlFileEntry.getExtension());
 
 		renameTitle(dlFileEntry, uniqueTitle);
 	}

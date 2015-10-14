@@ -82,6 +82,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 		}
 
+		postFormat();
+
 		_sourceFormatterHelper.close();
 	}
 
@@ -1453,6 +1455,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected boolean isModulesFile(String absolutePath) {
 		return absolutePath.contains("/modules/");
+	}
+
+	protected void postFormat() throws Exception {
 	}
 
 	protected void processErrorMessage(String fileName, String message) {

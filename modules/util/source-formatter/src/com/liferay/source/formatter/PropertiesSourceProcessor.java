@@ -31,8 +31,12 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 
@@ -45,9 +49,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	public String[] getIncludes() {
 		if (portalSource) {
 			return new String[] {
-				"**/portal.properties", "**/portal-ext.properties",
-				"**/portal-legacy-*.properties", "**/portlet.properties",
-				"**/source-formatter.properties"
+				"**/Language.properties", "**/portal.properties",
+				"**/portal-ext.properties", "**/portal-legacy-*.properties",
+				"**/portlet.properties", "**/source-formatter.properties"
 			};
 		}
 
@@ -57,6 +61,65 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		};
 	}
 
+	protected void addDuplicateLanguageKey(String fileName, String line) {
+		Set<String> duplicateLines = _duplicateLanguageKeyLinesMap.get(
+			fileName);
+
+		if (duplicateLines == null) {
+			duplicateLines = new HashSet<>();
+		}
+
+		duplicateLines.add(line);
+
+		_duplicateLanguageKeyLinesMap.put(fileName, duplicateLines);
+	}
+
+	protected void checkLanguageProperties(String fileName) throws Exception {
+		if (_languagePropertiesMap == null) {
+			populateLanguagePropertiesMap();
+		}
+
+		Properties languageProperties1 = _languagePropertiesMap.get(fileName);
+
+		_languagePropertiesMap.remove(fileName);
+
+		if (languageProperties1 == null) {
+			return;
+		}
+
+		for (Map.Entry<String, Properties> propertiesEntry :
+				_languagePropertiesMap.entrySet()) {
+
+			String fileName2 = propertiesEntry.getKey();
+			Properties languageProperties2 = propertiesEntry.getValue();
+
+			for (Map.Entry<Object, Object> entry :
+					languageProperties1.entrySet()) {
+
+				String key = (String)entry.getKey();
+
+				if (languageProperties2.containsKey(key)) {
+					String value1 = (String)entry.getValue();
+					String value2 = (String)languageProperties2.get(key);
+
+					if (!value1.equals(value2)) {
+						continue;
+					}
+
+					String line = key + "=" + value1;
+
+					addDuplicateLanguageKey(fileName, line);
+
+					if (!fileName2.endsWith(
+							"portal-impl/src/content/Language.properties")) {
+
+						addDuplicateLanguageKey(fileName2, line);
+					}
+				}
+			}
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -64,7 +127,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (fileName.endsWith("portlet.properties")) {
+		if (portalSource && fileName.endsWith("Language.properties")) {
+			checkLanguageProperties(fileName);
+		}
+		else if (fileName.endsWith("portlet.properties")) {
 			newContent = formatPortletProperties(fileName, content);
 		}
 		else if (fileName.endsWith("source-formatter.properties")) {
@@ -83,6 +149,64 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
+	}
+
+	protected void formatDuplicateLanguageKeys() throws Exception {
+		if (_duplicateLanguageKeyLinesMap.isEmpty()) {
+			return;
+		}
+
+		Set<String> allDuplicateLines = new HashSet<>();
+
+		for (Map.Entry<String, Set<String>> entry :
+			_duplicateLanguageKeyLinesMap.entrySet()) {
+
+			Set<String> duplicateLines = entry.getValue();
+
+			removeDuplicateKeys(entry.getKey(), duplicateLines);
+
+			allDuplicateLines.addAll(duplicateLines);
+		}
+
+		File coreLanguagePropertiesFile = new File(
+			getFile("portal-impl", PORTAL_MAX_DIR_LEVEL),
+			"src/content/Language.properties");
+
+		String coreLanguagePropertiesContent = FileUtil.read(
+			coreLanguagePropertiesFile);
+
+		String newCoreLanguagePropertiesContent = coreLanguagePropertiesContent;
+
+		String[][] categoryPrefixAndNameArray = getCategoryPrefixAndNameArray();
+
+		for (String line : allDuplicateLines) {
+			String categoryName = getCategoryName(
+				line, categoryPrefixAndNameArray);
+
+			int pos = newCoreLanguagePropertiesContent.indexOf(
+				"## " + categoryName);
+
+			for (int i = 0; i < 3; i++) {
+				pos = newCoreLanguagePropertiesContent.indexOf("\n", pos + 1);
+			}
+
+			if (!newCoreLanguagePropertiesContent.contains(
+					"\n" + line + "\n")) {
+
+				newCoreLanguagePropertiesContent = StringUtil.insert(
+					newCoreLanguagePropertiesContent, line + "\n", pos + 1);
+			}
+		}
+
+		if (!coreLanguagePropertiesContent.equals(
+				newCoreLanguagePropertiesContent)) {
+
+			processFormattedFile(
+				coreLanguagePropertiesFile,
+				"portal-impl/src/content/Language.properties",
+				coreLanguagePropertiesContent,
+				newCoreLanguagePropertiesContent);
+		}
 	}
 
 	protected String formatPortalPortalProperties(
@@ -280,6 +404,33 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected String getCategoryName(
+		String line, String[][] categoryPrefixAndNameArray) {
+
+		for (String[] categoryPrefixAndName : categoryPrefixAndNameArray) {
+			String prefix = categoryPrefixAndName[0];
+
+			if (line.startsWith(prefix)) {
+				return categoryPrefixAndName[1];
+			}
+		}
+
+		return "Messages";
+	}
+
+	protected String[][] getCategoryPrefixAndNameArray() {
+		return new String[][] {
+			new String[] {"action.", "Action names"},
+			new String[] {"category.", "Category titles"},
+			new String[] {"country.", "Country"},
+			new String[] {"currency.", "Currency"},
+			new String[] {"javax.portlet.", "Portlet descriptions and titles"},
+			new String[] {"lang.", "Language settings"},
+			new String[] {"language.", "Language"},
+			new String[] {"model.resource.", "Model resources"}
+		};
+	}
+
 	protected String getPortalPortalProperties() throws Exception {
 		if (_portalPortalPropertiesContent != null) {
 			return _portalPortalPropertiesContent;
@@ -310,6 +461,65 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		return _portalPortalPropertiesContent;
 	}
 
+	protected void populateLanguagePropertiesMap() throws Exception {
+		_languagePropertiesMap = new HashMap<>();
+
+		String[] includes = new String[] {"**/Language.properties"};
+
+		List<String> modulesLanguagePropertiesNames = getFileNames(
+			sourceFormatterArgs.getBaseDirName(), null, new String[0],
+			includes);
+
+		for (String fileName : modulesLanguagePropertiesNames) {
+			Properties properties = new Properties();
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			InputStream inputStream = new FileInputStream(fileName);
+
+			properties.load(inputStream);
+
+			_languagePropertiesMap.put(fileName, properties);
+		}
+	}
+
+	@Override
+	protected void postFormat() throws Exception {
+		formatDuplicateLanguageKeys();
+	}
+
+	protected void removeDuplicateKeys(String fileName, Set<String> lines)
+		throws Exception {
+
+		File file = new File(fileName);
+
+		String content = FileUtil.read(file);
+
+		String newContent = content;
+
+		for (String line : lines) {
+			if (newContent.startsWith(line)) {
+				if (newContent.equals(line)) {
+					newContent = StringPool.BLANK;
+				}
+				else {
+					newContent = StringUtil.replace(
+						newContent, line + "\n", StringPool.BLANK);
+				}
+			}
+			else {
+				newContent = StringUtil.replace(
+					newContent, "\n" + line, StringPool.BLANK);
+			}
+		}
+
+		processFormattedFile(file, fileName, content, newContent);
+	}
+
+	private Map<String, Set<String>> _duplicateLanguageKeyLinesMap =
+		new HashMap<>();
+	private Map<String, Properties> _languagePropertiesMap;
 	private String _portalPortalPropertiesContent;
 
 }

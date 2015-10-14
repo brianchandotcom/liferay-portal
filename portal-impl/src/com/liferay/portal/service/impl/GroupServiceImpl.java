@@ -717,7 +717,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long userId, String[] classNames, int max)
 		throws PortalException {
 
-		User user = userPersistence.fetchByPrimaryKey(userId);
+		User user = userPersistence.findByPrimaryKey(userId);
 
 		if (user.isDefaultUser()) {
 			return Collections.emptyList();

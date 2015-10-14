@@ -2809,6 +2809,8 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 		kaleoDefinition.setNew(true);
 		kaleoDefinition.setPrimaryKey(kaleoDefinitionId);
 
+		kaleoDefinition.setCompanyId(0);
+
 		return kaleoDefinition;
 	}
 
@@ -3061,9 +3063,9 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 		kaleoDefinitionImpl.setNew(kaleoDefinition.isNew());
 		kaleoDefinitionImpl.setPrimaryKey(kaleoDefinition.getPrimaryKey());
 
+		kaleoDefinitionImpl.setCompanyId(kaleoDefinition.getCompanyId());
 		kaleoDefinitionImpl.setKaleoDefinitionId(kaleoDefinition.getKaleoDefinitionId());
 		kaleoDefinitionImpl.setGroupId(kaleoDefinition.getGroupId());
-		kaleoDefinitionImpl.setCompanyId(kaleoDefinition.getCompanyId());
 		kaleoDefinitionImpl.setUserId(kaleoDefinition.getUserId());
 		kaleoDefinitionImpl.setUserName(kaleoDefinition.getUserName());
 		kaleoDefinitionImpl.setCreateDate(kaleoDefinition.getCreateDate());

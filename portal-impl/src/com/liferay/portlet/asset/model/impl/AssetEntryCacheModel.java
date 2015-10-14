@@ -68,12 +68,12 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 	public String toString() {
 		StringBundler sb = new StringBundler(55);
 
-		sb.append("{entryId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -131,9 +131,9 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 	public AssetEntry toEntityModel() {
 		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
 
+		assetEntryImpl.setCompanyId(companyId);
 		assetEntryImpl.setEntryId(entryId);
 		assetEntryImpl.setGroupId(groupId);
-		assetEntryImpl.setCompanyId(companyId);
 		assetEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -253,9 +253,9 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		entryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -285,9 +285,9 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -365,9 +365,9 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		objectOutput.writeInt(viewCount);
 	}
 
+	public long companyId;
 	public long entryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

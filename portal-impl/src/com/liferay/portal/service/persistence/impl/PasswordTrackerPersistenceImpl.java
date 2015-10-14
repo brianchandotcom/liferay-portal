@@ -685,6 +685,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		passwordTracker.setNew(true);
 		passwordTracker.setPrimaryKey(passwordTrackerId);
 
+		passwordTracker.setCompanyId(0);
+
 		return passwordTracker;
 	}
 
@@ -846,6 +848,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		passwordTrackerImpl.setNew(passwordTracker.isNew());
 		passwordTrackerImpl.setPrimaryKey(passwordTracker.getPrimaryKey());
 
+		passwordTrackerImpl.setCompanyId(passwordTracker.getCompanyId());
 		passwordTrackerImpl.setMvccVersion(passwordTracker.getMvccVersion());
 		passwordTrackerImpl.setPasswordTrackerId(passwordTracker.getPasswordTrackerId());
 		passwordTrackerImpl.setUserId(passwordTracker.getUserId());

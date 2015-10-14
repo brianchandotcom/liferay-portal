@@ -447,6 +447,62 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	public int countByG_U(long groupId, long userId);
 
 	/**
+	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a {@link NoSuchFileRankException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param fileEntryId the file entry ID
+	* @return the matching document library file rank
+	* @throws NoSuchFileRankException if a matching document library file rank could not be found
+	*/
+	public DLFileRank findByC_U_F(long companyId, long userId, long fileEntryId)
+		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
+
+	/**
+	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param fileEntryId the file entry ID
+	* @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	*/
+	public DLFileRank fetchByC_U_F(long companyId, long userId, long fileEntryId);
+
+	/**
+	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param fileEntryId the file entry ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	*/
+	public DLFileRank fetchByC_U_F(long companyId, long userId,
+		long fileEntryId, boolean retrieveFromCache);
+
+	/**
+	* Removes the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param fileEntryId the file entry ID
+	* @return the document library file rank that was removed
+	*/
+	public DLFileRank removeByC_U_F(long companyId, long userId,
+		long fileEntryId)
+		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
+
+	/**
+	* Returns the number of document library file ranks where companyId = &#63; and userId = &#63; and fileEntryId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param fileEntryId the file entry ID
+	* @return the number of matching document library file ranks
+	*/
+	public int countByC_U_F(long companyId, long userId, long fileEntryId);
+
+	/**
 	* Returns all the document library file ranks where groupId = &#63; and userId = &#63; and active = &#63;.
 	*
 	* @param groupId the group ID
@@ -604,62 +660,6 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @return the number of matching document library file ranks
 	*/
 	public int countByG_U_A(long groupId, long userId, boolean active);
-
-	/**
-	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a {@link NoSuchFileRankException} if it could not be found.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param fileEntryId the file entry ID
-	* @return the matching document library file rank
-	* @throws NoSuchFileRankException if a matching document library file rank could not be found
-	*/
-	public DLFileRank findByC_U_F(long companyId, long userId, long fileEntryId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
-
-	/**
-	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param fileEntryId the file entry ID
-	* @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
-	*/
-	public DLFileRank fetchByC_U_F(long companyId, long userId, long fileEntryId);
-
-	/**
-	* Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param fileEntryId the file entry ID
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
-	*/
-	public DLFileRank fetchByC_U_F(long companyId, long userId,
-		long fileEntryId, boolean retrieveFromCache);
-
-	/**
-	* Removes the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param fileEntryId the file entry ID
-	* @return the document library file rank that was removed
-	*/
-	public DLFileRank removeByC_U_F(long companyId, long userId,
-		long fileEntryId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
-
-	/**
-	* Returns the number of document library file ranks where companyId = &#63; and userId = &#63; and fileEntryId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param fileEntryId the file entry ID
-	* @return the number of matching document library file ranks
-	*/
-	public int countByC_U_F(long companyId, long userId, long fileEntryId);
 
 	/**
 	* Caches the document library file rank in the entity cache if it is enabled.

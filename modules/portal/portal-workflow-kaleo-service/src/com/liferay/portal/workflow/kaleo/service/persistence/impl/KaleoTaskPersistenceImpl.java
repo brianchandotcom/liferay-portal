@@ -1448,6 +1448,8 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 		kaleoTask.setNew(true);
 		kaleoTask.setPrimaryKey(kaleoTaskId);
 
+		kaleoTask.setCompanyId(0);
+
 		return kaleoTask;
 	}
 
@@ -1650,9 +1652,9 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 		kaleoTaskImpl.setNew(kaleoTask.isNew());
 		kaleoTaskImpl.setPrimaryKey(kaleoTask.getPrimaryKey());
 
+		kaleoTaskImpl.setCompanyId(kaleoTask.getCompanyId());
 		kaleoTaskImpl.setKaleoTaskId(kaleoTask.getKaleoTaskId());
 		kaleoTaskImpl.setGroupId(kaleoTask.getGroupId());
-		kaleoTaskImpl.setCompanyId(kaleoTask.getCompanyId());
 		kaleoTaskImpl.setUserId(kaleoTask.getUserId());
 		kaleoTaskImpl.setUserName(kaleoTask.getUserName());
 		kaleoTaskImpl.setCreateDate(kaleoTask.getCreateDate());

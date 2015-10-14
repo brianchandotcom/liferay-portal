@@ -987,6 +987,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		portlet.setNew(true);
 		portlet.setPrimaryKey(id);
 
+		portlet.setCompanyId(0);
+
 		return portlet;
 	}
 
@@ -1148,9 +1150,9 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		portletImpl.setNew(portlet.isNew());
 		portletImpl.setPrimaryKey(portlet.getPrimaryKey());
 
+		portletImpl.setCompanyId(portlet.getCompanyId());
 		portletImpl.setMvccVersion(portlet.getMvccVersion());
 		portletImpl.setId(portlet.getId());
-		portletImpl.setCompanyId(portlet.getCompanyId());
 		portletImpl.setPortletId(portlet.getPortletId());
 		portletImpl.setRoles(portlet.getRoles());
 		portletImpl.setActive(portlet.isActive());

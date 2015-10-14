@@ -81,14 +81,14 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", portletItemId=");
 		sb.append(portletItemId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -112,10 +112,10 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 	public PortletItem toEntityModel() {
 		PortletItemImpl portletItemImpl = new PortletItemImpl();
 
+		portletItemImpl.setCompanyId(companyId);
 		portletItemImpl.setMvccVersion(mvccVersion);
 		portletItemImpl.setPortletItemId(portletItemId);
 		portletItemImpl.setGroupId(groupId);
-		portletItemImpl.setCompanyId(companyId);
 		portletItemImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -162,10 +162,10 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		portletItemId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -178,10 +178,10 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(portletItemId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -211,10 +211,10 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		objectOutput.writeLong(classNameId);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long portletItemId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -10825,6 +10825,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		assetCategory.setUuid(uuid);
 
+		assetCategory.setCompanyId(0);
+
 		return assetCategory;
 	}
 
@@ -11259,10 +11261,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		assetCategoryImpl.setNew(assetCategory.isNew());
 		assetCategoryImpl.setPrimaryKey(assetCategory.getPrimaryKey());
 
+		assetCategoryImpl.setCompanyId(assetCategory.getCompanyId());
 		assetCategoryImpl.setUuid(assetCategory.getUuid());
 		assetCategoryImpl.setCategoryId(assetCategory.getCategoryId());
 		assetCategoryImpl.setGroupId(assetCategory.getGroupId());
-		assetCategoryImpl.setCompanyId(assetCategory.getCompanyId());
 		assetCategoryImpl.setUserId(assetCategory.getUserId());
 		assetCategoryImpl.setUserName(assetCategory.getUserName());
 		assetCategoryImpl.setCreateDate(assetCategory.getCreateDate());

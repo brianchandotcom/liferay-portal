@@ -32,6 +32,7 @@ public class DLFileEntryMetadataSoap implements Serializable {
 	public static DLFileEntryMetadataSoap toSoapModel(DLFileEntryMetadata model) {
 		DLFileEntryMetadataSoap soapModel = new DLFileEntryMetadataSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFileEntryMetadataId(model.getFileEntryMetadataId());
 		soapModel.setDDMStorageId(model.getDDMStorageId());
@@ -93,6 +94,14 @@ public class DLFileEntryMetadataSoap implements Serializable {
 		setFileEntryMetadataId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -141,6 +150,7 @@ public class DLFileEntryMetadataSoap implements Serializable {
 		_fileVersionId = fileVersionId;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _fileEntryMetadataId;
 	private long _DDMStorageId;

@@ -65,9 +65,9 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	 */
 	public static final String TABLE_NAME = "DLFileRank";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "fileRankId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "fileEntryId", Types.BIGINT },
@@ -76,16 +76,16 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileRankId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileRank (fileRankId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,fileEntryId LONG,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileRank (companyId LONG,fileRankId LONG not null primary key,groupId LONG,userId LONG,createDate DATE null,fileEntryId LONG,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileRank";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileRank.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileRank.createDate DESC";
@@ -147,9 +147,9 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("fileRankId", getFileRankId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("fileEntryId", getFileEntryId());
@@ -163,6 +163,12 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long fileRankId = (Long)attributes.get("fileRankId");
 
 		if (fileRankId != null) {
@@ -173,12 +179,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -204,6 +204,28 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		if (active != null) {
 			setActive(active);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -236,28 +258,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -390,9 +390,9 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public Object clone() {
 		DLFileRankImpl dlFileRankImpl = new DLFileRankImpl();
 
+		dlFileRankImpl.setCompanyId(getCompanyId());
 		dlFileRankImpl.setFileRankId(getFileRankId());
 		dlFileRankImpl.setGroupId(getGroupId());
-		dlFileRankImpl.setCompanyId(getCompanyId());
 		dlFileRankImpl.setUserId(getUserId());
 		dlFileRankImpl.setCreateDate(getCreateDate());
 		dlFileRankImpl.setFileEntryId(getFileEntryId());
@@ -459,13 +459,13 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public void resetOriginalValues() {
 		DLFileRankModelImpl dlFileRankModelImpl = this;
 
-		dlFileRankModelImpl._originalGroupId = dlFileRankModelImpl._groupId;
-
-		dlFileRankModelImpl._setOriginalGroupId = false;
-
 		dlFileRankModelImpl._originalCompanyId = dlFileRankModelImpl._companyId;
 
 		dlFileRankModelImpl._setOriginalCompanyId = false;
+
+		dlFileRankModelImpl._originalGroupId = dlFileRankModelImpl._groupId;
+
+		dlFileRankModelImpl._setOriginalGroupId = false;
 
 		dlFileRankModelImpl._originalUserId = dlFileRankModelImpl._userId;
 
@@ -486,11 +486,11 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public CacheModel<DLFileRank> toCacheModel() {
 		DLFileRankCacheModel dlFileRankCacheModel = new DLFileRankCacheModel();
 
+		dlFileRankCacheModel.companyId = getCompanyId();
+
 		dlFileRankCacheModel.fileRankId = getFileRankId();
 
 		dlFileRankCacheModel.groupId = getGroupId();
-
-		dlFileRankCacheModel.companyId = getCompanyId();
 
 		dlFileRankCacheModel.userId = getUserId();
 
@@ -514,12 +514,12 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{fileRankId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", fileRankId=");
 		sb.append(getFileRankId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", createDate=");
@@ -542,16 +542,16 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>fileRankId</column-name><column-value><![CDATA[");
 		sb.append(getFileRankId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -579,13 +579,13 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DLFileRank.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _fileRankId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

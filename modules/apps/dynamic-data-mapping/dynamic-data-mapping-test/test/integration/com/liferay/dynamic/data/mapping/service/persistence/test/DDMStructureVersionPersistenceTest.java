@@ -124,9 +124,9 @@ public class DDMStructureVersionPersistenceTest {
 
 		DDMStructureVersion newDDMStructureVersion = _persistence.create(pk);
 
-		newDDMStructureVersion.setGroupId(RandomTestUtil.nextLong());
-
 		newDDMStructureVersion.setCompanyId(RandomTestUtil.nextLong());
+
+		newDDMStructureVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDMStructureVersion.setUserId(RandomTestUtil.nextLong());
 
@@ -162,12 +162,12 @@ public class DDMStructureVersionPersistenceTest {
 
 		DDMStructureVersion existingDDMStructureVersion = _persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
+		Assert.assertEquals(existingDDMStructureVersion.getCompanyId(),
+			newDDMStructureVersion.getCompanyId());
 		Assert.assertEquals(existingDDMStructureVersion.getStructureVersionId(),
 			newDDMStructureVersion.getStructureVersionId());
 		Assert.assertEquals(existingDDMStructureVersion.getGroupId(),
 			newDDMStructureVersion.getGroupId());
-		Assert.assertEquals(existingDDMStructureVersion.getCompanyId(),
-			newDDMStructureVersion.getCompanyId());
 		Assert.assertEquals(existingDDMStructureVersion.getUserId(),
 			newDDMStructureVersion.getUserId());
 		Assert.assertEquals(existingDDMStructureVersion.getUserName(),
@@ -250,7 +250,7 @@ public class DDMStructureVersionPersistenceTest {
 
 	protected OrderByComparator<DDMStructureVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStructureVersion",
-			"structureVersionId", true, "groupId", true, "companyId", true,
+			"companyId", true, "structureVersionId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"structureId", true, "version", true, "parentStructureId", true,
 			"name", true, "storageType", true, "type", true, "status", true,
@@ -476,9 +476,9 @@ public class DDMStructureVersionPersistenceTest {
 
 		DDMStructureVersion ddmStructureVersion = _persistence.create(pk);
 
-		ddmStructureVersion.setGroupId(RandomTestUtil.nextLong());
-
 		ddmStructureVersion.setCompanyId(RandomTestUtil.nextLong());
+
+		ddmStructureVersion.setGroupId(RandomTestUtil.nextLong());
 
 		ddmStructureVersion.setUserId(RandomTestUtil.nextLong());
 

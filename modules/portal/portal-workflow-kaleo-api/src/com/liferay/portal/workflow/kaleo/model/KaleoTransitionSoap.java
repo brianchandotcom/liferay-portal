@@ -33,9 +33,9 @@ public class KaleoTransitionSoap implements Serializable {
 	public static KaleoTransitionSoap toSoapModel(KaleoTransition model) {
 		KaleoTransitionSoap soapModel = new KaleoTransitionSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setKaleoTransitionId(model.getKaleoTransitionId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -103,6 +103,14 @@ public class KaleoTransitionSoap implements Serializable {
 		setKaleoTransitionId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getKaleoTransitionId() {
 		return _kaleoTransitionId;
 	}
@@ -117,14 +125,6 @@ public class KaleoTransitionSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -235,9 +235,9 @@ public class KaleoTransitionSoap implements Serializable {
 		_defaultTransition = defaultTransition;
 	}
 
+	private long _companyId;
 	private long _kaleoTransitionId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

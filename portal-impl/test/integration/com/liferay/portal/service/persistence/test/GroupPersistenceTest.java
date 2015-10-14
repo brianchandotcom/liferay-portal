@@ -117,11 +117,11 @@ public class GroupPersistenceTest {
 
 		Group newGroup = _persistence.create(pk);
 
+		newGroup.setCompanyId(RandomTestUtil.nextLong());
+
 		newGroup.setMvccVersion(RandomTestUtil.nextLong());
 
 		newGroup.setUuid(RandomTestUtil.randomString());
-
-		newGroup.setCompanyId(RandomTestUtil.nextLong());
 
 		newGroup.setCreatorUserId(RandomTestUtil.nextLong());
 
@@ -163,12 +163,12 @@ public class GroupPersistenceTest {
 
 		Group existingGroup = _persistence.findByPrimaryKey(newGroup.getPrimaryKey());
 
+		Assert.assertEquals(existingGroup.getCompanyId(),
+			newGroup.getCompanyId());
 		Assert.assertEquals(existingGroup.getMvccVersion(),
 			newGroup.getMvccVersion());
 		Assert.assertEquals(existingGroup.getUuid(), newGroup.getUuid());
 		Assert.assertEquals(existingGroup.getGroupId(), newGroup.getGroupId());
-		Assert.assertEquals(existingGroup.getCompanyId(),
-			newGroup.getCompanyId());
 		Assert.assertEquals(existingGroup.getCreatorUserId(),
 			newGroup.getCreatorUserId());
 		Assert.assertEquals(existingGroup.getClassNameId(),
@@ -292,14 +292,6 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_P() throws Exception {
-		_persistence.countByG_C_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByG_C_P(0L, 0L, 0L);
-	}
-
-	@Test
 	public void testCountByC_C_C() throws Exception {
 		_persistence.countByC_C_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -331,6 +323,14 @@ public class GroupPersistenceTest {
 		_persistence.countByC_L_GK(0L, 0L, StringPool.NULL);
 
 		_persistence.countByC_L_GK(0L, 0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_C_P() throws Exception {
+		_persistence.countByG_C_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_C_P(0L, 0L, 0L);
 	}
 
 	@Test
@@ -377,8 +377,8 @@ public class GroupPersistenceTest {
 	}
 
 	protected OrderByComparator<Group> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Group_", "mvccVersion",
-			true, "uuid", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("Group_", "companyId", true,
+			"mvccVersion", true, "uuid", true, "groupId", true,
 			"creatorUserId", true, "classNameId", true, "classPK", true,
 			"parentGroupId", true, "liveGroupId", true, "treePath", true,
 			"groupKey", true, "name", true, "description", true, "type", true,
@@ -647,11 +647,11 @@ public class GroupPersistenceTest {
 
 		Group group = _persistence.create(pk);
 
+		group.setCompanyId(RandomTestUtil.nextLong());
+
 		group.setMvccVersion(RandomTestUtil.nextLong());
 
 		group.setUuid(RandomTestUtil.randomString());
-
-		group.setCompanyId(RandomTestUtil.nextLong());
 
 		group.setCreatorUserId(RandomTestUtil.nextLong());
 

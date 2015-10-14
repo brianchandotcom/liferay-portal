@@ -1,8 +1,8 @@
 create table DDMContent (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	contentId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -13,6 +13,7 @@ create table DDMContent (
 );
 
 create table DDMStorageLink (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	storageLinkId LONG not null primary key,
 	classNameId LONG,
@@ -21,10 +22,10 @@ create table DDMStorageLink (
 );
 
 create table DDMStructure (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	structureId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	versionUserId LONG,
@@ -44,10 +45,10 @@ create table DDMStructure (
 );
 
 create table DDMStructureLayout (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	structureLayoutId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -57,6 +58,7 @@ create table DDMStructureLayout (
 );
 
 create table DDMStructureLink (
+	companyId LONG,
 	structureLinkId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,
@@ -64,9 +66,9 @@ create table DDMStructureLink (
 );
 
 create table DDMStructureVersion (
+	companyId LONG,
 	structureVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -85,10 +87,10 @@ create table DDMStructureVersion (
 );
 
 create table DDMTemplate (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	templateId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	versionUserId LONG,
@@ -114,6 +116,7 @@ create table DDMTemplate (
 );
 
 create table DDMTemplateLink (
+	companyId LONG,
 	templateLinkId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,
@@ -121,9 +124,9 @@ create table DDMTemplateLink (
 );
 
 create table DDMTemplateVersion (
+	companyId LONG,
 	templateVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

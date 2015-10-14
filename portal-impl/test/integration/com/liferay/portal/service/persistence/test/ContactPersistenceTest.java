@@ -115,9 +115,9 @@ public class ContactPersistenceTest {
 
 		Contact newContact = _persistence.create(pk);
 
-		newContact.setMvccVersion(RandomTestUtil.nextLong());
-
 		newContact.setCompanyId(RandomTestUtil.nextLong());
+
+		newContact.setMvccVersion(RandomTestUtil.nextLong());
 
 		newContact.setUserId(RandomTestUtil.nextLong());
 
@@ -185,12 +185,12 @@ public class ContactPersistenceTest {
 
 		Contact existingContact = _persistence.findByPrimaryKey(newContact.getPrimaryKey());
 
+		Assert.assertEquals(existingContact.getCompanyId(),
+			newContact.getCompanyId());
 		Assert.assertEquals(existingContact.getMvccVersion(),
 			newContact.getMvccVersion());
 		Assert.assertEquals(existingContact.getContactId(),
 			newContact.getContactId());
-		Assert.assertEquals(existingContact.getCompanyId(),
-			newContact.getCompanyId());
 		Assert.assertEquals(existingContact.getUserId(), newContact.getUserId());
 		Assert.assertEquals(existingContact.getUserName(),
 			newContact.getUserName());
@@ -296,8 +296,8 @@ public class ContactPersistenceTest {
 	}
 
 	protected OrderByComparator<Contact> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Contact_", "mvccVersion",
-			true, "contactId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("Contact_", "companyId",
+			true, "mvccVersion", true, "contactId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "accountId", true,
 			"parentContactId", true, "emailAddress", true, "firstName", true,
@@ -504,9 +504,9 @@ public class ContactPersistenceTest {
 
 		Contact contact = _persistence.create(pk);
 
-		contact.setMvccVersion(RandomTestUtil.nextLong());
-
 		contact.setCompanyId(RandomTestUtil.nextLong());
+
+		contact.setMvccVersion(RandomTestUtil.nextLong());
 
 		contact.setUserId(RandomTestUtil.nextLong());
 

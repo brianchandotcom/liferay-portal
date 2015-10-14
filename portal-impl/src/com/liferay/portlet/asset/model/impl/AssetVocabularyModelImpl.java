@@ -78,10 +78,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	 */
 	public static final String TABLE_NAME = "AssetVocabulary";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "vocabularyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -95,10 +95,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("vocabularyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -110,7 +110,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetVocabulary (uuid_ VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetVocabulary (companyId LONG,uuid_ VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetVocabulary";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetVocabulary.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetVocabulary.name ASC";
@@ -144,10 +144,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 		AssetVocabulary model = new AssetVocabularyImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setVocabularyId(soapModel.getVocabularyId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -222,10 +222,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("vocabularyId", getVocabularyId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -244,6 +244,12 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -260,12 +266,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -321,6 +321,29 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -379,29 +402,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -849,10 +849,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	public Object clone() {
 		AssetVocabularyImpl assetVocabularyImpl = new AssetVocabularyImpl();
 
+		assetVocabularyImpl.setCompanyId(getCompanyId());
 		assetVocabularyImpl.setUuid(getUuid());
 		assetVocabularyImpl.setVocabularyId(getVocabularyId());
 		assetVocabularyImpl.setGroupId(getGroupId());
-		assetVocabularyImpl.setCompanyId(getCompanyId());
 		assetVocabularyImpl.setUserId(getUserId());
 		assetVocabularyImpl.setUserName(getUserName());
 		assetVocabularyImpl.setCreateDate(getCreateDate());
@@ -922,15 +922,15 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	public void resetOriginalValues() {
 		AssetVocabularyModelImpl assetVocabularyModelImpl = this;
 
+		assetVocabularyModelImpl._originalCompanyId = assetVocabularyModelImpl._companyId;
+
+		assetVocabularyModelImpl._setOriginalCompanyId = false;
+
 		assetVocabularyModelImpl._originalUuid = assetVocabularyModelImpl._uuid;
 
 		assetVocabularyModelImpl._originalGroupId = assetVocabularyModelImpl._groupId;
 
 		assetVocabularyModelImpl._setOriginalGroupId = false;
-
-		assetVocabularyModelImpl._originalCompanyId = assetVocabularyModelImpl._companyId;
-
-		assetVocabularyModelImpl._setOriginalCompanyId = false;
 
 		assetVocabularyModelImpl._setModifiedDate = false;
 
@@ -943,6 +943,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	public CacheModel<AssetVocabulary> toCacheModel() {
 		AssetVocabularyCacheModel assetVocabularyCacheModel = new AssetVocabularyCacheModel();
 
+		assetVocabularyCacheModel.companyId = getCompanyId();
+
 		assetVocabularyCacheModel.uuid = getUuid();
 
 		String uuid = assetVocabularyCacheModel.uuid;
@@ -954,8 +956,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		assetVocabularyCacheModel.vocabularyId = getVocabularyId();
 
 		assetVocabularyCacheModel.groupId = getGroupId();
-
-		assetVocabularyCacheModel.companyId = getCompanyId();
 
 		assetVocabularyCacheModel.userId = getUserId();
 
@@ -1033,14 +1033,14 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", vocabularyId=");
 		sb.append(getVocabularyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1073,6 +1073,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1083,10 +1087,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1134,15 +1134,15 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetVocabulary.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _vocabularyId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

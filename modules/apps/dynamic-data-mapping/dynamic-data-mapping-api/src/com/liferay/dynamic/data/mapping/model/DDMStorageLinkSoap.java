@@ -32,6 +32,7 @@ public class DDMStorageLinkSoap implements Serializable {
 	public static DDMStorageLinkSoap toSoapModel(DDMStorageLink model) {
 		DDMStorageLinkSoap soapModel = new DDMStorageLinkSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setStorageLinkId(model.getStorageLinkId());
 		soapModel.setClassNameId(model.getClassNameId());
@@ -89,6 +90,14 @@ public class DDMStorageLinkSoap implements Serializable {
 		setStorageLinkId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -129,6 +138,7 @@ public class DDMStorageLinkSoap implements Serializable {
 		_structureId = structureId;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _storageLinkId;
 	private long _classNameId;

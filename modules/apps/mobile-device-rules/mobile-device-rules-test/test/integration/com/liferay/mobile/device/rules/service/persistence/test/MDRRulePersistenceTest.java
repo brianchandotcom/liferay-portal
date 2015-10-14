@@ -124,11 +124,11 @@ public class MDRRulePersistenceTest {
 
 		MDRRule newMDRRule = _persistence.create(pk);
 
+		newMDRRule.setCompanyId(RandomTestUtil.nextLong());
+
 		newMDRRule.setUuid(RandomTestUtil.randomString());
 
 		newMDRRule.setGroupId(RandomTestUtil.nextLong());
-
-		newMDRRule.setCompanyId(RandomTestUtil.nextLong());
 
 		newMDRRule.setUserId(RandomTestUtil.nextLong());
 
@@ -154,12 +154,12 @@ public class MDRRulePersistenceTest {
 
 		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
+		Assert.assertEquals(existingMDRRule.getCompanyId(),
+			newMDRRule.getCompanyId());
 		Assert.assertEquals(existingMDRRule.getUuid(), newMDRRule.getUuid());
 		Assert.assertEquals(existingMDRRule.getRuleId(), newMDRRule.getRuleId());
 		Assert.assertEquals(existingMDRRule.getGroupId(),
 			newMDRRule.getGroupId());
-		Assert.assertEquals(existingMDRRule.getCompanyId(),
-			newMDRRule.getCompanyId());
 		Assert.assertEquals(existingMDRRule.getUserId(), newMDRRule.getUserId());
 		Assert.assertEquals(existingMDRRule.getUserName(),
 			newMDRRule.getUserName());
@@ -239,9 +239,9 @@ public class MDRRulePersistenceTest {
 	}
 
 	protected OrderByComparator<MDRRule> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MDRRule", "uuid", true,
-			"ruleId", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
+		return OrderByComparatorFactoryUtil.create("MDRRule", "companyId",
+			true, "uuid", true, "ruleId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"ruleGroupId", true, "name", true, "description", true, "type",
 			true, "lastPublishDate", true);
 	}
@@ -457,11 +457,11 @@ public class MDRRulePersistenceTest {
 
 		MDRRule mdrRule = _persistence.create(pk);
 
+		mdrRule.setCompanyId(RandomTestUtil.nextLong());
+
 		mdrRule.setUuid(RandomTestUtil.randomString());
 
 		mdrRule.setGroupId(RandomTestUtil.nextLong());
-
-		mdrRule.setCompanyId(RandomTestUtil.nextLong());
 
 		mdrRule.setUserId(RandomTestUtil.nextLong());
 

@@ -124,11 +124,11 @@ public class BookmarksFolderPersistenceTest {
 
 		BookmarksFolder newBookmarksFolder = _persistence.create(pk);
 
+		newBookmarksFolder.setCompanyId(RandomTestUtil.nextLong());
+
 		newBookmarksFolder.setUuid(RandomTestUtil.randomString());
 
 		newBookmarksFolder.setGroupId(RandomTestUtil.nextLong());
-
-		newBookmarksFolder.setCompanyId(RandomTestUtil.nextLong());
 
 		newBookmarksFolder.setUserId(RandomTestUtil.nextLong());
 
@@ -162,14 +162,14 @@ public class BookmarksFolderPersistenceTest {
 
 		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
+		Assert.assertEquals(existingBookmarksFolder.getCompanyId(),
+			newBookmarksFolder.getCompanyId());
 		Assert.assertEquals(existingBookmarksFolder.getUuid(),
 			newBookmarksFolder.getUuid());
 		Assert.assertEquals(existingBookmarksFolder.getFolderId(),
 			newBookmarksFolder.getFolderId());
 		Assert.assertEquals(existingBookmarksFolder.getGroupId(),
 			newBookmarksFolder.getGroupId());
-		Assert.assertEquals(existingBookmarksFolder.getCompanyId(),
-			newBookmarksFolder.getCompanyId());
 		Assert.assertEquals(existingBookmarksFolder.getUserId(),
 			newBookmarksFolder.getUserId());
 		Assert.assertEquals(existingBookmarksFolder.getUserName(),
@@ -239,13 +239,6 @@ public class BookmarksFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
@@ -253,11 +246,10 @@ public class BookmarksFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-		_persistence.countByG_P(0L, 0L);
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -266,6 +258,14 @@ public class BookmarksFolderPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByC_NotS(0L, 0);
+	}
+
+	@Test
+	public void testCountByG_P() throws Exception {
+		_persistence.countByG_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_P(0L, 0L);
 	}
 
 	@Test
@@ -322,8 +322,8 @@ public class BookmarksFolderPersistenceTest {
 	}
 
 	protected OrderByComparator<BookmarksFolder> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("BookmarksFolder", "uuid",
-			true, "folderId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("BookmarksFolder",
+			"companyId", true, "uuid", true, "folderId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "resourceBlockId", true, "parentFolderId",
 			true, "treePath", true, "name", true, "description", true,
@@ -544,11 +544,11 @@ public class BookmarksFolderPersistenceTest {
 
 		BookmarksFolder bookmarksFolder = _persistence.create(pk);
 
+		bookmarksFolder.setCompanyId(RandomTestUtil.nextLong());
+
 		bookmarksFolder.setUuid(RandomTestUtil.randomString());
 
 		bookmarksFolder.setGroupId(RandomTestUtil.nextLong());
-
-		bookmarksFolder.setCompanyId(RandomTestUtil.nextLong());
 
 		bookmarksFolder.setUserId(RandomTestUtil.nextLong());
 

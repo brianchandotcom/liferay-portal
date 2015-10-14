@@ -116,11 +116,11 @@ public class SubscriptionPersistenceTest {
 
 		Subscription newSubscription = _persistence.create(pk);
 
+		newSubscription.setCompanyId(RandomTestUtil.nextLong());
+
 		newSubscription.setMvccVersion(RandomTestUtil.nextLong());
 
 		newSubscription.setGroupId(RandomTestUtil.nextLong());
-
-		newSubscription.setCompanyId(RandomTestUtil.nextLong());
 
 		newSubscription.setUserId(RandomTestUtil.nextLong());
 
@@ -140,14 +140,14 @@ public class SubscriptionPersistenceTest {
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
 
+		Assert.assertEquals(existingSubscription.getCompanyId(),
+			newSubscription.getCompanyId());
 		Assert.assertEquals(existingSubscription.getMvccVersion(),
 			newSubscription.getMvccVersion());
 		Assert.assertEquals(existingSubscription.getSubscriptionId(),
 			newSubscription.getSubscriptionId());
 		Assert.assertEquals(existingSubscription.getGroupId(),
 			newSubscription.getGroupId());
-		Assert.assertEquals(existingSubscription.getCompanyId(),
-			newSubscription.getCompanyId());
 		Assert.assertEquals(existingSubscription.getUserId(),
 			newSubscription.getUserId());
 		Assert.assertEquals(existingSubscription.getUserName(),
@@ -236,10 +236,10 @@ public class SubscriptionPersistenceTest {
 	}
 
 	protected OrderByComparator<Subscription> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Subscription",
-			"mvccVersion", true, "subscriptionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+		return OrderByComparatorFactoryUtil.create("Subscription", "companyId",
+			true, "mvccVersion", true, "subscriptionId", true, "groupId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"frequency", true);
 	}
 
@@ -464,11 +464,11 @@ public class SubscriptionPersistenceTest {
 
 		Subscription subscription = _persistence.create(pk);
 
+		subscription.setCompanyId(RandomTestUtil.nextLong());
+
 		subscription.setMvccVersion(RandomTestUtil.nextLong());
 
 		subscription.setGroupId(RandomTestUtil.nextLong());
-
-		subscription.setCompanyId(RandomTestUtil.nextLong());
 
 		subscription.setUserId(RandomTestUtil.nextLong());
 

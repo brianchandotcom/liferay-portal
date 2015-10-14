@@ -118,11 +118,11 @@ public class SocialRequestPersistenceTest {
 
 		SocialRequest newSocialRequest = _persistence.create(pk);
 
+		newSocialRequest.setCompanyId(RandomTestUtil.nextLong());
+
 		newSocialRequest.setUuid(RandomTestUtil.randomString());
 
 		newSocialRequest.setGroupId(RandomTestUtil.nextLong());
-
-		newSocialRequest.setCompanyId(RandomTestUtil.nextLong());
 
 		newSocialRequest.setUserId(RandomTestUtil.nextLong());
 
@@ -146,14 +146,14 @@ public class SocialRequestPersistenceTest {
 
 		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
 
+		Assert.assertEquals(existingSocialRequest.getCompanyId(),
+			newSocialRequest.getCompanyId());
 		Assert.assertEquals(existingSocialRequest.getUuid(),
 			newSocialRequest.getUuid());
 		Assert.assertEquals(existingSocialRequest.getRequestId(),
 			newSocialRequest.getRequestId());
 		Assert.assertEquals(existingSocialRequest.getGroupId(),
 			newSocialRequest.getGroupId());
-		Assert.assertEquals(existingSocialRequest.getCompanyId(),
-			newSocialRequest.getCompanyId());
 		Assert.assertEquals(existingSocialRequest.getUserId(),
 			newSocialRequest.getUserId());
 		Assert.assertEquals(existingSocialRequest.getCreateDate(),
@@ -296,9 +296,9 @@ public class SocialRequestPersistenceTest {
 	}
 
 	protected OrderByComparator<SocialRequest> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SocialRequest", "uuid",
-			true, "requestId", true, "groupId", true, "companyId", true,
-			"userId", true, "createDate", true, "modifiedDate", true,
+		return OrderByComparatorFactoryUtil.create("SocialRequest",
+			"companyId", true, "uuid", true, "requestId", true, "groupId",
+			true, "userId", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "type", true, "extraData",
 			true, "receiverUserId", true, "status", true);
 	}
@@ -533,11 +533,11 @@ public class SocialRequestPersistenceTest {
 
 		SocialRequest socialRequest = _persistence.create(pk);
 
+		socialRequest.setCompanyId(RandomTestUtil.nextLong());
+
 		socialRequest.setUuid(RandomTestUtil.randomString());
 
 		socialRequest.setGroupId(RandomTestUtil.nextLong());
-
-		socialRequest.setCompanyId(RandomTestUtil.nextLong());
 
 		socialRequest.setUserId(RandomTestUtil.nextLong());
 

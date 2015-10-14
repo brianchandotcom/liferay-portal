@@ -117,11 +117,11 @@ public class LayoutSetPersistenceTest {
 
 		LayoutSet newLayoutSet = _persistence.create(pk);
 
+		newLayoutSet.setCompanyId(RandomTestUtil.nextLong());
+
 		newLayoutSet.setMvccVersion(RandomTestUtil.nextLong());
 
 		newLayoutSet.setGroupId(RandomTestUtil.nextLong());
-
-		newLayoutSet.setCompanyId(RandomTestUtil.nextLong());
 
 		newLayoutSet.setCreateDate(RandomTestUtil.nextDate());
 
@@ -153,14 +153,14 @@ public class LayoutSetPersistenceTest {
 
 		LayoutSet existingLayoutSet = _persistence.findByPrimaryKey(newLayoutSet.getPrimaryKey());
 
+		Assert.assertEquals(existingLayoutSet.getCompanyId(),
+			newLayoutSet.getCompanyId());
 		Assert.assertEquals(existingLayoutSet.getMvccVersion(),
 			newLayoutSet.getMvccVersion());
 		Assert.assertEquals(existingLayoutSet.getLayoutSetId(),
 			newLayoutSet.getLayoutSetId());
 		Assert.assertEquals(existingLayoutSet.getGroupId(),
 			newLayoutSet.getGroupId());
-		Assert.assertEquals(existingLayoutSet.getCompanyId(),
-			newLayoutSet.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutSet.getCreateDate()),
 			Time.getShortTimestamp(newLayoutSet.getCreateDate()));
@@ -237,8 +237,8 @@ public class LayoutSetPersistenceTest {
 	}
 
 	protected OrderByComparator<LayoutSet> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("LayoutSet", "mvccVersion",
-			true, "layoutSetId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("LayoutSet", "companyId",
+			true, "mvccVersion", true, "layoutSetId", true, "groupId", true,
 			"createDate", true, "modifiedDate", true, "privateLayout", true,
 			"logoId", true, "themeId", true, "colorSchemeId", true,
 			"wapThemeId", true, "wapColorSchemeId", true, "pageCount", true,
@@ -460,11 +460,11 @@ public class LayoutSetPersistenceTest {
 
 		LayoutSet layoutSet = _persistence.create(pk);
 
+		layoutSet.setCompanyId(RandomTestUtil.nextLong());
+
 		layoutSet.setMvccVersion(RandomTestUtil.nextLong());
 
 		layoutSet.setGroupId(RandomTestUtil.nextLong());
-
-		layoutSet.setCompanyId(RandomTestUtil.nextLong());
 
 		layoutSet.setCreateDate(RandomTestUtil.nextDate());
 

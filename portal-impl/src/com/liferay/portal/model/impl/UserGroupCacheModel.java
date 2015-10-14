@@ -81,14 +81,14 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", userGroupId=");
 		sb.append(userGroupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -116,6 +116,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	public UserGroup toEntityModel() {
 		UserGroupImpl userGroupImpl = new UserGroupImpl();
 
+		userGroupImpl.setCompanyId(companyId);
 		userGroupImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -126,7 +127,6 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		}
 
 		userGroupImpl.setUserGroupId(userGroupId);
-		userGroupImpl.setCompanyId(companyId);
 		userGroupImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -182,10 +182,10 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		userGroupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -200,6 +200,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -210,7 +211,6 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		}
 
 		objectOutput.writeLong(userGroupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -242,10 +242,10 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long userGroupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

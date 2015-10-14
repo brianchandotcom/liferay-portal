@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface UserNotificationEventModel extends BaseModel<UserNotificationEvent>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +58,22 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	 * @param primaryKey the primary key of this user notification event
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this user notification event.
+	 *
+	 * @return the company ID of this user notification event
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user notification event.
+	 *
+	 * @param companyId the company ID of this user notification event
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this user notification event.
@@ -103,20 +119,6 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	 * @param userNotificationEventId the user notification event ID of this user notification event
 	 */
 	public void setUserNotificationEventId(long userNotificationEventId);
-
-	/**
-	 * Returns the company ID of this user notification event.
-	 *
-	 * @return the company ID of this user notification event
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this user notification event.
-	 *
-	 * @param companyId the company ID of this user notification event
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this user notification event.

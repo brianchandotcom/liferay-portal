@@ -1,7 +1,7 @@
 create table Marketplace_App (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	appId LONG not null primary key,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -15,6 +15,7 @@ create table Marketplace_App (
 );
 
 create table Marketplace_Module (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	moduleId LONG not null primary key,
 	appId LONG,

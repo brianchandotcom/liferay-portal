@@ -5404,6 +5404,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		resourcePermission.setNew(true);
 		resourcePermission.setPrimaryKey(resourcePermissionId);
 
+		resourcePermission.setCompanyId(0);
+
 		return resourcePermission;
 	}
 
@@ -5691,9 +5693,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		resourcePermissionImpl.setNew(resourcePermission.isNew());
 		resourcePermissionImpl.setPrimaryKey(resourcePermission.getPrimaryKey());
 
+		resourcePermissionImpl.setCompanyId(resourcePermission.getCompanyId());
 		resourcePermissionImpl.setMvccVersion(resourcePermission.getMvccVersion());
 		resourcePermissionImpl.setResourcePermissionId(resourcePermission.getResourcePermissionId());
-		resourcePermissionImpl.setCompanyId(resourcePermission.getCompanyId());
 		resourcePermissionImpl.setName(resourcePermission.getName());
 		resourcePermissionImpl.setScope(resourcePermission.getScope());
 		resourcePermissionImpl.setPrimKey(resourcePermission.getPrimKey());

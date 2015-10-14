@@ -120,11 +120,11 @@ public class MBThreadPersistenceTest {
 
 		MBThread newMBThread = _persistence.create(pk);
 
+		newMBThread.setCompanyId(RandomTestUtil.nextLong());
+
 		newMBThread.setUuid(RandomTestUtil.randomString());
 
 		newMBThread.setGroupId(RandomTestUtil.nextLong());
-
-		newMBThread.setCompanyId(RandomTestUtil.nextLong());
 
 		newMBThread.setUserId(RandomTestUtil.nextLong());
 
@@ -166,13 +166,13 @@ public class MBThreadPersistenceTest {
 
 		MBThread existingMBThread = _persistence.findByPrimaryKey(newMBThread.getPrimaryKey());
 
+		Assert.assertEquals(existingMBThread.getCompanyId(),
+			newMBThread.getCompanyId());
 		Assert.assertEquals(existingMBThread.getUuid(), newMBThread.getUuid());
 		Assert.assertEquals(existingMBThread.getThreadId(),
 			newMBThread.getThreadId());
 		Assert.assertEquals(existingMBThread.getGroupId(),
 			newMBThread.getGroupId());
-		Assert.assertEquals(existingMBThread.getCompanyId(),
-			newMBThread.getCompanyId());
 		Assert.assertEquals(existingMBThread.getUserId(),
 			newMBThread.getUserId());
 		Assert.assertEquals(existingMBThread.getUserName(),
@@ -386,8 +386,8 @@ public class MBThreadPersistenceTest {
 	}
 
 	protected OrderByComparator<MBThread> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MBThread", "uuid", true,
-			"threadId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("MBThread", "companyId",
+			true, "uuid", true, "threadId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"categoryId", true, "rootMessageId", true, "rootMessageUserId",
 			true, "messageCount", true, "viewCount", true, "lastPostByUserId",
@@ -613,11 +613,11 @@ public class MBThreadPersistenceTest {
 
 		MBThread mbThread = _persistence.create(pk);
 
+		mbThread.setCompanyId(RandomTestUtil.nextLong());
+
 		mbThread.setUuid(RandomTestUtil.randomString());
 
 		mbThread.setGroupId(RandomTestUtil.nextLong());
-
-		mbThread.setCompanyId(RandomTestUtil.nextLong());
 
 		mbThread.setUserId(RandomTestUtil.nextLong());
 

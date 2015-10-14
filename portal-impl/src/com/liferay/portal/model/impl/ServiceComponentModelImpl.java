@@ -59,6 +59,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	 */
 	public static final String TABLE_NAME = "ServiceComponent";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "serviceComponentId", Types.BIGINT },
 			{ "buildNamespace", Types.VARCHAR },
@@ -69,6 +70,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("serviceComponentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("buildNamespace", Types.VARCHAR);
@@ -77,7 +79,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (mvccVersion LONG default 0,serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (companyId LONG,mvccVersion LONG default 0,serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table ServiceComponent";
 	public static final String ORDER_BY_JPQL = " ORDER BY serviceComponent.buildNamespace DESC, serviceComponent.buildNumber DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ServiceComponent.buildNamespace DESC, ServiceComponent.buildNumber DESC";
@@ -135,6 +137,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("serviceComponentId", getServiceComponentId());
 		attributes.put("buildNamespace", getBuildNamespace());
@@ -150,6 +153,12 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -185,6 +194,16 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		if (data != null) {
 			setData(data);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -285,7 +304,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ServiceComponent.class.getName(), getPrimaryKey());
 	}
 
@@ -310,6 +329,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public Object clone() {
 		ServiceComponentImpl serviceComponentImpl = new ServiceComponentImpl();
 
+		serviceComponentImpl.setCompanyId(getCompanyId());
 		serviceComponentImpl.setMvccVersion(getMvccVersion());
 		serviceComponentImpl.setServiceComponentId(getServiceComponentId());
 		serviceComponentImpl.setBuildNamespace(getBuildNamespace());
@@ -408,6 +428,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public CacheModel<ServiceComponent> toCacheModel() {
 		ServiceComponentCacheModel serviceComponentCacheModel = new ServiceComponentCacheModel();
 
+		serviceComponentCacheModel.companyId = getCompanyId();
+
 		serviceComponentCacheModel.mvccVersion = getMvccVersion();
 
 		serviceComponentCacheModel.serviceComponentId = getServiceComponentId();
@@ -437,9 +459,11 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", serviceComponentId=");
 		sb.append(getServiceComponentId());
@@ -458,12 +482,16 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ServiceComponent");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
@@ -498,6 +526,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ServiceComponent.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _serviceComponentId;
 	private String _buildNamespace;

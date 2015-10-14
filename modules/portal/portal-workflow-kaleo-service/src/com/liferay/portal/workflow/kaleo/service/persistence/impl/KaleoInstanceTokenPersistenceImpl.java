@@ -2939,6 +2939,8 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 		kaleoInstanceToken.setNew(true);
 		kaleoInstanceToken.setPrimaryKey(kaleoInstanceTokenId);
 
+		kaleoInstanceToken.setCompanyId(0);
+
 		return kaleoInstanceToken;
 	}
 
@@ -3212,9 +3214,9 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 		kaleoInstanceTokenImpl.setNew(kaleoInstanceToken.isNew());
 		kaleoInstanceTokenImpl.setPrimaryKey(kaleoInstanceToken.getPrimaryKey());
 
+		kaleoInstanceTokenImpl.setCompanyId(kaleoInstanceToken.getCompanyId());
 		kaleoInstanceTokenImpl.setKaleoInstanceTokenId(kaleoInstanceToken.getKaleoInstanceTokenId());
 		kaleoInstanceTokenImpl.setGroupId(kaleoInstanceToken.getGroupId());
-		kaleoInstanceTokenImpl.setCompanyId(kaleoInstanceToken.getCompanyId());
 		kaleoInstanceTokenImpl.setUserId(kaleoInstanceToken.getUserId());
 		kaleoInstanceTokenImpl.setUserName(kaleoInstanceToken.getUserName());
 		kaleoInstanceTokenImpl.setCreateDate(kaleoInstanceToken.getCreateDate());

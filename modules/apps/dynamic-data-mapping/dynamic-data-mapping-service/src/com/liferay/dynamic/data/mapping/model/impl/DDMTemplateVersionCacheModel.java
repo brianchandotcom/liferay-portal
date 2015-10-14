@@ -68,12 +68,12 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{templateVersionId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", templateVersionId=");
 		sb.append(templateVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -113,9 +113,9 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 	public DDMTemplateVersion toEntityModel() {
 		DDMTemplateVersionImpl ddmTemplateVersionImpl = new DDMTemplateVersionImpl();
 
+		ddmTemplateVersionImpl.setCompanyId(companyId);
 		ddmTemplateVersionImpl.setTemplateVersionId(templateVersionId);
 		ddmTemplateVersionImpl.setGroupId(groupId);
-		ddmTemplateVersionImpl.setCompanyId(companyId);
 		ddmTemplateVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -195,9 +195,9 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		templateVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -218,9 +218,9 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(templateVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -283,9 +283,9 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public long templateVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

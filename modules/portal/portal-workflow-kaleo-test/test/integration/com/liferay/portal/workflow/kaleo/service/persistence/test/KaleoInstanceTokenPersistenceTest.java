@@ -120,9 +120,9 @@ public class KaleoInstanceTokenPersistenceTest {
 
 		KaleoInstanceToken newKaleoInstanceToken = _persistence.create(pk);
 
-		newKaleoInstanceToken.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoInstanceToken.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoInstanceToken.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoInstanceToken.setUserId(RandomTestUtil.nextLong());
 
@@ -154,12 +154,12 @@ public class KaleoInstanceTokenPersistenceTest {
 
 		KaleoInstanceToken existingKaleoInstanceToken = _persistence.findByPrimaryKey(newKaleoInstanceToken.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoInstanceToken.getCompanyId(),
+			newKaleoInstanceToken.getCompanyId());
 		Assert.assertEquals(existingKaleoInstanceToken.getKaleoInstanceTokenId(),
 			newKaleoInstanceToken.getKaleoInstanceTokenId());
 		Assert.assertEquals(existingKaleoInstanceToken.getGroupId(),
 			newKaleoInstanceToken.getGroupId());
-		Assert.assertEquals(existingKaleoInstanceToken.getCompanyId(),
-			newKaleoInstanceToken.getCompanyId());
 		Assert.assertEquals(existingKaleoInstanceToken.getUserId(),
 			newKaleoInstanceToken.getUserId());
 		Assert.assertEquals(existingKaleoInstanceToken.getUserName(),
@@ -252,7 +252,7 @@ public class KaleoInstanceTokenPersistenceTest {
 
 	protected OrderByComparator<KaleoInstanceToken> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoInstanceToken",
-			"kaleoInstanceTokenId", true, "groupId", true, "companyId", true,
+			"companyId", true, "kaleoInstanceTokenId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoDefinitionId", true, "kaleoInstanceId",
 			true, "parentKaleoInstanceTokenId", true, "currentKaleoNodeId",
@@ -461,9 +461,9 @@ public class KaleoInstanceTokenPersistenceTest {
 
 		KaleoInstanceToken kaleoInstanceToken = _persistence.create(pk);
 
-		kaleoInstanceToken.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoInstanceToken.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoInstanceToken.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoInstanceToken.setUserId(RandomTestUtil.nextLong());
 

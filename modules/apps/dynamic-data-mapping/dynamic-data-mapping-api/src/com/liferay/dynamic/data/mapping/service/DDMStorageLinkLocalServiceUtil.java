@@ -206,6 +206,19 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().fetchDDMStorageLink(storageLinkId);
 	}
 
+	/**
+	* Returns the d d m storage link with the matching UUID and company.
+	*
+	* @param uuid the d d m storage link's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .fetchDDMStorageLinkByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -236,6 +249,20 @@ public class DDMStorageLinkLocalServiceUtil {
 		long storageLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMStorageLink(storageLinkId);
+	}
+
+	/**
+	* Returns the d d m storage link with the matching UUID and company.
+	*
+	* @param uuid the d d m storage link's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d m storage link
+	* @throws PortalException if a matching d d m storage link could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDMStorageLinkByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

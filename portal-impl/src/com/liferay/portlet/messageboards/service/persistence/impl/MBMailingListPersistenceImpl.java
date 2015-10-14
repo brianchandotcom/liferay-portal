@@ -2404,6 +2404,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		mbMailingList.setUuid(uuid);
 
+		mbMailingList.setCompanyId(0);
+
 		return mbMailingList;
 	}
 
@@ -2635,10 +2637,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		mbMailingListImpl.setNew(mbMailingList.isNew());
 		mbMailingListImpl.setPrimaryKey(mbMailingList.getPrimaryKey());
 
+		mbMailingListImpl.setCompanyId(mbMailingList.getCompanyId());
 		mbMailingListImpl.setUuid(mbMailingList.getUuid());
 		mbMailingListImpl.setMailingListId(mbMailingList.getMailingListId());
 		mbMailingListImpl.setGroupId(mbMailingList.getGroupId());
-		mbMailingListImpl.setCompanyId(mbMailingList.getCompanyId());
 		mbMailingListImpl.setUserId(mbMailingList.getUserId());
 		mbMailingListImpl.setUserName(mbMailingList.getUserName());
 		mbMailingListImpl.setCreateDate(mbMailingList.getCreateDate());

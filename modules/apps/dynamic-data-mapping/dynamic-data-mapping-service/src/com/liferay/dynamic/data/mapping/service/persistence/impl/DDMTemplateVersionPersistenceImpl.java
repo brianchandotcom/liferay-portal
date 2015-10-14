@@ -1552,6 +1552,8 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		ddmTemplateVersion.setNew(true);
 		ddmTemplateVersion.setPrimaryKey(templateVersionId);
 
+		ddmTemplateVersion.setCompanyId(0);
+
 		return ddmTemplateVersion;
 	}
 
@@ -1739,9 +1741,9 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		ddmTemplateVersionImpl.setNew(ddmTemplateVersion.isNew());
 		ddmTemplateVersionImpl.setPrimaryKey(ddmTemplateVersion.getPrimaryKey());
 
+		ddmTemplateVersionImpl.setCompanyId(ddmTemplateVersion.getCompanyId());
 		ddmTemplateVersionImpl.setTemplateVersionId(ddmTemplateVersion.getTemplateVersionId());
 		ddmTemplateVersionImpl.setGroupId(ddmTemplateVersion.getGroupId());
-		ddmTemplateVersionImpl.setCompanyId(ddmTemplateVersion.getCompanyId());
 		ddmTemplateVersionImpl.setUserId(ddmTemplateVersion.getUserId());
 		ddmTemplateVersionImpl.setUserName(ddmTemplateVersion.getUserName());
 		ddmTemplateVersionImpl.setCreateDate(ddmTemplateVersion.getCreateDate());

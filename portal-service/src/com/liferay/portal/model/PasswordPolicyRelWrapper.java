@@ -51,6 +51,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("passwordPolicyRelId", getPasswordPolicyRelId());
 		attributes.put("passwordPolicyId", getPasswordPolicyId());
@@ -62,6 +63,12 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -132,6 +139,16 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	@Override
 	public long getClassPK() {
 		return _passwordPolicyRel.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this password policy rel.
+	*
+	* @return the company ID of this password policy rel
+	*/
+	@Override
+	public long getCompanyId() {
+		return _passwordPolicyRel.getCompanyId();
 	}
 
 	@Override
@@ -237,6 +254,16 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	@Override
 	public void setClassPK(long classPK) {
 		_passwordPolicyRel.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this password policy rel.
+	*
+	* @param companyId the company ID of this password policy rel
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_passwordPolicyRel.setCompanyId(companyId);
 	}
 
 	@Override

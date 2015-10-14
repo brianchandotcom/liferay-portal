@@ -71,9 +71,9 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	 */
 	public static final String TABLE_NAME = "ShoppingCoupon";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "couponId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -93,9 +93,9 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("couponId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -113,7 +113,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		TABLE_COLUMNS_MAP.put("discountType", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ShoppingCoupon (couponId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name VARCHAR(75) null,description STRING null,startDate DATE null,endDate DATE null,active_ BOOLEAN,limitCategories STRING null,limitSkus STRING null,minOrder DOUBLE,discount DOUBLE,discountType VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table ShoppingCoupon (companyId LONG,couponId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name VARCHAR(75) null,description STRING null,startDate DATE null,endDate DATE null,active_ BOOLEAN,limitCategories STRING null,limitSkus STRING null,minOrder DOUBLE,discount DOUBLE,discountType VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingCoupon";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingCoupon.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ShoppingCoupon.createDate ASC";
@@ -146,9 +146,9 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 		ShoppingCoupon model = new ShoppingCouponImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setCouponId(soapModel.getCouponId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -228,9 +228,9 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("couponId", getCouponId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -255,6 +255,12 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long couponId = (Long)attributes.get("couponId");
 
 		if (couponId != null) {
@@ -265,12 +271,6 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -364,6 +364,17 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getCouponId() {
@@ -396,17 +407,6 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -679,9 +679,9 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	public Object clone() {
 		ShoppingCouponImpl shoppingCouponImpl = new ShoppingCouponImpl();
 
+		shoppingCouponImpl.setCompanyId(getCompanyId());
 		shoppingCouponImpl.setCouponId(getCouponId());
 		shoppingCouponImpl.setGroupId(getGroupId());
-		shoppingCouponImpl.setCompanyId(getCompanyId());
 		shoppingCouponImpl.setUserId(getUserId());
 		shoppingCouponImpl.setUserName(getUserName());
 		shoppingCouponImpl.setCreateDate(getCreateDate());
@@ -773,11 +773,11 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	public CacheModel<ShoppingCoupon> toCacheModel() {
 		ShoppingCouponCacheModel shoppingCouponCacheModel = new ShoppingCouponCacheModel();
 
+		shoppingCouponCacheModel.companyId = getCompanyId();
+
 		shoppingCouponCacheModel.couponId = getCouponId();
 
 		shoppingCouponCacheModel.groupId = getGroupId();
-
-		shoppingCouponCacheModel.companyId = getCompanyId();
 
 		shoppingCouponCacheModel.userId = getUserId();
 
@@ -886,12 +886,12 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{couponId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", couponId=");
 		sb.append(getCouponId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -936,16 +936,16 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>couponId</column-name><column-value><![CDATA[");
 		sb.append(getCouponId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1017,11 +1017,11 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ShoppingCoupon.class
 		};
+	private long _companyId;
 	private long _couponId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

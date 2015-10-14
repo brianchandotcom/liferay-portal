@@ -34,9 +34,9 @@ public class AppSoap implements Serializable {
 	public static AppSoap toSoapModel(App model) {
 		AppSoap soapModel = new AppSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setAppId(model.getAppId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -99,6 +99,14 @@ public class AppSoap implements Serializable {
 		setAppId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -113,14 +121,6 @@ public class AppSoap implements Serializable {
 
 	public void setAppId(long appId) {
 		_appId = appId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -203,9 +203,9 @@ public class AppSoap implements Serializable {
 		_version = version;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _appId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

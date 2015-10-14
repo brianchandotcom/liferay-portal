@@ -147,10 +147,10 @@ public class MicroblogsEntryPersistenceTest {
 
 		MicroblogsEntry existingMicroblogsEntry = _persistence.findByPrimaryKey(newMicroblogsEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingMicroblogsEntry.getMicroblogsEntryId(),
-			newMicroblogsEntry.getMicroblogsEntryId());
 		Assert.assertEquals(existingMicroblogsEntry.getCompanyId(),
 			newMicroblogsEntry.getCompanyId());
+		Assert.assertEquals(existingMicroblogsEntry.getMicroblogsEntryId(),
+			newMicroblogsEntry.getMicroblogsEntryId());
 		Assert.assertEquals(existingMicroblogsEntry.getUserId(),
 			newMicroblogsEntry.getUserId());
 		Assert.assertEquals(existingMicroblogsEntry.getUserName(),
@@ -275,7 +275,7 @@ public class MicroblogsEntryPersistenceTest {
 
 	protected OrderByComparator<MicroblogsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MicroblogsEntry",
-			"microblogsEntryId", true, "companyId", true, "userId", true,
+			"companyId", true, "microblogsEntryId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"creatorClassNameId", true, "creatorClassPK", true, "content",
 			true, "type", true, "parentMicroblogsEntryId", true,

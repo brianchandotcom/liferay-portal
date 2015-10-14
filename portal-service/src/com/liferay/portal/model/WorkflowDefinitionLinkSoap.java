@@ -34,10 +34,10 @@ public class WorkflowDefinitionLinkSoap implements Serializable {
 		WorkflowDefinitionLink model) {
 		WorkflowDefinitionLinkSoap soapModel = new WorkflowDefinitionLinkSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setWorkflowDefinitionLinkId(model.getWorkflowDefinitionLinkId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -102,6 +102,14 @@ public class WorkflowDefinitionLinkSoap implements Serializable {
 		setWorkflowDefinitionLinkId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -124,14 +132,6 @@ public class WorkflowDefinitionLinkSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -206,10 +206,10 @@ public class WorkflowDefinitionLinkSoap implements Serializable {
 		_workflowDefinitionVersion = workflowDefinitionVersion;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _workflowDefinitionLinkId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
-	StagedAuditedModel {
+	PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
 	 * @param primaryKey the primary key of this user group
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this user group.
+	 *
+	 * @return the company ID of this user group
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user group.
+	 *
+	 * @param companyId the company ID of this user group
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this user group.
@@ -107,22 +123,6 @@ public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
 	 * @param userGroupId the user group ID of this user group
 	 */
 	public void setUserGroupId(long userGroupId);
-
-	/**
-	 * Returns the company ID of this user group.
-	 *
-	 * @return the company ID of this user group
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this user group.
-	 *
-	 * @param companyId the company ID of this user group
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this user group.

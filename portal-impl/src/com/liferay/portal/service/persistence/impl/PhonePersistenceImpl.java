@@ -4034,6 +4034,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 		phone.setUuid(uuid);
 
+		phone.setCompanyId(0);
+
 		return phone;
 	}
 
@@ -4337,10 +4339,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		phoneImpl.setNew(phone.isNew());
 		phoneImpl.setPrimaryKey(phone.getPrimaryKey());
 
+		phoneImpl.setCompanyId(phone.getCompanyId());
 		phoneImpl.setMvccVersion(phone.getMvccVersion());
 		phoneImpl.setUuid(phone.getUuid());
 		phoneImpl.setPhoneId(phone.getPhoneId());
-		phoneImpl.setCompanyId(phone.getCompanyId());
 		phoneImpl.setUserId(phone.getUserId());
 		phoneImpl.setUserName(phone.getUserName());
 		phoneImpl.setCreateDate(phone.getCreateDate());

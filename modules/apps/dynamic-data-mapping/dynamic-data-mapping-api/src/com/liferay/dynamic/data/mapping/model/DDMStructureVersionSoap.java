@@ -34,9 +34,9 @@ public class DDMStructureVersionSoap implements Serializable {
 	public static DDMStructureVersionSoap toSoapModel(DDMStructureVersion model) {
 		DDMStructureVersionSoap soapModel = new DDMStructureVersionSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setStructureVersionId(model.getStructureVersionId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -107,6 +107,14 @@ public class DDMStructureVersionSoap implements Serializable {
 		setStructureVersionId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getStructureVersionId() {
 		return _structureVersionId;
 	}
@@ -121,14 +129,6 @@ public class DDMStructureVersionSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -251,9 +251,9 @@ public class DDMStructureVersionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _companyId;
 	private long _structureVersionId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

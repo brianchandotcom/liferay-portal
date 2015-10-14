@@ -124,11 +124,11 @@ public class MDRRuleGroupPersistenceTest {
 
 		MDRRuleGroup newMDRRuleGroup = _persistence.create(pk);
 
+		newMDRRuleGroup.setCompanyId(RandomTestUtil.nextLong());
+
 		newMDRRuleGroup.setUuid(RandomTestUtil.randomString());
 
 		newMDRRuleGroup.setGroupId(RandomTestUtil.nextLong());
-
-		newMDRRuleGroup.setCompanyId(RandomTestUtil.nextLong());
 
 		newMDRRuleGroup.setUserId(RandomTestUtil.nextLong());
 
@@ -148,14 +148,14 @@ public class MDRRuleGroupPersistenceTest {
 
 		MDRRuleGroup existingMDRRuleGroup = _persistence.findByPrimaryKey(newMDRRuleGroup.getPrimaryKey());
 
+		Assert.assertEquals(existingMDRRuleGroup.getCompanyId(),
+			newMDRRuleGroup.getCompanyId());
 		Assert.assertEquals(existingMDRRuleGroup.getUuid(),
 			newMDRRuleGroup.getUuid());
 		Assert.assertEquals(existingMDRRuleGroup.getRuleGroupId(),
 			newMDRRuleGroup.getRuleGroupId());
 		Assert.assertEquals(existingMDRRuleGroup.getGroupId(),
 			newMDRRuleGroup.getGroupId());
-		Assert.assertEquals(existingMDRRuleGroup.getCompanyId(),
-			newMDRRuleGroup.getCompanyId());
 		Assert.assertEquals(existingMDRRuleGroup.getUserId(),
 			newMDRRuleGroup.getUserId());
 		Assert.assertEquals(existingMDRRuleGroup.getUserName(),
@@ -243,11 +243,10 @@ public class MDRRuleGroupPersistenceTest {
 	}
 
 	protected OrderByComparator<MDRRuleGroup> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MDRRuleGroup", "uuid",
-			true, "ruleGroupId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true,
-			"lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("MDRRuleGroup", "companyId",
+			true, "uuid", true, "ruleGroupId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"name", true, "description", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -463,11 +462,11 @@ public class MDRRuleGroupPersistenceTest {
 
 		MDRRuleGroup mdrRuleGroup = _persistence.create(pk);
 
+		mdrRuleGroup.setCompanyId(RandomTestUtil.nextLong());
+
 		mdrRuleGroup.setUuid(RandomTestUtil.randomString());
 
 		mdrRuleGroup.setGroupId(RandomTestUtil.nextLong());
-
-		mdrRuleGroup.setCompanyId(RandomTestUtil.nextLong());
 
 		mdrRuleGroup.setUserId(RandomTestUtil.nextLong());
 

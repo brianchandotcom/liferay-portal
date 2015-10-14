@@ -35,10 +35,10 @@ public class CalEventSoap implements Serializable {
 	public static CalEventSoap toSoapModel(CalEvent model) {
 		CalEventSoap soapModel = new CalEventSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setEventId(model.getEventId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -110,6 +110,14 @@ public class CalEventSoap implements Serializable {
 		setEventId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -132,14 +140,6 @@ public class CalEventSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -306,10 +306,10 @@ public class CalEventSoap implements Serializable {
 		_secondReminder = secondReminder;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _eventId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

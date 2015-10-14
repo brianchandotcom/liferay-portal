@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface SocialRelationModel extends BaseModel<SocialRelation> {
+public interface SocialRelationModel extends BaseModel<SocialRelation>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,6 +61,22 @@ public interface SocialRelationModel extends BaseModel<SocialRelation> {
 	 * @param primaryKey the primary key of this social relation
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this social relation.
+	 *
+	 * @return the company ID of this social relation
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this social relation.
+	 *
+	 * @param companyId the company ID of this social relation
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this social relation.
@@ -88,20 +106,6 @@ public interface SocialRelationModel extends BaseModel<SocialRelation> {
 	 * @param relationId the relation ID of this social relation
 	 */
 	public void setRelationId(long relationId);
-
-	/**
-	 * Returns the company ID of this social relation.
-	 *
-	 * @return the company ID of this social relation
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this social relation.
-	 *
-	 * @param companyId the company ID of this social relation
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the create date of this social relation.

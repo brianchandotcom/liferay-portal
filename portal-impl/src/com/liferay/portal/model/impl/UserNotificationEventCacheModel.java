@@ -79,14 +79,14 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", userNotificationEventId=");
 		sb.append(userNotificationEventId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", type=");
@@ -114,6 +114,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	public UserNotificationEvent toEntityModel() {
 		UserNotificationEventImpl userNotificationEventImpl = new UserNotificationEventImpl();
 
+		userNotificationEventImpl.setCompanyId(companyId);
 		userNotificationEventImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -124,7 +125,6 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		}
 
 		userNotificationEventImpl.setUserNotificationEventId(userNotificationEventId);
-		userNotificationEventImpl.setCompanyId(companyId);
 		userNotificationEventImpl.setUserId(userId);
 
 		if (type == null) {
@@ -156,10 +156,10 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		userNotificationEventId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		type = objectInput.readUTF();
 		timestamp = objectInput.readLong();
@@ -174,6 +174,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -184,7 +185,6 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		}
 
 		objectOutput.writeLong(userNotificationEventId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (type == null) {
@@ -210,10 +210,10 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		objectOutput.writeBoolean(archived);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long userNotificationEventId;
-	public long companyId;
 	public long userId;
 	public String type;
 	public long timestamp;

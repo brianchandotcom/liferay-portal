@@ -115,9 +115,9 @@ public class SocialActivitySetPersistenceTest {
 
 		SocialActivitySet newSocialActivitySet = _persistence.create(pk);
 
-		newSocialActivitySet.setGroupId(RandomTestUtil.nextLong());
-
 		newSocialActivitySet.setCompanyId(RandomTestUtil.nextLong());
+
+		newSocialActivitySet.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivitySet.setUserId(RandomTestUtil.nextLong());
 
@@ -139,12 +139,12 @@ public class SocialActivitySetPersistenceTest {
 
 		SocialActivitySet existingSocialActivitySet = _persistence.findByPrimaryKey(newSocialActivitySet.getPrimaryKey());
 
+		Assert.assertEquals(existingSocialActivitySet.getCompanyId(),
+			newSocialActivitySet.getCompanyId());
 		Assert.assertEquals(existingSocialActivitySet.getActivitySetId(),
 			newSocialActivitySet.getActivitySetId());
 		Assert.assertEquals(existingSocialActivitySet.getGroupId(),
 			newSocialActivitySet.getGroupId());
-		Assert.assertEquals(existingSocialActivitySet.getCompanyId(),
-			newSocialActivitySet.getCompanyId());
 		Assert.assertEquals(existingSocialActivitySet.getUserId(),
 			newSocialActivitySet.getUserId());
 		Assert.assertEquals(existingSocialActivitySet.getCreateDate(),
@@ -235,7 +235,7 @@ public class SocialActivitySetPersistenceTest {
 
 	protected OrderByComparator<SocialActivitySet> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivitySet",
-			"activitySetId", true, "groupId", true, "companyId", true,
+			"companyId", true, "activitySetId", true, "groupId", true,
 			"userId", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "type", true, "extraData",
 			true, "activityCount", true);
@@ -441,9 +441,9 @@ public class SocialActivitySetPersistenceTest {
 
 		SocialActivitySet socialActivitySet = _persistence.create(pk);
 
-		socialActivitySet.setGroupId(RandomTestUtil.nextLong());
-
 		socialActivitySet.setCompanyId(RandomTestUtil.nextLong());
+
+		socialActivitySet.setGroupId(RandomTestUtil.nextLong());
 
 		socialActivitySet.setUserId(RandomTestUtil.nextLong());
 

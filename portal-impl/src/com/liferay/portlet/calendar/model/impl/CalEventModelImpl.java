@@ -67,10 +67,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	 */
 	public static final String TABLE_NAME = "CalEvent";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "eventId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -94,10 +94,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("eventId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -119,7 +119,7 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		TABLE_COLUMNS_MAP.put("secondReminder", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CalEvent (uuid_ VARCHAR(75) null,eventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,description TEXT null,location STRING null,startDate DATE null,endDate DATE null,durationHour INTEGER,durationMinute INTEGER,allDay BOOLEAN,timeZoneSensitive BOOLEAN,type_ VARCHAR(75) null,repeating BOOLEAN,recurrence TEXT null,remindBy INTEGER,firstReminder INTEGER,secondReminder INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CalEvent (companyId LONG,uuid_ VARCHAR(75) null,eventId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,description TEXT null,location STRING null,startDate DATE null,endDate DATE null,durationHour INTEGER,durationMinute INTEGER,allDay BOOLEAN,timeZoneSensitive BOOLEAN,type_ VARCHAR(75) null,repeating BOOLEAN,recurrence TEXT null,remindBy INTEGER,firstReminder INTEGER,secondReminder INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CalEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY calEvent.startDate ASC, calEvent.title ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CalEvent.startDate ASC, CalEvent.title ASC";
@@ -183,10 +183,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("eventId", getEventId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -215,6 +215,12 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -231,12 +237,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -355,6 +355,28 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -407,28 +429,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -757,10 +757,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	public Object clone() {
 		CalEventImpl calEventImpl = new CalEventImpl();
 
+		calEventImpl.setCompanyId(getCompanyId());
 		calEventImpl.setUuid(getUuid());
 		calEventImpl.setEventId(getEventId());
 		calEventImpl.setGroupId(getGroupId());
-		calEventImpl.setCompanyId(getCompanyId());
 		calEventImpl.setUserId(getUserId());
 		calEventImpl.setUserName(getUserName());
 		calEventImpl.setCreateDate(getCreateDate());
@@ -846,15 +846,15 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	public void resetOriginalValues() {
 		CalEventModelImpl calEventModelImpl = this;
 
+		calEventModelImpl._originalCompanyId = calEventModelImpl._companyId;
+
+		calEventModelImpl._setOriginalCompanyId = false;
+
 		calEventModelImpl._originalUuid = calEventModelImpl._uuid;
 
 		calEventModelImpl._originalGroupId = calEventModelImpl._groupId;
 
 		calEventModelImpl._setOriginalGroupId = false;
-
-		calEventModelImpl._originalCompanyId = calEventModelImpl._companyId;
-
-		calEventModelImpl._setOriginalCompanyId = false;
 
 		calEventModelImpl._setModifiedDate = false;
 
@@ -875,6 +875,8 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	public CacheModel<CalEvent> toCacheModel() {
 		CalEventCacheModel calEventCacheModel = new CalEventCacheModel();
 
+		calEventCacheModel.companyId = getCompanyId();
+
 		calEventCacheModel.uuid = getUuid();
 
 		String uuid = calEventCacheModel.uuid;
@@ -886,8 +888,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		calEventCacheModel.eventId = getEventId();
 
 		calEventCacheModel.groupId = getGroupId();
-
-		calEventCacheModel.companyId = getCompanyId();
 
 		calEventCacheModel.userId = getUserId();
 
@@ -998,14 +998,14 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	public String toString() {
 		StringBundler sb = new StringBundler(47);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", eventId=");
 		sb.append(getEventId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1058,6 +1058,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1068,10 +1072,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1159,15 +1159,15 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CalEvent.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _eventId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

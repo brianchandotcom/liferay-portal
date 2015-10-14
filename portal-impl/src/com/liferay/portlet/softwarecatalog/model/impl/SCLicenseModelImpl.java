@@ -65,6 +65,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	 */
 	public static final String TABLE_NAME = "SCLicense";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "licenseId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "url", Types.VARCHAR },
@@ -75,6 +76,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("licenseId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
@@ -83,7 +85,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		TABLE_COLUMNS_MAP.put("recommended", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SCLicense (licenseId LONG not null primary key,name VARCHAR(75) null,url STRING null,openSource BOOLEAN,active_ BOOLEAN,recommended BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table SCLicense (companyId LONG,licenseId LONG not null primary key,name VARCHAR(75) null,url STRING null,openSource BOOLEAN,active_ BOOLEAN,recommended BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table SCLicense";
 	public static final String ORDER_BY_JPQL = " ORDER BY scLicense.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SCLicense.name ASC";
@@ -116,6 +118,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 		SCLicense model = new SCLicenseImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setLicenseId(soapModel.getLicenseId());
 		model.setName(soapModel.getName());
 		model.setUrl(soapModel.getUrl());
@@ -199,6 +202,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("licenseId", getLicenseId());
 		attributes.put("name", getName());
 		attributes.put("url", getUrl());
@@ -214,6 +218,12 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long licenseId = (Long)attributes.get("licenseId");
 
 		if (licenseId != null) {
@@ -249,6 +259,17 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		if (recommended != null) {
 			setRecommended(recommended);
 		}
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -374,7 +395,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			SCLicense.class.getName(), getPrimaryKey());
 	}
 
@@ -399,6 +420,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	public Object clone() {
 		SCLicenseImpl scLicenseImpl = new SCLicenseImpl();
 
+		scLicenseImpl.setCompanyId(getCompanyId());
 		scLicenseImpl.setLicenseId(getLicenseId());
 		scLicenseImpl.setName(getName());
 		scLicenseImpl.setUrl(getUrl());
@@ -480,6 +502,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	public CacheModel<SCLicense> toCacheModel() {
 		SCLicenseCacheModel scLicenseCacheModel = new SCLicenseCacheModel();
 
+		scLicenseCacheModel.companyId = getCompanyId();
+
 		scLicenseCacheModel.licenseId = getLicenseId();
 
 		scLicenseCacheModel.name = getName();
@@ -509,9 +533,11 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{licenseId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", licenseId=");
 		sb.append(getLicenseId());
 		sb.append(", name=");
 		sb.append(getName());
@@ -530,12 +556,16 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.softwarecatalog.model.SCLicense");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>licenseId</column-name><column-value><![CDATA[");
 		sb.append(getLicenseId());
@@ -570,6 +600,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SCLicense.class
 		};
+	private long _companyId;
 	private long _licenseId;
 	private String _name;
 	private String _url;

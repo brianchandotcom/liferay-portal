@@ -7450,6 +7450,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		user.setUuid(uuid);
 
+		user.setCompanyId(0);
+
 		return user;
 	}
 
@@ -7812,10 +7814,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		userImpl.setNew(user.isNew());
 		userImpl.setPrimaryKey(user.getPrimaryKey());
 
+		userImpl.setCompanyId(user.getCompanyId());
 		userImpl.setMvccVersion(user.getMvccVersion());
 		userImpl.setUuid(user.getUuid());
 		userImpl.setUserId(user.getUserId());
-		userImpl.setCompanyId(user.getCompanyId());
 		userImpl.setCreateDate(user.getCreateDate());
 		userImpl.setModifiedDate(user.getModifiedDate());
 		userImpl.setDefaultUser(user.isDefaultUser());

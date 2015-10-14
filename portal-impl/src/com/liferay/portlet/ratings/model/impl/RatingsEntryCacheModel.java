@@ -68,12 +68,12 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", entryId=");
 		sb.append(entryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,6 +99,8 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	public RatingsEntry toEntityModel() {
 		RatingsEntryImpl ratingsEntryImpl = new RatingsEntryImpl();
 
+		ratingsEntryImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			ratingsEntryImpl.setUuid(StringPool.BLANK);
 		}
@@ -107,7 +109,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		}
 
 		ratingsEntryImpl.setEntryId(entryId);
-		ratingsEntryImpl.setCompanyId(companyId);
 		ratingsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -149,9 +150,9 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		entryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -165,6 +166,8 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -173,7 +176,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		}
 
 		objectOutput.writeLong(entryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -191,9 +193,9 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long entryId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -118,13 +118,13 @@ public class RepositoryPersistenceTest {
 
 		Repository newRepository = _persistence.create(pk);
 
+		newRepository.setCompanyId(RandomTestUtil.nextLong());
+
 		newRepository.setMvccVersion(RandomTestUtil.nextLong());
 
 		newRepository.setUuid(RandomTestUtil.randomString());
 
 		newRepository.setGroupId(RandomTestUtil.nextLong());
-
-		newRepository.setCompanyId(RandomTestUtil.nextLong());
 
 		newRepository.setUserId(RandomTestUtil.nextLong());
 
@@ -152,6 +152,8 @@ public class RepositoryPersistenceTest {
 
 		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
 
+		Assert.assertEquals(existingRepository.getCompanyId(),
+			newRepository.getCompanyId());
 		Assert.assertEquals(existingRepository.getMvccVersion(),
 			newRepository.getMvccVersion());
 		Assert.assertEquals(existingRepository.getUuid(),
@@ -160,8 +162,6 @@ public class RepositoryPersistenceTest {
 			newRepository.getRepositoryId());
 		Assert.assertEquals(existingRepository.getGroupId(),
 			newRepository.getGroupId());
-		Assert.assertEquals(existingRepository.getCompanyId(),
-			newRepository.getCompanyId());
 		Assert.assertEquals(existingRepository.getUserId(),
 			newRepository.getUserId());
 		Assert.assertEquals(existingRepository.getUserName(),
@@ -256,9 +256,9 @@ public class RepositoryPersistenceTest {
 	}
 
 	protected OrderByComparator<Repository> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Repository", "mvccVersion",
-			true, "uuid", true, "repositoryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
+		return OrderByComparatorFactoryUtil.create("Repository", "companyId",
+			true, "mvccVersion", true, "uuid", true, "repositoryId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "name", true,
 			"description", true, "portletId", true, "dlFolderId", true,
 			"lastPublishDate", true);
@@ -489,13 +489,13 @@ public class RepositoryPersistenceTest {
 
 		Repository repository = _persistence.create(pk);
 
+		repository.setCompanyId(RandomTestUtil.nextLong());
+
 		repository.setMvccVersion(RandomTestUtil.nextLong());
 
 		repository.setUuid(RandomTestUtil.randomString());
 
 		repository.setGroupId(RandomTestUtil.nextLong());
-
-		repository.setCompanyId(RandomTestUtil.nextLong());
 
 		repository.setUserId(RandomTestUtil.nextLong());
 

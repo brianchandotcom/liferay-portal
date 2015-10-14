@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -49,7 +50,8 @@ import java.util.Date;
  */
 @ProviderType
 public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
-	ContainerModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
+	ContainerModel, PartitionableModel, StagedGroupedModel, TrashedModel,
+	WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -69,6 +71,22 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	 * @param primaryKey the primary key of this bookmarks folder
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this bookmarks folder.
+	 *
+	 * @return the company ID of this bookmarks folder
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this bookmarks folder.
+	 *
+	 * @param companyId the company ID of this bookmarks folder
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this bookmarks folder.
@@ -116,22 +134,6 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this bookmarks folder.
-	 *
-	 * @return the company ID of this bookmarks folder
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this bookmarks folder.
-	 *
-	 * @param companyId the company ID of this bookmarks folder
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this bookmarks folder.

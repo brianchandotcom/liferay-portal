@@ -12091,6 +12091,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 		ddmTemplate.setUuid(uuid);
 
+		ddmTemplate.setCompanyId(0);
+
 		return ddmTemplate;
 	}
 
@@ -12528,10 +12530,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplateImpl.setNew(ddmTemplate.isNew());
 		ddmTemplateImpl.setPrimaryKey(ddmTemplate.getPrimaryKey());
 
+		ddmTemplateImpl.setCompanyId(ddmTemplate.getCompanyId());
 		ddmTemplateImpl.setUuid(ddmTemplate.getUuid());
 		ddmTemplateImpl.setTemplateId(ddmTemplate.getTemplateId());
 		ddmTemplateImpl.setGroupId(ddmTemplate.getGroupId());
-		ddmTemplateImpl.setCompanyId(ddmTemplate.getCompanyId());
 		ddmTemplateImpl.setUserId(ddmTemplate.getUserId());
 		ddmTemplateImpl.setUserName(ddmTemplate.getUserName());
 		ddmTemplateImpl.setVersionUserId(ddmTemplate.getVersionUserId());

@@ -66,12 +66,12 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{activityCounterId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", activityCounterId=");
 		sb.append(activityCounterId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -101,9 +101,9 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 	public SocialActivityCounter toEntityModel() {
 		SocialActivityCounterImpl socialActivityCounterImpl = new SocialActivityCounterImpl();
 
+		socialActivityCounterImpl.setCompanyId(companyId);
 		socialActivityCounterImpl.setActivityCounterId(activityCounterId);
 		socialActivityCounterImpl.setGroupId(groupId);
-		socialActivityCounterImpl.setCompanyId(companyId);
 		socialActivityCounterImpl.setClassNameId(classNameId);
 		socialActivityCounterImpl.setClassPK(classPK);
 
@@ -129,9 +129,9 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		activityCounterId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -147,9 +147,9 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(activityCounterId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 
@@ -169,9 +169,9 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		objectOutput.writeBoolean(active);
 	}
 
+	public long companyId;
 	public long activityCounterId;
 	public long groupId;
-	public long companyId;
 	public long classNameId;
 	public long classPK;
 	public String name;

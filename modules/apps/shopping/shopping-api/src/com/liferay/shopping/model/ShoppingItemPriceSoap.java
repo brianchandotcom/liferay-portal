@@ -32,6 +32,7 @@ public class ShoppingItemPriceSoap implements Serializable {
 	public static ShoppingItemPriceSoap toSoapModel(ShoppingItemPrice model) {
 		ShoppingItemPriceSoap soapModel = new ShoppingItemPriceSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setItemPriceId(model.getItemPriceId());
 		soapModel.setItemId(model.getItemId());
 		soapModel.setMinQuantity(model.getMinQuantity());
@@ -95,6 +96,14 @@ public class ShoppingItemPriceSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setItemPriceId(pk);
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	public long getItemPriceId() {
@@ -185,6 +194,7 @@ public class ShoppingItemPriceSoap implements Serializable {
 		_status = status;
 	}
 
+	private long _companyId;
 	private long _itemPriceId;
 	private long _itemId;
 	private int _minQuantity;

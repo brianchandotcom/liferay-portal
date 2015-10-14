@@ -68,14 +68,14 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", recordSetId=");
 		sb.append(recordSetId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -107,6 +107,8 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 	public DDLRecordSet toEntityModel() {
 		DDLRecordSetImpl ddlRecordSetImpl = new DDLRecordSetImpl();
 
+		ddlRecordSetImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			ddlRecordSetImpl.setUuid(StringPool.BLANK);
 		}
@@ -116,7 +118,6 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 
 		ddlRecordSetImpl.setRecordSetId(recordSetId);
 		ddlRecordSetImpl.setGroupId(groupId);
-		ddlRecordSetImpl.setCompanyId(companyId);
 		ddlRecordSetImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -180,10 +181,10 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		recordSetId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -200,6 +201,8 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -209,7 +212,6 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 
 		objectOutput.writeLong(recordSetId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -249,10 +251,10 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long recordSetId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

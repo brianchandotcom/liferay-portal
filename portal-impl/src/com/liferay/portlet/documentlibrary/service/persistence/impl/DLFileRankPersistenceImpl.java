@@ -1632,6 +1632,260 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 	private static final String _FINDER_COLUMN_G_U_GROUPID_2 = "dlFileRank.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_USERID_2 = "dlFileRank.userId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_U_F = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_U_F",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			DLFileRankModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLFileRankModelImpl.USERID_COLUMN_BITMASK |
+			DLFileRankModelImpl.FILEENTRYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_U_F = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileRankModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_F",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a {@link NoSuchFileRankException} if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param fileEntryId the file entry ID
+	 * @return the matching document library file rank
+	 * @throws NoSuchFileRankException if a matching document library file rank could not be found
+	 */
+	@Override
+	public DLFileRank findByC_U_F(long companyId, long userId, long fileEntryId)
+		throws NoSuchFileRankException {
+		DLFileRank dlFileRank = fetchByC_U_F(companyId, userId, fileEntryId);
+
+		if (dlFileRank == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", userId=");
+			msg.append(userId);
+
+			msg.append(", fileEntryId=");
+			msg.append(fileEntryId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchFileRankException(msg.toString());
+		}
+
+		return dlFileRank;
+	}
+
+	/**
+	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param fileEntryId the file entry ID
+	 * @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	 */
+	@Override
+	public DLFileRank fetchByC_U_F(long companyId, long userId, long fileEntryId) {
+		return fetchByC_U_F(companyId, userId, fileEntryId, true);
+	}
+
+	/**
+	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param fileEntryId the file entry ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
+	 */
+	@Override
+	public DLFileRank fetchByC_U_F(long companyId, long userId,
+		long fileEntryId, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { companyId, userId, fileEntryId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_U_F,
+					finderArgs, this);
+		}
+
+		if (result instanceof DLFileRank) {
+			DLFileRank dlFileRank = (DLFileRank)result;
+
+			if ((companyId != dlFileRank.getCompanyId()) ||
+					(userId != dlFileRank.getUserId()) ||
+					(fileEntryId != dlFileRank.getFileEntryId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_DLFILERANK_WHERE);
+
+			query.append(_FINDER_COLUMN_C_U_F_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_U_F_USERID_2);
+
+			query.append(_FINDER_COLUMN_C_U_F_FILEENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(userId);
+
+				qPos.add(fileEntryId);
+
+				List<DLFileRank> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_F,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"DLFileRankPersistenceImpl.fetchByC_U_F(long, long, long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					DLFileRank dlFileRank = list.get(0);
+
+					result = dlFileRank;
+
+					cacheResult(dlFileRank);
+
+					if ((dlFileRank.getCompanyId() != companyId) ||
+							(dlFileRank.getUserId() != userId) ||
+							(dlFileRank.getFileEntryId() != fileEntryId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_F,
+							finderArgs, dlFileRank);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_U_F, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (DLFileRank)result;
+		}
+	}
+
+	/**
+	 * Removes the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param fileEntryId the file entry ID
+	 * @return the document library file rank that was removed
+	 */
+	@Override
+	public DLFileRank removeByC_U_F(long companyId, long userId,
+		long fileEntryId) throws NoSuchFileRankException {
+		DLFileRank dlFileRank = findByC_U_F(companyId, userId, fileEntryId);
+
+		return remove(dlFileRank);
+	}
+
+	/**
+	 * Returns the number of document library file ranks where companyId = &#63; and userId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param fileEntryId the file entry ID
+	 * @return the number of matching document library file ranks
+	 */
+	@Override
+	public int countByC_U_F(long companyId, long userId, long fileEntryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_U_F;
+
+		Object[] finderArgs = new Object[] { companyId, userId, fileEntryId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_DLFILERANK_WHERE);
+
+			query.append(_FINDER_COLUMN_C_U_F_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_U_F_USERID_2);
+
+			query.append(_FINDER_COLUMN_C_U_F_FILEENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(userId);
+
+				qPos.add(fileEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_U_F_COMPANYID_2 = "dlFileRank.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_U_F_USERID_2 = "dlFileRank.userId = ? AND ";
+	private static final String _FINDER_COLUMN_C_U_F_FILEENTRYID_2 = "dlFileRank.fileEntryId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_A = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_A",
@@ -2216,260 +2470,6 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _FINDER_COLUMN_G_U_A_GROUPID_2 = "dlFileRank.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_A_USERID_2 = "dlFileRank.userId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_A_ACTIVE_2 = "dlFileRank.active = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_U_F = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			DLFileRankModelImpl.COMPANYID_COLUMN_BITMASK |
-			DLFileRankModelImpl.USERID_COLUMN_BITMASK |
-			DLFileRankModelImpl.FILEENTRYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_U_F = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileRankModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
-
-	/**
-	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a {@link NoSuchFileRankException} if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param fileEntryId the file entry ID
-	 * @return the matching document library file rank
-	 * @throws NoSuchFileRankException if a matching document library file rank could not be found
-	 */
-	@Override
-	public DLFileRank findByC_U_F(long companyId, long userId, long fileEntryId)
-		throws NoSuchFileRankException {
-		DLFileRank dlFileRank = fetchByC_U_F(companyId, userId, fileEntryId);
-
-		if (dlFileRank == null) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(", fileEntryId=");
-			msg.append(fileEntryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchFileRankException(msg.toString());
-		}
-
-		return dlFileRank;
-	}
-
-	/**
-	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param fileEntryId the file entry ID
-	 * @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
-	 */
-	@Override
-	public DLFileRank fetchByC_U_F(long companyId, long userId, long fileEntryId) {
-		return fetchByC_U_F(companyId, userId, fileEntryId, true);
-	}
-
-	/**
-	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param fileEntryId the file entry ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
-	 */
-	@Override
-	public DLFileRank fetchByC_U_F(long companyId, long userId,
-		long fileEntryId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { companyId, userId, fileEntryId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_U_F,
-					finderArgs, this);
-		}
-
-		if (result instanceof DLFileRank) {
-			DLFileRank dlFileRank = (DLFileRank)result;
-
-			if ((companyId != dlFileRank.getCompanyId()) ||
-					(userId != dlFileRank.getUserId()) ||
-					(fileEntryId != dlFileRank.getFileEntryId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(5);
-
-			query.append(_SQL_SELECT_DLFILERANK_WHERE);
-
-			query.append(_FINDER_COLUMN_C_U_F_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_U_F_USERID_2);
-
-			query.append(_FINDER_COLUMN_C_U_F_FILEENTRYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(userId);
-
-				qPos.add(fileEntryId);
-
-				List<DLFileRank> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_F,
-						finderArgs, list);
-				}
-				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"DLFileRankPersistenceImpl.fetchByC_U_F(long, long, long, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
-					DLFileRank dlFileRank = list.get(0);
-
-					result = dlFileRank;
-
-					cacheResult(dlFileRank);
-
-					if ((dlFileRank.getCompanyId() != companyId) ||
-							(dlFileRank.getUserId() != userId) ||
-							(dlFileRank.getFileEntryId() != fileEntryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_F,
-							finderArgs, dlFileRank);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_U_F, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (DLFileRank)result;
-		}
-	}
-
-	/**
-	 * Removes the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param fileEntryId the file entry ID
-	 * @return the document library file rank that was removed
-	 */
-	@Override
-	public DLFileRank removeByC_U_F(long companyId, long userId,
-		long fileEntryId) throws NoSuchFileRankException {
-		DLFileRank dlFileRank = findByC_U_F(companyId, userId, fileEntryId);
-
-		return remove(dlFileRank);
-	}
-
-	/**
-	 * Returns the number of document library file ranks where companyId = &#63; and userId = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param fileEntryId the file entry ID
-	 * @return the number of matching document library file ranks
-	 */
-	@Override
-	public int countByC_U_F(long companyId, long userId, long fileEntryId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_U_F;
-
-		Object[] finderArgs = new Object[] { companyId, userId, fileEntryId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_DLFILERANK_WHERE);
-
-			query.append(_FINDER_COLUMN_C_U_F_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_U_F_USERID_2);
-
-			query.append(_FINDER_COLUMN_C_U_F_FILEENTRYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(userId);
-
-				qPos.add(fileEntryId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_U_F_COMPANYID_2 = "dlFileRank.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_F_USERID_2 = "dlFileRank.userId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_F_FILEENTRYID_2 = "dlFileRank.fileEntryId = ?";
 
 	public DLFileRankPersistenceImpl() {
 		setModelClass(DLFileRank.class);
@@ -2627,6 +2627,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 		dlFileRank.setNew(true);
 		dlFileRank.setPrimaryKey(fileRankId);
+
+		dlFileRank.setCompanyId(0);
 
 		return dlFileRank;
 	}
@@ -2851,9 +2853,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		dlFileRankImpl.setNew(dlFileRank.isNew());
 		dlFileRankImpl.setPrimaryKey(dlFileRank.getPrimaryKey());
 
+		dlFileRankImpl.setCompanyId(dlFileRank.getCompanyId());
 		dlFileRankImpl.setFileRankId(dlFileRank.getFileRankId());
 		dlFileRankImpl.setGroupId(dlFileRank.getGroupId());
-		dlFileRankImpl.setCompanyId(dlFileRank.getCompanyId());
 		dlFileRankImpl.setUserId(dlFileRank.getUserId());
 		dlFileRankImpl.setCreateDate(dlFileRank.getCreateDate());
 		dlFileRankImpl.setFileEntryId(dlFileRank.getFileEntryId());

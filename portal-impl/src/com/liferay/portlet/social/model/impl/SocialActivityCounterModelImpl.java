@@ -62,9 +62,9 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	 */
 	public static final String TABLE_NAME = "SocialActivityCounter";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "activityCounterId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "name", Types.VARCHAR },
@@ -79,9 +79,9 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activityCounterId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -94,7 +94,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivityCounter (companyId LONG,activityCounterId LONG not null primary key,groupId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityCounter";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityCounter.activityCounterId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivityCounter.activityCounterId ASC";
@@ -158,9 +158,9 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("activityCounterId", getActivityCounterId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("name", getName());
@@ -180,6 +180,12 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long activityCounterId = (Long)attributes.get("activityCounterId");
 
 		if (activityCounterId != null) {
@@ -190,12 +196,6 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -260,6 +260,16 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	@Override
 	public long getActivityCounterId() {
 		return _activityCounterId;
 	}
@@ -289,16 +299,6 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -532,9 +532,9 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public Object clone() {
 		SocialActivityCounterImpl socialActivityCounterImpl = new SocialActivityCounterImpl();
 
+		socialActivityCounterImpl.setCompanyId(getCompanyId());
 		socialActivityCounterImpl.setActivityCounterId(getActivityCounterId());
 		socialActivityCounterImpl.setGroupId(getGroupId());
-		socialActivityCounterImpl.setCompanyId(getCompanyId());
 		socialActivityCounterImpl.setClassNameId(getClassNameId());
 		socialActivityCounterImpl.setClassPK(getClassPK());
 		socialActivityCounterImpl.setName(getName());
@@ -640,11 +640,11 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public CacheModel<SocialActivityCounter> toCacheModel() {
 		SocialActivityCounterCacheModel socialActivityCounterCacheModel = new SocialActivityCounterCacheModel();
 
+		socialActivityCounterCacheModel.companyId = getCompanyId();
+
 		socialActivityCounterCacheModel.activityCounterId = getActivityCounterId();
 
 		socialActivityCounterCacheModel.groupId = getGroupId();
-
-		socialActivityCounterCacheModel.companyId = getCompanyId();
 
 		socialActivityCounterCacheModel.classNameId = getClassNameId();
 
@@ -679,12 +679,12 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{activityCounterId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", activityCounterId=");
 		sb.append(getActivityCounterId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
@@ -719,16 +719,16 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>activityCounterId</column-name><column-value><![CDATA[");
 		sb.append(getActivityCounterId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
@@ -780,11 +780,11 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SocialActivityCounter.class
 		};
+	private long _companyId;
 	private long _activityCounterId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

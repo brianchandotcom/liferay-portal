@@ -60,9 +60,9 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	 */
 	public static final String TABLE_NAME = "SocialRelation";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "relationId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.BIGINT },
 			{ "userId1", Types.BIGINT },
 			{ "userId2", Types.BIGINT },
@@ -71,16 +71,16 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("relationId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId1", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId2", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SocialRelation (companyId LONG,uuid_ VARCHAR(75) null,relationId LONG not null primary key,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SocialRelation";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialRelation.relationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialRelation.relationId ASC";
@@ -142,9 +142,9 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("relationId", getRelationId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("userId1", getUserId1());
 		attributes.put("userId2", getUserId2());
@@ -158,6 +158,12 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -168,12 +174,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 		if (relationId != null) {
 			setRelationId(relationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long createDate = (Long)attributes.get("createDate");
@@ -199,6 +199,28 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -232,28 +254,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	@Override
 	public void setRelationId(long relationId) {
 		_relationId = relationId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -363,9 +363,9 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public Object clone() {
 		SocialRelationImpl socialRelationImpl = new SocialRelationImpl();
 
+		socialRelationImpl.setCompanyId(getCompanyId());
 		socialRelationImpl.setUuid(getUuid());
 		socialRelationImpl.setRelationId(getRelationId());
-		socialRelationImpl.setCompanyId(getCompanyId());
 		socialRelationImpl.setCreateDate(getCreateDate());
 		socialRelationImpl.setUserId1(getUserId1());
 		socialRelationImpl.setUserId2(getUserId2());
@@ -432,11 +432,11 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public void resetOriginalValues() {
 		SocialRelationModelImpl socialRelationModelImpl = this;
 
-		socialRelationModelImpl._originalUuid = socialRelationModelImpl._uuid;
-
 		socialRelationModelImpl._originalCompanyId = socialRelationModelImpl._companyId;
 
 		socialRelationModelImpl._setOriginalCompanyId = false;
+
+		socialRelationModelImpl._originalUuid = socialRelationModelImpl._uuid;
 
 		socialRelationModelImpl._originalUserId1 = socialRelationModelImpl._userId1;
 
@@ -457,6 +457,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public CacheModel<SocialRelation> toCacheModel() {
 		SocialRelationCacheModel socialRelationCacheModel = new SocialRelationCacheModel();
 
+		socialRelationCacheModel.companyId = getCompanyId();
+
 		socialRelationCacheModel.uuid = getUuid();
 
 		String uuid = socialRelationCacheModel.uuid;
@@ -466,8 +468,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		}
 
 		socialRelationCacheModel.relationId = getRelationId();
-
-		socialRelationCacheModel.companyId = getCompanyId();
 
 		socialRelationCacheModel.createDate = getCreateDate();
 
@@ -484,12 +484,12 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", relationId=");
 		sb.append(getRelationId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", userId1=");
@@ -512,16 +512,16 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>relationId</column-name><column-value><![CDATA[");
 		sb.append(getRelationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -549,12 +549,12 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SocialRelation.class
 		};
-	private String _uuid;
-	private String _originalUuid;
-	private long _relationId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private String _uuid;
+	private String _originalUuid;
+	private long _relationId;
 	private long _createDate;
 	private long _userId1;
 	private long _originalUserId1;

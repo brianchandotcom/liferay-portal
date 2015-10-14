@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ShoppingItemFieldModel extends BaseModel<ShoppingItemField> {
+public interface ShoppingItemFieldModel extends BaseModel<ShoppingItemField>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,6 +61,22 @@ public interface ShoppingItemFieldModel extends BaseModel<ShoppingItemField> {
 	 * @param primaryKey the primary key of this shopping item field
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this shopping item field.
+	 *
+	 * @return the company ID of this shopping item field
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this shopping item field.
+	 *
+	 * @param companyId the company ID of this shopping item field
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the item field ID of this shopping item field.

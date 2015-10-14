@@ -118,11 +118,11 @@ public class TeamPersistenceTest {
 
 		Team newTeam = _persistence.create(pk);
 
+		newTeam.setCompanyId(RandomTestUtil.nextLong());
+
 		newTeam.setMvccVersion(RandomTestUtil.nextLong());
 
 		newTeam.setUuid(RandomTestUtil.randomString());
-
-		newTeam.setCompanyId(RandomTestUtil.nextLong());
 
 		newTeam.setUserId(RandomTestUtil.nextLong());
 
@@ -144,11 +144,11 @@ public class TeamPersistenceTest {
 
 		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
 
+		Assert.assertEquals(existingTeam.getCompanyId(), newTeam.getCompanyId());
 		Assert.assertEquals(existingTeam.getMvccVersion(),
 			newTeam.getMvccVersion());
 		Assert.assertEquals(existingTeam.getUuid(), newTeam.getUuid());
 		Assert.assertEquals(existingTeam.getTeamId(), newTeam.getTeamId());
-		Assert.assertEquals(existingTeam.getCompanyId(), newTeam.getCompanyId());
 		Assert.assertEquals(existingTeam.getUserId(), newTeam.getUserId());
 		Assert.assertEquals(existingTeam.getUserName(), newTeam.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(existingTeam.getCreateDate()),
@@ -237,8 +237,8 @@ public class TeamPersistenceTest {
 	}
 
 	protected OrderByComparator<Team> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Team", "mvccVersion", true,
-			"uuid", true, "teamId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("Team", "companyId", true,
+			"mvccVersion", true, "uuid", true, "teamId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"groupId", true, "name", true, "description", true,
 			"lastPublishDate", true);
@@ -460,11 +460,11 @@ public class TeamPersistenceTest {
 
 		Team team = _persistence.create(pk);
 
+		team.setCompanyId(RandomTestUtil.nextLong());
+
 		team.setMvccVersion(RandomTestUtil.nextLong());
 
 		team.setUuid(RandomTestUtil.randomString());
-
-		team.setCompanyId(RandomTestUtil.nextLong());
 
 		team.setUserId(RandomTestUtil.nextLong());
 

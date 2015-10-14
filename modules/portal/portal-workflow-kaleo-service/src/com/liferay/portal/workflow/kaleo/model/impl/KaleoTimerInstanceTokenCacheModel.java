@@ -67,12 +67,12 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 	public String toString() {
 		StringBundler sb = new StringBundler(41);
 
-		sb.append("{kaleoTimerInstanceTokenId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoTimerInstanceTokenId=");
 		sb.append(kaleoTimerInstanceTokenId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -116,9 +116,9 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 	public KaleoTimerInstanceToken toEntityModel() {
 		KaleoTimerInstanceTokenImpl kaleoTimerInstanceTokenImpl = new KaleoTimerInstanceTokenImpl();
 
+		kaleoTimerInstanceTokenImpl.setCompanyId(companyId);
 		kaleoTimerInstanceTokenImpl.setKaleoTimerInstanceTokenId(kaleoTimerInstanceTokenId);
 		kaleoTimerInstanceTokenImpl.setGroupId(groupId);
-		kaleoTimerInstanceTokenImpl.setCompanyId(companyId);
 		kaleoTimerInstanceTokenImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -189,9 +189,9 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoTimerInstanceTokenId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -214,9 +214,9 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoTimerInstanceTokenId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -263,9 +263,9 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 		}
 	}
 
+	public long companyId;
 	public long kaleoTimerInstanceTokenId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

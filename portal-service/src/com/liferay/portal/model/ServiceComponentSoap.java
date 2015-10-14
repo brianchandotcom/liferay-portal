@@ -32,6 +32,7 @@ public class ServiceComponentSoap implements Serializable {
 	public static ServiceComponentSoap toSoapModel(ServiceComponent model) {
 		ServiceComponentSoap soapModel = new ServiceComponentSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setServiceComponentId(model.getServiceComponentId());
 		soapModel.setBuildNamespace(model.getBuildNamespace());
@@ -92,6 +93,14 @@ public class ServiceComponentSoap implements Serializable {
 		setServiceComponentId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -140,6 +149,7 @@ public class ServiceComponentSoap implements Serializable {
 		_data = data;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _serviceComponentId;
 	private String _buildNamespace;

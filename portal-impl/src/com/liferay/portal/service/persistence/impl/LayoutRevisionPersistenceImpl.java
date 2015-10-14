@@ -6005,6 +6005,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevision.setNew(true);
 		layoutRevision.setPrimaryKey(layoutRevisionId);
 
+		layoutRevision.setCompanyId(0);
+
 		return layoutRevision;
 	}
 
@@ -6366,10 +6368,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevisionImpl.setNew(layoutRevision.isNew());
 		layoutRevisionImpl.setPrimaryKey(layoutRevision.getPrimaryKey());
 
+		layoutRevisionImpl.setCompanyId(layoutRevision.getCompanyId());
 		layoutRevisionImpl.setMvccVersion(layoutRevision.getMvccVersion());
 		layoutRevisionImpl.setLayoutRevisionId(layoutRevision.getLayoutRevisionId());
 		layoutRevisionImpl.setGroupId(layoutRevision.getGroupId());
-		layoutRevisionImpl.setCompanyId(layoutRevision.getCompanyId());
 		layoutRevisionImpl.setUserId(layoutRevision.getUserId());
 		layoutRevisionImpl.setUserName(layoutRevision.getUserName());
 		layoutRevisionImpl.setCreateDate(layoutRevision.getCreateDate());

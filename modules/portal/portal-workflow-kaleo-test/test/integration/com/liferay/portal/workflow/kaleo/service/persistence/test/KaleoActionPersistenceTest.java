@@ -121,9 +121,9 @@ public class KaleoActionPersistenceTest {
 
 		KaleoAction newKaleoAction = _persistence.create(pk);
 
-		newKaleoAction.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoAction.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoAction.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoAction.setUserId(RandomTestUtil.nextLong());
 
@@ -159,12 +159,12 @@ public class KaleoActionPersistenceTest {
 
 		KaleoAction existingKaleoAction = _persistence.findByPrimaryKey(newKaleoAction.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoAction.getCompanyId(),
+			newKaleoAction.getCompanyId());
 		Assert.assertEquals(existingKaleoAction.getKaleoActionId(),
 			newKaleoAction.getKaleoActionId());
 		Assert.assertEquals(existingKaleoAction.getGroupId(),
 			newKaleoAction.getGroupId());
-		Assert.assertEquals(existingKaleoAction.getCompanyId(),
-			newKaleoAction.getCompanyId());
 		Assert.assertEquals(existingKaleoAction.getUserId(),
 			newKaleoAction.getUserId());
 		Assert.assertEquals(existingKaleoAction.getUserName(),
@@ -255,12 +255,12 @@ public class KaleoActionPersistenceTest {
 	}
 
 	protected OrderByComparator<KaleoAction> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("KaleoAction",
-			"kaleoActionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
-			"kaleoDefinitionId", true, "kaleoNodeName", true, "name", true,
-			"description", true, "executionType", true, "scriptLanguage", true,
+		return OrderByComparatorFactoryUtil.create("KaleoAction", "companyId",
+			true, "kaleoActionId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
+			true, "kaleoNodeName", true, "name", true, "description", true,
+			"executionType", true, "scriptLanguage", true,
 			"scriptRequiredContexts", true, "priority", true);
 	}
 
@@ -463,9 +463,9 @@ public class KaleoActionPersistenceTest {
 
 		KaleoAction kaleoAction = _persistence.create(pk);
 
-		kaleoAction.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoAction.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoAction.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoAction.setUserId(RandomTestUtil.nextLong());
 

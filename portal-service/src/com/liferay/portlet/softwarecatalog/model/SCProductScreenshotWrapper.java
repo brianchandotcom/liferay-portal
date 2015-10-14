@@ -52,8 +52,8 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("productScreenshotId", getProductScreenshotId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("productScreenshotId", getProductScreenshotId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("productEntryId", getProductEntryId());
 		attributes.put("thumbnailId", getThumbnailId());
@@ -65,16 +65,16 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long productScreenshotId = (Long)attributes.get("productScreenshotId");
-
-		if (productScreenshotId != null) {
-			setProductScreenshotId(productScreenshotId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long productScreenshotId = (Long)attributes.get("productScreenshotId");
+
+		if (productScreenshotId != null) {
+			setProductScreenshotId(productScreenshotId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");

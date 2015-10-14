@@ -116,11 +116,11 @@ public class LayoutPrototypePersistenceTest {
 
 		LayoutPrototype newLayoutPrototype = _persistence.create(pk);
 
+		newLayoutPrototype.setCompanyId(RandomTestUtil.nextLong());
+
 		newLayoutPrototype.setMvccVersion(RandomTestUtil.nextLong());
 
 		newLayoutPrototype.setUuid(RandomTestUtil.randomString());
-
-		newLayoutPrototype.setCompanyId(RandomTestUtil.nextLong());
 
 		newLayoutPrototype.setUserId(RandomTestUtil.nextLong());
 
@@ -144,14 +144,14 @@ public class LayoutPrototypePersistenceTest {
 
 		LayoutPrototype existingLayoutPrototype = _persistence.findByPrimaryKey(newLayoutPrototype.getPrimaryKey());
 
+		Assert.assertEquals(existingLayoutPrototype.getCompanyId(),
+			newLayoutPrototype.getCompanyId());
 		Assert.assertEquals(existingLayoutPrototype.getMvccVersion(),
 			newLayoutPrototype.getMvccVersion());
 		Assert.assertEquals(existingLayoutPrototype.getUuid(),
 			newLayoutPrototype.getUuid());
 		Assert.assertEquals(existingLayoutPrototype.getLayoutPrototypeId(),
 			newLayoutPrototype.getLayoutPrototypeId());
-		Assert.assertEquals(existingLayoutPrototype.getCompanyId(),
-			newLayoutPrototype.getCompanyId());
 		Assert.assertEquals(existingLayoutPrototype.getUserId(),
 			newLayoutPrototype.getUserId());
 		Assert.assertEquals(existingLayoutPrototype.getUserName(),
@@ -232,10 +232,11 @@ public class LayoutPrototypePersistenceTest {
 
 	protected OrderByComparator<LayoutPrototype> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutPrototype",
-			"mvccVersion", true, "uuid", true, "layoutPrototypeId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"settings", true, "active", true, "lastPublishDate", true);
+			"companyId", true, "mvccVersion", true, "uuid", true,
+			"layoutPrototypeId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "name", true,
+			"description", true, "settings", true, "active", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -437,11 +438,11 @@ public class LayoutPrototypePersistenceTest {
 
 		LayoutPrototype layoutPrototype = _persistence.create(pk);
 
+		layoutPrototype.setCompanyId(RandomTestUtil.nextLong());
+
 		layoutPrototype.setMvccVersion(RandomTestUtil.nextLong());
 
 		layoutPrototype.setUuid(RandomTestUtil.randomString());
-
-		layoutPrototype.setCompanyId(RandomTestUtil.nextLong());
 
 		layoutPrototype.setUserId(RandomTestUtil.nextLong());
 

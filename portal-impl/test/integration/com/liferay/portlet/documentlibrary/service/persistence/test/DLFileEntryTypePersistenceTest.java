@@ -119,11 +119,11 @@ public class DLFileEntryTypePersistenceTest {
 
 		DLFileEntryType newDLFileEntryType = _persistence.create(pk);
 
+		newDLFileEntryType.setCompanyId(RandomTestUtil.nextLong());
+
 		newDLFileEntryType.setUuid(RandomTestUtil.randomString());
 
 		newDLFileEntryType.setGroupId(RandomTestUtil.nextLong());
-
-		newDLFileEntryType.setCompanyId(RandomTestUtil.nextLong());
 
 		newDLFileEntryType.setUserId(RandomTestUtil.nextLong());
 
@@ -145,14 +145,14 @@ public class DLFileEntryTypePersistenceTest {
 
 		DLFileEntryType existingDLFileEntryType = _persistence.findByPrimaryKey(newDLFileEntryType.getPrimaryKey());
 
+		Assert.assertEquals(existingDLFileEntryType.getCompanyId(),
+			newDLFileEntryType.getCompanyId());
 		Assert.assertEquals(existingDLFileEntryType.getUuid(),
 			newDLFileEntryType.getUuid());
 		Assert.assertEquals(existingDLFileEntryType.getFileEntryTypeId(),
 			newDLFileEntryType.getFileEntryTypeId());
 		Assert.assertEquals(existingDLFileEntryType.getGroupId(),
 			newDLFileEntryType.getGroupId());
-		Assert.assertEquals(existingDLFileEntryType.getCompanyId(),
-			newDLFileEntryType.getCompanyId());
 		Assert.assertEquals(existingDLFileEntryType.getUserId(),
 			newDLFileEntryType.getUserId());
 		Assert.assertEquals(existingDLFileEntryType.getUserName(),
@@ -251,10 +251,10 @@ public class DLFileEntryTypePersistenceTest {
 	}
 
 	protected OrderByComparator<DLFileEntryType> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DLFileEntryType", "uuid",
-			true, "fileEntryTypeId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "fileEntryTypeKey", true, "name", true,
+		return OrderByComparatorFactoryUtil.create("DLFileEntryType",
+			"companyId", true, "uuid", true, "fileEntryTypeId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "fileEntryTypeKey", true, "name", true,
 			"description", true, "lastPublishDate", true);
 	}
 
@@ -481,11 +481,11 @@ public class DLFileEntryTypePersistenceTest {
 
 		DLFileEntryType dlFileEntryType = _persistence.create(pk);
 
+		dlFileEntryType.setCompanyId(RandomTestUtil.nextLong());
+
 		dlFileEntryType.setUuid(RandomTestUtil.randomString());
 
 		dlFileEntryType.setGroupId(RandomTestUtil.nextLong());
-
-		dlFileEntryType.setCompanyId(RandomTestUtil.nextLong());
 
 		dlFileEntryType.setUserId(RandomTestUtil.nextLong());
 

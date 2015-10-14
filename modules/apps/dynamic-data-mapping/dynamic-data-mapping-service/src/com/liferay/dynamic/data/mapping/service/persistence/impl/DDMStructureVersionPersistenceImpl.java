@@ -1558,6 +1558,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersion.setNew(true);
 		ddmStructureVersion.setPrimaryKey(structureVersionId);
 
+		ddmStructureVersion.setCompanyId(0);
+
 		return ddmStructureVersion;
 	}
 
@@ -1748,9 +1750,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersionImpl.setNew(ddmStructureVersion.isNew());
 		ddmStructureVersionImpl.setPrimaryKey(ddmStructureVersion.getPrimaryKey());
 
+		ddmStructureVersionImpl.setCompanyId(ddmStructureVersion.getCompanyId());
 		ddmStructureVersionImpl.setStructureVersionId(ddmStructureVersion.getStructureVersionId());
 		ddmStructureVersionImpl.setGroupId(ddmStructureVersion.getGroupId());
-		ddmStructureVersionImpl.setCompanyId(ddmStructureVersion.getCompanyId());
 		ddmStructureVersionImpl.setUserId(ddmStructureVersion.getUserId());
 		ddmStructureVersionImpl.setUserName(ddmStructureVersion.getUserName());
 		ddmStructureVersionImpl.setCreateDate(ddmStructureVersion.getCreateDate());

@@ -63,9 +63,11 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", moduleId=");
 		sb.append(moduleId);
@@ -85,6 +87,8 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 	@Override
 	public Module toEntityModel() {
 		ModuleImpl moduleImpl = new ModuleImpl();
+
+		moduleImpl.setCompanyId(companyId);
 
 		if (uuid == null) {
 			moduleImpl.setUuid(StringPool.BLANK);
@@ -124,6 +128,7 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		moduleId = objectInput.readLong();
 		appId = objectInput.readLong();
@@ -135,6 +140,8 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -167,6 +174,7 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		}
 	}
 
+	public long companyId;
 	public String uuid;
 	public long moduleId;
 	public long appId;

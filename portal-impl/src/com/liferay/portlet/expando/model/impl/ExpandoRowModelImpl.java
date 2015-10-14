@@ -57,8 +57,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	 */
 	public static final String TABLE_NAME = "ExpandoRow";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "rowId_", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "rowId_", Types.BIGINT },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "tableId", Types.BIGINT },
 			{ "classPK", Types.BIGINT }
@@ -66,14 +66,14 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("rowId_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("rowId_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExpandoRow (rowId_ LONG not null primary key,companyId LONG,modifiedDate DATE null,tableId LONG,classPK LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ExpandoRow (companyId LONG,rowId_ LONG not null primary key,modifiedDate DATE null,tableId LONG,classPK LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ExpandoRow";
 	public static final String ORDER_BY_JPQL = " ORDER BY expandoRow.rowId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ExpandoRow.rowId_ ASC";
@@ -132,8 +132,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("rowId", getRowId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("rowId", getRowId());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("tableId", getTableId());
 		attributes.put("classPK", getClassPK());
@@ -146,16 +146,16 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long rowId = (Long)attributes.get("rowId");
-
-		if (rowId != null) {
-			setRowId(rowId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long rowId = (Long)attributes.get("rowId");
+
+		if (rowId != null) {
+			setRowId(rowId);
 		}
 
 		Date modifiedDate = (Date)attributes.get("modifiedDate");
@@ -178,16 +178,6 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	}
 
 	@Override
-	public long getRowId() {
-		return _rowId;
-	}
-
-	@Override
-	public void setRowId(long rowId) {
-		_rowId = rowId;
-	}
-
-	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -195,6 +185,16 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	@Override
+	public long getRowId() {
+		return _rowId;
+	}
+
+	@Override
+	public void setRowId(long rowId) {
+		_rowId = rowId;
 	}
 
 	@Override
@@ -269,8 +269,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public Object clone() {
 		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
 
-		expandoRowImpl.setRowId(getRowId());
 		expandoRowImpl.setCompanyId(getCompanyId());
+		expandoRowImpl.setRowId(getRowId());
 		expandoRowImpl.setModifiedDate(getModifiedDate());
 		expandoRowImpl.setTableId(getTableId());
 		expandoRowImpl.setClassPK(getClassPK());
@@ -351,9 +351,9 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public CacheModel<ExpandoRow> toCacheModel() {
 		ExpandoRowCacheModel expandoRowCacheModel = new ExpandoRowCacheModel();
 
-		expandoRowCacheModel.rowId = getRowId();
-
 		expandoRowCacheModel.companyId = getCompanyId();
+
+		expandoRowCacheModel.rowId = getRowId();
 
 		Date modifiedDate = getModifiedDate();
 
@@ -375,10 +375,10 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("{rowId=");
-		sb.append(getRowId());
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(getCompanyId());
+		sb.append(", rowId=");
+		sb.append(getRowId());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
 		sb.append(", tableId=");
@@ -399,12 +399,12 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>rowId</column-name><column-value><![CDATA[");
-		sb.append(getRowId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>rowId</column-name><column-value><![CDATA[");
+		sb.append(getRowId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
@@ -428,8 +428,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ExpandoRow.class
 		};
-	private long _rowId;
 	private long _companyId;
+	private long _rowId;
 	private Date _modifiedDate;
 	private long _tableId;
 	private long _originalTableId;

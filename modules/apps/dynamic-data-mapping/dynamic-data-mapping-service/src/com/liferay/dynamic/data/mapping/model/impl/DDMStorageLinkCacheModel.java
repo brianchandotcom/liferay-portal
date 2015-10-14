@@ -64,9 +64,11 @@ public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", storageLinkId=");
 		sb.append(storageLinkId);
@@ -84,6 +86,8 @@ public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
 	@Override
 	public DDMStorageLink toEntityModel() {
 		DDMStorageLinkImpl ddmStorageLinkImpl = new DDMStorageLinkImpl();
+
+		ddmStorageLinkImpl.setCompanyId(companyId);
 
 		if (uuid == null) {
 			ddmStorageLinkImpl.setUuid(StringPool.BLANK);
@@ -104,6 +108,7 @@ public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		storageLinkId = objectInput.readLong();
 		classNameId = objectInput.readLong();
@@ -114,6 +119,8 @@ public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -127,6 +134,7 @@ public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
 		objectOutput.writeLong(structureId);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long storageLinkId;
 	public long classNameId;

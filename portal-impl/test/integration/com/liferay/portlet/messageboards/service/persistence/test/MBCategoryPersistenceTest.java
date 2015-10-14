@@ -119,11 +119,11 @@ public class MBCategoryPersistenceTest {
 
 		MBCategory newMBCategory = _persistence.create(pk);
 
+		newMBCategory.setCompanyId(RandomTestUtil.nextLong());
+
 		newMBCategory.setUuid(RandomTestUtil.randomString());
 
 		newMBCategory.setGroupId(RandomTestUtil.nextLong());
-
-		newMBCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		newMBCategory.setUserId(RandomTestUtil.nextLong());
 
@@ -161,14 +161,14 @@ public class MBCategoryPersistenceTest {
 
 		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
+		Assert.assertEquals(existingMBCategory.getCompanyId(),
+			newMBCategory.getCompanyId());
 		Assert.assertEquals(existingMBCategory.getUuid(),
 			newMBCategory.getUuid());
 		Assert.assertEquals(existingMBCategory.getCategoryId(),
 			newMBCategory.getCategoryId());
 		Assert.assertEquals(existingMBCategory.getGroupId(),
 			newMBCategory.getGroupId());
-		Assert.assertEquals(existingMBCategory.getCompanyId(),
-			newMBCategory.getCompanyId());
 		Assert.assertEquals(existingMBCategory.getUserId(),
 			newMBCategory.getUserId());
 		Assert.assertEquals(existingMBCategory.getUserName(),
@@ -236,6 +236,13 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -243,10 +250,11 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByCompanyId(0L);
+		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -269,14 +277,6 @@ public class MBCategoryPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -355,8 +355,8 @@ public class MBCategoryPersistenceTest {
 	}
 
 	protected OrderByComparator<MBCategory> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MBCategory", "uuid", true,
-			"categoryId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("MBCategory", "companyId",
+			true, "uuid", true, "categoryId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"parentCategoryId", true, "name", true, "description", true,
 			"displayStyle", true, "threadCount", true, "messageCount", true,
@@ -577,11 +577,11 @@ public class MBCategoryPersistenceTest {
 
 		MBCategory mbCategory = _persistence.create(pk);
 
+		mbCategory.setCompanyId(RandomTestUtil.nextLong());
+
 		mbCategory.setUuid(RandomTestUtil.randomString());
 
 		mbCategory.setGroupId(RandomTestUtil.nextLong());
-
-		mbCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		mbCategory.setUserId(RandomTestUtil.nextLong());
 

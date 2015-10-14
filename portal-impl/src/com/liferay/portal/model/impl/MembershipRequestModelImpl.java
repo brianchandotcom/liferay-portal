@@ -69,10 +69,10 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	 */
 	public static final String TABLE_NAME = "MembershipRequest";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "membershipRequestId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "comments", Types.VARCHAR },
@@ -84,10 +84,10 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("membershipRequestId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
@@ -97,7 +97,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		TABLE_COLUMNS_MAP.put("statusId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MembershipRequest (mvccVersion LONG default 0,membershipRequestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,comments STRING null,replyComments STRING null,replyDate DATE null,replierUserId LONG,statusId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MembershipRequest (companyId LONG,mvccVersion LONG default 0,membershipRequestId LONG not null primary key,groupId LONG,userId LONG,createDate DATE null,comments STRING null,replyComments STRING null,replyDate DATE null,replierUserId LONG,statusId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MembershipRequest";
 	public static final String ORDER_BY_JPQL = " ORDER BY membershipRequest.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MembershipRequest.createDate DESC";
@@ -131,10 +131,10 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 		MembershipRequest model = new MembershipRequestImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setMembershipRequestId(soapModel.getMembershipRequestId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setComments(soapModel.getComments());
@@ -207,10 +207,10 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("membershipRequestId", getMembershipRequestId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("comments", getComments());
@@ -227,6 +227,12 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -243,12 +249,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -294,6 +294,17 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -337,17 +348,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -526,10 +526,10 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	public Object clone() {
 		MembershipRequestImpl membershipRequestImpl = new MembershipRequestImpl();
 
+		membershipRequestImpl.setCompanyId(getCompanyId());
 		membershipRequestImpl.setMvccVersion(getMvccVersion());
 		membershipRequestImpl.setMembershipRequestId(getMembershipRequestId());
 		membershipRequestImpl.setGroupId(getGroupId());
-		membershipRequestImpl.setCompanyId(getCompanyId());
 		membershipRequestImpl.setUserId(getUserId());
 		membershipRequestImpl.setCreateDate(getCreateDate());
 		membershipRequestImpl.setComments(getComments());
@@ -619,13 +619,13 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	public CacheModel<MembershipRequest> toCacheModel() {
 		MembershipRequestCacheModel membershipRequestCacheModel = new MembershipRequestCacheModel();
 
+		membershipRequestCacheModel.companyId = getCompanyId();
+
 		membershipRequestCacheModel.mvccVersion = getMvccVersion();
 
 		membershipRequestCacheModel.membershipRequestId = getMembershipRequestId();
 
 		membershipRequestCacheModel.groupId = getGroupId();
-
-		membershipRequestCacheModel.companyId = getCompanyId();
 
 		membershipRequestCacheModel.userId = getUserId();
 
@@ -674,14 +674,14 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", membershipRequestId=");
 		sb.append(getMembershipRequestId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", createDate=");
@@ -710,6 +710,10 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
@@ -720,10 +724,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -763,12 +763,12 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			MembershipRequest.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _membershipRequestId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

@@ -33,9 +33,9 @@ public class KaleoTimerSoap implements Serializable {
 	public static KaleoTimerSoap toSoapModel(KaleoTimer model) {
 		KaleoTimerSoap soapModel = new KaleoTimerSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setKaleoTimerId(model.getKaleoTimerId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -102,6 +102,14 @@ public class KaleoTimerSoap implements Serializable {
 		setKaleoTimerId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getKaleoTimerId() {
 		return _kaleoTimerId;
 	}
@@ -116,14 +124,6 @@ public class KaleoTimerSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -242,9 +242,9 @@ public class KaleoTimerSoap implements Serializable {
 		_recurrenceScale = recurrenceScale;
 	}
 
+	private long _companyId;
 	private long _kaleoTimerId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

@@ -68,10 +68,10 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{microblogsEntryId=");
-		sb.append(microblogsEntryId);
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(companyId);
+		sb.append(", microblogsEntryId=");
+		sb.append(microblogsEntryId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -101,8 +101,8 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 	public MicroblogsEntry toEntityModel() {
 		MicroblogsEntryImpl microblogsEntryImpl = new MicroblogsEntryImpl();
 
-		microblogsEntryImpl.setMicroblogsEntryId(microblogsEntryId);
 		microblogsEntryImpl.setCompanyId(companyId);
+		microblogsEntryImpl.setMicroblogsEntryId(microblogsEntryId);
 		microblogsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -147,8 +147,8 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		microblogsEntryId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		microblogsEntryId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -164,8 +164,8 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(microblogsEntryId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(microblogsEntryId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -192,8 +192,8 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		objectOutput.writeInt(socialRelationType);
 	}
 
-	public long microblogsEntryId;
 	public long companyId;
+	public long microblogsEntryId;
 	public long userId;
 	public String userName;
 	public long createDate;

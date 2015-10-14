@@ -1762,6 +1762,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItem.setNew(true);
 		portletItem.setPrimaryKey(portletItemId);
 
+		portletItem.setCompanyId(0);
+
 		return portletItem;
 	}
 
@@ -1975,10 +1977,10 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItemImpl.setNew(portletItem.isNew());
 		portletItemImpl.setPrimaryKey(portletItem.getPrimaryKey());
 
+		portletItemImpl.setCompanyId(portletItem.getCompanyId());
 		portletItemImpl.setMvccVersion(portletItem.getMvccVersion());
 		portletItemImpl.setPortletItemId(portletItem.getPortletItemId());
 		portletItemImpl.setGroupId(portletItem.getGroupId());
-		portletItemImpl.setCompanyId(portletItem.getCompanyId());
 		portletItemImpl.setUserId(portletItem.getUserId());
 		portletItemImpl.setUserName(portletItem.getUserName());
 		portletItemImpl.setCreateDate(portletItem.getCreateDate());

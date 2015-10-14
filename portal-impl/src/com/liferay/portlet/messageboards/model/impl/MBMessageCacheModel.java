@@ -68,14 +68,14 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 	public String toString() {
 		StringBundler sb = new StringBundler(53);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", messageId=");
 		sb.append(messageId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -129,6 +129,8 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 	public MBMessage toEntityModel() {
 		MBMessageImpl mbMessageImpl = new MBMessageImpl();
 
+		mbMessageImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			mbMessageImpl.setUuid(StringPool.BLANK);
 		}
@@ -138,7 +140,6 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 
 		mbMessageImpl.setMessageId(messageId);
 		mbMessageImpl.setGroupId(groupId);
-		mbMessageImpl.setCompanyId(companyId);
 		mbMessageImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -226,10 +227,10 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		messageId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -257,6 +258,8 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -266,7 +269,6 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 
 		objectOutput.writeLong(messageId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -324,10 +326,10 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long messageId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

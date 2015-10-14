@@ -129,10 +129,10 @@ public class ExpandoRowPersistenceTest {
 
 		ExpandoRow existingExpandoRow = _persistence.findByPrimaryKey(newExpandoRow.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoRow.getRowId(),
-			newExpandoRow.getRowId());
 		Assert.assertEquals(existingExpandoRow.getCompanyId(),
 			newExpandoRow.getCompanyId());
+		Assert.assertEquals(existingExpandoRow.getRowId(),
+			newExpandoRow.getRowId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingExpandoRow.getModifiedDate()),
 			Time.getShortTimestamp(newExpandoRow.getModifiedDate()));
@@ -187,8 +187,8 @@ public class ExpandoRowPersistenceTest {
 	}
 
 	protected OrderByComparator<ExpandoRow> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ExpandoRow", "rowId", true,
-			"companyId", true, "modifiedDate", true, "tableId", true,
+		return OrderByComparatorFactoryUtil.create("ExpandoRow", "companyId",
+			true, "rowId", true, "modifiedDate", true, "tableId", true,
 			"classPK", true);
 	}
 

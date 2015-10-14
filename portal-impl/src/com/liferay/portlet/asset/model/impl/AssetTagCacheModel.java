@@ -67,14 +67,14 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", tagId=");
 		sb.append(tagId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -98,6 +98,8 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 	public AssetTag toEntityModel() {
 		AssetTagImpl assetTagImpl = new AssetTagImpl();
 
+		assetTagImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			assetTagImpl.setUuid(StringPool.BLANK);
 		}
@@ -107,7 +109,6 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 
 		assetTagImpl.setTagId(tagId);
 		assetTagImpl.setGroupId(groupId);
-		assetTagImpl.setCompanyId(companyId);
 		assetTagImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -154,10 +155,10 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		tagId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -170,6 +171,8 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -179,7 +182,6 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 
 		objectOutput.writeLong(tagId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -203,10 +205,10 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long tagId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

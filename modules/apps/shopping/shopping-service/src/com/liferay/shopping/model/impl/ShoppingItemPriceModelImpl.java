@@ -60,6 +60,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	 */
 	public static final String TABLE_NAME = "ShoppingItemPrice";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "itemPriceId", Types.BIGINT },
 			{ "itemId", Types.BIGINT },
 			{ "minQuantity", Types.INTEGER },
@@ -74,6 +75,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("itemPriceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("itemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("minQuantity", Types.INTEGER);
@@ -86,7 +88,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ShoppingItemPrice (itemPriceId LONG not null primary key,itemId LONG,minQuantity INTEGER,maxQuantity INTEGER,price DOUBLE,discount DOUBLE,taxable BOOLEAN,shipping DOUBLE,useShippingFormula BOOLEAN,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table ShoppingItemPrice (companyId LONG,itemPriceId LONG not null primary key,itemId LONG,minQuantity INTEGER,maxQuantity INTEGER,price DOUBLE,discount DOUBLE,taxable BOOLEAN,shipping DOUBLE,useShippingFormula BOOLEAN,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingItemPrice";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingItemPrice.itemId ASC, shoppingItemPrice.itemPriceId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ShoppingItemPrice.itemId ASC, ShoppingItemPrice.itemPriceId ASC";
@@ -144,6 +146,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("itemPriceId", getItemPriceId());
 		attributes.put("itemId", getItemId());
 		attributes.put("minQuantity", getMinQuantity());
@@ -163,6 +166,12 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long itemPriceId = (Long)attributes.get("itemPriceId");
 
 		if (itemPriceId != null) {
@@ -223,6 +232,16 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -355,7 +374,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ShoppingItemPrice.class.getName(), getPrimaryKey());
 	}
 
@@ -380,6 +399,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	public Object clone() {
 		ShoppingItemPriceImpl shoppingItemPriceImpl = new ShoppingItemPriceImpl();
 
+		shoppingItemPriceImpl.setCompanyId(getCompanyId());
 		shoppingItemPriceImpl.setItemPriceId(getItemPriceId());
 		shoppingItemPriceImpl.setItemId(getItemId());
 		shoppingItemPriceImpl.setMinQuantity(getMinQuantity());
@@ -483,6 +503,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	public CacheModel<ShoppingItemPrice> toCacheModel() {
 		ShoppingItemPriceCacheModel shoppingItemPriceCacheModel = new ShoppingItemPriceCacheModel();
 
+		shoppingItemPriceCacheModel.companyId = getCompanyId();
+
 		shoppingItemPriceCacheModel.itemPriceId = getItemPriceId();
 
 		shoppingItemPriceCacheModel.itemId = getItemId();
@@ -508,9 +530,11 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{itemPriceId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", itemPriceId=");
 		sb.append(getItemPriceId());
 		sb.append(", itemId=");
 		sb.append(getItemId());
@@ -537,12 +561,16 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.shopping.model.ShoppingItemPrice");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>itemPriceId</column-name><column-value><![CDATA[");
 		sb.append(getItemPriceId());
@@ -593,6 +621,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ShoppingItemPrice.class
 		};
+	private long _companyId;
 	private long _itemPriceId;
 	private long _itemId;
 	private long _originalItemId;

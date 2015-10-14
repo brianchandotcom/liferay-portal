@@ -68,12 +68,12 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{categoryId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", categoryId=");
 		sb.append(categoryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -97,9 +97,9 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 	public ShoppingCategory toEntityModel() {
 		ShoppingCategoryImpl shoppingCategoryImpl = new ShoppingCategoryImpl();
 
+		shoppingCategoryImpl.setCompanyId(companyId);
 		shoppingCategoryImpl.setCategoryId(categoryId);
 		shoppingCategoryImpl.setGroupId(groupId);
-		shoppingCategoryImpl.setCompanyId(companyId);
 		shoppingCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -146,9 +146,9 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		categoryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -161,9 +161,9 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(categoryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -192,9 +192,9 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		}
 	}
 
+	public long companyId;
 	public long categoryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

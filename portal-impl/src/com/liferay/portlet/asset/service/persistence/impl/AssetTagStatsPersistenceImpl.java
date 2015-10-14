@@ -1471,6 +1471,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		assetTagStats.setNew(true);
 		assetTagStats.setPrimaryKey(tagStatsId);
 
+		assetTagStats.setCompanyId(0);
+
 		return assetTagStats;
 	}
 
@@ -1651,6 +1653,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		assetTagStatsImpl.setNew(assetTagStats.isNew());
 		assetTagStatsImpl.setPrimaryKey(assetTagStats.getPrimaryKey());
 
+		assetTagStatsImpl.setCompanyId(assetTagStats.getCompanyId());
 		assetTagStatsImpl.setTagStatsId(assetTagStats.getTagStatsId());
 		assetTagStatsImpl.setTagId(assetTagStats.getTagId());
 		assetTagStatsImpl.setClassNameId(assetTagStats.getClassNameId());

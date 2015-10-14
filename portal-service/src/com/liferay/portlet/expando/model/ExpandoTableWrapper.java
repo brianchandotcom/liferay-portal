@@ -52,8 +52,8 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("tableId", getTableId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("tableId", getTableId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("name", getName());
 
@@ -62,16 +62,16 @@ public class ExpandoTableWrapper implements ExpandoTable,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long tableId = (Long)attributes.get("tableId");
-
-		if (tableId != null) {
-			setTableId(tableId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long tableId = (Long)attributes.get("tableId");
+
+		if (tableId != null) {
+			setTableId(tableId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");

@@ -2325,6 +2325,8 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		kaleoTransition.setNew(true);
 		kaleoTransition.setPrimaryKey(kaleoTransitionId);
 
+		kaleoTransition.setCompanyId(0);
+
 		return kaleoTransition;
 	}
 
@@ -2550,9 +2552,9 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		kaleoTransitionImpl.setNew(kaleoTransition.isNew());
 		kaleoTransitionImpl.setPrimaryKey(kaleoTransition.getPrimaryKey());
 
+		kaleoTransitionImpl.setCompanyId(kaleoTransition.getCompanyId());
 		kaleoTransitionImpl.setKaleoTransitionId(kaleoTransition.getKaleoTransitionId());
 		kaleoTransitionImpl.setGroupId(kaleoTransition.getGroupId());
-		kaleoTransitionImpl.setCompanyId(kaleoTransition.getCompanyId());
 		kaleoTransitionImpl.setUserId(kaleoTransition.getUserId());
 		kaleoTransitionImpl.setUserName(kaleoTransition.getUserName());
 		kaleoTransitionImpl.setCreateDate(kaleoTransition.getCreateDate());

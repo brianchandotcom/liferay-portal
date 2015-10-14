@@ -2506,6 +2506,8 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 		kaleoNotification.setNew(true);
 		kaleoNotification.setPrimaryKey(kaleoNotificationId);
 
+		kaleoNotification.setCompanyId(0);
+
 		return kaleoNotification;
 	}
 
@@ -2757,9 +2759,9 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 		kaleoNotificationImpl.setNew(kaleoNotification.isNew());
 		kaleoNotificationImpl.setPrimaryKey(kaleoNotification.getPrimaryKey());
 
+		kaleoNotificationImpl.setCompanyId(kaleoNotification.getCompanyId());
 		kaleoNotificationImpl.setKaleoNotificationId(kaleoNotification.getKaleoNotificationId());
 		kaleoNotificationImpl.setGroupId(kaleoNotification.getGroupId());
-		kaleoNotificationImpl.setCompanyId(kaleoNotification.getCompanyId());
 		kaleoNotificationImpl.setUserId(kaleoNotification.getUserId());
 		kaleoNotificationImpl.setUserName(kaleoNotification.getUserName());
 		kaleoNotificationImpl.setCreateDate(kaleoNotification.getCreateDate());

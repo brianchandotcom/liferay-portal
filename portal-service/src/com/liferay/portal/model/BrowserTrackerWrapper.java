@@ -51,6 +51,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("browserTrackerId", getBrowserTrackerId());
 		attributes.put("userId", getUserId());
@@ -61,6 +62,12 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -114,6 +121,16 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	@Override
 	public long getBrowserTrackerId() {
 		return _browserTracker.getBrowserTrackerId();
+	}
+
+	/**
+	* Returns the company ID of this browser tracker.
+	*
+	* @return the company ID of this browser tracker
+	*/
+	@Override
+	public long getCompanyId() {
+		return _browserTracker.getCompanyId();
 	}
 
 	@Override
@@ -214,6 +231,16 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_browserTracker.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this browser tracker.
+	*
+	* @param companyId the company ID of this browser tracker
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_browserTracker.setCompanyId(companyId);
 	}
 
 	@Override

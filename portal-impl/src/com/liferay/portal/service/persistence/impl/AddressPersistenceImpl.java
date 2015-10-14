@@ -4682,6 +4682,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 		address.setUuid(uuid);
 
+		address.setCompanyId(0);
+
 		return address;
 	}
 
@@ -5015,10 +5017,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		addressImpl.setNew(address.isNew());
 		addressImpl.setPrimaryKey(address.getPrimaryKey());
 
+		addressImpl.setCompanyId(address.getCompanyId());
 		addressImpl.setMvccVersion(address.getMvccVersion());
 		addressImpl.setUuid(address.getUuid());
 		addressImpl.setAddressId(address.getAddressId());
-		addressImpl.setCompanyId(address.getCompanyId());
 		addressImpl.setUserId(address.getUserId());
 		addressImpl.setUserName(address.getUserName());
 		addressImpl.setCreateDate(address.getCreateDate());

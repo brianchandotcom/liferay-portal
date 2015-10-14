@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel {
+public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,6 +58,22 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel {
 	 * @param primaryKey the primary key of this layout branch
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this layout branch.
+	 *
+	 * @return the company ID of this layout branch
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this layout branch.
+	 *
+	 * @param companyId the company ID of this layout branch
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this layout branch.
@@ -101,20 +118,6 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel {
 	 * @param groupId the group ID of this layout branch
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this layout branch.
-	 *
-	 * @return the company ID of this layout branch
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this layout branch.
-	 *
-	 * @param companyId the company ID of this layout branch
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this layout branch.

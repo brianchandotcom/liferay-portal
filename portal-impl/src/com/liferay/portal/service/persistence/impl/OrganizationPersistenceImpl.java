@@ -6722,6 +6722,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		organization.setUuid(uuid);
 
+		organization.setCompanyId(0);
+
 		return organization;
 	}
 
@@ -6996,10 +6998,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		organizationImpl.setNew(organization.isNew());
 		organizationImpl.setPrimaryKey(organization.getPrimaryKey());
 
+		organizationImpl.setCompanyId(organization.getCompanyId());
 		organizationImpl.setMvccVersion(organization.getMvccVersion());
 		organizationImpl.setUuid(organization.getUuid());
 		organizationImpl.setOrganizationId(organization.getOrganizationId());
-		organizationImpl.setCompanyId(organization.getCompanyId());
 		organizationImpl.setUserId(organization.getUserId());
 		organizationImpl.setUserName(organization.getUserName());
 		organizationImpl.setCreateDate(organization.getCreateDate());

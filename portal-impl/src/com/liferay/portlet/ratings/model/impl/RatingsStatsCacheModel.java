@@ -63,9 +63,11 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{statsId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", statsId=");
 		sb.append(statsId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
@@ -86,6 +88,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 	public RatingsStats toEntityModel() {
 		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
 
+		ratingsStatsImpl.setCompanyId(companyId);
 		ratingsStatsImpl.setStatsId(statsId);
 		ratingsStatsImpl.setClassNameId(classNameId);
 		ratingsStatsImpl.setClassPK(classPK);
@@ -100,6 +103,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		statsId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
@@ -111,6 +115,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(statsId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
@@ -119,6 +124,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 		objectOutput.writeDouble(averageScore);
 	}
 
+	public long companyId;
 	public long statsId;
 	public long classNameId;
 	public long classPK;

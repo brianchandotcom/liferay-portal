@@ -51,6 +51,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("imageId", getImageId());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -64,6 +65,12 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -115,6 +122,16 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public int compareTo(com.liferay.portal.model.Image image) {
 		return _image.compareTo(image);
+	}
+
+	/**
+	* Returns the company ID of this image.
+	*
+	* @return the company ID of this image
+	*/
+	@Override
+	public long getCompanyId() {
+		return _image.getCompanyId();
 	}
 
 	@Override
@@ -240,6 +257,16 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_image.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this image.
+	*
+	* @param companyId the company ID of this image
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_image.setCompanyId(companyId);
 	}
 
 	@Override

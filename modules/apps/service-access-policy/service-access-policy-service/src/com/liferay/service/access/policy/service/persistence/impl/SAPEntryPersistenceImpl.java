@@ -4212,6 +4212,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 		sapEntry.setUuid(uuid);
 
+		sapEntry.setCompanyId(0);
+
 		return sapEntry;
 	}
 
@@ -4458,9 +4460,9 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		sapEntryImpl.setNew(sapEntry.isNew());
 		sapEntryImpl.setPrimaryKey(sapEntry.getPrimaryKey());
 
+		sapEntryImpl.setCompanyId(sapEntry.getCompanyId());
 		sapEntryImpl.setUuid(sapEntry.getUuid());
 		sapEntryImpl.setSapEntryId(sapEntry.getSapEntryId());
-		sapEntryImpl.setCompanyId(sapEntry.getCompanyId());
 		sapEntryImpl.setUserId(sapEntry.getUserId());
 		sapEntryImpl.setUserName(sapEntry.getUserName());
 		sapEntryImpl.setCreateDate(sapEntry.getCreateDate());

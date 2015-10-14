@@ -33,10 +33,10 @@ public class PortletItemSoap implements Serializable {
 	public static PortletItemSoap toSoapModel(PortletItem model) {
 		PortletItemSoap soapModel = new PortletItemSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setPortletItemId(model.getPortletItemId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -96,6 +96,14 @@ public class PortletItemSoap implements Serializable {
 		setPortletItemId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -118,14 +126,6 @@ public class PortletItemSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -184,10 +184,10 @@ public class PortletItemSoap implements Serializable {
 		_classNameId = classNameId;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _portletItemId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

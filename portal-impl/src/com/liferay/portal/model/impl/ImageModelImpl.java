@@ -64,6 +64,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	 */
 	public static final String TABLE_NAME = "Image";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "imageId", Types.BIGINT },
 			{ "modifiedDate", Types.TIMESTAMP },
@@ -75,6 +76,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("imageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
@@ -84,7 +86,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		TABLE_COLUMNS_MAP.put("size_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Image (mvccVersion LONG default 0,imageId LONG not null primary key,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Image (companyId LONG,mvccVersion LONG default 0,imageId LONG not null primary key,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Image";
 	public static final String ORDER_BY_JPQL = " ORDER BY image.imageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Image.imageId ASC";
@@ -116,6 +118,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		Image model = new ImageImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setImageId(soapModel.getImageId());
 		model.setModifiedDate(soapModel.getModifiedDate());
@@ -187,6 +190,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("imageId", getImageId());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -203,6 +207,12 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -244,6 +254,17 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		if (size != null) {
 			setSize(size);
 		}
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -348,7 +369,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Image.class.getName(), getPrimaryKey());
 	}
 
@@ -373,6 +394,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public Object clone() {
 		ImageImpl imageImpl = new ImageImpl();
 
+		imageImpl.setCompanyId(getCompanyId());
 		imageImpl.setMvccVersion(getMvccVersion());
 		imageImpl.setImageId(getImageId());
 		imageImpl.setModifiedDate(getModifiedDate());
@@ -459,6 +481,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public CacheModel<Image> toCacheModel() {
 		ImageCacheModel imageCacheModel = new ImageCacheModel();
 
+		imageCacheModel.companyId = getCompanyId();
+
 		imageCacheModel.mvccVersion = getMvccVersion();
 
 		imageCacheModel.imageId = getImageId();
@@ -491,9 +515,11 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", imageId=");
 		sb.append(getImageId());
@@ -514,12 +540,16 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Image");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
@@ -558,6 +588,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			Image.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _imageId;
 	private Date _modifiedDate;

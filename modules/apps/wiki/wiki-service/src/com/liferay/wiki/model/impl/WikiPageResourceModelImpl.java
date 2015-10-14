@@ -61,6 +61,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	 */
 	public static final String TABLE_NAME = "WikiPageResource";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "resourcePrimKey", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
@@ -70,6 +71,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -77,7 +79,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WikiPageResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,nodeId LONG,title VARCHAR(255) null)";
+	public static final String TABLE_SQL_CREATE = "create table WikiPageResource (companyId LONG,uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,nodeId LONG,title VARCHAR(255) null)";
 	public static final String TABLE_SQL_DROP = "drop table WikiPageResource";
 	public static final String ORDER_BY_JPQL = " ORDER BY wikiPageResource.resourcePrimKey ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WikiPageResource.resourcePrimKey ASC";
@@ -93,11 +95,12 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.wiki.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.wiki.model.WikiPageResource"),
 			true);
-	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long NODEID_COLUMN_BITMASK = 2L;
-	public static final long TITLE_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 16L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long NODEID_COLUMN_BITMASK = 4L;
+	public static final long TITLE_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.wiki.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.wiki.model.WikiPageResource"));
 
@@ -138,6 +141,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
@@ -152,6 +156,12 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -181,6 +191,28 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		if (title != null) {
 			setTitle(title);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -291,7 +323,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			WikiPageResource.class.getName(), getPrimaryKey());
 	}
 
@@ -316,6 +348,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public Object clone() {
 		WikiPageResourceImpl wikiPageResourceImpl = new WikiPageResourceImpl();
 
+		wikiPageResourceImpl.setCompanyId(getCompanyId());
 		wikiPageResourceImpl.setUuid(getUuid());
 		wikiPageResourceImpl.setResourcePrimKey(getResourcePrimKey());
 		wikiPageResourceImpl.setGroupId(getGroupId());
@@ -383,6 +416,10 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public void resetOriginalValues() {
 		WikiPageResourceModelImpl wikiPageResourceModelImpl = this;
 
+		wikiPageResourceModelImpl._originalCompanyId = wikiPageResourceModelImpl._companyId;
+
+		wikiPageResourceModelImpl._setOriginalCompanyId = false;
+
 		wikiPageResourceModelImpl._originalUuid = wikiPageResourceModelImpl._uuid;
 
 		wikiPageResourceModelImpl._originalGroupId = wikiPageResourceModelImpl._groupId;
@@ -401,6 +438,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	@Override
 	public CacheModel<WikiPageResource> toCacheModel() {
 		WikiPageResourceCacheModel wikiPageResourceCacheModel = new WikiPageResourceCacheModel();
+
+		wikiPageResourceCacheModel.companyId = getCompanyId();
 
 		wikiPageResourceCacheModel.uuid = getUuid();
 
@@ -429,9 +468,11 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", resourcePrimKey=");
 		sb.append(getResourcePrimKey());
@@ -448,12 +489,16 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.wiki.model.WikiPageResource");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
@@ -484,6 +529,9 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			WikiPageResource.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _resourcePrimKey;

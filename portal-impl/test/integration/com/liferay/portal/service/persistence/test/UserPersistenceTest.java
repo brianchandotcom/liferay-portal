@@ -118,11 +118,11 @@ public class UserPersistenceTest {
 
 		User newUser = _persistence.create(pk);
 
+		newUser.setCompanyId(RandomTestUtil.nextLong());
+
 		newUser.setMvccVersion(RandomTestUtil.nextLong());
 
 		newUser.setUuid(RandomTestUtil.randomString());
-
-		newUser.setCompanyId(RandomTestUtil.nextLong());
 
 		newUser.setCreateDate(RandomTestUtil.nextDate());
 
@@ -204,11 +204,11 @@ public class UserPersistenceTest {
 
 		User existingUser = _persistence.findByPrimaryKey(newUser.getPrimaryKey());
 
+		Assert.assertEquals(existingUser.getCompanyId(), newUser.getCompanyId());
 		Assert.assertEquals(existingUser.getMvccVersion(),
 			newUser.getMvccVersion());
 		Assert.assertEquals(existingUser.getUuid(), newUser.getUuid());
 		Assert.assertEquals(existingUser.getUserId(), newUser.getUserId());
-		Assert.assertEquals(existingUser.getCompanyId(), newUser.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(existingUser.getCreateDate()),
 			Time.getShortTimestamp(newUser.getCreateDate()));
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -444,12 +444,12 @@ public class UserPersistenceTest {
 	}
 
 	protected OrderByComparator<User> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("User_", "mvccVersion",
-			true, "uuid", true, "userId", true, "companyId", true,
-			"createDate", true, "modifiedDate", true, "defaultUser", true,
-			"contactId", true, "password", true, "passwordEncrypted", true,
-			"passwordReset", true, "passwordModifiedDate", true, "digest",
-			true, "reminderQueryQuestion", true, "reminderQueryAnswer", true,
+		return OrderByComparatorFactoryUtil.create("User_", "companyId", true,
+			"mvccVersion", true, "uuid", true, "userId", true, "createDate",
+			true, "modifiedDate", true, "defaultUser", true, "contactId", true,
+			"password", true, "passwordEncrypted", true, "passwordReset", true,
+			"passwordModifiedDate", true, "digest", true,
+			"reminderQueryQuestion", true, "reminderQueryAnswer", true,
 			"graceLoginCount", true, "screenName", true, "emailAddress", true,
 			"facebookId", true, "ldapServerId", true, "openId", true,
 			"portraitId", true, "languageId", true, "timeZoneId", true,
@@ -714,11 +714,11 @@ public class UserPersistenceTest {
 
 		User user = _persistence.create(pk);
 
+		user.setCompanyId(RandomTestUtil.nextLong());
+
 		user.setMvccVersion(RandomTestUtil.nextLong());
 
 		user.setUuid(RandomTestUtil.randomString());
-
-		user.setCompanyId(RandomTestUtil.nextLong());
 
 		user.setCreateDate(RandomTestUtil.nextDate());
 

@@ -72,10 +72,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	 */
 	public static final String TABLE_NAME = "CalendarNotificationTemplate";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "calendarNotificationTemplateId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -91,10 +91,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("calendarNotificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -108,7 +108,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CalendarNotificationTemplate (uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CalendarNotificationTemplate (companyId LONG,uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CalendarNotificationTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY calendarNotificationTemplate.calendarNotificationTemplateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CalendarNotificationTemplate.calendarNotificationTemplateId ASC";
@@ -146,10 +146,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 		CalendarNotificationTemplate model = new CalendarNotificationTemplateImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setCalendarNotificationTemplateId(soapModel.getCalendarNotificationTemplateId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -226,11 +226,11 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("calendarNotificationTemplateId",
 			getCalendarNotificationTemplateId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -251,6 +251,12 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -268,12 +274,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -345,6 +345,29 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -402,29 +425,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -669,10 +669,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	public Object clone() {
 		CalendarNotificationTemplateImpl calendarNotificationTemplateImpl = new CalendarNotificationTemplateImpl();
 
+		calendarNotificationTemplateImpl.setCompanyId(getCompanyId());
 		calendarNotificationTemplateImpl.setUuid(getUuid());
 		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(getCalendarNotificationTemplateId());
 		calendarNotificationTemplateImpl.setGroupId(getGroupId());
-		calendarNotificationTemplateImpl.setCompanyId(getCompanyId());
 		calendarNotificationTemplateImpl.setUserId(getUserId());
 		calendarNotificationTemplateImpl.setUserName(getUserName());
 		calendarNotificationTemplateImpl.setCreateDate(getCreateDate());
@@ -748,15 +748,15 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		CalendarNotificationTemplateModelImpl calendarNotificationTemplateModelImpl =
 			this;
 
+		calendarNotificationTemplateModelImpl._originalCompanyId = calendarNotificationTemplateModelImpl._companyId;
+
+		calendarNotificationTemplateModelImpl._setOriginalCompanyId = false;
+
 		calendarNotificationTemplateModelImpl._originalUuid = calendarNotificationTemplateModelImpl._uuid;
 
 		calendarNotificationTemplateModelImpl._originalGroupId = calendarNotificationTemplateModelImpl._groupId;
 
 		calendarNotificationTemplateModelImpl._setOriginalGroupId = false;
-
-		calendarNotificationTemplateModelImpl._originalCompanyId = calendarNotificationTemplateModelImpl._companyId;
-
-		calendarNotificationTemplateModelImpl._setOriginalCompanyId = false;
 
 		calendarNotificationTemplateModelImpl._setModifiedDate = false;
 
@@ -776,6 +776,8 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		CalendarNotificationTemplateCacheModel calendarNotificationTemplateCacheModel =
 			new CalendarNotificationTemplateCacheModel();
 
+		calendarNotificationTemplateCacheModel.companyId = getCompanyId();
+
 		calendarNotificationTemplateCacheModel.uuid = getUuid();
 
 		String uuid = calendarNotificationTemplateCacheModel.uuid;
@@ -787,8 +789,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		calendarNotificationTemplateCacheModel.calendarNotificationTemplateId = getCalendarNotificationTemplateId();
 
 		calendarNotificationTemplateCacheModel.groupId = getGroupId();
-
-		calendarNotificationTemplateCacheModel.companyId = getCompanyId();
 
 		calendarNotificationTemplateCacheModel.userId = getUserId();
 
@@ -878,14 +878,14 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", calendarNotificationTemplateId=");
 		sb.append(getCalendarNotificationTemplateId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -922,6 +922,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -932,10 +936,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -991,15 +991,15 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CalendarNotificationTemplate.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _calendarNotificationTemplateId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

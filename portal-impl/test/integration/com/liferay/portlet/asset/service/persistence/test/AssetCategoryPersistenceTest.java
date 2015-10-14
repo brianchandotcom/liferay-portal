@@ -119,11 +119,11 @@ public class AssetCategoryPersistenceTest {
 
 		AssetCategory newAssetCategory = _persistence.create(pk);
 
+		newAssetCategory.setCompanyId(RandomTestUtil.nextLong());
+
 		newAssetCategory.setUuid(RandomTestUtil.randomString());
 
 		newAssetCategory.setGroupId(RandomTestUtil.nextLong());
-
-		newAssetCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		newAssetCategory.setUserId(RandomTestUtil.nextLong());
 
@@ -151,14 +151,14 @@ public class AssetCategoryPersistenceTest {
 
 		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(newAssetCategory.getPrimaryKey());
 
+		Assert.assertEquals(existingAssetCategory.getCompanyId(),
+			newAssetCategory.getCompanyId());
 		Assert.assertEquals(existingAssetCategory.getUuid(),
 			newAssetCategory.getUuid());
 		Assert.assertEquals(existingAssetCategory.getCategoryId(),
 			newAssetCategory.getCategoryId());
 		Assert.assertEquals(existingAssetCategory.getGroupId(),
 			newAssetCategory.getGroupId());
-		Assert.assertEquals(existingAssetCategory.getCompanyId(),
-			newAssetCategory.getCompanyId());
 		Assert.assertEquals(existingAssetCategory.getUserId(),
 			newAssetCategory.getUserId());
 		Assert.assertEquals(existingAssetCategory.getUserName(),
@@ -351,9 +351,9 @@ public class AssetCategoryPersistenceTest {
 	}
 
 	protected OrderByComparator<AssetCategory> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("AssetCategory", "uuid",
-			true, "categoryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+		return OrderByComparatorFactoryUtil.create("AssetCategory",
+			"companyId", true, "uuid", true, "categoryId", true, "groupId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentCategoryId", true, "leftCategoryId",
 			true, "rightCategoryId", true, "name", true, "title", true,
 			"description", true, "vocabularyId", true, "lastPublishDate", true);
@@ -584,11 +584,11 @@ public class AssetCategoryPersistenceTest {
 
 		AssetCategory assetCategory = _persistence.create(pk);
 
+		assetCategory.setCompanyId(RandomTestUtil.nextLong());
+
 		assetCategory.setUuid(RandomTestUtil.randomString());
 
 		assetCategory.setGroupId(RandomTestUtil.nextLong());
-
-		assetCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		assetCategory.setUserId(RandomTestUtil.nextLong());
 
@@ -835,10 +835,10 @@ public class AssetCategoryPersistenceTest {
 
 		AssetCategory assetCategory = _persistence.create(pk);
 
+		assetCategory.setCompanyId(RandomTestUtil.nextLong());
+
 		assetCategory.setUuid(RandomTestUtil.randomString());
 		assetCategory.setGroupId(groupId);
-
-		assetCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		assetCategory.setUserId(RandomTestUtil.nextLong());
 

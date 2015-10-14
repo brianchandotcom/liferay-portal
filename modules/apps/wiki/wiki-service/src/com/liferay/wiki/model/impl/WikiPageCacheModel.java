@@ -67,7 +67,9 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(49);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", pageId=");
 		sb.append(pageId);
@@ -75,8 +77,6 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		sb.append(resourcePrimKey);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -124,6 +124,8 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 	public WikiPage toEntityModel() {
 		WikiPageImpl wikiPageImpl = new WikiPageImpl();
 
+		wikiPageImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			wikiPageImpl.setUuid(StringPool.BLANK);
 		}
@@ -134,7 +136,6 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		wikiPageImpl.setPageId(pageId);
 		wikiPageImpl.setResourcePrimKey(resourcePrimKey);
 		wikiPageImpl.setGroupId(groupId);
-		wikiPageImpl.setCompanyId(companyId);
 		wikiPageImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -238,11 +239,11 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		pageId = objectInput.readLong();
 		resourcePrimKey = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -267,6 +268,8 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -277,7 +280,6 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		objectOutput.writeLong(pageId);
 		objectOutput.writeLong(resourcePrimKey);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -352,11 +354,11 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long pageId;
 	public long resourcePrimKey;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

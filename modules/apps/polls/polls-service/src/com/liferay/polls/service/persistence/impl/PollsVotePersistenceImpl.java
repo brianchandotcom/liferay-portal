@@ -2895,6 +2895,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		pollsVote.setUuid(uuid);
 
+		pollsVote.setCompanyId(0);
+
 		return pollsVote;
 	}
 
@@ -3139,10 +3141,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		pollsVoteImpl.setNew(pollsVote.isNew());
 		pollsVoteImpl.setPrimaryKey(pollsVote.getPrimaryKey());
 
+		pollsVoteImpl.setCompanyId(pollsVote.getCompanyId());
 		pollsVoteImpl.setUuid(pollsVote.getUuid());
 		pollsVoteImpl.setVoteId(pollsVote.getVoteId());
 		pollsVoteImpl.setGroupId(pollsVote.getGroupId());
-		pollsVoteImpl.setCompanyId(pollsVote.getCompanyId());
 		pollsVoteImpl.setUserId(pollsVote.getUserId());
 		pollsVoteImpl.setUserName(pollsVote.getUserName());
 		pollsVoteImpl.setCreateDate(pollsVote.getCreateDate());

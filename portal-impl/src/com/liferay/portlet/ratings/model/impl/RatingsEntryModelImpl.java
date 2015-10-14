@@ -72,9 +72,9 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	 */
 	public static final String TABLE_NAME = "RatingsEntry";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "entryId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -87,9 +87,9 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -100,7 +100,7 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RatingsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table RatingsEntry (companyId LONG,uuid_ VARCHAR(75) null,entryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table RatingsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY ratingsEntry.entryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RatingsEntry.entryId ASC";
@@ -137,9 +137,9 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		RatingsEntry model = new RatingsEntryImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -212,9 +212,9 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("entryId", getEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -232,6 +232,12 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -242,12 +248,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		if (entryId != null) {
 			setEntryId(entryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -299,6 +299,29 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -332,29 +355,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	@Override
 	public void setEntryId(long entryId) {
 		_entryId = entryId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -577,9 +577,9 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public Object clone() {
 		RatingsEntryImpl ratingsEntryImpl = new RatingsEntryImpl();
 
+		ratingsEntryImpl.setCompanyId(getCompanyId());
 		ratingsEntryImpl.setUuid(getUuid());
 		ratingsEntryImpl.setEntryId(getEntryId());
-		ratingsEntryImpl.setCompanyId(getCompanyId());
 		ratingsEntryImpl.setUserId(getUserId());
 		ratingsEntryImpl.setUserName(getUserName());
 		ratingsEntryImpl.setCreateDate(getCreateDate());
@@ -650,11 +650,11 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public void resetOriginalValues() {
 		RatingsEntryModelImpl ratingsEntryModelImpl = this;
 
-		ratingsEntryModelImpl._originalUuid = ratingsEntryModelImpl._uuid;
-
 		ratingsEntryModelImpl._originalCompanyId = ratingsEntryModelImpl._companyId;
 
 		ratingsEntryModelImpl._setOriginalCompanyId = false;
+
+		ratingsEntryModelImpl._originalUuid = ratingsEntryModelImpl._uuid;
 
 		ratingsEntryModelImpl._originalUserId = ratingsEntryModelImpl._userId;
 
@@ -681,6 +681,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public CacheModel<RatingsEntry> toCacheModel() {
 		RatingsEntryCacheModel ratingsEntryCacheModel = new RatingsEntryCacheModel();
 
+		ratingsEntryCacheModel.companyId = getCompanyId();
+
 		ratingsEntryCacheModel.uuid = getUuid();
 
 		String uuid = ratingsEntryCacheModel.uuid;
@@ -690,8 +692,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		}
 
 		ratingsEntryCacheModel.entryId = getEntryId();
-
-		ratingsEntryCacheModel.companyId = getCompanyId();
 
 		ratingsEntryCacheModel.userId = getUserId();
 
@@ -743,12 +743,12 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", entryId=");
 		sb.append(getEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -779,16 +779,16 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>entryId</column-name><column-value><![CDATA[");
 		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -832,12 +832,12 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			RatingsEntry.class
 		};
-	private String _uuid;
-	private String _originalUuid;
-	private long _entryId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private String _uuid;
+	private String _originalUuid;
+	private long _entryId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

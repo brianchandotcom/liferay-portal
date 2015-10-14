@@ -119,11 +119,11 @@ public class DLFileEntryPersistenceTest {
 
 		DLFileEntry newDLFileEntry = _persistence.create(pk);
 
+		newDLFileEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		newDLFileEntry.setUuid(RandomTestUtil.randomString());
 
 		newDLFileEntry.setGroupId(RandomTestUtil.nextLong());
-
-		newDLFileEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newDLFileEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -181,14 +181,14 @@ public class DLFileEntryPersistenceTest {
 
 		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingDLFileEntry.getCompanyId(),
+			newDLFileEntry.getCompanyId());
 		Assert.assertEquals(existingDLFileEntry.getUuid(),
 			newDLFileEntry.getUuid());
 		Assert.assertEquals(existingDLFileEntry.getFileEntryId(),
 			newDLFileEntry.getFileEntryId());
 		Assert.assertEquals(existingDLFileEntry.getGroupId(),
 			newDLFileEntry.getGroupId());
-		Assert.assertEquals(existingDLFileEntry.getCompanyId(),
-			newDLFileEntry.getCompanyId());
 		Assert.assertEquals(existingDLFileEntry.getUserId(),
 			newDLFileEntry.getUserId());
 		Assert.assertEquals(existingDLFileEntry.getUserName(),
@@ -274,17 +274,17 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -438,8 +438,8 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	protected OrderByComparator<DLFileEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DLFileEntry", "uuid", true,
-			"fileEntryId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("DLFileEntry", "companyId",
+			true, "uuid", true, "fileEntryId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "repositoryId", true,
 			"folderId", true, "treePath", true, "name", true, "fileName", true,
@@ -693,11 +693,11 @@ public class DLFileEntryPersistenceTest {
 
 		DLFileEntry dlFileEntry = _persistence.create(pk);
 
+		dlFileEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		dlFileEntry.setUuid(RandomTestUtil.randomString());
 
 		dlFileEntry.setGroupId(RandomTestUtil.nextLong());
-
-		dlFileEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		dlFileEntry.setUserId(RandomTestUtil.nextLong());
 

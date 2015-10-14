@@ -1003,6 +1003,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		announcementsFlag.setNew(true);
 		announcementsFlag.setPrimaryKey(flagId);
 
+		announcementsFlag.setCompanyId(0);
+
 		return announcementsFlag;
 	}
 
@@ -1167,6 +1169,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		announcementsFlagImpl.setNew(announcementsFlag.isNew());
 		announcementsFlagImpl.setPrimaryKey(announcementsFlag.getPrimaryKey());
 
+		announcementsFlagImpl.setCompanyId(announcementsFlag.getCompanyId());
 		announcementsFlagImpl.setFlagId(announcementsFlag.getFlagId());
 		announcementsFlagImpl.setUserId(announcementsFlag.getUserId());
 		announcementsFlagImpl.setCreateDate(announcementsFlag.getCreateDate());

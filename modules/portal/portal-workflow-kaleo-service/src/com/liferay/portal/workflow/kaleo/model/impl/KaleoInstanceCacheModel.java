@@ -67,12 +67,12 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{kaleoInstanceId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoInstanceId=");
 		sb.append(kaleoInstanceId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -108,9 +108,9 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 	public KaleoInstance toEntityModel() {
 		KaleoInstanceImpl kaleoInstanceImpl = new KaleoInstanceImpl();
 
+		kaleoInstanceImpl.setCompanyId(companyId);
 		kaleoInstanceImpl.setKaleoInstanceId(kaleoInstanceId);
 		kaleoInstanceImpl.setGroupId(groupId);
-		kaleoInstanceImpl.setCompanyId(companyId);
 		kaleoInstanceImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -177,9 +177,9 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoInstanceId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -198,9 +198,9 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoInstanceId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -243,9 +243,9 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 		}
 	}
 
+	public long companyId;
 	public long kaleoInstanceId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

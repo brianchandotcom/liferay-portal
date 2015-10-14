@@ -1478,6 +1478,8 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		ddmTemplateLink.setNew(true);
 		ddmTemplateLink.setPrimaryKey(templateLinkId);
 
+		ddmTemplateLink.setCompanyId(0);
+
 		return ddmTemplateLink;
 	}
 
@@ -1659,6 +1661,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		ddmTemplateLinkImpl.setNew(ddmTemplateLink.isNew());
 		ddmTemplateLinkImpl.setPrimaryKey(ddmTemplateLink.getPrimaryKey());
 
+		ddmTemplateLinkImpl.setCompanyId(ddmTemplateLink.getCompanyId());
 		ddmTemplateLinkImpl.setTemplateLinkId(ddmTemplateLink.getTemplateLinkId());
 		ddmTemplateLinkImpl.setClassNameId(ddmTemplateLink.getClassNameId());
 		ddmTemplateLinkImpl.setClassPK(ddmTemplateLink.getClassPK());

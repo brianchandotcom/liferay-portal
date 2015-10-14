@@ -81,12 +81,12 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", userTrackerId=");
 		sb.append(userTrackerId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", modifiedDate=");
@@ -108,9 +108,9 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 	public UserTracker toEntityModel() {
 		UserTrackerImpl userTrackerImpl = new UserTrackerImpl();
 
+		userTrackerImpl.setCompanyId(companyId);
 		userTrackerImpl.setMvccVersion(mvccVersion);
 		userTrackerImpl.setUserTrackerId(userTrackerId);
-		userTrackerImpl.setCompanyId(companyId);
 		userTrackerImpl.setUserId(userId);
 
 		if (modifiedDate == Long.MIN_VALUE) {
@@ -155,9 +155,9 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		userTrackerId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		sessionId = objectInput.readUTF();
@@ -169,9 +169,9 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(userTrackerId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(modifiedDate);
 
@@ -204,9 +204,9 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		}
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long userTrackerId;
-	public long companyId;
 	public long userId;
 	public long modifiedDate;
 	public String sessionId;

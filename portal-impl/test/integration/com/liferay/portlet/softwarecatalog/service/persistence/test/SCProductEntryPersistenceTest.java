@@ -119,9 +119,9 @@ public class SCProductEntryPersistenceTest {
 
 		SCProductEntry newSCProductEntry = _persistence.create(pk);
 
-		newSCProductEntry.setGroupId(RandomTestUtil.nextLong());
-
 		newSCProductEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		newSCProductEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newSCProductEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -153,12 +153,12 @@ public class SCProductEntryPersistenceTest {
 
 		SCProductEntry existingSCProductEntry = _persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingSCProductEntry.getCompanyId(),
+			newSCProductEntry.getCompanyId());
 		Assert.assertEquals(existingSCProductEntry.getProductEntryId(),
 			newSCProductEntry.getProductEntryId());
 		Assert.assertEquals(existingSCProductEntry.getGroupId(),
 			newSCProductEntry.getGroupId());
-		Assert.assertEquals(existingSCProductEntry.getCompanyId(),
-			newSCProductEntry.getCompanyId());
 		Assert.assertEquals(existingSCProductEntry.getUserId(),
 			newSCProductEntry.getUserId());
 		Assert.assertEquals(existingSCProductEntry.getUserName(),
@@ -190,17 +190,17 @@ public class SCProductEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -250,7 +250,7 @@ public class SCProductEntryPersistenceTest {
 
 	protected OrderByComparator<SCProductEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductEntry",
-			"productEntryId", true, "groupId", true, "companyId", true,
+			"companyId", true, "productEntryId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "type", true, "tags", true,
 			"shortDescription", true, "longDescription", true, "pageURL", true,
@@ -474,9 +474,9 @@ public class SCProductEntryPersistenceTest {
 
 		SCProductEntry scProductEntry = _persistence.create(pk);
 
-		scProductEntry.setGroupId(RandomTestUtil.nextLong());
-
 		scProductEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		scProductEntry.setGroupId(RandomTestUtil.nextLong());
 
 		scProductEntry.setUserId(RandomTestUtil.nextLong());
 

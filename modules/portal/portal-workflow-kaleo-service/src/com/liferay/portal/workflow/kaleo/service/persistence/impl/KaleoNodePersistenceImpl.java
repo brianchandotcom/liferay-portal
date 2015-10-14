@@ -1732,6 +1732,8 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		kaleoNode.setNew(true);
 		kaleoNode.setPrimaryKey(kaleoNodeId);
 
+		kaleoNode.setCompanyId(0);
+
 		return kaleoNode;
 	}
 
@@ -1952,9 +1954,9 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		kaleoNodeImpl.setNew(kaleoNode.isNew());
 		kaleoNodeImpl.setPrimaryKey(kaleoNode.getPrimaryKey());
 
+		kaleoNodeImpl.setCompanyId(kaleoNode.getCompanyId());
 		kaleoNodeImpl.setKaleoNodeId(kaleoNode.getKaleoNodeId());
 		kaleoNodeImpl.setGroupId(kaleoNode.getGroupId());
-		kaleoNodeImpl.setCompanyId(kaleoNode.getCompanyId());
 		kaleoNodeImpl.setUserId(kaleoNode.getUserId());
 		kaleoNodeImpl.setUserName(kaleoNode.getUserName());
 		kaleoNodeImpl.setCreateDate(kaleoNode.getCreateDate());

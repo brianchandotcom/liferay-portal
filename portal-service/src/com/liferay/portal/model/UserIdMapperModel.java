@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel {
+public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,6 +58,22 @@ public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel {
 	 * @param primaryKey the primary key of this user ID mapper
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this user ID mapper.
+	 *
+	 * @return the company ID of this user ID mapper
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user ID mapper.
+	 *
+	 * @param companyId the company ID of this user ID mapper
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this user ID mapper.

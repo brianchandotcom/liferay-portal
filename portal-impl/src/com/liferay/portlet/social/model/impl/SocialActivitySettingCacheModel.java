@@ -66,12 +66,12 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{activitySettingId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", activitySettingId=");
 		sb.append(activitySettingId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", activityType=");
@@ -89,9 +89,9 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 	public SocialActivitySetting toEntityModel() {
 		SocialActivitySettingImpl socialActivitySettingImpl = new SocialActivitySettingImpl();
 
+		socialActivitySettingImpl.setCompanyId(companyId);
 		socialActivitySettingImpl.setActivitySettingId(activitySettingId);
 		socialActivitySettingImpl.setGroupId(groupId);
-		socialActivitySettingImpl.setCompanyId(companyId);
 		socialActivitySettingImpl.setClassNameId(classNameId);
 		socialActivitySettingImpl.setActivityType(activityType);
 
@@ -116,9 +116,9 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		activitySettingId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		activityType = objectInput.readInt();
 		name = objectInput.readUTF();
@@ -128,9 +128,9 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(activitySettingId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeInt(activityType);
 
@@ -149,9 +149,9 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 		}
 	}
 
+	public long companyId;
 	public long activitySettingId;
 	public long groupId;
-	public long companyId;
 	public long classNameId;
 	public int activityType;
 	public String name;

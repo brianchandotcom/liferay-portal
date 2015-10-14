@@ -78,10 +78,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	 */
 	public static final String TABLE_NAME = "AssetCategory";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "categoryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -98,10 +98,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("categoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -116,7 +116,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,leftCategoryId LONG,rightCategoryId LONG,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetCategory (companyId LONG,uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,leftCategoryId LONG,rightCategoryId LONG,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetCategory";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetCategory.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetCategory.name ASC";
@@ -152,10 +152,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 		AssetCategory model = new AssetCategoryImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setCategoryId(soapModel.getCategoryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -245,10 +245,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -270,6 +270,12 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -286,12 +292,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -367,6 +367,29 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -423,29 +446,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -965,10 +965,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public Object clone() {
 		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
 
+		assetCategoryImpl.setCompanyId(getCompanyId());
 		assetCategoryImpl.setUuid(getUuid());
 		assetCategoryImpl.setCategoryId(getCategoryId());
 		assetCategoryImpl.setGroupId(getGroupId());
-		assetCategoryImpl.setCompanyId(getCompanyId());
 		assetCategoryImpl.setUserId(getUserId());
 		assetCategoryImpl.setUserName(getUserName());
 		assetCategoryImpl.setCreateDate(getCreateDate());
@@ -1041,15 +1041,15 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public void resetOriginalValues() {
 		AssetCategoryModelImpl assetCategoryModelImpl = this;
 
+		assetCategoryModelImpl._originalCompanyId = assetCategoryModelImpl._companyId;
+
+		assetCategoryModelImpl._setOriginalCompanyId = false;
+
 		assetCategoryModelImpl._originalUuid = assetCategoryModelImpl._uuid;
 
 		assetCategoryModelImpl._originalGroupId = assetCategoryModelImpl._groupId;
 
 		assetCategoryModelImpl._setOriginalGroupId = false;
-
-		assetCategoryModelImpl._originalCompanyId = assetCategoryModelImpl._companyId;
-
-		assetCategoryModelImpl._setOriginalCompanyId = false;
 
 		assetCategoryModelImpl._setModifiedDate = false;
 
@@ -1070,6 +1070,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public CacheModel<AssetCategory> toCacheModel() {
 		AssetCategoryCacheModel assetCategoryCacheModel = new AssetCategoryCacheModel();
 
+		assetCategoryCacheModel.companyId = getCompanyId();
+
 		assetCategoryCacheModel.uuid = getUuid();
 
 		String uuid = assetCategoryCacheModel.uuid;
@@ -1081,8 +1083,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		assetCategoryCacheModel.categoryId = getCategoryId();
 
 		assetCategoryCacheModel.groupId = getGroupId();
-
-		assetCategoryCacheModel.companyId = getCompanyId();
 
 		assetCategoryCacheModel.userId = getUserId();
 
@@ -1160,14 +1160,14 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", categoryId=");
 		sb.append(getCategoryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1206,6 +1206,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1216,10 +1220,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1279,15 +1279,15 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetCategory.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _categoryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

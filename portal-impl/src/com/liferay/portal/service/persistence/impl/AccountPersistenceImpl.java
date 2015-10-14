@@ -177,6 +177,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		account.setNew(true);
 		account.setPrimaryKey(accountId);
 
+		account.setCompanyId(0);
+
 		return account;
 	}
 
@@ -338,9 +340,9 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		accountImpl.setNew(account.isNew());
 		accountImpl.setPrimaryKey(account.getPrimaryKey());
 
+		accountImpl.setCompanyId(account.getCompanyId());
 		accountImpl.setMvccVersion(account.getMvccVersion());
 		accountImpl.setAccountId(account.getAccountId());
-		accountImpl.setCompanyId(account.getCompanyId());
 		accountImpl.setUserId(account.getUserId());
 		accountImpl.setUserName(account.getUserName());
 		accountImpl.setCreateDate(account.getCreateDate());

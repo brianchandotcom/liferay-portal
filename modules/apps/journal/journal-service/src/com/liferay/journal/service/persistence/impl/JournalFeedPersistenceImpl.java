@@ -2785,6 +2785,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		journalFeed.setUuid(uuid);
 
+		journalFeed.setCompanyId(0);
+
 		return journalFeed;
 	}
 
@@ -3014,10 +3016,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		journalFeedImpl.setNew(journalFeed.isNew());
 		journalFeedImpl.setPrimaryKey(journalFeed.getPrimaryKey());
 
+		journalFeedImpl.setCompanyId(journalFeed.getCompanyId());
 		journalFeedImpl.setUuid(journalFeed.getUuid());
 		journalFeedImpl.setId(journalFeed.getId());
 		journalFeedImpl.setGroupId(journalFeed.getGroupId());
-		journalFeedImpl.setCompanyId(journalFeed.getCompanyId());
 		journalFeedImpl.setUserId(journalFeed.getUserId());
 		journalFeedImpl.setUserName(journalFeed.getUserName());
 		journalFeedImpl.setCreateDate(journalFeed.getCreateDate());

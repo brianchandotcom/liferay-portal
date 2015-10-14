@@ -81,14 +81,14 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", teamId=");
 		sb.append(teamId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -114,6 +114,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 	public Team toEntityModel() {
 		TeamImpl teamImpl = new TeamImpl();
 
+		teamImpl.setCompanyId(companyId);
 		teamImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -124,7 +125,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		}
 
 		teamImpl.setTeamId(teamId);
-		teamImpl.setCompanyId(companyId);
 		teamImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -178,10 +178,10 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		teamId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -195,6 +195,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -205,7 +206,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		}
 
 		objectOutput.writeLong(teamId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -236,10 +236,10 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long teamId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

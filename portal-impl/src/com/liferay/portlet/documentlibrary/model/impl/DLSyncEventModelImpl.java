@@ -60,6 +60,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	 */
 	public static final String TABLE_NAME = "DLSyncEvent";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "syncEventId", Types.BIGINT },
 			{ "modifiedTime", Types.BIGINT },
 			{ "event", Types.VARCHAR },
@@ -69,6 +70,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("syncEventId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("event", Types.VARCHAR);
@@ -76,7 +78,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 		TABLE_COLUMNS_MAP.put("typePK", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLSyncEvent (syncEventId LONG not null primary key,modifiedTime LONG,event VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DLSyncEvent (companyId LONG,syncEventId LONG not null primary key,modifiedTime LONG,event VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLSyncEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlSyncEvent.modifiedTime ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLSyncEvent.modifiedTime ASC";
@@ -134,6 +136,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("syncEventId", getSyncEventId());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put("event", getEvent());
@@ -148,6 +151,12 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long syncEventId = (Long)attributes.get("syncEventId");
 
 		if (syncEventId != null) {
@@ -177,6 +186,16 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 		if (typePK != null) {
 			setTypePK(typePK);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -269,7 +288,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DLSyncEvent.class.getName(), getPrimaryKey());
 	}
 
@@ -294,6 +313,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	public Object clone() {
 		DLSyncEventImpl dlSyncEventImpl = new DLSyncEventImpl();
 
+		dlSyncEventImpl.setCompanyId(getCompanyId());
 		dlSyncEventImpl.setSyncEventId(getSyncEventId());
 		dlSyncEventImpl.setModifiedTime(getModifiedTime());
 		dlSyncEventImpl.setEvent(getEvent());
@@ -382,6 +402,8 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	public CacheModel<DLSyncEvent> toCacheModel() {
 		DLSyncEventCacheModel dlSyncEventCacheModel = new DLSyncEventCacheModel();
 
+		dlSyncEventCacheModel.companyId = getCompanyId();
+
 		dlSyncEventCacheModel.syncEventId = getSyncEventId();
 
 		dlSyncEventCacheModel.modifiedTime = getModifiedTime();
@@ -409,9 +431,11 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{syncEventId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", syncEventId=");
 		sb.append(getSyncEventId());
 		sb.append(", modifiedTime=");
 		sb.append(getModifiedTime());
@@ -428,12 +452,16 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLSyncEvent");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>syncEventId</column-name><column-value><![CDATA[");
 		sb.append(getSyncEventId());
@@ -464,6 +492,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DLSyncEvent.class
 		};
+	private long _companyId;
 	private long _syncEventId;
 	private long _modifiedTime;
 	private long _originalModifiedTime;

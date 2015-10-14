@@ -681,6 +681,167 @@ public class BookmarksFolderUtil {
 	}
 
 	/**
+	* Returns all the bookmarks folders where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching bookmarks folders
+	*/
+	public static List<BookmarksFolder> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the bookmarks folders where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of bookmarks folders
+	* @param end the upper bound of the range of bookmarks folders (not inclusive)
+	* @return the range of matching bookmarks folders
+	*/
+	public static List<BookmarksFolder> findByCompanyId(long companyId,
+		int start, int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the bookmarks folders where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of bookmarks folders
+	* @param end the upper bound of the range of bookmarks folders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching bookmarks folders
+	*/
+	public static List<BookmarksFolder> findByCompanyId(long companyId,
+		int start, int end, OrderByComparator<BookmarksFolder> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the bookmarks folders where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of bookmarks folders
+	* @param end the upper bound of the range of bookmarks folders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching bookmarks folders
+	*/
+	public static List<BookmarksFolder> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<BookmarksFolder> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first bookmarks folder in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching bookmarks folder
+	* @throws com.liferay.bookmarks.NoSuchFolderException if a matching bookmarks folder could not be found
+	*/
+	public static BookmarksFolder findByCompanyId_First(long companyId,
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws com.liferay.bookmarks.exception.NoSuchFolderException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first bookmarks folder in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
+	*/
+	public static BookmarksFolder fetchByCompanyId_First(long companyId,
+		OrderByComparator<BookmarksFolder> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last bookmarks folder in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching bookmarks folder
+	* @throws com.liferay.bookmarks.NoSuchFolderException if a matching bookmarks folder could not be found
+	*/
+	public static BookmarksFolder findByCompanyId_Last(long companyId,
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws com.liferay.bookmarks.exception.NoSuchFolderException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last bookmarks folder in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
+	*/
+	public static BookmarksFolder fetchByCompanyId_Last(long companyId,
+		OrderByComparator<BookmarksFolder> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the bookmarks folders before and after the current bookmarks folder in the ordered set where companyId = &#63;.
+	*
+	* @param folderId the primary key of the current bookmarks folder
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next bookmarks folder
+	* @throws com.liferay.bookmarks.NoSuchFolderException if a bookmarks folder with the primary key could not be found
+	*/
+	public static BookmarksFolder[] findByCompanyId_PrevAndNext(long folderId,
+		long companyId, OrderByComparator<BookmarksFolder> orderByComparator)
+		throws com.liferay.bookmarks.exception.NoSuchFolderException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(folderId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the bookmarks folders where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of bookmarks folders where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching bookmarks folders
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
 	* Returns all the bookmarks folders where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -911,164 +1072,178 @@ public class BookmarksFolderUtil {
 	}
 
 	/**
-	* Returns all the bookmarks folders where companyId = &#63;.
+	* Returns all the bookmarks folders where companyId = &#63; and status &ne; &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @return the matching bookmarks folders
 	*/
-	public static List<BookmarksFolder> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
+	public static List<BookmarksFolder> findByC_NotS(long companyId, int status) {
+		return getPersistence().findByC_NotS(companyId, status);
 	}
 
 	/**
-	* Returns a range of all the bookmarks folders where companyId = &#63;.
+	* Returns a range of all the bookmarks folders where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of bookmarks folders
 	* @param end the upper bound of the range of bookmarks folders (not inclusive)
 	* @return the range of matching bookmarks folders
 	*/
-	public static List<BookmarksFolder> findByCompanyId(long companyId,
-		int start, int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
+	public static List<BookmarksFolder> findByC_NotS(long companyId,
+		int status, int start, int end) {
+		return getPersistence().findByC_NotS(companyId, status, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the bookmarks folders where companyId = &#63;.
+	* Returns an ordered range of all the bookmarks folders where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of bookmarks folders
 	* @param end the upper bound of the range of bookmarks folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching bookmarks folders
 	*/
-	public static List<BookmarksFolder> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator<BookmarksFolder> orderByComparator) {
+	public static List<BookmarksFolder> findByC_NotS(long companyId,
+		int status, int start, int end,
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
+				   .findByC_NotS(companyId, status, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the bookmarks folders where companyId = &#63;.
+	* Returns an ordered range of all the bookmarks folders where companyId = &#63; and status &ne; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of bookmarks folders
 	* @param end the upper bound of the range of bookmarks folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching bookmarks folders
 	*/
-	public static List<BookmarksFolder> findByCompanyId(long companyId,
-		int start, int end,
+	public static List<BookmarksFolder> findByC_NotS(long companyId,
+		int status, int start, int end,
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator,
-			retrieveFromCache);
+				   .findByC_NotS(companyId, status, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first bookmarks folder in the ordered set where companyId = &#63;.
+	* Returns the first bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks folder
 	* @throws com.liferay.bookmarks.NoSuchFolderException if a matching bookmarks folder could not be found
 	*/
-	public static BookmarksFolder findByCompanyId_First(long companyId,
-		OrderByComparator<BookmarksFolder> orderByComparator)
+	public static BookmarksFolder findByC_NotS_First(long companyId,
+		int status, OrderByComparator<BookmarksFolder> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
+				   .findByC_NotS_First(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the first bookmarks folder in the ordered set where companyId = &#63;.
+	* Returns the first bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
 	*/
-	public static BookmarksFolder fetchByCompanyId_First(long companyId,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
+	public static BookmarksFolder fetchByC_NotS_First(long companyId,
+		int status, OrderByComparator<BookmarksFolder> orderByComparator) {
 		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
+				   .fetchByC_NotS_First(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the last bookmarks folder in the ordered set where companyId = &#63;.
+	* Returns the last bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks folder
 	* @throws com.liferay.bookmarks.NoSuchFolderException if a matching bookmarks folder could not be found
 	*/
-	public static BookmarksFolder findByCompanyId_Last(long companyId,
+	public static BookmarksFolder findByC_NotS_Last(long companyId, int status,
 		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
+				   .findByC_NotS_Last(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the last bookmarks folder in the ordered set where companyId = &#63;.
+	* Returns the last bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
 	*/
-	public static BookmarksFolder fetchByCompanyId_Last(long companyId,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
+	public static BookmarksFolder fetchByC_NotS_Last(long companyId,
+		int status, OrderByComparator<BookmarksFolder> orderByComparator) {
 		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
+				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the bookmarks folders before and after the current bookmarks folder in the ordered set where companyId = &#63;.
+	* Returns the bookmarks folders before and after the current bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
 	*
 	* @param folderId the primary key of the current bookmarks folder
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks folder
 	* @throws com.liferay.bookmarks.NoSuchFolderException if a bookmarks folder with the primary key could not be found
 	*/
-	public static BookmarksFolder[] findByCompanyId_PrevAndNext(long folderId,
-		long companyId, OrderByComparator<BookmarksFolder> orderByComparator)
+	public static BookmarksFolder[] findByC_NotS_PrevAndNext(long folderId,
+		long companyId, int status,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws com.liferay.bookmarks.exception.NoSuchFolderException {
 		return getPersistence()
-				   .findByCompanyId_PrevAndNext(folderId, companyId,
+				   .findByC_NotS_PrevAndNext(folderId, companyId, status,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the bookmarks folders where companyId = &#63; from the database.
+	* Removes all the bookmarks folders where companyId = &#63; and status &ne; &#63; from the database.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
+	public static void removeByC_NotS(long companyId, int status) {
+		getPersistence().removeByC_NotS(companyId, status);
 	}
 
 	/**
-	* Returns the number of bookmarks folders where companyId = &#63;.
+	* Returns the number of bookmarks folders where companyId = &#63; and status &ne; &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @return the number of matching bookmarks folders
 	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
+	public static int countByC_NotS(long companyId, int status) {
+		return getPersistence().countByC_NotS(companyId, status);
 	}
 
 	/**
@@ -1332,181 +1507,6 @@ public class BookmarksFolderUtil {
 	*/
 	public static int filterCountByG_P(long groupId, long parentFolderId) {
 		return getPersistence().filterCountByG_P(groupId, parentFolderId);
-	}
-
-	/**
-	* Returns all the bookmarks folders where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the matching bookmarks folders
-	*/
-	public static List<BookmarksFolder> findByC_NotS(long companyId, int status) {
-		return getPersistence().findByC_NotS(companyId, status);
-	}
-
-	/**
-	* Returns a range of all the bookmarks folders where companyId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of bookmarks folders
-	* @param end the upper bound of the range of bookmarks folders (not inclusive)
-	* @return the range of matching bookmarks folders
-	*/
-	public static List<BookmarksFolder> findByC_NotS(long companyId,
-		int status, int start, int end) {
-		return getPersistence().findByC_NotS(companyId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the bookmarks folders where companyId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of bookmarks folders
-	* @param end the upper bound of the range of bookmarks folders (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching bookmarks folders
-	*/
-	public static List<BookmarksFolder> findByC_NotS(long companyId,
-		int status, int start, int end,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-		return getPersistence()
-				   .findByC_NotS(companyId, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the bookmarks folders where companyId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BookmarksFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of bookmarks folders
-	* @param end the upper bound of the range of bookmarks folders (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching bookmarks folders
-	*/
-	public static List<BookmarksFolder> findByC_NotS(long companyId,
-		int status, int start, int end,
-		OrderByComparator<BookmarksFolder> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_NotS(companyId, status, start, end,
-			orderByComparator, retrieveFromCache);
-	}
-
-	/**
-	* Returns the first bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching bookmarks folder
-	* @throws com.liferay.bookmarks.NoSuchFolderException if a matching bookmarks folder could not be found
-	*/
-	public static BookmarksFolder findByC_NotS_First(long companyId,
-		int status, OrderByComparator<BookmarksFolder> orderByComparator)
-		throws com.liferay.bookmarks.exception.NoSuchFolderException {
-		return getPersistence()
-				   .findByC_NotS_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the first bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	*/
-	public static BookmarksFolder fetchByC_NotS_First(long companyId,
-		int status, OrderByComparator<BookmarksFolder> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_NotS_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching bookmarks folder
-	* @throws com.liferay.bookmarks.NoSuchFolderException if a matching bookmarks folder could not be found
-	*/
-	public static BookmarksFolder findByC_NotS_Last(long companyId, int status,
-		OrderByComparator<BookmarksFolder> orderByComparator)
-		throws com.liferay.bookmarks.exception.NoSuchFolderException {
-		return getPersistence()
-				   .findByC_NotS_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	*/
-	public static BookmarksFolder fetchByC_NotS_Last(long companyId,
-		int status, OrderByComparator<BookmarksFolder> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the bookmarks folders before and after the current bookmarks folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param folderId the primary key of the current bookmarks folder
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next bookmarks folder
-	* @throws com.liferay.bookmarks.NoSuchFolderException if a bookmarks folder with the primary key could not be found
-	*/
-	public static BookmarksFolder[] findByC_NotS_PrevAndNext(long folderId,
-		long companyId, int status,
-		OrderByComparator<BookmarksFolder> orderByComparator)
-		throws com.liferay.bookmarks.exception.NoSuchFolderException {
-		return getPersistence()
-				   .findByC_NotS_PrevAndNext(folderId, companyId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the bookmarks folders where companyId = &#63; and status &ne; &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	*/
-	public static void removeByC_NotS(long companyId, int status) {
-		getPersistence().removeByC_NotS(companyId, status);
-	}
-
-	/**
-	* Returns the number of bookmarks folders where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the number of matching bookmarks folders
-	*/
-	public static int countByC_NotS(long companyId, int status) {
-		return getPersistence().countByC_NotS(companyId, status);
 	}
 
 	/**

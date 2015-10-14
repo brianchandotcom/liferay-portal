@@ -1007,6 +1007,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		announcementsDelivery.setNew(true);
 		announcementsDelivery.setPrimaryKey(deliveryId);
 
+		announcementsDelivery.setCompanyId(0);
+
 		return announcementsDelivery;
 	}
 
@@ -1174,8 +1176,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		announcementsDeliveryImpl.setNew(announcementsDelivery.isNew());
 		announcementsDeliveryImpl.setPrimaryKey(announcementsDelivery.getPrimaryKey());
 
-		announcementsDeliveryImpl.setDeliveryId(announcementsDelivery.getDeliveryId());
 		announcementsDeliveryImpl.setCompanyId(announcementsDelivery.getCompanyId());
+		announcementsDeliveryImpl.setDeliveryId(announcementsDelivery.getDeliveryId());
 		announcementsDeliveryImpl.setUserId(announcementsDelivery.getUserId());
 		announcementsDeliveryImpl.setType(announcementsDelivery.getType());
 		announcementsDeliveryImpl.setEmail(announcementsDelivery.isEmail());

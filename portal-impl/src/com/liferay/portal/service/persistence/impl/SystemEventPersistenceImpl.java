@@ -2421,6 +2421,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEvent.setNew(true);
 		systemEvent.setPrimaryKey(systemEventId);
 
+		systemEvent.setCompanyId(0);
+
 		return systemEvent;
 	}
 
@@ -2651,10 +2653,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEventImpl.setNew(systemEvent.isNew());
 		systemEventImpl.setPrimaryKey(systemEvent.getPrimaryKey());
 
+		systemEventImpl.setCompanyId(systemEvent.getCompanyId());
 		systemEventImpl.setMvccVersion(systemEvent.getMvccVersion());
 		systemEventImpl.setSystemEventId(systemEvent.getSystemEventId());
 		systemEventImpl.setGroupId(systemEvent.getGroupId());
-		systemEventImpl.setCompanyId(systemEvent.getCompanyId());
 		systemEventImpl.setUserId(systemEvent.getUserId());
 		systemEventImpl.setUserName(systemEvent.getUserName());
 		systemEventImpl.setCreateDate(systemEvent.getCreateDate());

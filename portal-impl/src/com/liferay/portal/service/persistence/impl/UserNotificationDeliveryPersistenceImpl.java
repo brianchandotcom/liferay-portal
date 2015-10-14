@@ -1108,6 +1108,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		userNotificationDelivery.setNew(true);
 		userNotificationDelivery.setPrimaryKey(userNotificationDeliveryId);
 
+		userNotificationDelivery.setCompanyId(0);
+
 		return userNotificationDelivery;
 	}
 
@@ -1278,9 +1280,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		userNotificationDeliveryImpl.setNew(userNotificationDelivery.isNew());
 		userNotificationDeliveryImpl.setPrimaryKey(userNotificationDelivery.getPrimaryKey());
 
+		userNotificationDeliveryImpl.setCompanyId(userNotificationDelivery.getCompanyId());
 		userNotificationDeliveryImpl.setMvccVersion(userNotificationDelivery.getMvccVersion());
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(userNotificationDelivery.getUserNotificationDeliveryId());
-		userNotificationDeliveryImpl.setCompanyId(userNotificationDelivery.getCompanyId());
 		userNotificationDeliveryImpl.setUserId(userNotificationDelivery.getUserId());
 		userNotificationDeliveryImpl.setPortletId(userNotificationDelivery.getPortletId());
 		userNotificationDeliveryImpl.setClassNameId(userNotificationDelivery.getClassNameId());

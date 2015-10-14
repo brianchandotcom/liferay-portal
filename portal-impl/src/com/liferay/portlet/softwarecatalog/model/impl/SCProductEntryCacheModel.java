@@ -68,12 +68,12 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{productEntryId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", productEntryId=");
 		sb.append(productEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -109,9 +109,9 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 	public SCProductEntry toEntityModel() {
 		SCProductEntryImpl scProductEntryImpl = new SCProductEntryImpl();
 
+		scProductEntryImpl.setCompanyId(companyId);
 		scProductEntryImpl.setProductEntryId(productEntryId);
 		scProductEntryImpl.setGroupId(groupId);
-		scProductEntryImpl.setCompanyId(companyId);
 		scProductEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -205,9 +205,9 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		productEntryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -226,9 +226,9 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(productEntryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -305,9 +305,9 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 		}
 	}
 
+	public long companyId;
 	public long productEntryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

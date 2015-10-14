@@ -68,14 +68,14 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public String toString() {
 		StringBundler sb = new StringBundler(59);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -135,6 +135,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public BlogsEntry toEntityModel() {
 		BlogsEntryImpl blogsEntryImpl = new BlogsEntryImpl();
 
+		blogsEntryImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			blogsEntryImpl.setUuid(StringPool.BLANK);
 		}
@@ -144,7 +146,6 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 		blogsEntryImpl.setEntryId(entryId);
 		blogsEntryImpl.setGroupId(groupId);
-		blogsEntryImpl.setCompanyId(companyId);
 		blogsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -278,10 +279,10 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		entryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -312,6 +313,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -321,7 +324,6 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -421,10 +423,10 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long entryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

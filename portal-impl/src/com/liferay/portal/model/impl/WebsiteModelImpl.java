@@ -72,10 +72,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	 */
 	public static final String TABLE_NAME = "Website";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "websiteId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -90,10 +90,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("websiteId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -106,7 +106,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Website (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,websiteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,url STRING null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Website (companyId LONG,mvccVersion LONG default 0,uuid_ VARCHAR(75) null,websiteId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,url STRING null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Website";
 	public static final String ORDER_BY_JPQL = " ORDER BY website.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Website.createDate ASC";
@@ -143,10 +143,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 		Website model = new WebsiteImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setWebsiteId(soapModel.getWebsiteId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -221,10 +221,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("websiteId", getWebsiteId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -244,6 +244,12 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -260,12 +266,6 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 		if (websiteId != null) {
 			setWebsiteId(websiteId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -329,6 +329,29 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -373,29 +396,6 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	@Override
 	public void setWebsiteId(long websiteId) {
 		_websiteId = websiteId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -652,10 +652,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public Object clone() {
 		WebsiteImpl websiteImpl = new WebsiteImpl();
 
+		websiteImpl.setCompanyId(getCompanyId());
 		websiteImpl.setMvccVersion(getMvccVersion());
 		websiteImpl.setUuid(getUuid());
 		websiteImpl.setWebsiteId(getWebsiteId());
-		websiteImpl.setCompanyId(getCompanyId());
 		websiteImpl.setUserId(getUserId());
 		websiteImpl.setUserName(getUserName());
 		websiteImpl.setCreateDate(getCreateDate());
@@ -726,11 +726,11 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public void resetOriginalValues() {
 		WebsiteModelImpl websiteModelImpl = this;
 
-		websiteModelImpl._originalUuid = websiteModelImpl._uuid;
-
 		websiteModelImpl._originalCompanyId = websiteModelImpl._companyId;
 
 		websiteModelImpl._setOriginalCompanyId = false;
+
+		websiteModelImpl._originalUuid = websiteModelImpl._uuid;
 
 		websiteModelImpl._originalUserId = websiteModelImpl._userId;
 
@@ -757,6 +757,8 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public CacheModel<Website> toCacheModel() {
 		WebsiteCacheModel websiteCacheModel = new WebsiteCacheModel();
 
+		websiteCacheModel.companyId = getCompanyId();
+
 		websiteCacheModel.mvccVersion = getMvccVersion();
 
 		websiteCacheModel.uuid = getUuid();
@@ -768,8 +770,6 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		}
 
 		websiteCacheModel.websiteId = getWebsiteId();
-
-		websiteCacheModel.companyId = getCompanyId();
 
 		websiteCacheModel.userId = getUserId();
 
@@ -831,14 +831,14 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", websiteId=");
 		sb.append(getWebsiteId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -873,6 +873,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
@@ -883,10 +887,6 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		sb.append(
 			"<column><column-name>websiteId</column-name><column-value><![CDATA[");
 		sb.append(getWebsiteId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -938,13 +938,13 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			Website.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _websiteId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

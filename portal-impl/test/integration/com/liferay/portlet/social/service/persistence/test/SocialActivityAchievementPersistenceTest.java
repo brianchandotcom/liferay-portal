@@ -118,9 +118,9 @@ public class SocialActivityAchievementPersistenceTest {
 
 		SocialActivityAchievement newSocialActivityAchievement = _persistence.create(pk);
 
-		newSocialActivityAchievement.setGroupId(RandomTestUtil.nextLong());
-
 		newSocialActivityAchievement.setCompanyId(RandomTestUtil.nextLong());
+
+		newSocialActivityAchievement.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivityAchievement.setUserId(RandomTestUtil.nextLong());
 
@@ -135,12 +135,12 @@ public class SocialActivityAchievementPersistenceTest {
 
 		SocialActivityAchievement existingSocialActivityAchievement = _persistence.findByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
+		Assert.assertEquals(existingSocialActivityAchievement.getCompanyId(),
+			newSocialActivityAchievement.getCompanyId());
 		Assert.assertEquals(existingSocialActivityAchievement.getActivityAchievementId(),
 			newSocialActivityAchievement.getActivityAchievementId());
 		Assert.assertEquals(existingSocialActivityAchievement.getGroupId(),
 			newSocialActivityAchievement.getGroupId());
-		Assert.assertEquals(existingSocialActivityAchievement.getCompanyId(),
-			newSocialActivityAchievement.getCompanyId());
 		Assert.assertEquals(existingSocialActivityAchievement.getUserId(),
 			newSocialActivityAchievement.getUserId());
 		Assert.assertEquals(existingSocialActivityAchievement.getCreateDate(),
@@ -226,7 +226,7 @@ public class SocialActivityAchievementPersistenceTest {
 
 	protected OrderByComparator<SocialActivityAchievement> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivityAchievement",
-			"activityAchievementId", true, "groupId", true, "companyId", true,
+			"companyId", true, "activityAchievementId", true, "groupId", true,
 			"userId", true, "createDate", true, "name", true, "firstInGroup",
 			true);
 	}
@@ -461,9 +461,9 @@ public class SocialActivityAchievementPersistenceTest {
 
 		SocialActivityAchievement socialActivityAchievement = _persistence.create(pk);
 
-		socialActivityAchievement.setGroupId(RandomTestUtil.nextLong());
-
 		socialActivityAchievement.setCompanyId(RandomTestUtil.nextLong());
+
+		socialActivityAchievement.setGroupId(RandomTestUtil.nextLong());
 
 		socialActivityAchievement.setUserId(RandomTestUtil.nextLong());
 

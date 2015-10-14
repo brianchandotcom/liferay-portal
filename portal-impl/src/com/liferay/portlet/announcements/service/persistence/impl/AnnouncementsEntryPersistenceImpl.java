@@ -4948,6 +4948,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		announcementsEntry.setUuid(uuid);
 
+		announcementsEntry.setCompanyId(0);
+
 		return announcementsEntry;
 	}
 
@@ -5247,9 +5249,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		announcementsEntryImpl.setNew(announcementsEntry.isNew());
 		announcementsEntryImpl.setPrimaryKey(announcementsEntry.getPrimaryKey());
 
+		announcementsEntryImpl.setCompanyId(announcementsEntry.getCompanyId());
 		announcementsEntryImpl.setUuid(announcementsEntry.getUuid());
 		announcementsEntryImpl.setEntryId(announcementsEntry.getEntryId());
-		announcementsEntryImpl.setCompanyId(announcementsEntry.getCompanyId());
 		announcementsEntryImpl.setUserId(announcementsEntry.getUserId());
 		announcementsEntryImpl.setUserName(announcementsEntry.getUserName());
 		announcementsEntryImpl.setCreateDate(announcementsEntry.getCreateDate());

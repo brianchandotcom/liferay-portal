@@ -2062,6 +2062,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		ddmStructureLink.setNew(true);
 		ddmStructureLink.setPrimaryKey(structureLinkId);
 
+		ddmStructureLink.setCompanyId(0);
+
 		return ddmStructureLink;
 	}
 
@@ -2265,6 +2267,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		ddmStructureLinkImpl.setNew(ddmStructureLink.isNew());
 		ddmStructureLinkImpl.setPrimaryKey(ddmStructureLink.getPrimaryKey());
 
+		ddmStructureLinkImpl.setCompanyId(ddmStructureLink.getCompanyId());
 		ddmStructureLinkImpl.setStructureLinkId(ddmStructureLink.getStructureLinkId());
 		ddmStructureLinkImpl.setClassNameId(ddmStructureLink.getClassNameId());
 		ddmStructureLinkImpl.setClassPK(ddmStructureLink.getClassPK());

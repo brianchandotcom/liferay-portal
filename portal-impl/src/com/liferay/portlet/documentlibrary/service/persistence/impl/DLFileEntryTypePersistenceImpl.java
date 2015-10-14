@@ -3278,6 +3278,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 		dlFileEntryType.setUuid(uuid);
 
+		dlFileEntryType.setCompanyId(0);
+
 		return dlFileEntryType;
 	}
 
@@ -3512,10 +3514,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		dlFileEntryTypeImpl.setNew(dlFileEntryType.isNew());
 		dlFileEntryTypeImpl.setPrimaryKey(dlFileEntryType.getPrimaryKey());
 
+		dlFileEntryTypeImpl.setCompanyId(dlFileEntryType.getCompanyId());
 		dlFileEntryTypeImpl.setUuid(dlFileEntryType.getUuid());
 		dlFileEntryTypeImpl.setFileEntryTypeId(dlFileEntryType.getFileEntryTypeId());
 		dlFileEntryTypeImpl.setGroupId(dlFileEntryType.getGroupId());
-		dlFileEntryTypeImpl.setCompanyId(dlFileEntryType.getCompanyId());
 		dlFileEntryTypeImpl.setUserId(dlFileEntryType.getUserId());
 		dlFileEntryTypeImpl.setUserName(dlFileEntryType.getUserName());
 		dlFileEntryTypeImpl.setCreateDate(dlFileEntryType.getCreateDate());

@@ -4798,6 +4798,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		journalContentSearch.setNew(true);
 		journalContentSearch.setPrimaryKey(contentSearchId);
 
+		journalContentSearch.setCompanyId(0);
+
 		return journalContentSearch;
 	}
 
@@ -5095,9 +5097,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		journalContentSearchImpl.setNew(journalContentSearch.isNew());
 		journalContentSearchImpl.setPrimaryKey(journalContentSearch.getPrimaryKey());
 
+		journalContentSearchImpl.setCompanyId(journalContentSearch.getCompanyId());
 		journalContentSearchImpl.setContentSearchId(journalContentSearch.getContentSearchId());
 		journalContentSearchImpl.setGroupId(journalContentSearch.getGroupId());
-		journalContentSearchImpl.setCompanyId(journalContentSearch.getCompanyId());
 		journalContentSearchImpl.setPrivateLayout(journalContentSearch.isPrivateLayout());
 		journalContentSearchImpl.setLayoutId(journalContentSearch.getLayoutId());
 		journalContentSearchImpl.setPortletId(journalContentSearch.getPortletId());

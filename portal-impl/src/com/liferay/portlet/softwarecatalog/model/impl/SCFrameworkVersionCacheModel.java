@@ -68,12 +68,12 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{frameworkVersionId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", frameworkVersionId=");
 		sb.append(frameworkVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,9 +99,9 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 	public SCFrameworkVersion toEntityModel() {
 		SCFrameworkVersionImpl scFrameworkVersionImpl = new SCFrameworkVersionImpl();
 
+		scFrameworkVersionImpl.setCompanyId(companyId);
 		scFrameworkVersionImpl.setFrameworkVersionId(frameworkVersionId);
 		scFrameworkVersionImpl.setGroupId(groupId);
-		scFrameworkVersionImpl.setCompanyId(companyId);
 		scFrameworkVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -149,9 +149,9 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		frameworkVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -165,9 +165,9 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(frameworkVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -198,9 +198,9 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 		objectOutput.writeInt(priority);
 	}
 
+	public long companyId;
 	public long frameworkVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

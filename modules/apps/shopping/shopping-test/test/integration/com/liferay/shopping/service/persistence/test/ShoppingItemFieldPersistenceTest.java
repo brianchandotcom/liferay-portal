@@ -120,6 +120,8 @@ public class ShoppingItemFieldPersistenceTest {
 
 		ShoppingItemField newShoppingItemField = _persistence.create(pk);
 
+		newShoppingItemField.setCompanyId(RandomTestUtil.nextLong());
+
 		newShoppingItemField.setItemId(RandomTestUtil.nextLong());
 
 		newShoppingItemField.setName(RandomTestUtil.randomString());
@@ -132,6 +134,8 @@ public class ShoppingItemFieldPersistenceTest {
 
 		ShoppingItemField existingShoppingItemField = _persistence.findByPrimaryKey(newShoppingItemField.getPrimaryKey());
 
+		Assert.assertEquals(existingShoppingItemField.getCompanyId(),
+			newShoppingItemField.getCompanyId());
 		Assert.assertEquals(existingShoppingItemField.getItemFieldId(),
 			newShoppingItemField.getItemFieldId());
 		Assert.assertEquals(existingShoppingItemField.getItemId(),
@@ -175,8 +179,8 @@ public class ShoppingItemFieldPersistenceTest {
 
 	protected OrderByComparator<ShoppingItemField> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingItemField",
-			"itemFieldId", true, "itemId", true, "name", true, "values", true,
-			"description", true);
+			"companyId", true, "itemFieldId", true, "itemId", true, "name",
+			true, "values", true, "description", true);
 	}
 
 	@Test
@@ -376,6 +380,8 @@ public class ShoppingItemFieldPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		ShoppingItemField shoppingItemField = _persistence.create(pk);
+
+		shoppingItemField.setCompanyId(RandomTestUtil.nextLong());
 
 		shoppingItemField.setItemId(RandomTestUtil.nextLong());
 

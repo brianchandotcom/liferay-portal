@@ -140,10 +140,10 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		AssetCategoryProperty existingAssetCategoryProperty = _persistence.findByPrimaryKey(newAssetCategoryProperty.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetCategoryProperty.getCategoryPropertyId(),
-			newAssetCategoryProperty.getCategoryPropertyId());
 		Assert.assertEquals(existingAssetCategoryProperty.getCompanyId(),
 			newAssetCategoryProperty.getCompanyId());
+		Assert.assertEquals(existingAssetCategoryProperty.getCategoryPropertyId(),
+			newAssetCategoryProperty.getCategoryPropertyId());
 		Assert.assertEquals(existingAssetCategoryProperty.getUserId(),
 			newAssetCategoryProperty.getUserId());
 		Assert.assertEquals(existingAssetCategoryProperty.getUserName(),
@@ -219,7 +219,7 @@ public class AssetCategoryPropertyPersistenceTest {
 
 	protected OrderByComparator<AssetCategoryProperty> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetCategoryProperty",
-			"categoryPropertyId", true, "companyId", true, "userId", true,
+			"companyId", true, "categoryPropertyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"categoryId", true, "key", true, "value", true);
 	}

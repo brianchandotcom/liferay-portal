@@ -122,11 +122,11 @@ public class BackgroundTaskPersistenceTest {
 
 		BackgroundTask newBackgroundTask = _persistence.create(pk);
 
+		newBackgroundTask.setCompanyId(RandomTestUtil.nextLong());
+
 		newBackgroundTask.setMvccVersion(RandomTestUtil.nextLong());
 
 		newBackgroundTask.setGroupId(RandomTestUtil.nextLong());
-
-		newBackgroundTask.setCompanyId(RandomTestUtil.nextLong());
 
 		newBackgroundTask.setUserId(RandomTestUtil.nextLong());
 
@@ -156,14 +156,14 @@ public class BackgroundTaskPersistenceTest {
 
 		BackgroundTask existingBackgroundTask = _persistence.findByPrimaryKey(newBackgroundTask.getPrimaryKey());
 
+		Assert.assertEquals(existingBackgroundTask.getCompanyId(),
+			newBackgroundTask.getCompanyId());
 		Assert.assertEquals(existingBackgroundTask.getMvccVersion(),
 			newBackgroundTask.getMvccVersion());
 		Assert.assertEquals(existingBackgroundTask.getBackgroundTaskId(),
 			newBackgroundTask.getBackgroundTaskId());
 		Assert.assertEquals(existingBackgroundTask.getGroupId(),
 			newBackgroundTask.getGroupId());
-		Assert.assertEquals(existingBackgroundTask.getCompanyId(),
-			newBackgroundTask.getCompanyId());
 		Assert.assertEquals(existingBackgroundTask.getUserId(),
 			newBackgroundTask.getUserId());
 		Assert.assertEquals(existingBackgroundTask.getUserName(),
@@ -194,17 +194,17 @@ public class BackgroundTaskPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -343,8 +343,8 @@ public class BackgroundTaskPersistenceTest {
 
 	protected OrderByComparator<BackgroundTask> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BackgroundTask",
-			"mvccVersion", true, "backgroundTaskId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
+			"companyId", true, "mvccVersion", true, "backgroundTaskId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "servletContextNames",
 			true, "taskExecutorClassName", true, "completed", true,
 			"completionDate", true, "status", true);
@@ -549,11 +549,11 @@ public class BackgroundTaskPersistenceTest {
 
 		BackgroundTask backgroundTask = _persistence.create(pk);
 
+		backgroundTask.setCompanyId(RandomTestUtil.nextLong());
+
 		backgroundTask.setMvccVersion(RandomTestUtil.nextLong());
 
 		backgroundTask.setGroupId(RandomTestUtil.nextLong());
-
-		backgroundTask.setCompanyId(RandomTestUtil.nextLong());
 
 		backgroundTask.setUserId(RandomTestUtil.nextLong());
 

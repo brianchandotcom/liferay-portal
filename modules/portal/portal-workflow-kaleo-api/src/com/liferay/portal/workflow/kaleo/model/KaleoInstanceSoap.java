@@ -33,9 +33,9 @@ public class KaleoInstanceSoap implements Serializable {
 	public static KaleoInstanceSoap toSoapModel(KaleoInstance model) {
 		KaleoInstanceSoap soapModel = new KaleoInstanceSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setKaleoInstanceId(model.getKaleoInstanceId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -101,6 +101,14 @@ public class KaleoInstanceSoap implements Serializable {
 		setKaleoInstanceId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getKaleoInstanceId() {
 		return _kaleoInstanceId;
 	}
@@ -115,14 +123,6 @@ public class KaleoInstanceSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -233,9 +233,9 @@ public class KaleoInstanceSoap implements Serializable {
 		_workflowContext = workflowContext;
 	}
 
+	private long _companyId;
 	private long _kaleoInstanceId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

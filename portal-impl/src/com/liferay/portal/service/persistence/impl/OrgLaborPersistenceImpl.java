@@ -685,6 +685,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		orgLabor.setNew(true);
 		orgLabor.setPrimaryKey(orgLaborId);
 
+		orgLabor.setCompanyId(0);
+
 		return orgLabor;
 	}
 
@@ -846,6 +848,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		orgLaborImpl.setNew(orgLabor.isNew());
 		orgLaborImpl.setPrimaryKey(orgLabor.getPrimaryKey());
 
+		orgLaborImpl.setCompanyId(orgLabor.getCompanyId());
 		orgLaborImpl.setMvccVersion(orgLabor.getMvccVersion());
 		orgLaborImpl.setOrgLaborId(orgLabor.getOrgLaborId());
 		orgLaborImpl.setOrganizationId(orgLabor.getOrganizationId());

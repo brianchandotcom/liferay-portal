@@ -124,11 +124,11 @@ public class DDMTemplatePersistenceTest {
 
 		DDMTemplate newDDMTemplate = _persistence.create(pk);
 
+		newDDMTemplate.setCompanyId(RandomTestUtil.nextLong());
+
 		newDDMTemplate.setUuid(RandomTestUtil.randomString());
 
 		newDDMTemplate.setGroupId(RandomTestUtil.nextLong());
-
-		newDDMTemplate.setCompanyId(RandomTestUtil.nextLong());
 
 		newDDMTemplate.setUserId(RandomTestUtil.nextLong());
 
@@ -178,14 +178,14 @@ public class DDMTemplatePersistenceTest {
 
 		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
+		Assert.assertEquals(existingDDMTemplate.getCompanyId(),
+			newDDMTemplate.getCompanyId());
 		Assert.assertEquals(existingDDMTemplate.getUuid(),
 			newDDMTemplate.getUuid());
 		Assert.assertEquals(existingDDMTemplate.getTemplateId(),
 			newDDMTemplate.getTemplateId());
 		Assert.assertEquals(existingDDMTemplate.getGroupId(),
 			newDDMTemplate.getGroupId());
-		Assert.assertEquals(existingDDMTemplate.getCompanyId(),
-			newDDMTemplate.getCompanyId());
 		Assert.assertEquals(existingDDMTemplate.getUserId(),
 			newDDMTemplate.getUserId());
 		Assert.assertEquals(existingDDMTemplate.getUserName(),
@@ -418,8 +418,8 @@ public class DDMTemplatePersistenceTest {
 	}
 
 	protected OrderByComparator<DDMTemplate> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DDMTemplate", "uuid", true,
-			"templateId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("DDMTemplate", "companyId",
+			true, "uuid", true, "templateId", true, "groupId", true, "userId",
 			true, "userName", true, "versionUserId", true, "versionUserName",
 			true, "createDate", true, "modifiedDate", true, "classNameId",
 			true, "classPK", true, "resourceClassNameId", true, "templateKey",
@@ -656,11 +656,11 @@ public class DDMTemplatePersistenceTest {
 
 		DDMTemplate ddmTemplate = _persistence.create(pk);
 
+		ddmTemplate.setCompanyId(RandomTestUtil.nextLong());
+
 		ddmTemplate.setUuid(RandomTestUtil.randomString());
 
 		ddmTemplate.setGroupId(RandomTestUtil.nextLong());
-
-		ddmTemplate.setCompanyId(RandomTestUtil.nextLong());
 
 		ddmTemplate.setUserId(RandomTestUtil.nextLong());
 

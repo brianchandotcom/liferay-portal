@@ -33,9 +33,9 @@ public class PluginSettingSoap implements Serializable {
 	public static PluginSettingSoap toSoapModel(PluginSetting model) {
 		PluginSettingSoap soapModel = new PluginSettingSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setPluginSettingId(model.getPluginSettingId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setPluginId(model.getPluginId());
 		soapModel.setPluginType(model.getPluginType());
 		soapModel.setRoles(model.getRoles());
@@ -92,6 +92,14 @@ public class PluginSettingSoap implements Serializable {
 		setPluginSettingId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -106,14 +114,6 @@ public class PluginSettingSoap implements Serializable {
 
 	public void setPluginSettingId(long pluginSettingId) {
 		_pluginSettingId = pluginSettingId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public String getPluginId() {
@@ -152,9 +152,9 @@ public class PluginSettingSoap implements Serializable {
 		_active = active;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _pluginSettingId;
-	private long _companyId;
 	private String _pluginId;
 	private String _pluginType;
 	private String _roles;

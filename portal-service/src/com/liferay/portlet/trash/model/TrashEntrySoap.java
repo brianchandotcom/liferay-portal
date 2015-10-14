@@ -34,9 +34,9 @@ public class TrashEntrySoap implements Serializable {
 	public static TrashEntrySoap toSoapModel(TrashEntry model) {
 		TrashEntrySoap soapModel = new TrashEntrySoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setEntryId(model.getEntryId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -97,6 +97,14 @@ public class TrashEntrySoap implements Serializable {
 		setEntryId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getEntryId() {
 		return _entryId;
 	}
@@ -111,14 +119,6 @@ public class TrashEntrySoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -185,9 +185,9 @@ public class TrashEntrySoap implements Serializable {
 		_status = status;
 	}
 
+	private long _companyId;
 	private long _entryId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

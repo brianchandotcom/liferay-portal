@@ -68,12 +68,12 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{recordVersionId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", recordVersionId=");
 		sb.append(recordVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -107,9 +107,9 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	public DDLRecordVersion toEntityModel() {
 		DDLRecordVersionImpl ddlRecordVersionImpl = new DDLRecordVersionImpl();
 
+		ddlRecordVersionImpl.setCompanyId(companyId);
 		ddlRecordVersionImpl.setRecordVersionId(recordVersionId);
 		ddlRecordVersionImpl.setGroupId(groupId);
-		ddlRecordVersionImpl.setCompanyId(companyId);
 		ddlRecordVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -162,9 +162,9 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		recordVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -182,9 +182,9 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(recordVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -220,9 +220,9 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public long recordVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

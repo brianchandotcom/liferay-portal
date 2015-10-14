@@ -64,9 +64,9 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	 */
 	public static final String TABLE_NAME = "KaleoNode";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "kaleoNodeId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -82,9 +82,9 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -98,7 +98,7 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 		TABLE_COLUMNS_MAP.put("terminal", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoNode (kaleoNodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,name VARCHAR(200) null,metadata STRING null,description STRING null,type_ VARCHAR(20) null,initial_ BOOLEAN,terminal BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoNode (companyId LONG,kaleoNodeId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,name VARCHAR(200) null,metadata STRING null,description STRING null,type_ VARCHAR(20) null,initial_ BOOLEAN,terminal BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoNode";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoNode.kaleoNodeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoNode.kaleoNodeId ASC";
@@ -157,9 +157,9 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("kaleoNodeId", getKaleoNodeId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -180,6 +180,12 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long kaleoNodeId = (Long)attributes.get("kaleoNodeId");
 
 		if (kaleoNodeId != null) {
@@ -190,12 +196,6 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -266,28 +266,6 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	}
 
 	@Override
-	public long getKaleoNodeId() {
-		return _kaleoNodeId;
-	}
-
-	@Override
-	public void setKaleoNodeId(long kaleoNodeId) {
-		_columnBitmask = -1L;
-
-		_kaleoNodeId = kaleoNodeId;
-	}
-
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
-	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -307,6 +285,28 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@Override
+	public long getKaleoNodeId() {
+		return _kaleoNodeId;
+	}
+
+	@Override
+	public void setKaleoNodeId(long kaleoNodeId) {
+		_columnBitmask = -1L;
+
+		_kaleoNodeId = kaleoNodeId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	@Override
@@ -519,9 +519,9 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	public Object clone() {
 		KaleoNodeImpl kaleoNodeImpl = new KaleoNodeImpl();
 
+		kaleoNodeImpl.setCompanyId(getCompanyId());
 		kaleoNodeImpl.setKaleoNodeId(getKaleoNodeId());
 		kaleoNodeImpl.setGroupId(getGroupId());
-		kaleoNodeImpl.setCompanyId(getCompanyId());
 		kaleoNodeImpl.setUserId(getUserId());
 		kaleoNodeImpl.setUserName(getUserName());
 		kaleoNodeImpl.setCreateDate(getCreateDate());
@@ -618,11 +618,11 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	public CacheModel<KaleoNode> toCacheModel() {
 		KaleoNodeCacheModel kaleoNodeCacheModel = new KaleoNodeCacheModel();
 
+		kaleoNodeCacheModel.companyId = getCompanyId();
+
 		kaleoNodeCacheModel.kaleoNodeId = getKaleoNodeId();
 
 		kaleoNodeCacheModel.groupId = getGroupId();
-
-		kaleoNodeCacheModel.companyId = getCompanyId();
 
 		kaleoNodeCacheModel.userId = getUserId();
 
@@ -697,12 +697,12 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{kaleoNodeId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", kaleoNodeId=");
 		sb.append(getKaleoNodeId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -739,16 +739,16 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>kaleoNodeId</column-name><column-value><![CDATA[");
 		sb.append(getKaleoNodeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -804,11 +804,11 @@ public class KaleoNodeModelImpl extends BaseModelImpl<KaleoNode>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoNode.class
 		};
-	private long _kaleoNodeId;
-	private long _groupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _kaleoNodeId;
+	private long _groupId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

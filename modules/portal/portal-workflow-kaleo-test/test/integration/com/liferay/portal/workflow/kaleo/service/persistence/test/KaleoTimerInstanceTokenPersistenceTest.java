@@ -121,9 +121,9 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 		KaleoTimerInstanceToken newKaleoTimerInstanceToken = _persistence.create(pk);
 
-		newKaleoTimerInstanceToken.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoTimerInstanceToken.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoTimerInstanceToken.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTimerInstanceToken.setUserId(RandomTestUtil.nextLong());
 
@@ -164,12 +164,12 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 		KaleoTimerInstanceToken existingKaleoTimerInstanceToken = _persistence.findByPrimaryKey(newKaleoTimerInstanceToken.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTimerInstanceToken.getCompanyId(),
+			newKaleoTimerInstanceToken.getCompanyId());
 		Assert.assertEquals(existingKaleoTimerInstanceToken.getKaleoTimerInstanceTokenId(),
 			newKaleoTimerInstanceToken.getKaleoTimerInstanceTokenId());
 		Assert.assertEquals(existingKaleoTimerInstanceToken.getGroupId(),
 			newKaleoTimerInstanceToken.getGroupId());
-		Assert.assertEquals(existingKaleoTimerInstanceToken.getCompanyId(),
-			newKaleoTimerInstanceToken.getCompanyId());
 		Assert.assertEquals(existingKaleoTimerInstanceToken.getUserId(),
 			newKaleoTimerInstanceToken.getUserId());
 		Assert.assertEquals(existingKaleoTimerInstanceToken.getUserName(),
@@ -267,7 +267,7 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 	protected OrderByComparator<KaleoTimerInstanceToken> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTimerInstanceToken",
-			"kaleoTimerInstanceTokenId", true, "groupId", true, "companyId",
+			"companyId", true, "kaleoTimerInstanceTokenId", true, "groupId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
 			"kaleoDefinitionId", true, "kaleoInstanceId", true,
@@ -505,9 +505,9 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 		KaleoTimerInstanceToken kaleoTimerInstanceToken = _persistence.create(pk);
 
-		kaleoTimerInstanceToken.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoTimerInstanceToken.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoTimerInstanceToken.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoTimerInstanceToken.setUserId(RandomTestUtil.nextLong());
 

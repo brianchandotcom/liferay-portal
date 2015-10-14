@@ -64,8 +64,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	 */
 	public static final String TABLE_NAME = "ExpandoValue";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "valueId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "valueId", Types.BIGINT },
 			{ "tableId", Types.BIGINT },
 			{ "columnId", Types.BIGINT },
 			{ "rowId_", Types.BIGINT },
@@ -76,8 +76,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("valueId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("valueId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("columnId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("rowId_", Types.BIGINT);
@@ -86,7 +86,7 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExpandoValue (valueId LONG not null primary key,companyId LONG,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table ExpandoValue (companyId LONG,valueId LONG not null primary key,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table ExpandoValue";
 	public static final String ORDER_BY_JPQL = " ORDER BY expandoValue.tableId ASC, expandoValue.rowId ASC, expandoValue.columnId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ExpandoValue.tableId ASC, ExpandoValue.rowId_ ASC, ExpandoValue.columnId ASC";
@@ -122,8 +122,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 		ExpandoValue model = new ExpandoValueImpl();
 
-		model.setValueId(soapModel.getValueId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setValueId(soapModel.getValueId());
 		model.setTableId(soapModel.getTableId());
 		model.setColumnId(soapModel.getColumnId());
 		model.setRowId(soapModel.getRowId());
@@ -194,8 +194,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("valueId", getValueId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("valueId", getValueId());
 		attributes.put("tableId", getTableId());
 		attributes.put("columnId", getColumnId());
 		attributes.put("rowId", getRowId());
@@ -211,16 +211,16 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long valueId = (Long)attributes.get("valueId");
-
-		if (valueId != null) {
-			setValueId(valueId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long valueId = (Long)attributes.get("valueId");
+
+		if (valueId != null) {
+			setValueId(valueId);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");
@@ -260,6 +260,17 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getValueId() {
@@ -269,17 +280,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	@Override
 	public void setValueId(long valueId) {
 		_valueId = valueId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -461,8 +461,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public Object clone() {
 		ExpandoValueImpl expandoValueImpl = new ExpandoValueImpl();
 
-		expandoValueImpl.setValueId(getValueId());
 		expandoValueImpl.setCompanyId(getCompanyId());
+		expandoValueImpl.setValueId(getValueId());
 		expandoValueImpl.setTableId(getTableId());
 		expandoValueImpl.setColumnId(getColumnId());
 		expandoValueImpl.setRowId(getRowId());
@@ -594,9 +594,9 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public CacheModel<ExpandoValue> toCacheModel() {
 		ExpandoValueCacheModel expandoValueCacheModel = new ExpandoValueCacheModel();
 
-		expandoValueCacheModel.valueId = getValueId();
-
 		expandoValueCacheModel.companyId = getCompanyId();
+
+		expandoValueCacheModel.valueId = getValueId();
 
 		expandoValueCacheModel.tableId = getTableId();
 
@@ -623,10 +623,10 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public String toString() {
 		StringBundler sb = new StringBundler(17);
 
-		sb.append("{valueId=");
-		sb.append(getValueId());
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(getCompanyId());
+		sb.append(", valueId=");
+		sb.append(getValueId());
 		sb.append(", tableId=");
 		sb.append(getTableId());
 		sb.append(", columnId=");
@@ -653,12 +653,12 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>valueId</column-name><column-value><![CDATA[");
-		sb.append(getValueId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>valueId</column-name><column-value><![CDATA[");
+		sb.append(getValueId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>tableId</column-name><column-value><![CDATA[");
@@ -694,8 +694,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ExpandoValue.class
 		};
-	private long _valueId;
 	private long _companyId;
+	private long _valueId;
 	private long _tableId;
 	private long _originalTableId;
 	private boolean _setOriginalTableId;

@@ -52,6 +52,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("storageLinkId", getStorageLinkId());
 		attributes.put("classNameId", getClassNameId());
@@ -63,6 +64,12 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -133,6 +140,16 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	@Override
 	public long getClassPK() {
 		return _ddmStorageLink.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this d d m storage link.
+	*
+	* @return the company ID of this d d m storage link
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ddmStorageLink.getCompanyId();
 	}
 
 	@Override
@@ -250,6 +267,16 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	@Override
 	public void setClassPK(long classPK) {
 		_ddmStorageLink.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this d d m storage link.
+	*
+	* @param companyId the company ID of this d d m storage link
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ddmStorageLink.setCompanyId(companyId);
 	}
 
 	@Override

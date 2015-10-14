@@ -67,12 +67,12 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{kaleoTransitionId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoTransitionId=");
 		sb.append(kaleoTransitionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -108,9 +108,9 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 	public KaleoTransition toEntityModel() {
 		KaleoTransitionImpl kaleoTransitionImpl = new KaleoTransitionImpl();
 
+		kaleoTransitionImpl.setCompanyId(companyId);
 		kaleoTransitionImpl.setKaleoTransitionId(kaleoTransitionId);
 		kaleoTransitionImpl.setGroupId(groupId);
-		kaleoTransitionImpl.setCompanyId(companyId);
 		kaleoTransitionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -178,9 +178,9 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoTransitionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -199,9 +199,9 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoTransitionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -251,9 +251,9 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		objectOutput.writeBoolean(defaultTransition);
 	}
 
+	public long companyId;
 	public long kaleoTransitionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

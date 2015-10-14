@@ -27,10 +27,10 @@ update DLFolder set restrictionType = 1 where overrideFileEntryTypes = 1;
 alter table DLFolder drop column overrideFileEntryTypes;
 
 create table ExportImportConfiguration (
+	companyId LONG,
 	mvccVersion LONG default 0,
 	exportImportConfigurationId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

@@ -3171,6 +3171,8 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 
 		ddlRecord.setUuid(uuid);
 
+		ddlRecord.setCompanyId(0);
+
 		return ddlRecord;
 	}
 
@@ -3437,10 +3439,10 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		ddlRecordImpl.setNew(ddlRecord.isNew());
 		ddlRecordImpl.setPrimaryKey(ddlRecord.getPrimaryKey());
 
+		ddlRecordImpl.setCompanyId(ddlRecord.getCompanyId());
 		ddlRecordImpl.setUuid(ddlRecord.getUuid());
 		ddlRecordImpl.setRecordId(ddlRecord.getRecordId());
 		ddlRecordImpl.setGroupId(ddlRecord.getGroupId());
-		ddlRecordImpl.setCompanyId(ddlRecord.getCompanyId());
 		ddlRecordImpl.setUserId(ddlRecord.getUserId());
 		ddlRecordImpl.setUserName(ddlRecord.getUserName());
 		ddlRecordImpl.setVersionUserId(ddlRecord.getVersionUserId());

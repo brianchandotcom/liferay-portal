@@ -124,9 +124,9 @@ public class DDLRecordVersionPersistenceTest {
 
 		DDLRecordVersion newDDLRecordVersion = _persistence.create(pk);
 
-		newDDLRecordVersion.setGroupId(RandomTestUtil.nextLong());
-
 		newDDLRecordVersion.setCompanyId(RandomTestUtil.nextLong());
+
+		newDDLRecordVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDLRecordVersion.setUserId(RandomTestUtil.nextLong());
 
@@ -156,12 +156,12 @@ public class DDLRecordVersionPersistenceTest {
 
 		DDLRecordVersion existingDDLRecordVersion = _persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
+		Assert.assertEquals(existingDDLRecordVersion.getCompanyId(),
+			newDDLRecordVersion.getCompanyId());
 		Assert.assertEquals(existingDDLRecordVersion.getRecordVersionId(),
 			newDDLRecordVersion.getRecordVersionId());
 		Assert.assertEquals(existingDDLRecordVersion.getGroupId(),
 			newDDLRecordVersion.getGroupId());
-		Assert.assertEquals(existingDDLRecordVersion.getCompanyId(),
-			newDDLRecordVersion.getCompanyId());
 		Assert.assertEquals(existingDDLRecordVersion.getUserId(),
 			newDDLRecordVersion.getUserId());
 		Assert.assertEquals(existingDDLRecordVersion.getUserName(),
@@ -238,7 +238,7 @@ public class DDLRecordVersionPersistenceTest {
 
 	protected OrderByComparator<DDLRecordVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDLRecordVersion",
-			"recordVersionId", true, "groupId", true, "companyId", true,
+			"companyId", true, "recordVersionId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"DDMStorageId", true, "recordSetId", true, "recordId", true,
 			"version", true, "displayIndex", true, "status", true,
@@ -461,9 +461,9 @@ public class DDLRecordVersionPersistenceTest {
 
 		DDLRecordVersion ddlRecordVersion = _persistence.create(pk);
 
-		ddlRecordVersion.setGroupId(RandomTestUtil.nextLong());
-
 		ddlRecordVersion.setCompanyId(RandomTestUtil.nextLong());
+
+		ddlRecordVersion.setGroupId(RandomTestUtil.nextLong());
 
 		ddlRecordVersion.setUserId(RandomTestUtil.nextLong());
 

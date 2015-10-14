@@ -2485,6 +2485,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 		repository.setUuid(uuid);
 
+		repository.setCompanyId(0);
+
 		return repository;
 	}
 
@@ -2714,11 +2716,11 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		repositoryImpl.setNew(repository.isNew());
 		repositoryImpl.setPrimaryKey(repository.getPrimaryKey());
 
+		repositoryImpl.setCompanyId(repository.getCompanyId());
 		repositoryImpl.setMvccVersion(repository.getMvccVersion());
 		repositoryImpl.setUuid(repository.getUuid());
 		repositoryImpl.setRepositoryId(repository.getRepositoryId());
 		repositoryImpl.setGroupId(repository.getGroupId());
-		repositoryImpl.setCompanyId(repository.getCompanyId());
 		repositoryImpl.setUserId(repository.getUserId());
 		repositoryImpl.setUserName(repository.getUserName());
 		repositoryImpl.setCreateDate(repository.getCreateDate());

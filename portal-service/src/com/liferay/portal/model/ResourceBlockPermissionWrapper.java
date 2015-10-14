@@ -52,6 +52,7 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourceBlockPermissionId",
 			getResourceBlockPermissionId());
@@ -64,6 +65,12 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -115,6 +122,16 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	@Override
 	public long getActionIds() {
 		return _resourceBlockPermission.getActionIds();
+	}
+
+	/**
+	* Returns the company ID of this resource block permission.
+	*
+	* @return the company ID of this resource block permission
+	*/
+	@Override
+	public long getCompanyId() {
+		return _resourceBlockPermission.getCompanyId();
 	}
 
 	@Override
@@ -215,6 +232,16 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_resourceBlockPermission.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this resource block permission.
+	*
+	* @param companyId the company ID of this resource block permission
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_resourceBlockPermission.setCompanyId(companyId);
 	}
 
 	@Override

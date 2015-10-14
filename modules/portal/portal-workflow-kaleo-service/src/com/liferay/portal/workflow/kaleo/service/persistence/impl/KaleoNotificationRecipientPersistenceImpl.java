@@ -1755,6 +1755,8 @@ public class KaleoNotificationRecipientPersistenceImpl
 		kaleoNotificationRecipient.setNew(true);
 		kaleoNotificationRecipient.setPrimaryKey(kaleoNotificationRecipientId);
 
+		kaleoNotificationRecipient.setCompanyId(0);
+
 		return kaleoNotificationRecipient;
 	}
 
@@ -1989,9 +1991,9 @@ public class KaleoNotificationRecipientPersistenceImpl
 		kaleoNotificationRecipientImpl.setNew(kaleoNotificationRecipient.isNew());
 		kaleoNotificationRecipientImpl.setPrimaryKey(kaleoNotificationRecipient.getPrimaryKey());
 
+		kaleoNotificationRecipientImpl.setCompanyId(kaleoNotificationRecipient.getCompanyId());
 		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(kaleoNotificationRecipient.getKaleoNotificationRecipientId());
 		kaleoNotificationRecipientImpl.setGroupId(kaleoNotificationRecipient.getGroupId());
-		kaleoNotificationRecipientImpl.setCompanyId(kaleoNotificationRecipient.getCompanyId());
 		kaleoNotificationRecipientImpl.setUserId(kaleoNotificationRecipient.getUserId());
 		kaleoNotificationRecipientImpl.setUserName(kaleoNotificationRecipient.getUserName());
 		kaleoNotificationRecipientImpl.setCreateDate(kaleoNotificationRecipient.getCreateDate());

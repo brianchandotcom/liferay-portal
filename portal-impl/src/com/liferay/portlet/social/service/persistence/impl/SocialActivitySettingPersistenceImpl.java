@@ -2774,6 +2774,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		socialActivitySetting.setNew(true);
 		socialActivitySetting.setPrimaryKey(activitySettingId);
 
+		socialActivitySetting.setCompanyId(0);
+
 		return socialActivitySetting;
 	}
 
@@ -3006,9 +3008,9 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		socialActivitySettingImpl.setNew(socialActivitySetting.isNew());
 		socialActivitySettingImpl.setPrimaryKey(socialActivitySetting.getPrimaryKey());
 
+		socialActivitySettingImpl.setCompanyId(socialActivitySetting.getCompanyId());
 		socialActivitySettingImpl.setActivitySettingId(socialActivitySetting.getActivitySettingId());
 		socialActivitySettingImpl.setGroupId(socialActivitySetting.getGroupId());
-		socialActivitySettingImpl.setCompanyId(socialActivitySetting.getCompanyId());
 		socialActivitySettingImpl.setClassNameId(socialActivitySetting.getClassNameId());
 		socialActivitySettingImpl.setActivityType(socialActivitySetting.getActivityType());
 		socialActivitySettingImpl.setName(socialActivitySetting.getName());

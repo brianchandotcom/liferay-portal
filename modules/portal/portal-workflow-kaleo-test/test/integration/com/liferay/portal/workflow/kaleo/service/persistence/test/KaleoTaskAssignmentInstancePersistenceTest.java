@@ -121,9 +121,9 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 		KaleoTaskAssignmentInstance newKaleoTaskAssignmentInstance = _persistence.create(pk);
 
-		newKaleoTaskAssignmentInstance.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoTaskAssignmentInstance.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoTaskAssignmentInstance.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTaskAssignmentInstance.setUserId(RandomTestUtil.nextLong());
 
@@ -158,12 +158,12 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 		KaleoTaskAssignmentInstance existingKaleoTaskAssignmentInstance = _persistence.findByPrimaryKey(newKaleoTaskAssignmentInstance.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getCompanyId(),
+			newKaleoTaskAssignmentInstance.getCompanyId());
 		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getKaleoTaskAssignmentInstanceId(),
 			newKaleoTaskAssignmentInstance.getKaleoTaskAssignmentInstanceId());
 		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getGroupId(),
 			newKaleoTaskAssignmentInstance.getGroupId());
-		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getCompanyId(),
-			newKaleoTaskAssignmentInstance.getCompanyId());
 		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getUserId(),
 			newKaleoTaskAssignmentInstance.getUserId());
 		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getUserName(),
@@ -279,8 +279,8 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 	protected OrderByComparator<KaleoTaskAssignmentInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTaskAssignmentInstance",
-			"kaleoTaskAssignmentInstanceId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
+			"companyId", true, "kaleoTaskAssignmentInstanceId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "kaleoDefinitionId", true,
 			"kaleoInstanceId", true, "kaleoInstanceTokenId", true,
 			"kaleoTaskInstanceTokenId", true, "kaleoTaskId", true,
@@ -504,9 +504,9 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance = _persistence.create(pk);
 
-		kaleoTaskAssignmentInstance.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoTaskAssignmentInstance.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoTaskAssignmentInstance.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoTaskAssignmentInstance.setUserId(RandomTestUtil.nextLong());
 

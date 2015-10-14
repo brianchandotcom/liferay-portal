@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AssetTagModel extends BaseModel<AssetTag>, StagedGroupedModel {
+public interface AssetTagModel extends BaseModel<AssetTag>, PartitionableModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,6 +64,22 @@ public interface AssetTagModel extends BaseModel<AssetTag>, StagedGroupedModel {
 	 * @param primaryKey the primary key of this asset tag
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this asset tag.
+	 *
+	 * @return the company ID of this asset tag
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this asset tag.
+	 *
+	 * @param companyId the company ID of this asset tag
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this asset tag.
@@ -109,22 +127,6 @@ public interface AssetTagModel extends BaseModel<AssetTag>, StagedGroupedModel {
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this asset tag.
-	 *
-	 * @return the company ID of this asset tag
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this asset tag.
-	 *
-	 * @param companyId the company ID of this asset tag
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this asset tag.

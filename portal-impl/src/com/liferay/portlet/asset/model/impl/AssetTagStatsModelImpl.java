@@ -62,6 +62,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	 */
 	public static final String TABLE_NAME = "AssetTagStats";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "tagStatsId", Types.BIGINT },
 			{ "tagId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
@@ -70,13 +71,14 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("tagStatsId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("tagId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetCount", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetTagStats (tagStatsId LONG not null primary key,tagId LONG,classNameId LONG,assetCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetTagStats (companyId LONG,tagStatsId LONG not null primary key,tagId LONG,classNameId LONG,assetCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetTagStats";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetTagStats.assetCount DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetTagStats.assetCount DESC";
@@ -135,6 +137,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("tagStatsId", getTagStatsId());
 		attributes.put("tagId", getTagId());
 		attributes.put("classNameId", getClassNameId());
@@ -148,6 +151,12 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long tagStatsId = (Long)attributes.get("tagStatsId");
 
 		if (tagStatsId != null) {
@@ -171,6 +180,16 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		if (assetCount != null) {
 			setAssetCount(assetCount);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -265,7 +284,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AssetTagStats.class.getName(), getPrimaryKey());
 	}
 
@@ -290,6 +309,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	public Object clone() {
 		AssetTagStatsImpl assetTagStatsImpl = new AssetTagStatsImpl();
 
+		assetTagStatsImpl.setCompanyId(getCompanyId());
 		assetTagStatsImpl.setTagStatsId(getTagStatsId());
 		assetTagStatsImpl.setTagId(getTagId());
 		assetTagStatsImpl.setClassNameId(getClassNameId());
@@ -379,6 +399,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	public CacheModel<AssetTagStats> toCacheModel() {
 		AssetTagStatsCacheModel assetTagStatsCacheModel = new AssetTagStatsCacheModel();
 
+		assetTagStatsCacheModel.companyId = getCompanyId();
+
 		assetTagStatsCacheModel.tagStatsId = getTagStatsId();
 
 		assetTagStatsCacheModel.tagId = getTagId();
@@ -392,9 +414,11 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("{tagStatsId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", tagStatsId=");
 		sb.append(getTagStatsId());
 		sb.append(", tagId=");
 		sb.append(getTagId());
@@ -409,12 +433,16 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.asset.model.AssetTagStats");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>tagStatsId</column-name><column-value><![CDATA[");
 		sb.append(getTagStatsId());
@@ -441,6 +469,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetTagStats.class
 		};
+	private long _companyId;
 	private long _tagStatsId;
 	private long _tagId;
 	private long _originalTagId;

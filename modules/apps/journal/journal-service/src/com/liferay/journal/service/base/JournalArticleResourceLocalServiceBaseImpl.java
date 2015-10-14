@@ -276,6 +276,37 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns all the journal article resources matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the journal article resources
+	 * @param companyId the primary key of the company
+	 * @return the matching journal article resources, or an empty list if no matches were found
+	 */
+	@Override
+	public List<JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return journalArticleResourcePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of journal article resources matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the journal article resources
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of journal article resources
+	 * @param end the upper bound of the range of journal article resources (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching journal article resources, or an empty list if no matches were found
+	 */
+	@Override
+	public List<JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<JournalArticleResource> orderByComparator) {
+		return journalArticleResourcePersistence.findByUuid_C(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the journal article resource matching the UUID and group.
 	 *
 	 * @param uuid the journal article resource's UUID

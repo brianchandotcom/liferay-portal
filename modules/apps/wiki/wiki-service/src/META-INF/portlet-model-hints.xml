@@ -2,10 +2,10 @@
 
 <model-hints>
 	<model name="com.liferay.wiki.model.WikiNode">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="nodeId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -24,11 +24,11 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.wiki.model.WikiPage">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="pageId" type="long" />
 		<field name="resourcePrimKey" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -66,6 +66,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.wiki.model.WikiPageResource">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="resourcePrimKey" type="long" />
 		<field name="groupId" type="long" />

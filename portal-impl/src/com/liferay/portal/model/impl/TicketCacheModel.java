@@ -81,12 +81,12 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", ticketId=");
 		sb.append(ticketId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", classNameId=");
@@ -110,9 +110,9 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable,
 	public Ticket toEntityModel() {
 		TicketImpl ticketImpl = new TicketImpl();
 
+		ticketImpl.setCompanyId(companyId);
 		ticketImpl.setMvccVersion(mvccVersion);
 		ticketImpl.setTicketId(ticketId);
-		ticketImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			ticketImpl.setCreateDate(null);
@@ -154,9 +154,9 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		ticketId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
@@ -169,9 +169,9 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(ticketId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
@@ -195,9 +195,9 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable,
 		objectOutput.writeLong(expirationDate);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long ticketId;
-	public long companyId;
 	public long createDate;
 	public long classNameId;
 	public long classPK;

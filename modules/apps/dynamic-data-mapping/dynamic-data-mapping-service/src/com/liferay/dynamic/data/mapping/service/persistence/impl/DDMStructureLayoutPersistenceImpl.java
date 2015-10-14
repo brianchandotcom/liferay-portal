@@ -1888,6 +1888,8 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 
 		ddmStructureLayout.setUuid(uuid);
 
+		ddmStructureLayout.setCompanyId(0);
+
 		return ddmStructureLayout;
 	}
 
@@ -2105,10 +2107,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		ddmStructureLayoutImpl.setNew(ddmStructureLayout.isNew());
 		ddmStructureLayoutImpl.setPrimaryKey(ddmStructureLayout.getPrimaryKey());
 
+		ddmStructureLayoutImpl.setCompanyId(ddmStructureLayout.getCompanyId());
 		ddmStructureLayoutImpl.setUuid(ddmStructureLayout.getUuid());
 		ddmStructureLayoutImpl.setStructureLayoutId(ddmStructureLayout.getStructureLayoutId());
 		ddmStructureLayoutImpl.setGroupId(ddmStructureLayout.getGroupId());
-		ddmStructureLayoutImpl.setCompanyId(ddmStructureLayout.getCompanyId());
 		ddmStructureLayoutImpl.setUserId(ddmStructureLayout.getUserId());
 		ddmStructureLayoutImpl.setUserName(ddmStructureLayout.getUserName());
 		ddmStructureLayoutImpl.setCreateDate(ddmStructureLayout.getCreateDate());

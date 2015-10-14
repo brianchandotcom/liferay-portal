@@ -3047,6 +3047,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		subscription.setNew(true);
 		subscription.setPrimaryKey(subscriptionId);
 
+		subscription.setCompanyId(0);
+
 		return subscription;
 	}
 
@@ -3323,10 +3325,10 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		subscriptionImpl.setNew(subscription.isNew());
 		subscriptionImpl.setPrimaryKey(subscription.getPrimaryKey());
 
+		subscriptionImpl.setCompanyId(subscription.getCompanyId());
 		subscriptionImpl.setMvccVersion(subscription.getMvccVersion());
 		subscriptionImpl.setSubscriptionId(subscription.getSubscriptionId());
 		subscriptionImpl.setGroupId(subscription.getGroupId());
-		subscriptionImpl.setCompanyId(subscription.getCompanyId());
 		subscriptionImpl.setUserId(subscription.getUserId());
 		subscriptionImpl.setUserName(subscription.getUserName());
 		subscriptionImpl.setCreateDate(subscription.getCreateDate());

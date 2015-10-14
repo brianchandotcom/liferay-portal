@@ -115,11 +115,11 @@ public class SystemEventPersistenceTest {
 
 		SystemEvent newSystemEvent = _persistence.create(pk);
 
+		newSystemEvent.setCompanyId(RandomTestUtil.nextLong());
+
 		newSystemEvent.setMvccVersion(RandomTestUtil.nextLong());
 
 		newSystemEvent.setGroupId(RandomTestUtil.nextLong());
-
-		newSystemEvent.setCompanyId(RandomTestUtil.nextLong());
 
 		newSystemEvent.setUserId(RandomTestUtil.nextLong());
 
@@ -147,14 +147,14 @@ public class SystemEventPersistenceTest {
 
 		SystemEvent existingSystemEvent = _persistence.findByPrimaryKey(newSystemEvent.getPrimaryKey());
 
+		Assert.assertEquals(existingSystemEvent.getCompanyId(),
+			newSystemEvent.getCompanyId());
 		Assert.assertEquals(existingSystemEvent.getMvccVersion(),
 			newSystemEvent.getMvccVersion());
 		Assert.assertEquals(existingSystemEvent.getSystemEventId(),
 			newSystemEvent.getSystemEventId());
 		Assert.assertEquals(existingSystemEvent.getGroupId(),
 			newSystemEvent.getGroupId());
-		Assert.assertEquals(existingSystemEvent.getCompanyId(),
-			newSystemEvent.getCompanyId());
 		Assert.assertEquals(existingSystemEvent.getUserId(),
 			newSystemEvent.getUserId());
 		Assert.assertEquals(existingSystemEvent.getUserName(),
@@ -235,10 +235,10 @@ public class SystemEventPersistenceTest {
 	}
 
 	protected OrderByComparator<SystemEvent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SystemEvent",
-			"mvccVersion", true, "systemEventId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "classNameId", true, "classPK", true, "classUuid", true,
+		return OrderByComparatorFactoryUtil.create("SystemEvent", "companyId",
+			true, "mvccVersion", true, "systemEventId", true, "groupId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"classNameId", true, "classPK", true, "classUuid", true,
 			"referrerClassNameId", true, "parentSystemEventId", true,
 			"systemEventSetKey", true, "type", true);
 	}
@@ -442,11 +442,11 @@ public class SystemEventPersistenceTest {
 
 		SystemEvent systemEvent = _persistence.create(pk);
 
+		systemEvent.setCompanyId(RandomTestUtil.nextLong());
+
 		systemEvent.setMvccVersion(RandomTestUtil.nextLong());
 
 		systemEvent.setGroupId(RandomTestUtil.nextLong());
-
-		systemEvent.setCompanyId(RandomTestUtil.nextLong());
 
 		systemEvent.setUserId(RandomTestUtil.nextLong());
 

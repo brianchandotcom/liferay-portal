@@ -1065,6 +1065,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		pluginSetting.setNew(true);
 		pluginSetting.setPrimaryKey(pluginSettingId);
 
+		pluginSetting.setCompanyId(0);
+
 		return pluginSetting;
 	}
 
@@ -1229,9 +1231,9 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		pluginSettingImpl.setNew(pluginSetting.isNew());
 		pluginSettingImpl.setPrimaryKey(pluginSetting.getPrimaryKey());
 
+		pluginSettingImpl.setCompanyId(pluginSetting.getCompanyId());
 		pluginSettingImpl.setMvccVersion(pluginSetting.getMvccVersion());
 		pluginSettingImpl.setPluginSettingId(pluginSetting.getPluginSettingId());
-		pluginSettingImpl.setCompanyId(pluginSetting.getCompanyId());
 		pluginSettingImpl.setPluginId(pluginSetting.getPluginId());
 		pluginSettingImpl.setPluginType(pluginSetting.getPluginType());
 		pluginSettingImpl.setRoles(pluginSetting.getRoles());

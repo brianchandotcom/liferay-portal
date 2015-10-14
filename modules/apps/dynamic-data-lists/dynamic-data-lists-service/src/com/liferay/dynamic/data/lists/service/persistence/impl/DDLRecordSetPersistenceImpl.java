@@ -3253,6 +3253,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 		ddlRecordSet.setUuid(uuid);
 
+		ddlRecordSet.setCompanyId(0);
+
 		return ddlRecordSet;
 	}
 
@@ -3483,10 +3485,10 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		ddlRecordSetImpl.setNew(ddlRecordSet.isNew());
 		ddlRecordSetImpl.setPrimaryKey(ddlRecordSet.getPrimaryKey());
 
+		ddlRecordSetImpl.setCompanyId(ddlRecordSet.getCompanyId());
 		ddlRecordSetImpl.setUuid(ddlRecordSet.getUuid());
 		ddlRecordSetImpl.setRecordSetId(ddlRecordSet.getRecordSetId());
 		ddlRecordSetImpl.setGroupId(ddlRecordSet.getGroupId());
-		ddlRecordSetImpl.setCompanyId(ddlRecordSet.getCompanyId());
 		ddlRecordSetImpl.setUserId(ddlRecordSet.getUserId());
 		ddlRecordSetImpl.setUserName(ddlRecordSet.getUserName());
 		ddlRecordSetImpl.setCreateDate(ddlRecordSet.getCreateDate());

@@ -1531,6 +1531,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSet.setNew(true);
 		layoutSet.setPrimaryKey(layoutSetId);
 
+		layoutSet.setCompanyId(0);
+
 		return layoutSet;
 	}
 
@@ -1736,10 +1738,10 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSetImpl.setNew(layoutSet.isNew());
 		layoutSetImpl.setPrimaryKey(layoutSet.getPrimaryKey());
 
+		layoutSetImpl.setCompanyId(layoutSet.getCompanyId());
 		layoutSetImpl.setMvccVersion(layoutSet.getMvccVersion());
 		layoutSetImpl.setLayoutSetId(layoutSet.getLayoutSetId());
 		layoutSetImpl.setGroupId(layoutSet.getGroupId());
-		layoutSetImpl.setCompanyId(layoutSet.getCompanyId());
 		layoutSetImpl.setCreateDate(layoutSet.getCreateDate());
 		layoutSetImpl.setModifiedDate(layoutSet.getModifiedDate());
 		layoutSetImpl.setPrivateLayout(layoutSet.isPrivateLayout());

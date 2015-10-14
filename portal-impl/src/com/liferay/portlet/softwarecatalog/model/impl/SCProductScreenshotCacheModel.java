@@ -65,10 +65,10 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{productScreenshotId=");
-		sb.append(productScreenshotId);
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(companyId);
+		sb.append(", productScreenshotId=");
+		sb.append(productScreenshotId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", productEntryId=");
@@ -88,8 +88,8 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 	public SCProductScreenshot toEntityModel() {
 		SCProductScreenshotImpl scProductScreenshotImpl = new SCProductScreenshotImpl();
 
-		scProductScreenshotImpl.setProductScreenshotId(productScreenshotId);
 		scProductScreenshotImpl.setCompanyId(companyId);
+		scProductScreenshotImpl.setProductScreenshotId(productScreenshotId);
 		scProductScreenshotImpl.setGroupId(groupId);
 		scProductScreenshotImpl.setProductEntryId(productEntryId);
 		scProductScreenshotImpl.setThumbnailId(thumbnailId);
@@ -103,8 +103,8 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		productScreenshotId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		productScreenshotId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		productEntryId = objectInput.readLong();
 		thumbnailId = objectInput.readLong();
@@ -115,8 +115,8 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(productScreenshotId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(productScreenshotId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(productEntryId);
 		objectOutput.writeLong(thumbnailId);
@@ -124,8 +124,8 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 		objectOutput.writeInt(priority);
 	}
 
-	public long productScreenshotId;
 	public long companyId;
+	public long productScreenshotId;
 	public long groupId;
 	public long productEntryId;
 	public long thumbnailId;

@@ -21,6 +21,7 @@ import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface AnnouncementsEntryModel extends AttachedModel, AuditedModel,
-	BaseModel<AnnouncementsEntry> {
+	BaseModel<AnnouncementsEntry>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +65,22 @@ public interface AnnouncementsEntryModel extends AttachedModel, AuditedModel,
 	 * @param primaryKey the primary key of this announcements entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this announcements entry.
+	 *
+	 * @return the company ID of this announcements entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this announcements entry.
+	 *
+	 * @param companyId the company ID of this announcements entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this announcements entry.
@@ -93,22 +110,6 @@ public interface AnnouncementsEntryModel extends AttachedModel, AuditedModel,
 	 * @param entryId the entry ID of this announcements entry
 	 */
 	public void setEntryId(long entryId);
-
-	/**
-	 * Returns the company ID of this announcements entry.
-	 *
-	 * @return the company ID of this announcements entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this announcements entry.
-	 *
-	 * @param companyId the company ID of this announcements entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this announcements entry.

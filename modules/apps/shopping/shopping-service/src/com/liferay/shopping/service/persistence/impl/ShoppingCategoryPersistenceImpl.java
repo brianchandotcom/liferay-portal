@@ -2299,6 +2299,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		shoppingCategory.setNew(true);
 		shoppingCategory.setPrimaryKey(categoryId);
 
+		shoppingCategory.setCompanyId(0);
+
 		return shoppingCategory;
 	}
 
@@ -2508,9 +2510,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		shoppingCategoryImpl.setNew(shoppingCategory.isNew());
 		shoppingCategoryImpl.setPrimaryKey(shoppingCategory.getPrimaryKey());
 
+		shoppingCategoryImpl.setCompanyId(shoppingCategory.getCompanyId());
 		shoppingCategoryImpl.setCategoryId(shoppingCategory.getCategoryId());
 		shoppingCategoryImpl.setGroupId(shoppingCategory.getGroupId());
-		shoppingCategoryImpl.setCompanyId(shoppingCategory.getCompanyId());
 		shoppingCategoryImpl.setUserId(shoppingCategory.getUserId());
 		shoppingCategoryImpl.setUserName(shoppingCategory.getUserName());
 		shoppingCategoryImpl.setCreateDate(shoppingCategory.getCreateDate());

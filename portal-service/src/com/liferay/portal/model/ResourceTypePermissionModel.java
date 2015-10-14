@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermission>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +58,22 @@ public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermi
 	 * @param primaryKey the primary key of this resource type permission
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this resource type permission.
+	 *
+	 * @return the company ID of this resource type permission
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this resource type permission.
+	 *
+	 * @param companyId the company ID of this resource type permission
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this resource type permission.
@@ -88,20 +104,6 @@ public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermi
 	 * @param resourceTypePermissionId the resource type permission ID of this resource type permission
 	 */
 	public void setResourceTypePermissionId(long resourceTypePermissionId);
-
-	/**
-	 * Returns the company ID of this resource type permission.
-	 *
-	 * @return the company ID of this resource type permission
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this resource type permission.
-	 *
-	 * @param companyId the company ID of this resource type permission
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the group ID of this resource type permission.

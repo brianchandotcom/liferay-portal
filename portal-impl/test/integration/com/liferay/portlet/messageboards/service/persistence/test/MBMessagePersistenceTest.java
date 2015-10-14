@@ -120,11 +120,11 @@ public class MBMessagePersistenceTest {
 
 		MBMessage newMBMessage = _persistence.create(pk);
 
+		newMBMessage.setCompanyId(RandomTestUtil.nextLong());
+
 		newMBMessage.setUuid(RandomTestUtil.randomString());
 
 		newMBMessage.setGroupId(RandomTestUtil.nextLong());
-
-		newMBMessage.setCompanyId(RandomTestUtil.nextLong());
 
 		newMBMessage.setUserId(RandomTestUtil.nextLong());
 
@@ -174,13 +174,13 @@ public class MBMessagePersistenceTest {
 
 		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
 
+		Assert.assertEquals(existingMBMessage.getCompanyId(),
+			newMBMessage.getCompanyId());
 		Assert.assertEquals(existingMBMessage.getUuid(), newMBMessage.getUuid());
 		Assert.assertEquals(existingMBMessage.getMessageId(),
 			newMBMessage.getMessageId());
 		Assert.assertEquals(existingMBMessage.getGroupId(),
 			newMBMessage.getGroupId());
-		Assert.assertEquals(existingMBMessage.getCompanyId(),
-			newMBMessage.getCompanyId());
 		Assert.assertEquals(existingMBMessage.getUserId(),
 			newMBMessage.getUserId());
 		Assert.assertEquals(existingMBMessage.getUserName(),
@@ -258,17 +258,17 @@ public class MBMessagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -293,6 +293,14 @@ public class MBMessagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_S(0L, 0);
+	}
+
+	@Test
 	public void testCountByG_U() throws Exception {
 		_persistence.countByG_U(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
@@ -314,14 +322,6 @@ public class MBMessagePersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -489,8 +489,8 @@ public class MBMessagePersistenceTest {
 	}
 
 	protected OrderByComparator<MBMessage> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MBMessage", "uuid", true,
-			"messageId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("MBMessage", "companyId",
+			true, "uuid", true, "messageId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "categoryId", true,
 			"threadId", true, "rootMessageId", true, "parentMessageId", true,
@@ -713,11 +713,11 @@ public class MBMessagePersistenceTest {
 
 		MBMessage mbMessage = _persistence.create(pk);
 
+		mbMessage.setCompanyId(RandomTestUtil.nextLong());
+
 		mbMessage.setUuid(RandomTestUtil.randomString());
 
 		mbMessage.setGroupId(RandomTestUtil.nextLong());
-
-		mbMessage.setCompanyId(RandomTestUtil.nextLong());
 
 		mbMessage.setUserId(RandomTestUtil.nextLong());
 

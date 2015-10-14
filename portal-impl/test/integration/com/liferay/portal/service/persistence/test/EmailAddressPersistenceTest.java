@@ -116,11 +116,11 @@ public class EmailAddressPersistenceTest {
 
 		EmailAddress newEmailAddress = _persistence.create(pk);
 
+		newEmailAddress.setCompanyId(RandomTestUtil.nextLong());
+
 		newEmailAddress.setMvccVersion(RandomTestUtil.nextLong());
 
 		newEmailAddress.setUuid(RandomTestUtil.randomString());
-
-		newEmailAddress.setCompanyId(RandomTestUtil.nextLong());
 
 		newEmailAddress.setUserId(RandomTestUtil.nextLong());
 
@@ -146,14 +146,14 @@ public class EmailAddressPersistenceTest {
 
 		EmailAddress existingEmailAddress = _persistence.findByPrimaryKey(newEmailAddress.getPrimaryKey());
 
+		Assert.assertEquals(existingEmailAddress.getCompanyId(),
+			newEmailAddress.getCompanyId());
 		Assert.assertEquals(existingEmailAddress.getMvccVersion(),
 			newEmailAddress.getMvccVersion());
 		Assert.assertEquals(existingEmailAddress.getUuid(),
 			newEmailAddress.getUuid());
 		Assert.assertEquals(existingEmailAddress.getEmailAddressId(),
 			newEmailAddress.getEmailAddressId());
-		Assert.assertEquals(existingEmailAddress.getCompanyId(),
-			newEmailAddress.getCompanyId());
 		Assert.assertEquals(existingEmailAddress.getUserId(),
 			newEmailAddress.getUserId());
 		Assert.assertEquals(existingEmailAddress.getUserName(),
@@ -259,10 +259,10 @@ public class EmailAddressPersistenceTest {
 	}
 
 	protected OrderByComparator<EmailAddress> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("EmailAddress",
-			"mvccVersion", true, "uuid", true, "emailAddressId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+		return OrderByComparatorFactoryUtil.create("EmailAddress", "companyId",
+			true, "mvccVersion", true, "uuid", true, "emailAddressId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"address", true, "typeId", true, "primary", true,
 			"lastPublishDate", true);
 	}
@@ -466,11 +466,11 @@ public class EmailAddressPersistenceTest {
 
 		EmailAddress emailAddress = _persistence.create(pk);
 
+		emailAddress.setCompanyId(RandomTestUtil.nextLong());
+
 		emailAddress.setMvccVersion(RandomTestUtil.nextLong());
 
 		emailAddress.setUuid(RandomTestUtil.randomString());
-
-		emailAddress.setCompanyId(RandomTestUtil.nextLong());
 
 		emailAddress.setUserId(RandomTestUtil.nextLong());
 

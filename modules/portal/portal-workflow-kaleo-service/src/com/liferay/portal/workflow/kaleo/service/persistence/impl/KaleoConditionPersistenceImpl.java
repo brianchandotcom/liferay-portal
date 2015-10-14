@@ -1468,6 +1468,8 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 		kaleoCondition.setNew(true);
 		kaleoCondition.setPrimaryKey(kaleoConditionId);
 
+		kaleoCondition.setCompanyId(0);
+
 		return kaleoCondition;
 	}
 
@@ -1676,9 +1678,9 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 		kaleoConditionImpl.setNew(kaleoCondition.isNew());
 		kaleoConditionImpl.setPrimaryKey(kaleoCondition.getPrimaryKey());
 
+		kaleoConditionImpl.setCompanyId(kaleoCondition.getCompanyId());
 		kaleoConditionImpl.setKaleoConditionId(kaleoCondition.getKaleoConditionId());
 		kaleoConditionImpl.setGroupId(kaleoCondition.getGroupId());
-		kaleoConditionImpl.setCompanyId(kaleoCondition.getCompanyId());
 		kaleoConditionImpl.setUserId(kaleoCondition.getUserId());
 		kaleoConditionImpl.setUserName(kaleoCondition.getUserName());
 		kaleoConditionImpl.setCreateDate(kaleoCondition.getCreateDate());

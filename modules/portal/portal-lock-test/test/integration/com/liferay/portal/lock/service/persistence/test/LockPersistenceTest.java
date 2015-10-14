@@ -123,11 +123,11 @@ public class LockPersistenceTest {
 
 		Lock newLock = _persistence.create(pk);
 
+		newLock.setCompanyId(RandomTestUtil.nextLong());
+
 		newLock.setMvccVersion(RandomTestUtil.nextLong());
 
 		newLock.setUuid(RandomTestUtil.randomString());
-
-		newLock.setCompanyId(RandomTestUtil.nextLong());
 
 		newLock.setUserId(RandomTestUtil.nextLong());
 
@@ -149,11 +149,11 @@ public class LockPersistenceTest {
 
 		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
+		Assert.assertEquals(existingLock.getCompanyId(), newLock.getCompanyId());
 		Assert.assertEquals(existingLock.getMvccVersion(),
 			newLock.getMvccVersion());
 		Assert.assertEquals(existingLock.getUuid(), newLock.getUuid());
 		Assert.assertEquals(existingLock.getLockId(), newLock.getLockId());
-		Assert.assertEquals(existingLock.getCompanyId(), newLock.getCompanyId());
 		Assert.assertEquals(existingLock.getUserId(), newLock.getUserId());
 		Assert.assertEquals(existingLock.getUserName(), newLock.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(existingLock.getCreateDate()),
@@ -225,11 +225,10 @@ public class LockPersistenceTest {
 	}
 
 	protected OrderByComparator<Lock> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Lock_", "mvccVersion",
-			true, "uuid", true, "lockId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "className", true,
-			"key", true, "owner", true, "inheritable", true, "expirationDate",
-			true);
+		return OrderByComparatorFactoryUtil.create("Lock_", "companyId", true,
+			"mvccVersion", true, "uuid", true, "lockId", true, "userId", true,
+			"userName", true, "createDate", true, "className", true, "key",
+			true, "owner", true, "inheritable", true, "expirationDate", true);
 	}
 
 	@Test
@@ -441,11 +440,11 @@ public class LockPersistenceTest {
 
 		Lock lock = _persistence.create(pk);
 
+		lock.setCompanyId(RandomTestUtil.nextLong());
+
 		lock.setMvccVersion(RandomTestUtil.nextLong());
 
 		lock.setUuid(RandomTestUtil.randomString());
-
-		lock.setCompanyId(RandomTestUtil.nextLong());
 
 		lock.setUserId(RandomTestUtil.nextLong());
 

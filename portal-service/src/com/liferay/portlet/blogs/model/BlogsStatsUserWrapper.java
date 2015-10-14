@@ -53,9 +53,9 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("statsUserId", getStatsUserId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("entryCount", getEntryCount());
 		attributes.put("lastPostDate", getLastPostDate());
@@ -68,6 +68,12 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long statsUserId = (Long)attributes.get("statsUserId");
 
 		if (statsUserId != null) {
@@ -78,12 +84,6 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

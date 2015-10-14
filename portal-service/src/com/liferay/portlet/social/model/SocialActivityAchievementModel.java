@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface SocialActivityAchievementModel extends BaseModel<SocialActivityAchievement> {
+public interface SocialActivityAchievementModel extends BaseModel<SocialActivityAchievement>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,6 +61,22 @@ public interface SocialActivityAchievementModel extends BaseModel<SocialActivity
 	 * @param primaryKey the primary key of this social activity achievement
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this social activity achievement.
+	 *
+	 * @return the company ID of this social activity achievement
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this social activity achievement.
+	 *
+	 * @param companyId the company ID of this social activity achievement
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the activity achievement ID of this social activity achievement.
@@ -87,20 +105,6 @@ public interface SocialActivityAchievementModel extends BaseModel<SocialActivity
 	 * @param groupId the group ID of this social activity achievement
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this social activity achievement.
-	 *
-	 * @return the company ID of this social activity achievement
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this social activity achievement.
-	 *
-	 * @param companyId the company ID of this social activity achievement
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this social activity achievement.

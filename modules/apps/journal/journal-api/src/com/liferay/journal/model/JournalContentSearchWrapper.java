@@ -53,9 +53,9 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("contentSearchId", getContentSearchId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("portletId", getPortletId());
@@ -66,6 +66,12 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long contentSearchId = (Long)attributes.get("contentSearchId");
 
 		if (contentSearchId != null) {
@@ -76,12 +82,6 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Boolean privateLayout = (Boolean)attributes.get("privateLayout");

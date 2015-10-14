@@ -116,9 +116,9 @@ public class UserTrackerPersistenceTest {
 
 		UserTracker newUserTracker = _persistence.create(pk);
 
-		newUserTracker.setMvccVersion(RandomTestUtil.nextLong());
-
 		newUserTracker.setCompanyId(RandomTestUtil.nextLong());
+
+		newUserTracker.setMvccVersion(RandomTestUtil.nextLong());
 
 		newUserTracker.setUserId(RandomTestUtil.nextLong());
 
@@ -136,12 +136,12 @@ public class UserTrackerPersistenceTest {
 
 		UserTracker existingUserTracker = _persistence.findByPrimaryKey(newUserTracker.getPrimaryKey());
 
+		Assert.assertEquals(existingUserTracker.getCompanyId(),
+			newUserTracker.getCompanyId());
 		Assert.assertEquals(existingUserTracker.getMvccVersion(),
 			newUserTracker.getMvccVersion());
 		Assert.assertEquals(existingUserTracker.getUserTrackerId(),
 			newUserTracker.getUserTrackerId());
-		Assert.assertEquals(existingUserTracker.getCompanyId(),
-			newUserTracker.getCompanyId());
 		Assert.assertEquals(existingUserTracker.getUserId(),
 			newUserTracker.getUserId());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -203,10 +203,10 @@ public class UserTrackerPersistenceTest {
 	}
 
 	protected OrderByComparator<UserTracker> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("UserTracker",
-			"mvccVersion", true, "userTrackerId", true, "companyId", true,
-			"userId", true, "modifiedDate", true, "sessionId", true,
-			"remoteAddr", true, "remoteHost", true, "userAgent", true);
+		return OrderByComparatorFactoryUtil.create("UserTracker", "companyId",
+			true, "mvccVersion", true, "userTrackerId", true, "userId", true,
+			"modifiedDate", true, "sessionId", true, "remoteAddr", true,
+			"remoteHost", true, "userAgent", true);
 	}
 
 	@Test
@@ -408,9 +408,9 @@ public class UserTrackerPersistenceTest {
 
 		UserTracker userTracker = _persistence.create(pk);
 
-		userTracker.setMvccVersion(RandomTestUtil.nextLong());
-
 		userTracker.setCompanyId(RandomTestUtil.nextLong());
+
+		userTracker.setMvccVersion(RandomTestUtil.nextLong());
 
 		userTracker.setUserId(RandomTestUtil.nextLong());
 

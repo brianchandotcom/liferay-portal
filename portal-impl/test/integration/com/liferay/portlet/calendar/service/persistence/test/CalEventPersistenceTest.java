@@ -121,11 +121,11 @@ public class CalEventPersistenceTest {
 
 		CalEvent newCalEvent = _persistence.create(pk);
 
+		newCalEvent.setCompanyId(RandomTestUtil.nextLong());
+
 		newCalEvent.setUuid(RandomTestUtil.randomString());
 
 		newCalEvent.setGroupId(RandomTestUtil.nextLong());
-
-		newCalEvent.setCompanyId(RandomTestUtil.nextLong());
 
 		newCalEvent.setUserId(RandomTestUtil.nextLong());
 
@@ -169,13 +169,13 @@ public class CalEventPersistenceTest {
 
 		CalEvent existingCalEvent = _persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
 
+		Assert.assertEquals(existingCalEvent.getCompanyId(),
+			newCalEvent.getCompanyId());
 		Assert.assertEquals(existingCalEvent.getUuid(), newCalEvent.getUuid());
 		Assert.assertEquals(existingCalEvent.getEventId(),
 			newCalEvent.getEventId());
 		Assert.assertEquals(existingCalEvent.getGroupId(),
 			newCalEvent.getGroupId());
-		Assert.assertEquals(existingCalEvent.getCompanyId(),
-			newCalEvent.getCompanyId());
 		Assert.assertEquals(existingCalEvent.getUserId(),
 			newCalEvent.getUserId());
 		Assert.assertEquals(existingCalEvent.getUserName(),
@@ -246,17 +246,17 @@ public class CalEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -336,8 +336,8 @@ public class CalEventPersistenceTest {
 	}
 
 	protected OrderByComparator<CalEvent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CalEvent", "uuid", true,
-			"eventId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("CalEvent", "companyId",
+			true, "uuid", true, "eventId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"title", true, "location", true, "startDate", true, "endDate",
 			true, "durationHour", true, "durationMinute", true, "allDay", true,
@@ -558,11 +558,11 @@ public class CalEventPersistenceTest {
 
 		CalEvent calEvent = _persistence.create(pk);
 
+		calEvent.setCompanyId(RandomTestUtil.nextLong());
+
 		calEvent.setUuid(RandomTestUtil.randomString());
 
 		calEvent.setGroupId(RandomTestUtil.nextLong());
-
-		calEvent.setCompanyId(RandomTestUtil.nextLong());
 
 		calEvent.setUserId(RandomTestUtil.nextLong());
 

@@ -694,6 +694,8 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		userTrackerPath.setNew(true);
 		userTrackerPath.setPrimaryKey(userTrackerPathId);
 
+		userTrackerPath.setCompanyId(0);
+
 		return userTrackerPath;
 	}
 
@@ -857,6 +859,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		userTrackerPathImpl.setNew(userTrackerPath.isNew());
 		userTrackerPathImpl.setPrimaryKey(userTrackerPath.getPrimaryKey());
 
+		userTrackerPathImpl.setCompanyId(userTrackerPath.getCompanyId());
 		userTrackerPathImpl.setMvccVersion(userTrackerPath.getMvccVersion());
 		userTrackerPathImpl.setUserTrackerPathId(userTrackerPath.getUserTrackerPathId());
 		userTrackerPathImpl.setUserTrackerId(userTrackerPath.getUserTrackerId());

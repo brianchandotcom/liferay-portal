@@ -1012,6 +1012,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		scProductVersion.setNew(true);
 		scProductVersion.setPrimaryKey(productVersionId);
 
+		scProductVersion.setCompanyId(0);
+
 		return scProductVersion;
 	}
 
@@ -1207,8 +1209,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		scProductVersionImpl.setNew(scProductVersion.isNew());
 		scProductVersionImpl.setPrimaryKey(scProductVersion.getPrimaryKey());
 
-		scProductVersionImpl.setProductVersionId(scProductVersion.getProductVersionId());
 		scProductVersionImpl.setCompanyId(scProductVersion.getCompanyId());
+		scProductVersionImpl.setProductVersionId(scProductVersion.getProductVersionId());
 		scProductVersionImpl.setUserId(scProductVersion.getUserId());
 		scProductVersionImpl.setUserName(scProductVersion.getUserName());
 		scProductVersionImpl.setCreateDate(scProductVersion.getCreateDate());

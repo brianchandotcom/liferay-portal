@@ -5,7 +5,7 @@ create unique index IX_EB9BDE28 on DDMContent (uuid_[$COLUMN_LENGTH:75$], groupI
 
 create unique index IX_702D1AD5 on DDMStorageLink (classPK);
 create index IX_81776090 on DDMStorageLink (structureId);
-create index IX_32A18526 on DDMStorageLink (uuid_[$COLUMN_LENGTH:75$]);
+create index IX_DB81EB42 on DDMStorageLink (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_31817A62 on DDMStructure (classNameId);
 create index IX_4FBAC092 on DDMStructure (companyId, classNameId);

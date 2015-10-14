@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
 	 * @param primaryKey the primary key of this web d a v props
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this web d a v props.
+	 *
+	 * @return the company ID of this web d a v props
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this web d a v props.
+	 *
+	 * @param companyId the company ID of this web d a v props
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this web d a v props.
@@ -90,20 +106,6 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
 	 * @param webDavPropsId the web dav props ID of this web d a v props
 	 */
 	public void setWebDavPropsId(long webDavPropsId);
-
-	/**
-	 * Returns the company ID of this web d a v props.
-	 *
-	 * @return the company ID of this web d a v props
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this web d a v props.
-	 *
-	 * @param companyId the company ID of this web d a v props
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the create date of this web d a v props.

@@ -118,9 +118,9 @@ public class BlogsStatsUserPersistenceTest {
 
 		BlogsStatsUser newBlogsStatsUser = _persistence.create(pk);
 
-		newBlogsStatsUser.setGroupId(RandomTestUtil.nextLong());
-
 		newBlogsStatsUser.setCompanyId(RandomTestUtil.nextLong());
+
+		newBlogsStatsUser.setGroupId(RandomTestUtil.nextLong());
 
 		newBlogsStatsUser.setUserId(RandomTestUtil.nextLong());
 
@@ -138,12 +138,12 @@ public class BlogsStatsUserPersistenceTest {
 
 		BlogsStatsUser existingBlogsStatsUser = _persistence.findByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
 
+		Assert.assertEquals(existingBlogsStatsUser.getCompanyId(),
+			newBlogsStatsUser.getCompanyId());
 		Assert.assertEquals(existingBlogsStatsUser.getStatsUserId(),
 			newBlogsStatsUser.getStatsUserId());
 		Assert.assertEquals(existingBlogsStatsUser.getGroupId(),
 			newBlogsStatsUser.getGroupId());
-		Assert.assertEquals(existingBlogsStatsUser.getCompanyId(),
-			newBlogsStatsUser.getCompanyId());
 		Assert.assertEquals(existingBlogsStatsUser.getUserId(),
 			newBlogsStatsUser.getUserId());
 		Assert.assertEquals(existingBlogsStatsUser.getEntryCount(),
@@ -174,6 +174,14 @@ public class BlogsStatsUserPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_NotE() throws Exception {
+		_persistence.countByC_NotE(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_NotE(0L, 0);
+	}
+
+	@Test
 	public void testCountByG_U() throws Exception {
 		_persistence.countByG_U(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
@@ -187,14 +195,6 @@ public class BlogsStatsUserPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_NotE(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_NotE() throws Exception {
-		_persistence.countByC_NotE(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_NotE(0L, 0);
 	}
 
 	@Test
@@ -229,7 +229,7 @@ public class BlogsStatsUserPersistenceTest {
 
 	protected OrderByComparator<BlogsStatsUser> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BlogsStatsUser",
-			"statsUserId", true, "groupId", true, "companyId", true, "userId",
+			"companyId", true, "statsUserId", true, "groupId", true, "userId",
 			true, "entryCount", true, "lastPostDate", true,
 			"ratingsTotalEntries", true, "ratingsTotalScore", true,
 			"ratingsAverageScore", true);
@@ -448,9 +448,9 @@ public class BlogsStatsUserPersistenceTest {
 
 		BlogsStatsUser blogsStatsUser = _persistence.create(pk);
 
-		blogsStatsUser.setGroupId(RandomTestUtil.nextLong());
-
 		blogsStatsUser.setCompanyId(RandomTestUtil.nextLong());
+
+		blogsStatsUser.setGroupId(RandomTestUtil.nextLong());
 
 		blogsStatsUser.setUserId(RandomTestUtil.nextLong());
 

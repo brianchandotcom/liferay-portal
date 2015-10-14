@@ -64,9 +64,11 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{syncEventId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", syncEventId=");
 		sb.append(syncEventId);
 		sb.append(", modifiedTime=");
 		sb.append(modifiedTime);
@@ -85,6 +87,7 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 	public DLSyncEvent toEntityModel() {
 		DLSyncEventImpl dlSyncEventImpl = new DLSyncEventImpl();
 
+		dlSyncEventImpl.setCompanyId(companyId);
 		dlSyncEventImpl.setSyncEventId(syncEventId);
 		dlSyncEventImpl.setModifiedTime(modifiedTime);
 
@@ -111,6 +114,7 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		syncEventId = objectInput.readLong();
 		modifiedTime = objectInput.readLong();
 		event = objectInput.readUTF();
@@ -121,6 +125,7 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(syncEventId);
 		objectOutput.writeLong(modifiedTime);
 
@@ -141,6 +146,7 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 		objectOutput.writeLong(typePK);
 	}
 
+	public long companyId;
 	public long syncEventId;
 	public long modifiedTime;
 	public String event;

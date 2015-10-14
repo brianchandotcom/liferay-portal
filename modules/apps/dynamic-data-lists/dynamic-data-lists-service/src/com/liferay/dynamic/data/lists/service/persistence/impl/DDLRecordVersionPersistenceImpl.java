@@ -1544,6 +1544,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		ddlRecordVersion.setNew(true);
 		ddlRecordVersion.setPrimaryKey(recordVersionId);
 
+		ddlRecordVersion.setCompanyId(0);
+
 		return ddlRecordVersion;
 	}
 
@@ -1730,9 +1732,9 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		ddlRecordVersionImpl.setNew(ddlRecordVersion.isNew());
 		ddlRecordVersionImpl.setPrimaryKey(ddlRecordVersion.getPrimaryKey());
 
+		ddlRecordVersionImpl.setCompanyId(ddlRecordVersion.getCompanyId());
 		ddlRecordVersionImpl.setRecordVersionId(ddlRecordVersion.getRecordVersionId());
 		ddlRecordVersionImpl.setGroupId(ddlRecordVersion.getGroupId());
-		ddlRecordVersionImpl.setCompanyId(ddlRecordVersion.getCompanyId());
 		ddlRecordVersionImpl.setUserId(ddlRecordVersion.getUserId());
 		ddlRecordVersionImpl.setUserName(ddlRecordVersion.getUserName());
 		ddlRecordVersionImpl.setCreateDate(ddlRecordVersion.getCreateDate());

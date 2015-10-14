@@ -830,6 +830,180 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
+	* Returns all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @return the matching document library file shortcuts
+	*/
+	public static List<DLFileShortcut> findByC_NotS(long companyId, int status) {
+		return getPersistence().findByC_NotS(companyId, status);
+	}
+
+	/**
+	* Returns a range of all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of matching document library file shortcuts
+	*/
+	public static List<DLFileShortcut> findByC_NotS(long companyId, int status,
+		int start, int end) {
+		return getPersistence().findByC_NotS(companyId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching document library file shortcuts
+	*/
+	public static List<DLFileShortcut> findByC_NotS(long companyId, int status,
+		int start, int end, OrderByComparator<DLFileShortcut> orderByComparator) {
+		return getPersistence()
+				   .findByC_NotS(companyId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching document library file shortcuts
+	*/
+	public static List<DLFileShortcut> findByC_NotS(long companyId, int status,
+		int start, int end,
+		OrderByComparator<DLFileShortcut> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_NotS(companyId, status, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file shortcut
+	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	*/
+	public static DLFileShortcut findByC_NotS_First(long companyId, int status,
+		OrderByComparator<DLFileShortcut> orderByComparator)
+		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		return getPersistence()
+				   .findByC_NotS_First(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	*/
+	public static DLFileShortcut fetchByC_NotS_First(long companyId,
+		int status, OrderByComparator<DLFileShortcut> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_NotS_First(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file shortcut
+	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	*/
+	public static DLFileShortcut findByC_NotS_Last(long companyId, int status,
+		OrderByComparator<DLFileShortcut> orderByComparator)
+		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		return getPersistence()
+				   .findByC_NotS_Last(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	*/
+	public static DLFileShortcut fetchByC_NotS_Last(long companyId, int status,
+		OrderByComparator<DLFileShortcut> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param fileShortcutId the primary key of the current document library file shortcut
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next document library file shortcut
+	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	*/
+	public static DLFileShortcut[] findByC_NotS_PrevAndNext(
+		long fileShortcutId, long companyId, int status,
+		OrderByComparator<DLFileShortcut> orderByComparator)
+		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		return getPersistence()
+				   .findByC_NotS_PrevAndNext(fileShortcutId, companyId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the document library file shortcuts where companyId = &#63; and status &ne; &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	*/
+	public static void removeByC_NotS(long companyId, int status) {
+		getPersistence().removeByC_NotS(companyId, status);
+	}
+
+	/**
+	* Returns the number of document library file shortcuts where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @return the number of matching document library file shortcuts
+	*/
+	public static int countByC_NotS(long companyId, int status) {
+		return getPersistence().countByC_NotS(companyId, status);
+	}
+
+	/**
 	* Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63;.
 	*
 	* @param groupId the group ID
@@ -1082,180 +1256,6 @@ public class DLFileShortcutUtil {
 	*/
 	public static int filterCountByG_F(long groupId, long folderId) {
 		return getPersistence().filterCountByG_F(groupId, folderId);
-	}
-
-	/**
-	* Returns all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the matching document library file shortcuts
-	*/
-	public static List<DLFileShortcut> findByC_NotS(long companyId, int status) {
-		return getPersistence().findByC_NotS(companyId, status);
-	}
-
-	/**
-	* Returns a range of all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of document library file shortcuts
-	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
-	* @return the range of matching document library file shortcuts
-	*/
-	public static List<DLFileShortcut> findByC_NotS(long companyId, int status,
-		int start, int end) {
-		return getPersistence().findByC_NotS(companyId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of document library file shortcuts
-	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching document library file shortcuts
-	*/
-	public static List<DLFileShortcut> findByC_NotS(long companyId, int status,
-		int start, int end, OrderByComparator<DLFileShortcut> orderByComparator) {
-		return getPersistence()
-				   .findByC_NotS(companyId, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileShortcutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of document library file shortcuts
-	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching document library file shortcuts
-	*/
-	public static List<DLFileShortcut> findByC_NotS(long companyId, int status,
-		int start, int end,
-		OrderByComparator<DLFileShortcut> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_NotS(companyId, status, start, end,
-			orderByComparator, retrieveFromCache);
-	}
-
-	/**
-	* Returns the first document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	*/
-	public static DLFileShortcut findByC_NotS_First(long companyId, int status,
-		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
-		return getPersistence()
-				   .findByC_NotS_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the first document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	*/
-	public static DLFileShortcut fetchByC_NotS_First(long companyId,
-		int status, OrderByComparator<DLFileShortcut> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_NotS_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching document library file shortcut
-	* @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
-	*/
-	public static DLFileShortcut findByC_NotS_Last(long companyId, int status,
-		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
-		return getPersistence()
-				   .findByC_NotS_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	*/
-	public static DLFileShortcut fetchByC_NotS_Last(long companyId, int status,
-		OrderByComparator<DLFileShortcut> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param fileShortcutId the primary key of the current document library file shortcut
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next document library file shortcut
-	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	*/
-	public static DLFileShortcut[] findByC_NotS_PrevAndNext(
-		long fileShortcutId, long companyId, int status,
-		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
-		return getPersistence()
-				   .findByC_NotS_PrevAndNext(fileShortcutId, companyId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the document library file shortcuts where companyId = &#63; and status &ne; &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	*/
-	public static void removeByC_NotS(long companyId, int status) {
-		getPersistence().removeByC_NotS(companyId, status);
-	}
-
-	/**
-	* Returns the number of document library file shortcuts where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the number of matching document library file shortcuts
-	*/
-	public static int countByC_NotS(long companyId, int status) {
-		return getPersistence().countByC_NotS(companyId, status);
 	}
 
 	/**

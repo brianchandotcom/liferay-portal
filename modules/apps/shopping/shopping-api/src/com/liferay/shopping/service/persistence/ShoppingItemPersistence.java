@@ -176,6 +176,56 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	public int countByLargeImageId(long largeImageId);
 
 	/**
+	* Returns the shopping item where companyId = &#63; and sku = &#63; or throws a {@link com.liferay.shopping.NoSuchItemException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the matching shopping item
+	* @throws com.liferay.shopping.NoSuchItemException if a matching shopping item could not be found
+	*/
+	public ShoppingItem findByC_S(long companyId, java.lang.String sku)
+		throws com.liferay.shopping.exception.NoSuchItemException;
+
+	/**
+	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
+	*/
+	public ShoppingItem fetchByC_S(long companyId, java.lang.String sku);
+
+	/**
+	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
+	*/
+	public ShoppingItem fetchByC_S(long companyId, java.lang.String sku,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the shopping item where companyId = &#63; and sku = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the shopping item that was removed
+	*/
+	public ShoppingItem removeByC_S(long companyId, java.lang.String sku)
+		throws com.liferay.shopping.exception.NoSuchItemException;
+
+	/**
+	* Returns the number of shopping items where companyId = &#63; and sku = &#63;.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the number of matching shopping items
+	*/
+	public int countByC_S(long companyId, java.lang.String sku);
+
+	/**
 	* Returns all the shopping items where groupId = &#63; and categoryId = &#63;.
 	*
 	* @param groupId the group ID
@@ -385,56 +435,6 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* @return the number of matching shopping items that the user has permission to view
 	*/
 	public int filterCountByG_C(long groupId, long categoryId);
-
-	/**
-	* Returns the shopping item where companyId = &#63; and sku = &#63; or throws a {@link com.liferay.shopping.NoSuchItemException} if it could not be found.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the matching shopping item
-	* @throws com.liferay.shopping.NoSuchItemException if a matching shopping item could not be found
-	*/
-	public ShoppingItem findByC_S(long companyId, java.lang.String sku)
-		throws com.liferay.shopping.exception.NoSuchItemException;
-
-	/**
-	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	*/
-	public ShoppingItem fetchByC_S(long companyId, java.lang.String sku);
-
-	/**
-	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	*/
-	public ShoppingItem fetchByC_S(long companyId, java.lang.String sku,
-		boolean retrieveFromCache);
-
-	/**
-	* Removes the shopping item where companyId = &#63; and sku = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the shopping item that was removed
-	*/
-	public ShoppingItem removeByC_S(long companyId, java.lang.String sku)
-		throws com.liferay.shopping.exception.NoSuchItemException;
-
-	/**
-	* Returns the number of shopping items where companyId = &#63; and sku = &#63;.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the number of matching shopping items
-	*/
-	public int countByC_S(long companyId, java.lang.String sku);
 
 	/**
 	* Caches the shopping item in the entity cache if it is enabled.

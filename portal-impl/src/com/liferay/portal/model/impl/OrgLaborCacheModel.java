@@ -76,9 +76,11 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", orgLaborId=");
 		sb.append(orgLaborId);
@@ -123,6 +125,7 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable,
 	public OrgLabor toEntityModel() {
 		OrgLaborImpl orgLaborImpl = new OrgLaborImpl();
 
+		orgLaborImpl.setCompanyId(companyId);
 		orgLaborImpl.setMvccVersion(mvccVersion);
 		orgLaborImpl.setOrgLaborId(orgLaborId);
 		orgLaborImpl.setOrganizationId(organizationId);
@@ -149,6 +152,7 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		orgLaborId = objectInput.readLong();
 		organizationId = objectInput.readLong();
@@ -172,6 +176,7 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(orgLaborId);
 		objectOutput.writeLong(organizationId);
@@ -192,6 +197,7 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable,
 		objectOutput.writeInt(satClose);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long orgLaborId;
 	public long organizationId;

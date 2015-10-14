@@ -1,7 +1,7 @@
 create table KaleoAction (
+	companyId LONG,
 	kaleoActionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -20,9 +20,9 @@ create table KaleoAction (
 );
 
 create table KaleoCondition (
+	companyId LONG,
 	kaleoConditionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -35,9 +35,9 @@ create table KaleoCondition (
 );
 
 create table KaleoDefinition (
+	companyId LONG,
 	kaleoDefinitionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -52,9 +52,9 @@ create table KaleoDefinition (
 );
 
 create table KaleoInstance (
+	companyId LONG,
 	kaleoInstanceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -71,9 +71,9 @@ create table KaleoInstance (
 );
 
 create table KaleoInstanceToken (
+	companyId LONG,
 	kaleoInstanceTokenId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -90,9 +90,9 @@ create table KaleoInstanceToken (
 );
 
 create table KaleoLog (
+	companyId LONG,
 	kaleoLogId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -123,9 +123,9 @@ create table KaleoLog (
 );
 
 create table KaleoNode (
+	companyId LONG,
 	kaleoNodeId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -140,9 +140,9 @@ create table KaleoNode (
 );
 
 create table KaleoNotification (
+	companyId LONG,
 	kaleoNotificationId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -160,9 +160,9 @@ create table KaleoNotification (
 );
 
 create table KaleoNotificationRecipient (
+	companyId LONG,
 	kaleoNotificationRecipientId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -180,9 +180,9 @@ create table KaleoNotificationRecipient (
 );
 
 create table KaleoTask (
+	companyId LONG,
 	kaleoTaskId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -194,9 +194,9 @@ create table KaleoTask (
 );
 
 create table KaleoTaskAssignment (
+	companyId LONG,
 	kaleoTaskAssignmentId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -214,9 +214,9 @@ create table KaleoTaskAssignment (
 );
 
 create table KaleoTaskAssignmentInstance (
+	companyId LONG,
 	kaleoTaskAssignmentInstanceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -234,9 +234,9 @@ create table KaleoTaskAssignmentInstance (
 );
 
 create table KaleoTaskInstanceToken (
+	companyId LONG,
 	kaleoTaskInstanceTokenId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -256,9 +256,9 @@ create table KaleoTaskInstanceToken (
 );
 
 create table KaleoTimer (
+	companyId LONG,
 	kaleoTimerId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -276,9 +276,9 @@ create table KaleoTimer (
 );
 
 create table KaleoTimerInstanceToken (
+	companyId LONG,
 	kaleoTimerInstanceTokenId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -299,9 +299,9 @@ create table KaleoTimerInstanceToken (
 );
 
 create table KaleoTransition (
+	companyId LONG,
 	kaleoTransitionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,

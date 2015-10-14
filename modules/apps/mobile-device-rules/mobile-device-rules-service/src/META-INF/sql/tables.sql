@@ -1,8 +1,8 @@
 create table MDRAction (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	actionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -18,10 +18,10 @@ create table MDRAction (
 );
 
 create table MDRRule (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	ruleId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -35,10 +35,10 @@ create table MDRRule (
 );
 
 create table MDRRuleGroup (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	ruleGroupId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -49,10 +49,10 @@ create table MDRRuleGroup (
 );
 
 create table MDRRuleGroupInstance (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	ruleGroupInstanceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

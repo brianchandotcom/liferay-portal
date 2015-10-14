@@ -33,9 +33,9 @@ public class UserNotificationDeliverySoap implements Serializable {
 		UserNotificationDelivery model) {
 		UserNotificationDeliverySoap soapModel = new UserNotificationDeliverySoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUserNotificationDeliveryId(model.getUserNotificationDeliveryId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setClassNameId(model.getClassNameId());
@@ -97,6 +97,14 @@ public class UserNotificationDeliverySoap implements Serializable {
 		setUserNotificationDeliveryId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -111,14 +119,6 @@ public class UserNotificationDeliverySoap implements Serializable {
 
 	public void setUserNotificationDeliveryId(long userNotificationDeliveryId) {
 		_userNotificationDeliveryId = userNotificationDeliveryId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -173,9 +173,9 @@ public class UserNotificationDeliverySoap implements Serializable {
 		_deliver = deliver;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _userNotificationDeliveryId;
-	private long _companyId;
 	private long _userId;
 	private String _portletId;
 	private long _classNameId;

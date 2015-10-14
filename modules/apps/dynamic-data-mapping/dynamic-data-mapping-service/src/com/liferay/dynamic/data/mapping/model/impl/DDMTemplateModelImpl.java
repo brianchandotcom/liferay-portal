@@ -79,10 +79,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	 */
 	public static final String TABLE_NAME = "DDMTemplate";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "templateId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "versionUserId", Types.BIGINT },
@@ -109,10 +109,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("versionUserId", Types.BIGINT);
@@ -137,7 +137,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name TEXT null,description TEXT null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (companyId LONG,uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name TEXT null,description TEXT null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplate.templateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplate.templateId ASC";
@@ -178,10 +178,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 		DDMTemplate model = new DDMTemplateImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setTemplateId(soapModel.getTemplateId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setVersionUserId(soapModel.getVersionUserId());
@@ -268,10 +268,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("templateId", getTemplateId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("versionUserId", getVersionUserId());
@@ -303,6 +303,12 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -319,12 +325,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -460,6 +460,29 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -516,29 +539,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1271,10 +1271,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public Object clone() {
 		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl();
 
+		ddmTemplateImpl.setCompanyId(getCompanyId());
 		ddmTemplateImpl.setUuid(getUuid());
 		ddmTemplateImpl.setTemplateId(getTemplateId());
 		ddmTemplateImpl.setGroupId(getGroupId());
-		ddmTemplateImpl.setCompanyId(getCompanyId());
 		ddmTemplateImpl.setUserId(getUserId());
 		ddmTemplateImpl.setUserName(getUserName());
 		ddmTemplateImpl.setVersionUserId(getVersionUserId());
@@ -1359,15 +1359,15 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public void resetOriginalValues() {
 		DDMTemplateModelImpl ddmTemplateModelImpl = this;
 
+		ddmTemplateModelImpl._originalCompanyId = ddmTemplateModelImpl._companyId;
+
+		ddmTemplateModelImpl._setOriginalCompanyId = false;
+
 		ddmTemplateModelImpl._originalUuid = ddmTemplateModelImpl._uuid;
 
 		ddmTemplateModelImpl._originalGroupId = ddmTemplateModelImpl._groupId;
 
 		ddmTemplateModelImpl._setOriginalGroupId = false;
-
-		ddmTemplateModelImpl._originalCompanyId = ddmTemplateModelImpl._companyId;
-
-		ddmTemplateModelImpl._setOriginalCompanyId = false;
 
 		ddmTemplateModelImpl._setModifiedDate = false;
 
@@ -1398,6 +1398,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public CacheModel<DDMTemplate> toCacheModel() {
 		DDMTemplateCacheModel ddmTemplateCacheModel = new DDMTemplateCacheModel();
 
+		ddmTemplateCacheModel.companyId = getCompanyId();
+
 		ddmTemplateCacheModel.uuid = getUuid();
 
 		String uuid = ddmTemplateCacheModel.uuid;
@@ -1409,8 +1411,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateCacheModel.templateId = getTemplateId();
 
 		ddmTemplateCacheModel.groupId = getGroupId();
-
-		ddmTemplateCacheModel.companyId = getCompanyId();
 
 		ddmTemplateCacheModel.userId = getUserId();
 
@@ -1550,14 +1550,14 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public String toString() {
 		StringBundler sb = new StringBundler(53);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", templateId=");
 		sb.append(getTemplateId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1616,6 +1616,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1626,10 +1630,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1729,15 +1729,15 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DDMTemplate.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _templateId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private long _versionUserId;

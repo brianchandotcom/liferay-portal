@@ -53,9 +53,9 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("contentId", getContentId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("path", getPath());
 		attributes.put("version", getVersion());
@@ -67,6 +67,12 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long contentId = (Long)attributes.get("contentId");
 
 		if (contentId != null) {
@@ -77,12 +83,6 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long repositoryId = (Long)attributes.get("repositoryId");

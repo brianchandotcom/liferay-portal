@@ -34,9 +34,9 @@ public class SocialActivitySettingSoap implements Serializable {
 		SocialActivitySetting model) {
 		SocialActivitySettingSoap soapModel = new SocialActivitySettingSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setActivitySettingId(model.getActivitySettingId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setActivityType(model.getActivityType());
 		soapModel.setName(model.getName());
@@ -96,6 +96,14 @@ public class SocialActivitySettingSoap implements Serializable {
 		setActivitySettingId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getActivitySettingId() {
 		return _activitySettingId;
 	}
@@ -110,14 +118,6 @@ public class SocialActivitySettingSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getClassNameId() {
@@ -152,9 +152,9 @@ public class SocialActivitySettingSoap implements Serializable {
 		_value = value;
 	}
 
+	private long _companyId;
 	private long _activitySettingId;
 	private long _groupId;
-	private long _companyId;
 	private long _classNameId;
 	private int _activityType;
 	private String _name;

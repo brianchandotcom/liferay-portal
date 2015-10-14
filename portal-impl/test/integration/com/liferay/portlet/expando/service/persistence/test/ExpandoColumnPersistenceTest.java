@@ -134,10 +134,10 @@ public class ExpandoColumnPersistenceTest {
 
 		ExpandoColumn existingExpandoColumn = _persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoColumn.getColumnId(),
-			newExpandoColumn.getColumnId());
 		Assert.assertEquals(existingExpandoColumn.getCompanyId(),
 			newExpandoColumn.getCompanyId());
+		Assert.assertEquals(existingExpandoColumn.getColumnId(),
+			newExpandoColumn.getColumnId());
 		Assert.assertEquals(existingExpandoColumn.getTableId(),
 			newExpandoColumn.getTableId());
 		Assert.assertEquals(existingExpandoColumn.getName(),
@@ -198,8 +198,9 @@ public class ExpandoColumnPersistenceTest {
 	}
 
 	protected OrderByComparator<ExpandoColumn> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ExpandoColumn", "columnId",
-			true, "companyId", true, "tableId", true, "name", true, "type", true);
+		return OrderByComparatorFactoryUtil.create("ExpandoColumn",
+			"companyId", true, "columnId", true, "tableId", true, "name", true,
+			"type", true);
 	}
 
 	@Test

@@ -34,9 +34,9 @@ public class ContactSoap implements Serializable {
 	public static ContactSoap toSoapModel(Contact model) {
 		ContactSoap soapModel = new ContactSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setContactId(model.getContactId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -120,6 +120,14 @@ public class ContactSoap implements Serializable {
 		setContactId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -134,14 +142,6 @@ public class ContactSoap implements Serializable {
 
 	public void setContactId(long contactId) {
 		_contactId = contactId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -396,9 +396,9 @@ public class ContactSoap implements Serializable {
 		_hoursOfOperation = hoursOfOperation;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _contactId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

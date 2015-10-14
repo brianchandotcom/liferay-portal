@@ -68,14 +68,14 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public String toString() {
 		StringBundler sb = new StringBundler(53);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", templateId=");
 		sb.append(templateId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -129,6 +129,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public DDMTemplate toEntityModel() {
 		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl();
 
+		ddmTemplateImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			ddmTemplateImpl.setUuid(StringPool.BLANK);
 		}
@@ -138,7 +140,6 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 		ddmTemplateImpl.setTemplateId(templateId);
 		ddmTemplateImpl.setGroupId(groupId);
-		ddmTemplateImpl.setCompanyId(companyId);
 		ddmTemplateImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -256,10 +257,10 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		templateId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		versionUserId = objectInput.readLong();
@@ -287,6 +288,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -296,7 +299,6 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 		objectOutput.writeLong(templateId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -391,10 +393,10 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long templateId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long versionUserId;

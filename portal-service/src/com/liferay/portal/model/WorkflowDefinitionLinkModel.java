@@ -40,7 +40,8 @@ import java.util.Date;
  */
 @ProviderType
 public interface WorkflowDefinitionLinkModel extends AttachedModel,
-	BaseModel<WorkflowDefinitionLink>, GroupedModel, MVCCModel {
+	BaseModel<WorkflowDefinitionLink>, GroupedModel, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +61,22 @@ public interface WorkflowDefinitionLinkModel extends AttachedModel,
 	 * @param primaryKey the primary key of this workflow definition link
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this workflow definition link.
+	 *
+	 * @return the company ID of this workflow definition link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this workflow definition link.
+	 *
+	 * @param companyId the company ID of this workflow definition link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this workflow definition link.
@@ -106,22 +123,6 @@ public interface WorkflowDefinitionLinkModel extends AttachedModel,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this workflow definition link.
-	 *
-	 * @return the company ID of this workflow definition link
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this workflow definition link.
-	 *
-	 * @param companyId the company ID of this workflow definition link
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this workflow definition link.

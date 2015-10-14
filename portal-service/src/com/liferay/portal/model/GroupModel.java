@@ -42,7 +42,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface GroupModel extends AttachedModel, BaseModel<Group>,
-	LocalizedModel, MVCCModel {
+	LocalizedModel, MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,6 +62,22 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>,
 	 * @param primaryKey the primary key of this group
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this group.
+	 *
+	 * @return the company ID of this group
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this group.
+	 *
+	 * @param companyId the company ID of this group
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this group.
@@ -107,20 +123,6 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>,
 	 * @param groupId the group ID of this group
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this group.
-	 *
-	 * @return the company ID of this group
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this group.
-	 *
-	 * @param companyId the company ID of this group
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the creator user ID of this group.

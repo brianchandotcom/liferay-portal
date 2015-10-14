@@ -115,6 +115,8 @@ public class ResourceBlockPermissionPersistenceTest {
 
 		ResourceBlockPermission newResourceBlockPermission = _persistence.create(pk);
 
+		newResourceBlockPermission.setCompanyId(RandomTestUtil.nextLong());
+
 		newResourceBlockPermission.setMvccVersion(RandomTestUtil.nextLong());
 
 		newResourceBlockPermission.setResourceBlockId(RandomTestUtil.nextLong());
@@ -128,6 +130,8 @@ public class ResourceBlockPermissionPersistenceTest {
 
 		ResourceBlockPermission existingResourceBlockPermission = _persistence.findByPrimaryKey(newResourceBlockPermission.getPrimaryKey());
 
+		Assert.assertEquals(existingResourceBlockPermission.getCompanyId(),
+			newResourceBlockPermission.getCompanyId());
 		Assert.assertEquals(existingResourceBlockPermission.getMvccVersion(),
 			newResourceBlockPermission.getMvccVersion());
 		Assert.assertEquals(existingResourceBlockPermission.getResourceBlockPermissionId(),
@@ -187,8 +191,9 @@ public class ResourceBlockPermissionPersistenceTest {
 
 	protected OrderByComparator<ResourceBlockPermission> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceBlockPermission",
-			"mvccVersion", true, "resourceBlockPermissionId", true,
-			"resourceBlockId", true, "roleId", true, "actionIds", true);
+			"companyId", true, "mvccVersion", true,
+			"resourceBlockPermissionId", true, "resourceBlockId", true,
+			"roleId", true, "actionIds", true);
 	}
 
 	@Test
@@ -419,6 +424,8 @@ public class ResourceBlockPermissionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		ResourceBlockPermission resourceBlockPermission = _persistence.create(pk);
+
+		resourceBlockPermission.setCompanyId(RandomTestUtil.nextLong());
 
 		resourceBlockPermission.setMvccVersion(RandomTestUtil.nextLong());
 

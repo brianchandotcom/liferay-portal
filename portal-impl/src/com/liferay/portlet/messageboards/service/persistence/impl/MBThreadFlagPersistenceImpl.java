@@ -2898,6 +2898,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 		mbThreadFlag.setUuid(uuid);
 
+		mbThreadFlag.setCompanyId(0);
+
 		return mbThreadFlag;
 	}
 
@@ -3145,10 +3147,10 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		mbThreadFlagImpl.setNew(mbThreadFlag.isNew());
 		mbThreadFlagImpl.setPrimaryKey(mbThreadFlag.getPrimaryKey());
 
+		mbThreadFlagImpl.setCompanyId(mbThreadFlag.getCompanyId());
 		mbThreadFlagImpl.setUuid(mbThreadFlag.getUuid());
 		mbThreadFlagImpl.setThreadFlagId(mbThreadFlag.getThreadFlagId());
 		mbThreadFlagImpl.setGroupId(mbThreadFlag.getGroupId());
-		mbThreadFlagImpl.setCompanyId(mbThreadFlag.getCompanyId());
 		mbThreadFlagImpl.setUserId(mbThreadFlag.getUserId());
 		mbThreadFlagImpl.setUserName(mbThreadFlag.getUserName());
 		mbThreadFlagImpl.setCreateDate(mbThreadFlag.getCreateDate());

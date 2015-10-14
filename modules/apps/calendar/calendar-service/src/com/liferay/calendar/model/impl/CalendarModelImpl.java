@@ -79,10 +79,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	 */
 	public static final String TABLE_NAME = "Calendar";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "calendarId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -101,10 +101,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("calendarId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -121,7 +121,7 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Calendar (uuid_ VARCHAR(75) null,calendarId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,calendarResourceId LONG,name STRING null,description STRING null,timeZoneId VARCHAR(75) null,color INTEGER,defaultCalendar BOOLEAN,enableComments BOOLEAN,enableRatings BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Calendar (companyId LONG,uuid_ VARCHAR(75) null,calendarId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,calendarResourceId LONG,name STRING null,description STRING null,timeZoneId VARCHAR(75) null,color INTEGER,defaultCalendar BOOLEAN,enableComments BOOLEAN,enableRatings BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Calendar";
 	public static final String ORDER_BY_JPQL = " ORDER BY calendar.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Calendar.name ASC";
@@ -158,10 +158,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 
 		Calendar model = new CalendarImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setCalendarId(soapModel.getCalendarId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -240,10 +240,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("calendarId", getCalendarId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -267,6 +267,12 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -283,12 +289,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -376,6 +376,29 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -432,29 +455,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -995,10 +995,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	public Object clone() {
 		CalendarImpl calendarImpl = new CalendarImpl();
 
+		calendarImpl.setCompanyId(getCompanyId());
 		calendarImpl.setUuid(getUuid());
 		calendarImpl.setCalendarId(getCalendarId());
 		calendarImpl.setGroupId(getGroupId());
-		calendarImpl.setCompanyId(getCompanyId());
 		calendarImpl.setUserId(getUserId());
 		calendarImpl.setUserName(getUserName());
 		calendarImpl.setCreateDate(getCreateDate());
@@ -1073,15 +1073,15 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	public void resetOriginalValues() {
 		CalendarModelImpl calendarModelImpl = this;
 
+		calendarModelImpl._originalCompanyId = calendarModelImpl._companyId;
+
+		calendarModelImpl._setOriginalCompanyId = false;
+
 		calendarModelImpl._originalUuid = calendarModelImpl._uuid;
 
 		calendarModelImpl._originalGroupId = calendarModelImpl._groupId;
 
 		calendarModelImpl._setOriginalGroupId = false;
-
-		calendarModelImpl._originalCompanyId = calendarModelImpl._companyId;
-
-		calendarModelImpl._setOriginalCompanyId = false;
 
 		calendarModelImpl._setModifiedDate = false;
 
@@ -1104,6 +1104,8 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	public CacheModel<Calendar> toCacheModel() {
 		CalendarCacheModel calendarCacheModel = new CalendarCacheModel();
 
+		calendarCacheModel.companyId = getCompanyId();
+
 		calendarCacheModel.uuid = getUuid();
 
 		String uuid = calendarCacheModel.uuid;
@@ -1115,8 +1117,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		calendarCacheModel.calendarId = getCalendarId();
 
 		calendarCacheModel.groupId = getGroupId();
-
-		calendarCacheModel.companyId = getCompanyId();
 
 		calendarCacheModel.userId = getUserId();
 
@@ -1198,14 +1198,14 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", calendarId=");
 		sb.append(getCalendarId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1248,6 +1248,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1258,10 +1262,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1329,15 +1329,15 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			Calendar.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _calendarId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

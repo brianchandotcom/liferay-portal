@@ -54,8 +54,8 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("categoryPropertyId", getCategoryPropertyId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("categoryPropertyId", getCategoryPropertyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -69,16 +69,16 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long categoryPropertyId = (Long)attributes.get("categoryPropertyId");
-
-		if (categoryPropertyId != null) {
-			setCategoryPropertyId(categoryPropertyId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long categoryPropertyId = (Long)attributes.get("categoryPropertyId");
+
+		if (categoryPropertyId != null) {
+			setCategoryPropertyId(categoryPropertyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

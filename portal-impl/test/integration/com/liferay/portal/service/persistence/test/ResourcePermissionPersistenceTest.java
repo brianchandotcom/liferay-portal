@@ -117,9 +117,9 @@ public class ResourcePermissionPersistenceTest {
 
 		ResourcePermission newResourcePermission = _persistence.create(pk);
 
-		newResourcePermission.setMvccVersion(RandomTestUtil.nextLong());
-
 		newResourcePermission.setCompanyId(RandomTestUtil.nextLong());
+
+		newResourcePermission.setMvccVersion(RandomTestUtil.nextLong());
 
 		newResourcePermission.setName(RandomTestUtil.randomString());
 
@@ -141,12 +141,12 @@ public class ResourcePermissionPersistenceTest {
 
 		ResourcePermission existingResourcePermission = _persistence.findByPrimaryKey(newResourcePermission.getPrimaryKey());
 
+		Assert.assertEquals(existingResourcePermission.getCompanyId(),
+			newResourcePermission.getCompanyId());
 		Assert.assertEquals(existingResourcePermission.getMvccVersion(),
 			newResourcePermission.getMvccVersion());
 		Assert.assertEquals(existingResourcePermission.getResourcePermissionId(),
 			newResourcePermission.getResourcePermissionId());
-		Assert.assertEquals(existingResourcePermission.getCompanyId(),
-			newResourcePermission.getCompanyId());
 		Assert.assertEquals(existingResourcePermission.getName(),
 			newResourcePermission.getName());
 		Assert.assertEquals(existingResourcePermission.getScope(),
@@ -280,7 +280,7 @@ public class ResourcePermissionPersistenceTest {
 
 	protected OrderByComparator<ResourcePermission> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourcePermission",
-			"mvccVersion", true, "resourcePermissionId", true, "companyId",
+			"companyId", true, "mvccVersion", true, "resourcePermissionId",
 			true, "name", true, "scope", true, "primKey", true, "primKeyId",
 			true, "roleId", true, "ownerId", true, "actionIds", true,
 			"viewActionId", true);
@@ -516,9 +516,9 @@ public class ResourcePermissionPersistenceTest {
 
 		ResourcePermission resourcePermission = _persistence.create(pk);
 
-		resourcePermission.setMvccVersion(RandomTestUtil.nextLong());
-
 		resourcePermission.setCompanyId(RandomTestUtil.nextLong());
+
+		resourcePermission.setMvccVersion(RandomTestUtil.nextLong());
 
 		resourcePermission.setName(RandomTestUtil.randomString());
 

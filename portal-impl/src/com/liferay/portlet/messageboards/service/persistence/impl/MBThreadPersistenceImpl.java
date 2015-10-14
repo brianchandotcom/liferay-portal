@@ -13071,6 +13071,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		mbThread.setUuid(uuid);
 
+		mbThread.setCompanyId(0);
+
 		return mbThread;
 	}
 
@@ -13427,10 +13429,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		mbThreadImpl.setNew(mbThread.isNew());
 		mbThreadImpl.setPrimaryKey(mbThread.getPrimaryKey());
 
+		mbThreadImpl.setCompanyId(mbThread.getCompanyId());
 		mbThreadImpl.setUuid(mbThread.getUuid());
 		mbThreadImpl.setThreadId(mbThread.getThreadId());
 		mbThreadImpl.setGroupId(mbThread.getGroupId());
-		mbThreadImpl.setCompanyId(mbThread.getCompanyId());
 		mbThreadImpl.setUserId(mbThread.getUserId());
 		mbThreadImpl.setUserName(mbThread.getUserName());
 		mbThreadImpl.setCreateDate(mbThread.getCreateDate());

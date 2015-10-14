@@ -53,8 +53,8 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("microblogsEntryId", getMicroblogsEntryId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("microblogsEntryId", getMicroblogsEntryId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -71,16 +71,16 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long microblogsEntryId = (Long)attributes.get("microblogsEntryId");
-
-		if (microblogsEntryId != null) {
-			setMicroblogsEntryId(microblogsEntryId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long microblogsEntryId = (Long)attributes.get("microblogsEntryId");
+
+		if (microblogsEntryId != null) {
+			setMicroblogsEntryId(microblogsEntryId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

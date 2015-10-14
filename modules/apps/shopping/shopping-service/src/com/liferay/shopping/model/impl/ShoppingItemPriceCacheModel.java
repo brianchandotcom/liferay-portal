@@ -63,9 +63,11 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{itemPriceId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", itemPriceId=");
 		sb.append(itemPriceId);
 		sb.append(", itemId=");
 		sb.append(itemId);
@@ -94,6 +96,7 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 	public ShoppingItemPrice toEntityModel() {
 		ShoppingItemPriceImpl shoppingItemPriceImpl = new ShoppingItemPriceImpl();
 
+		shoppingItemPriceImpl.setCompanyId(companyId);
 		shoppingItemPriceImpl.setItemPriceId(itemPriceId);
 		shoppingItemPriceImpl.setItemId(itemId);
 		shoppingItemPriceImpl.setMinQuantity(minQuantity);
@@ -112,6 +115,7 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		itemPriceId = objectInput.readLong();
 		itemId = objectInput.readLong();
 		minQuantity = objectInput.readInt();
@@ -127,6 +131,7 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(itemPriceId);
 		objectOutput.writeLong(itemId);
 		objectOutput.writeInt(minQuantity);
@@ -139,6 +144,7 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 		objectOutput.writeInt(status);
 	}
 
+	public long companyId;
 	public long itemPriceId;
 	public long itemId;
 	public int minQuantity;

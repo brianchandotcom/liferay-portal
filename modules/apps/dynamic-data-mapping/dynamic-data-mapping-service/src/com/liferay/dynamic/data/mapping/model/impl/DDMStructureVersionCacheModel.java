@@ -68,12 +68,12 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{structureVersionId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", structureVersionId=");
 		sb.append(structureVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -113,9 +113,9 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	public DDMStructureVersion toEntityModel() {
 		DDMStructureVersionImpl ddmStructureVersionImpl = new DDMStructureVersionImpl();
 
+		ddmStructureVersionImpl.setCompanyId(companyId);
 		ddmStructureVersionImpl.setStructureVersionId(structureVersionId);
 		ddmStructureVersionImpl.setGroupId(groupId);
-		ddmStructureVersionImpl.setCompanyId(companyId);
 		ddmStructureVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -199,9 +199,9 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
+		companyId = objectInput.readLong();
 		structureVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -224,9 +224,9 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(structureVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -292,9 +292,9 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		objectOutput.writeObject(_ddmForm);
 	}
 
+	public long companyId;
 	public long structureVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

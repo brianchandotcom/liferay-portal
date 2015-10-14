@@ -117,11 +117,11 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		WorkflowDefinitionLink newWorkflowDefinitionLink = _persistence.create(pk);
 
+		newWorkflowDefinitionLink.setCompanyId(RandomTestUtil.nextLong());
+
 		newWorkflowDefinitionLink.setMvccVersion(RandomTestUtil.nextLong());
 
 		newWorkflowDefinitionLink.setGroupId(RandomTestUtil.nextLong());
-
-		newWorkflowDefinitionLink.setCompanyId(RandomTestUtil.nextLong());
 
 		newWorkflowDefinitionLink.setUserId(RandomTestUtil.nextLong());
 
@@ -146,14 +146,14 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		WorkflowDefinitionLink existingWorkflowDefinitionLink = _persistence.findByPrimaryKey(newWorkflowDefinitionLink.getPrimaryKey());
 
+		Assert.assertEquals(existingWorkflowDefinitionLink.getCompanyId(),
+			newWorkflowDefinitionLink.getCompanyId());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getMvccVersion(),
 			newWorkflowDefinitionLink.getMvccVersion());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getWorkflowDefinitionLinkId(),
 			newWorkflowDefinitionLink.getWorkflowDefinitionLinkId());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getGroupId(),
 			newWorkflowDefinitionLink.getGroupId());
-		Assert.assertEquals(existingWorkflowDefinitionLink.getCompanyId(),
-			newWorkflowDefinitionLink.getCompanyId());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getUserId(),
 			newWorkflowDefinitionLink.getUserId());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getUserName(),
@@ -184,14 +184,6 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_C() throws Exception {
-		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByG_C_C(0L, 0L, 0L);
-	}
-
-	@Test
 	public void testCountByC_W_W() throws Exception {
 		_persistence.countByC_W_W(RandomTestUtil.nextLong(), StringPool.BLANK,
 			RandomTestUtil.nextInt());
@@ -199,6 +191,14 @@ public class WorkflowDefinitionLinkPersistenceTest {
 		_persistence.countByC_W_W(0L, StringPool.NULL, 0);
 
 		_persistence.countByC_W_W(0L, (String)null, 0);
+	}
+
+	@Test
+	public void testCountByG_C_C() throws Exception {
+		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_C_C(0L, 0L, 0L);
 	}
 
 	@Test
@@ -235,8 +235,8 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 	protected OrderByComparator<WorkflowDefinitionLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WorkflowDefinitionLink",
-			"mvccVersion", true, "workflowDefinitionLinkId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
+			"companyId", true, "mvccVersion", true, "workflowDefinitionLinkId",
+			true, "groupId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "classNameId", true,
 			"classPK", true, "typePK", true, "workflowDefinitionName", true,
 			"workflowDefinitionVersion", true);
@@ -483,11 +483,11 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		WorkflowDefinitionLink workflowDefinitionLink = _persistence.create(pk);
 
+		workflowDefinitionLink.setCompanyId(RandomTestUtil.nextLong());
+
 		workflowDefinitionLink.setMvccVersion(RandomTestUtil.nextLong());
 
 		workflowDefinitionLink.setGroupId(RandomTestUtil.nextLong());
-
-		workflowDefinitionLink.setCompanyId(RandomTestUtil.nextLong());
 
 		workflowDefinitionLink.setUserId(RandomTestUtil.nextLong());
 

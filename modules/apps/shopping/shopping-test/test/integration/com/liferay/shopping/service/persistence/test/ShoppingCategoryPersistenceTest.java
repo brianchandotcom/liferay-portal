@@ -124,9 +124,9 @@ public class ShoppingCategoryPersistenceTest {
 
 		ShoppingCategory newShoppingCategory = _persistence.create(pk);
 
-		newShoppingCategory.setGroupId(RandomTestUtil.nextLong());
-
 		newShoppingCategory.setCompanyId(RandomTestUtil.nextLong());
+
+		newShoppingCategory.setGroupId(RandomTestUtil.nextLong());
 
 		newShoppingCategory.setUserId(RandomTestUtil.nextLong());
 
@@ -146,12 +146,12 @@ public class ShoppingCategoryPersistenceTest {
 
 		ShoppingCategory existingShoppingCategory = _persistence.findByPrimaryKey(newShoppingCategory.getPrimaryKey());
 
+		Assert.assertEquals(existingShoppingCategory.getCompanyId(),
+			newShoppingCategory.getCompanyId());
 		Assert.assertEquals(existingShoppingCategory.getCategoryId(),
 			newShoppingCategory.getCategoryId());
 		Assert.assertEquals(existingShoppingCategory.getGroupId(),
 			newShoppingCategory.getGroupId());
-		Assert.assertEquals(existingShoppingCategory.getCompanyId(),
-			newShoppingCategory.getCompanyId());
 		Assert.assertEquals(existingShoppingCategory.getUserId(),
 			newShoppingCategory.getUserId());
 		Assert.assertEquals(existingShoppingCategory.getUserName(),
@@ -224,7 +224,7 @@ public class ShoppingCategoryPersistenceTest {
 
 	protected OrderByComparator<ShoppingCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingCategory",
-			"categoryId", true, "groupId", true, "companyId", true, "userId",
+			"companyId", true, "categoryId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"parentCategoryId", true, "name", true, "description", true);
 	}
@@ -442,9 +442,9 @@ public class ShoppingCategoryPersistenceTest {
 
 		ShoppingCategory shoppingCategory = _persistence.create(pk);
 
-		shoppingCategory.setGroupId(RandomTestUtil.nextLong());
-
 		shoppingCategory.setCompanyId(RandomTestUtil.nextLong());
+
+		shoppingCategory.setGroupId(RandomTestUtil.nextLong());
 
 		shoppingCategory.setUserId(RandomTestUtil.nextLong());
 

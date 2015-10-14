@@ -34,9 +34,9 @@ public class ShoppingItemSoap implements Serializable {
 	public static ShoppingItemSoap toSoapModel(ShoppingItem model) {
 		ShoppingItemSoap soapModel = new ShoppingItemSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setItemId(model.getItemId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -120,6 +120,14 @@ public class ShoppingItemSoap implements Serializable {
 		setItemId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getItemId() {
 		return _itemId;
 	}
@@ -134,14 +142,6 @@ public class ShoppingItemSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -428,9 +428,9 @@ public class ShoppingItemSoap implements Serializable {
 		_largeImageURL = largeImageURL;
 	}
 
+	private long _companyId;
 	private long _itemId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

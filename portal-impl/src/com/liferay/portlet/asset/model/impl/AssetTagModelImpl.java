@@ -71,10 +71,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	 */
 	public static final String TABLE_NAME = "AssetTag";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "tagId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -86,10 +86,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("tagId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -99,7 +99,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetTag (uuid_ VARCHAR(75) null,tagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,assetCount INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetTag (companyId LONG,uuid_ VARCHAR(75) null,tagId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,assetCount INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetTag";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetTag.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetTag.name ASC";
@@ -133,10 +133,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 		AssetTag model = new AssetTagImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setTagId(soapModel.getTagId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -218,10 +218,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("tagId", getTagId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -238,6 +238,12 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -254,12 +260,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -303,6 +303,29 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -361,29 +384,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -542,10 +542,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public Object clone() {
 		AssetTagImpl assetTagImpl = new AssetTagImpl();
 
+		assetTagImpl.setCompanyId(getCompanyId());
 		assetTagImpl.setUuid(getUuid());
 		assetTagImpl.setTagId(getTagId());
 		assetTagImpl.setGroupId(getGroupId());
-		assetTagImpl.setCompanyId(getCompanyId());
 		assetTagImpl.setUserId(getUserId());
 		assetTagImpl.setUserName(getUserName());
 		assetTagImpl.setCreateDate(getCreateDate());
@@ -613,15 +613,15 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public void resetOriginalValues() {
 		AssetTagModelImpl assetTagModelImpl = this;
 
+		assetTagModelImpl._originalCompanyId = assetTagModelImpl._companyId;
+
+		assetTagModelImpl._setOriginalCompanyId = false;
+
 		assetTagModelImpl._originalUuid = assetTagModelImpl._uuid;
 
 		assetTagModelImpl._originalGroupId = assetTagModelImpl._groupId;
 
 		assetTagModelImpl._setOriginalGroupId = false;
-
-		assetTagModelImpl._originalCompanyId = assetTagModelImpl._companyId;
-
-		assetTagModelImpl._setOriginalCompanyId = false;
 
 		assetTagModelImpl._setModifiedDate = false;
 
@@ -634,6 +634,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public CacheModel<AssetTag> toCacheModel() {
 		AssetTagCacheModel assetTagCacheModel = new AssetTagCacheModel();
 
+		assetTagCacheModel.companyId = getCompanyId();
+
 		assetTagCacheModel.uuid = getUuid();
 
 		String uuid = assetTagCacheModel.uuid;
@@ -645,8 +647,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		assetTagCacheModel.tagId = getTagId();
 
 		assetTagCacheModel.groupId = getGroupId();
-
-		assetTagCacheModel.companyId = getCompanyId();
 
 		assetTagCacheModel.userId = getUserId();
 
@@ -702,14 +702,14 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", tagId=");
 		sb.append(getTagId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -738,6 +738,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -748,10 +752,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -791,15 +791,15 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetTag.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _tagId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

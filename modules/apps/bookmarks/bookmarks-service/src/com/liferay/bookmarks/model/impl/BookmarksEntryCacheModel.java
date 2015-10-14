@@ -68,14 +68,14 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 	public String toString() {
 		StringBundler sb = new StringBundler(43);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -119,6 +119,8 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 	public BookmarksEntry toEntityModel() {
 		BookmarksEntryImpl bookmarksEntryImpl = new BookmarksEntryImpl();
 
+		bookmarksEntryImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			bookmarksEntryImpl.setUuid(StringPool.BLANK);
 		}
@@ -128,7 +130,6 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 
 		bookmarksEntryImpl.setEntryId(entryId);
 		bookmarksEntryImpl.setGroupId(groupId);
-		bookmarksEntryImpl.setCompanyId(companyId);
 		bookmarksEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -217,10 +218,10 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		entryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -243,6 +244,8 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -252,7 +255,6 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -311,10 +313,10 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long entryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

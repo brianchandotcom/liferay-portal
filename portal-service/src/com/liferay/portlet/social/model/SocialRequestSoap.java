@@ -33,10 +33,10 @@ public class SocialRequestSoap implements Serializable {
 	public static SocialRequestSoap toSoapModel(SocialRequest model) {
 		SocialRequestSoap soapModel = new SocialRequestSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setRequestId(model.getRequestId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
@@ -98,6 +98,14 @@ public class SocialRequestSoap implements Serializable {
 		setRequestId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -120,14 +128,6 @@ public class SocialRequestSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -202,10 +202,10 @@ public class SocialRequestSoap implements Serializable {
 		_status = status;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _requestId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private long _createDate;
 	private long _modifiedDate;

@@ -64,9 +64,11 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{versionId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", versionId=");
 		sb.append(versionId);
 		sb.append(", entryId=");
 		sb.append(entryId);
@@ -87,6 +89,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 	public TrashVersion toEntityModel() {
 		TrashVersionImpl trashVersionImpl = new TrashVersionImpl();
 
+		trashVersionImpl.setCompanyId(companyId);
 		trashVersionImpl.setVersionId(versionId);
 		trashVersionImpl.setEntryId(entryId);
 		trashVersionImpl.setClassNameId(classNameId);
@@ -108,6 +111,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		versionId = objectInput.readLong();
 		entryId = objectInput.readLong();
 		classNameId = objectInput.readLong();
@@ -119,6 +123,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(versionId);
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(classNameId);
@@ -134,6 +139,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		objectOutput.writeInt(status);
 	}
 
+	public long companyId;
 	public long versionId;
 	public long entryId;
 	public long classNameId;

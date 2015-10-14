@@ -7149,6 +7149,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 		userNotificationEvent.setUuid(uuid);
 
+		userNotificationEvent.setCompanyId(0);
+
 		return userNotificationEvent;
 	}
 
@@ -7562,10 +7564,10 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		userNotificationEventImpl.setNew(userNotificationEvent.isNew());
 		userNotificationEventImpl.setPrimaryKey(userNotificationEvent.getPrimaryKey());
 
+		userNotificationEventImpl.setCompanyId(userNotificationEvent.getCompanyId());
 		userNotificationEventImpl.setMvccVersion(userNotificationEvent.getMvccVersion());
 		userNotificationEventImpl.setUuid(userNotificationEvent.getUuid());
 		userNotificationEventImpl.setUserNotificationEventId(userNotificationEvent.getUserNotificationEventId());
-		userNotificationEventImpl.setCompanyId(userNotificationEvent.getCompanyId());
 		userNotificationEventImpl.setUserId(userNotificationEvent.getUserId());
 		userNotificationEventImpl.setType(userNotificationEvent.getType());
 		userNotificationEventImpl.setTimestamp(userNotificationEvent.getTimestamp());

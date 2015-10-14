@@ -79,14 +79,14 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", layoutBranchId=");
 		sb.append(layoutBranchId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -110,10 +110,10 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 	public LayoutBranch toEntityModel() {
 		LayoutBranchImpl layoutBranchImpl = new LayoutBranchImpl();
 
+		layoutBranchImpl.setCompanyId(companyId);
 		layoutBranchImpl.setMvccVersion(mvccVersion);
 		layoutBranchImpl.setLayoutBranchId(layoutBranchId);
 		layoutBranchImpl.setGroupId(groupId);
-		layoutBranchImpl.setCompanyId(companyId);
 		layoutBranchImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -149,10 +149,10 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		layoutBranchId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		layoutSetBranchId = objectInput.readLong();
@@ -165,10 +165,10 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(layoutBranchId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -198,10 +198,10 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		objectOutput.writeBoolean(master);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long layoutBranchId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long layoutSetBranchId;

@@ -723,6 +723,260 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	}
 
 	private static final String _FINDER_COLUMN_LARGEIMAGEID_LARGEIMAGEID_2 = "shoppingItem.largeImageId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_S = new FinderPath(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, ShoppingItemImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_S",
+			new String[] { Long.class.getName(), String.class.getName() },
+			ShoppingItemModelImpl.COMPANYID_COLUMN_BITMASK |
+			ShoppingItemModelImpl.SKU_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_S = new FinderPath(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the shopping item where companyId = &#63; and sku = &#63; or throws a {@link com.liferay.shopping.NoSuchItemException} if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @return the matching shopping item
+	 * @throws com.liferay.shopping.NoSuchItemException if a matching shopping item could not be found
+	 */
+	@Override
+	public ShoppingItem findByC_S(long companyId, String sku)
+		throws NoSuchItemException {
+		ShoppingItem shoppingItem = fetchByC_S(companyId, sku);
+
+		if (shoppingItem == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", sku=");
+			msg.append(sku);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchItemException(msg.toString());
+		}
+
+		return shoppingItem;
+	}
+
+	/**
+	 * Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
+	 */
+	@Override
+	public ShoppingItem fetchByC_S(long companyId, String sku) {
+		return fetchByC_S(companyId, sku, true);
+	}
+
+	/**
+	 * Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
+	 */
+	@Override
+	public ShoppingItem fetchByC_S(long companyId, String sku,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { companyId, sku };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_S,
+					finderArgs, this);
+		}
+
+		if (result instanceof ShoppingItem) {
+			ShoppingItem shoppingItem = (ShoppingItem)result;
+
+			if ((companyId != shoppingItem.getCompanyId()) ||
+					!Validator.equals(sku, shoppingItem.getSku())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_SHOPPINGITEM_WHERE);
+
+			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+			boolean bindSku = false;
+
+			if (sku == null) {
+				query.append(_FINDER_COLUMN_C_S_SKU_1);
+			}
+			else if (sku.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_S_SKU_3);
+			}
+			else {
+				bindSku = true;
+
+				query.append(_FINDER_COLUMN_C_S_SKU_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (bindSku) {
+					qPos.add(sku);
+				}
+
+				List<ShoppingItem> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_S, finderArgs,
+						list);
+				}
+				else {
+					ShoppingItem shoppingItem = list.get(0);
+
+					result = shoppingItem;
+
+					cacheResult(shoppingItem);
+
+					if ((shoppingItem.getCompanyId() != companyId) ||
+							(shoppingItem.getSku() == null) ||
+							!shoppingItem.getSku().equals(sku)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_S,
+							finderArgs, shoppingItem);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_S, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ShoppingItem)result;
+		}
+	}
+
+	/**
+	 * Removes the shopping item where companyId = &#63; and sku = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @return the shopping item that was removed
+	 */
+	@Override
+	public ShoppingItem removeByC_S(long companyId, String sku)
+		throws NoSuchItemException {
+		ShoppingItem shoppingItem = findByC_S(companyId, sku);
+
+		return remove(shoppingItem);
+	}
+
+	/**
+	 * Returns the number of shopping items where companyId = &#63; and sku = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @return the number of matching shopping items
+	 */
+	@Override
+	public int countByC_S(long companyId, String sku) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S;
+
+		Object[] finderArgs = new Object[] { companyId, sku };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SHOPPINGITEM_WHERE);
+
+			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+			boolean bindSku = false;
+
+			if (sku == null) {
+				query.append(_FINDER_COLUMN_C_S_SKU_1);
+			}
+			else if (sku.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_S_SKU_3);
+			}
+			else {
+				bindSku = true;
+
+				query.append(_FINDER_COLUMN_C_S_SKU_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (bindSku) {
+					qPos.add(sku);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "shoppingItem.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_S_SKU_1 = "shoppingItem.sku IS NULL";
+	private static final String _FINDER_COLUMN_C_S_SKU_2 = "shoppingItem.sku = ?";
+	private static final String _FINDER_COLUMN_C_S_SKU_3 = "(shoppingItem.sku IS NULL OR shoppingItem.sku = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C = new FinderPath(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, ShoppingItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
@@ -1639,260 +1893,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "shoppingItem.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_2 = "shoppingItem.categoryId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_S = new FinderPath(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, ShoppingItemImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_S",
-			new String[] { Long.class.getName(), String.class.getName() },
-			ShoppingItemModelImpl.COMPANYID_COLUMN_BITMASK |
-			ShoppingItemModelImpl.SKU_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_S = new FinderPath(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] { Long.class.getName(), String.class.getName() });
-
-	/**
-	 * Returns the shopping item where companyId = &#63; and sku = &#63; or throws a {@link com.liferay.shopping.NoSuchItemException} if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @return the matching shopping item
-	 * @throws com.liferay.shopping.NoSuchItemException if a matching shopping item could not be found
-	 */
-	@Override
-	public ShoppingItem findByC_S(long companyId, String sku)
-		throws NoSuchItemException {
-		ShoppingItem shoppingItem = fetchByC_S(companyId, sku);
-
-		if (shoppingItem == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", sku=");
-			msg.append(sku);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchItemException(msg.toString());
-		}
-
-		return shoppingItem;
-	}
-
-	/**
-	 * Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 */
-	@Override
-	public ShoppingItem fetchByC_S(long companyId, String sku) {
-		return fetchByC_S(companyId, sku, true);
-	}
-
-	/**
-	 * Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 */
-	@Override
-	public ShoppingItem fetchByC_S(long companyId, String sku,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { companyId, sku };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_S,
-					finderArgs, this);
-		}
-
-		if (result instanceof ShoppingItem) {
-			ShoppingItem shoppingItem = (ShoppingItem)result;
-
-			if ((companyId != shoppingItem.getCompanyId()) ||
-					!Validator.equals(sku, shoppingItem.getSku())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_SHOPPINGITEM_WHERE);
-
-			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-			boolean bindSku = false;
-
-			if (sku == null) {
-				query.append(_FINDER_COLUMN_C_S_SKU_1);
-			}
-			else if (sku.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_S_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				query.append(_FINDER_COLUMN_C_S_SKU_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				if (bindSku) {
-					qPos.add(sku);
-				}
-
-				List<ShoppingItem> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_S, finderArgs,
-						list);
-				}
-				else {
-					ShoppingItem shoppingItem = list.get(0);
-
-					result = shoppingItem;
-
-					cacheResult(shoppingItem);
-
-					if ((shoppingItem.getCompanyId() != companyId) ||
-							(shoppingItem.getSku() == null) ||
-							!shoppingItem.getSku().equals(sku)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_S,
-							finderArgs, shoppingItem);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_S, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ShoppingItem)result;
-		}
-	}
-
-	/**
-	 * Removes the shopping item where companyId = &#63; and sku = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @return the shopping item that was removed
-	 */
-	@Override
-	public ShoppingItem removeByC_S(long companyId, String sku)
-		throws NoSuchItemException {
-		ShoppingItem shoppingItem = findByC_S(companyId, sku);
-
-		return remove(shoppingItem);
-	}
-
-	/**
-	 * Returns the number of shopping items where companyId = &#63; and sku = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @return the number of matching shopping items
-	 */
-	@Override
-	public int countByC_S(long companyId, String sku) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S;
-
-		Object[] finderArgs = new Object[] { companyId, sku };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_SHOPPINGITEM_WHERE);
-
-			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-			boolean bindSku = false;
-
-			if (sku == null) {
-				query.append(_FINDER_COLUMN_C_S_SKU_1);
-			}
-			else if (sku.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_S_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				query.append(_FINDER_COLUMN_C_S_SKU_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				if (bindSku) {
-					qPos.add(sku);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "shoppingItem.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_S_SKU_1 = "shoppingItem.sku IS NULL";
-	private static final String _FINDER_COLUMN_C_S_SKU_2 = "shoppingItem.sku = ?";
-	private static final String _FINDER_COLUMN_C_S_SKU_3 = "(shoppingItem.sku IS NULL OR shoppingItem.sku = '')";
 
 	public ShoppingItemPersistenceImpl() {
 		setModelClass(ShoppingItem.class);
@@ -2150,6 +2150,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		shoppingItem.setNew(true);
 		shoppingItem.setPrimaryKey(itemId);
 
+		shoppingItem.setCompanyId(0);
+
 		return shoppingItem;
 	}
 
@@ -2339,9 +2341,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		shoppingItemImpl.setNew(shoppingItem.isNew());
 		shoppingItemImpl.setPrimaryKey(shoppingItem.getPrimaryKey());
 
+		shoppingItemImpl.setCompanyId(shoppingItem.getCompanyId());
 		shoppingItemImpl.setItemId(shoppingItem.getItemId());
 		shoppingItemImpl.setGroupId(shoppingItem.getGroupId());
-		shoppingItemImpl.setCompanyId(shoppingItem.getCompanyId());
 		shoppingItemImpl.setUserId(shoppingItem.getUserId());
 		shoppingItemImpl.setUserName(shoppingItem.getUserName());
 		shoppingItemImpl.setCreateDate(shoppingItem.getCreateDate());

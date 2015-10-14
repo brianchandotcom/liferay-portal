@@ -4658,6 +4658,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		portletPreferences.setNew(true);
 		portletPreferences.setPrimaryKey(portletPreferencesId);
 
+		portletPreferences.setCompanyId(0);
+
 		return portletPreferences;
 	}
 
@@ -4952,6 +4954,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		portletPreferencesImpl.setNew(portletPreferences.isNew());
 		portletPreferencesImpl.setPrimaryKey(portletPreferences.getPrimaryKey());
 
+		portletPreferencesImpl.setCompanyId(portletPreferences.getCompanyId());
 		portletPreferencesImpl.setMvccVersion(portletPreferences.getMvccVersion());
 		portletPreferencesImpl.setPortletPreferencesId(portletPreferences.getPortletPreferencesId());
 		portletPreferencesImpl.setOwnerId(portletPreferences.getOwnerId());

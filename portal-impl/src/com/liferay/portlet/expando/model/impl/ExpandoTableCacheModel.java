@@ -66,10 +66,10 @@ public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("{tableId=");
-		sb.append(tableId);
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(companyId);
+		sb.append(", tableId=");
+		sb.append(tableId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", name=");
@@ -83,8 +83,8 @@ public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
 	public ExpandoTable toEntityModel() {
 		ExpandoTableImpl expandoTableImpl = new ExpandoTableImpl();
 
-		expandoTableImpl.setTableId(tableId);
 		expandoTableImpl.setCompanyId(companyId);
+		expandoTableImpl.setTableId(tableId);
 		expandoTableImpl.setClassNameId(classNameId);
 
 		if (name == null) {
@@ -101,8 +101,8 @@ public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		tableId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		tableId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		name = objectInput.readUTF();
 	}
@@ -110,8 +110,8 @@ public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(tableId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(tableId);
 		objectOutput.writeLong(classNameId);
 
 		if (name == null) {
@@ -122,8 +122,8 @@ public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
 		}
 	}
 
-	public long tableId;
 	public long companyId;
+	public long tableId;
 	public long classNameId;
 	public String name;
 }

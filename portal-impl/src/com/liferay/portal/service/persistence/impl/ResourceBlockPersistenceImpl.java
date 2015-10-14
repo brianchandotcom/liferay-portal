@@ -1808,6 +1808,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		resourceBlock.setNew(true);
 		resourceBlock.setPrimaryKey(resourceBlockId);
 
+		resourceBlock.setCompanyId(0);
+
 		return resourceBlock;
 	}
 
@@ -1999,9 +2001,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		resourceBlockImpl.setNew(resourceBlock.isNew());
 		resourceBlockImpl.setPrimaryKey(resourceBlock.getPrimaryKey());
 
+		resourceBlockImpl.setCompanyId(resourceBlock.getCompanyId());
 		resourceBlockImpl.setMvccVersion(resourceBlock.getMvccVersion());
 		resourceBlockImpl.setResourceBlockId(resourceBlock.getResourceBlockId());
-		resourceBlockImpl.setCompanyId(resourceBlock.getCompanyId());
 		resourceBlockImpl.setGroupId(resourceBlock.getGroupId());
 		resourceBlockImpl.setName(resourceBlock.getName());
 		resourceBlockImpl.setPermissionsHash(resourceBlock.getPermissionsHash());

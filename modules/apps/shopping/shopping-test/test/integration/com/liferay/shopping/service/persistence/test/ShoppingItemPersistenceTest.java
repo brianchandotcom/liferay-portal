@@ -125,9 +125,9 @@ public class ShoppingItemPersistenceTest {
 
 		ShoppingItem newShoppingItem = _persistence.create(pk);
 
-		newShoppingItem.setGroupId(RandomTestUtil.nextLong());
-
 		newShoppingItem.setCompanyId(RandomTestUtil.nextLong());
+
+		newShoppingItem.setGroupId(RandomTestUtil.nextLong());
 
 		newShoppingItem.setUserId(RandomTestUtil.nextLong());
 
@@ -195,12 +195,12 @@ public class ShoppingItemPersistenceTest {
 
 		ShoppingItem existingShoppingItem = _persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
 
+		Assert.assertEquals(existingShoppingItem.getCompanyId(),
+			newShoppingItem.getCompanyId());
 		Assert.assertEquals(existingShoppingItem.getItemId(),
 			newShoppingItem.getItemId());
 		Assert.assertEquals(existingShoppingItem.getGroupId(),
 			newShoppingItem.getGroupId());
-		Assert.assertEquals(existingShoppingItem.getCompanyId(),
-			newShoppingItem.getCompanyId());
 		Assert.assertEquals(existingShoppingItem.getUserId(),
 			newShoppingItem.getUserId());
 		Assert.assertEquals(existingShoppingItem.getUserName(),
@@ -289,20 +289,20 @@ public class ShoppingItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByG_C(0L, 0L);
-	}
-
-	@Test
 	public void testCountByC_S() throws Exception {
 		_persistence.countByC_S(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 		_persistence.countByC_S(0L, StringPool.NULL);
 
 		_persistence.countByC_S(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
@@ -328,18 +328,18 @@ public class ShoppingItemPersistenceTest {
 	}
 
 	protected OrderByComparator<ShoppingItem> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ShoppingItem", "itemId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"categoryId", true, "sku", true, "name", true, "description", true,
-			"properties", true, "fields", true, "fieldsQuantities", true,
-			"minQuantity", true, "maxQuantity", true, "price", true,
-			"discount", true, "taxable", true, "shipping", true,
-			"useShippingFormula", true, "requiresShipping", true,
-			"stockQuantity", true, "featured", true, "sale", true,
-			"smallImage", true, "smallImageId", true, "smallImageURL", true,
-			"mediumImage", true, "mediumImageId", true, "mediumImageURL", true,
-			"largeImage", true, "largeImageId", true, "largeImageURL", true);
+		return OrderByComparatorFactoryUtil.create("ShoppingItem", "companyId",
+			true, "itemId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "categoryId", true,
+			"sku", true, "name", true, "description", true, "properties", true,
+			"fields", true, "fieldsQuantities", true, "minQuantity", true,
+			"maxQuantity", true, "price", true, "discount", true, "taxable",
+			true, "shipping", true, "useShippingFormula", true,
+			"requiresShipping", true, "stockQuantity", true, "featured", true,
+			"sale", true, "smallImage", true, "smallImageId", true,
+			"smallImageURL", true, "mediumImage", true, "mediumImageId", true,
+			"mediumImageURL", true, "largeImage", true, "largeImageId", true,
+			"largeImageURL", true);
 	}
 
 	@Test
@@ -568,9 +568,9 @@ public class ShoppingItemPersistenceTest {
 
 		ShoppingItem shoppingItem = _persistence.create(pk);
 
-		shoppingItem.setGroupId(RandomTestUtil.nextLong());
-
 		shoppingItem.setCompanyId(RandomTestUtil.nextLong());
+
+		shoppingItem.setGroupId(RandomTestUtil.nextLong());
 
 		shoppingItem.setUserId(RandomTestUtil.nextLong());
 

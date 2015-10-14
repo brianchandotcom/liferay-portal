@@ -6706,6 +6706,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 		calendarResource.setUuid(uuid);
 
+		calendarResource.setCompanyId(0);
+
 		return calendarResource;
 	}
 
@@ -7018,10 +7020,10 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		calendarResourceImpl.setNew(calendarResource.isNew());
 		calendarResourceImpl.setPrimaryKey(calendarResource.getPrimaryKey());
 
+		calendarResourceImpl.setCompanyId(calendarResource.getCompanyId());
 		calendarResourceImpl.setUuid(calendarResource.getUuid());
 		calendarResourceImpl.setCalendarResourceId(calendarResource.getCalendarResourceId());
 		calendarResourceImpl.setGroupId(calendarResource.getGroupId());
-		calendarResourceImpl.setCompanyId(calendarResource.getCompanyId());
 		calendarResourceImpl.setUserId(calendarResource.getUserId());
 		calendarResourceImpl.setUserName(calendarResource.getUserName());
 		calendarResourceImpl.setCreateDate(calendarResource.getCreateDate());

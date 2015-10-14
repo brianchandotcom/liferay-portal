@@ -116,11 +116,11 @@ public class AddressPersistenceTest {
 
 		Address newAddress = _persistence.create(pk);
 
+		newAddress.setCompanyId(RandomTestUtil.nextLong());
+
 		newAddress.setMvccVersion(RandomTestUtil.nextLong());
 
 		newAddress.setUuid(RandomTestUtil.randomString());
-
-		newAddress.setCompanyId(RandomTestUtil.nextLong());
 
 		newAddress.setUserId(RandomTestUtil.nextLong());
 
@@ -160,13 +160,13 @@ public class AddressPersistenceTest {
 
 		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
 
+		Assert.assertEquals(existingAddress.getCompanyId(),
+			newAddress.getCompanyId());
 		Assert.assertEquals(existingAddress.getMvccVersion(),
 			newAddress.getMvccVersion());
 		Assert.assertEquals(existingAddress.getUuid(), newAddress.getUuid());
 		Assert.assertEquals(existingAddress.getAddressId(),
 			newAddress.getAddressId());
-		Assert.assertEquals(existingAddress.getCompanyId(),
-			newAddress.getCompanyId());
 		Assert.assertEquals(existingAddress.getUserId(), newAddress.getUserId());
 		Assert.assertEquals(existingAddress.getUserName(),
 			newAddress.getUserName());
@@ -291,13 +291,13 @@ public class AddressPersistenceTest {
 	}
 
 	protected OrderByComparator<Address> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Address", "mvccVersion",
-			true, "uuid", true, "addressId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "street1", true, "street2",
-			true, "street3", true, "city", true, "zip", true, "regionId", true,
-			"countryId", true, "typeId", true, "mailing", true, "primary",
-			true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("Address", "companyId",
+			true, "mvccVersion", true, "uuid", true, "addressId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"street1", true, "street2", true, "street3", true, "city", true,
+			"zip", true, "regionId", true, "countryId", true, "typeId", true,
+			"mailing", true, "primary", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -497,11 +497,11 @@ public class AddressPersistenceTest {
 
 		Address address = _persistence.create(pk);
 
+		address.setCompanyId(RandomTestUtil.nextLong());
+
 		address.setMvccVersion(RandomTestUtil.nextLong());
 
 		address.setUuid(RandomTestUtil.randomString());
-
-		address.setCompanyId(RandomTestUtil.nextLong());
 
 		address.setUserId(RandomTestUtil.nextLong());
 

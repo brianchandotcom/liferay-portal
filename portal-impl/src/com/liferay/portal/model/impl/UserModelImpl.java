@@ -68,10 +68,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	public static final String TABLE_NAME = "User_";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "userId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "defaultUser", Types.BOOLEAN },
@@ -114,10 +114,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("defaultUser", Types.BOOLEAN);
@@ -158,7 +158,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table User_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,lastPublishDate DATE null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table User_ (companyId LONG,mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userId LONG not null primary key,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,lastPublishDate DATE null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table User_";
 	public static final String ORDER_BY_JPQL = " ORDER BY user.userId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY User_.userId ASC";
@@ -201,10 +201,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		User model = new UserImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setUserId(soapModel.getUserId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setDefaultUser(soapModel.getDefaultUser());
@@ -352,10 +352,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("userId", getUserId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("defaultUser", getDefaultUser());
@@ -403,6 +403,12 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -419,12 +425,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if (userId != null) {
 			setUserId(userId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -661,6 +661,29 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -733,29 +756,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public long getOriginalUserId() {
 		return _originalUserId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1444,10 +1444,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public Object clone() {
 		UserImpl userImpl = new UserImpl();
 
+		userImpl.setCompanyId(getCompanyId());
 		userImpl.setMvccVersion(getMvccVersion());
 		userImpl.setUuid(getUuid());
 		userImpl.setUserId(getUserId());
-		userImpl.setCompanyId(getCompanyId());
 		userImpl.setCreateDate(getCreateDate());
 		userImpl.setModifiedDate(getModifiedDate());
 		userImpl.setDefaultUser(getDefaultUser());
@@ -1548,15 +1548,15 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public void resetOriginalValues() {
 		UserModelImpl userModelImpl = this;
 
+		userModelImpl._originalCompanyId = userModelImpl._companyId;
+
+		userModelImpl._setOriginalCompanyId = false;
+
 		userModelImpl._originalUuid = userModelImpl._uuid;
 
 		userModelImpl._originalUserId = userModelImpl._userId;
 
 		userModelImpl._setOriginalUserId = false;
-
-		userModelImpl._originalCompanyId = userModelImpl._companyId;
-
-		userModelImpl._setOriginalCompanyId = false;
 
 		userModelImpl._originalCreateDate = userModelImpl._createDate;
 
@@ -1597,6 +1597,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public CacheModel<User> toCacheModel() {
 		UserCacheModel userCacheModel = new UserCacheModel();
 
+		userCacheModel.companyId = getCompanyId();
+
 		userCacheModel.mvccVersion = getMvccVersion();
 
 		userCacheModel.uuid = getUuid();
@@ -1608,8 +1610,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		userCacheModel.userId = getUserId();
-
-		userCacheModel.companyId = getCompanyId();
 
 		Date createDate = getCreateDate();
 
@@ -1854,14 +1854,14 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public String toString() {
 		StringBundler sb = new StringBundler(85);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", userId=");
 		sb.append(getUserId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -1952,6 +1952,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
@@ -1962,10 +1966,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -2129,15 +2129,15 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			User.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _originalCreateDate;
 	private Date _modifiedDate;

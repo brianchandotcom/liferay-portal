@@ -118,13 +118,13 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		LayoutFriendlyURL newLayoutFriendlyURL = _persistence.create(pk);
 
+		newLayoutFriendlyURL.setCompanyId(RandomTestUtil.nextLong());
+
 		newLayoutFriendlyURL.setMvccVersion(RandomTestUtil.nextLong());
 
 		newLayoutFriendlyURL.setUuid(RandomTestUtil.randomString());
 
 		newLayoutFriendlyURL.setGroupId(RandomTestUtil.nextLong());
-
-		newLayoutFriendlyURL.setCompanyId(RandomTestUtil.nextLong());
 
 		newLayoutFriendlyURL.setUserId(RandomTestUtil.nextLong());
 
@@ -148,6 +148,8 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		LayoutFriendlyURL existingLayoutFriendlyURL = _persistence.findByPrimaryKey(newLayoutFriendlyURL.getPrimaryKey());
 
+		Assert.assertEquals(existingLayoutFriendlyURL.getCompanyId(),
+			newLayoutFriendlyURL.getCompanyId());
 		Assert.assertEquals(existingLayoutFriendlyURL.getMvccVersion(),
 			newLayoutFriendlyURL.getMvccVersion());
 		Assert.assertEquals(existingLayoutFriendlyURL.getUuid(),
@@ -156,8 +158,6 @@ public class LayoutFriendlyURLPersistenceTest {
 			newLayoutFriendlyURL.getLayoutFriendlyURLId());
 		Assert.assertEquals(existingLayoutFriendlyURL.getGroupId(),
 			newLayoutFriendlyURL.getGroupId());
-		Assert.assertEquals(existingLayoutFriendlyURL.getCompanyId(),
-			newLayoutFriendlyURL.getCompanyId());
 		Assert.assertEquals(existingLayoutFriendlyURL.getUserId(),
 			newLayoutFriendlyURL.getUserId());
 		Assert.assertEquals(existingLayoutFriendlyURL.getUserName(),
@@ -209,17 +209,17 @@ public class LayoutFriendlyURLPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -295,11 +295,11 @@ public class LayoutFriendlyURLPersistenceTest {
 
 	protected OrderByComparator<LayoutFriendlyURL> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutFriendlyURL",
-			"mvccVersion", true, "uuid", true, "layoutFriendlyURLId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "plid", true,
-			"privateLayout", true, "friendlyURL", true, "languageId", true,
-			"lastPublishDate", true);
+			"companyId", true, "mvccVersion", true, "uuid", true,
+			"layoutFriendlyURLId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "plid",
+			true, "privateLayout", true, "friendlyURL", true, "languageId",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -543,13 +543,13 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		LayoutFriendlyURL layoutFriendlyURL = _persistence.create(pk);
 
+		layoutFriendlyURL.setCompanyId(RandomTestUtil.nextLong());
+
 		layoutFriendlyURL.setMvccVersion(RandomTestUtil.nextLong());
 
 		layoutFriendlyURL.setUuid(RandomTestUtil.randomString());
 
 		layoutFriendlyURL.setGroupId(RandomTestUtil.nextLong());
-
-		layoutFriendlyURL.setCompanyId(RandomTestUtil.nextLong());
 
 		layoutFriendlyURL.setUserId(RandomTestUtil.nextLong());
 

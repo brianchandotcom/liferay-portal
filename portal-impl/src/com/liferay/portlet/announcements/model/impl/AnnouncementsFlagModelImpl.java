@@ -70,6 +70,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	 */
 	public static final String TABLE_NAME = "AnnouncementsFlag";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "flagId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
@@ -79,6 +80,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("flagId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -86,7 +88,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		TABLE_COLUMNS_MAP.put("value", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AnnouncementsFlag (flagId LONG not null primary key,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AnnouncementsFlag (companyId LONG,flagId LONG not null primary key,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsFlag";
 	public static final String ORDER_BY_JPQL = " ORDER BY announcementsFlag.userId ASC, announcementsFlag.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AnnouncementsFlag.userId ASC, AnnouncementsFlag.createDate ASC";
@@ -120,6 +122,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 		AnnouncementsFlag model = new AnnouncementsFlagImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setFlagId(soapModel.getFlagId());
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -190,6 +193,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("flagId", getFlagId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
@@ -204,6 +208,12 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long flagId = (Long)attributes.get("flagId");
 
 		if (flagId != null) {
@@ -233,6 +243,17 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		if (value != null) {
 			setValue(value);
 		}
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -350,7 +371,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AnnouncementsFlag.class.getName(), getPrimaryKey());
 	}
 
@@ -375,6 +396,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public Object clone() {
 		AnnouncementsFlagImpl announcementsFlagImpl = new AnnouncementsFlagImpl();
 
+		announcementsFlagImpl.setCompanyId(getCompanyId());
 		announcementsFlagImpl.setFlagId(getFlagId());
 		announcementsFlagImpl.setUserId(getUserId());
 		announcementsFlagImpl.setCreateDate(getCreateDate());
@@ -474,6 +496,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public CacheModel<AnnouncementsFlag> toCacheModel() {
 		AnnouncementsFlagCacheModel announcementsFlagCacheModel = new AnnouncementsFlagCacheModel();
 
+		announcementsFlagCacheModel.companyId = getCompanyId();
+
 		announcementsFlagCacheModel.flagId = getFlagId();
 
 		announcementsFlagCacheModel.userId = getUserId();
@@ -496,9 +520,11 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{flagId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", flagId=");
 		sb.append(getFlagId());
 		sb.append(", userId=");
 		sb.append(getUserId());
@@ -515,12 +541,16 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.announcements.model.AnnouncementsFlag");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>flagId</column-name><column-value><![CDATA[");
 		sb.append(getFlagId());
@@ -551,6 +581,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AnnouncementsFlag.class
 		};
+	private long _companyId;
 	private long _flagId;
 	private long _userId;
 	private long _originalUserId;

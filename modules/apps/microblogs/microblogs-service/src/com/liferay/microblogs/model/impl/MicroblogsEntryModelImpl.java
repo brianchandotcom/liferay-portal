@@ -71,8 +71,8 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	 */
 	public static final String TABLE_NAME = "MicroblogsEntry";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "microblogsEntryId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "microblogsEntryId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -87,8 +87,8 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("microblogsEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("microblogsEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -101,7 +101,7 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		TABLE_COLUMNS_MAP.put("socialRelationType", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MicroblogsEntry (microblogsEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creatorClassNameId LONG,creatorClassPK LONG,content STRING null,type_ INTEGER,parentMicroblogsEntryId LONG,socialRelationType INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table MicroblogsEntry (companyId LONG,microblogsEntryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creatorClassNameId LONG,creatorClassPK LONG,content STRING null,type_ INTEGER,parentMicroblogsEntryId LONG,socialRelationType INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table MicroblogsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY microblogsEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MicroblogsEntry.createDate DESC";
@@ -139,8 +139,8 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 		MicroblogsEntry model = new MicroblogsEntryImpl();
 
-		model.setMicroblogsEntryId(soapModel.getMicroblogsEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setMicroblogsEntryId(soapModel.getMicroblogsEntryId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -216,8 +216,8 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("microblogsEntryId", getMicroblogsEntryId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("microblogsEntryId", getMicroblogsEntryId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -237,16 +237,16 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long microblogsEntryId = (Long)attributes.get("microblogsEntryId");
-
-		if (microblogsEntryId != null) {
-			setMicroblogsEntryId(microblogsEntryId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long microblogsEntryId = (Long)attributes.get("microblogsEntryId");
+
+		if (microblogsEntryId != null) {
+			setMicroblogsEntryId(microblogsEntryId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -312,18 +312,7 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		}
 	}
 
-	@JSON
-	@Override
-	public long getMicroblogsEntryId() {
-		return _microblogsEntryId;
-	}
-
-	@Override
-	public void setMicroblogsEntryId(long microblogsEntryId) {
-		_microblogsEntryId = microblogsEntryId;
-	}
-
-	@JSON
+	@JSON(include = false)
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -344,6 +333,17 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@JSON
+	@Override
+	public long getMicroblogsEntryId() {
+		return _microblogsEntryId;
+	}
+
+	@Override
+	public void setMicroblogsEntryId(long microblogsEntryId) {
+		_microblogsEntryId = microblogsEntryId;
 	}
 
 	@JSON
@@ -601,8 +601,8 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	public Object clone() {
 		MicroblogsEntryImpl microblogsEntryImpl = new MicroblogsEntryImpl();
 
-		microblogsEntryImpl.setMicroblogsEntryId(getMicroblogsEntryId());
 		microblogsEntryImpl.setCompanyId(getCompanyId());
+		microblogsEntryImpl.setMicroblogsEntryId(getMicroblogsEntryId());
 		microblogsEntryImpl.setUserId(getUserId());
 		microblogsEntryImpl.setUserName(getUserName());
 		microblogsEntryImpl.setCreateDate(getCreateDate());
@@ -715,9 +715,9 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	public CacheModel<MicroblogsEntry> toCacheModel() {
 		MicroblogsEntryCacheModel microblogsEntryCacheModel = new MicroblogsEntryCacheModel();
 
-		microblogsEntryCacheModel.microblogsEntryId = getMicroblogsEntryId();
-
 		microblogsEntryCacheModel.companyId = getCompanyId();
+
+		microblogsEntryCacheModel.microblogsEntryId = getMicroblogsEntryId();
 
 		microblogsEntryCacheModel.userId = getUserId();
 
@@ -772,10 +772,10 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{microblogsEntryId=");
-		sb.append(getMicroblogsEntryId());
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(getCompanyId());
+		sb.append(", microblogsEntryId=");
+		sb.append(getMicroblogsEntryId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -810,12 +810,12 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>microblogsEntryId</column-name><column-value><![CDATA[");
-		sb.append(getMicroblogsEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>microblogsEntryId</column-name><column-value><![CDATA[");
+		sb.append(getMicroblogsEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -867,10 +867,10 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			MicroblogsEntry.class
 		};
-	private long _microblogsEntryId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _microblogsEntryId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

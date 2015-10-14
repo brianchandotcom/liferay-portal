@@ -34,10 +34,10 @@ public class PhoneSoap implements Serializable {
 	public static PhoneSoap toSoapModel(Phone model) {
 		PhoneSoap soapModel = new PhoneSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setPhoneId(model.getPhoneId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -101,6 +101,14 @@ public class PhoneSoap implements Serializable {
 		setPhoneId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -123,14 +131,6 @@ public class PhoneSoap implements Serializable {
 
 	public void setPhoneId(long phoneId) {
 		_phoneId = phoneId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -225,10 +225,10 @@ public class PhoneSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private String _uuid;
 	private long _phoneId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

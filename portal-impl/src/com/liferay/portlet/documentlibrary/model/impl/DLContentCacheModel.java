@@ -66,12 +66,12 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{contentId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", contentId=");
 		sb.append(contentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", path=");
@@ -89,9 +89,9 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 	public DLContent toEntityModel() {
 		DLContentImpl dlContentImpl = new DLContentImpl();
 
+		dlContentImpl.setCompanyId(companyId);
 		dlContentImpl.setContentId(contentId);
 		dlContentImpl.setGroupId(groupId);
-		dlContentImpl.setCompanyId(companyId);
 		dlContentImpl.setRepositoryId(repositoryId);
 
 		if (path == null) {
@@ -117,9 +117,9 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		contentId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		repositoryId = objectInput.readLong();
 		path = objectInput.readUTF();
 		version = objectInput.readUTF();
@@ -129,9 +129,9 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(contentId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(repositoryId);
 
 		if (path == null) {
@@ -151,9 +151,9 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 		objectOutput.writeLong(size);
 	}
 
+	public long companyId;
 	public long contentId;
 	public long groupId;
-	public long companyId;
 	public long repositoryId;
 	public String path;
 	public String version;

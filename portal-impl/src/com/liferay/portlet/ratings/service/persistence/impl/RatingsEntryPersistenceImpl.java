@@ -2748,6 +2748,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 		ratingsEntry.setUuid(uuid);
 
+		ratingsEntry.setCompanyId(0);
+
 		return ratingsEntry;
 	}
 
@@ -3004,9 +3006,9 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		ratingsEntryImpl.setNew(ratingsEntry.isNew());
 		ratingsEntryImpl.setPrimaryKey(ratingsEntry.getPrimaryKey());
 
+		ratingsEntryImpl.setCompanyId(ratingsEntry.getCompanyId());
 		ratingsEntryImpl.setUuid(ratingsEntry.getUuid());
 		ratingsEntryImpl.setEntryId(ratingsEntry.getEntryId());
-		ratingsEntryImpl.setCompanyId(ratingsEntry.getCompanyId());
 		ratingsEntryImpl.setUserId(ratingsEntry.getUserId());
 		ratingsEntryImpl.setUserName(ratingsEntry.getUserName());
 		ratingsEntryImpl.setCreateDate(ratingsEntry.getCreateDate());

@@ -118,9 +118,9 @@ public class SocialActivityLimitPersistenceTest {
 
 		SocialActivityLimit newSocialActivityLimit = _persistence.create(pk);
 
-		newSocialActivityLimit.setGroupId(RandomTestUtil.nextLong());
-
 		newSocialActivityLimit.setCompanyId(RandomTestUtil.nextLong());
+
+		newSocialActivityLimit.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivityLimit.setUserId(RandomTestUtil.nextLong());
 
@@ -138,12 +138,12 @@ public class SocialActivityLimitPersistenceTest {
 
 		SocialActivityLimit existingSocialActivityLimit = _persistence.findByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
 
+		Assert.assertEquals(existingSocialActivityLimit.getCompanyId(),
+			newSocialActivityLimit.getCompanyId());
 		Assert.assertEquals(existingSocialActivityLimit.getActivityLimitId(),
 			newSocialActivityLimit.getActivityLimitId());
 		Assert.assertEquals(existingSocialActivityLimit.getGroupId(),
 			newSocialActivityLimit.getGroupId());
-		Assert.assertEquals(existingSocialActivityLimit.getCompanyId(),
-			newSocialActivityLimit.getCompanyId());
 		Assert.assertEquals(existingSocialActivityLimit.getUserId(),
 			newSocialActivityLimit.getUserId());
 		Assert.assertEquals(existingSocialActivityLimit.getClassNameId(),
@@ -216,7 +216,7 @@ public class SocialActivityLimitPersistenceTest {
 
 	protected OrderByComparator<SocialActivityLimit> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivityLimit",
-			"activityLimitId", true, "groupId", true, "companyId", true,
+			"companyId", true, "activityLimitId", true, "groupId", true,
 			"userId", true, "classNameId", true, "classPK", true,
 			"activityType", true, "activityCounterName", true, "value", true);
 	}
@@ -456,9 +456,9 @@ public class SocialActivityLimitPersistenceTest {
 
 		SocialActivityLimit socialActivityLimit = _persistence.create(pk);
 
-		socialActivityLimit.setGroupId(RandomTestUtil.nextLong());
-
 		socialActivityLimit.setCompanyId(RandomTestUtil.nextLong());
+
+		socialActivityLimit.setGroupId(RandomTestUtil.nextLong());
 
 		socialActivityLimit.setUserId(RandomTestUtil.nextLong());
 

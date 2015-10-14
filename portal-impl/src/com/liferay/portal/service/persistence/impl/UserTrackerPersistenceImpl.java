@@ -1728,6 +1728,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		userTracker.setNew(true);
 		userTracker.setPrimaryKey(userTrackerId);
 
+		userTracker.setCompanyId(0);
+
 		return userTracker;
 	}
 
@@ -1923,9 +1925,9 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		userTrackerImpl.setNew(userTracker.isNew());
 		userTrackerImpl.setPrimaryKey(userTracker.getPrimaryKey());
 
+		userTrackerImpl.setCompanyId(userTracker.getCompanyId());
 		userTrackerImpl.setMvccVersion(userTracker.getMvccVersion());
 		userTrackerImpl.setUserTrackerId(userTracker.getUserTrackerId());
-		userTrackerImpl.setCompanyId(userTracker.getCompanyId());
 		userTrackerImpl.setUserId(userTracker.getUserId());
 		userTrackerImpl.setModifiedDate(userTracker.getModifiedDate());
 		userTrackerImpl.setSessionId(userTracker.getSessionId());

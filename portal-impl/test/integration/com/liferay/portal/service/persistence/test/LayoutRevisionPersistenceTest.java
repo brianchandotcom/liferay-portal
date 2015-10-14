@@ -116,11 +116,11 @@ public class LayoutRevisionPersistenceTest {
 
 		LayoutRevision newLayoutRevision = _persistence.create(pk);
 
+		newLayoutRevision.setCompanyId(RandomTestUtil.nextLong());
+
 		newLayoutRevision.setMvccVersion(RandomTestUtil.nextLong());
 
 		newLayoutRevision.setGroupId(RandomTestUtil.nextLong());
-
-		newLayoutRevision.setCompanyId(RandomTestUtil.nextLong());
 
 		newLayoutRevision.setUserId(RandomTestUtil.nextLong());
 
@@ -180,14 +180,14 @@ public class LayoutRevisionPersistenceTest {
 
 		LayoutRevision existingLayoutRevision = _persistence.findByPrimaryKey(newLayoutRevision.getPrimaryKey());
 
+		Assert.assertEquals(existingLayoutRevision.getCompanyId(),
+			newLayoutRevision.getCompanyId());
 		Assert.assertEquals(existingLayoutRevision.getMvccVersion(),
 			newLayoutRevision.getMvccVersion());
 		Assert.assertEquals(existingLayoutRevision.getLayoutRevisionId(),
 			newLayoutRevision.getLayoutRevisionId());
 		Assert.assertEquals(existingLayoutRevision.getGroupId(),
 			newLayoutRevision.getGroupId());
-		Assert.assertEquals(existingLayoutRevision.getCompanyId(),
-			newLayoutRevision.getCompanyId());
 		Assert.assertEquals(existingLayoutRevision.getUserId(),
 			newLayoutRevision.getUserId());
 		Assert.assertEquals(existingLayoutRevision.getUserName(),
@@ -357,8 +357,8 @@ public class LayoutRevisionPersistenceTest {
 
 	protected OrderByComparator<LayoutRevision> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutRevision",
-			"mvccVersion", true, "layoutRevisionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
+			"companyId", true, "mvccVersion", true, "layoutRevisionId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "layoutSetBranchId", true,
 			"layoutBranchId", true, "parentLayoutRevisionId", true, "head",
 			true, "major", true, "plid", true, "privateLayout", true, "name",
@@ -588,11 +588,11 @@ public class LayoutRevisionPersistenceTest {
 
 		LayoutRevision layoutRevision = _persistence.create(pk);
 
+		layoutRevision.setCompanyId(RandomTestUtil.nextLong());
+
 		layoutRevision.setMvccVersion(RandomTestUtil.nextLong());
 
 		layoutRevision.setGroupId(RandomTestUtil.nextLong());
-
-		layoutRevision.setCompanyId(RandomTestUtil.nextLong());
 
 		layoutRevision.setUserId(RandomTestUtil.nextLong());
 

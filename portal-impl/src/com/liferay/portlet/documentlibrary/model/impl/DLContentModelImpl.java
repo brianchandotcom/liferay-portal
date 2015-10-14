@@ -63,9 +63,9 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	 */
 	public static final String TABLE_NAME = "DLContent";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "contentId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "repositoryId", Types.BIGINT },
 			{ "path_", Types.VARCHAR },
 			{ "version", Types.VARCHAR },
@@ -75,9 +75,9 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("repositoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("path_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
@@ -85,7 +85,7 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		TABLE_COLUMNS_MAP.put("size_", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLContent (contentId LONG not null primary key,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DLContent (companyId LONG,contentId LONG not null primary key,groupId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLContent";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlContent.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLContent.version DESC";
@@ -145,9 +145,9 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("contentId", getContentId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("path", getPath());
 		attributes.put("version", getVersion());
@@ -162,6 +162,12 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long contentId = (Long)attributes.get("contentId");
 
 		if (contentId != null) {
@@ -172,12 +178,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long repositoryId = (Long)attributes.get("repositoryId");
@@ -212,26 +212,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	@Override
-	public long getContentId() {
-		return _contentId;
-	}
-
-	@Override
-	public void setContentId(long contentId) {
-		_contentId = contentId;
-	}
-
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
-	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -251,6 +231,26 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@Override
+	public long getContentId() {
+		return _contentId;
+	}
+
+	@Override
+	public void setContentId(long contentId) {
+		_contentId = contentId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	@Override
@@ -395,9 +395,9 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public Object clone() {
 		DLContentImpl dlContentImpl = new DLContentImpl();
 
+		dlContentImpl.setCompanyId(getCompanyId());
 		dlContentImpl.setContentId(getContentId());
 		dlContentImpl.setGroupId(getGroupId());
-		dlContentImpl.setCompanyId(getCompanyId());
 		dlContentImpl.setRepositoryId(getRepositoryId());
 		dlContentImpl.setPath(getPath());
 		dlContentImpl.setVersion(getVersion());
@@ -485,11 +485,11 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public CacheModel<DLContent> toCacheModel() {
 		DLContentCacheModel dlContentCacheModel = new DLContentCacheModel();
 
+		dlContentCacheModel.companyId = getCompanyId();
+
 		dlContentCacheModel.contentId = getContentId();
 
 		dlContentCacheModel.groupId = getGroupId();
-
-		dlContentCacheModel.companyId = getCompanyId();
 
 		dlContentCacheModel.repositoryId = getRepositoryId();
 
@@ -518,12 +518,12 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public String toString() {
 		StringBundler sb = new StringBundler(17);
 
-		sb.append("{contentId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", contentId=");
 		sb.append(getContentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", repositoryId=");
 		sb.append(getRepositoryId());
 		sb.append(", path=");
@@ -546,16 +546,16 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>contentId</column-name><column-value><![CDATA[");
 		sb.append(getContentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
@@ -583,11 +583,11 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DLContent.class
 		};
-	private long _contentId;
-	private long _groupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _contentId;
+	private long _groupId;
 	private long _repositoryId;
 	private long _originalRepositoryId;
 	private boolean _setOriginalRepositoryId;

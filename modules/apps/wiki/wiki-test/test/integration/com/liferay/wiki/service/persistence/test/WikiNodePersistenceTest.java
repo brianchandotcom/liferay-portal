@@ -124,11 +124,11 @@ public class WikiNodePersistenceTest {
 
 		WikiNode newWikiNode = _persistence.create(pk);
 
+		newWikiNode.setCompanyId(RandomTestUtil.nextLong());
+
 		newWikiNode.setUuid(RandomTestUtil.randomString());
 
 		newWikiNode.setGroupId(RandomTestUtil.nextLong());
-
-		newWikiNode.setCompanyId(RandomTestUtil.nextLong());
 
 		newWikiNode.setUserId(RandomTestUtil.nextLong());
 
@@ -158,13 +158,13 @@ public class WikiNodePersistenceTest {
 
 		WikiNode existingWikiNode = _persistence.findByPrimaryKey(newWikiNode.getPrimaryKey());
 
+		Assert.assertEquals(existingWikiNode.getCompanyId(),
+			newWikiNode.getCompanyId());
 		Assert.assertEquals(existingWikiNode.getUuid(), newWikiNode.getUuid());
 		Assert.assertEquals(existingWikiNode.getNodeId(),
 			newWikiNode.getNodeId());
 		Assert.assertEquals(existingWikiNode.getGroupId(),
 			newWikiNode.getGroupId());
-		Assert.assertEquals(existingWikiNode.getCompanyId(),
-			newWikiNode.getCompanyId());
 		Assert.assertEquals(existingWikiNode.getUserId(),
 			newWikiNode.getUserId());
 		Assert.assertEquals(existingWikiNode.getUserName(),
@@ -223,6 +223,13 @@ public class WikiNodePersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -230,10 +237,11 @@ public class WikiNodePersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByCompanyId(0L);
+		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -251,14 +259,6 @@ public class WikiNodePersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -290,12 +290,12 @@ public class WikiNodePersistenceTest {
 	}
 
 	protected OrderByComparator<WikiNode> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("WikiNode", "uuid", true,
-			"nodeId", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true, "lastPostDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+		return OrderByComparatorFactoryUtil.create("WikiNode", "companyId",
+			true, "uuid", true, "nodeId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"name", true, "description", true, "lastPostDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -518,11 +518,11 @@ public class WikiNodePersistenceTest {
 
 		WikiNode wikiNode = _persistence.create(pk);
 
+		wikiNode.setCompanyId(RandomTestUtil.nextLong());
+
 		wikiNode.setUuid(RandomTestUtil.randomString());
 
 		wikiNode.setGroupId(RandomTestUtil.nextLong());
-
-		wikiNode.setCompanyId(RandomTestUtil.nextLong());
 
 		wikiNode.setUserId(RandomTestUtil.nextLong());
 

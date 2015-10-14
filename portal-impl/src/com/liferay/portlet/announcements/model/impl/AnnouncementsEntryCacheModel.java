@@ -68,12 +68,12 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", entryId=");
 		sb.append(entryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -111,6 +111,8 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 	public AnnouncementsEntry toEntityModel() {
 		AnnouncementsEntryImpl announcementsEntryImpl = new AnnouncementsEntryImpl();
 
+		announcementsEntryImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			announcementsEntryImpl.setUuid(StringPool.BLANK);
 		}
@@ -119,7 +121,6 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		}
 
 		announcementsEntryImpl.setEntryId(entryId);
-		announcementsEntryImpl.setCompanyId(companyId);
 		announcementsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -198,9 +199,9 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		entryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -220,6 +221,8 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -228,7 +231,6 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		}
 
 		objectOutput.writeLong(entryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -277,9 +279,9 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		objectOutput.writeBoolean(alert);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long entryId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

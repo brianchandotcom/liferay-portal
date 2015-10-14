@@ -33,6 +33,7 @@ public class PasswordTrackerSoap implements Serializable {
 	public static PasswordTrackerSoap toSoapModel(PasswordTracker model) {
 		PasswordTrackerSoap soapModel = new PasswordTrackerSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setPasswordTrackerId(model.getPasswordTrackerId());
 		soapModel.setUserId(model.getUserId());
@@ -92,6 +93,14 @@ public class PasswordTrackerSoap implements Serializable {
 		setPasswordTrackerId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -132,6 +141,7 @@ public class PasswordTrackerSoap implements Serializable {
 		_password = password;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _passwordTrackerId;
 	private long _userId;

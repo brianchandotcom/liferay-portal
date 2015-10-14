@@ -67,14 +67,14 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", banId=");
 		sb.append(banId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -96,6 +96,8 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	public MBBan toEntityModel() {
 		MBBanImpl mbBanImpl = new MBBanImpl();
 
+		mbBanImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			mbBanImpl.setUuid(StringPool.BLANK);
 		}
@@ -105,7 +107,6 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 		mbBanImpl.setBanId(banId);
 		mbBanImpl.setGroupId(groupId);
-		mbBanImpl.setCompanyId(companyId);
 		mbBanImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -145,10 +146,10 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		banId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -160,6 +161,8 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -169,7 +172,6 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 		objectOutput.writeLong(banId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -185,10 +187,10 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long banId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

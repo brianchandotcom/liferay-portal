@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +58,22 @@ public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
 	 * @param primaryKey the primary key of this portlet preferences
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this portlet preferences.
+	 *
+	 * @return the company ID of this portlet preferences
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this portlet preferences.
+	 *
+	 * @param companyId the company ID of this portlet preferences
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this portlet preferences.

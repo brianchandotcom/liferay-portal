@@ -72,9 +72,9 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	 */
 	public static final String TABLE_NAME = "TrashEntry";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "entryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -87,9 +87,9 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -100,7 +100,7 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table TrashEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table TrashEntry (companyId LONG,entryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table TrashEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY trashEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY TrashEntry.createDate DESC";
@@ -135,9 +135,9 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		TrashEntry model = new TrashEntryImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -210,9 +210,9 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("entryId", getEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -230,6 +230,12 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long entryId = (Long)attributes.get("entryId");
 
 		if (entryId != null) {
@@ -240,12 +246,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -297,6 +297,29 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public long getEntryId() {
@@ -329,29 +352,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -553,9 +553,9 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	public Object clone() {
 		TrashEntryImpl trashEntryImpl = new TrashEntryImpl();
 
+		trashEntryImpl.setCompanyId(getCompanyId());
 		trashEntryImpl.setEntryId(getEntryId());
 		trashEntryImpl.setGroupId(getGroupId());
-		trashEntryImpl.setCompanyId(getCompanyId());
 		trashEntryImpl.setUserId(getUserId());
 		trashEntryImpl.setUserName(getUserName());
 		trashEntryImpl.setCreateDate(getCreateDate());
@@ -626,13 +626,13 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	public void resetOriginalValues() {
 		TrashEntryModelImpl trashEntryModelImpl = this;
 
-		trashEntryModelImpl._originalGroupId = trashEntryModelImpl._groupId;
-
-		trashEntryModelImpl._setOriginalGroupId = false;
-
 		trashEntryModelImpl._originalCompanyId = trashEntryModelImpl._companyId;
 
 		trashEntryModelImpl._setOriginalCompanyId = false;
+
+		trashEntryModelImpl._originalGroupId = trashEntryModelImpl._groupId;
+
+		trashEntryModelImpl._setOriginalGroupId = false;
 
 		trashEntryModelImpl._originalCreateDate = trashEntryModelImpl._createDate;
 
@@ -651,11 +651,11 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	public CacheModel<TrashEntry> toCacheModel() {
 		TrashEntryCacheModel trashEntryCacheModel = new TrashEntryCacheModel();
 
+		trashEntryCacheModel.companyId = getCompanyId();
+
 		trashEntryCacheModel.entryId = getEntryId();
 
 		trashEntryCacheModel.groupId = getGroupId();
-
-		trashEntryCacheModel.companyId = getCompanyId();
 
 		trashEntryCacheModel.userId = getUserId();
 
@@ -699,12 +699,12 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{entryId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", entryId=");
 		sb.append(getEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -735,16 +735,16 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>entryId</column-name><column-value><![CDATA[");
 		sb.append(getEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -788,13 +788,13 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			TrashEntry.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _entryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

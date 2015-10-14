@@ -52,9 +52,9 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("activityLimitId", getActivityLimitId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -67,6 +67,12 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long activityLimitId = (Long)attributes.get("activityLimitId");
 
 		if (activityLimitId != null) {
@@ -77,12 +83,6 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

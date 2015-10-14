@@ -120,9 +120,9 @@ public class AssetEntryPersistenceTest {
 
 		AssetEntry newAssetEntry = _persistence.create(pk);
 
-		newAssetEntry.setGroupId(RandomTestUtil.nextLong());
-
 		newAssetEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		newAssetEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newAssetEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -176,12 +176,12 @@ public class AssetEntryPersistenceTest {
 
 		AssetEntry existingAssetEntry = _persistence.findByPrimaryKey(newAssetEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingAssetEntry.getCompanyId(),
+			newAssetEntry.getCompanyId());
 		Assert.assertEquals(existingAssetEntry.getEntryId(),
 			newAssetEntry.getEntryId());
 		Assert.assertEquals(existingAssetEntry.getGroupId(),
 			newAssetEntry.getGroupId());
-		Assert.assertEquals(existingAssetEntry.getCompanyId(),
-			newAssetEntry.getCompanyId());
 		Assert.assertEquals(existingAssetEntry.getUserId(),
 			newAssetEntry.getUserId());
 		Assert.assertEquals(existingAssetEntry.getUserName(),
@@ -238,17 +238,17 @@ public class AssetEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -321,15 +321,14 @@ public class AssetEntryPersistenceTest {
 	}
 
 	protected OrderByComparator<AssetEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("AssetEntry", "entryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "classUuid", true,
-			"classTypeId", true, "listable", true, "visible", true,
-			"startDate", true, "endDate", true, "publishDate", true,
-			"expirationDate", true, "mimeType", true, "title", true, "url",
-			true, "layoutUuid", true, "height", true, "width", true,
-			"priority", true, "viewCount", true);
+		return OrderByComparatorFactoryUtil.create("AssetEntry", "companyId",
+			true, "entryId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "classUuid", true, "classTypeId", true,
+			"listable", true, "visible", true, "startDate", true, "endDate",
+			true, "publishDate", true, "expirationDate", true, "mimeType",
+			true, "title", true, "url", true, "layoutUuid", true, "height",
+			true, "width", true, "priority", true, "viewCount", true);
 	}
 
 	@Test
@@ -552,9 +551,9 @@ public class AssetEntryPersistenceTest {
 
 		AssetEntry assetEntry = _persistence.create(pk);
 
-		assetEntry.setGroupId(RandomTestUtil.nextLong());
-
 		assetEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		assetEntry.setGroupId(RandomTestUtil.nextLong());
 
 		assetEntry.setUserId(RandomTestUtil.nextLong());
 

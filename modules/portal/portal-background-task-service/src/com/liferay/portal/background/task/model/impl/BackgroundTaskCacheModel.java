@@ -83,14 +83,14 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", backgroundTaskId=");
 		sb.append(backgroundTaskId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -124,10 +124,10 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	public BackgroundTask toEntityModel() {
 		BackgroundTaskImpl backgroundTaskImpl = new BackgroundTaskImpl();
 
+		backgroundTaskImpl.setCompanyId(companyId);
 		backgroundTaskImpl.setMvccVersion(mvccVersion);
 		backgroundTaskImpl.setBackgroundTaskId(backgroundTaskId);
 		backgroundTaskImpl.setGroupId(groupId);
-		backgroundTaskImpl.setCompanyId(companyId);
 		backgroundTaskImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -199,10 +199,10 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		backgroundTaskId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -220,10 +220,10 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(backgroundTaskId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -270,10 +270,10 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		}
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long backgroundTaskId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

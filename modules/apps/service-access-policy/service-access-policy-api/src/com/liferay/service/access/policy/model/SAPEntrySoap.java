@@ -34,9 +34,9 @@ public class SAPEntrySoap implements Serializable {
 	public static SAPEntrySoap toSoapModel(SAPEntry model) {
 		SAPEntrySoap soapModel = new SAPEntrySoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setSapEntryId(model.getSapEntryId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -98,6 +98,14 @@ public class SAPEntrySoap implements Serializable {
 		setSapEntryId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -112,14 +120,6 @@ public class SAPEntrySoap implements Serializable {
 
 	public void setSapEntryId(long sapEntryId) {
 		_sapEntryId = sapEntryId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -202,9 +202,9 @@ public class SAPEntrySoap implements Serializable {
 		_title = title;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _sapEntryId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

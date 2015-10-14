@@ -68,14 +68,14 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", vocabularyId=");
 		sb.append(vocabularyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -103,6 +103,8 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 	public AssetVocabulary toEntityModel() {
 		AssetVocabularyImpl assetVocabularyImpl = new AssetVocabularyImpl();
 
+		assetVocabularyImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			assetVocabularyImpl.setUuid(StringPool.BLANK);
 		}
@@ -112,7 +114,6 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 
 		assetVocabularyImpl.setVocabularyId(vocabularyId);
 		assetVocabularyImpl.setGroupId(groupId);
-		assetVocabularyImpl.setCompanyId(companyId);
 		assetVocabularyImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -178,10 +179,10 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		vocabularyId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -196,6 +197,8 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -205,7 +208,6 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 
 		objectOutput.writeLong(vocabularyId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -249,10 +251,10 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long vocabularyId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -124,11 +124,11 @@ public class DDLRecordPersistenceTest {
 
 		DDLRecord newDDLRecord = _persistence.create(pk);
 
+		newDDLRecord.setCompanyId(RandomTestUtil.nextLong());
+
 		newDDLRecord.setUuid(RandomTestUtil.randomString());
 
 		newDDLRecord.setGroupId(RandomTestUtil.nextLong());
-
-		newDDLRecord.setCompanyId(RandomTestUtil.nextLong());
 
 		newDDLRecord.setUserId(RandomTestUtil.nextLong());
 
@@ -156,13 +156,13 @@ public class DDLRecordPersistenceTest {
 
 		DDLRecord existingDDLRecord = _persistence.findByPrimaryKey(newDDLRecord.getPrimaryKey());
 
+		Assert.assertEquals(existingDDLRecord.getCompanyId(),
+			newDDLRecord.getCompanyId());
 		Assert.assertEquals(existingDDLRecord.getUuid(), newDDLRecord.getUuid());
 		Assert.assertEquals(existingDDLRecord.getRecordId(),
 			newDDLRecord.getRecordId());
 		Assert.assertEquals(existingDDLRecord.getGroupId(),
 			newDDLRecord.getGroupId());
-		Assert.assertEquals(existingDDLRecord.getCompanyId(),
-			newDDLRecord.getCompanyId());
 		Assert.assertEquals(existingDDLRecord.getUserId(),
 			newDDLRecord.getUserId());
 		Assert.assertEquals(existingDDLRecord.getUserName(),
@@ -262,8 +262,8 @@ public class DDLRecordPersistenceTest {
 	}
 
 	protected OrderByComparator<DDLRecord> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DDLRecord", "uuid", true,
-			"recordId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("DDLRecord", "companyId",
+			true, "uuid", true, "recordId", true, "groupId", true, "userId",
 			true, "userName", true, "versionUserId", true, "versionUserName",
 			true, "createDate", true, "modifiedDate", true, "DDMStorageId",
 			true, "recordSetId", true, "version", true, "displayIndex", true,
@@ -483,11 +483,11 @@ public class DDLRecordPersistenceTest {
 
 		DDLRecord ddlRecord = _persistence.create(pk);
 
+		ddlRecord.setCompanyId(RandomTestUtil.nextLong());
+
 		ddlRecord.setUuid(RandomTestUtil.randomString());
 
 		ddlRecord.setGroupId(RandomTestUtil.nextLong());
-
-		ddlRecord.setCompanyId(RandomTestUtil.nextLong());
 
 		ddlRecord.setUserId(RandomTestUtil.nextLong());
 

@@ -123,9 +123,9 @@ public class JournalContentSearchPersistenceTest {
 
 		JournalContentSearch newJournalContentSearch = _persistence.create(pk);
 
-		newJournalContentSearch.setGroupId(RandomTestUtil.nextLong());
-
 		newJournalContentSearch.setCompanyId(RandomTestUtil.nextLong());
+
+		newJournalContentSearch.setGroupId(RandomTestUtil.nextLong());
 
 		newJournalContentSearch.setPrivateLayout(RandomTestUtil.randomBoolean());
 
@@ -139,12 +139,12 @@ public class JournalContentSearchPersistenceTest {
 
 		JournalContentSearch existingJournalContentSearch = _persistence.findByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
+		Assert.assertEquals(existingJournalContentSearch.getCompanyId(),
+			newJournalContentSearch.getCompanyId());
 		Assert.assertEquals(existingJournalContentSearch.getContentSearchId(),
 			newJournalContentSearch.getContentSearchId());
 		Assert.assertEquals(existingJournalContentSearch.getGroupId(),
 			newJournalContentSearch.getGroupId());
-		Assert.assertEquals(existingJournalContentSearch.getCompanyId(),
-			newJournalContentSearch.getCompanyId());
 		Assert.assertEquals(existingJournalContentSearch.getPrivateLayout(),
 			newJournalContentSearch.getPrivateLayout());
 		Assert.assertEquals(existingJournalContentSearch.getLayoutId(),
@@ -261,7 +261,7 @@ public class JournalContentSearchPersistenceTest {
 
 	protected OrderByComparator<JournalContentSearch> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalContentSearch",
-			"contentSearchId", true, "groupId", true, "companyId", true,
+			"companyId", true, "contentSearchId", true, "groupId", true,
 			"privateLayout", true, "layoutId", true, "portletId", true,
 			"articleId", true);
 	}
@@ -499,9 +499,9 @@ public class JournalContentSearchPersistenceTest {
 
 		JournalContentSearch journalContentSearch = _persistence.create(pk);
 
-		journalContentSearch.setGroupId(RandomTestUtil.nextLong());
-
 		journalContentSearch.setCompanyId(RandomTestUtil.nextLong());
+
+		journalContentSearch.setGroupId(RandomTestUtil.nextLong());
 
 		journalContentSearch.setPrivateLayout(RandomTestUtil.randomBoolean());
 

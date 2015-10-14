@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel,
-	MVCCModel, TypedModel {
+	MVCCModel, PartitionableModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel,
 	 * @param primaryKey the primary key of this portlet item
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this portlet item.
+	 *
+	 * @return the company ID of this portlet item
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this portlet item.
+	 *
+	 * @param companyId the company ID of this portlet item
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this portlet item.
@@ -106,22 +122,6 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this portlet item.
-	 *
-	 * @return the company ID of this portlet item
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this portlet item.
-	 *
-	 * @param companyId the company ID of this portlet item
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this portlet item.

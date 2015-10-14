@@ -124,11 +124,11 @@ public class DDMContentPersistenceTest {
 
 		DDMContent newDDMContent = _persistence.create(pk);
 
+		newDDMContent.setCompanyId(RandomTestUtil.nextLong());
+
 		newDDMContent.setUuid(RandomTestUtil.randomString());
 
 		newDDMContent.setGroupId(RandomTestUtil.nextLong());
-
-		newDDMContent.setCompanyId(RandomTestUtil.nextLong());
 
 		newDDMContent.setUserId(RandomTestUtil.nextLong());
 
@@ -148,14 +148,14 @@ public class DDMContentPersistenceTest {
 
 		DDMContent existingDDMContent = _persistence.findByPrimaryKey(newDDMContent.getPrimaryKey());
 
+		Assert.assertEquals(existingDDMContent.getCompanyId(),
+			newDDMContent.getCompanyId());
 		Assert.assertEquals(existingDDMContent.getUuid(),
 			newDDMContent.getUuid());
 		Assert.assertEquals(existingDDMContent.getContentId(),
 			newDDMContent.getContentId());
 		Assert.assertEquals(existingDDMContent.getGroupId(),
 			newDDMContent.getGroupId());
-		Assert.assertEquals(existingDDMContent.getCompanyId(),
-			newDDMContent.getCompanyId());
 		Assert.assertEquals(existingDDMContent.getUserId(),
 			newDDMContent.getUserId());
 		Assert.assertEquals(existingDDMContent.getUserName(),
@@ -202,17 +202,17 @@ public class DDMContentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -238,8 +238,8 @@ public class DDMContentPersistenceTest {
 	}
 
 	protected OrderByComparator<DDMContent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DDMContent", "uuid", true,
-			"contentId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("DDMContent", "companyId",
+			true, "uuid", true, "contentId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"name", true, "description", true);
 	}
@@ -457,11 +457,11 @@ public class DDMContentPersistenceTest {
 
 		DDMContent ddmContent = _persistence.create(pk);
 
+		ddmContent.setCompanyId(RandomTestUtil.nextLong());
+
 		ddmContent.setUuid(RandomTestUtil.randomString());
 
 		ddmContent.setGroupId(RandomTestUtil.nextLong());
-
-		ddmContent.setCompanyId(RandomTestUtil.nextLong());
 
 		ddmContent.setUserId(RandomTestUtil.nextLong());
 

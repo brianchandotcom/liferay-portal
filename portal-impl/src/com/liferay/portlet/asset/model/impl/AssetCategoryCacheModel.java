@@ -68,14 +68,14 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", categoryId=");
 		sb.append(categoryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -109,6 +109,8 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 	public AssetCategory toEntityModel() {
 		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
 
+		assetCategoryImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			assetCategoryImpl.setUuid(StringPool.BLANK);
 		}
@@ -118,7 +120,6 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 
 		assetCategoryImpl.setCategoryId(categoryId);
 		assetCategoryImpl.setGroupId(groupId);
-		assetCategoryImpl.setCompanyId(companyId);
 		assetCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -183,10 +184,10 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		categoryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -204,6 +205,8 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -213,7 +216,6 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 
 		objectOutput.writeLong(categoryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -254,10 +256,10 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long categoryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

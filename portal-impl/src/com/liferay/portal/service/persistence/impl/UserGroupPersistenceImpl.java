@@ -4217,6 +4217,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		userGroup.setUuid(uuid);
 
+		userGroup.setCompanyId(0);
+
 		return userGroup;
 	}
 
@@ -4475,10 +4477,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		userGroupImpl.setNew(userGroup.isNew());
 		userGroupImpl.setPrimaryKey(userGroup.getPrimaryKey());
 
+		userGroupImpl.setCompanyId(userGroup.getCompanyId());
 		userGroupImpl.setMvccVersion(userGroup.getMvccVersion());
 		userGroupImpl.setUuid(userGroup.getUuid());
 		userGroupImpl.setUserGroupId(userGroup.getUserGroupId());
-		userGroupImpl.setCompanyId(userGroup.getCompanyId());
 		userGroupImpl.setUserId(userGroup.getUserId());
 		userGroupImpl.setUserName(userGroup.getUserName());
 		userGroupImpl.setCreateDate(userGroup.getCreateDate());

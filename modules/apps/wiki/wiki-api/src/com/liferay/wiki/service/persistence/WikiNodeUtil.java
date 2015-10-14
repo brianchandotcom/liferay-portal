@@ -500,6 +500,166 @@ public class WikiNodeUtil {
 	}
 
 	/**
+	* Returns all the wiki nodes where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching wiki nodes
+	*/
+	public static List<WikiNode> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the wiki nodes where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of wiki nodes
+	* @param end the upper bound of the range of wiki nodes (not inclusive)
+	* @return the range of matching wiki nodes
+	*/
+	public static List<WikiNode> findByCompanyId(long companyId, int start,
+		int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of wiki nodes
+	* @param end the upper bound of the range of wiki nodes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching wiki nodes
+	*/
+	public static List<WikiNode> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<WikiNode> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of wiki nodes
+	* @param end the upper bound of the range of wiki nodes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching wiki nodes
+	*/
+	public static List<WikiNode> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<WikiNode> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first wiki node in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching wiki node
+	* @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
+	*/
+	public static WikiNode findByCompanyId_First(long companyId,
+		OrderByComparator<WikiNode> orderByComparator)
+		throws com.liferay.wiki.exception.NoSuchNodeException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first wiki node in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	*/
+	public static WikiNode fetchByCompanyId_First(long companyId,
+		OrderByComparator<WikiNode> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last wiki node in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching wiki node
+	* @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
+	*/
+	public static WikiNode findByCompanyId_Last(long companyId,
+		OrderByComparator<WikiNode> orderByComparator)
+		throws com.liferay.wiki.exception.NoSuchNodeException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last wiki node in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	*/
+	public static WikiNode fetchByCompanyId_Last(long companyId,
+		OrderByComparator<WikiNode> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63;.
+	*
+	* @param nodeId the primary key of the current wiki node
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next wiki node
+	* @throws com.liferay.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
+	*/
+	public static WikiNode[] findByCompanyId_PrevAndNext(long nodeId,
+		long companyId, OrderByComparator<WikiNode> orderByComparator)
+		throws com.liferay.wiki.exception.NoSuchNodeException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(nodeId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the wiki nodes where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of wiki nodes where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching wiki nodes
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
 	* Returns all the wiki nodes where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -727,163 +887,174 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	* Returns all the wiki nodes where companyId = &#63;.
+	* Returns all the wiki nodes where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @return the matching wiki nodes
 	*/
-	public static List<WikiNode> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
+	public static List<WikiNode> findByC_S(long companyId, int status) {
+		return getPersistence().findByC_S(companyId, status);
 	}
 
 	/**
-	* Returns a range of all the wiki nodes where companyId = &#63;.
+	* Returns a range of all the wiki nodes where companyId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of wiki nodes
 	* @param end the upper bound of the range of wiki nodes (not inclusive)
 	* @return the range of matching wiki nodes
 	*/
-	public static List<WikiNode> findByCompanyId(long companyId, int start,
-		int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
+	public static List<WikiNode> findByC_S(long companyId, int status,
+		int start, int end) {
+		return getPersistence().findByC_S(companyId, status, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	* Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of wiki nodes
 	* @param end the upper bound of the range of wiki nodes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki nodes
 	*/
-	public static List<WikiNode> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<WikiNode> orderByComparator) {
+	public static List<WikiNode> findByC_S(long companyId, int status,
+		int start, int end, OrderByComparator<WikiNode> orderByComparator) {
 		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
+				   .findByC_S(companyId, status, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	* Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of wiki nodes
 	* @param end the upper bound of the range of wiki nodes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching wiki nodes
 	*/
-	public static List<WikiNode> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<WikiNode> orderByComparator,
+	public static List<WikiNode> findByC_S(long companyId, int status,
+		int start, int end, OrderByComparator<WikiNode> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator,
+				   .findByC_S(companyId, status, start, end, orderByComparator,
 			retrieveFromCache);
 	}
 
 	/**
-	* Returns the first wiki node in the ordered set where companyId = &#63;.
+	* Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki node
 	* @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
 	*/
-	public static WikiNode findByCompanyId_First(long companyId,
+	public static WikiNode findByC_S_First(long companyId, int status,
 		OrderByComparator<WikiNode> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchNodeException {
 		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
+				   .findByC_S_First(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the first wiki node in the ordered set where companyId = &#63;.
+	* Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public static WikiNode fetchByCompanyId_First(long companyId,
+	public static WikiNode fetchByC_S_First(long companyId, int status,
 		OrderByComparator<WikiNode> orderByComparator) {
 		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
+				   .fetchByC_S_First(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the last wiki node in the ordered set where companyId = &#63;.
+	* Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki node
 	* @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
 	*/
-	public static WikiNode findByCompanyId_Last(long companyId,
+	public static WikiNode findByC_S_Last(long companyId, int status,
 		OrderByComparator<WikiNode> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchNodeException {
 		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
+				   .findByC_S_Last(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the last wiki node in the ordered set where companyId = &#63;.
+	* Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
-	public static WikiNode fetchByCompanyId_Last(long companyId,
+	public static WikiNode fetchByC_S_Last(long companyId, int status,
 		OrderByComparator<WikiNode> orderByComparator) {
 		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
+				   .fetchByC_S_Last(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63;.
+	* Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param nodeId the primary key of the current wiki node
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki node
 	* @throws com.liferay.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
 	*/
-	public static WikiNode[] findByCompanyId_PrevAndNext(long nodeId,
-		long companyId, OrderByComparator<WikiNode> orderByComparator)
+	public static WikiNode[] findByC_S_PrevAndNext(long nodeId, long companyId,
+		int status, OrderByComparator<WikiNode> orderByComparator)
 		throws com.liferay.wiki.exception.NoSuchNodeException {
 		return getPersistence()
-				   .findByCompanyId_PrevAndNext(nodeId, companyId,
+				   .findByC_S_PrevAndNext(nodeId, companyId, status,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the wiki nodes where companyId = &#63; from the database.
+	* Removes all the wiki nodes where companyId = &#63; and status = &#63; from the database.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
+	public static void removeByC_S(long companyId, int status) {
+		getPersistence().removeByC_S(companyId, status);
 	}
 
 	/**
-	* Returns the number of wiki nodes where companyId = &#63;.
+	* Returns the number of wiki nodes where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @return the number of matching wiki nodes
 	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
+	public static int countByC_S(long companyId, int status) {
+		return getPersistence().countByC_S(companyId, status);
 	}
 
 	/**
@@ -1194,177 +1365,6 @@ public class WikiNodeUtil {
 	*/
 	public static int filterCountByG_S(long groupId, int status) {
 		return getPersistence().filterCountByG_S(groupId, status);
-	}
-
-	/**
-	* Returns all the wiki nodes where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the matching wiki nodes
-	*/
-	public static List<WikiNode> findByC_S(long companyId, int status) {
-		return getPersistence().findByC_S(companyId, status);
-	}
-
-	/**
-	* Returns a range of all the wiki nodes where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of wiki nodes
-	* @param end the upper bound of the range of wiki nodes (not inclusive)
-	* @return the range of matching wiki nodes
-	*/
-	public static List<WikiNode> findByC_S(long companyId, int status,
-		int start, int end) {
-		return getPersistence().findByC_S(companyId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of wiki nodes
-	* @param end the upper bound of the range of wiki nodes (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching wiki nodes
-	*/
-	public static List<WikiNode> findByC_S(long companyId, int status,
-		int start, int end, OrderByComparator<WikiNode> orderByComparator) {
-		return getPersistence()
-				   .findByC_S(companyId, status, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of wiki nodes
-	* @param end the upper bound of the range of wiki nodes (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching wiki nodes
-	*/
-	public static List<WikiNode> findByC_S(long companyId, int status,
-		int start, int end, OrderByComparator<WikiNode> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_S(companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	* Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching wiki node
-	* @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
-	*/
-	public static WikiNode findByC_S_First(long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-		return getPersistence()
-				   .findByC_S_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	*/
-	public static WikiNode fetchByC_S_First(long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_S_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching wiki node
-	* @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
-	*/
-	public static WikiNode findByC_S_Last(long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-		return getPersistence()
-				   .findByC_S_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	*/
-	public static WikiNode fetchByC_S_Last(long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_S_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param nodeId the primary key of the current wiki node
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next wiki node
-	* @throws com.liferay.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
-	*/
-	public static WikiNode[] findByC_S_PrevAndNext(long nodeId, long companyId,
-		int status, OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-		return getPersistence()
-				   .findByC_S_PrevAndNext(nodeId, companyId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the wiki nodes where companyId = &#63; and status = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	*/
-	public static void removeByC_S(long companyId, int status) {
-		getPersistence().removeByC_S(companyId, status);
-	}
-
-	/**
-	* Returns the number of wiki nodes where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the number of matching wiki nodes
-	*/
-	public static int countByC_S(long companyId, int status) {
-		return getPersistence().countByC_S(companyId, status);
 	}
 
 	/**

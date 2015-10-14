@@ -33,8 +33,8 @@ public class ExpandoColumnSoap implements Serializable {
 	public static ExpandoColumnSoap toSoapModel(ExpandoColumn model) {
 		ExpandoColumnSoap soapModel = new ExpandoColumnSoap();
 
-		soapModel.setColumnId(model.getColumnId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setColumnId(model.getColumnId());
 		soapModel.setTableId(model.getTableId());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
@@ -92,20 +92,20 @@ public class ExpandoColumnSoap implements Serializable {
 		setColumnId(pk);
 	}
 
-	public long getColumnId() {
-		return _columnId;
-	}
-
-	public void setColumnId(long columnId) {
-		_columnId = columnId;
-	}
-
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public long getColumnId() {
+		return _columnId;
+	}
+
+	public void setColumnId(long columnId) {
+		_columnId = columnId;
 	}
 
 	public long getTableId() {
@@ -148,8 +148,8 @@ public class ExpandoColumnSoap implements Serializable {
 		_typeSettings = typeSettings;
 	}
 
-	private long _columnId;
 	private long _companyId;
+	private long _columnId;
 	private long _tableId;
 	private String _name;
 	private int _type;

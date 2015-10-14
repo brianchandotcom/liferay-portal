@@ -3340,6 +3340,8 @@ public class SocialActivityAchievementPersistenceImpl
 		socialActivityAchievement.setNew(true);
 		socialActivityAchievement.setPrimaryKey(activityAchievementId);
 
+		socialActivityAchievement.setCompanyId(0);
+
 		return socialActivityAchievement;
 	}
 
@@ -3597,9 +3599,9 @@ public class SocialActivityAchievementPersistenceImpl
 		socialActivityAchievementImpl.setNew(socialActivityAchievement.isNew());
 		socialActivityAchievementImpl.setPrimaryKey(socialActivityAchievement.getPrimaryKey());
 
+		socialActivityAchievementImpl.setCompanyId(socialActivityAchievement.getCompanyId());
 		socialActivityAchievementImpl.setActivityAchievementId(socialActivityAchievement.getActivityAchievementId());
 		socialActivityAchievementImpl.setGroupId(socialActivityAchievement.getGroupId());
-		socialActivityAchievementImpl.setCompanyId(socialActivityAchievement.getCompanyId());
 		socialActivityAchievementImpl.setUserId(socialActivityAchievement.getUserId());
 		socialActivityAchievementImpl.setCreateDate(socialActivityAchievement.getCreateDate());
 		socialActivityAchievementImpl.setName(socialActivityAchievement.getName());

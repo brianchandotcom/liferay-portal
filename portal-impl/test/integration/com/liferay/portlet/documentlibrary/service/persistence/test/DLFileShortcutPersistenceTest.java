@@ -119,11 +119,11 @@ public class DLFileShortcutPersistenceTest {
 
 		DLFileShortcut newDLFileShortcut = _persistence.create(pk);
 
+		newDLFileShortcut.setCompanyId(RandomTestUtil.nextLong());
+
 		newDLFileShortcut.setUuid(RandomTestUtil.randomString());
 
 		newDLFileShortcut.setGroupId(RandomTestUtil.nextLong());
-
-		newDLFileShortcut.setCompanyId(RandomTestUtil.nextLong());
 
 		newDLFileShortcut.setUserId(RandomTestUtil.nextLong());
 
@@ -157,14 +157,14 @@ public class DLFileShortcutPersistenceTest {
 
 		DLFileShortcut existingDLFileShortcut = _persistence.findByPrimaryKey(newDLFileShortcut.getPrimaryKey());
 
+		Assert.assertEquals(existingDLFileShortcut.getCompanyId(),
+			newDLFileShortcut.getCompanyId());
 		Assert.assertEquals(existingDLFileShortcut.getUuid(),
 			newDLFileShortcut.getUuid());
 		Assert.assertEquals(existingDLFileShortcut.getFileShortcutId(),
 			newDLFileShortcut.getFileShortcutId());
 		Assert.assertEquals(existingDLFileShortcut.getGroupId(),
 			newDLFileShortcut.getGroupId());
-		Assert.assertEquals(existingDLFileShortcut.getCompanyId(),
-			newDLFileShortcut.getCompanyId());
 		Assert.assertEquals(existingDLFileShortcut.getUserId(),
 			newDLFileShortcut.getUserId());
 		Assert.assertEquals(existingDLFileShortcut.getUserName(),
@@ -241,19 +241,19 @@ public class DLFileShortcutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_F() throws Exception {
-		_persistence.countByG_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByG_F(0L, 0L);
-	}
-
-	@Test
 	public void testCountByC_NotS() throws Exception {
 		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
 
 		_persistence.countByC_NotS(0L, 0);
+	}
+
+	@Test
+	public void testCountByG_F() throws Exception {
+		_persistence.countByG_F(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_F(0L, 0L);
 	}
 
 	@Test
@@ -296,9 +296,9 @@ public class DLFileShortcutPersistenceTest {
 	}
 
 	protected OrderByComparator<DLFileShortcut> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DLFileShortcut", "uuid",
-			true, "fileShortcutId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+		return OrderByComparatorFactoryUtil.create("DLFileShortcut",
+			"companyId", true, "uuid", true, "fileShortcutId", true, "groupId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "repositoryId", true, "folderId", true,
 			"toFileEntryId", true, "treePath", true, "active", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
@@ -520,11 +520,11 @@ public class DLFileShortcutPersistenceTest {
 
 		DLFileShortcut dlFileShortcut = _persistence.create(pk);
 
+		dlFileShortcut.setCompanyId(RandomTestUtil.nextLong());
+
 		dlFileShortcut.setUuid(RandomTestUtil.randomString());
 
 		dlFileShortcut.setGroupId(RandomTestUtil.nextLong());
-
-		dlFileShortcut.setCompanyId(RandomTestUtil.nextLong());
 
 		dlFileShortcut.setUserId(RandomTestUtil.nextLong());
 

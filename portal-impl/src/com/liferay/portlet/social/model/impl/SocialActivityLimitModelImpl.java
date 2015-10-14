@@ -65,9 +65,9 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	 */
 	public static final String TABLE_NAME = "SocialActivityLimit";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "activityLimitId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
@@ -78,9 +78,9 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activityLimitId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
@@ -89,7 +89,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivityLimit (companyId LONG,activityLimitId LONG not null primary key,groupId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityLimit";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityLimit.activityLimitId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivityLimit.activityLimitId ASC";
@@ -152,9 +152,9 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("activityLimitId", getActivityLimitId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -170,6 +170,12 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long activityLimitId = (Long)attributes.get("activityLimitId");
 
 		if (activityLimitId != null) {
@@ -180,12 +186,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -227,6 +227,16 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	@Override
 	public long getActivityLimitId() {
 		return _activityLimitId;
 	}
@@ -256,16 +266,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -463,9 +463,9 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public Object clone() {
 		SocialActivityLimitImpl socialActivityLimitImpl = new SocialActivityLimitImpl();
 
+		socialActivityLimitImpl.setCompanyId(getCompanyId());
 		socialActivityLimitImpl.setActivityLimitId(getActivityLimitId());
 		socialActivityLimitImpl.setGroupId(getGroupId());
-		socialActivityLimitImpl.setCompanyId(getCompanyId());
 		socialActivityLimitImpl.setUserId(getUserId());
 		socialActivityLimitImpl.setClassNameId(getClassNameId());
 		socialActivityLimitImpl.setClassPK(getClassPK());
@@ -563,11 +563,11 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public CacheModel<SocialActivityLimit> toCacheModel() {
 		SocialActivityLimitCacheModel socialActivityLimitCacheModel = new SocialActivityLimitCacheModel();
 
+		socialActivityLimitCacheModel.companyId = getCompanyId();
+
 		socialActivityLimitCacheModel.activityLimitId = getActivityLimitId();
 
 		socialActivityLimitCacheModel.groupId = getGroupId();
-
-		socialActivityLimitCacheModel.companyId = getCompanyId();
 
 		socialActivityLimitCacheModel.userId = getUserId();
 
@@ -601,12 +601,12 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{activityLimitId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", activityLimitId=");
 		sb.append(getActivityLimitId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", classNameId=");
@@ -633,16 +633,16 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>activityLimitId</column-name><column-value><![CDATA[");
 		sb.append(getActivityLimitId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -678,11 +678,11 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SocialActivityLimit.class
 		};
+	private long _companyId;
 	private long _activityLimitId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

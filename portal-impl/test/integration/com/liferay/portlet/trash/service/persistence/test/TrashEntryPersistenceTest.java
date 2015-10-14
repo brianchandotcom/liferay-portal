@@ -117,9 +117,9 @@ public class TrashEntryPersistenceTest {
 
 		TrashEntry newTrashEntry = _persistence.create(pk);
 
-		newTrashEntry.setGroupId(RandomTestUtil.nextLong());
-
 		newTrashEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		newTrashEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newTrashEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -141,12 +141,12 @@ public class TrashEntryPersistenceTest {
 
 		TrashEntry existingTrashEntry = _persistence.findByPrimaryKey(newTrashEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingTrashEntry.getCompanyId(),
+			newTrashEntry.getCompanyId());
 		Assert.assertEquals(existingTrashEntry.getEntryId(),
 			newTrashEntry.getEntryId());
 		Assert.assertEquals(existingTrashEntry.getGroupId(),
 			newTrashEntry.getGroupId());
-		Assert.assertEquals(existingTrashEntry.getCompanyId(),
-			newTrashEntry.getCompanyId());
 		Assert.assertEquals(existingTrashEntry.getUserId(),
 			newTrashEntry.getUserId());
 		Assert.assertEquals(existingTrashEntry.getUserName(),
@@ -167,17 +167,17 @@ public class TrashEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -227,10 +227,10 @@ public class TrashEntryPersistenceTest {
 	}
 
 	protected OrderByComparator<TrashEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("TrashEntry", "entryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "classNameId", true,
-			"classPK", true, "systemEventSetKey", true, "status", true);
+		return OrderByComparatorFactoryUtil.create("TrashEntry", "companyId",
+			true, "entryId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "classNameId", true, "classPK", true,
+			"systemEventSetKey", true, "status", true);
 	}
 
 	@Test
@@ -446,9 +446,9 @@ public class TrashEntryPersistenceTest {
 
 		TrashEntry trashEntry = _persistence.create(pk);
 
-		trashEntry.setGroupId(RandomTestUtil.nextLong());
-
 		trashEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		trashEntry.setGroupId(RandomTestUtil.nextLong());
 
 		trashEntry.setUserId(RandomTestUtil.nextLong());
 

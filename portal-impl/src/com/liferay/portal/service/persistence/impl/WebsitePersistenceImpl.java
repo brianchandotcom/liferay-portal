@@ -4056,6 +4056,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 		website.setUuid(uuid);
 
+		website.setCompanyId(0);
+
 		return website;
 	}
 
@@ -4364,10 +4366,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		websiteImpl.setNew(website.isNew());
 		websiteImpl.setPrimaryKey(website.getPrimaryKey());
 
+		websiteImpl.setCompanyId(website.getCompanyId());
 		websiteImpl.setMvccVersion(website.getMvccVersion());
 		websiteImpl.setUuid(website.getUuid());
 		websiteImpl.setWebsiteId(website.getWebsiteId());
-		websiteImpl.setCompanyId(website.getCompanyId());
 		websiteImpl.setUserId(website.getUserId());
 		websiteImpl.setUserName(website.getUserName());
 		websiteImpl.setCreateDate(website.getCreateDate());

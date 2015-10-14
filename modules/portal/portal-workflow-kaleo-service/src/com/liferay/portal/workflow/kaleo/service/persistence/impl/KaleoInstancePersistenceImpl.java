@@ -3615,6 +3615,8 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		kaleoInstance.setNew(true);
 		kaleoInstance.setPrimaryKey(kaleoInstanceId);
 
+		kaleoInstance.setCompanyId(0);
+
 		return kaleoInstance;
 	}
 
@@ -3908,9 +3910,9 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		kaleoInstanceImpl.setNew(kaleoInstance.isNew());
 		kaleoInstanceImpl.setPrimaryKey(kaleoInstance.getPrimaryKey());
 
+		kaleoInstanceImpl.setCompanyId(kaleoInstance.getCompanyId());
 		kaleoInstanceImpl.setKaleoInstanceId(kaleoInstance.getKaleoInstanceId());
 		kaleoInstanceImpl.setGroupId(kaleoInstance.getGroupId());
-		kaleoInstanceImpl.setCompanyId(kaleoInstance.getCompanyId());
 		kaleoInstanceImpl.setUserId(kaleoInstance.getUserId());
 		kaleoInstanceImpl.setUserName(kaleoInstance.getUserName());
 		kaleoInstanceImpl.setCreateDate(kaleoInstance.getCreateDate());

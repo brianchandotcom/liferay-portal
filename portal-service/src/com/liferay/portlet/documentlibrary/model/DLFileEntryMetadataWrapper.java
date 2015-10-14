@@ -52,6 +52,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
 		attributes.put("DDMStorageId", getDDMStorageId());
@@ -64,6 +65,12 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -110,6 +117,16 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	public int compareTo(
 		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata) {
 		return _dlFileEntryMetadata.compareTo(dlFileEntryMetadata);
+	}
+
+	/**
+	* Returns the company ID of this document library file entry metadata.
+	*
+	* @return the company ID of this document library file entry metadata
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlFileEntryMetadata.getCompanyId();
 	}
 
 	/**
@@ -226,6 +243,16 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_dlFileEntryMetadata.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this document library file entry metadata.
+	*
+	* @param companyId the company ID of this document library file entry metadata
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_dlFileEntryMetadata.setCompanyId(companyId);
 	}
 
 	/**

@@ -116,9 +116,9 @@ public class SocialActivityPersistenceTest {
 
 		SocialActivity newSocialActivity = _persistence.create(pk);
 
-		newSocialActivity.setGroupId(RandomTestUtil.nextLong());
-
 		newSocialActivity.setCompanyId(RandomTestUtil.nextLong());
+
+		newSocialActivity.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivity.setUserId(RandomTestUtil.nextLong());
 
@@ -146,12 +146,12 @@ public class SocialActivityPersistenceTest {
 
 		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
+		Assert.assertEquals(existingSocialActivity.getCompanyId(),
+			newSocialActivity.getCompanyId());
 		Assert.assertEquals(existingSocialActivity.getActivityId(),
 			newSocialActivity.getActivityId());
 		Assert.assertEquals(existingSocialActivity.getGroupId(),
 			newSocialActivity.getGroupId());
-		Assert.assertEquals(existingSocialActivity.getCompanyId(),
-			newSocialActivity.getCompanyId());
 		Assert.assertEquals(existingSocialActivity.getUserId(),
 			newSocialActivity.getUserId());
 		Assert.assertEquals(existingSocialActivity.getCreateDate(),
@@ -177,17 +177,17 @@ public class SocialActivityPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -293,7 +293,7 @@ public class SocialActivityPersistenceTest {
 
 	protected OrderByComparator<SocialActivity> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivity",
-			"activityId", true, "groupId", true, "companyId", true, "userId",
+			"companyId", true, "activityId", true, "groupId", true, "userId",
 			true, "createDate", true, "activitySetId", true,
 			"mirrorActivityId", true, "classNameId", true, "classPK", true,
 			"parentClassNameId", true, "parentClassPK", true, "type", true,
@@ -535,9 +535,9 @@ public class SocialActivityPersistenceTest {
 
 		SocialActivity socialActivity = _persistence.create(pk);
 
-		socialActivity.setGroupId(RandomTestUtil.nextLong());
-
 		socialActivity.setCompanyId(RandomTestUtil.nextLong());
+
+		socialActivity.setGroupId(RandomTestUtil.nextLong());
 
 		socialActivity.setUserId(RandomTestUtil.nextLong());
 

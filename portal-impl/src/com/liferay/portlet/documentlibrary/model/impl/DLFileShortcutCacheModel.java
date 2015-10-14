@@ -68,14 +68,14 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fileShortcutId=");
 		sb.append(fileShortcutId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -113,6 +113,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	public DLFileShortcut toEntityModel() {
 		DLFileShortcutImpl dlFileShortcutImpl = new DLFileShortcutImpl();
 
+		dlFileShortcutImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			dlFileShortcutImpl.setUuid(StringPool.BLANK);
 		}
@@ -122,7 +124,6 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 
 		dlFileShortcutImpl.setFileShortcutId(fileShortcutId);
 		dlFileShortcutImpl.setGroupId(groupId);
-		dlFileShortcutImpl.setCompanyId(companyId);
 		dlFileShortcutImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -190,10 +191,10 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		fileShortcutId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -213,6 +214,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -222,7 +225,6 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 
 		objectOutput.writeLong(fileShortcutId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -260,10 +262,10 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long fileShortcutId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

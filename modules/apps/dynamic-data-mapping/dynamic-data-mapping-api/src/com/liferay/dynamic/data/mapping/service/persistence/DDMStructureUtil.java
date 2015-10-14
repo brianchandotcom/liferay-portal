@@ -1375,6 +1375,181 @@ public class DDMStructureUtil {
 	}
 
 	/**
+	* Returns all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the matching d d m structures
+	*/
+	public static List<DDMStructure> findByC_C(long companyId, long classNameId) {
+		return getPersistence().findByC_C(companyId, classNameId);
+	}
+
+	/**
+	* Returns a range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @return the range of matching d d m structures
+	*/
+	public static List<DDMStructure> findByC_C(long companyId,
+		long classNameId, int start, int end) {
+		return getPersistence().findByC_C(companyId, classNameId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m structures
+	*/
+	public static List<DDMStructure> findByC_C(long companyId,
+		long classNameId, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
+		return getPersistence()
+				   .findByC_C(companyId, classNameId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching d d m structures
+	*/
+	public static List<DDMStructure> findByC_C(long companyId,
+		long classNameId, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_C(companyId, classNameId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m structure
+	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a matching d d m structure could not be found
+	*/
+	public static DDMStructure findByC_C_First(long companyId,
+		long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureException {
+		return getPersistence()
+				   .findByC_C_First(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	*/
+	public static DDMStructure fetchByC_C_First(long companyId,
+		long classNameId, OrderByComparator<DDMStructure> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m structure
+	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a matching d d m structure could not be found
+	*/
+	public static DDMStructure findByC_C_Last(long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureException {
+		return getPersistence()
+				   .findByC_C_Last(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	*/
+	public static DDMStructure fetchByC_C_Last(long companyId,
+		long classNameId, OrderByComparator<DDMStructure> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the d d m structures before and after the current d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param structureId the primary key of the current d d m structure
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m structure
+	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a d d m structure with the primary key could not be found
+	*/
+	public static DDMStructure[] findByC_C_PrevAndNext(long structureId,
+		long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureException {
+		return getPersistence()
+				   .findByC_C_PrevAndNext(structureId, companyId, classNameId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m structures where companyId = &#63; and classNameId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	*/
+	public static void removeByC_C(long companyId, long classNameId) {
+		getPersistence().removeByC_C(companyId, classNameId);
+	}
+
+	/**
+	* Returns the number of d d m structures where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the number of matching d d m structures
+	*/
+	public static int countByC_C(long companyId, long classNameId) {
+		return getPersistence().countByC_C(companyId, classNameId);
+	}
+
+	/**
 	* Returns all the d d m structures where groupId = &#63; and parentStructureId = &#63;.
 	*
 	* @param groupId the group ID
@@ -2047,181 +2222,6 @@ public class DDMStructureUtil {
 	*/
 	public static int filterCountByG_C(long[] groupIds, long classNameId) {
 		return getPersistence().filterCountByG_C(groupIds, classNameId);
-	}
-
-	/**
-	* Returns all the d d m structures where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @return the matching d d m structures
-	*/
-	public static List<DDMStructure> findByC_C(long companyId, long classNameId) {
-		return getPersistence().findByC_C(companyId, classNameId);
-	}
-
-	/**
-	* Returns a range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param start the lower bound of the range of d d m structures
-	* @param end the upper bound of the range of d d m structures (not inclusive)
-	* @return the range of matching d d m structures
-	*/
-	public static List<DDMStructure> findByC_C(long companyId,
-		long classNameId, int start, int end) {
-		return getPersistence().findByC_C(companyId, classNameId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param start the lower bound of the range of d d m structures
-	* @param end the upper bound of the range of d d m structures (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m structures
-	*/
-	public static List<DDMStructure> findByC_C(long companyId,
-		long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
-		return getPersistence()
-				   .findByC_C(companyId, classNameId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param start the lower bound of the range of d d m structures
-	* @param end the upper bound of the range of d d m structures (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m structures
-	*/
-	public static List<DDMStructure> findByC_C(long companyId,
-		long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_C(companyId, classNameId, start, end,
-			orderByComparator, retrieveFromCache);
-	}
-
-	/**
-	* Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m structure
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a matching d d m structure could not be found
-	*/
-	public static DDMStructure findByC_C_First(long companyId,
-		long classNameId, OrderByComparator<DDMStructure> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureException {
-		return getPersistence()
-				   .findByC_C_First(companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	* Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
-	*/
-	public static DDMStructure fetchByC_C_First(long companyId,
-		long classNameId, OrderByComparator<DDMStructure> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	* Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m structure
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a matching d d m structure could not be found
-	*/
-	public static DDMStructure findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureException {
-		return getPersistence()
-				   .findByC_C_Last(companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	* Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
-	*/
-	public static DDMStructure fetchByC_C_Last(long companyId,
-		long classNameId, OrderByComparator<DDMStructure> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	* Returns the d d m structures before and after the current d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param structureId the primary key of the current d d m structure
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m structure
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a d d m structure with the primary key could not be found
-	*/
-	public static DDMStructure[] findByC_C_PrevAndNext(long structureId,
-		long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureException {
-		return getPersistence()
-				   .findByC_C_PrevAndNext(structureId, companyId, classNameId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the d d m structures where companyId = &#63; and classNameId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	*/
-	public static void removeByC_C(long companyId, long classNameId) {
-		getPersistence().removeByC_C(companyId, classNameId);
-	}
-
-	/**
-	* Returns the number of d d m structures where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @return the number of matching d d m structures
-	*/
-	public static int countByC_C(long companyId, long classNameId) {
-		return getPersistence().countByC_C(companyId, classNameId);
 	}
 
 	/**

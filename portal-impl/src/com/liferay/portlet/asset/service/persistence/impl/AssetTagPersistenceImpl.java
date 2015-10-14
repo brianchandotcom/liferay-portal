@@ -4783,6 +4783,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		assetTag.setUuid(uuid);
 
+		assetTag.setCompanyId(0);
+
 		return assetTag;
 	}
 
@@ -5011,10 +5013,10 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		assetTagImpl.setNew(assetTag.isNew());
 		assetTagImpl.setPrimaryKey(assetTag.getPrimaryKey());
 
+		assetTagImpl.setCompanyId(assetTag.getCompanyId());
 		assetTagImpl.setUuid(assetTag.getUuid());
 		assetTagImpl.setTagId(assetTag.getTagId());
 		assetTagImpl.setGroupId(assetTag.getGroupId());
-		assetTagImpl.setCompanyId(assetTag.getCompanyId());
 		assetTagImpl.setUserId(assetTag.getUserId());
 		assetTagImpl.setUserName(assetTag.getUserName());
 		assetTagImpl.setCreateDate(assetTag.getCreateDate());

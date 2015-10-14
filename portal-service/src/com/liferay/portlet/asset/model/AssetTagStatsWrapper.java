@@ -52,6 +52,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("tagStatsId", getTagStatsId());
 		attributes.put("tagId", getTagId());
 		attributes.put("classNameId", getClassNameId());
@@ -62,6 +63,12 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long tagStatsId = (Long)attributes.get("tagStatsId");
 
 		if (tagStatsId != null) {
@@ -126,6 +133,16 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	@Override
 	public long getClassNameId() {
 		return _assetTagStats.getClassNameId();
+	}
+
+	/**
+	* Returns the company ID of this asset tag stats.
+	*
+	* @return the company ID of this asset tag stats
+	*/
+	@Override
+	public long getCompanyId() {
+		return _assetTagStats.getCompanyId();
 	}
 
 	@Override
@@ -221,6 +238,16 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	@Override
 	public void setClassNameId(long classNameId) {
 		_assetTagStats.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the company ID of this asset tag stats.
+	*
+	* @param companyId the company ID of this asset tag stats
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_assetTagStats.setCompanyId(companyId);
 	}
 
 	@Override

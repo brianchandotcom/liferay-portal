@@ -966,6 +966,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		shoppingCoupon.setNew(true);
 		shoppingCoupon.setPrimaryKey(couponId);
 
+		shoppingCoupon.setCompanyId(0);
+
 		return shoppingCoupon;
 	}
 
@@ -1152,9 +1154,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		shoppingCouponImpl.setNew(shoppingCoupon.isNew());
 		shoppingCouponImpl.setPrimaryKey(shoppingCoupon.getPrimaryKey());
 
+		shoppingCouponImpl.setCompanyId(shoppingCoupon.getCompanyId());
 		shoppingCouponImpl.setCouponId(shoppingCoupon.getCouponId());
 		shoppingCouponImpl.setGroupId(shoppingCoupon.getGroupId());
-		shoppingCouponImpl.setCompanyId(shoppingCoupon.getCompanyId());
 		shoppingCouponImpl.setUserId(shoppingCoupon.getUserId());
 		shoppingCouponImpl.setUserName(shoppingCoupon.getUserName());
 		shoppingCouponImpl.setCreateDate(shoppingCoupon.getCreateDate());

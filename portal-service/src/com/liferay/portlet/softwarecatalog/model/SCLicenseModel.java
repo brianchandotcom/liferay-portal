@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface SCLicenseModel extends BaseModel<SCLicense> {
+public interface SCLicenseModel extends BaseModel<SCLicense>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,6 +60,22 @@ public interface SCLicenseModel extends BaseModel<SCLicense> {
 	 * @param primaryKey the primary key of this s c license
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this s c license.
+	 *
+	 * @return the company ID of this s c license
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this s c license.
+	 *
+	 * @param companyId the company ID of this s c license
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the license ID of this s c license.

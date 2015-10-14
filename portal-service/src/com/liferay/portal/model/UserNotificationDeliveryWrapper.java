@@ -52,10 +52,10 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userNotificationDeliveryId",
 			getUserNotificationDeliveryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
@@ -68,6 +68,12 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -79,12 +85,6 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 
 		if (userNotificationDeliveryId != null) {
 			setUserNotificationDeliveryId(userNotificationDeliveryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

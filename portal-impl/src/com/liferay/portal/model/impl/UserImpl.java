@@ -824,17 +824,7 @@ public class UserImpl extends UserBaseImpl {
 			return false;
 		}
 
-		int max = PropsValues.MY_SITES_MAX_ELEMENTS;
-
-		if (max == 1) {
-
-			// Increment so that we return more than just the Control Panel
-			// group
-
-			max++;
-		}
-
-		List<Group> groups = getMySiteGroups(max);
+		List<Group> groups = getMySiteGroups(1);
 
 		return !groups.isEmpty();
 	}

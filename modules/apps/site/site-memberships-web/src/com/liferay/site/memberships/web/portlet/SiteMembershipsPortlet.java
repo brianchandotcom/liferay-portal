@@ -43,7 +43,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
-import com.liferay.site.memberships.web.upgrade.SiteMembershipsWebUpgrade;
 
 import java.io.IOException;
 
@@ -344,11 +343,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		OrganizationService organizationService) {
 
 		_organizationService = organizationService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteMembershipsWebUpgrade(
-		SiteMembershipsWebUpgrade siteMembershipsWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

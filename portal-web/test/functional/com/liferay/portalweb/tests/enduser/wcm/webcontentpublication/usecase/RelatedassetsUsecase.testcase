@@ -36,8 +36,10 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Categories" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
@@ -50,8 +52,10 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -63,13 +67,11 @@
 
 		<execute macro="WebContent#publish" />
 
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title 1" />
-		</execute>
-
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -82,8 +84,10 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -97,14 +101,21 @@
 			<var name="webContentTitle" value="Web Content Title 2" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="Page#openURL">
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Private Page Name" />
 			<var name="sitePagePrivacy" value="Private" />
+			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

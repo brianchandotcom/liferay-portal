@@ -125,9 +125,11 @@
 				<execute function="AssertElementPresent" locator1="Home#PORTLET_2" />
 				<execute function="AssertElementPresent" locator1="Home#PORTLET_3" />
 
-				<execute function="AssertTextEquals" locator1="PGBlogs#TITLE_1" value1="Blogs" />
-				<execute function="AssertTextEquals" locator1="PGBlogs#TITLE_2" value1="Tag Cloud" />
-				<execute function="AssertTextEquals" locator1="PGBlogs#TITLE_3" value1="Recent Bloggers" />
+				<for list="${portletTtitleList}" param="portletName" >
+					<var name="key_portletName" value="${portletName}" />
+
+					<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
+				</for>
 			</then>
 		</if>
 	</command>

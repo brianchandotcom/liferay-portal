@@ -1,5 +1,6 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
+	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile project(":apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-common")
 }
 

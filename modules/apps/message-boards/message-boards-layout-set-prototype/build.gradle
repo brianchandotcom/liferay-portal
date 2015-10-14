@@ -1,5 +1,4 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:layout:layout-set-prototype-web")
 	compile project(":apps:message-boards:message-boards-web")
 	compile project(":apps:social:social-user-statistics-web")

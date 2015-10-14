@@ -2,12 +2,15 @@ import com.liferay.gradle.util.FileUtil
 
 configurations {
 	antlr
+
+	provided {
+		extendsFrom antlr
+	}
 }
 
 dependencies {
 	antlr group: "org.antlr", name: "antlr", version: "3.0.1"
 
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-engine-input-editor-common")
 }

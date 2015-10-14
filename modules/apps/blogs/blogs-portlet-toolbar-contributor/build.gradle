@@ -1,5 +1,4 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compile project(":apps:blogs:blogs-item-selector-api")
 	compile project(":apps:blogs:blogs-web")
 	compile project(":apps:item-selector:item-selector-api")

@@ -1,5 +1,7 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
+	compile group: "commons-beanutils", name: "commons-beanutils", version: "1.8.2"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:item-selector:item-selector-api")
 }

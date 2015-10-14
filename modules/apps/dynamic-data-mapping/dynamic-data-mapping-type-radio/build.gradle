@@ -4,7 +4,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
-	testCompile group: "junit", name: "junit", version: "4.11"
+	testCompile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 }
 
 liferay {

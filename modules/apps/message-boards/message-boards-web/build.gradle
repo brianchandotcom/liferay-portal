@@ -1,4 +1,6 @@
 dependencies {
+	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
+	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:message-boards:message-boards-api")

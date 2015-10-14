@@ -1,6 +1,9 @@
 dependencies {
-	compile group: "com.liferay", name: "com.google.ical", version: "20110304"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	provided group: "com.liferay", name: "com.google.ical", version: "20110304"
 }
 
 liferay {

@@ -17,14 +17,6 @@ package com.liferay.exportimport.content.processor;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.Collection;
@@ -32,8 +24,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * @author Gergely Mathe
+ * @author Mate Thurzo
  */
 @ProviderType
 public class ExportImportContentProcessorRegistryUtil {
@@ -50,34 +50,14 @@ public class ExportImportContentProcessorRegistryUtil {
 		return _instance._getExportImportContentProcessors();
 	}
 
-	public static void register(
-		ExportImportContentProcessor exportImportContentProcessor) {
-
-		_instance._register(exportImportContentProcessor);
-	}
-
-	public static void unregister(
-		ExportImportContentProcessor exportImportContentProcessor) {
-
-		_instance._unregister(exportImportContentProcessor);
-	}
-
-	public static void unregister(
-		List<ExportImportContentProcessor> exportImportContentProcessors) {
-
-		for (ExportImportContentProcessor exportImportContentProcessor :
-				exportImportContentProcessors) {
-
-			unregister(exportImportContentProcessor);
-		}
-	}
-
 	private ExportImportContentProcessorRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			ExportImportContentProcessorRegistryUtil.class);
 
-		_serviceTracker = registry.trackServices(
-			(Class<ExportImportContentProcessor>)(Class<?>)
-				ExportImportContentProcessor.class,
+		_bundleContext = bundle.getBundleContext();
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, ExportImportContentProcessor.class,
 			new ExportImportContentProcessorServiceTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -98,40 +78,12 @@ public class ExportImportContentProcessorRegistryUtil {
 		return ListUtil.fromCollection(values);
 	}
 
-	private void _register(
-		ExportImportContentProcessor exportImportContentProcessor) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<ExportImportContentProcessor>
-			serviceRegistration = registry.registerService(
-				(Class<ExportImportContentProcessor>)(Class<?>)
-					ExportImportContentProcessor.class,
-				exportImportContentProcessor);
-
-		_serviceRegistrations.put(
-			exportImportContentProcessor, serviceRegistration);
-	}
-
-	private void _unregister(
-		ExportImportContentProcessor exportImportContentProcessor) {
-
-		ServiceRegistration<ExportImportContentProcessor>
-			serviceRegistration = _serviceRegistrations.remove(
-				exportImportContentProcessor);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
 	private static final ExportImportContentProcessorRegistryUtil _instance =
 		new ExportImportContentProcessorRegistryUtil();
 
+	private final BundleContext _bundleContext;
 	private final Map<String, ExportImportContentProcessor>
 		_exportImportContentProcessors = new ConcurrentHashMap<>();
-	private final ServiceRegistrationMap<ExportImportContentProcessor>
-		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker
 		<ExportImportContentProcessor, ExportImportContentProcessor>
 			_serviceTracker;
@@ -144,10 +96,8 @@ public class ExportImportContentProcessorRegistryUtil {
 		public ExportImportContentProcessor addingService(
 			ServiceReference<ExportImportContentProcessor> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			ExportImportContentProcessor exportImportContentProcessor =
-				registry.getService(serviceReference);
+				_bundleContext.getService(serviceReference);
 
 			List<String> modelClassNames = StringPlus.asList(
 				serviceReference.getProperty("model.class.name"));
@@ -164,6 +114,10 @@ public class ExportImportContentProcessorRegistryUtil {
 		public void modifiedService(
 			ServiceReference<ExportImportContentProcessor> serviceReference,
 			ExportImportContentProcessor exportImportContentProcessor) {
+
+			removedService(serviceReference, exportImportContentProcessor);
+
+			addingService(serviceReference);
 		}
 
 		@Override
@@ -171,9 +125,7 @@ public class ExportImportContentProcessorRegistryUtil {
 			ServiceReference<ExportImportContentProcessor> serviceReference,
 			ExportImportContentProcessor exportImportContentProcessor) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			List<String> modelClassNames = StringPlus.asList(
 				serviceReference.getProperty("model.class.name"));

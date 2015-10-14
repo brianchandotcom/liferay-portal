@@ -45,8 +45,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.util.xml.XMLUtil;
 
 import java.io.Serializable;
@@ -61,6 +61,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -543,7 +544,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		long groupId = GetterUtil.getLong(parts[2]);
 
-		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+		return _dlAppLocalService.getFileEntryByUuidAndGroupId(
 			parts[5], groupId);
 	}
 
@@ -558,7 +559,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		long groupId = GetterUtil.getLong(matcher.group(2));
 
-		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+		return _dlAppLocalService.getFileEntryByUuidAndGroupId(
 			matcher.group(1), groupId);
 	}
 
@@ -593,6 +594,16 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		element.remove(attribute);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	protected void updateContentDynamicElement(
@@ -833,7 +844,7 @@ public class JournalConverterImpl implements JournalConverter {
 			sb.append(StringPool.AT);
 
 			if (privateLayout) {
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+				Group group = _groupLocalService.fetchGroup(groupId);
 
 				if (group == null) {
 					sb.append("private");
@@ -1043,6 +1054,8 @@ public class JournalConverterImpl implements JournalConverter {
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;
+	private DLAppLocalService _dlAppLocalService;
+	private GroupLocalService _groupLocalService;
 	private final Map<String, String> _journalTypesToDDMTypes;
 	private final Pattern _oldDocumentLibraryURLPattern = Pattern.compile(
 		"uuid=([^&]+)&groupId=([^&]+)");

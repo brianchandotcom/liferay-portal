@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.service.SystemEventLocalServiceUtil;
+import com.liferay.portal.service.SystemEventLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -62,8 +62,15 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 			journalArticleResourceLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSystemEventLocalService(
+		SystemEventLocalService systemEventLocalService) {
+
+		_systemEventLocalService = systemEventLocalService;
+	}
+
 	protected void verifyJournalArticleDeleteSystemEvents() throws Exception {
-		DynamicQuery dynamicQuery = SystemEventLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _systemEventLocalService.dynamicQuery();
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
@@ -76,8 +83,8 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 
 		dynamicQuery.add(typeProperty.eq(SystemEventConstants.TYPE_DELETE));
 
-		List<SystemEvent> systemEvents =
-			SystemEventLocalServiceUtil.dynamicQuery(dynamicQuery);
+		List<SystemEvent> systemEvents = _systemEventLocalService.dynamicQuery(
+			dynamicQuery);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -114,7 +121,7 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 				continue;
 			}
 
-			SystemEventLocalServiceUtil.deleteSystemEvent(systemEvent);
+			_systemEventLocalService.deleteSystemEvent(systemEvent);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -128,5 +135,6 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+	private SystemEventLocalService _systemEventLocalService;
 
 }

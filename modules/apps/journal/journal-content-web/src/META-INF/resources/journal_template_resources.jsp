@@ -23,23 +23,21 @@ DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
 List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 
 String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
+
+Map<String, Object> cardData = new HashMap<String, Object>();
+cardData.put("change-enabled", ddmTemplates.size() > 1);
+cardData.put("group-id", (article != null) ? article.getGroupId() : scopeGroupId);
+cardData.put("structure-id", (ddmStructure != null) ? ddmStructure.getClassNameId() : 0);
+cardData.put("structure-key", (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0);
+cardData.put("template-id", (ddmTemplate != null) ? ddmTemplate.getTemplateId() : StringPool.BLANK);
+cardData.put("template-key", ddmTemplate.getTemplateKey());
 %>
 
-<div
-	class="media template-preview-content"
-	data-change-enabled="<%= ddmTemplates.size() > 1 %>"
-	data-group-id="<%= (article != null) ? article.getGroupId() : scopeGroupId %>"
-	data-structure-id="<%= (ddmStructure != null) ? ddmStructure.getClassNameId() : 0 %>"
-	data-structure-key="<%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>"
-	data-template-id="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : StringPool.BLANK %>"
-	data-template-key="<%= ddmTemplate.getTemplateKey() %>"
->
-	<c:if test="<%= Validator.isNotNull(ddmTemplateImageURL) %>">
-		<img alt="<%= ddmTemplate.getName(locale) %>" class="<%= Validator.isNull(ddmTemplateImageURL) ? "hidden " : StringPool.BLANK %>media-object pull-left template-image" src="<%= ddmTemplateImageURL %>">
-	</c:if>
-
-	<div class="media-body">
-		<h2 class="heading4 template-title"><%= ddmTemplate.getName(locale) %></h2>
-		<p class="template-description"><%= ddmTemplate.getDescription() %></p>
-	</div>
-</div>
+<liferay-frontend:card
+	cssClass="template-preview-content"
+	data="<%= cardData %>"
+	horizontal="<%= true %>"
+	imageCSSClass='<%= Validator.isNotNull(ddmTemplateImageURL) ? "icon-monospaced" : StringPool.BLANK %>'
+	imageUrl="<%= ddmTemplateImageURL %>"
+	title="<%= ddmTemplate.getName(locale) %>"
+/>

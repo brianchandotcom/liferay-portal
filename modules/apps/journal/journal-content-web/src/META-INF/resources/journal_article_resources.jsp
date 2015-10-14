@@ -19,39 +19,32 @@
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
 AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAssetRenderer();
+User userDisplay = UserLocalServiceUtil.fetchUserById(assetRenderer.getUserId());
 %>
 
-<div class="article-preview-content">
-	<div class="card-horizontal">
-		<div class="card-row">
-			<div class="card-col-5">
-				<div class="card-media-primary" style="background-image: url('<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>');"></div>
-			</div>
+<liferay-util:buffer var="headerHtml">
+	<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>
 
-			<div class="card-col-7 card-col-gutters">
-				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+	<c:if test="<%= article.getGroupId() != themeDisplay.getScopeGroupId() %>">
 
-				<h4>
-					<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>
+		<%
+		Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
+		%>
 
-					<c:if test="<%= article.getGroupId() != themeDisplay.getScopeGroupId() %>">
+		(<%= articleGroup.getDescriptiveName(locale) %>)
+	</c:if>
+</liferay-util:buffer>
 
-						<%
-						Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
-						%>
+<liferay-util:buffer var="statusHtml">
+	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+</liferay-util:buffer>
 
-						(<%= articleGroup.getDescriptiveName(locale) %>)
-					</c:if>
-				</h4>
-
-				<p><%= assetRenderer.getSummary() %></p>
-
-				<liferay-ui:user-display
-					markupView="lexicon"
-					showLink="<%= false %>"
-					userId="<%= assetRenderer.getUserId() %>"
-				/>
-			</div>
-		</div>
-	</div>
-</div>
+<liferay-frontend:card
+	cssClass="article-preview-content"
+	footer="<%= statusHtml %>"
+	imageUrl="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>"
+	smallImageCSSClass="user-icon user-icon-lg"
+	smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+	subtitle="<%= assetRenderer.getSummary() %>"
+	title="<%= headerHtml %>"
+/>

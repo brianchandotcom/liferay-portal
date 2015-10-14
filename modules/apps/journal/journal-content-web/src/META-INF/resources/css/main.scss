@@ -38,67 +38,11 @@
 		}
 	}
 
-	.card-media-primary {
-		background-position: center center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		overflow: hidden;
-		padding-bottom: 100%;
-		position: relative;
-		width: 100%;
-	}
-
-	.template-preview {
-		.media {
-			margin-bottom: 20px;
-
-			img {
-				height: 48px;
-			}
-		}
-	}
-
-	.taglib-workflow-status {
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
-
 	.row-spacing {
 		margin-bottom: 40px;
 	}
-}
 
-.portlet-configuration {
-	.displaying-article-id.modified {
-		color: #4DCF0C;
-	}
-}
-
-.ie {
-	.portlet-journal-content {
-		.journal-content-article {
-			zoom: 1;
-		}
-
-		.lfr-icon-actions {
-			opacity: 0.2;
-		}
-
-		&:hover .lfr-icon-actions {
-			opacity: 1;
-		}
-	}
-}
-
-.ie6 {
-	.portlet-journal-content {
-		.icons-container {
-			height: 1%;
-		}
-
-		.lfr-icon-actions {
-			opacity: 0.9;
-		}
+	.row-button {
+		margin-top: -30px;
 	}
 }

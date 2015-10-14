@@ -1369,31 +1369,25 @@
 				Team.teamId IN
 					(
 						SELECT
-							Team.teamId
+							UserGroups_Teams.teamId
 						FROM
-							Team, UserGroup, UserGroups_Teams, Users_UserGroups
+							Users_UserGroups, UserGroups_Teams
 						WHERE
 							Users_UserGroups.userId = ?
 						AND
-							Users_UserGroups.userGroupId = UserGroup.userGroupId
-						AND
-							UserGroup.userGroupId = UserGroups_Teams.userGroupId
-						AND
-							UserGroups_Teams.teamId = Team.teamId
+							Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
 					)
 			OR
 				Team.teamId IN
 					(
 						SELECT
-							Team.teamId
+							Users_Teams.teamId
 						FROM
-							Users_Teams, User_, Team
+							User_, Users_Teams
 						WHERE
 							User_.userId = ?
 						AND
 							User_.userId = Users_Teams.userId
-						AND
-							Users_Teams.teamId = Team.teamId
 					)
 		]]>
 	</sql>

@@ -22098,6 +22098,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		wikiPage.setUuid(uuid);
 
+		wikiPage.setCompanyId(0);
+
 		return wikiPage;
 	}
 
@@ -22913,11 +22915,11 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		wikiPageImpl.setNew(wikiPage.isNew());
 		wikiPageImpl.setPrimaryKey(wikiPage.getPrimaryKey());
 
+		wikiPageImpl.setCompanyId(wikiPage.getCompanyId());
 		wikiPageImpl.setUuid(wikiPage.getUuid());
 		wikiPageImpl.setPageId(wikiPage.getPageId());
 		wikiPageImpl.setResourcePrimKey(wikiPage.getResourcePrimKey());
 		wikiPageImpl.setGroupId(wikiPage.getGroupId());
-		wikiPageImpl.setCompanyId(wikiPage.getCompanyId());
 		wikiPageImpl.setUserId(wikiPage.getUserId());
 		wikiPageImpl.setUserName(wikiPage.getUserName());
 		wikiPageImpl.setCreateDate(wikiPage.getCreateDate());

@@ -1457,6 +1457,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		expandoRow.setNew(true);
 		expandoRow.setPrimaryKey(rowId);
 
+		expandoRow.setCompanyId(0);
+
 		return expandoRow;
 	}
 
@@ -1635,8 +1637,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		expandoRowImpl.setNew(expandoRow.isNew());
 		expandoRowImpl.setPrimaryKey(expandoRow.getPrimaryKey());
 
-		expandoRowImpl.setRowId(expandoRow.getRowId());
 		expandoRowImpl.setCompanyId(expandoRow.getCompanyId());
+		expandoRowImpl.setRowId(expandoRow.getRowId());
 		expandoRowImpl.setModifiedDate(expandoRow.getModifiedDate());
 		expandoRowImpl.setTableId(expandoRow.getTableId());
 		expandoRowImpl.setClassPK(expandoRow.getClassPK());

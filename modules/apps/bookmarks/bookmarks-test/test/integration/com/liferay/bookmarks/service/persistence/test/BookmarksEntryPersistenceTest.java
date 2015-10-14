@@ -124,11 +124,11 @@ public class BookmarksEntryPersistenceTest {
 
 		BookmarksEntry newBookmarksEntry = _persistence.create(pk);
 
+		newBookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		newBookmarksEntry.setUuid(RandomTestUtil.randomString());
 
 		newBookmarksEntry.setGroupId(RandomTestUtil.nextLong());
-
-		newBookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newBookmarksEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -168,14 +168,14 @@ public class BookmarksEntryPersistenceTest {
 
 		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingBookmarksEntry.getCompanyId(),
+			newBookmarksEntry.getCompanyId());
 		Assert.assertEquals(existingBookmarksEntry.getUuid(),
 			newBookmarksEntry.getUuid());
 		Assert.assertEquals(existingBookmarksEntry.getEntryId(),
 			newBookmarksEntry.getEntryId());
 		Assert.assertEquals(existingBookmarksEntry.getGroupId(),
 			newBookmarksEntry.getGroupId());
-		Assert.assertEquals(existingBookmarksEntry.getCompanyId(),
-			newBookmarksEntry.getCompanyId());
 		Assert.assertEquals(existingBookmarksEntry.getUserId(),
 			newBookmarksEntry.getUserId());
 		Assert.assertEquals(existingBookmarksEntry.getUserName(),
@@ -258,6 +258,14 @@ public class BookmarksEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_NotS() throws Exception {
+		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_NotS(0L, 0);
+	}
+
+	@Test
 	public void testCountByG_F() throws Exception {
 		_persistence.countByG_F(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
@@ -285,14 +293,6 @@ public class BookmarksEntryPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_NotS(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_NotS() throws Exception {
-		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
@@ -381,8 +381,8 @@ public class BookmarksEntryPersistenceTest {
 	}
 
 	protected OrderByComparator<BookmarksEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("BookmarksEntry", "uuid",
-			true, "entryId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("BookmarksEntry",
+			"companyId", true, "uuid", true, "entryId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "resourceBlockId", true, "folderId", true,
 			"treePath", true, "name", true, "url", true, "description", true,
@@ -604,11 +604,11 @@ public class BookmarksEntryPersistenceTest {
 
 		BookmarksEntry bookmarksEntry = _persistence.create(pk);
 
+		bookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		bookmarksEntry.setUuid(RandomTestUtil.randomString());
 
 		bookmarksEntry.setGroupId(RandomTestUtil.nextLong());
-
-		bookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		bookmarksEntry.setUserId(RandomTestUtil.nextLong());
 

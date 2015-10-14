@@ -68,12 +68,12 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 	public String toString() {
 		StringBundler sb = new StringBundler(103);
 
-		sb.append("{orderId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", orderId=");
 		sb.append(orderId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -179,9 +179,9 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 	public ShoppingOrder toEntityModel() {
 		ShoppingOrderImpl shoppingOrderImpl = new ShoppingOrderImpl();
 
+		shoppingOrderImpl.setCompanyId(companyId);
 		shoppingOrderImpl.setOrderId(orderId);
 		shoppingOrderImpl.setGroupId(groupId);
-		shoppingOrderImpl.setCompanyId(companyId);
 		shoppingOrderImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -455,9 +455,9 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		orderId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -511,9 +511,9 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(orderId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -770,9 +770,9 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 		objectOutput.writeBoolean(sendShippingEmail);
 	}
 
+	public long companyId;
 	public long orderId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -68,14 +68,14 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", threadFlagId=");
 		sb.append(threadFlagId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -97,6 +97,8 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 	public MBThreadFlag toEntityModel() {
 		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
 
+		mbThreadFlagImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			mbThreadFlagImpl.setUuid(StringPool.BLANK);
 		}
@@ -106,7 +108,6 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 
 		mbThreadFlagImpl.setThreadFlagId(threadFlagId);
 		mbThreadFlagImpl.setGroupId(groupId);
-		mbThreadFlagImpl.setCompanyId(companyId);
 		mbThreadFlagImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -146,10 +147,10 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		threadFlagId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -161,6 +162,8 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -170,7 +173,6 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 
 		objectOutput.writeLong(threadFlagId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -186,10 +188,10 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long threadFlagId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

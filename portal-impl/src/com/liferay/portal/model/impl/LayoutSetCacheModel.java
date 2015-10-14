@@ -81,14 +81,14 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", layoutSetId=");
 		sb.append(layoutSetId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -124,10 +124,10 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public LayoutSet toEntityModel() {
 		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
 
+		layoutSetImpl.setCompanyId(companyId);
 		layoutSetImpl.setMvccVersion(mvccVersion);
 		layoutSetImpl.setLayoutSetId(layoutSetId);
 		layoutSetImpl.setGroupId(groupId);
-		layoutSetImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			layoutSetImpl.setCreateDate(null);
@@ -211,10 +211,10 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		layoutSetId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		privateLayout = objectInput.readBoolean();
@@ -236,10 +236,10 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(layoutSetId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeBoolean(privateLayout);
@@ -302,10 +302,10 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		objectOutput.writeObject(_virtualHostname);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long layoutSetId;
 	public long groupId;
-	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public boolean privateLayout;

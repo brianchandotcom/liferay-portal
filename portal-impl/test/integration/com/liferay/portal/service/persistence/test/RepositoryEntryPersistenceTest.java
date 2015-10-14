@@ -118,13 +118,13 @@ public class RepositoryEntryPersistenceTest {
 
 		RepositoryEntry newRepositoryEntry = _persistence.create(pk);
 
+		newRepositoryEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		newRepositoryEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		newRepositoryEntry.setUuid(RandomTestUtil.randomString());
 
 		newRepositoryEntry.setGroupId(RandomTestUtil.nextLong());
-
-		newRepositoryEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newRepositoryEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -146,6 +146,8 @@ public class RepositoryEntryPersistenceTest {
 
 		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingRepositoryEntry.getCompanyId(),
+			newRepositoryEntry.getCompanyId());
 		Assert.assertEquals(existingRepositoryEntry.getMvccVersion(),
 			newRepositoryEntry.getMvccVersion());
 		Assert.assertEquals(existingRepositoryEntry.getUuid(),
@@ -154,8 +156,6 @@ public class RepositoryEntryPersistenceTest {
 			newRepositoryEntry.getRepositoryEntryId());
 		Assert.assertEquals(existingRepositoryEntry.getGroupId(),
 			newRepositoryEntry.getGroupId());
-		Assert.assertEquals(existingRepositoryEntry.getCompanyId(),
-			newRepositoryEntry.getCompanyId());
 		Assert.assertEquals(existingRepositoryEntry.getUserId(),
 			newRepositoryEntry.getUserId());
 		Assert.assertEquals(existingRepositoryEntry.getUserName(),
@@ -244,11 +244,11 @@ public class RepositoryEntryPersistenceTest {
 
 	protected OrderByComparator<RepositoryEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("RepositoryEntry",
-			"mvccVersion", true, "uuid", true, "repositoryEntryId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "repositoryId",
-			true, "mappedId", true, "manualCheckInRequired", true,
-			"lastPublishDate", true);
+			"companyId", true, "mvccVersion", true, "uuid", true,
+			"repositoryEntryId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"repositoryId", true, "mappedId", true, "manualCheckInRequired",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -475,13 +475,13 @@ public class RepositoryEntryPersistenceTest {
 
 		RepositoryEntry repositoryEntry = _persistence.create(pk);
 
+		repositoryEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		repositoryEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		repositoryEntry.setUuid(RandomTestUtil.randomString());
 
 		repositoryEntry.setGroupId(RandomTestUtil.nextLong());
-
-		repositoryEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		repositoryEntry.setUserId(RandomTestUtil.nextLong());
 

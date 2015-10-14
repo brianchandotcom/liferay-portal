@@ -67,12 +67,12 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{kaleoConditionId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoConditionId=");
 		sb.append(kaleoConditionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -100,9 +100,9 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 	public KaleoCondition toEntityModel() {
 		KaleoConditionImpl kaleoConditionImpl = new KaleoConditionImpl();
 
+		kaleoConditionImpl.setCompanyId(companyId);
 		kaleoConditionImpl.setKaleoConditionId(kaleoConditionId);
 		kaleoConditionImpl.setGroupId(groupId);
-		kaleoConditionImpl.setCompanyId(companyId);
 		kaleoConditionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -157,9 +157,9 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoConditionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -174,9 +174,9 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoConditionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -213,9 +213,9 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		}
 	}
 
+	public long companyId;
 	public long kaleoConditionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

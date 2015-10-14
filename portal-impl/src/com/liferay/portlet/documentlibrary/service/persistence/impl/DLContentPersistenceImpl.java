@@ -2369,6 +2369,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		dlContent.setNew(true);
 		dlContent.setPrimaryKey(contentId);
 
+		dlContent.setCompanyId(0);
+
 		return dlContent;
 	}
 
@@ -2562,9 +2564,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		dlContentImpl.setNew(dlContent.isNew());
 		dlContentImpl.setPrimaryKey(dlContent.getPrimaryKey());
 
+		dlContentImpl.setCompanyId(dlContent.getCompanyId());
 		dlContentImpl.setContentId(dlContent.getContentId());
 		dlContentImpl.setGroupId(dlContent.getGroupId());
-		dlContentImpl.setCompanyId(dlContent.getCompanyId());
 		dlContentImpl.setRepositoryId(dlContent.getRepositoryId());
 		dlContentImpl.setPath(dlContent.getPath());
 		dlContentImpl.setVersion(dlContent.getVersion());

@@ -1,8 +1,8 @@
 create table BackgroundTask (
+	companyId LONG,
 	mvccVersion LONG default 0,
 	backgroundTaskId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

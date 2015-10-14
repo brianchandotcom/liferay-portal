@@ -122,9 +122,9 @@ public class ShoppingCartPersistenceTest {
 
 		ShoppingCart newShoppingCart = _persistence.create(pk);
 
-		newShoppingCart.setGroupId(RandomTestUtil.nextLong());
-
 		newShoppingCart.setCompanyId(RandomTestUtil.nextLong());
+
+		newShoppingCart.setGroupId(RandomTestUtil.nextLong());
 
 		newShoppingCart.setUserId(RandomTestUtil.nextLong());
 
@@ -146,12 +146,12 @@ public class ShoppingCartPersistenceTest {
 
 		ShoppingCart existingShoppingCart = _persistence.findByPrimaryKey(newShoppingCart.getPrimaryKey());
 
+		Assert.assertEquals(existingShoppingCart.getCompanyId(),
+			newShoppingCart.getCompanyId());
 		Assert.assertEquals(existingShoppingCart.getCartId(),
 			newShoppingCart.getCartId());
 		Assert.assertEquals(existingShoppingCart.getGroupId(),
 			newShoppingCart.getGroupId());
-		Assert.assertEquals(existingShoppingCart.getCompanyId(),
-			newShoppingCart.getCompanyId());
 		Assert.assertEquals(existingShoppingCart.getUserId(),
 			newShoppingCart.getUserId());
 		Assert.assertEquals(existingShoppingCart.getUserName(),
@@ -217,10 +217,10 @@ public class ShoppingCartPersistenceTest {
 	}
 
 	protected OrderByComparator<ShoppingCart> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ShoppingCart", "cartId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"couponCodes", true, "altShipping", true, "insure", true);
+		return OrderByComparatorFactoryUtil.create("ShoppingCart", "companyId",
+			true, "cartId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "couponCodes",
+			true, "altShipping", true, "insure", true);
 	}
 
 	@Test
@@ -436,9 +436,9 @@ public class ShoppingCartPersistenceTest {
 
 		ShoppingCart shoppingCart = _persistence.create(pk);
 
-		shoppingCart.setGroupId(RandomTestUtil.nextLong());
-
 		shoppingCart.setCompanyId(RandomTestUtil.nextLong());
+
+		shoppingCart.setGroupId(RandomTestUtil.nextLong());
 
 		shoppingCart.setUserId(RandomTestUtil.nextLong());
 

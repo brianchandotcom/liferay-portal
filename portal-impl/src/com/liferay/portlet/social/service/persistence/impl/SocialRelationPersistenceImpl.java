@@ -5820,6 +5820,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 		socialRelation.setUuid(uuid);
 
+		socialRelation.setCompanyId(0);
+
 		return socialRelation;
 	}
 
@@ -6163,9 +6165,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		socialRelationImpl.setNew(socialRelation.isNew());
 		socialRelationImpl.setPrimaryKey(socialRelation.getPrimaryKey());
 
+		socialRelationImpl.setCompanyId(socialRelation.getCompanyId());
 		socialRelationImpl.setUuid(socialRelation.getUuid());
 		socialRelationImpl.setRelationId(socialRelation.getRelationId());
-		socialRelationImpl.setCompanyId(socialRelation.getCompanyId());
 		socialRelationImpl.setCreateDate(socialRelation.getCreateDate());
 		socialRelationImpl.setUserId1(socialRelation.getUserId1());
 		socialRelationImpl.setUserId2(socialRelation.getUserId2());

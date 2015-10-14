@@ -117,6 +117,8 @@ public class AnnouncementsFlagPersistenceTest {
 
 		AnnouncementsFlag newAnnouncementsFlag = _persistence.create(pk);
 
+		newAnnouncementsFlag.setCompanyId(RandomTestUtil.nextLong());
+
 		newAnnouncementsFlag.setUserId(RandomTestUtil.nextLong());
 
 		newAnnouncementsFlag.setCreateDate(RandomTestUtil.nextDate());
@@ -129,6 +131,8 @@ public class AnnouncementsFlagPersistenceTest {
 
 		AnnouncementsFlag existingAnnouncementsFlag = _persistence.findByPrimaryKey(newAnnouncementsFlag.getPrimaryKey());
 
+		Assert.assertEquals(existingAnnouncementsFlag.getCompanyId(),
+			newAnnouncementsFlag.getCompanyId());
 		Assert.assertEquals(existingAnnouncementsFlag.getFlagId(),
 			newAnnouncementsFlag.getFlagId());
 		Assert.assertEquals(existingAnnouncementsFlag.getUserId(),
@@ -181,8 +185,8 @@ public class AnnouncementsFlagPersistenceTest {
 
 	protected OrderByComparator<AnnouncementsFlag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AnnouncementsFlag",
-			"flagId", true, "userId", true, "createDate", true, "entryId",
-			true, "value", true);
+			"companyId", true, "flagId", true, "userId", true, "createDate",
+			true, "entryId", true, "value", true);
 	}
 
 	@Test
@@ -402,6 +406,8 @@ public class AnnouncementsFlagPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsFlag announcementsFlag = _persistence.create(pk);
+
+		announcementsFlag.setCompanyId(RandomTestUtil.nextLong());
 
 		announcementsFlag.setUserId(RandomTestUtil.nextLong());
 

@@ -118,9 +118,9 @@ public class SocialActivityCounterPersistenceTest {
 
 		SocialActivityCounter newSocialActivityCounter = _persistence.create(pk);
 
-		newSocialActivityCounter.setGroupId(RandomTestUtil.nextLong());
-
 		newSocialActivityCounter.setCompanyId(RandomTestUtil.nextLong());
+
+		newSocialActivityCounter.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivityCounter.setClassNameId(RandomTestUtil.nextLong());
 
@@ -147,12 +147,12 @@ public class SocialActivityCounterPersistenceTest {
 
 		SocialActivityCounter existingSocialActivityCounter = _persistence.findByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
 
+		Assert.assertEquals(existingSocialActivityCounter.getCompanyId(),
+			newSocialActivityCounter.getCompanyId());
 		Assert.assertEquals(existingSocialActivityCounter.getActivityCounterId(),
 			newSocialActivityCounter.getActivityCounterId());
 		Assert.assertEquals(existingSocialActivityCounter.getGroupId(),
 			newSocialActivityCounter.getGroupId());
-		Assert.assertEquals(existingSocialActivityCounter.getCompanyId(),
-			newSocialActivityCounter.getCompanyId());
 		Assert.assertEquals(existingSocialActivityCounter.getClassNameId(),
 			newSocialActivityCounter.getClassNameId());
 		Assert.assertEquals(existingSocialActivityCounter.getClassPK(),
@@ -246,7 +246,7 @@ public class SocialActivityCounterPersistenceTest {
 
 	protected OrderByComparator<SocialActivityCounter> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivityCounter",
-			"activityCounterId", true, "groupId", true, "companyId", true,
+			"companyId", true, "activityCounterId", true, "groupId", true,
 			"classNameId", true, "classPK", true, "name", true, "ownerType",
 			true, "currentValue", true, "totalValue", true, "graceValue", true,
 			"startPeriod", true, "endPeriod", true, "active", true);
@@ -516,9 +516,9 @@ public class SocialActivityCounterPersistenceTest {
 
 		SocialActivityCounter socialActivityCounter = _persistence.create(pk);
 
-		socialActivityCounter.setGroupId(RandomTestUtil.nextLong());
-
 		socialActivityCounter.setCompanyId(RandomTestUtil.nextLong());
+
+		socialActivityCounter.setGroupId(RandomTestUtil.nextLong());
 
 		socialActivityCounter.setClassNameId(RandomTestUtil.nextLong());
 

@@ -124,11 +124,11 @@ public class CalendarBookingPersistenceTest {
 
 		CalendarBooking newCalendarBooking = _persistence.create(pk);
 
+		newCalendarBooking.setCompanyId(RandomTestUtil.nextLong());
+
 		newCalendarBooking.setUuid(RandomTestUtil.randomString());
 
 		newCalendarBooking.setGroupId(RandomTestUtil.nextLong());
-
-		newCalendarBooking.setCompanyId(RandomTestUtil.nextLong());
 
 		newCalendarBooking.setUserId(RandomTestUtil.nextLong());
 
@@ -184,14 +184,14 @@ public class CalendarBookingPersistenceTest {
 
 		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(newCalendarBooking.getPrimaryKey());
 
+		Assert.assertEquals(existingCalendarBooking.getCompanyId(),
+			newCalendarBooking.getCompanyId());
 		Assert.assertEquals(existingCalendarBooking.getUuid(),
 			newCalendarBooking.getUuid());
 		Assert.assertEquals(existingCalendarBooking.getCalendarBookingId(),
 			newCalendarBooking.getCalendarBookingId());
 		Assert.assertEquals(existingCalendarBooking.getGroupId(),
 			newCalendarBooking.getGroupId());
-		Assert.assertEquals(existingCalendarBooking.getCompanyId(),
-			newCalendarBooking.getCompanyId());
 		Assert.assertEquals(existingCalendarBooking.getUserId(),
 			newCalendarBooking.getUserId());
 		Assert.assertEquals(existingCalendarBooking.getUserName(),
@@ -365,11 +365,11 @@ public class CalendarBookingPersistenceTest {
 	}
 
 	protected OrderByComparator<CalendarBooking> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CalendarBooking", "uuid",
-			true, "calendarBookingId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "resourceBlockId", true, "calendarId", true,
-			"calendarResourceId", true, "parentCalendarBookingId", true,
+		return OrderByComparatorFactoryUtil.create("CalendarBooking",
+			"companyId", true, "uuid", true, "calendarBookingId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "resourceBlockId", true, "calendarId",
+			true, "calendarResourceId", true, "parentCalendarBookingId", true,
 			"vEventUid", true, "title", true, "location", true, "startTime",
 			true, "endTime", true, "allDay", true, "recurrence", true,
 			"firstReminder", true, "firstReminderType", true, "secondReminder",
@@ -611,11 +611,11 @@ public class CalendarBookingPersistenceTest {
 
 		CalendarBooking calendarBooking = _persistence.create(pk);
 
+		calendarBooking.setCompanyId(RandomTestUtil.nextLong());
+
 		calendarBooking.setUuid(RandomTestUtil.randomString());
 
 		calendarBooking.setGroupId(RandomTestUtil.nextLong());
-
-		calendarBooking.setCompanyId(RandomTestUtil.nextLong());
 
 		calendarBooking.setUserId(RandomTestUtil.nextLong());
 

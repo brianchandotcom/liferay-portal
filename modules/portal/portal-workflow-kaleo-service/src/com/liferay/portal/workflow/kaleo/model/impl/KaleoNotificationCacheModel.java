@@ -67,12 +67,12 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
 
-		sb.append("{kaleoNotificationId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoNotificationId=");
 		sb.append(kaleoNotificationId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -110,9 +110,9 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 	public KaleoNotification toEntityModel() {
 		KaleoNotificationImpl kaleoNotificationImpl = new KaleoNotificationImpl();
 
+		kaleoNotificationImpl.setCompanyId(companyId);
 		kaleoNotificationImpl.setKaleoNotificationId(kaleoNotificationId);
 		kaleoNotificationImpl.setGroupId(groupId);
-		kaleoNotificationImpl.setCompanyId(companyId);
 		kaleoNotificationImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -202,9 +202,9 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoNotificationId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -224,9 +224,9 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoNotificationId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -299,9 +299,9 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 		}
 	}
 
+	public long companyId;
 	public long kaleoNotificationId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DLFileRankModel extends BaseModel<DLFileRank> {
+public interface DLFileRankModel extends BaseModel<DLFileRank>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +62,22 @@ public interface DLFileRankModel extends BaseModel<DLFileRank> {
 	 * @param primaryKey the primary key of this document library file rank
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this document library file rank.
+	 *
+	 * @return the company ID of this document library file rank
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this document library file rank.
+	 *
+	 * @param companyId the company ID of this document library file rank
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the file rank ID of this document library file rank.
@@ -88,20 +106,6 @@ public interface DLFileRankModel extends BaseModel<DLFileRank> {
 	 * @param groupId the group ID of this document library file rank
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this document library file rank.
-	 *
-	 * @return the company ID of this document library file rank
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this document library file rank.
-	 *
-	 * @param companyId the company ID of this document library file rank
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this document library file rank.

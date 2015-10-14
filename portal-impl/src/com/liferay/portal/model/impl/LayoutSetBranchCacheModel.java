@@ -81,14 +81,14 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	public String toString() {
 		StringBundler sb = new StringBundler(43);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", layoutSetBranchId=");
 		sb.append(layoutSetBranchId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -132,10 +132,10 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	public LayoutSetBranch toEntityModel() {
 		LayoutSetBranchImpl layoutSetBranchImpl = new LayoutSetBranchImpl();
 
+		layoutSetBranchImpl.setCompanyId(companyId);
 		layoutSetBranchImpl.setMvccVersion(mvccVersion);
 		layoutSetBranchImpl.setLayoutSetBranchId(layoutSetBranchId);
 		layoutSetBranchImpl.setGroupId(groupId);
-		layoutSetBranchImpl.setCompanyId(companyId);
 		layoutSetBranchImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -236,10 +236,10 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		layoutSetBranchId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -262,10 +262,10 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(layoutSetBranchId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -348,10 +348,10 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long layoutSetBranchId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

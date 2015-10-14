@@ -64,9 +64,9 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	 */
 	public static final String TABLE_NAME = "ResourceBlock";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "resourceBlockId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "permissionsHash", Types.VARCHAR },
@@ -75,16 +75,16 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourceBlockId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("permissionsHash", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("referenceCount", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (mvccVersion LONG default 0,resourceBlockId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (companyId LONG,mvccVersion LONG default 0,resourceBlockId LONG not null primary key,groupId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlock";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourceBlock.resourceBlockId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ResourceBlock.resourceBlockId ASC";
@@ -119,9 +119,9 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 		ResourceBlock model = new ResourceBlockImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setResourceBlockId(soapModel.getResourceBlockId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setName(soapModel.getName());
 		model.setPermissionsHash(soapModel.getPermissionsHash());
@@ -190,9 +190,9 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourceBlockId", getResourceBlockId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("permissionsHash", getPermissionsHash());
@@ -206,6 +206,12 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -216,12 +222,6 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 		if (resourceBlockId != null) {
 			setResourceBlockId(resourceBlockId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -249,29 +249,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		}
 	}
 
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getResourceBlockId() {
-		return _resourceBlockId;
-	}
-
-	@Override
-	public void setResourceBlockId(long resourceBlockId) {
-		_resourceBlockId = resourceBlockId;
-	}
-
-	@JSON
+	@JSON(include = false)
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -292,6 +270,28 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getResourceBlockId() {
+		return _resourceBlockId;
+	}
+
+	@Override
+	public void setResourceBlockId(long resourceBlockId) {
+		_resourceBlockId = resourceBlockId;
 	}
 
 	@JSON
@@ -411,9 +411,9 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public Object clone() {
 		ResourceBlockImpl resourceBlockImpl = new ResourceBlockImpl();
 
+		resourceBlockImpl.setCompanyId(getCompanyId());
 		resourceBlockImpl.setMvccVersion(getMvccVersion());
 		resourceBlockImpl.setResourceBlockId(getResourceBlockId());
-		resourceBlockImpl.setCompanyId(getCompanyId());
 		resourceBlockImpl.setGroupId(getGroupId());
 		resourceBlockImpl.setName(getName());
 		resourceBlockImpl.setPermissionsHash(getPermissionsHash());
@@ -499,11 +499,11 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public CacheModel<ResourceBlock> toCacheModel() {
 		ResourceBlockCacheModel resourceBlockCacheModel = new ResourceBlockCacheModel();
 
+		resourceBlockCacheModel.companyId = getCompanyId();
+
 		resourceBlockCacheModel.mvccVersion = getMvccVersion();
 
 		resourceBlockCacheModel.resourceBlockId = getResourceBlockId();
-
-		resourceBlockCacheModel.companyId = getCompanyId();
 
 		resourceBlockCacheModel.groupId = getGroupId();
 
@@ -532,12 +532,12 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", resourceBlockId=");
 		sb.append(getResourceBlockId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", name=");
@@ -560,16 +560,16 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>resourceBlockId</column-name><column-value><![CDATA[");
 		sb.append(getResourceBlockId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -597,11 +597,11 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ResourceBlock.class
 		};
-	private long _mvccVersion;
-	private long _resourceBlockId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _mvccVersion;
+	private long _resourceBlockId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

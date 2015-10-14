@@ -64,9 +64,9 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	 */
 	public static final String TABLE_NAME = "ResourcePermission";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "resourcePermissionId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "scope", Types.INTEGER },
 			{ "primKey", Types.VARCHAR },
@@ -79,9 +79,9 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePermissionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("scope", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("primKey", Types.VARCHAR);
@@ -92,7 +92,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		TABLE_COLUMNS_MAP.put("viewActionId", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ResourcePermission (mvccVersion LONG default 0,resourcePermissionId LONG not null primary key,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,primKeyId LONG,roleId LONG,ownerId LONG,actionIds LONG,viewActionId BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table ResourcePermission (companyId LONG,mvccVersion LONG default 0,resourcePermissionId LONG not null primary key,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,primKeyId LONG,roleId LONG,ownerId LONG,actionIds LONG,viewActionId BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table ResourcePermission";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourcePermission.resourcePermissionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ResourcePermission.resourcePermissionId ASC";
@@ -130,9 +130,9 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 		ResourcePermission model = new ResourcePermissionImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setResourcePermissionId(soapModel.getResourcePermissionId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setName(soapModel.getName());
 		model.setScope(soapModel.getScope());
 		model.setPrimKey(soapModel.getPrimKey());
@@ -206,9 +206,9 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourcePermissionId", getResourcePermissionId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("name", getName());
 		attributes.put("scope", getScope());
 		attributes.put("primKey", getPrimKey());
@@ -226,6 +226,12 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -236,12 +242,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 		if (resourcePermissionId != null) {
 			setResourcePermissionId(resourcePermissionId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -293,29 +293,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 	}
 
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getResourcePermissionId() {
-		return _resourcePermissionId;
-	}
-
-	@Override
-	public void setResourcePermissionId(long resourcePermissionId) {
-		_resourcePermissionId = resourcePermissionId;
-	}
-
-	@JSON
+	@JSON(include = false)
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -336,6 +314,28 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getResourcePermissionId() {
+		return _resourcePermissionId;
+	}
+
+	@Override
+	public void setResourcePermissionId(long resourcePermissionId) {
+		_resourcePermissionId = resourcePermissionId;
 	}
 
 	@JSON
@@ -540,9 +540,9 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public Object clone() {
 		ResourcePermissionImpl resourcePermissionImpl = new ResourcePermissionImpl();
 
+		resourcePermissionImpl.setCompanyId(getCompanyId());
 		resourcePermissionImpl.setMvccVersion(getMvccVersion());
 		resourcePermissionImpl.setResourcePermissionId(getResourcePermissionId());
-		resourcePermissionImpl.setCompanyId(getCompanyId());
 		resourcePermissionImpl.setName(getName());
 		resourcePermissionImpl.setScope(getScope());
 		resourcePermissionImpl.setPrimKey(getPrimKey());
@@ -644,11 +644,11 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public CacheModel<ResourcePermission> toCacheModel() {
 		ResourcePermissionCacheModel resourcePermissionCacheModel = new ResourcePermissionCacheModel();
 
+		resourcePermissionCacheModel.companyId = getCompanyId();
+
 		resourcePermissionCacheModel.mvccVersion = getMvccVersion();
 
 		resourcePermissionCacheModel.resourcePermissionId = getResourcePermissionId();
-
-		resourcePermissionCacheModel.companyId = getCompanyId();
 
 		resourcePermissionCacheModel.name = getName();
 
@@ -685,12 +685,12 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", resourcePermissionId=");
 		sb.append(getResourcePermissionId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", scope=");
@@ -721,16 +721,16 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>resourcePermissionId</column-name><column-value><![CDATA[");
 		sb.append(getResourcePermissionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -774,11 +774,11 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ResourcePermission.class
 		};
-	private long _mvccVersion;
-	private long _resourcePermissionId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _mvccVersion;
+	private long _resourcePermissionId;
 	private String _name;
 	private String _originalName;
 	private int _scope;

@@ -1,7 +1,7 @@
 create table ShoppingCart (
+	companyId LONG,
 	cartId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -13,9 +13,9 @@ create table ShoppingCart (
 );
 
 create table ShoppingCategory (
+	companyId LONG,
 	categoryId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -26,9 +26,9 @@ create table ShoppingCategory (
 );
 
 create table ShoppingCoupon (
+	companyId LONG,
 	couponId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -47,9 +47,9 @@ create table ShoppingCoupon (
 );
 
 create table ShoppingItem (
+	companyId LONG,
 	itemId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -84,6 +84,7 @@ create table ShoppingItem (
 );
 
 create table ShoppingItemField (
+	companyId LONG,
 	itemFieldId LONG not null primary key,
 	itemId LONG,
 	name VARCHAR(75) null,
@@ -92,6 +93,7 @@ create table ShoppingItemField (
 );
 
 create table ShoppingItemPrice (
+	companyId LONG,
 	itemPriceId LONG not null primary key,
 	itemId LONG,
 	minQuantity INTEGER,
@@ -105,9 +107,9 @@ create table ShoppingItemPrice (
 );
 
 create table ShoppingOrder (
+	companyId LONG,
 	orderId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -159,6 +161,7 @@ create table ShoppingOrder (
 );
 
 create table ShoppingOrderItem (
+	companyId LONG,
 	orderItemId LONG not null primary key,
 	orderId LONG,
 	itemId TEXT null,

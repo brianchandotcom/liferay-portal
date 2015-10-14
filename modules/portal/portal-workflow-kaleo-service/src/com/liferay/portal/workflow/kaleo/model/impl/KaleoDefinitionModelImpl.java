@@ -76,9 +76,9 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 	 */
 	public static final String TABLE_NAME = "KaleoDefinition";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "kaleoDefinitionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -94,9 +94,9 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -110,7 +110,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		TABLE_COLUMNS_MAP.put("startKaleoNodeId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoDefinition (kaleoDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,version INTEGER,active_ BOOLEAN,startKaleoNodeId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoDefinition (companyId LONG,kaleoDefinitionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,version INTEGER,active_ BOOLEAN,startKaleoNodeId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoDefinition.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoDefinition.version DESC";
@@ -144,9 +144,9 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 
 		KaleoDefinition model = new KaleoDefinitionImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setKaleoDefinitionId(soapModel.getKaleoDefinitionId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -223,9 +223,9 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("kaleoDefinitionId", getKaleoDefinitionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -246,6 +246,12 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long kaleoDefinitionId = (Long)attributes.get("kaleoDefinitionId");
 
 		if (kaleoDefinitionId != null) {
@@ -256,12 +262,6 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -331,29 +331,7 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		}
 	}
 
-	@JSON
-	@Override
-	public long getKaleoDefinitionId() {
-		return _kaleoDefinitionId;
-	}
-
-	@Override
-	public void setKaleoDefinitionId(long kaleoDefinitionId) {
-		_kaleoDefinitionId = kaleoDefinitionId;
-	}
-
-	@JSON
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
-	@JSON
+	@JSON(include = false)
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -374,6 +352,28 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@JSON
+	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
+	}
+
+	@JSON
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	@JSON
@@ -758,9 +758,9 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 	public Object clone() {
 		KaleoDefinitionImpl kaleoDefinitionImpl = new KaleoDefinitionImpl();
 
+		kaleoDefinitionImpl.setCompanyId(getCompanyId());
 		kaleoDefinitionImpl.setKaleoDefinitionId(getKaleoDefinitionId());
 		kaleoDefinitionImpl.setGroupId(getGroupId());
-		kaleoDefinitionImpl.setCompanyId(getCompanyId());
 		kaleoDefinitionImpl.setUserId(getUserId());
 		kaleoDefinitionImpl.setUserName(getUserName());
 		kaleoDefinitionImpl.setCreateDate(getCreateDate());
@@ -865,11 +865,11 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 	public CacheModel<KaleoDefinition> toCacheModel() {
 		KaleoDefinitionCacheModel kaleoDefinitionCacheModel = new KaleoDefinitionCacheModel();
 
+		kaleoDefinitionCacheModel.companyId = getCompanyId();
+
 		kaleoDefinitionCacheModel.kaleoDefinitionId = getKaleoDefinitionId();
 
 		kaleoDefinitionCacheModel.groupId = getGroupId();
-
-		kaleoDefinitionCacheModel.companyId = getCompanyId();
 
 		kaleoDefinitionCacheModel.userId = getUserId();
 
@@ -944,12 +944,12 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{kaleoDefinitionId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", kaleoDefinitionId=");
 		sb.append(getKaleoDefinitionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -986,16 +986,16 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>kaleoDefinitionId</column-name><column-value><![CDATA[");
 		sb.append(getKaleoDefinitionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1051,11 +1051,11 @@ public class KaleoDefinitionModelImpl extends BaseModelImpl<KaleoDefinition>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoDefinition.class
 		};
-	private long _kaleoDefinitionId;
-	private long _groupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _kaleoDefinitionId;
+	private long _groupId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

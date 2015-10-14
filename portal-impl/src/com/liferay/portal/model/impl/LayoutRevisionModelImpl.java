@@ -77,10 +77,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	 */
 	public static final String TABLE_NAME = "LayoutRevision";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "layoutRevisionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -112,10 +112,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutRevisionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -145,7 +145,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (mvccVersion LONG default 0,layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (companyId LONG,mvccVersion LONG default 0,layoutRevisionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutRevision";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutRevision.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutRevision.modifiedDate DESC";
@@ -182,10 +182,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 		LayoutRevision model = new LayoutRevisionImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setLayoutRevisionId(soapModel.getLayoutRevisionId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -277,10 +277,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("layoutRevisionId", getLayoutRevisionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -317,6 +317,12 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -333,12 +339,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -505,6 +505,17 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -536,17 +547,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -1721,10 +1721,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public Object clone() {
 		LayoutRevisionImpl layoutRevisionImpl = new LayoutRevisionImpl();
 
+		layoutRevisionImpl.setCompanyId(getCompanyId());
 		layoutRevisionImpl.setMvccVersion(getMvccVersion());
 		layoutRevisionImpl.setLayoutRevisionId(getLayoutRevisionId());
 		layoutRevisionImpl.setGroupId(getGroupId());
-		layoutRevisionImpl.setCompanyId(getCompanyId());
 		layoutRevisionImpl.setUserId(getUserId());
 		layoutRevisionImpl.setUserName(getUserName());
 		layoutRevisionImpl.setCreateDate(getCreateDate());
@@ -1848,13 +1848,13 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public CacheModel<LayoutRevision> toCacheModel() {
 		LayoutRevisionCacheModel layoutRevisionCacheModel = new LayoutRevisionCacheModel();
 
+		layoutRevisionCacheModel.companyId = getCompanyId();
+
 		layoutRevisionCacheModel.mvccVersion = getMvccVersion();
 
 		layoutRevisionCacheModel.layoutRevisionId = getLayoutRevisionId();
 
 		layoutRevisionCacheModel.groupId = getGroupId();
-
-		layoutRevisionCacheModel.companyId = getCompanyId();
 
 		layoutRevisionCacheModel.userId = getUserId();
 
@@ -2016,14 +2016,14 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public String toString() {
 		StringBundler sb = new StringBundler(63);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", layoutRevisionId=");
 		sb.append(getLayoutRevisionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -2092,6 +2092,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
@@ -2102,10 +2106,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -2225,10 +2225,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			LayoutRevision.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _layoutRevisionId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

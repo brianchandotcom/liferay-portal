@@ -66,10 +66,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	 */
 	public static final String TABLE_NAME = "SystemEvent";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "systemEventId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -85,10 +85,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("systemEventId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -102,7 +102,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		TABLE_COLUMNS_MAP.put("extraData", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SystemEvent (mvccVersion LONG default 0,systemEventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table SystemEvent (companyId LONG,mvccVersion LONG default 0,systemEventId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table SystemEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY systemEvent.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SystemEvent.createDate DESC";
@@ -164,10 +164,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("systemEventId", getSystemEventId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -188,6 +188,12 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -204,12 +210,6 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -280,6 +280,16 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -319,16 +329,6 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -573,10 +573,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	public Object clone() {
 		SystemEventImpl systemEventImpl = new SystemEventImpl();
 
+		systemEventImpl.setCompanyId(getCompanyId());
 		systemEventImpl.setMvccVersion(getMvccVersion());
 		systemEventImpl.setSystemEventId(getSystemEventId());
 		systemEventImpl.setGroupId(getGroupId());
-		systemEventImpl.setCompanyId(getCompanyId());
 		systemEventImpl.setUserId(getUserId());
 		systemEventImpl.setUserName(getUserName());
 		systemEventImpl.setCreateDate(getCreateDate());
@@ -677,13 +677,13 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	public CacheModel<SystemEvent> toCacheModel() {
 		SystemEventCacheModel systemEventCacheModel = new SystemEventCacheModel();
 
+		systemEventCacheModel.companyId = getCompanyId();
+
 		systemEventCacheModel.mvccVersion = getMvccVersion();
 
 		systemEventCacheModel.systemEventId = getSystemEventId();
 
 		systemEventCacheModel.groupId = getGroupId();
-
-		systemEventCacheModel.companyId = getCompanyId();
 
 		systemEventCacheModel.userId = getUserId();
 
@@ -739,14 +739,14 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", systemEventId=");
 		sb.append(getSystemEventId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -783,6 +783,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
@@ -793,10 +797,6 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -852,12 +852,12 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SystemEvent.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _systemEventId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

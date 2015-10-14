@@ -52,8 +52,8 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("rowId", getRowId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("rowId", getRowId());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("tableId", getTableId());
 		attributes.put("classPK", getClassPK());
@@ -63,16 +63,16 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long rowId = (Long)attributes.get("rowId");
-
-		if (rowId != null) {
-			setRowId(rowId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long rowId = (Long)attributes.get("rowId");
+
+		if (rowId != null) {
+			setRowId(rowId);
 		}
 
 		Date modifiedDate = (Date)attributes.get("modifiedDate");

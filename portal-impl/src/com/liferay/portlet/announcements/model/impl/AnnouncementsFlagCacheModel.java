@@ -65,9 +65,11 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{flagId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", flagId=");
 		sb.append(flagId);
 		sb.append(", userId=");
 		sb.append(userId);
@@ -86,6 +88,7 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 	public AnnouncementsFlag toEntityModel() {
 		AnnouncementsFlagImpl announcementsFlagImpl = new AnnouncementsFlagImpl();
 
+		announcementsFlagImpl.setCompanyId(companyId);
 		announcementsFlagImpl.setFlagId(flagId);
 		announcementsFlagImpl.setUserId(userId);
 
@@ -106,6 +109,7 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		flagId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
@@ -116,6 +120,7 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(flagId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
@@ -123,6 +128,7 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 		objectOutput.writeInt(value);
 	}
 
+	public long companyId;
 	public long flagId;
 	public long userId;
 	public long createDate;

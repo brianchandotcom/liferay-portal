@@ -124,11 +124,11 @@ public class DDMStructureLayoutPersistenceTest {
 
 		DDMStructureLayout newDDMStructureLayout = _persistence.create(pk);
 
+		newDDMStructureLayout.setCompanyId(RandomTestUtil.nextLong());
+
 		newDDMStructureLayout.setUuid(RandomTestUtil.randomString());
 
 		newDDMStructureLayout.setGroupId(RandomTestUtil.nextLong());
-
-		newDDMStructureLayout.setCompanyId(RandomTestUtil.nextLong());
 
 		newDDMStructureLayout.setUserId(RandomTestUtil.nextLong());
 
@@ -146,14 +146,14 @@ public class DDMStructureLayoutPersistenceTest {
 
 		DDMStructureLayout existingDDMStructureLayout = _persistence.findByPrimaryKey(newDDMStructureLayout.getPrimaryKey());
 
+		Assert.assertEquals(existingDDMStructureLayout.getCompanyId(),
+			newDDMStructureLayout.getCompanyId());
 		Assert.assertEquals(existingDDMStructureLayout.getUuid(),
 			newDDMStructureLayout.getUuid());
 		Assert.assertEquals(existingDDMStructureLayout.getStructureLayoutId(),
 			newDDMStructureLayout.getStructureLayoutId());
 		Assert.assertEquals(existingDDMStructureLayout.getGroupId(),
 			newDDMStructureLayout.getGroupId());
-		Assert.assertEquals(existingDDMStructureLayout.getCompanyId(),
-			newDDMStructureLayout.getCompanyId());
 		Assert.assertEquals(existingDDMStructureLayout.getUserId(),
 			newDDMStructureLayout.getUserId());
 		Assert.assertEquals(existingDDMStructureLayout.getUserName(),
@@ -228,8 +228,8 @@ public class DDMStructureLayoutPersistenceTest {
 
 	protected OrderByComparator<DDMStructureLayout> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStructureLayout",
-			"uuid", true, "structureLayoutId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
+			"companyId", true, "uuid", true, "structureLayoutId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "structureVersionId", true);
 	}
 
@@ -456,11 +456,11 @@ public class DDMStructureLayoutPersistenceTest {
 
 		DDMStructureLayout ddmStructureLayout = _persistence.create(pk);
 
+		ddmStructureLayout.setCompanyId(RandomTestUtil.nextLong());
+
 		ddmStructureLayout.setUuid(RandomTestUtil.randomString());
 
 		ddmStructureLayout.setGroupId(RandomTestUtil.nextLong());
-
-		ddmStructureLayout.setCompanyId(RandomTestUtil.nextLong());
 
 		ddmStructureLayout.setUserId(RandomTestUtil.nextLong());
 

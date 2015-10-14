@@ -2,10 +2,10 @@
 
 <model-hints>
 	<model name="com.liferay.mobile.device.rules.model.MDRAction">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="actionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -30,10 +30,10 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.mobile.device.rules.model.MDRRule">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="ruleId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -56,10 +56,10 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.mobile.device.rules.model.MDRRuleGroup">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="ruleGroupId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -75,10 +75,10 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.mobile.device.rules.model.MDRRuleGroupInstance">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="ruleGroupInstanceId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />

@@ -1417,6 +1417,8 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		kaleoTimer.setNew(true);
 		kaleoTimer.setPrimaryKey(kaleoTimerId);
 
+		kaleoTimer.setCompanyId(0);
+
 		return kaleoTimer;
 	}
 
@@ -1627,9 +1629,9 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		kaleoTimerImpl.setNew(kaleoTimer.isNew());
 		kaleoTimerImpl.setPrimaryKey(kaleoTimer.getPrimaryKey());
 
+		kaleoTimerImpl.setCompanyId(kaleoTimer.getCompanyId());
 		kaleoTimerImpl.setKaleoTimerId(kaleoTimer.getKaleoTimerId());
 		kaleoTimerImpl.setGroupId(kaleoTimer.getGroupId());
-		kaleoTimerImpl.setCompanyId(kaleoTimer.getCompanyId());
 		kaleoTimerImpl.setUserId(kaleoTimer.getUserId());
 		kaleoTimerImpl.setUserName(kaleoTimer.getUserName());
 		kaleoTimerImpl.setCreateDate(kaleoTimer.getCreateDate());

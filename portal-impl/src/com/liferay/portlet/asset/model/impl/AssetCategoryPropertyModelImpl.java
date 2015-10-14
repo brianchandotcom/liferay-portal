@@ -69,8 +69,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	 */
 	public static final String TABLE_NAME = "AssetCategoryProperty";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "categoryPropertyId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "categoryPropertyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -82,8 +82,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("categoryPropertyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("categoryPropertyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -93,7 +93,7 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetCategoryProperty (categoryPropertyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(75) null,value VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetCategoryProperty (companyId LONG,categoryPropertyId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(75) null,value VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetCategoryProperty";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetCategoryProperty.key ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetCategoryProperty.key_ ASC";
@@ -127,8 +127,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 
 		AssetCategoryProperty model = new AssetCategoryPropertyImpl();
 
-		model.setCategoryPropertyId(soapModel.getCategoryPropertyId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setCategoryPropertyId(soapModel.getCategoryPropertyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -201,8 +201,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("categoryPropertyId", getCategoryPropertyId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("categoryPropertyId", getCategoryPropertyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -219,16 +219,16 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long categoryPropertyId = (Long)attributes.get("categoryPropertyId");
-
-		if (categoryPropertyId != null) {
-			setCategoryPropertyId(categoryPropertyId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long categoryPropertyId = (Long)attributes.get("categoryPropertyId");
+
+		if (categoryPropertyId != null) {
+			setCategoryPropertyId(categoryPropertyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -274,18 +274,7 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		}
 	}
 
-	@JSON
-	@Override
-	public long getCategoryPropertyId() {
-		return _categoryPropertyId;
-	}
-
-	@Override
-	public void setCategoryPropertyId(long categoryPropertyId) {
-		_categoryPropertyId = categoryPropertyId;
-	}
-
-	@JSON
+	@JSON(include = false)
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -306,6 +295,17 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@JSON
+	@Override
+	public long getCategoryPropertyId() {
+		return _categoryPropertyId;
+	}
+
+	@Override
+	public void setCategoryPropertyId(long categoryPropertyId) {
+		_categoryPropertyId = categoryPropertyId;
 	}
 
 	@JSON
@@ -475,8 +475,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public Object clone() {
 		AssetCategoryPropertyImpl assetCategoryPropertyImpl = new AssetCategoryPropertyImpl();
 
-		assetCategoryPropertyImpl.setCategoryPropertyId(getCategoryPropertyId());
 		assetCategoryPropertyImpl.setCompanyId(getCompanyId());
+		assetCategoryPropertyImpl.setCategoryPropertyId(getCategoryPropertyId());
 		assetCategoryPropertyImpl.setUserId(getUserId());
 		assetCategoryPropertyImpl.setUserName(getUserName());
 		assetCategoryPropertyImpl.setCreateDate(getCreateDate());
@@ -563,9 +563,9 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public CacheModel<AssetCategoryProperty> toCacheModel() {
 		AssetCategoryPropertyCacheModel assetCategoryPropertyCacheModel = new AssetCategoryPropertyCacheModel();
 
-		assetCategoryPropertyCacheModel.categoryPropertyId = getCategoryPropertyId();
-
 		assetCategoryPropertyCacheModel.companyId = getCompanyId();
+
+		assetCategoryPropertyCacheModel.categoryPropertyId = getCategoryPropertyId();
 
 		assetCategoryPropertyCacheModel.userId = getUserId();
 
@@ -620,10 +620,10 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{categoryPropertyId=");
-		sb.append(getCategoryPropertyId());
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(getCompanyId());
+		sb.append(", categoryPropertyId=");
+		sb.append(getCategoryPropertyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -652,12 +652,12 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>categoryPropertyId</column-name><column-value><![CDATA[");
-		sb.append(getCategoryPropertyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>categoryPropertyId</column-name><column-value><![CDATA[");
+		sb.append(getCategoryPropertyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -697,10 +697,10 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetCategoryProperty.class
 		};
-	private long _categoryPropertyId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _categoryPropertyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

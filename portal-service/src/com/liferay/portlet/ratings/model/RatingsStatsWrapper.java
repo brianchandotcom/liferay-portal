@@ -52,6 +52,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("statsId", getStatsId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -64,6 +65,12 @@ public class RatingsStatsWrapper implements RatingsStats,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long statsId = (Long)attributes.get("statsId");
 
 		if (statsId != null) {
@@ -150,6 +157,16 @@ public class RatingsStatsWrapper implements RatingsStats,
 	@Override
 	public long getClassPK() {
 		return _ratingsStats.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this ratings stats.
+	*
+	* @return the company ID of this ratings stats
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ratingsStats.getCompanyId();
 	}
 
 	@Override
@@ -265,6 +282,16 @@ public class RatingsStatsWrapper implements RatingsStats,
 	@Override
 	public void setClassPK(long classPK) {
 		_ratingsStats.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this ratings stats.
+	*
+	* @param companyId the company ID of this ratings stats
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ratingsStats.setCompanyId(companyId);
 	}
 
 	@Override

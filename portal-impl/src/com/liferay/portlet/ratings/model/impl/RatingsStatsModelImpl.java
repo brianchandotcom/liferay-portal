@@ -62,6 +62,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	 */
 	public static final String TABLE_NAME = "RatingsStats";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "statsId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
@@ -72,6 +73,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statsId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
@@ -80,7 +82,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		TABLE_COLUMNS_MAP.put("averageScore", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RatingsStats (statsId LONG not null primary key,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table RatingsStats (companyId LONG,statsId LONG not null primary key,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
 	public static final String ORDER_BY_JPQL = " ORDER BY ratingsStats.statsId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RatingsStats.statsId ASC";
@@ -139,6 +141,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("statsId", getStatsId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -154,6 +157,12 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long statsId = (Long)attributes.get("statsId");
 
 		if (statsId != null) {
@@ -189,6 +198,16 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		if (averageScore != null) {
 			setAverageScore(averageScore);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -301,7 +320,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			RatingsStats.class.getName(), getPrimaryKey());
 	}
 
@@ -326,6 +345,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	public Object clone() {
 		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
 
+		ratingsStatsImpl.setCompanyId(getCompanyId());
 		ratingsStatsImpl.setStatsId(getStatsId());
 		ratingsStatsImpl.setClassNameId(getClassNameId());
 		ratingsStatsImpl.setClassPK(getClassPK());
@@ -409,6 +429,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	public CacheModel<RatingsStats> toCacheModel() {
 		RatingsStatsCacheModel ratingsStatsCacheModel = new RatingsStatsCacheModel();
 
+		ratingsStatsCacheModel.companyId = getCompanyId();
+
 		ratingsStatsCacheModel.statsId = getStatsId();
 
 		ratingsStatsCacheModel.classNameId = getClassNameId();
@@ -426,9 +448,11 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{statsId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", statsId=");
 		sb.append(getStatsId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
@@ -447,12 +471,16 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.ratings.model.RatingsStats");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>statsId</column-name><column-value><![CDATA[");
 		sb.append(getStatsId());
@@ -487,6 +515,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			RatingsStats.class
 		};
+	private long _companyId;
 	private long _statsId;
 	private long _classNameId;
 	private long _originalClassNameId;

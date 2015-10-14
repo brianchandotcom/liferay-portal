@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
-	MVCCModel, StagedAuditedModel {
+	MVCCModel, PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
 	 * @param primaryKey the primary key of this website
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this website.
+	 *
+	 * @return the company ID of this website
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this website.
+	 *
+	 * @param companyId the company ID of this website
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this website.
@@ -107,22 +123,6 @@ public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
 	 * @param websiteId the website ID of this website
 	 */
 	public void setWebsiteId(long websiteId);
-
-	/**
-	 * Returns the company ID of this website.
-	 *
-	 * @return the company ID of this website
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this website.
-	 *
-	 * @param companyId the company ID of this website
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this website.

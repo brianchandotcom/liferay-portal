@@ -120,9 +120,9 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		KaleoNotificationRecipient newKaleoNotificationRecipient = _persistence.create(pk);
 
-		newKaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoNotificationRecipient.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoNotificationRecipient.setUserId(RandomTestUtil.nextLong());
 
@@ -158,12 +158,12 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		KaleoNotificationRecipient existingKaleoNotificationRecipient = _persistence.findByPrimaryKey(newKaleoNotificationRecipient.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoNotificationRecipient.getCompanyId(),
+			newKaleoNotificationRecipient.getCompanyId());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getKaleoNotificationRecipientId(),
 			newKaleoNotificationRecipient.getKaleoNotificationRecipientId());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getGroupId(),
 			newKaleoNotificationRecipient.getGroupId());
-		Assert.assertEquals(existingKaleoNotificationRecipient.getCompanyId(),
-			newKaleoNotificationRecipient.getCompanyId());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getUserId(),
 			newKaleoNotificationRecipient.getUserId());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getUserName(),
@@ -244,7 +244,7 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 	protected OrderByComparator<KaleoNotificationRecipient> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoNotificationRecipient",
-			"kaleoNotificationRecipientId", true, "groupId", true, "companyId",
+			"companyId", true, "kaleoNotificationRecipientId", true, "groupId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoDefinitionId", true,
 			"kaleoNotificationId", true, "recipientClassName", true,
@@ -469,9 +469,9 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		KaleoNotificationRecipient kaleoNotificationRecipient = _persistence.create(pk);
 
-		kaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoNotificationRecipient.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoNotificationRecipient.setUserId(RandomTestUtil.nextLong());
 

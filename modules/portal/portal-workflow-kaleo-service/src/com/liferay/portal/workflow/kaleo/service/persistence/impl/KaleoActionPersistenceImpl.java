@@ -2479,6 +2479,8 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		kaleoAction.setNew(true);
 		kaleoAction.setPrimaryKey(kaleoActionId);
 
+		kaleoAction.setCompanyId(0);
+
 		return kaleoAction;
 	}
 
@@ -2724,9 +2726,9 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		kaleoActionImpl.setNew(kaleoAction.isNew());
 		kaleoActionImpl.setPrimaryKey(kaleoAction.getPrimaryKey());
 
+		kaleoActionImpl.setCompanyId(kaleoAction.getCompanyId());
 		kaleoActionImpl.setKaleoActionId(kaleoAction.getKaleoActionId());
 		kaleoActionImpl.setGroupId(kaleoAction.getGroupId());
-		kaleoActionImpl.setCompanyId(kaleoAction.getCompanyId());
 		kaleoActionImpl.setUserId(kaleoAction.getUserId());
 		kaleoActionImpl.setUserName(kaleoAction.getUserName());
 		kaleoActionImpl.setCreateDate(kaleoAction.getCreateDate());

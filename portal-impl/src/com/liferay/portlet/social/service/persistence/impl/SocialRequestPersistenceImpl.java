@@ -6472,6 +6472,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 		socialRequest.setUuid(uuid);
 
+		socialRequest.setCompanyId(0);
+
 		return socialRequest;
 	}
 
@@ -6832,10 +6834,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		socialRequestImpl.setNew(socialRequest.isNew());
 		socialRequestImpl.setPrimaryKey(socialRequest.getPrimaryKey());
 
+		socialRequestImpl.setCompanyId(socialRequest.getCompanyId());
 		socialRequestImpl.setUuid(socialRequest.getUuid());
 		socialRequestImpl.setRequestId(socialRequest.getRequestId());
 		socialRequestImpl.setGroupId(socialRequest.getGroupId());
-		socialRequestImpl.setCompanyId(socialRequest.getCompanyId());
 		socialRequestImpl.setUserId(socialRequest.getUserId());
 		socialRequestImpl.setCreateDate(socialRequest.getCreateDate());
 		socialRequestImpl.setModifiedDate(socialRequest.getModifiedDate());

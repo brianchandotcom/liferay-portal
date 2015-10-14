@@ -34,10 +34,10 @@ public class WikiNodeSoap implements Serializable {
 	public static WikiNodeSoap toSoapModel(WikiNode model) {
 		WikiNodeSoap soapModel = new WikiNodeSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setNodeId(model.getNodeId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -102,6 +102,14 @@ public class WikiNodeSoap implements Serializable {
 		setNodeId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -124,14 +132,6 @@ public class WikiNodeSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -230,10 +230,10 @@ public class WikiNodeSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _nodeId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SCProductVersionModel extends AuditedModel,
-	BaseModel<SCProductVersion> {
+	BaseModel<SCProductVersion>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,20 +66,6 @@ public interface SCProductVersionModel extends AuditedModel,
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the product version ID of this s c product version.
-	 *
-	 * @return the product version ID of this s c product version
-	 */
-	public long getProductVersionId();
-
-	/**
-	 * Sets the product version ID of this s c product version.
-	 *
-	 * @param productVersionId the product version ID of this s c product version
-	 */
-	public void setProductVersionId(long productVersionId);
-
-	/**
 	 * Returns the company ID of this s c product version.
 	 *
 	 * @return the company ID of this s c product version
@@ -93,6 +80,20 @@ public interface SCProductVersionModel extends AuditedModel,
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the product version ID of this s c product version.
+	 *
+	 * @return the product version ID of this s c product version
+	 */
+	public long getProductVersionId();
+
+	/**
+	 * Sets the product version ID of this s c product version.
+	 *
+	 * @param productVersionId the product version ID of this s c product version
+	 */
+	public void setProductVersionId(long productVersionId);
 
 	/**
 	 * Returns the user ID of this s c product version.

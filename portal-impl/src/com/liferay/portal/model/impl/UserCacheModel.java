@@ -81,14 +81,14 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(83);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", userId=");
 		sb.append(userId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -172,6 +172,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 	public User toEntityModel() {
 		UserImpl userImpl = new UserImpl();
 
+		userImpl.setCompanyId(companyId);
 		userImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -182,7 +183,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		}
 
 		userImpl.setUserId(userId);
-		userImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			userImpl.setCreateDate(null);
@@ -379,10 +379,10 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		userId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		defaultUser = objectInput.readBoolean();
@@ -425,6 +425,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -435,7 +436,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		}
 
 		objectOutput.writeLong(userId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeBoolean(defaultUser);
@@ -584,10 +584,10 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		objectOutput.writeInt(status);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long userId;
-	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public boolean defaultUser;

@@ -68,14 +68,14 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", recordId=");
 		sb.append(recordId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -107,6 +107,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 	public DDLRecord toEntityModel() {
 		DDLRecordImpl ddlRecordImpl = new DDLRecordImpl();
 
+		ddlRecordImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			ddlRecordImpl.setUuid(StringPool.BLANK);
 		}
@@ -116,7 +118,6 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 		ddlRecordImpl.setRecordId(recordId);
 		ddlRecordImpl.setGroupId(groupId);
-		ddlRecordImpl.setCompanyId(companyId);
 		ddlRecordImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -175,10 +176,10 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		recordId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		versionUserId = objectInput.readLong();
@@ -195,6 +196,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -204,7 +207,6 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 		objectOutput.writeLong(recordId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -239,10 +241,10 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long recordId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long versionUserId;

@@ -2,10 +2,10 @@
 
 <model-hints>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecord">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="recordId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="versionUserId" type="long" />
@@ -19,10 +19,10 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordSet">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="recordSetId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -43,9 +43,9 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordVersion">
+		<field name="companyId" type="long" />
 		<field name="recordVersionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />

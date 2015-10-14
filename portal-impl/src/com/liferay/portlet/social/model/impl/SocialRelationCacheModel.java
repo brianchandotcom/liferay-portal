@@ -66,12 +66,12 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", relationId=");
 		sb.append(relationId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", userId1=");
@@ -89,6 +89,8 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 	public SocialRelation toEntityModel() {
 		SocialRelationImpl socialRelationImpl = new SocialRelationImpl();
 
+		socialRelationImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			socialRelationImpl.setUuid(StringPool.BLANK);
 		}
@@ -97,7 +99,6 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 		}
 
 		socialRelationImpl.setRelationId(relationId);
-		socialRelationImpl.setCompanyId(companyId);
 		socialRelationImpl.setCreateDate(createDate);
 		socialRelationImpl.setUserId1(userId1);
 		socialRelationImpl.setUserId2(userId2);
@@ -110,9 +111,9 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		relationId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		userId1 = objectInput.readLong();
 		userId2 = objectInput.readLong();
@@ -122,6 +123,8 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -130,16 +133,15 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 		}
 
 		objectOutput.writeLong(relationId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(userId1);
 		objectOutput.writeLong(userId2);
 		objectOutput.writeInt(type);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long relationId;
-	public long companyId;
 	public long createDate;
 	public long userId1;
 	public long userId2;

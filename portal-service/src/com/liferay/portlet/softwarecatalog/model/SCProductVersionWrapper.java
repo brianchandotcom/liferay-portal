@@ -53,8 +53,8 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("productVersionId", getProductVersionId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("productVersionId", getProductVersionId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -71,16 +71,16 @@ public class SCProductVersionWrapper implements SCProductVersion,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long productVersionId = (Long)attributes.get("productVersionId");
-
-		if (productVersionId != null) {
-			setProductVersionId(productVersionId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long productVersionId = (Long)attributes.get("productVersionId");
+
+		if (productVersionId != null) {
+			setProductVersionId(productVersionId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

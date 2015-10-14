@@ -1518,7 +1518,7 @@ public class DLFileEntryLocalServiceImpl
 
 		String uniqueTitle = title;
 
-		for (int i = 1;;) {
+		for (int i = 1;; i++) {
 			String uniqueFileName = DLUtil.getSanitizedFileName(
 				uniqueTitle, extension);
 

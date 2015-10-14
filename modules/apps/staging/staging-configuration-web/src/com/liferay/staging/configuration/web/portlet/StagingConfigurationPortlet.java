@@ -23,6 +23,7 @@ import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.service.StagingLocalService;
 import com.liferay.portlet.exportimport.staging.StagingConstants;
 import com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys;
@@ -32,6 +33,8 @@ import java.io.IOException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,6 +78,8 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 		Group liveGroup = _groupLocalService.getGroup(liveGroupId);
 
+		boolean stagingWasEnabled = true;
+
 		int stagingType = ParamUtil.getInteger(actionRequest, "stagingType");
 
 		boolean branchingPublic = ParamUtil.getBoolean(
@@ -92,11 +97,15 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			_groupLocalService.disableStaging(liveGroupId);
 		}
 		else if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
+			stagingWasEnabled = liveGroup.hasStagingGroup();
+
 			_stagingLocalService.enableLocalStaging(
 				themeDisplay.getUserId(), liveGroup, branchingPublic,
 				branchingPrivate, serviceContext);
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
+			stagingWasEnabled = liveGroup.isStagedRemotely();
+
 			String remoteAddress = ParamUtil.getString(
 				actionRequest, "remoteAddress");
 			int remotePort = ParamUtil.getInteger(actionRequest, "remotePort");
@@ -117,6 +126,18 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (!stagingWasEnabled) {
+			PortletURL stagingGroupAdministrationURL =
+				PortalUtil.getControlPanelPortletURL(
+					actionRequest, liveGroup.getStagingGroup(),
+					StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0,
+					PortletRequest.RENDER_PHASE);
+
+			if (stagingGroupAdministrationURL != null) {
+				redirect = stagingGroupAdministrationURL.toString();
+			}
+		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 

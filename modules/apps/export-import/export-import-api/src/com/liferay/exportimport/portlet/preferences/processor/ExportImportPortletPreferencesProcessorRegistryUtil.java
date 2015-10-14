@@ -16,19 +16,18 @@ package com.liferay.exportimport.portlet.preferences.processor;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Mate Thurzo
@@ -48,38 +47,14 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 		return _instance._getExportImportPortletPreferencesProcessors();
 	}
 
-	public static void register(
-		ExportImportPortletPreferencesProcessor
-			exportImportPortletPreferencesProcessor) {
-
-		_instance._register(exportImportPortletPreferencesProcessor);
-	}
-
-	public static void unregister(
-		ExportImportPortletPreferencesProcessor
-			exportImportPortletPreferencesProcessor) {
-
-		_instance._unregister(exportImportPortletPreferencesProcessor);
-	}
-
-	public static void unregister(
-		List<ExportImportPortletPreferencesProcessor>
-			exportImportPortletPreferencesProcessors) {
-
-		for (ExportImportPortletPreferencesProcessor
-				exportImportPortletPreferencesProcessor :
-					exportImportPortletPreferencesProcessors) {
-
-			unregister(exportImportPortletPreferencesProcessor);
-		}
-	}
-
 	private ExportImportPortletPreferencesProcessorRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			ExportImportPortletPreferencesProcessorRegistryUtil.class);
 
-		_serviceTracker = registry.trackServices(
-			(Class<ExportImportPortletPreferencesProcessor>)(Class<?>)
-				ExportImportPortletPreferencesProcessor.class,
+		_bundleContext = bundle.getBundleContext();
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, ExportImportPortletPreferencesProcessor.class,
 			new ExportImportPortletPreferencesProcessorServiceTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -100,43 +75,12 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 		return ListUtil.fromCollection(values);
 	}
 
-	private void _register(
-		ExportImportPortletPreferencesProcessor
-			exportImportPortletPreferencesProcessor) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<ExportImportPortletPreferencesProcessor>
-			serviceRegistration = registry.registerService(
-				(Class<ExportImportPortletPreferencesProcessor>)(Class<?>)
-					ExportImportPortletPreferencesProcessor.class,
-				exportImportPortletPreferencesProcessor);
-
-		_serviceRegistrations.put(
-			exportImportPortletPreferencesProcessor, serviceRegistration);
-	}
-
-	private void _unregister(
-		ExportImportPortletPreferencesProcessor
-			exportImportPortletPreferencesProcessor) {
-
-		ServiceRegistration<ExportImportPortletPreferencesProcessor>
-			serviceRegistration = _serviceRegistrations.remove(
-				exportImportPortletPreferencesProcessor);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
 	private static final ExportImportPortletPreferencesProcessorRegistryUtil
 		_instance = new ExportImportPortletPreferencesProcessorRegistryUtil();
 
+	private final BundleContext _bundleContext;
 	private final Map<String, ExportImportPortletPreferencesProcessor>
 		_exportImportPortletPreferencesProcessors = new ConcurrentHashMap<>();
-	private final ServiceRegistrationMap
-		<ExportImportPortletPreferencesProcessor> _serviceRegistrations =
-			new ServiceRegistrationMapImpl<>();
 	private final
 		ServiceTracker
 			<ExportImportPortletPreferencesProcessor,
@@ -152,14 +96,12 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 			ServiceReference<ExportImportPortletPreferencesProcessor>
 				serviceReference) {
 
+			ExportImportPortletPreferencesProcessor
+				exportImportPortletPreferencesProcessor =
+					_bundleContext.getService(serviceReference);
+
 			String portletName = GetterUtil.getString(
 				serviceReference.getProperty("javax.portlet.name"));
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			ExportImportPortletPreferencesProcessor
-				exportImportPortletPreferencesProcessor = registry.getService(
-					serviceReference);
 
 			_exportImportPortletPreferencesProcessors.put(
 				portletName, exportImportPortletPreferencesProcessor);
@@ -173,6 +115,11 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 				serviceReference,
 			ExportImportPortletPreferencesProcessor
 				exportImportPortletPreferencesProcessor) {
+
+			removedService(
+				serviceReference, exportImportPortletPreferencesProcessor);
+
+			addingService(serviceReference);
 		}
 
 		@Override
@@ -182,9 +129,7 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 			ExportImportPortletPreferencesProcessor
 				exportImportPortletPreferencesProcessor) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			String portletName = GetterUtil.getString(
 				serviceReference.getProperty("javax.portlet.name"));

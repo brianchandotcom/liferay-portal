@@ -946,9 +946,11 @@
 		<sequential>
 			<echo>Sending testray results to @{testray.results.dir}.</echo>
 
-			<copy failonerror="false" todir="@{testray.results.dir}">
-				<fileset dir="@{test.results.suite.dir}" erroronmissingdir="false" includes="TESTS-*.xml" />
-			</copy>
+			<for list="uat" param="testray.base.dir.name">
+				<sequential>
+					<rsync rsync.dest="testray-results/@{testray.base.dir.name}" rsync.src="@{test.results.suite.dir}" />
+				</sequential>
+			</for>
 		</sequential>
 	</macrodef>
 

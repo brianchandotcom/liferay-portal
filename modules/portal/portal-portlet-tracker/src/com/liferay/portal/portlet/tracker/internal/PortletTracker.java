@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.EventDefinition;
@@ -48,6 +48,7 @@ import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.PortletInfo;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PublicRenderParameter;
+import com.liferay.portal.model.impl.PublicRenderParameterImpl;
 import com.liferay.portal.security.permission.ResourceActions;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.CompanyLocalService;
@@ -870,17 +871,25 @@ public class PortletTracker
 			serviceReference.getProperty(
 				"javax.portlet.supported-public-render-parameter"));
 
-		for (String identifier : supportedPublicRenderParameters) {
-			PublicRenderParameter publicRenderParameter =
-				portletApp.getPublicRenderParameter(identifier);
+		for (String supportedPublicRenderParameter :
+				supportedPublicRenderParameters) {
 
-			if (publicRenderParameter == null) {
-				_log.error(
-					"Supported public render parameter references unknown " +
-						"identifier " + identifier);
+			String name = supportedPublicRenderParameter;
+			String qname = null;
 
-				continue;
+			String[] parts = StringUtil.split(
+				supportedPublicRenderParameter, StringPool.SEMICOLON);
+
+			if (parts.length == 2) {
+				name = parts[0];
+				qname = parts[1];
 			}
+
+			QName qName = getQName(
+				name, qname, portletApp.getDefaultNamespace());
+
+			PublicRenderParameter publicRenderParameter =
+				new PublicRenderParameterImpl(name, qName, portletApp);
 
 			publicRenderParameters.add(publicRenderParameter);
 		}
@@ -1210,12 +1219,12 @@ public class PortletTracker
 		}
 
 		if (Validator.isNull(uri)) {
-			return SAXReaderUtil.createQName(
-				name, SAXReaderUtil.createNamespace(defaultNamespace));
+			return _saxReader.createQName(
+				name, _saxReader.createNamespace(defaultNamespace));
 		}
 
-		return SAXReaderUtil.createQName(
-			name, SAXReaderUtil.createNamespace(uri));
+		return _saxReader.createQName(
+			name, _saxReader.createNamespace(uri));
 	}
 
 	protected ServiceRegistrations getServiceRegistrations(Bundle bundle) {
@@ -1315,6 +1324,11 @@ public class PortletTracker
 		_resourceActions = resourceActions;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSAXReader(SAXReader saxReader) {
+		_saxReader = saxReader;
+	}
+
 	protected String toLowerCase(Object object) {
 		String string = String.valueOf(object);
 
@@ -1367,6 +1381,7 @@ public class PortletTracker
 		new PortletPropertyValidator();
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceActions _resourceActions;
+	private SAXReader _saxReader;
 	private final ConcurrentMap<Bundle, ServiceRegistrations>
 		_serviceRegistrations = new ConcurrentHashMap<>();
 	private ServiceTracker<Portlet, com.liferay.portal.model.Portlet>

@@ -2342,6 +2342,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_WALLENTRY = "SELECT wallEntry FROM WallEntry wallEntry";
 	private static final String _SQL_SELECT_WALLENTRY_WHERE_PKS_IN = "SELECT wallEntry FROM WallEntry wallEntry WHERE wallEntryId IN (";
 	private static final String _SQL_SELECT_WALLENTRY_WHERE = "SELECT wallEntry FROM WallEntry wallEntry WHERE ";
@@ -2369,9 +2373,4 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 				return _nullWallEntry;
 			}
 		};
-
-	@ServiceReference(type = EntityCache.class)
-	protected EntityCache entityCache;
-	@ServiceReference(type = FinderCache.class)
-	protected FinderCache finderCache;
 }

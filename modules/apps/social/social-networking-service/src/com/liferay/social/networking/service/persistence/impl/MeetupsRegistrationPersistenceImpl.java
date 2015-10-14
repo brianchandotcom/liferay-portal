@@ -2173,6 +2173,10 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MEETUPSREGISTRATION = "SELECT meetupsRegistration FROM MeetupsRegistration meetupsRegistration";
 	private static final String _SQL_SELECT_MEETUPSREGISTRATION_WHERE_PKS_IN = "SELECT meetupsRegistration FROM MeetupsRegistration meetupsRegistration WHERE meetupsRegistrationId IN (";
 	private static final String _SQL_SELECT_MEETUPSREGISTRATION_WHERE = "SELECT meetupsRegistration FROM MeetupsRegistration meetupsRegistration WHERE ";
@@ -2201,9 +2205,4 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 				return _nullMeetupsRegistration;
 			}
 		};
-
-	@ServiceReference(type = EntityCache.class)
-	protected EntityCache entityCache;
-	@ServiceReference(type = FinderCache.class)
-	protected FinderCache finderCache;
 }

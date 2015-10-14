@@ -64,8 +64,13 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		Configuration configuration = _addPropertiesSource(
 			fileName, url, _baseCompositeConfiguration);
 
-		if ((configuration != null) && !configuration.isEmpty()) {
+		if (configuration != null) {
 			_baseConfigurationLoaded = true;
+
+			if (configuration.isEmpty() && _log.isDebugEnabled()) {
+				_log.debug(
+					"Base configuration source " + fileName + " is empty");
+			}
 		}
 	}
 

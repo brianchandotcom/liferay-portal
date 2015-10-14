@@ -185,7 +185,18 @@ public class DDMFormEvaluatorHelper {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		if (Validator.isNull(value.getString(_locale))) {
+		String valueString = value.getString(_locale);
+
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		String dataType = ddmFormField.getDataType();
+
+		if (Validator.isNull(valueString)) {
+			return true;
+		}
+		else if (Validator.equals(dataType, "boolean") &&
+				 Validator.equals(valueString, "false")) {
+
 			return true;
 		}
 

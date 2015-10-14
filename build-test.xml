@@ -571,6 +571,23 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						<var name="test.url" value="${testcase.url}" />
 					</then>
 				</elseif>
+				<elseif>
+					<equals arg1="${test.portal.instance}" arg2="true" />
+					<then>
+						<if>
+							<os family="unix" />
+							<then>
+								<var name="test.url" value="http://${env.HOSTNAME}:8080" />
+							</then>
+							<elseif>
+								<os family="windows" />
+								<then>
+									<var name="test.url" value="http://${env.COMPUTERNAME}:8080" />
+								</then>
+							</elseif>
+						</if>
+					</then>
+				</elseif>
 				<else>
 					<var name="test.url" value="http://localhost:8080" />
 				</else>

@@ -78,7 +78,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 		Group liveGroup = _groupLocalService.getGroup(liveGroupId);
 
-		boolean stagingWasEnabled = true;
+		boolean stagedGroup = true;
 
 		int stagingType = ParamUtil.getInteger(actionRequest, "stagingType");
 
@@ -97,14 +97,14 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			_groupLocalService.disableStaging(liveGroupId);
 		}
 		else if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
-			stagingWasEnabled = liveGroup.hasStagingGroup();
+			stagedGroup = liveGroup.hasStagingGroup();
 
 			_stagingLocalService.enableLocalStaging(
 				themeDisplay.getUserId(), liveGroup, branchingPublic,
 				branchingPrivate, serviceContext);
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
-			stagingWasEnabled = liveGroup.isStagedRemotely();
+			stagedGroup = liveGroup.isStagedRemotely();
 
 			String remoteAddress = ParamUtil.getString(
 				actionRequest, "remoteAddress");
@@ -127,7 +127,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		if (!stagingWasEnabled) {
+		if (!stagedGroup) {
 			PortletURL stagingGroupAdministrationURL =
 				PortalUtil.getControlPanelPortletURL(
 					actionRequest, liveGroup.getStagingGroup(),

@@ -62,7 +62,7 @@ portletURL.setParameter("navigation", navigation);
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+<c:if test='<%= navigation.equals("entries") && BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>'>
 	<portlet:renderURL var="viewEntriesURL">
 		<portlet:param name="mvcRenderCommandName" value="/blogs_admin/view" />
 	</portlet:renderURL>

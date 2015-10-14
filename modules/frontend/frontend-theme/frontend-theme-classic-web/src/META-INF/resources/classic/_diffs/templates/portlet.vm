@@ -11,8 +11,10 @@
 
 #set ($portlet_toolbar = $portlet_display.getPortletToolbar())
 
+#set ($portlet_content_css_class = "portlet-content")
+
 <section class="portlet" id="portlet_$portlet_id">
-	#if ($portlet_display.isPortletDecorate())
+	#if ($portlet_display.isPortletDecorate() && !$portlet_display.isStateMax())
 		<header class="portlet-topper">
 			<div class="portlet-title-default">
 				<span class="portlet-name-text">$portlet_name</span>
@@ -32,9 +34,11 @@
 				#end
 			</menu>
 		</header>
+
+		#set ($portlet_content_css_class = $portlet_content_css_class + " portlet-content-editable")
 	#end
 
-	<div class="portlet-content">
+	<div class="$portlet_content_css_class">
 		#if ($portlet_display.getPortletDecoratorId() != "barebone")
 			<h2 class="portlet-title-text">$portlet_title</h2>
 		#end

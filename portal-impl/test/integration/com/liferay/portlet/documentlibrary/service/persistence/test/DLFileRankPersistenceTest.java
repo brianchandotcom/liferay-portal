@@ -117,9 +117,9 @@ public class DLFileRankPersistenceTest {
 
 		DLFileRank newDLFileRank = _persistence.create(pk);
 
-		newDLFileRank.setGroupId(RandomTestUtil.nextLong());
-
 		newDLFileRank.setCompanyId(RandomTestUtil.nextLong());
+
+		newDLFileRank.setGroupId(RandomTestUtil.nextLong());
 
 		newDLFileRank.setUserId(RandomTestUtil.nextLong());
 
@@ -133,12 +133,12 @@ public class DLFileRankPersistenceTest {
 
 		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(newDLFileRank.getPrimaryKey());
 
+		Assert.assertEquals(existingDLFileRank.getCompanyId(),
+			newDLFileRank.getCompanyId());
 		Assert.assertEquals(existingDLFileRank.getFileRankId(),
 			newDLFileRank.getFileRankId());
 		Assert.assertEquals(existingDLFileRank.getGroupId(),
 			newDLFileRank.getGroupId());
-		Assert.assertEquals(existingDLFileRank.getCompanyId(),
-			newDLFileRank.getCompanyId());
 		Assert.assertEquals(existingDLFileRank.getUserId(),
 			newDLFileRank.getUserId());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -173,19 +173,19 @@ public class DLFileRankPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_U_A() throws Exception {
-		_persistence.countByG_U_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_U_A(0L, 0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testCountByC_U_F() throws Exception {
 		_persistence.countByC_U_F(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_U_F(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_U_A() throws Exception {
+		_persistence.countByG_U_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_U_A(0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -211,8 +211,8 @@ public class DLFileRankPersistenceTest {
 	}
 
 	protected OrderByComparator<DLFileRank> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DLFileRank", "fileRankId",
-			true, "groupId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("DLFileRank", "companyId",
+			true, "fileRankId", true, "groupId", true, "userId", true,
 			"createDate", true, "fileEntryId", true, "active", true);
 	}
 
@@ -432,9 +432,9 @@ public class DLFileRankPersistenceTest {
 
 		DLFileRank dlFileRank = _persistence.create(pk);
 
-		dlFileRank.setGroupId(RandomTestUtil.nextLong());
-
 		dlFileRank.setCompanyId(RandomTestUtil.nextLong());
+
+		dlFileRank.setGroupId(RandomTestUtil.nextLong());
 
 		dlFileRank.setUserId(RandomTestUtil.nextLong());
 

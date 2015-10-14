@@ -34,10 +34,10 @@ public class BlogsEntrySoap implements Serializable {
 	public static BlogsEntrySoap toSoapModel(BlogsEntry model) {
 		BlogsEntrySoap soapModel = new BlogsEntrySoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setEntryId(model.getEntryId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -115,6 +115,14 @@ public class BlogsEntrySoap implements Serializable {
 		setEntryId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -137,14 +145,6 @@ public class BlogsEntrySoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -359,10 +359,10 @@ public class BlogsEntrySoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _entryId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

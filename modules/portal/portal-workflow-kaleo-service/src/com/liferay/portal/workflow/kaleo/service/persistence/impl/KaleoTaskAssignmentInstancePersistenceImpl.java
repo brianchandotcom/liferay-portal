@@ -4027,6 +4027,8 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		kaleoTaskAssignmentInstance.setNew(true);
 		kaleoTaskAssignmentInstance.setPrimaryKey(kaleoTaskAssignmentInstanceId);
 
+		kaleoTaskAssignmentInstance.setCompanyId(0);
+
 		return kaleoTaskAssignmentInstance;
 	}
 
@@ -4347,9 +4349,9 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		kaleoTaskAssignmentInstanceImpl.setNew(kaleoTaskAssignmentInstance.isNew());
 		kaleoTaskAssignmentInstanceImpl.setPrimaryKey(kaleoTaskAssignmentInstance.getPrimaryKey());
 
+		kaleoTaskAssignmentInstanceImpl.setCompanyId(kaleoTaskAssignmentInstance.getCompanyId());
 		kaleoTaskAssignmentInstanceImpl.setKaleoTaskAssignmentInstanceId(kaleoTaskAssignmentInstance.getKaleoTaskAssignmentInstanceId());
 		kaleoTaskAssignmentInstanceImpl.setGroupId(kaleoTaskAssignmentInstance.getGroupId());
-		kaleoTaskAssignmentInstanceImpl.setCompanyId(kaleoTaskAssignmentInstance.getCompanyId());
 		kaleoTaskAssignmentInstanceImpl.setUserId(kaleoTaskAssignmentInstance.getUserId());
 		kaleoTaskAssignmentInstanceImpl.setUserName(kaleoTaskAssignmentInstance.getUserName());
 		kaleoTaskAssignmentInstanceImpl.setCreateDate(kaleoTaskAssignmentInstance.getCreateDate());

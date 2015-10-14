@@ -1512,179 +1512,6 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @return the matching groups
-	*/
-	public static List<Group> findByG_C_P(long groupId, long companyId,
-		long parentGroupId) {
-		return getPersistence().findByG_C_P(groupId, companyId, parentGroupId);
-	}
-
-	/**
-	* Returns a range of all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @param start the lower bound of the range of groups
-	* @param end the upper bound of the range of groups (not inclusive)
-	* @return the range of matching groups
-	*/
-	public static List<Group> findByG_C_P(long groupId, long companyId,
-		long parentGroupId, int start, int end) {
-		return getPersistence()
-				   .findByG_C_P(groupId, companyId, parentGroupId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @param start the lower bound of the range of groups
-	* @param end the upper bound of the range of groups (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching groups
-	*/
-	public static List<Group> findByG_C_P(long groupId, long companyId,
-		long parentGroupId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-		return getPersistence()
-				   .findByG_C_P(groupId, companyId, parentGroupId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @param start the lower bound of the range of groups
-	* @param end the upper bound of the range of groups (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching groups
-	*/
-	public static List<Group> findByG_C_P(long groupId, long companyId,
-		long parentGroupId, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByG_C_P(groupId, companyId, parentGroupId, start, end,
-			orderByComparator, retrieveFromCache);
-	}
-
-	/**
-	* Returns the first group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching group
-	* @throws NoSuchGroupException if a matching group could not be found
-	*/
-	public static Group findByG_C_P_First(long groupId, long companyId,
-		long parentGroupId, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.NoSuchGroupException {
-		return getPersistence()
-				   .findByG_C_P_First(groupId, companyId, parentGroupId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching group, or <code>null</code> if a matching group could not be found
-	*/
-	public static Group fetchByG_C_P_First(long groupId, long companyId,
-		long parentGroupId, OrderByComparator<Group> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_C_P_First(groupId, companyId, parentGroupId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching group
-	* @throws NoSuchGroupException if a matching group could not be found
-	*/
-	public static Group findByG_C_P_Last(long groupId, long companyId,
-		long parentGroupId, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.NoSuchGroupException {
-		return getPersistence()
-				   .findByG_C_P_Last(groupId, companyId, parentGroupId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching group, or <code>null</code> if a matching group could not be found
-	*/
-	public static Group fetchByG_C_P_Last(long groupId, long companyId,
-		long parentGroupId, OrderByComparator<Group> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_C_P_Last(groupId, companyId, parentGroupId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	*/
-	public static void removeByG_C_P(long groupId, long companyId,
-		long parentGroupId) {
-		getPersistence().removeByG_C_P(groupId, companyId, parentGroupId);
-	}
-
-	/**
-	* Returns the number of groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param parentGroupId the parent group ID
-	* @return the number of matching groups
-	*/
-	public static int countByG_C_P(long groupId, long companyId,
-		long parentGroupId) {
-		return getPersistence().countByG_C_P(groupId, companyId, parentGroupId);
-	}
-
-	/**
 	* Returns the group where companyId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchGroupException} if it could not be found.
 	*
 	* @param companyId the company ID
@@ -2211,6 +2038,179 @@ public class GroupUtil {
 	public static int countByC_L_GK(long companyId, long liveGroupId,
 		java.lang.String groupKey) {
 		return getPersistence().countByC_L_GK(companyId, liveGroupId, groupKey);
+	}
+
+	/**
+	* Returns all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @return the matching groups
+	*/
+	public static List<Group> findByG_C_P(long groupId, long companyId,
+		long parentGroupId) {
+		return getPersistence().findByG_C_P(groupId, companyId, parentGroupId);
+	}
+
+	/**
+	* Returns a range of all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @return the range of matching groups
+	*/
+	public static List<Group> findByG_C_P(long groupId, long companyId,
+		long parentGroupId, int start, int end) {
+		return getPersistence()
+				   .findByG_C_P(groupId, companyId, parentGroupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching groups
+	*/
+	public static List<Group> findByG_C_P(long groupId, long companyId,
+		long parentGroupId, int start, int end,
+		OrderByComparator<Group> orderByComparator) {
+		return getPersistence()
+				   .findByG_C_P(groupId, companyId, parentGroupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching groups
+	*/
+	public static List<Group> findByG_C_P(long groupId, long companyId,
+		long parentGroupId, int start, int end,
+		OrderByComparator<Group> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_C_P(groupId, companyId, parentGroupId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group
+	* @throws NoSuchGroupException if a matching group could not be found
+	*/
+	public static Group findByG_C_P_First(long groupId, long companyId,
+		long parentGroupId, OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getPersistence()
+				   .findByG_C_P_First(groupId, companyId, parentGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static Group fetchByG_C_P_First(long groupId, long companyId,
+		long parentGroupId, OrderByComparator<Group> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_P_First(groupId, companyId, parentGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group
+	* @throws NoSuchGroupException if a matching group could not be found
+	*/
+	public static Group findByG_C_P_Last(long groupId, long companyId,
+		long parentGroupId, OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getPersistence()
+				   .findByG_C_P_Last(groupId, companyId, parentGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static Group fetchByG_C_P_Last(long groupId, long companyId,
+		long parentGroupId, OrderByComparator<Group> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_P_Last(groupId, companyId, parentGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	*/
+	public static void removeByG_C_P(long groupId, long companyId,
+		long parentGroupId) {
+		getPersistence().removeByG_C_P(groupId, companyId, parentGroupId);
+	}
+
+	/**
+	* Returns the number of groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @return the number of matching groups
+	*/
+	public static int countByG_C_P(long groupId, long companyId,
+		long parentGroupId) {
+		return getPersistence().countByG_C_P(groupId, companyId, parentGroupId);
 	}
 
 	/**

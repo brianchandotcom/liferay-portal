@@ -67,12 +67,12 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", appId=");
 		sb.append(appId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -102,6 +102,8 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 	public App toEntityModel() {
 		AppImpl appImpl = new AppImpl();
 
+		appImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			appImpl.setUuid(StringPool.BLANK);
 		}
@@ -110,7 +112,6 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		}
 
 		appImpl.setAppId(appId);
-		appImpl.setCompanyId(companyId);
 		appImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -178,9 +179,9 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		appId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -196,6 +197,8 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -204,7 +207,6 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		}
 
 		objectOutput.writeLong(appId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -254,9 +256,9 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		}
 	}
 
+	public long companyId;
 	public String uuid;
 	public long appId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

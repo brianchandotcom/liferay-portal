@@ -79,12 +79,12 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", resourcePermissionId=");
 		sb.append(resourcePermissionId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", scope=");
@@ -110,9 +110,9 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 	public ResourcePermission toEntityModel() {
 		ResourcePermissionImpl resourcePermissionImpl = new ResourcePermissionImpl();
 
+		resourcePermissionImpl.setCompanyId(companyId);
 		resourcePermissionImpl.setMvccVersion(mvccVersion);
 		resourcePermissionImpl.setResourcePermissionId(resourcePermissionId);
-		resourcePermissionImpl.setCompanyId(companyId);
 
 		if (name == null) {
 			resourcePermissionImpl.setName(StringPool.BLANK);
@@ -143,9 +143,9 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		resourcePermissionId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		name = objectInput.readUTF();
 		scope = objectInput.readInt();
 		primKey = objectInput.readUTF();
@@ -159,9 +159,9 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(resourcePermissionId);
-		objectOutput.writeLong(companyId);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -186,9 +186,9 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 		objectOutput.writeBoolean(viewActionId);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long resourcePermissionId;
-	public long companyId;
 	public String name;
 	public int scope;
 	public String primKey;

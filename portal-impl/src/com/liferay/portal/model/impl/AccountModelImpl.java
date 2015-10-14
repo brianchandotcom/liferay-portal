@@ -68,9 +68,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	 */
 	public static final String TABLE_NAME = "Account_";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "accountId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -89,9 +89,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -108,7 +108,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		TABLE_COLUMNS_MAP.put("size_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Account_ (mvccVersion LONG default 0,accountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountId LONG,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Account_ (companyId LONG,mvccVersion LONG default 0,accountId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountId LONG,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Account_";
 	public static final String ORDER_BY_JPQL = " ORDER BY account.accountId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Account_.accountId ASC";
@@ -136,9 +136,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 		Account model = new AccountImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setAccountId(soapModel.getAccountId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -217,9 +217,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("accountId", getAccountId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -243,6 +243,12 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -253,12 +259,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 		if (accountId != null) {
 			setAccountId(accountId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -346,6 +346,17 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -366,17 +377,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public void setAccountId(long accountId) {
 		_accountId = accountId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -632,9 +632,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public Object clone() {
 		AccountImpl accountImpl = new AccountImpl();
 
+		accountImpl.setCompanyId(getCompanyId());
 		accountImpl.setMvccVersion(getMvccVersion());
 		accountImpl.setAccountId(getAccountId());
-		accountImpl.setCompanyId(getCompanyId());
 		accountImpl.setUserId(getUserId());
 		accountImpl.setUserName(getUserName());
 		accountImpl.setCreateDate(getCreateDate());
@@ -718,11 +718,11 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public CacheModel<Account> toCacheModel() {
 		AccountCacheModel accountCacheModel = new AccountCacheModel();
 
+		accountCacheModel.companyId = getCompanyId();
+
 		accountCacheModel.mvccVersion = getMvccVersion();
 
 		accountCacheModel.accountId = getAccountId();
-
-		accountCacheModel.companyId = getCompanyId();
 
 		accountCacheModel.userId = getUserId();
 
@@ -833,12 +833,12 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", accountId=");
 		sb.append(getAccountId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -881,16 +881,16 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>accountId</column-name><column-value><![CDATA[");
 		sb.append(getAccountId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -958,9 +958,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			Account.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _accountId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

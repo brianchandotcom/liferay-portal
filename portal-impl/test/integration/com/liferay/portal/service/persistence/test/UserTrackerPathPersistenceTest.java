@@ -115,6 +115,8 @@ public class UserTrackerPathPersistenceTest {
 
 		UserTrackerPath newUserTrackerPath = _persistence.create(pk);
 
+		newUserTrackerPath.setCompanyId(RandomTestUtil.nextLong());
+
 		newUserTrackerPath.setMvccVersion(RandomTestUtil.nextLong());
 
 		newUserTrackerPath.setUserTrackerId(RandomTestUtil.nextLong());
@@ -127,6 +129,8 @@ public class UserTrackerPathPersistenceTest {
 
 		UserTrackerPath existingUserTrackerPath = _persistence.findByPrimaryKey(newUserTrackerPath.getPrimaryKey());
 
+		Assert.assertEquals(existingUserTrackerPath.getCompanyId(),
+			newUserTrackerPath.getCompanyId());
 		Assert.assertEquals(existingUserTrackerPath.getMvccVersion(),
 			newUserTrackerPath.getMvccVersion());
 		Assert.assertEquals(existingUserTrackerPath.getUserTrackerPathId(),
@@ -171,8 +175,8 @@ public class UserTrackerPathPersistenceTest {
 
 	protected OrderByComparator<UserTrackerPath> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserTrackerPath",
-			"mvccVersion", true, "userTrackerPathId", true, "userTrackerId",
-			true, "path", true, "pathDate", true);
+			"companyId", true, "mvccVersion", true, "userTrackerPathId", true,
+			"userTrackerId", true, "path", true, "pathDate", true);
 	}
 
 	@Test
@@ -373,6 +377,8 @@ public class UserTrackerPathPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		UserTrackerPath userTrackerPath = _persistence.create(pk);
+
+		userTrackerPath.setCompanyId(RandomTestUtil.nextLong());
 
 		userTrackerPath.setMvccVersion(RandomTestUtil.nextLong());
 

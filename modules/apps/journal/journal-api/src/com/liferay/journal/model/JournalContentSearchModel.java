@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface JournalContentSearchModel extends BaseModel<JournalContentSearch> {
+public interface JournalContentSearchModel extends BaseModel<JournalContentSearch>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,6 +61,22 @@ public interface JournalContentSearchModel extends BaseModel<JournalContentSearc
 	 * @param primaryKey the primary key of this journal content search
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this journal content search.
+	 *
+	 * @return the company ID of this journal content search
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this journal content search.
+	 *
+	 * @param companyId the company ID of this journal content search
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the content search ID of this journal content search.
@@ -87,20 +105,6 @@ public interface JournalContentSearchModel extends BaseModel<JournalContentSearc
 	 * @param groupId the group ID of this journal content search
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this journal content search.
-	 *
-	 * @return the company ID of this journal content search
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this journal content search.
-	 *
-	 * @param companyId the company ID of this journal content search
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the private layout of this journal content search.

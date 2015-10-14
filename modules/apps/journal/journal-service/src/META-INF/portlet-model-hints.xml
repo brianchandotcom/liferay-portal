@@ -2,11 +2,11 @@
 
 <model-hints>
 	<model name="com.liferay.journal.model.JournalArticle">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="id" type="long" />
 		<field name="resourcePrimKey" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -59,6 +59,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.journal.model.JournalArticleImage">
+		<field name="companyId" type="long" />
 		<field name="articleImageId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="articleId" type="String" />
@@ -69,15 +70,16 @@
 		<field name="tempImage" type="boolean" />
 	</model>
 	<model name="com.liferay.journal.model.JournalArticleResource">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="resourcePrimKey" type="long" />
 		<field name="groupId" type="long" />
 		<field name="articleId" type="String" />
 	</model>
 	<model name="com.liferay.journal.model.JournalContentSearch">
+		<field name="companyId" type="long" />
 		<field name="contentSearchId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="privateLayout" type="boolean" />
 		<field name="layoutId" type="long" />
 		<field name="portletId" type="String">
@@ -86,10 +88,10 @@
 		<field name="articleId" type="String" />
 	</model>
 	<model name="com.liferay.journal.model.JournalFeed">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="id" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -122,10 +124,10 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.journal.model.JournalFolder">
+		<field name="companyId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="folderId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />

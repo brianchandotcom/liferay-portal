@@ -68,7 +68,9 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public String toString() {
 		StringBundler sb = new StringBundler(69);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", id=");
 		sb.append(id);
@@ -76,8 +78,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(resourcePrimKey);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -145,6 +145,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public JournalArticle toEntityModel() {
 		JournalArticleImpl journalArticleImpl = new JournalArticleImpl();
 
+		journalArticleImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			journalArticleImpl.setUuid(StringPool.BLANK);
 		}
@@ -155,7 +157,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		journalArticleImpl.setId(id);
 		journalArticleImpl.setResourcePrimKey(resourcePrimKey);
 		journalArticleImpl.setGroupId(groupId);
-		journalArticleImpl.setCompanyId(companyId);
 		journalArticleImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -316,11 +317,11 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		id = objectInput.readLong();
 		resourcePrimKey = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -358,6 +359,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -368,7 +371,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		objectOutput.writeLong(id);
 		objectOutput.writeLong(resourcePrimKey);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -480,11 +482,11 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		objectOutput.writeObject(_document);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long id;
 	public long resourcePrimKey;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

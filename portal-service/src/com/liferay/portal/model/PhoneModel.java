@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
-	StagedAuditedModel {
+	PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
 	 * @param primaryKey the primary key of this phone
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this phone.
+	 *
+	 * @return the company ID of this phone
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this phone.
+	 *
+	 * @param companyId the company ID of this phone
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this phone.
@@ -107,22 +123,6 @@ public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
 	 * @param phoneId the phone ID of this phone
 	 */
 	public void setPhoneId(long phoneId);
-
-	/**
-	 * Returns the company ID of this phone.
-	 *
-	 * @return the company ID of this phone
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this phone.
-	 *
-	 * @param companyId the company ID of this phone
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this phone.

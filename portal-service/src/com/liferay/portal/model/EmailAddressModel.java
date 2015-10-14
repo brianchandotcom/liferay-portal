@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress>,
-	MVCCModel, StagedAuditedModel {
+	MVCCModel, PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress
 	 * @param primaryKey the primary key of this email address
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this email address.
+	 *
+	 * @return the company ID of this email address
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this email address.
+	 *
+	 * @param companyId the company ID of this email address
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this email address.
@@ -107,22 +123,6 @@ public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress
 	 * @param emailAddressId the email address ID of this email address
 	 */
 	public void setEmailAddressId(long emailAddressId);
-
-	/**
-	 * Returns the company ID of this email address.
-	 *
-	 * @return the company ID of this email address
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this email address.
-	 *
-	 * @param companyId the company ID of this email address
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this email address.

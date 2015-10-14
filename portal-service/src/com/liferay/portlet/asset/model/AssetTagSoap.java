@@ -34,10 +34,10 @@ public class AssetTagSoap implements Serializable {
 	public static AssetTagSoap toSoapModel(AssetTag model) {
 		AssetTagSoap soapModel = new AssetTagSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setTagId(model.getTagId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -97,6 +97,14 @@ public class AssetTagSoap implements Serializable {
 		setTagId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -119,14 +127,6 @@ public class AssetTagSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -185,10 +185,10 @@ public class AssetTagSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _tagId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

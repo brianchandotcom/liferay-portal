@@ -67,12 +67,12 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{statsUserId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", statsUserId=");
 		sb.append(statsUserId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", entryCount=");
@@ -94,9 +94,9 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 	public BlogsStatsUser toEntityModel() {
 		BlogsStatsUserImpl blogsStatsUserImpl = new BlogsStatsUserImpl();
 
+		blogsStatsUserImpl.setCompanyId(companyId);
 		blogsStatsUserImpl.setStatsUserId(statsUserId);
 		blogsStatsUserImpl.setGroupId(groupId);
-		blogsStatsUserImpl.setCompanyId(companyId);
 		blogsStatsUserImpl.setUserId(userId);
 		blogsStatsUserImpl.setEntryCount(entryCount);
 
@@ -118,9 +118,9 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		statsUserId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		entryCount = objectInput.readInt();
 		lastPostDate = objectInput.readLong();
@@ -132,9 +132,9 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(statsUserId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeInt(entryCount);
 		objectOutput.writeLong(lastPostDate);
@@ -143,9 +143,9 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 		objectOutput.writeDouble(ratingsAverageScore);
 	}
 
+	public long companyId;
 	public long statsUserId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public int entryCount;
 	public long lastPostDate;

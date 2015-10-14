@@ -51,6 +51,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("moduleId", getModuleId());
 		attributes.put("appId", getAppId());
@@ -63,6 +64,12 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -138,6 +145,16 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	@Override
 	public java.lang.String getBundleVersion() {
 		return _module.getBundleVersion();
+	}
+
+	/**
+	* Returns the company ID of this module.
+	*
+	* @return the company ID of this module
+	*/
+	@Override
+	public long getCompanyId() {
+		return _module.getCompanyId();
 	}
 
 	/**
@@ -253,6 +270,16 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_module.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this module.
+	*
+	* @param companyId the company ID of this module
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_module.setCompanyId(companyId);
 	}
 
 	/**

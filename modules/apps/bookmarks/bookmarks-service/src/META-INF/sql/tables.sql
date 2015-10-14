@@ -1,8 +1,8 @@
 create table BookmarksEntry (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	entryId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -23,10 +23,10 @@ create table BookmarksEntry (
 );
 
 create table BookmarksFolder (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	folderId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

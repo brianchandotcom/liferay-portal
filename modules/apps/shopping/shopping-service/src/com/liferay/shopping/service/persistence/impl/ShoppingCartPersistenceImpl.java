@@ -1461,6 +1461,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		shoppingCart.setNew(true);
 		shoppingCart.setPrimaryKey(cartId);
 
+		shoppingCart.setCompanyId(0);
+
 		return shoppingCart;
 	}
 
@@ -1663,9 +1665,9 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		shoppingCartImpl.setNew(shoppingCart.isNew());
 		shoppingCartImpl.setPrimaryKey(shoppingCart.getPrimaryKey());
 
+		shoppingCartImpl.setCompanyId(shoppingCart.getCompanyId());
 		shoppingCartImpl.setCartId(shoppingCart.getCartId());
 		shoppingCartImpl.setGroupId(shoppingCart.getGroupId());
-		shoppingCartImpl.setCompanyId(shoppingCart.getCompanyId());
 		shoppingCartImpl.setUserId(shoppingCart.getUserId());
 		shoppingCartImpl.setUserName(shoppingCart.getUserName());
 		shoppingCartImpl.setCreateDate(shoppingCart.getCreateDate());

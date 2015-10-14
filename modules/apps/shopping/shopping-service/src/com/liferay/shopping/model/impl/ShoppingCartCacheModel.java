@@ -68,12 +68,12 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{cartId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", cartId=");
 		sb.append(cartId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,9 +99,9 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 	public ShoppingCart toEntityModel() {
 		ShoppingCartImpl shoppingCartImpl = new ShoppingCartImpl();
 
+		shoppingCartImpl.setCompanyId(companyId);
 		shoppingCartImpl.setCartId(cartId);
 		shoppingCartImpl.setGroupId(groupId);
-		shoppingCartImpl.setCompanyId(companyId);
 		shoppingCartImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -149,9 +149,9 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		cartId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -165,9 +165,9 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(cartId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -198,9 +198,9 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		objectOutput.writeBoolean(insure);
 	}
 
+	public long companyId;
 	public long cartId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -132,10 +132,10 @@ public class SCProductScreenshotPersistenceTest {
 
 		SCProductScreenshot existingSCProductScreenshot = _persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
-		Assert.assertEquals(existingSCProductScreenshot.getProductScreenshotId(),
-			newSCProductScreenshot.getProductScreenshotId());
 		Assert.assertEquals(existingSCProductScreenshot.getCompanyId(),
 			newSCProductScreenshot.getCompanyId());
+		Assert.assertEquals(existingSCProductScreenshot.getProductScreenshotId(),
+			newSCProductScreenshot.getProductScreenshotId());
 		Assert.assertEquals(existingSCProductScreenshot.getGroupId(),
 			newSCProductScreenshot.getGroupId());
 		Assert.assertEquals(existingSCProductScreenshot.getProductEntryId(),
@@ -201,7 +201,7 @@ public class SCProductScreenshotPersistenceTest {
 
 	protected OrderByComparator<SCProductScreenshot> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductScreenshot",
-			"productScreenshotId", true, "companyId", true, "groupId", true,
+			"companyId", true, "productScreenshotId", true, "groupId", true,
 			"productEntryId", true, "thumbnailId", true, "fullImageId", true,
 			"priority", true);
 	}

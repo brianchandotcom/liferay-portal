@@ -61,9 +61,9 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	 */
 	public static final String TABLE_NAME = "JournalContentSearch";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "contentSearchId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "privateLayout", Types.BOOLEAN },
 			{ "layoutId", Types.BIGINT },
 			{ "portletId", Types.VARCHAR },
@@ -72,16 +72,16 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contentSearchId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("articleId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalContentSearch (contentSearchId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalContentSearch (companyId LONG,contentSearchId LONG not null primary key,groupId LONG,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalContentSearch";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalContentSearch.contentSearchId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalContentSearch.contentSearchId ASC";
@@ -143,9 +143,9 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("contentSearchId", getContentSearchId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("portletId", getPortletId());
@@ -159,6 +159,12 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long contentSearchId = (Long)attributes.get("contentSearchId");
 
 		if (contentSearchId != null) {
@@ -169,12 +175,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
@@ -200,6 +200,16 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		if (articleId != null) {
 			setArticleId(articleId);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -232,16 +242,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -374,9 +374,9 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public Object clone() {
 		JournalContentSearchImpl journalContentSearchImpl = new JournalContentSearchImpl();
 
+		journalContentSearchImpl.setCompanyId(getCompanyId());
 		journalContentSearchImpl.setContentSearchId(getContentSearchId());
 		journalContentSearchImpl.setGroupId(getGroupId());
-		journalContentSearchImpl.setCompanyId(getCompanyId());
 		journalContentSearchImpl.setPrivateLayout(getPrivateLayout());
 		journalContentSearchImpl.setLayoutId(getLayoutId());
 		journalContentSearchImpl.setPortletId(getPortletId());
@@ -466,11 +466,11 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public CacheModel<JournalContentSearch> toCacheModel() {
 		JournalContentSearchCacheModel journalContentSearchCacheModel = new JournalContentSearchCacheModel();
 
+		journalContentSearchCacheModel.companyId = getCompanyId();
+
 		journalContentSearchCacheModel.contentSearchId = getContentSearchId();
 
 		journalContentSearchCacheModel.groupId = getGroupId();
-
-		journalContentSearchCacheModel.companyId = getCompanyId();
 
 		journalContentSearchCacheModel.privateLayout = getPrivateLayout();
 
@@ -499,12 +499,12 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{contentSearchId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", contentSearchId=");
 		sb.append(getContentSearchId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", privateLayout=");
 		sb.append(getPrivateLayout());
 		sb.append(", layoutId=");
@@ -527,16 +527,16 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>contentSearchId</column-name><column-value><![CDATA[");
 		sb.append(getContentSearchId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
@@ -564,11 +564,11 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			JournalContentSearch.class
 		};
+	private long _companyId;
 	private long _contentSearchId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;

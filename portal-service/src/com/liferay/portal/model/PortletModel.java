@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PortletModel extends BaseModel<Portlet>, MVCCModel {
+public interface PortletModel extends BaseModel<Portlet>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,6 +58,22 @@ public interface PortletModel extends BaseModel<Portlet>, MVCCModel {
 	 * @param primaryKey the primary key of this portlet
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this portlet.
+	 *
+	 * @return the company ID of this portlet
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this portlet.
+	 *
+	 * @param companyId the company ID of this portlet
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this portlet.
@@ -87,20 +104,6 @@ public interface PortletModel extends BaseModel<Portlet>, MVCCModel {
 	 * @param id the ID of this portlet
 	 */
 	public void setId(long id);
-
-	/**
-	 * Returns the company ID of this portlet.
-	 *
-	 * @return the company ID of this portlet
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this portlet.
-	 *
-	 * @param companyId the company ID of this portlet
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the portlet ID of this portlet.

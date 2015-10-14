@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel {
+public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,6 +60,22 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel
 	 * @param primaryKey the primary key of this ticket
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this ticket.
+	 *
+	 * @return the company ID of this ticket
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this ticket.
+	 *
+	 * @param companyId the company ID of this ticket
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this ticket.
@@ -89,20 +106,6 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel
 	 * @param ticketId the ticket ID of this ticket
 	 */
 	public void setTicketId(long ticketId);
-
-	/**
-	 * Returns the company ID of this ticket.
-	 *
-	 * @return the company ID of this ticket
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this ticket.
-	 *
-	 * @param companyId the company ID of this ticket
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the create date of this ticket.

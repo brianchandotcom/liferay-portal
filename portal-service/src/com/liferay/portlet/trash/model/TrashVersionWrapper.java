@@ -52,6 +52,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("versionId", getVersionId());
 		attributes.put("entryId", getEntryId());
 		attributes.put("classNameId", getClassNameId());
@@ -64,6 +65,12 @@ public class TrashVersionWrapper implements TrashVersion,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long versionId = (Long)attributes.get("versionId");
 
 		if (versionId != null) {
@@ -140,6 +147,16 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public long getClassPK() {
 		return _trashVersion.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this trash version.
+	*
+	* @return the company ID of this trash version
+	*/
+	@Override
+	public long getCompanyId() {
+		return _trashVersion.getCompanyId();
 	}
 
 	/**
@@ -271,6 +288,16 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public void setClassPK(long classPK) {
 		_trashVersion.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this trash version.
+	*
+	* @param companyId the company ID of this trash version
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_trashVersion.setCompanyId(companyId);
 	}
 
 	/**

@@ -81,14 +81,14 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", systemEventId=");
 		sb.append(systemEventId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -120,10 +120,10 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 	public SystemEvent toEntityModel() {
 		SystemEventImpl systemEventImpl = new SystemEventImpl();
 
+		systemEventImpl.setCompanyId(companyId);
 		systemEventImpl.setMvccVersion(mvccVersion);
 		systemEventImpl.setSystemEventId(systemEventId);
 		systemEventImpl.setGroupId(groupId);
-		systemEventImpl.setCompanyId(companyId);
 		systemEventImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -169,10 +169,10 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		systemEventId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -189,10 +189,10 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(systemEventId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -226,10 +226,10 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		}
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long systemEventId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

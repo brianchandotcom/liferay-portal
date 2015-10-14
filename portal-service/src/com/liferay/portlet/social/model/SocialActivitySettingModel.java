@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -41,7 +42,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface SocialActivitySettingModel extends BaseModel<SocialActivitySetting>,
-	TypedModel {
+	PartitionableModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,6 +62,22 @@ public interface SocialActivitySettingModel extends BaseModel<SocialActivitySett
 	 * @param primaryKey the primary key of this social activity setting
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this social activity setting.
+	 *
+	 * @return the company ID of this social activity setting
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this social activity setting.
+	 *
+	 * @param companyId the company ID of this social activity setting
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the activity setting ID of this social activity setting.
@@ -89,20 +106,6 @@ public interface SocialActivitySettingModel extends BaseModel<SocialActivitySett
 	 * @param groupId the group ID of this social activity setting
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this social activity setting.
-	 *
-	 * @return the company ID of this social activity setting
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this social activity setting.
-	 *
-	 * @param companyId the company ID of this social activity setting
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the fully qualified class name of this social activity setting.

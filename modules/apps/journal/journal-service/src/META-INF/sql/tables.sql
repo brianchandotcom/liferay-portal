@@ -1,9 +1,9 @@
 create table JournalArticle (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	id_ LONG not null primary key,
 	resourcePrimKey LONG,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -36,6 +36,7 @@ create table JournalArticle (
 );
 
 create table JournalArticleImage (
+	companyId LONG,
 	articleImageId LONG not null primary key,
 	groupId LONG,
 	articleId VARCHAR(75) null,
@@ -47,6 +48,7 @@ create table JournalArticleImage (
 );
 
 create table JournalArticleResource (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	resourcePrimKey LONG not null primary key,
 	groupId LONG,
@@ -54,9 +56,9 @@ create table JournalArticleResource (
 );
 
 create table JournalContentSearch (
+	companyId LONG,
 	contentSearchId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	privateLayout BOOLEAN,
 	layoutId LONG,
 	portletId VARCHAR(200) null,
@@ -64,10 +66,10 @@ create table JournalContentSearch (
 );
 
 create table JournalFeed (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	id_ LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -90,10 +92,10 @@ create table JournalFeed (
 );
 
 create table JournalFolder (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	folderId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

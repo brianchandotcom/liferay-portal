@@ -69,14 +69,14 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", calendarNotificationTemplateId=");
 		sb.append(calendarNotificationTemplateId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -108,6 +108,8 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 	public CalendarNotificationTemplate toEntityModel() {
 		CalendarNotificationTemplateImpl calendarNotificationTemplateImpl = new CalendarNotificationTemplateImpl();
 
+		calendarNotificationTemplateImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			calendarNotificationTemplateImpl.setUuid(StringPool.BLANK);
 		}
@@ -117,7 +119,6 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 
 		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(calendarNotificationTemplateId);
 		calendarNotificationTemplateImpl.setGroupId(groupId);
-		calendarNotificationTemplateImpl.setCompanyId(companyId);
 		calendarNotificationTemplateImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -194,10 +195,10 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		calendarNotificationTemplateId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -214,6 +215,8 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -223,7 +226,6 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 
 		objectOutput.writeLong(calendarNotificationTemplateId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -275,10 +277,10 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long calendarNotificationTemplateId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

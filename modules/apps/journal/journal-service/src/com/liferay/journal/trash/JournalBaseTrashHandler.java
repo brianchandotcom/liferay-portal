@@ -19,7 +19,6 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -29,7 +28,6 @@ import com.liferay.portal.model.ContainerModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
@@ -49,7 +47,7 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelName(long classPK) {
+	public String getContainerModelName() {
 		return "folder";
 	}
 
@@ -110,13 +108,6 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 	@Override
 	public String getRootContainerModelName() {
 		return "folder";
-	}
-
-	@Override
-	public String getRootContainerModelTitle(
-		long containerModelId, Locale locale) {
-
-		return LanguageUtil.get(locale, "home");
 	}
 
 	@Override

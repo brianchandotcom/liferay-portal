@@ -15,7 +15,6 @@
 package com.liferay.document.library.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -39,7 +38,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Zsolt Berentey
@@ -63,7 +61,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelName(long classPK) {
+	public String getContainerModelName() {
 		return "folder";
 	}
 
@@ -128,13 +126,6 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	@Override
 	public String getRootContainerModelName() {
 		return "folder";
-	}
-
-	@Override
-	public String getRootContainerModelTitle(
-		long containerModelId, Locale locale) {
-
-		return LanguageUtil.get(locale, "home");
 	}
 
 	@Override

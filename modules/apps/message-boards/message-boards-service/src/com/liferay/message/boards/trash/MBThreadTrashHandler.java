@@ -82,7 +82,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelName(long classPK) {
+	public String getContainerModelName() {
 		return "category";
 	}
 

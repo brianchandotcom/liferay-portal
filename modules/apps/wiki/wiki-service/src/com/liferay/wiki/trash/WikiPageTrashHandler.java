@@ -314,11 +314,6 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public boolean isRootContainerModelMovable() {
-		return true;
-	}
-
-	@Override
 	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException {
 

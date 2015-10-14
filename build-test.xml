@@ -7125,8 +7125,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<beanshell>
 			<![CDATA[
-				import com.liferay.portal.kernel.util.StringUtil;
-
 				import org.apache.commons.io.FileUtils;
 
 				Set requiredPluginNamesSet = new HashSet();
@@ -7134,15 +7132,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 				String[] pluginTypes = {"hook", "layouttpl", "portlet", "required", "theme", "web"};
 
 				for (String pluginType : pluginTypes) {
-					String[] pluginNames = StringUtil.split(project.getProperty(pluginType + ".plugins.includes"), ',');
+					String pluginNamesString = project.getProperty(pluginType + ".plugins.includes");
 
-					for (String pluginName : pluginNames) {
-						requiredPluginNamesSet.add(pluginName);
+					if (pluginNamesString != null) {
+						String[] pluginNames = pluginNamesString.split(",");
+
+						for (String pluginName : pluginNames) {
+							requiredPluginNamesSet.add(pluginName);
+						}
 					}
 				}
 
 				System.out.println("Ensuring the following plugins have been deployed:");
-				System.out.println(StringUtil.merge(requiredPluginNamesSet));
+				System.out.println(requiredPluginNamesSet);
 
 				String logFilePath = project.getProperty("log.file.path");
 

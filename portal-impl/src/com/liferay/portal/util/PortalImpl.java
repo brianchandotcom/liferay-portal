@@ -3293,6 +3293,34 @@ public class PortalImpl implements Portal {
 			}
 		}
 
+		// Get locale from group
+
+		if (groupId > 0) {
+			try {
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				UnicodeProperties typeSettingsProperties =
+					group.getTypeSettingsProperties();
+
+				String defaultLanguageId = typeSettingsProperties.getProperty(
+					"languageId");
+
+				if (Validator.isNotNull(defaultLanguageId)) {
+					locale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+					if (LanguageUtil.isAvailableLocale(groupId, locale)) {
+						if (initialize) {
+							setLocale(request, response, locale);
+						}
+
+						return locale;
+					}
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
 		// Get locale from the default user
 
 		Company company = null;

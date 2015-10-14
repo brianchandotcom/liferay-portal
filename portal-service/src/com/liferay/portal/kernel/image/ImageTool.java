@@ -47,8 +47,6 @@ public interface ImageTool {
 
 	public static final String TYPE_TIFF = "tiff";
 
-	public Future<RenderedImage> convertCMYKtoRGB(byte[] bytes, String type);
-
 	public BufferedImage convertImageType(BufferedImage sourceImage, int type);
 
 	public RenderedImage crop(

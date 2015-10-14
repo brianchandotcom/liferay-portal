@@ -293,28 +293,6 @@ public class ImageProcessorImpl
 				return;
 			}
 
-			ColorModel colorModel = renderedImage.getColorModel();
-
-			if (colorModel.getNumColorComponents() == 4) {
-				Future<RenderedImage> future = ImageToolUtil.convertCMYKtoRGB(
-					bytes, imageBag.getType());
-
-				if (future == null) {
-					return;
-				}
-
-				String processIdentity = String.valueOf(
-					destinationFileVersion.getFileVersionId());
-
-				futures.put(processIdentity, future);
-
-				RenderedImage convertedRenderedImage = future.get();
-
-				if (convertedRenderedImage != null) {
-					renderedImage = convertedRenderedImage;
-				}
-			}
-
 			if (!_hasPreview(destinationFileVersion)) {
 				_storePreviewImage(destinationFileVersion, renderedImage);
 			}

@@ -408,8 +408,8 @@ public class FileEntryStagedModelDataHandler
 
 				String fileEntryTitle =
 					DLFileEntryLocalServiceUtil.getUniqueTitle(
-						portletDataContext.getScopeGroupId(), folderId, -1,
-						fileEntry.getTitle(), fileEntry.getExtension());
+						portletDataContext.getScopeGroupId(), folderId, 0,
+						fileEntry.getTitle());
 
 				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 					userId, portletDataContext.getScopeGroupId(), folderId,
@@ -529,8 +529,8 @@ public class FileEntryStagedModelDataHandler
 		}
 		else {
 			String fileEntryTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
-					portletDataContext.getScopeGroupId(), folderId, -1,
-					fileEntry.getTitle(), fileEntry.getExtension());
+				portletDataContext.getScopeGroupId(), folderId, 0,
+				fileEntry.getTitle());
 
 			importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 				userId, portletDataContext.getScopeGroupId(), folderId,

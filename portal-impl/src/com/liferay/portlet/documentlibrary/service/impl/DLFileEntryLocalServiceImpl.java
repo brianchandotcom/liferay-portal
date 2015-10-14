@@ -1511,17 +1511,10 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public String getUniqueTitle(
-			long groupId, long folderId, long fileEntryId, String title,
-			String extension)
+			long groupId, long folderId, long fileEntryId, String title)
 		throws PortalException {
 
-		String titleExtension = StringPool.BLANK;
-		String titleWithoutExtension = title;
-
-		if (title.endsWith(StringPool.PERIOD.concat(extension))) {
-			titleExtension = extension;
-			titleWithoutExtension = FileUtil.stripExtension(title);
-		}
+		String extension = FileUtil.stripExtension(title);
 
 		String uniqueTitle = title;
 
@@ -1544,14 +1537,8 @@ public class DLFileEntryLocalServiceImpl
 				}
 			}
 
-			uniqueTitle =
-				titleWithoutExtension + StringPool.UNDERLINE +
-					String.valueOf(i++);
-
-			if (Validator.isNotNull(titleExtension)) {
-				uniqueTitle = uniqueTitle.concat(
-					StringPool.PERIOD.concat(titleExtension));
-			}
+			uniqueTitle = FileUtil.appendParentheticalSuffix(
+				title, String.valueOf(i));
 		}
 	}
 

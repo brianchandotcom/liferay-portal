@@ -191,11 +191,14 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			T stagedModel = null;
 
 			if (stagedModel instanceof StagedGroupedModel) {
-				stagedModel = fetchStagedModelByUuidAndGroupId(_uuid, _groupId);
+				stagedModel =
+					stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+						_uuid, _groupId);
 			}
 			else {
-				List<T> stagedModels = fetchStagedModelsByUuidAndCompanyId(
-					_uuid, _companyId);
+				List<T> stagedModels =
+					stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
+						_uuid, _companyId);
 
 				if (!stagedModels.isEmpty()) {
 					stagedModel = stagedModels.get(0);

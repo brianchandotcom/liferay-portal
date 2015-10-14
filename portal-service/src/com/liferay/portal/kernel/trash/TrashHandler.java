@@ -194,6 +194,11 @@ public interface TrashHandler {
 
 	public String getContainerModelClassName(long classPK);
 
+	/**
+	 * Returns the name of the container model (e.g. folder name).
+	 *
+	 * @return the name of the container model
+	 */
 	public String getContainerModelName();
 
 	/**

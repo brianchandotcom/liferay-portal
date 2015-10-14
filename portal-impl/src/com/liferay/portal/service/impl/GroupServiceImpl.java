@@ -722,14 +722,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		List<Group> userSiteGroups = new ArrayList<>();
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (max != QueryUtil.ALL_POS) {
-			start = 0;
-			end = max;
-		}
-
 		if (classNames == null) {
 			classNames = new String[] {
 				Company.class.getName(), Group.class.getName(),
@@ -801,7 +793,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return Collections.unmodifiableList(
-			ListUtil.subList(ListUtil.unique(userSiteGroups), start, end));
+			ListUtil.subList(ListUtil.unique(userSiteGroups), 0, max));
 	}
 
 	/**

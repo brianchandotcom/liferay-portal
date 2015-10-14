@@ -139,6 +139,12 @@ public class JournalDisplayContext {
 				"showEditActions", String.valueOf(isShowEditActions()));
 		}
 
+		String deltaEntry = ParamUtil.getString(_request, "deltaEntry");
+
+		if (Validator.isNotNull(deltaEntry)) {
+			portletURL.setParameter("deltaEntry", deltaEntry);
+		}
+
 		return portletURL;
 	}
 

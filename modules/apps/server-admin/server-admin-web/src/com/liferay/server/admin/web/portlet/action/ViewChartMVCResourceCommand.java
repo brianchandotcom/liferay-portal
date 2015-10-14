@@ -78,7 +78,7 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(resourceBundle.getString("used-memory"));
+		sb.append(ResourceBundleUtil.getString(resourceBundle, "used-memory"));
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(StringPool.SPACE);
@@ -87,13 +87,15 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 			valueDataset = new DefaultValueDataset(
 				(usedMemory * 100) / totalMemory);
 
-			sb.append(resourceBundle.getString("total-memory"));
+			sb.append(
+				ResourceBundleUtil.getString(resourceBundle, "total-memory"));
 		}
 		else {
 			valueDataset = new DefaultValueDataset(
 				(usedMemory * 100) / maxMemory);
 
-			sb.append(resourceBundle.getString("maximum-memory"));
+			sb.append(
+				ResourceBundleUtil.getString(resourceBundle, "maximum-memory"));
 		}
 
 		MeterPlot meterPlot = getMeterPlot(themeDisplay, valueDataset);

@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -112,6 +113,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -1162,8 +1164,11 @@ public class CalendarPortlet extends MVCPortlet {
 			}
 		}
 		else {
-			String message = themeDisplay.translate(
-				"failed-to-import-empty-file");
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", themeDisplay.getLocale(), getClass());
+
+			String message = ResourceBundleUtil.getString(
+				resourceBundle, "failed-to-import-empty-file");
 
 			jsonObject.put("error", message);
 		}

@@ -377,6 +377,12 @@ public class JournalDisplayContext {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
 		}
 
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
 		if (!isShowEditActions()) {
 			portletURL.setParameter(
 				"showEditActions", String.valueOf(isShowEditActions()));

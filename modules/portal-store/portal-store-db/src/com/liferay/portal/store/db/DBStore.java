@@ -116,11 +116,8 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (PortalException pe) {
-			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe);
-			}
+			logFailedDeletion(
+				companyId, repositoryId, fileName, versionLabel, pe);
 		}
 	}
 

@@ -230,13 +230,13 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			logFailedDeletion(companyId, repositoryId, dirName);
+			logFailedDeletion(companyId, repositoryId, dirName, pnfe);
 		}
 		catch (RepositoryException re) {
 			String message = GetterUtil.getString(re.getMessage());
 
 			if (message.contains("failed to resolve path")) {
-				logFailedDeletion(companyId, repositoryId, dirName);
+				logFailedDeletion(companyId, repositoryId, dirName, re);
 			}
 			else {
 				throw new SystemException(re);
@@ -289,7 +289,7 @@ public class JCRStore extends BaseStore {
 			versionHistory.addVersionLabel(version.getName(), "0.0", false);
 		}
 		catch (PathNotFoundException pnfe) {
-			logFailedDeletion(companyId, repositoryId, fileName);
+			logFailedDeletion(companyId, repositoryId, fileName, pnfe);
 
 			return;
 		}
@@ -340,7 +340,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			logFailedDeletion(companyId, repositoryId, fileName);
+			logFailedDeletion(companyId, repositoryId, fileName, pnfe);
 
 			return;
 		}
@@ -367,7 +367,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			logFailedDeletion(companyId, repositoryId, fileName);
+			logFailedDeletion(companyId, repositoryId, fileName, pnfe);
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);

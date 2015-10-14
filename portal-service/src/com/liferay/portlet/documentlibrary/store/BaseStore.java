@@ -593,7 +593,14 @@ public abstract class BaseStore implements Store {
 	protected void logFailedDeletion(
 		long companyId, long repositoryId, String fileName) {
 
-		logFailedDeletion(companyId, repositoryId, fileName, null);
+		logFailedDeletion(companyId, repositoryId, fileName, null, null);
+	}
+
+	protected void logFailedDeletion(
+		long companyId, long repositoryId, String fileName,
+		Exception exception) {
+
+		logFailedDeletion(companyId, repositoryId, fileName, null, exception);
 	}
 
 	protected void logFailedDeletion(
@@ -608,7 +615,9 @@ public abstract class BaseStore implements Store {
 		long companyId, long repositoryId, String fileName, String versionLabel,
 		Exception cause) {
 
-		if (_log.isWarnEnabled()) {
+		if ((_log.isWarnEnabled() && (cause != null)) ||
+			(_log.isDebugEnabled() && (cause == null))) {
+
 			StringBundler sb = new StringBundler(9);
 
 			sb.append("Unable to delete file {companyId=");
@@ -625,11 +634,12 @@ public abstract class BaseStore implements Store {
 
 			sb.append("} because it does not exist");
 
-			if (cause == null) {
-				_log.warn(sb.toString());
-			}
-			else {
+			if (_log.isWarnEnabled() && (cause != null)) {
 				_log.warn(sb.toString(), cause);
+			}
+
+			if (_log.isDebugEnabled() && (cause == null)) {
+				_log.debug(sb.toString());
 			}
 		}
 	}

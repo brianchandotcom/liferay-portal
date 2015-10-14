@@ -1717,7 +1717,7 @@ this task.
 			src="${app.server.parent.dir}/${app.server.tcserver.zip.name}"
 		>
 			<mapper
-				from="vfabric-tc-server-standard-${app.server.tcserver.version}.RELEASE/*"
+				from="vfabric-tc-server-developer-${app.server.tcserver.version}.RELEASE/*"
 				to="tc-server-${app.server.tcserver.version}/*"
 				type="glob"
 			/>
@@ -1747,13 +1747,13 @@ this task.
 			<os family="windows" />
 			<then>
 				<replace file="${app.server.tcserver.bin.dir}/setenv.bat">
-					<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss192K]]></replacetoken>
+					<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss256K]]></replacetoken>
 					<replacevalue><![CDATA[set JVM_OPTS=-Xmx1024M -Xss512K -XX:MaxPermSize=512m]]></replacevalue>
 				</replace>
 			</then>
 			<else>
 				<replace file="${app.server.tcserver.bin.dir}/setenv.sh">
-					<replacetoken><![CDATA[JVM_OPTS="-Xmx512M -Xss192K"]]></replacetoken>
+					<replacetoken><![CDATA[JVM_OPTS="-Xmx512M -Xss256K"]]></replacetoken>
 					<replacevalue><![CDATA[JVM_OPTS="-Xmx1024M -Xss512K -XX:MaxPermSize=512m"]]></replacevalue>
 				</replace>
 			</else>
@@ -1778,7 +1778,7 @@ this task.
 				</replace>
 
 				<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
-					<replacetoken><![CDATA[wrapper.java.additional.9="-Xss192K"]]></replacetoken>
+					<replacetoken><![CDATA[wrapper.java.additional.9="-Xss256K"]]></replacetoken>
 					<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
 						wrapper.java.additional.10="-XX:MaxPermSize=256m"]]></replacevalue>
 				</replace>

@@ -445,7 +445,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Permissions')] | //a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

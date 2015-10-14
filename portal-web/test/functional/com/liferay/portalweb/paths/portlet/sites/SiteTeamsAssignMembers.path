@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>USER_GROUPS</td>
-	<td>//a[contains(.,'User Groups')]</td>
+	<td>//li[contains(@id,'SiteTeamsPortlet')]/a[contains(.,'User Groups')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -748,13 +748,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		if (ArrayUtil.contains(classNames, Company.class.getName())) {
-			userSiteGroups.addAll(
-				groupLocalService.search(
-					user.getCompanyId(),
-					new long[] {
-						classNameLocalService.getClassNameId(Company.class)
-					},
-					null, new LinkedHashMap<String, Object>(), start, end));
+			userSiteGroups.add(
+				groupLocalService.getCompanyGroup(user.getCompanyId()));
 		}
 
 		if (ArrayUtil.contains(classNames, Group.class.getName())) {

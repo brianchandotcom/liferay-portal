@@ -137,6 +137,17 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		_portlet.addSchedulerEntry(schedulerEntry);
 	}
 
+	/**
+	* Adds an application type.
+	*
+	* @param applicationType an application type
+	*/
+	@Override
+	public void addSupportedApplicationType(
+		com.liferay.portal.kernel.application.type.ApplicationType applicationType) {
+		_portlet.addSupportedApplicationType(applicationType);
+	}
+
 	@Override
 	public java.lang.Object clone() {
 		return new PortletWrapper((Portlet)_portlet.clone());
@@ -219,6 +230,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public java.util.Set<java.lang.String> getAllWindowStates() {
 		return _portlet.getAllWindowStates();
+	}
+
+	/**
+	* Returns the supported application types of the portlet.
+	*
+	* @return the supported application types of the portlet
+	*/
+	@Override
+	public java.util.Set<com.liferay.portal.kernel.application.type.ApplicationType> getApplicationTypes() {
+		return _portlet.getApplicationTypes();
 	}
 
 	/**
@@ -2270,6 +2291,18 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Sets the supported public render parameters of the portlet.
+	*
+	* @param applicationTypes the supported public render parameters of
+	the portlet
+	*/
+	@Override
+	public void setApplicationTypes(
+		java.util.Set<com.liferay.portal.kernel.application.type.ApplicationType> applicationTypes) {
+		_portlet.setApplicationTypes(applicationTypes);
+	}
+
+	/**
 	* Sets the names of the classes that represent asset types associated with
 	* the portlet.
 	*
@@ -2554,11 +2587,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setFriendlyURLRoutes(java.lang.String friendlyURLRoutes) {
 		_portlet.setFriendlyURLRoutes(friendlyURLRoutes);
-	}
-
-	@Override
-	public void setFullPageDisplayable(boolean fullPageDisplayable) {
-		_portlet.setFullPageDisplayable(fullPageDisplayable);
 	}
 
 	/**

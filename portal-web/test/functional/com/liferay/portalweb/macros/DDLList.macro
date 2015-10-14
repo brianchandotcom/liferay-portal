@@ -119,7 +119,7 @@
 		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_SELECT_LIST" value1="Select List" />
 
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Type" locator1="DDLConfiguration#SEARCH_FIELD" value1="${ddlListName}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${ddlListName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertClick" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Displaying List: ${ddlListName} (Modified)" />

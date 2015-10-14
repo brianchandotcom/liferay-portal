@@ -1,7 +1,8 @@
 <definition>
 	<command name="configureListViewPG">
-		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="AssertClick" locator1="PGDynamicdatalists#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 

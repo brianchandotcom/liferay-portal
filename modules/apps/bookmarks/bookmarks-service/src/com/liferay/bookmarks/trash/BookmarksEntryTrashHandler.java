@@ -22,12 +22,14 @@ import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker
 import com.liferay.bookmarks.util.BookmarksUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
+import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletRequest;
 
@@ -37,6 +39,10 @@ import javax.portlet.PortletRequest;
  * @author Levente Hudák
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"},
+	service = TrashHandler.class
+)
 public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 	@Override

@@ -114,7 +114,7 @@ public class BookmarksFolderAssetRenderer
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			return "/html/portlet/bookmarks/asset/folder_" + template + ".jsp";
+			return "/bookmarks/asset/folder_" + template + ".jsp";
 		}
 		else {
 			return null;

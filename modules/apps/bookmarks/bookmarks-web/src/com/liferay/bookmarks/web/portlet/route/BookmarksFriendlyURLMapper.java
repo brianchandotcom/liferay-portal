@@ -12,19 +12,30 @@
  * details.
  */
 
-package com.liferay.bookmarks.notifications;
+package com.liferay.bookmarks.web.portlet.route;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
+import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Roberto Díaz
+ * @author Iván Zaera
  */
-public class BookmarksUserNotificationHandler
-	extends BaseModelUserNotificationHandler {
+@Component(
+	property = {
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS
+	},
+	service = FriendlyURLMapper.class
+)
+public class BookmarksFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
-	public BookmarksUserNotificationHandler() {
-		setPortletId(BookmarksPortletKeys.BOOKMARKS);
+	@Override
+	public String getMapping() {
+		return _MAPPING;
 	}
+
+	private static final String _MAPPING = "bookmarks";
 
 }

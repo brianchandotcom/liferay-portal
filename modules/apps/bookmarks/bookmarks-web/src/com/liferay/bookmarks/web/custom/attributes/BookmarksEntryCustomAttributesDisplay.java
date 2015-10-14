@@ -14,13 +14,21 @@
 
 package com.liferay.bookmarks.web.custom.attributes;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS},
+	service = CustomAttributesDisplay.class
+)
 public class BookmarksEntryCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 

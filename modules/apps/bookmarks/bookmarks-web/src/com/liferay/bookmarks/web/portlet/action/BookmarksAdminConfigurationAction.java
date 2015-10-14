@@ -14,22 +14,38 @@
 
 package com.liferay.bookmarks.web.portlet.action;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Sergio González
  */
-public class BookmarksGroupServiceSettingsConfigurationAction
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN},
+	service = ConfigurationAction.class
+)
+public class BookmarksAdminConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
+
+	@Override
+	public String getJspPath(HttpServletRequest request) {
+		return "/bookmarks_admin/configuration.jsp";
+	}
 
 	@Override
 	public void processAction(
@@ -43,6 +59,15 @@ public class BookmarksGroupServiceSettingsConfigurationAction
 		validateRootFolder(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected void validateRootFolder(ActionRequest actionRequest)

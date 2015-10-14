@@ -12,34 +12,26 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.custom.attributes;
+package com.liferay.bookmarks.web.notifications;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge Ferrer
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
 	property = {"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS},
-	service = CustomAttributesDisplay.class
+	service = UserNotificationHandler.class
 )
-public class BookmarksFolderCustomAttributesDisplay
-	extends BaseCustomAttributesDisplay {
+public class BookmarksUserNotificationHandler
+	extends BaseModelUserNotificationHandler {
 
-	@Override
-	public String getClassName() {
-		return BookmarksFolder.class.getName();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/folder.png";
+	public BookmarksUserNotificationHandler() {
+		setPortletId(BookmarksPortletKeys.BOOKMARKS);
 	}
 
 }

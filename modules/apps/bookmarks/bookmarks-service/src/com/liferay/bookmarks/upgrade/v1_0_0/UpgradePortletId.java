@@ -23,8 +23,11 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"28", "28_WAR_bookmarksweb"},
-			new String[] {"198", "198_WAR_bookmarksweb"}
+			new String[] {
+				"28", "com_liferay_bookmarks_web_portlet_BookmarksPortlet"},
+			new String[] {
+				"198",
+				"com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet"}
 		};
 	}
 

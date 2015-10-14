@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.social;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,10 +23,16 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS},
+	service = SocialActivityInterpreter.class
+)
 public class BookmarksFolderActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 

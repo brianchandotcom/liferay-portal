@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>28_WAR_bookmarksweb</portlet-name>
+		<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>
@@ -22,7 +22,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>198_WAR_bookmarksweb</portlet-name>
+		<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>

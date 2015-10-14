@@ -95,12 +95,13 @@ AUI.add(
 				var fieldType = FieldTypes.get(type);
 				var settings = fieldType.get('settings');
 
-				var config = {};
+				var config = settings.fields.reduce(
+					function(prev, item) {
+						prev[item.name] = instance.get(item.name);
 
-				settings.fields.forEach(
-					function(settingField) {
-						config[settingField.name] = instance.get(settingField.name);
-					}
+						return prev;
+					},
+					{}
 				);
 
 				var fieldClass = Util.getFieldClass(type);

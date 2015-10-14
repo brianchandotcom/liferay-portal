@@ -60,20 +60,20 @@ import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.PortletItemLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.PortletItemLocalService;
+import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.service.PortletPreferencesLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.exportimport.LayoutImportException;
 import com.liferay.portlet.exportimport.controller.ExportController;
@@ -312,7 +312,7 @@ public class PortletExportController implements ExportController {
 
 		stopWatch.start();
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
+		Layout layout = _layoutLocalService.getLayout(
 			portletDataContext.getPlid());
 
 		if (!layout.isTypeControlPanel() && !layout.isTypePanel() &&
@@ -331,7 +331,7 @@ public class PortletExportController implements ExportController {
 			serviceContext.setCompanyId(layout.getCompanyId());
 			serviceContext.setSignedIn(false);
 
-			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			long defaultUserId = _userLocalService.getDefaultUserId(
 				layout.getCompanyId());
 
 			serviceContext.setUserId(defaultUserId);
@@ -359,7 +359,7 @@ public class PortletExportController implements ExportController {
 			Group scopeGroup = null;
 
 			if (scopeType.equals("company")) {
-				scopeGroup = GroupLocalServiceUtil.getCompanyGroup(
+				scopeGroup = _groupLocalService.getCompanyGroup(
 					layout.getCompanyId());
 			}
 			else if (Validator.isNotNull(scopeLayoutUuid)) {
@@ -506,7 +506,7 @@ public class PortletExportController implements ExportController {
 				assetLinkElement.addAttribute("path", path);
 
 				AssetEntry targetAssetEntry =
-					AssetEntryLocalServiceUtil.fetchAssetEntry(
+					_assetEntryLocalService.fetchAssetEntry(
 						assetLink.getEntryId2());
 
 				assetLinkElement.addAttribute(
@@ -624,7 +624,7 @@ public class PortletExportController implements ExportController {
 			layoutId = layout.getLayoutId();
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			portletDataContext.getCompanyId(),
 			portletDataContext.getPortletId());
 
@@ -766,7 +766,7 @@ public class PortletExportController implements ExportController {
 
 		if (exportPortletUserPreferences) {
 			List<PortletPreferences> portletPreferencesList =
-				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				_portletPreferencesLocalService.getPortletPreferences(
 					PortletKeys.PREFS_OWNER_TYPE_USER, plid,
 					portletDataContext.getPortletId());
 
@@ -789,7 +789,7 @@ public class PortletExportController implements ExportController {
 
 			try {
 				PortletPreferences groupPortletPreferences =
-					PortletPreferencesLocalServiceUtil.getPortletPreferences(
+					_portletPreferencesLocalService.getPortletPreferences(
 						portletDataContext.getScopeGroupId(),
 						PortletKeys.PREFS_OWNER_TYPE_GROUP,
 						PortletKeys.PREFS_PLID_SHARED,
@@ -809,7 +809,7 @@ public class PortletExportController implements ExportController {
 
 		if (exportPortletArchivedSetups) {
 			List<PortletItem> portletItems =
-				PortletItemLocalServiceUtil.getPortletItems(
+				_portletItemLocalService.getPortletItems(
 					portletDataContext.getGroupId(),
 					portletDataContext.getRootPortletId(),
 					PortletPreferences.class.getName());
@@ -897,7 +897,7 @@ public class PortletExportController implements ExportController {
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.fromDefaultXML(preferencesXML);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			portletDataContext.getCompanyId(), portletId);
 
 		Element portletPreferencesElement = parentElement.addElement(
@@ -968,15 +968,15 @@ public class PortletExportController implements ExportController {
 		rootElement.addAttribute("portlet-id", portletId);
 
 		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-			PortletItem portletItem =
-				PortletItemLocalServiceUtil.getPortletItem(ownerId);
+			PortletItem portletItem = _portletItemLocalService.getPortletItem(
+				ownerId);
 
 			rootElement.addAttribute(
 				"archive-user-uuid", portletItem.getUserUuid());
 			rootElement.addAttribute("archive-name", portletItem.getName());
 		}
 		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-			User user = UserLocalServiceUtil.fetchUserById(ownerId);
+			User user = _userLocalService.fetchUserById(ownerId);
 
 			if (user == null) {
 				return;
@@ -1042,7 +1042,7 @@ public class PortletExportController implements ExportController {
 			return;
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			portletDataContext.getPortletId());
 
 		if ((portlet == null) || portlet.isUndeployedPortlet()) {
@@ -1107,15 +1107,15 @@ public class PortletExportController implements ExportController {
 		rootElement.addAttribute("service-name", serviceName);
 
 		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-			PortletItem portletItem =
-				PortletItemLocalServiceUtil.getPortletItem(ownerId);
+			PortletItem portletItem = _portletItemLocalService.getPortletItem(
+				ownerId);
 
 			rootElement.addAttribute(
 				"archive-user-uuid", portletItem.getUserUuid());
 			rootElement.addAttribute("archive-name", portletItem.getName());
 		}
 		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-			User user = UserLocalServiceUtil.fetchUserById(ownerId);
+			User user = _userLocalService.fetchUserById(ownerId);
 
 			if (user == null) {
 				return;
@@ -1203,7 +1203,7 @@ public class PortletExportController implements ExportController {
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(sourcePlid);
+		Layout layout = _layoutLocalService.getLayout(sourcePlid);
 		ZipWriter zipWriter = ExportImportHelperUtil.getPortletZipWriter(
 			portletId);
 
@@ -1230,13 +1230,13 @@ public class PortletExportController implements ExportController {
 			(ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP)) {
 
 			portletPreferences =
-				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				_portletPreferencesLocalService.getPortletPreferences(
 					ownerId, ownerType, LayoutConstants.DEFAULT_PLID,
 					portletId);
 		}
 		else {
 			portletPreferences =
-				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				_portletPreferencesLocalService.getPortletPreferences(
 					ownerId, ownerType, plid, portletId);
 		}
 
@@ -1251,6 +1251,13 @@ public class PortletExportController implements ExportController {
 		return PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 	}
 
+	@Reference
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
 	@Reference(unbind = "-")
 	protected void setExportImportLifecycleManager(
 		ExportImportLifecycleManager exportImportLifecycleManager) {
@@ -1258,14 +1265,59 @@ public class PortletExportController implements ExportController {
 		_exportImportLifecycleManager = exportImportLifecycleManager;
 	}
 
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference
+	protected void setPortletItemLocalService(
+		PortletItemLocalService portletItemLocalService) {
+
+		_portletItemLocalService = portletItemLocalService;
+	}
+
+	@Reference
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	@Reference
+	protected void setPortletPreferencesLocalService(
+		PortletPreferencesLocalService portletPreferencesLocalService) {
+
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
+	@Reference
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletExportController.class);
 
+	private AssetEntryLocalService _assetEntryLocalService;
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
+	private PortletItemLocalService _portletItemLocalService;
+	private PortletLocalService _portletLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+	private UserLocalService _userLocalService;
 
 	private class UpdatePortletLastPublishDateCallable
 		implements Callable<Void> {
@@ -1283,15 +1335,15 @@ public class PortletExportController implements ExportController {
 
 		@Override
 		public Void call() throws PortalException {
-			Group group = GroupLocalServiceUtil.getGroup(_groupId);
+			Group group = _groupLocalService.getGroup(_groupId);
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
+			Layout layout = _layoutLocalService.fetchLayout(_plid);
 
 			if (group.hasStagingGroup()) {
 				group = group.getStagingGroup();
 
 				if (layout != null) {
-					layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 						layout.getUuid(), group.getGroupId(),
 						layout.isPrivateLayout());
 				}

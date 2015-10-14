@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.io.Serializable;
@@ -71,8 +71,8 @@ public class LayoutsLocalPublisherMessageListener
 			message.getPayload());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(exportImportConfigurationId);
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId);
 
 		messageStatus.setPayload(exportImportConfiguration);
 
@@ -107,5 +107,17 @@ public class LayoutsLocalPublisherMessageListener
 	)
 	protected void setDestination(Destination destination) {
 	}
+
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
 
 }

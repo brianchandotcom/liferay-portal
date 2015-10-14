@@ -28,15 +28,15 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.LARFileNameException;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
+import com.liferay.portlet.exportimport.service.ExportImportService;
 
 import java.io.Serializable;
 
@@ -50,6 +50,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -105,13 +106,13 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
+				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						themeDisplay.getUserId(), taskName,
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 						exportLayoutSettingsMap);
 
-			ExportImportServiceUtil.exportLayoutsAsFileInBackground(
+			_exportImportService.exportLayoutsAsFileInBackground(
 				exportImportConfiguration);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -139,7 +140,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 			boolean includeChildren = entry.getValue();
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Layout layout = _layoutLocalService.getLayout(plid);
 
 			if (!layouts.contains(layout)) {
 				layouts.add(layout);
@@ -154,7 +155,35 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			new ArrayList<Layout>(layouts));
 	}
 
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	@Reference
+	protected void setExportImportService(
+		ExportImportService exportImportService) {
+
+		_exportImportService = exportImportService;
+	}
+
+	@Reference
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportLayoutsMVCActionCommand.class);
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+	private ExportImportService _exportImportService;
+	private LayoutLocalService _layoutLocalService;
 
 }

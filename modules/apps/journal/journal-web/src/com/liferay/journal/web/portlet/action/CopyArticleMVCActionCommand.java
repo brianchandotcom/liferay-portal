@@ -18,7 +18,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.ArticleIdException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.exception.NoSuchArticleException;
-import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -32,6 +32,7 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -57,7 +58,7 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "autoArticleId");
 		double version = ParamUtil.getDouble(actionRequest, "version");
 
-		JournalArticleServiceUtil.copyArticle(
+		_journalArticleService.copyArticle(
 			groupId, oldArticleId, newArticleId, autoArticleId, version);
 	}
 
@@ -96,5 +97,14 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleService(
+		JournalArticleService journalArticleService) {
+
+		_journalArticleService = journalArticleService;
+	}
+
+	private JournalArticleService _journalArticleService;
 
 }

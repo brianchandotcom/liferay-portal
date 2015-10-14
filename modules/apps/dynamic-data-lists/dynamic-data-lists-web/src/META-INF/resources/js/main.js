@@ -146,7 +146,7 @@ AUI.add(
 						scrollableElement.set('scrollLeft', scrollTo);
 					},
 
-					_normalizeFieldData: function(item, index, record, fieldsDisplayValues, normalized) {
+					_normalizeFieldData: function(item, record, fieldsDisplayValues, normalized) {
 						var instance = this;
 
 						var type = item.type;
@@ -173,8 +173,8 @@ AUI.add(
 
 						if (item.fields && isArray(item.fields)) {
 							item.fields.forEach(
-								function(item, index) {
-									instance._normalizeFieldData(item, index, record, fieldsDisplayValues, normalized);
+								function(item) {
+									instance._normalizeFieldData(item, record, fieldsDisplayValues, normalized);
 								}
 							);
 						}
@@ -190,8 +190,8 @@ AUI.add(
 						var normalized = {};
 
 						structure.forEach(
-							function(item, index) {
-								instance._normalizeFieldData(item, index, record, fieldsDisplayValues, normalized);
+							function(item) {
+								instance._normalizeFieldData(item, record, fieldsDisplayValues, normalized);
 							}
 						);
 

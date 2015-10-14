@@ -26,16 +26,6 @@ import org.junit.Test;
 public class UpgradeInfoTest {
 
 	@Test
-	public void testEqualsReturnsFalseComparingToDifferentType() {
-		UpgradeStep upgradeStep = new UpgradeStepStub();
-
-		UpgradeInfo upgradeInfo = new UpgradeInfo(
-			"1.0.0", "2.0.0", upgradeStep);
-
-		Assert.assertFalse(upgradeInfo.equals(new String()));
-	}
-
-	@Test
 	public void testEqualsReturnsFalseComparingToDifferentSchemaVersion() {
 		UpgradeInfo upgradeInfo1 = new UpgradeInfo(
 			"1.0.0", "2.0.0", new UpgradeStepStub());
@@ -44,6 +34,16 @@ public class UpgradeInfoTest {
 			"2.0.0", "3.0.0", new UpgradeStepStub());
 
 		Assert.assertFalse(upgradeInfo1.equals(upgradeInfo2));
+	}
+
+	@Test
+	public void testEqualsReturnsFalseComparingToDifferentType() {
+		UpgradeStep upgradeStep = new UpgradeStepStub();
+
+		UpgradeInfo upgradeInfo = new UpgradeInfo(
+			"1.0.0", "2.0.0", upgradeStep);
+
+		Assert.assertFalse(upgradeInfo.equals(new String()));
 	}
 
 	@Test

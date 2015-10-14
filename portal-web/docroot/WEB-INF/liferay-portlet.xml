@@ -16,12 +16,10 @@
 	<portlet>
 		<portlet-name>11</portlet-name>
 		<icon>/html/icons/directory.png</icon>
-		<struts-path>directory</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<asset-renderer-factory>com.liferay.portlet.directory.asset.UserAssetRendererFactory</asset-renderer-factory>
 		<workflow-handler>com.liferay.portlet.directory.workflow.UserWorkflowHandler</workflow-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -167,10 +165,8 @@
 	<portlet>
 		<portlet-name>186</portlet-name>
 		<icon>/html/icons/directory.png</icon>
-		<parent-struts-path>directory</parent-struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -180,10 +176,8 @@
 	<portlet>
 		<portlet-name>187</portlet-name>
 		<icon>/html/icons/directory.png</icon>
-		<parent-struts-path>directory</parent-struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -193,10 +187,8 @@
 	<portlet>
 		<portlet-name>188</portlet-name>
 		<icon>/html/icons/directory.png</icon>
-		<parent-struts-path>directory</parent-struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>

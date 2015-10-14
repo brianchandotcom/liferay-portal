@@ -86,7 +86,7 @@ if (parentOrganizationId > 0) {
 		modelVar="organization"
 	>
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/directory/view_organization" />
+			<portlet:param name="mvcRenderCommandName" value="/directory/view_organization" />
 			<portlet:param name="tabs1" value="<%= HtmlUtil.escape(tabs1) %>" />
 			<portlet:param name="redirect" value="<%= organizationSearchContainer.getIteratorURL().toString() %>" />
 			<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />

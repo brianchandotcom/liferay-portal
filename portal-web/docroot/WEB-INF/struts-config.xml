@@ -131,16 +131,6 @@
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
 
-		<!-- Directory -->
-
-		<action path="/directory/find_user" type="com.liferay.portlet.usersadmin.action.FindUserAction" />
-
-		<action path="/directory/view" forward="portlet.directory.view" />
-
-		<action path="/directory/view_organization" forward="portlet.directory.view_organization" />
-
-		<action path="/directory/view_user" forward="portlet.directory.view_user" />
-
 		<!-- Flags -->
 
 		<action path="/flags/edit_entry" type="com.liferay.portlet.flags.action.EditEntryAction">
@@ -190,10 +180,6 @@
 		<!-- Recent Documents -->
 
 		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
-
-		<!-- Sites Directory -->
-
-		<action path="/sites_directory/view" forward="portlet.sites_directory.view" />
 
 		<!-- Software Catalog -->
 

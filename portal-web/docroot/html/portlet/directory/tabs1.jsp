@@ -19,7 +19,7 @@
 <%
 PortletURL tabs1URL = renderResponse.createRenderURL();
 
-tabs1URL.setParameter("struts_action", "/directory/view");
+tabs1URL.setParameter("mvcRenderCommandName", "/directory/view");
 
 String tabs1Names = ParamUtil.getString(request, "tabs1Names", "users,organizations,user-groups");
 

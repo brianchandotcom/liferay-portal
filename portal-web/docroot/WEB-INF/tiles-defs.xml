@@ -132,26 +132,6 @@
 		<put name="portlet_content" value="/portlet/calendar/view_event.jsp" />
 	</definition>
 
-	<!-- Directory -->
-
-	<definition name="portlet.directory" extends="portlet" />
-
-	<definition name="portlet.directory.error" extends="portlet.directory">
-		<put name="portlet_content" value="/portlet/directory/error.jsp" />
-	</definition>
-
-	<definition name="portlet.directory.view" extends="portlet.directory">
-		<put name="portlet_content" value="/portlet/directory/view.jsp" />
-	</definition>
-
-	<definition name="portlet.directory.view_organization" extends="portlet.directory">
-		<put name="portlet_content" value="/portlet/directory/view_organization.jsp" />
-	</definition>
-
-	<definition name="portlet.directory.view_user" extends="portlet.directory">
-		<put name="portlet_content" value="/portlet/directory/view_user.jsp" />
-	</definition>
-
 	<!-- Flags -->
 
 	<definition name="portlet.flags.edit_entry" path="/portlet/flags/edit_entry.jsp" />
@@ -224,14 +204,6 @@
 
 	<definition name="portlet.recent_documents.view" extends="portlet.recent_documents">
 		<put name="portlet_content" value="/portlet/recent_documents/view.jsp" />
-	</definition>
-
-	<!-- Sites Directory -->
-
-	<definition name="portlet.sites_directory" extends="portlet" />
-
-	<definition name="portlet.sites_directory.view" extends="portlet.sites_directory">
-		<put name="portlet_content" value="/portlet/sites_directory/view.jsp" />
 	</definition>
 
 	<!-- Software Catalog -->

@@ -24,14 +24,14 @@
 	<portlet>
 		<portlet-name>11</portlet-name>
 		<display-name>Portal Directory</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.directory.PortalDirectoryPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/directory/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/directory/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/directory/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -302,14 +302,14 @@
 	<portlet>
 		<portlet-name>186</portlet-name>
 		<display-name>Friends Directory</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.directory.FriendsDirectoryPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/directory/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/directory/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/directory/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -326,14 +326,14 @@
 	<portlet>
 		<portlet-name>187</portlet-name>
 		<display-name>Site Members Directory</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.directory.SiteMembersDirectoryPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/directory/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/directory/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/directory/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -350,14 +350,14 @@
 	<portlet>
 		<portlet-name>188</portlet-name>
 		<display-name>My Sites Directory</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.directory.MySitesDirectoryPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/directory/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/directory/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/directory/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

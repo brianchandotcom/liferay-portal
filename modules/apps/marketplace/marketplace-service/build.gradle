@@ -8,6 +8,7 @@ dependencies {
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile project(":apps:marketplace:marketplace-api")
+	compile project(":portal:portal-upgrade")
 }
 
 liferay {

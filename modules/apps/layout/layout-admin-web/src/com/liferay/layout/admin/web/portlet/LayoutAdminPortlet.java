@@ -18,10 +18,10 @@ import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.upgrade.LayoutAdminWebUpgrade;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRActionServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRActionLocalService;
+import com.liferay.mobile.device.rules.service.MDRActionService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutFriendlyURLsException;
@@ -70,23 +70,23 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.ThemeSetting;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.GroupServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.LayoutPrototypeServiceUtil;
-import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.GroupService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutPrototypeLocalService;
+import com.liferay.portal.service.LayoutPrototypeService;
+import com.liferay.portal.service.LayoutRevisionLocalService;
+import com.liferay.portal.service.LayoutService;
+import com.liferay.portal.service.LayoutSetLocalService;
+import com.liferay.portal.service.LayoutSetService;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.ThemeLocalServiceUtil;
+import com.liferay.portal.service.ThemeLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.sites.action.ActionUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -195,10 +195,10 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				actionRequest, "TypeSettingsProperties--");
 
 		if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
-			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
+			Layout parentLayout = layoutLocalService.getLayout(
 				groupId, privateLayout, parentLayoutId);
 
-			layout = LayoutServiceUtil.addLayout(
+			layout = layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 				parentLayout.getDescriptionMap(), parentLayout.getKeywordsMap(),
 				parentLayout.getRobotsMap(), parentLayout.getType(),
@@ -215,8 +215,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 		else if (layoutPrototypeId > 0) {
 			LayoutPrototype layoutPrototype =
-				LayoutPrototypeServiceUtil.getLayoutPrototype(
-					layoutPrototypeId);
+				layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
 
 			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
 				uploadPortletRequest, "layoutPrototypeLinkEnabled");
@@ -227,7 +226,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			serviceContext.setAttribute(
 				"layoutPrototypeUuid", layoutPrototype.getUuid());
 
-			layout = LayoutServiceUtil.addLayout(
+			layout = layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 				descriptionMap, keywordsMap, robotsMap,
 				LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
@@ -249,7 +248,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
 			if (copyLayoutId > 0) {
-				copyLayout = LayoutLocalServiceUtil.fetchLayout(
+				copyLayout = layoutLocalService.fetchLayout(
 					groupId, privateLayout, copyLayoutId);
 
 				if ((copyLayout != null) && copyLayout.isTypePortlet()) {
@@ -264,7 +263,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				}
 			}
 
-			layout = LayoutServiceUtil.addLayout(
+			layout = layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 				descriptionMap, keywordsMap, robotsMap, type,
 				typeSettingsProperties.toString(), hidden, friendlyURLMap,
@@ -276,7 +275,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			layoutTypePortlet.setLayoutTemplateId(
 				themeDisplay.getUserId(), layoutTemplateId);
 
-			LayoutServiceUtil.updateLayout(
+			layoutService.updateLayout(
 				groupId, privateLayout, layout.getLayoutId(),
 				layout.getTypeSettings());
 
@@ -310,7 +309,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				actionRequest, "privateLayout");
 			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(
+			Layout layout = layoutLocalService.getLayout(
 				groupId, privateLayout, layoutId);
 
 			plid = layout.getPlid();
@@ -370,8 +369,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			uploadPortletRequest, "fileEntryId");
 
 		if (fileEntryId > 0) {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				fileEntryId);
+			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 			iconBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
@@ -379,10 +377,10 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
+		Layout layout = layoutLocalService.getLayout(
 			groupId, privateLayout, layoutId);
 
-		layout = LayoutServiceUtil.updateLayout(
+		layout = layoutService.updateLayout(
 			groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
@@ -409,7 +407,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				uploadPortletRequest, "copyLayoutId");
 
 			if ((copyLayoutId > 0) && (copyLayoutId != layout.getLayoutId())) {
-				Layout copyLayout = LayoutLocalServiceUtil.fetchLayout(
+				Layout copyLayout = layoutLocalService.fetchLayout(
 					groupId, privateLayout, copyLayoutId);
 
 				if ((copyLayout != null) && copyLayout.isTypePortlet()) {
@@ -427,7 +425,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			else {
 				layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
-				LayoutServiceUtil.updateLayout(
+				layoutService.updateLayout(
 					groupId, privateLayout, layoutId, layout.getTypeSettings());
 			}
 		}
@@ -437,7 +435,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			layoutTypeSettingsProperties.putAll(
 				layout.getTypeSettingsProperties());
 
-			LayoutServiceUtil.updateLayout(
+			layoutService.updateLayout(
 				groupId, privateLayout, layoutId, layout.getTypeSettings());
 		}
 
@@ -445,7 +443,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			actionRequest, "removeEmbeddedPortletIds");
 
 		if (removeEmbeddedPortletIds.length > 0) {
-			PortletLocalServiceUtil.deletePortlets(
+			portletLocalService.deletePortlets(
 				themeDisplay.getCompanyId(), removeEmbeddedPortletIds,
 				layout.getPlid());
 		}
@@ -479,8 +477,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSetId);
+		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(layoutSetId);
 
 		updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
 
@@ -505,7 +502,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			actionRequest, "incompleteLayoutRevisionId");
 
 		LayoutRevision incompleteLayoutRevision =
-			LayoutRevisionLocalServiceUtil.getLayoutRevision(
+			layoutRevisionLocalService.getLayoutRevision(
 				incompleteLayoutRevisionId);
 
 		long layoutBranchId = ParamUtil.getLong(
@@ -517,7 +514,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		LayoutRevisionLocalServiceUtil.updateLayoutRevision(
+		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(),
 			incompleteLayoutRevision.getLayoutRevisionId(), layoutBranchId,
 			incompleteLayoutRevision.getName(),
@@ -570,20 +567,19 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			actionRequest, "layoutPrototypeId");
 
 		LayoutPrototype layoutPrototype =
-			LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
-				layoutPrototypeId);
+			layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId);
 
 		SitesUtil.setMergeFailCount(layoutPrototype, 0);
 
 		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
-		Layout selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
+		Layout selLayout = layoutLocalService.getLayout(selPlid);
 
 		SitesUtil.resetPrototype(selLayout);
 
 		SitesUtil.mergeLayoutPrototypeLayout(selLayout.getGroup(), selLayout);
 
-		layoutPrototype = LayoutPrototypeServiceUtil.getLayoutPrototype(
+		layoutPrototype = layoutPrototypeService.getLayoutPrototype(
 			layoutPrototypeId);
 
 		int mergeFailCountAfterMerge = SitesUtil.getMergeFailCount(
@@ -672,15 +668,14 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			boolean wapTheme)
 		throws Exception {
 
-		Theme theme = ThemeLocalServiceUtil.getTheme(
-			companyId, themeId, wapTheme);
+		Theme theme = themeLocalService.getTheme(companyId, themeId, wapTheme);
 
 		if (!theme.hasColorSchemes()) {
 			colorSchemeId = StringPool.BLANK;
 		}
 
 		if (Validator.isNull(colorSchemeId)) {
-			ColorScheme colorScheme = ThemeLocalServiceUtil.getColorScheme(
+			ColorScheme colorScheme = themeLocalService.getColorScheme(
 				companyId, themeId, colorSchemeId, wapTheme);
 
 			colorSchemeId = colorScheme.getColorSchemeId();
@@ -719,25 +714,24 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		throws PortalException {
 
 		List<MDRRuleGroupInstance> parentMDRRuleGroupInstances =
-			MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstances(
+			mdrRuleGroupInstanceLocalService.getRuleGroupInstances(
 				Layout.class.getName(), layout.getParentPlid());
 
 		for (MDRRuleGroupInstance parentMDRRuleGroupInstance :
 				parentMDRRuleGroupInstances) {
 
 			MDRRuleGroupInstance mdrRuleGroupInstance =
-				MDRRuleGroupInstanceServiceUtil.addRuleGroupInstance(
+				mdrRuleGroupInstanceService.addRuleGroupInstance(
 					layout.getGroupId(), Layout.class.getName(),
 					layout.getPlid(),
 					parentMDRRuleGroupInstance.getRuleGroupId(),
 					parentMDRRuleGroupInstance.getPriority(), serviceContext);
 
-			List<MDRAction> parentMDRActions =
-				MDRActionLocalServiceUtil.getActions(
-					parentMDRRuleGroupInstance.getRuleGroupInstanceId());
+			List<MDRAction> parentMDRActions = mdrActionLocalService.getActions(
+				parentMDRRuleGroupInstance.getRuleGroupInstanceId());
 
 			for (MDRAction mdrAction : parentMDRActions) {
-				MDRActionServiceUtil.addAction(
+				mdrActionService.addAction(
 					mdrRuleGroupInstance.getRuleGroupInstanceId(),
 					mdrAction.getNameMap(), mdrAction.getDescriptionMap(),
 					mdrAction.getType(), mdrAction.getTypeSettings(),
@@ -770,8 +764,107 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		this.dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		this.groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutAdminWebUpgrade(
 		LayoutAdminWebUpgrade layoutAdminWebUpgrade) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		this.layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
+		this.layoutPrototypeLocalService = layoutPrototypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutPrototypeService(
+		LayoutPrototypeService layoutPrototypeService) {
+
+		this.layoutPrototypeService = layoutPrototypeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutRevisionLocalService(
+		LayoutRevisionLocalService layoutRevisionLocalService) {
+
+		this.layoutRevisionLocalService = layoutRevisionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutService(LayoutService layoutService) {
+		this.layoutService = layoutService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		this.layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetService(LayoutSetService layoutSetService) {
+		this.layoutSetService = layoutSetService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRActionLocalService(
+		MDRActionLocalService mdrActionLocalService) {
+
+		this.mdrActionLocalService = mdrActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRActionService(MDRActionService mdrActionService) {
+		this.mdrActionService = mdrActionService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		this.mdrRuleGroupInstanceLocalService =
+			mdrRuleGroupInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceService(
+		MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
+
+		this.mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		this.portletLocalService = portletLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setThemeLocalService(ThemeLocalService themeLocalService) {
+		this.themeLocalService = themeLocalService;
 	}
 
 	protected void setThemeSettingProperties(
@@ -789,7 +882,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				actionRequest, "privateLayout");
 			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 
-			layout = LayoutLocalServiceUtil.getLayout(
+			layout = layoutLocalService.getLayout(
 				groupId, privateLayout, layoutId);
 		}
 
@@ -827,8 +920,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		if (fileEntryId > 0) {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				fileEntryId);
+			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
@@ -839,7 +931,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			groupId = stagingGroupId;
 		}
 
-		LayoutSetServiceUtil.updateLogo(
+		layoutSetService.updateLogo(
 			groupId, privateLayout, !deleteLogo, logoBytes);
 	}
 
@@ -887,11 +979,11 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				groupId = stagingGroupId;
 			}
 
-			LayoutServiceUtil.updateLayout(
+			layoutService.updateLayout(
 				groupId, privateLayout, layoutId,
 				typeSettingsProperties.toString());
 
-			LayoutServiceUtil.updateLookAndFeel(
+			layoutService.updateLookAndFeel(
 				groupId, privateLayout, layoutId, deviceThemeId,
 				deviceColorSchemeId, deviceCss, deviceWapTheme);
 		}
@@ -931,7 +1023,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				groupId = stagingGroupId;
 			}
 
-			LayoutSetServiceUtil.updateLookAndFeel(
+			layoutSetService.updateLookAndFeel(
 				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
 				deviceCss, deviceWapTheme);
 		}
@@ -944,7 +1036,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		boolean mergeGuestPublicPages = ParamUtil.getBoolean(
 			actionRequest, "mergeGuestPublicPages");
 
-		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
+		Group liveGroup = groupLocalService.getGroup(liveGroupId);
 
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
@@ -952,7 +1044,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		typeSettingsProperties.setProperty(
 			"mergeGuestPublicPages", String.valueOf(mergeGuestPublicPages));
 
-		GroupServiceUtil.updateGroup(liveGroupId, liveGroup.getTypeSettings());
+		groupService.updateGroup(liveGroupId, liveGroup.getTypeSettings());
 	}
 
 	protected void updateRobots(
@@ -960,7 +1052,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			boolean privateLayout)
 		throws Exception {
 
-		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
+		Group liveGroup = groupLocalService.getGroup(liveGroupId);
 
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
@@ -977,7 +1069,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		typeSettingsProperties.setProperty(propertyName, robots);
 
-		GroupServiceUtil.updateGroup(
+		groupService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
 	}
 
@@ -998,7 +1090,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			groupId = stagingGroupId;
 		}
 
-		LayoutSetServiceUtil.updateSettings(
+		layoutSetService.updateSettings(
 			groupId, privateLayout, settingsProperties.toString());
 	}
 
@@ -1008,7 +1100,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			String deviceThemeId, boolean wapTheme, boolean isLayout)
 		throws Exception {
 
-		Theme theme = ThemeLocalServiceUtil.getTheme(
+		Theme theme = themeLocalService.getTheme(
 			companyId, deviceThemeId, wapTheme);
 
 		deleteThemeSettingsProperties(typeSettingsProperties, device);
@@ -1026,6 +1118,23 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		return typeSettingsProperties;
 	}
+
+	protected DLAppLocalService dlAppLocalService;
+	protected GroupLocalService groupLocalService;
+	protected GroupService groupService;
+	protected LayoutLocalService layoutLocalService;
+	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
+	protected LayoutPrototypeService layoutPrototypeService;
+	protected LayoutRevisionLocalService layoutRevisionLocalService;
+	protected LayoutService layoutService;
+	protected LayoutSetLocalService layoutSetLocalService;
+	protected LayoutSetService layoutSetService;
+	protected MDRActionLocalService mdrActionLocalService;
+	protected MDRActionService mdrActionService;
+	protected MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
+	protected MDRRuleGroupInstanceService mdrRuleGroupInstanceService;
+	protected PortletLocalService portletLocalService;
+	protected ThemeLocalService themeLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutAdminPortlet.class);

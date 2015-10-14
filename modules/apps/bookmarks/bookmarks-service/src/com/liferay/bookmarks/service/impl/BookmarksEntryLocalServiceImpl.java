@@ -547,6 +547,10 @@ public class BookmarksEntryLocalServiceImpl
 
 					updateBookmarksEntry(entry);
 
+					if (!reindex) {
+						return;
+					}
+
 					Document document = indexer.getDocument(entry);
 
 					actionableDynamicQuery.addDocument(document);

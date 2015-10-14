@@ -319,14 +319,6 @@
 		<execute macro="PortalSettings#viewAuthenticationOpenSSOCP" />
 	</command>
 
-	<command name="ViewAuthenticationSiteMinder" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationSiteMinderCP" />
-	</command>
-
 	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />

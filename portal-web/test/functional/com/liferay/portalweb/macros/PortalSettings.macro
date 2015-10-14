@@ -449,16 +449,6 @@
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON" value1="Test OpenSSO Configuration" />
 	</command>
 
-	<command name="viewAuthenticationSiteMinderCP">
-		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
-
-		<execute function="AssertClick" locator1="NavTab#SITE_MINDER" value1="SiteMinder" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_SITE_MINDER_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_SITE_MINDER_IMPORT_FROM_LDAP_CHECKBOX" />
-		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_SITE_MINDER_USER_HEADER_HEADER" value1="User Header" />
-		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_SITE_MINDER_USER_HEADER_FIELD" value1="SM_USER" />
-	</command>
-
 	<command name="viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
 		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 

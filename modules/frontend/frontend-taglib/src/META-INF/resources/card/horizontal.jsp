@@ -16,33 +16,37 @@
 
 <%@ include file="/card/init.jsp" %>
 
-<div class="<%= cssClass %>">
-	<div class="card-horizontal">
-		<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
-			<div class="card-col-field <%= (((rowChecker != null) && (resultRow != null)) || showCheckbox) ? "checkbox-default" : StringPool.BLANK %>">
+<div class="card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
+	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">
+		<c:if test="<%= (((rowChecker != null) && (resultRow != null)) || showCheckbox) %>">
+			<div class="card-col-field checkbox-default">
 				<c:choose>
 					<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
 						<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
 					</c:when>
-					<c:when test="<%= showCheckbox %>">
-						<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(title)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
-					</c:when>
+					<c:otherwise>
+						<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(text)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+					</c:otherwise>
 				</c:choose>
 			</div>
+		</c:if>
 
+		<c:if test="<%= Validator.isNotNull(imageUrl) %>">
 			<div class="card-col-field">
-				<span class="<%= imageCSSClass %> <%= imageUrl %>"></span>
+				<span class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %> <%= Validator.isNotNull(imageUrl) ? imageUrl : StringPool.BLANK %>"></span>
 			</div>
+		</c:if>
 
-			<div class="card-col-content card-col-gutters">
-				<h4>
-					<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(title) %>" />
-				</h4>
-			</div>
+		<div class="card-col-content card-col-gutters">
+			<h4>
+				<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(title) %>" />
+			</h4>
+		</div>
 
+		<c:if test="<%= Validator.isNotNull(actionJsp) %>">
 			<div class="card-col-content card-col-gutters">
 				<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
 			</div>
-		</div>
+		</c:if>
 	</div>
 </div>

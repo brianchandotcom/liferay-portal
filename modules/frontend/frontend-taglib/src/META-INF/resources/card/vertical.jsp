@@ -16,7 +16,7 @@
 
 <%@ include file="/card/init.jsp" %>
 
-<div class="<%= cssClass %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+<div class="<%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 	<div class="<%= showCheckbox ? "checkbox checkbox-default toggle-card-dm" : StringPool.BLANK %>">
 		<c:choose>
 			<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">

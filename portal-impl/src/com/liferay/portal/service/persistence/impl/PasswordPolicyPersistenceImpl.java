@@ -3603,6 +3603,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		passwordPolicy.setUuid(uuid);
 
+		passwordPolicy.setCompanyId(0);
+
 		return passwordPolicy;
 	}
 
@@ -3834,10 +3836,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		passwordPolicyImpl.setNew(passwordPolicy.isNew());
 		passwordPolicyImpl.setPrimaryKey(passwordPolicy.getPrimaryKey());
 
+		passwordPolicyImpl.setCompanyId(passwordPolicy.getCompanyId());
 		passwordPolicyImpl.setMvccVersion(passwordPolicy.getMvccVersion());
 		passwordPolicyImpl.setUuid(passwordPolicy.getUuid());
 		passwordPolicyImpl.setPasswordPolicyId(passwordPolicy.getPasswordPolicyId());
-		passwordPolicyImpl.setCompanyId(passwordPolicy.getCompanyId());
 		passwordPolicyImpl.setUserId(passwordPolicy.getUserId());
 		passwordPolicyImpl.setUserName(passwordPolicy.getUserName());
 		passwordPolicyImpl.setCreateDate(passwordPolicy.getCreateDate());

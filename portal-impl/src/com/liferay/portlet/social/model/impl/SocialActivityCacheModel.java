@@ -66,12 +66,12 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{activityId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", activityId=");
 		sb.append(activityId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -103,9 +103,9 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 	public SocialActivity toEntityModel() {
 		SocialActivityImpl socialActivityImpl = new SocialActivityImpl();
 
+		socialActivityImpl.setCompanyId(companyId);
 		socialActivityImpl.setActivityId(activityId);
 		socialActivityImpl.setGroupId(groupId);
-		socialActivityImpl.setCompanyId(companyId);
 		socialActivityImpl.setUserId(userId);
 		socialActivityImpl.setCreateDate(createDate);
 		socialActivityImpl.setActivitySetId(activitySetId);
@@ -132,9 +132,9 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		activityId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		activitySetId = objectInput.readLong();
@@ -151,9 +151,9 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(activityId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(activitySetId);
@@ -174,9 +174,9 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		objectOutput.writeLong(receiverUserId);
 	}
 
+	public long companyId;
 	public long activityId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public long activitySetId;

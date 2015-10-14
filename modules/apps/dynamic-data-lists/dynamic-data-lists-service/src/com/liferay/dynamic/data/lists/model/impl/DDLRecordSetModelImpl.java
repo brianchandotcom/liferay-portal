@@ -79,10 +79,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	 */
 	public static final String TABLE_NAME = "DDLRecordSet";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "recordSetId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -98,10 +98,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("recordSetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -115,7 +115,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDLRecordSet (uuid_ VARCHAR(75) null,recordSetId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStructureId LONG,recordSetKey VARCHAR(75) null,name STRING null,description STRING null,minDisplayRows INTEGER,scope INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDLRecordSet (companyId LONG,uuid_ VARCHAR(75) null,recordSetId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStructureId LONG,recordSetKey VARCHAR(75) null,name STRING null,description STRING null,minDisplayRows INTEGER,scope INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDLRecordSet";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddlRecordSet.recordSetId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDLRecordSet.recordSetId ASC";
@@ -150,10 +150,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 		DDLRecordSet model = new DDLRecordSetImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setRecordSetId(soapModel.getRecordSetId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -229,10 +229,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("recordSetId", getRecordSetId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -253,6 +253,12 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -269,12 +275,6 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -344,6 +344,29 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -400,29 +423,6 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -887,10 +887,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public Object clone() {
 		DDLRecordSetImpl ddlRecordSetImpl = new DDLRecordSetImpl();
 
+		ddlRecordSetImpl.setCompanyId(getCompanyId());
 		ddlRecordSetImpl.setUuid(getUuid());
 		ddlRecordSetImpl.setRecordSetId(getRecordSetId());
 		ddlRecordSetImpl.setGroupId(getGroupId());
-		ddlRecordSetImpl.setCompanyId(getCompanyId());
 		ddlRecordSetImpl.setUserId(getUserId());
 		ddlRecordSetImpl.setUserName(getUserName());
 		ddlRecordSetImpl.setCreateDate(getCreateDate());
@@ -964,15 +964,15 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public void resetOriginalValues() {
 		DDLRecordSetModelImpl ddlRecordSetModelImpl = this;
 
+		ddlRecordSetModelImpl._originalCompanyId = ddlRecordSetModelImpl._companyId;
+
+		ddlRecordSetModelImpl._setOriginalCompanyId = false;
+
 		ddlRecordSetModelImpl._originalUuid = ddlRecordSetModelImpl._uuid;
 
 		ddlRecordSetModelImpl._originalGroupId = ddlRecordSetModelImpl._groupId;
 
 		ddlRecordSetModelImpl._setOriginalGroupId = false;
-
-		ddlRecordSetModelImpl._originalCompanyId = ddlRecordSetModelImpl._companyId;
-
-		ddlRecordSetModelImpl._setOriginalCompanyId = false;
 
 		ddlRecordSetModelImpl._setModifiedDate = false;
 
@@ -985,6 +985,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public CacheModel<DDLRecordSet> toCacheModel() {
 		DDLRecordSetCacheModel ddlRecordSetCacheModel = new DDLRecordSetCacheModel();
 
+		ddlRecordSetCacheModel.companyId = getCompanyId();
+
 		ddlRecordSetCacheModel.uuid = getUuid();
 
 		String uuid = ddlRecordSetCacheModel.uuid;
@@ -996,8 +998,6 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		ddlRecordSetCacheModel.recordSetId = getRecordSetId();
 
 		ddlRecordSetCacheModel.groupId = getGroupId();
-
-		ddlRecordSetCacheModel.companyId = getCompanyId();
 
 		ddlRecordSetCacheModel.userId = getUserId();
 
@@ -1073,14 +1073,14 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", recordSetId=");
 		sb.append(getRecordSetId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1117,6 +1117,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1127,10 +1131,6 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1186,15 +1186,15 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DDLRecordSet.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _recordSetId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

@@ -64,9 +64,9 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	 */
 	public static final String TABLE_NAME = "UserNotificationDelivery";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "userNotificationDeliveryId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "portletId", Types.VARCHAR },
 			{ "classNameId", Types.BIGINT },
@@ -77,9 +77,9 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userNotificationDeliveryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -88,7 +88,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		TABLE_COLUMNS_MAP.put("deliver", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (mvccVersion LONG default 0,userNotificationDeliveryId LONG not null primary key,companyId LONG,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (companyId LONG,mvccVersion LONG default 0,userNotificationDeliveryId LONG not null primary key,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationDelivery";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationDelivery.userNotificationDeliveryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationDelivery.userNotificationDeliveryId ASC";
@@ -150,10 +150,10 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userNotificationDeliveryId",
 			getUserNotificationDeliveryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
@@ -169,6 +169,12 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -180,12 +186,6 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		if (userNotificationDeliveryId != null) {
 			setUserNotificationDeliveryId(userNotificationDeliveryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -226,6 +226,16 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -243,16 +253,6 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	@Override
 	public void setUserNotificationDeliveryId(long userNotificationDeliveryId) {
 		_userNotificationDeliveryId = userNotificationDeliveryId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -450,9 +450,9 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	public Object clone() {
 		UserNotificationDeliveryImpl userNotificationDeliveryImpl = new UserNotificationDeliveryImpl();
 
+		userNotificationDeliveryImpl.setCompanyId(getCompanyId());
 		userNotificationDeliveryImpl.setMvccVersion(getMvccVersion());
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(getUserNotificationDeliveryId());
-		userNotificationDeliveryImpl.setCompanyId(getCompanyId());
 		userNotificationDeliveryImpl.setUserId(getUserId());
 		userNotificationDeliveryImpl.setPortletId(getPortletId());
 		userNotificationDeliveryImpl.setClassNameId(getClassNameId());
@@ -546,11 +546,11 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	public CacheModel<UserNotificationDelivery> toCacheModel() {
 		UserNotificationDeliveryCacheModel userNotificationDeliveryCacheModel = new UserNotificationDeliveryCacheModel();
 
+		userNotificationDeliveryCacheModel.companyId = getCompanyId();
+
 		userNotificationDeliveryCacheModel.mvccVersion = getMvccVersion();
 
 		userNotificationDeliveryCacheModel.userNotificationDeliveryId = getUserNotificationDeliveryId();
-
-		userNotificationDeliveryCacheModel.companyId = getCompanyId();
 
 		userNotificationDeliveryCacheModel.userId = getUserId();
 
@@ -577,12 +577,12 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", userNotificationDeliveryId=");
 		sb.append(getUserNotificationDeliveryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", portletId=");
@@ -609,16 +609,16 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userNotificationDeliveryId</column-name><column-value><![CDATA[");
 		sb.append(getUserNotificationDeliveryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -654,9 +654,9 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			UserNotificationDelivery.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _userNotificationDeliveryId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

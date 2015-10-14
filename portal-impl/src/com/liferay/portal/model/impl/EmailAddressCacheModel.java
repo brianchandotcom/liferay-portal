@@ -81,14 +81,14 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", emailAddressId=");
 		sb.append(emailAddressId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -116,6 +116,7 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 	public EmailAddress toEntityModel() {
 		EmailAddressImpl emailAddressImpl = new EmailAddressImpl();
 
+		emailAddressImpl.setCompanyId(companyId);
 		emailAddressImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -126,7 +127,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		}
 
 		emailAddressImpl.setEmailAddressId(emailAddressId);
-		emailAddressImpl.setCompanyId(companyId);
 		emailAddressImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -170,10 +170,10 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		emailAddressId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -188,6 +188,7 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -198,7 +199,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		}
 
 		objectOutput.writeLong(emailAddressId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -224,10 +224,10 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		objectOutput.writeBoolean(primary);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long emailAddressId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

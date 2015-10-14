@@ -2735,6 +2735,8 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		socialActivityCounter.setNew(true);
 		socialActivityCounter.setPrimaryKey(activityCounterId);
 
+		socialActivityCounter.setCompanyId(0);
+
 		return socialActivityCounter;
 	}
 
@@ -2948,9 +2950,9 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		socialActivityCounterImpl.setNew(socialActivityCounter.isNew());
 		socialActivityCounterImpl.setPrimaryKey(socialActivityCounter.getPrimaryKey());
 
+		socialActivityCounterImpl.setCompanyId(socialActivityCounter.getCompanyId());
 		socialActivityCounterImpl.setActivityCounterId(socialActivityCounter.getActivityCounterId());
 		socialActivityCounterImpl.setGroupId(socialActivityCounter.getGroupId());
-		socialActivityCounterImpl.setCompanyId(socialActivityCounter.getCompanyId());
 		socialActivityCounterImpl.setClassNameId(socialActivityCounter.getClassNameId());
 		socialActivityCounterImpl.setClassPK(socialActivityCounter.getClassPK());
 		socialActivityCounterImpl.setName(socialActivityCounter.getName());

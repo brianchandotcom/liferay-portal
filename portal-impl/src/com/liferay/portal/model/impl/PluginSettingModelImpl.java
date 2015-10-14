@@ -64,9 +64,9 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	 */
 	public static final String TABLE_NAME = "PluginSetting";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "pluginSettingId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "pluginId", Types.VARCHAR },
 			{ "pluginType", Types.VARCHAR },
 			{ "roles", Types.VARCHAR },
@@ -75,16 +75,16 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("pluginSettingId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("pluginId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pluginType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("roles", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PluginSetting (mvccVersion LONG default 0,pluginSettingId LONG not null primary key,companyId LONG,pluginId VARCHAR(75) null,pluginType VARCHAR(75) null,roles STRING null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table PluginSetting (companyId LONG,mvccVersion LONG default 0,pluginSettingId LONG not null primary key,pluginId VARCHAR(75) null,pluginType VARCHAR(75) null,roles STRING null,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table PluginSetting";
 	public static final String ORDER_BY_JPQL = " ORDER BY pluginSetting.pluginSettingId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PluginSetting.pluginSettingId ASC";
@@ -118,9 +118,9 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 		PluginSetting model = new PluginSettingImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setPluginSettingId(soapModel.getPluginSettingId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setPluginId(soapModel.getPluginId());
 		model.setPluginType(soapModel.getPluginType());
 		model.setRoles(soapModel.getRoles());
@@ -189,9 +189,9 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("pluginSettingId", getPluginSettingId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("pluginId", getPluginId());
 		attributes.put("pluginType", getPluginType());
 		attributes.put("roles", getRoles());
@@ -205,6 +205,12 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -215,12 +221,6 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 		if (pluginSettingId != null) {
 			setPluginSettingId(pluginSettingId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		String pluginId = (String)attributes.get("pluginId");
@@ -248,29 +248,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		}
 	}
 
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getPluginSettingId() {
-		return _pluginSettingId;
-	}
-
-	@Override
-	public void setPluginSettingId(long pluginSettingId) {
-		_pluginSettingId = pluginSettingId;
-	}
-
-	@JSON
+	@JSON(include = false)
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -291,6 +269,28 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getPluginSettingId() {
+		return _pluginSettingId;
+	}
+
+	@Override
+	public void setPluginSettingId(long pluginSettingId) {
+		_pluginSettingId = pluginSettingId;
 	}
 
 	@JSON
@@ -408,9 +408,9 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public Object clone() {
 		PluginSettingImpl pluginSettingImpl = new PluginSettingImpl();
 
+		pluginSettingImpl.setCompanyId(getCompanyId());
 		pluginSettingImpl.setMvccVersion(getMvccVersion());
 		pluginSettingImpl.setPluginSettingId(getPluginSettingId());
-		pluginSettingImpl.setCompanyId(getCompanyId());
 		pluginSettingImpl.setPluginId(getPluginId());
 		pluginSettingImpl.setPluginType(getPluginType());
 		pluginSettingImpl.setRoles(getRoles());
@@ -492,11 +492,11 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public CacheModel<PluginSetting> toCacheModel() {
 		PluginSettingCacheModel pluginSettingCacheModel = new PluginSettingCacheModel();
 
+		pluginSettingCacheModel.companyId = getCompanyId();
+
 		pluginSettingCacheModel.mvccVersion = getMvccVersion();
 
 		pluginSettingCacheModel.pluginSettingId = getPluginSettingId();
-
-		pluginSettingCacheModel.companyId = getCompanyId();
 
 		pluginSettingCacheModel.pluginId = getPluginId();
 
@@ -531,12 +531,12 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", pluginSettingId=");
 		sb.append(getPluginSettingId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", pluginId=");
 		sb.append(getPluginId());
 		sb.append(", pluginType=");
@@ -559,16 +559,16 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>pluginSettingId</column-name><column-value><![CDATA[");
 		sb.append(getPluginSettingId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>pluginId</column-name><column-value><![CDATA[");
@@ -596,11 +596,11 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			PluginSetting.class
 		};
-	private long _mvccVersion;
-	private long _pluginSettingId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _mvccVersion;
+	private long _pluginSettingId;
 	private String _pluginId;
 	private String _originalPluginId;
 	private String _pluginType;

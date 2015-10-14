@@ -81,7 +81,9 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
@@ -89,8 +91,6 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		sb.append(repositoryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -122,6 +122,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	public Repository toEntityModel() {
 		RepositoryImpl repositoryImpl = new RepositoryImpl();
 
+		repositoryImpl.setCompanyId(companyId);
 		repositoryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -133,7 +134,6 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 
 		repositoryImpl.setRepositoryId(repositoryId);
 		repositoryImpl.setGroupId(groupId);
-		repositoryImpl.setCompanyId(companyId);
 		repositoryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -203,11 +203,11 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		repositoryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -224,6 +224,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -235,7 +236,6 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 
 		objectOutput.writeLong(repositoryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -281,11 +281,11 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long repositoryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

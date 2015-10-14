@@ -2165,6 +2165,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		lock.setUuid(uuid);
 
+		lock.setCompanyId(0);
+
 		return lock;
 	}
 
@@ -2348,10 +2350,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		lockImpl.setNew(lock.isNew());
 		lockImpl.setPrimaryKey(lock.getPrimaryKey());
 
+		lockImpl.setCompanyId(lock.getCompanyId());
 		lockImpl.setMvccVersion(lock.getMvccVersion());
 		lockImpl.setUuid(lock.getUuid());
 		lockImpl.setLockId(lock.getLockId());
-		lockImpl.setCompanyId(lock.getCompanyId());
 		lockImpl.setUserId(lock.getUserId());
 		lockImpl.setUserName(lock.getUserName());
 		lockImpl.setCreateDate(lock.getCreateDate());

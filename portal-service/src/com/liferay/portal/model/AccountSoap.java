@@ -34,9 +34,9 @@ public class AccountSoap implements Serializable {
 	public static AccountSoap toSoapModel(Account model) {
 		AccountSoap soapModel = new AccountSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setAccountId(model.getAccountId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -103,6 +103,14 @@ public class AccountSoap implements Serializable {
 		setAccountId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -117,14 +125,6 @@ public class AccountSoap implements Serializable {
 
 	public void setAccountId(long accountId) {
 		_accountId = accountId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -239,9 +239,9 @@ public class AccountSoap implements Serializable {
 		_size = size;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _accountId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

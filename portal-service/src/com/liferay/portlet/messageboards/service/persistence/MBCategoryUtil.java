@@ -499,6 +499,166 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	* Returns all the message boards categories where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching message boards categories
+	*/
+	public static List<MBCategory> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the message boards categories where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @return the range of matching message boards categories
+	*/
+	public static List<MBCategory> findByCompanyId(long companyId, int start,
+		int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards categories
+	*/
+	public static List<MBCategory> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards categories where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching message boards categories
+	*/
+	public static List<MBCategory> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<MBCategory> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first message boards category in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards category
+	* @throws NoSuchCategoryException if a matching message boards category could not be found
+	*/
+	public static MBCategory findByCompanyId_First(long companyId,
+		OrderByComparator<MBCategory> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first message boards category in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	*/
+	public static MBCategory fetchByCompanyId_First(long companyId,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards category in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards category
+	* @throws NoSuchCategoryException if a matching message boards category could not be found
+	*/
+	public static MBCategory findByCompanyId_Last(long companyId,
+		OrderByComparator<MBCategory> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards category in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	*/
+	public static MBCategory fetchByCompanyId_Last(long companyId,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63;.
+	*
+	* @param categoryId the primary key of the current message boards category
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards category
+	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
+	*/
+	public static MBCategory[] findByCompanyId_PrevAndNext(long categoryId,
+		long companyId, OrderByComparator<MBCategory> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(categoryId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the message boards categories where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of message boards categories where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching message boards categories
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
 	* Returns all the message boards categories where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -729,163 +889,175 @@ public class MBCategoryUtil {
 	}
 
 	/**
-	* Returns all the message boards categories where companyId = &#63;.
+	* Returns all the message boards categories where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @return the matching message boards categories
 	*/
-	public static List<MBCategory> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
+	public static List<MBCategory> findByC_S(long companyId, int status) {
+		return getPersistence().findByC_S(companyId, status);
 	}
 
 	/**
-	* Returns a range of all the message boards categories where companyId = &#63;.
+	* Returns a range of all the message boards categories where companyId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of message boards categories
 	* @param end the upper bound of the range of message boards categories (not inclusive)
 	* @return the range of matching message boards categories
 	*/
-	public static List<MBCategory> findByCompanyId(long companyId, int start,
-		int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
+	public static List<MBCategory> findByC_S(long companyId, int status,
+		int start, int end) {
+		return getPersistence().findByC_S(companyId, status, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the message boards categories where companyId = &#63;.
+	* Returns an ordered range of all the message boards categories where companyId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of message boards categories
 	* @param end the upper bound of the range of message boards categories (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards categories
 	*/
-	public static List<MBCategory> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<MBCategory> orderByComparator) {
+	public static List<MBCategory> findByC_S(long companyId, int status,
+		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
 		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
+				   .findByC_S(companyId, status, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the message boards categories where companyId = &#63;.
+	* Returns an ordered range of all the message boards categories where companyId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param start the lower bound of the range of message boards categories
 	* @param end the upper bound of the range of message boards categories (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards categories
 	*/
-	public static List<MBCategory> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<MBCategory> orderByComparator,
+	public static List<MBCategory> findByC_S(long companyId, int status,
+		int start, int end, OrderByComparator<MBCategory> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator,
+				   .findByC_S(companyId, status, start, end, orderByComparator,
 			retrieveFromCache);
 	}
 
 	/**
-	* Returns the first message boards category in the ordered set where companyId = &#63;.
+	* Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards category
 	* @throws NoSuchCategoryException if a matching message boards category could not be found
 	*/
-	public static MBCategory findByCompanyId_First(long companyId,
+	public static MBCategory findByC_S_First(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
 		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
+				   .findByC_S_First(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the first message boards category in the ordered set where companyId = &#63;.
+	* Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	*/
-	public static MBCategory fetchByCompanyId_First(long companyId,
+	public static MBCategory fetchByC_S_First(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator) {
 		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
+				   .fetchByC_S_First(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the last message boards category in the ordered set where companyId = &#63;.
+	* Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards category
 	* @throws NoSuchCategoryException if a matching message boards category could not be found
 	*/
-	public static MBCategory findByCompanyId_Last(long companyId,
+	public static MBCategory findByC_S_Last(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
 		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
+				   .findByC_S_Last(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the last message boards category in the ordered set where companyId = &#63;.
+	* Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	*/
-	public static MBCategory fetchByCompanyId_Last(long companyId,
+	public static MBCategory fetchByC_S_Last(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator) {
 		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
+				   .fetchByC_S_Last(companyId, status, orderByComparator);
 	}
 
 	/**
-	* Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63;.
+	* Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	*
 	* @param categoryId the primary key of the current message boards category
 	* @param companyId the company ID
+	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards category
 	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
 	*/
-	public static MBCategory[] findByCompanyId_PrevAndNext(long categoryId,
-		long companyId, OrderByComparator<MBCategory> orderByComparator)
+	public static MBCategory[] findByC_S_PrevAndNext(long categoryId,
+		long companyId, int status,
+		OrderByComparator<MBCategory> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
 		return getPersistence()
-				   .findByCompanyId_PrevAndNext(categoryId, companyId,
+				   .findByC_S_PrevAndNext(categoryId, companyId, status,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the message boards categories where companyId = &#63; from the database.
+	* Removes all the message boards categories where companyId = &#63; and status = &#63; from the database.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
+	public static void removeByC_S(long companyId, int status) {
+		getPersistence().removeByC_S(companyId, status);
 	}
 
 	/**
-	* Returns the number of message boards categories where companyId = &#63;.
+	* Returns the number of message boards categories where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID
+	* @param status the status
 	* @return the number of matching message boards categories
 	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
+	public static int countByC_S(long companyId, int status) {
+		return getPersistence().countByC_S(companyId, status);
 	}
 
 	/**
@@ -1552,178 +1724,6 @@ public class MBCategoryUtil {
 	*/
 	public static int filterCountByG_S(long groupId, int status) {
 		return getPersistence().filterCountByG_S(groupId, status);
-	}
-
-	/**
-	* Returns all the message boards categories where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the matching message boards categories
-	*/
-	public static List<MBCategory> findByC_S(long companyId, int status) {
-		return getPersistence().findByC_S(companyId, status);
-	}
-
-	/**
-	* Returns a range of all the message boards categories where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of message boards categories
-	* @param end the upper bound of the range of message boards categories (not inclusive)
-	* @return the range of matching message boards categories
-	*/
-	public static List<MBCategory> findByC_S(long companyId, int status,
-		int start, int end) {
-		return getPersistence().findByC_S(companyId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the message boards categories where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of message boards categories
-	* @param end the upper bound of the range of message boards categories (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching message boards categories
-	*/
-	public static List<MBCategory> findByC_S(long companyId, int status,
-		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
-		return getPersistence()
-				   .findByC_S(companyId, status, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the message boards categories where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of message boards categories
-	* @param end the upper bound of the range of message boards categories (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching message boards categories
-	*/
-	public static List<MBCategory> findByC_S(long companyId, int status,
-		int start, int end, OrderByComparator<MBCategory> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_S(companyId, status, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	* Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching message boards category
-	* @throws NoSuchCategoryException if a matching message boards category could not be found
-	*/
-	public static MBCategory findByC_S_First(long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
-		return getPersistence()
-				   .findByC_S_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	*/
-	public static MBCategory fetchByC_S_First(long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_S_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching message boards category
-	* @throws NoSuchCategoryException if a matching message boards category could not be found
-	*/
-	public static MBCategory findByC_S_Last(long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
-		return getPersistence()
-				   .findByC_S_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	*/
-	public static MBCategory fetchByC_S_Last(long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_S_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param categoryId the primary key of the current message boards category
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next message boards category
-	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	*/
-	public static MBCategory[] findByC_S_PrevAndNext(long categoryId,
-		long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
-		return getPersistence()
-				   .findByC_S_PrevAndNext(categoryId, companyId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the message boards categories where companyId = &#63; and status = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	*/
-	public static void removeByC_S(long companyId, int status) {
-		getPersistence().removeByC_S(companyId, status);
-	}
-
-	/**
-	* Returns the number of message boards categories where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the number of matching message boards categories
-	*/
-	public static int countByC_S(long companyId, int status) {
-		return getPersistence().countByC_S(companyId, status);
 	}
 
 	/**

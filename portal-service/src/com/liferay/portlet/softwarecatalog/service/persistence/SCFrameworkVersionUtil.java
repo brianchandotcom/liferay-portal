@@ -111,6 +111,169 @@ public class SCFrameworkVersionUtil {
 	}
 
 	/**
+	* Returns all the s c framework versions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching s c framework versions
+	*/
+	public static List<SCFrameworkVersion> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the s c framework versions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of s c framework versions
+	* @param end the upper bound of the range of s c framework versions (not inclusive)
+	* @return the range of matching s c framework versions
+	*/
+	public static List<SCFrameworkVersion> findByCompanyId(long companyId,
+		int start, int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the s c framework versions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of s c framework versions
+	* @param end the upper bound of the range of s c framework versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching s c framework versions
+	*/
+	public static List<SCFrameworkVersion> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the s c framework versions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of s c framework versions
+	* @param end the upper bound of the range of s c framework versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching s c framework versions
+	*/
+	public static List<SCFrameworkVersion> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first s c framework version in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c framework version
+	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
+	*/
+	public static SCFrameworkVersion findByCompanyId_First(long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
+		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first s c framework version in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
+	*/
+	public static SCFrameworkVersion fetchByCompanyId_First(long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last s c framework version in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c framework version
+	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
+	*/
+	public static SCFrameworkVersion findByCompanyId_Last(long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
+		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last s c framework version in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
+	*/
+	public static SCFrameworkVersion fetchByCompanyId_Last(long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the s c framework versions before and after the current s c framework version in the ordered set where companyId = &#63;.
+	*
+	* @param frameworkVersionId the primary key of the current s c framework version
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next s c framework version
+	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
+	*/
+	public static SCFrameworkVersion[] findByCompanyId_PrevAndNext(
+		long frameworkVersionId, long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
+		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(frameworkVersionId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the s c framework versions where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of s c framework versions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching s c framework versions
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
 	* Returns all the s c framework versions where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -342,169 +505,6 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
-	}
-
-	/**
-	* Returns all the s c framework versions where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching s c framework versions
-	*/
-	public static List<SCFrameworkVersion> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the s c framework versions where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of s c framework versions
-	* @param end the upper bound of the range of s c framework versions (not inclusive)
-	* @return the range of matching s c framework versions
-	*/
-	public static List<SCFrameworkVersion> findByCompanyId(long companyId,
-		int start, int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the s c framework versions where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of s c framework versions
-	* @param end the upper bound of the range of s c framework versions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching s c framework versions
-	*/
-	public static List<SCFrameworkVersion> findByCompanyId(long companyId,
-		int start, int end,
-		OrderByComparator<SCFrameworkVersion> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the s c framework versions where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of s c framework versions
-	* @param end the upper bound of the range of s c framework versions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching s c framework versions
-	*/
-	public static List<SCFrameworkVersion> findByCompanyId(long companyId,
-		int start, int end,
-		OrderByComparator<SCFrameworkVersion> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	* Returns the first s c framework version in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching s c framework version
-	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
-	*/
-	public static SCFrameworkVersion findByCompanyId_First(long companyId,
-		OrderByComparator<SCFrameworkVersion> orderByComparator)
-		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first s c framework version in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
-	*/
-	public static SCFrameworkVersion fetchByCompanyId_First(long companyId,
-		OrderByComparator<SCFrameworkVersion> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last s c framework version in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching s c framework version
-	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
-	*/
-	public static SCFrameworkVersion findByCompanyId_Last(long companyId,
-		OrderByComparator<SCFrameworkVersion> orderByComparator)
-		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last s c framework version in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
-	*/
-	public static SCFrameworkVersion fetchByCompanyId_Last(long companyId,
-		OrderByComparator<SCFrameworkVersion> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the s c framework versions before and after the current s c framework version in the ordered set where companyId = &#63;.
-	*
-	* @param frameworkVersionId the primary key of the current s c framework version
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next s c framework version
-	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
-	*/
-	public static SCFrameworkVersion[] findByCompanyId_PrevAndNext(
-		long frameworkVersionId, long companyId,
-		OrderByComparator<SCFrameworkVersion> orderByComparator)
-		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(frameworkVersionId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the s c framework versions where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of s c framework versions where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching s c framework versions
-	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

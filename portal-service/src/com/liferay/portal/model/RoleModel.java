@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface RoleModel extends AttachedModel, BaseModel<Role>, LocalizedModel,
-	MVCCModel, StagedAuditedModel {
+	MVCCModel, PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -63,6 +63,22 @@ public interface RoleModel extends AttachedModel, BaseModel<Role>, LocalizedMode
 	 * @param primaryKey the primary key of this role
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this role.
+	 *
+	 * @return the company ID of this role
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this role.
+	 *
+	 * @param companyId the company ID of this role
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this role.
@@ -110,22 +126,6 @@ public interface RoleModel extends AttachedModel, BaseModel<Role>, LocalizedMode
 	 * @param roleId the role ID of this role
 	 */
 	public void setRoleId(long roleId);
-
-	/**
-	 * Returns the company ID of this role.
-	 *
-	 * @return the company ID of this role
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this role.
-	 *
-	 * @param companyId the company ID of this role
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this role.

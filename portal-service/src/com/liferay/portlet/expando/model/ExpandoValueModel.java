@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -38,7 +39,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue> {
+public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +62,22 @@ public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the company ID of this expando value.
+	 *
+	 * @return the company ID of this expando value
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this expando value.
+	 *
+	 * @param companyId the company ID of this expando value
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the value ID of this expando value.
 	 *
 	 * @return the value ID of this expando value
@@ -72,20 +90,6 @@ public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue
 	 * @param valueId the value ID of this expando value
 	 */
 	public void setValueId(long valueId);
-
-	/**
-	 * Returns the company ID of this expando value.
-	 *
-	 * @return the company ID of this expando value
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this expando value.
-	 *
-	 * @param companyId the company ID of this expando value
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the table ID of this expando value.

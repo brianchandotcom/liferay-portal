@@ -121,9 +121,9 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		KaleoTaskAssignment newKaleoTaskAssignment = _persistence.create(pk);
 
-		newKaleoTaskAssignment.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoTaskAssignment.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoTaskAssignment.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTaskAssignment.setUserId(RandomTestUtil.nextLong());
 
@@ -157,12 +157,12 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		KaleoTaskAssignment existingKaleoTaskAssignment = _persistence.findByPrimaryKey(newKaleoTaskAssignment.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTaskAssignment.getCompanyId(),
+			newKaleoTaskAssignment.getCompanyId());
 		Assert.assertEquals(existingKaleoTaskAssignment.getKaleoTaskAssignmentId(),
 			newKaleoTaskAssignment.getKaleoTaskAssignmentId());
 		Assert.assertEquals(existingKaleoTaskAssignment.getGroupId(),
 			newKaleoTaskAssignment.getGroupId());
-		Assert.assertEquals(existingKaleoTaskAssignment.getCompanyId(),
-			newKaleoTaskAssignment.getCompanyId());
 		Assert.assertEquals(existingKaleoTaskAssignment.getUserId(),
 			newKaleoTaskAssignment.getUserId());
 		Assert.assertEquals(existingKaleoTaskAssignment.getUserName(),
@@ -252,7 +252,7 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 	protected OrderByComparator<KaleoTaskAssignment> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTaskAssignment",
-			"kaleoTaskAssignmentId", true, "groupId", true, "companyId", true,
+			"companyId", true, "kaleoTaskAssignmentId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
 			"kaleoDefinitionId", true, "kaleoNodeId", true,
@@ -463,9 +463,9 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		KaleoTaskAssignment kaleoTaskAssignment = _persistence.create(pk);
 
-		kaleoTaskAssignment.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoTaskAssignment.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoTaskAssignment.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoTaskAssignment.setUserId(RandomTestUtil.nextLong());
 

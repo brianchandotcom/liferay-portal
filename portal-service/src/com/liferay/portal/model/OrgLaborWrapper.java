@@ -50,6 +50,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("orgLaborId", getOrgLaborId());
 		attributes.put("organizationId", getOrganizationId());
@@ -74,6 +75,12 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -191,6 +198,16 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public int compareTo(com.liferay.portal.model.OrgLabor orgLabor) {
 		return _orgLabor.compareTo(orgLabor);
+	}
+
+	/**
+	* Returns the company ID of this org labor.
+	*
+	* @return the company ID of this org labor
+	*/
+	@Override
+	public long getCompanyId() {
+		return _orgLabor.getCompanyId();
 	}
 
 	@Override
@@ -427,6 +444,16 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_orgLabor.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this org labor.
+	*
+	* @param companyId the company ID of this org labor
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_orgLabor.setCompanyId(companyId);
 	}
 
 	@Override

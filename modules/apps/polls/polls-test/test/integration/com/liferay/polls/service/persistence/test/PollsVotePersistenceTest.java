@@ -124,11 +124,11 @@ public class PollsVotePersistenceTest {
 
 		PollsVote newPollsVote = _persistence.create(pk);
 
+		newPollsVote.setCompanyId(RandomTestUtil.nextLong());
+
 		newPollsVote.setUuid(RandomTestUtil.randomString());
 
 		newPollsVote.setGroupId(RandomTestUtil.nextLong());
-
-		newPollsVote.setCompanyId(RandomTestUtil.nextLong());
 
 		newPollsVote.setUserId(RandomTestUtil.nextLong());
 
@@ -150,13 +150,13 @@ public class PollsVotePersistenceTest {
 
 		PollsVote existingPollsVote = _persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
+		Assert.assertEquals(existingPollsVote.getCompanyId(),
+			newPollsVote.getCompanyId());
 		Assert.assertEquals(existingPollsVote.getUuid(), newPollsVote.getUuid());
 		Assert.assertEquals(existingPollsVote.getVoteId(),
 			newPollsVote.getVoteId());
 		Assert.assertEquals(existingPollsVote.getGroupId(),
 			newPollsVote.getGroupId());
-		Assert.assertEquals(existingPollsVote.getCompanyId(),
-			newPollsVote.getCompanyId());
 		Assert.assertEquals(existingPollsVote.getUserId(),
 			newPollsVote.getUserId());
 		Assert.assertEquals(existingPollsVote.getUserName(),
@@ -251,9 +251,9 @@ public class PollsVotePersistenceTest {
 	}
 
 	protected OrderByComparator<PollsVote> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("PollsVote", "uuid", true,
-			"voteId", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
+		return OrderByComparatorFactoryUtil.create("PollsVote", "companyId",
+			true, "uuid", true, "voteId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"questionId", true, "choiceId", true, "lastPublishDate", true,
 			"voteDate", true);
 	}
@@ -478,11 +478,11 @@ public class PollsVotePersistenceTest {
 
 		PollsVote pollsVote = _persistence.create(pk);
 
+		pollsVote.setCompanyId(RandomTestUtil.nextLong());
+
 		pollsVote.setUuid(RandomTestUtil.randomString());
 
 		pollsVote.setGroupId(RandomTestUtil.nextLong());
-
-		pollsVote.setCompanyId(RandomTestUtil.nextLong());
 
 		pollsVote.setUserId(RandomTestUtil.nextLong());
 

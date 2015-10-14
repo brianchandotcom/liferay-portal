@@ -66,12 +66,12 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{activitySetId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", activitySetId=");
 		sb.append(activitySetId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -97,9 +97,9 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 	public SocialActivitySet toEntityModel() {
 		SocialActivitySetImpl socialActivitySetImpl = new SocialActivitySetImpl();
 
+		socialActivitySetImpl.setCompanyId(companyId);
 		socialActivitySetImpl.setActivitySetId(activitySetId);
 		socialActivitySetImpl.setGroupId(groupId);
-		socialActivitySetImpl.setCompanyId(companyId);
 		socialActivitySetImpl.setUserId(userId);
 		socialActivitySetImpl.setCreateDate(createDate);
 		socialActivitySetImpl.setModifiedDate(modifiedDate);
@@ -123,9 +123,9 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		activitySetId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
@@ -139,9 +139,9 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(activitySetId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
@@ -159,9 +159,9 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 		objectOutput.writeInt(activityCount);
 	}
 
+	public long companyId;
 	public long activitySetId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public long modifiedDate;

@@ -68,10 +68,10 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{linkId=");
-		sb.append(linkId);
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(companyId);
+		sb.append(", linkId=");
+		sb.append(linkId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -95,8 +95,8 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 	public AssetLink toEntityModel() {
 		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
 
-		assetLinkImpl.setLinkId(linkId);
 		assetLinkImpl.setCompanyId(companyId);
+		assetLinkImpl.setLinkId(linkId);
 		assetLinkImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -125,8 +125,8 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		linkId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		linkId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -139,8 +139,8 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(linkId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(linkId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -157,8 +157,8 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 		objectOutput.writeInt(weight);
 	}
 
-	public long linkId;
 	public long companyId;
+	public long linkId;
 	public long userId;
 	public String userName;
 	public long createDate;

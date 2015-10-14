@@ -1717,6 +1717,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		contact.setNew(true);
 		contact.setPrimaryKey(contactId);
 
+		contact.setCompanyId(0);
+
 		return contact;
 	}
 
@@ -1935,9 +1937,9 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		contactImpl.setNew(contact.isNew());
 		contactImpl.setPrimaryKey(contact.getPrimaryKey());
 
+		contactImpl.setCompanyId(contact.getCompanyId());
 		contactImpl.setMvccVersion(contact.getMvccVersion());
 		contactImpl.setContactId(contact.getContactId());
-		contactImpl.setCompanyId(contact.getCompanyId());
 		contactImpl.setUserId(contact.getUserId());
 		contactImpl.setUserName(contact.getUserName());
 		contactImpl.setCreateDate(contact.getCreateDate());

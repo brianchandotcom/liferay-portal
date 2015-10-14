@@ -81,14 +81,14 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", roleId=");
 		sb.append(roleId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -120,6 +120,7 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 	public Role toEntityModel() {
 		RoleImpl roleImpl = new RoleImpl();
 
+		roleImpl.setCompanyId(companyId);
 		roleImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -130,7 +131,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		}
 
 		roleImpl.setRoleId(roleId);
-		roleImpl.setCompanyId(companyId);
 		roleImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -194,10 +194,10 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		roleId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -214,6 +214,7 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -224,7 +225,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		}
 
 		objectOutput.writeLong(roleId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -270,10 +270,10 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		}
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long roleId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

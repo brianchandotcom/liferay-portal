@@ -64,9 +64,9 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	 */
 	public static final String TABLE_NAME = "KaleoAction";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "kaleoActionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -86,9 +86,9 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoActionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -106,7 +106,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoAction (kaleoActionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoAction (companyId LONG,kaleoActionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoAction.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoAction.priority ASC";
@@ -168,9 +168,9 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("kaleoActionId", getKaleoActionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -195,6 +195,12 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long kaleoActionId = (Long)attributes.get("kaleoActionId");
 
 		if (kaleoActionId != null) {
@@ -205,12 +211,6 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -306,26 +306,6 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	}
 
 	@Override
-	public long getKaleoActionId() {
-		return _kaleoActionId;
-	}
-
-	@Override
-	public void setKaleoActionId(long kaleoActionId) {
-		_kaleoActionId = kaleoActionId;
-	}
-
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
-	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -345,6 +325,26 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@Override
+	public long getKaleoActionId() {
+		return _kaleoActionId;
+	}
+
+	@Override
+	public void setKaleoActionId(long kaleoActionId) {
+		_kaleoActionId = kaleoActionId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	@Override
@@ -641,9 +641,9 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	public Object clone() {
 		KaleoActionImpl kaleoActionImpl = new KaleoActionImpl();
 
+		kaleoActionImpl.setCompanyId(getCompanyId());
 		kaleoActionImpl.setKaleoActionId(getKaleoActionId());
 		kaleoActionImpl.setGroupId(getGroupId());
-		kaleoActionImpl.setCompanyId(getCompanyId());
 		kaleoActionImpl.setUserId(getUserId());
 		kaleoActionImpl.setUserName(getUserName());
 		kaleoActionImpl.setCreateDate(getCreateDate());
@@ -752,11 +752,11 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	public CacheModel<KaleoAction> toCacheModel() {
 		KaleoActionCacheModel kaleoActionCacheModel = new KaleoActionCacheModel();
 
+		kaleoActionCacheModel.companyId = getCompanyId();
+
 		kaleoActionCacheModel.kaleoActionId = getKaleoActionId();
 
 		kaleoActionCacheModel.groupId = getGroupId();
-
-		kaleoActionCacheModel.companyId = getCompanyId();
 
 		kaleoActionCacheModel.userId = getUserId();
 
@@ -864,12 +864,12 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{kaleoActionId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", kaleoActionId=");
 		sb.append(getKaleoActionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -914,16 +914,16 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>kaleoActionId</column-name><column-value><![CDATA[");
 		sb.append(getKaleoActionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -995,11 +995,11 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoAction.class
 		};
-	private long _kaleoActionId;
-	private long _groupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _kaleoActionId;
+	private long _groupId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

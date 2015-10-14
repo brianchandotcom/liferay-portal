@@ -64,6 +64,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	 */
 	public static final String TABLE_NAME = "MBStatsUser";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "statsUserId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -73,6 +74,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statsUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -80,7 +82,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBStatsUser (companyId LONG,statsUserId LONG not null primary key,groupId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBStatsUser";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbStatsUser.messageCount DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBStatsUser.messageCount DESC";
@@ -139,6 +141,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("statsUserId", getStatsUserId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("userId", getUserId());
@@ -153,6 +156,12 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long statsUserId = (Long)attributes.get("statsUserId");
 
 		if (statsUserId != null) {
@@ -182,6 +191,16 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		if (lastPostDate != null) {
 			setLastPostDate(lastPostDate);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -308,7 +327,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBStatsUser.class.getName(), getPrimaryKey());
 	}
 
@@ -333,6 +352,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public Object clone() {
 		MBStatsUserImpl mbStatsUserImpl = new MBStatsUserImpl();
 
+		mbStatsUserImpl.setCompanyId(getCompanyId());
 		mbStatsUserImpl.setStatsUserId(getStatsUserId());
 		mbStatsUserImpl.setGroupId(getGroupId());
 		mbStatsUserImpl.setUserId(getUserId());
@@ -427,6 +447,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public CacheModel<MBStatsUser> toCacheModel() {
 		MBStatsUserCacheModel mbStatsUserCacheModel = new MBStatsUserCacheModel();
 
+		mbStatsUserCacheModel.companyId = getCompanyId();
+
 		mbStatsUserCacheModel.statsUserId = getStatsUserId();
 
 		mbStatsUserCacheModel.groupId = getGroupId();
@@ -449,9 +471,11 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{statsUserId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", statsUserId=");
 		sb.append(getStatsUserId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -468,12 +492,16 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBStatsUser");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>statsUserId</column-name><column-value><![CDATA[");
 		sb.append(getStatsUserId());
@@ -504,6 +532,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			MBStatsUser.class
 		};
+	private long _companyId;
 	private long _statsUserId;
 	private long _groupId;
 	private long _originalGroupId;

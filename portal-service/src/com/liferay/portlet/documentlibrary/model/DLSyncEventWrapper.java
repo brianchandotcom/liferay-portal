@@ -52,6 +52,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("syncEventId", getSyncEventId());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put("event", getEvent());
@@ -63,6 +64,12 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long syncEventId = (Long)attributes.get("syncEventId");
 
 		if (syncEventId != null) {
@@ -103,6 +110,16 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	public int compareTo(
 		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
 		return _dlSyncEvent.compareTo(dlSyncEvent);
+	}
+
+	/**
+	* Returns the company ID of this d l sync event.
+	*
+	* @return the company ID of this d l sync event
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlSyncEvent.getCompanyId();
 	}
 
 	/**
@@ -203,6 +220,16 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_dlSyncEvent.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this d l sync event.
+	*
+	* @param companyId the company ID of this d l sync event
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_dlSyncEvent.setCompanyId(companyId);
 	}
 
 	/**

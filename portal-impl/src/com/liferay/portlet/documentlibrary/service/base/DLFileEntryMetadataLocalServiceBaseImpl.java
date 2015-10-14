@@ -217,6 +217,20 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file entry metadata with the matching UUID and company.
+	 *
+	 * @param uuid the document library file entry metadata's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return dlFileEntryMetadataPersistence.fetchByUuid_C_First(uuid,
+			companyId, null);
+	}
+
+	/**
 	 * Returns the document library file entry metadata with the primary key.
 	 *
 	 * @param fileEntryMetadataId the primary key of the document library file entry metadata
@@ -264,6 +278,21 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return dlFileEntryMetadataPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the document library file entry metadata with the matching UUID and company.
+	 *
+	 * @param uuid the document library file entry metadata's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching document library file entry metadata
+	 * @throws PortalException if a matching document library file entry metadata could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
+		String uuid, long companyId) throws PortalException {
+		return dlFileEntryMetadataPersistence.findByUuid_C_First(uuid,
+			companyId, null);
 	}
 
 	/**

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -47,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
-	StagedAuditedModel {
+	PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,6 +68,22 @@ public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
 	 * @param primaryKey the primary key of this s a p entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this s a p entry.
+	 *
+	 * @return the company ID of this s a p entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this s a p entry.
+	 *
+	 * @param companyId the company ID of this s a p entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this s a p entry.
@@ -98,22 +115,6 @@ public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
 	 * @param sapEntryId the sap entry ID of this s a p entry
 	 */
 	public void setSapEntryId(long sapEntryId);
-
-	/**
-	 * Returns the company ID of this s a p entry.
-	 *
-	 * @return the company ID of this s a p entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this s a p entry.
-	 *
-	 * @param companyId the company ID of this s a p entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this s a p entry.

@@ -4870,6 +4870,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		mdrRuleGroupInstance.setUuid(uuid);
 
+		mdrRuleGroupInstance.setCompanyId(0);
+
 		return mdrRuleGroupInstance;
 	}
 
@@ -5168,10 +5170,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		mdrRuleGroupInstanceImpl.setNew(mdrRuleGroupInstance.isNew());
 		mdrRuleGroupInstanceImpl.setPrimaryKey(mdrRuleGroupInstance.getPrimaryKey());
 
+		mdrRuleGroupInstanceImpl.setCompanyId(mdrRuleGroupInstance.getCompanyId());
 		mdrRuleGroupInstanceImpl.setUuid(mdrRuleGroupInstance.getUuid());
 		mdrRuleGroupInstanceImpl.setRuleGroupInstanceId(mdrRuleGroupInstance.getRuleGroupInstanceId());
 		mdrRuleGroupInstanceImpl.setGroupId(mdrRuleGroupInstance.getGroupId());
-		mdrRuleGroupInstanceImpl.setCompanyId(mdrRuleGroupInstance.getCompanyId());
 		mdrRuleGroupInstanceImpl.setUserId(mdrRuleGroupInstance.getUserId());
 		mdrRuleGroupInstanceImpl.setUserName(mdrRuleGroupInstance.getUserName());
 		mdrRuleGroupInstanceImpl.setCreateDate(mdrRuleGroupInstance.getCreateDate());

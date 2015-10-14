@@ -33,9 +33,9 @@ public class SocialActivityAchievementSoap implements Serializable {
 		SocialActivityAchievement model) {
 		SocialActivityAchievementSoap soapModel = new SocialActivityAchievementSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setActivityAchievementId(model.getActivityAchievementId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setName(model.getName());
@@ -95,6 +95,14 @@ public class SocialActivityAchievementSoap implements Serializable {
 		setActivityAchievementId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getActivityAchievementId() {
 		return _activityAchievementId;
 	}
@@ -109,14 +117,6 @@ public class SocialActivityAchievementSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -155,9 +155,9 @@ public class SocialActivityAchievementSoap implements Serializable {
 		_firstInGroup = firstInGroup;
 	}
 
+	private long _companyId;
 	private long _activityAchievementId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private long _createDate;
 	private String _name;

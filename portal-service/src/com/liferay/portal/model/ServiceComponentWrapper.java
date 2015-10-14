@@ -51,6 +51,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("serviceComponentId", getServiceComponentId());
 		attributes.put("buildNamespace", getBuildNamespace());
@@ -63,6 +64,12 @@ public class ServiceComponentWrapper implements ServiceComponent,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -139,6 +146,16 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public long getBuildNumber() {
 		return _serviceComponent.getBuildNumber();
+	}
+
+	/**
+	* Returns the company ID of this service component.
+	*
+	* @return the company ID of this service component
+	*/
+	@Override
+	public long getCompanyId() {
+		return _serviceComponent.getCompanyId();
 	}
 
 	/**
@@ -264,6 +281,16 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_serviceComponent.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this service component.
+	*
+	* @param companyId the company ID of this service component
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_serviceComponent.setCompanyId(companyId);
 	}
 
 	/**

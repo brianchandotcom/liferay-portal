@@ -62,10 +62,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	 */
 	public static final String TABLE_NAME = "UserNotificationEvent";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "userNotificationEventId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
 			{ "timestamp", Types.BIGINT },
@@ -79,10 +79,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userNotificationEventId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("timestamp", Types.BIGINT);
@@ -94,7 +94,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		TABLE_COLUMNS_MAP.put("archived", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,actionRequired BOOLEAN,archived BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (companyId LONG,mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,actionRequired BOOLEAN,archived BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationEvent.timestamp DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationEvent.timestamp DESC";
@@ -158,10 +158,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("userNotificationEventId", getUserNotificationEventId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("timestamp", getTimestamp());
@@ -180,6 +180,12 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -197,12 +203,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		if (userNotificationEventId != null) {
 			setUserNotificationEventId(userNotificationEventId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -261,6 +261,28 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -301,28 +323,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	@Override
 	public void setUserNotificationEventId(long userNotificationEventId) {
 		_userNotificationEventId = userNotificationEventId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -549,10 +549,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public Object clone() {
 		UserNotificationEventImpl userNotificationEventImpl = new UserNotificationEventImpl();
 
+		userNotificationEventImpl.setCompanyId(getCompanyId());
 		userNotificationEventImpl.setMvccVersion(getMvccVersion());
 		userNotificationEventImpl.setUuid(getUuid());
 		userNotificationEventImpl.setUserNotificationEventId(getUserNotificationEventId());
-		userNotificationEventImpl.setCompanyId(getCompanyId());
 		userNotificationEventImpl.setUserId(getUserId());
 		userNotificationEventImpl.setType(getType());
 		userNotificationEventImpl.setTimestamp(getTimestamp());
@@ -632,11 +632,11 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public void resetOriginalValues() {
 		UserNotificationEventModelImpl userNotificationEventModelImpl = this;
 
-		userNotificationEventModelImpl._originalUuid = userNotificationEventModelImpl._uuid;
-
 		userNotificationEventModelImpl._originalCompanyId = userNotificationEventModelImpl._companyId;
 
 		userNotificationEventModelImpl._setOriginalCompanyId = false;
+
+		userNotificationEventModelImpl._originalUuid = userNotificationEventModelImpl._uuid;
 
 		userNotificationEventModelImpl._originalUserId = userNotificationEventModelImpl._userId;
 
@@ -665,6 +665,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public CacheModel<UserNotificationEvent> toCacheModel() {
 		UserNotificationEventCacheModel userNotificationEventCacheModel = new UserNotificationEventCacheModel();
 
+		userNotificationEventCacheModel.companyId = getCompanyId();
+
 		userNotificationEventCacheModel.mvccVersion = getMvccVersion();
 
 		userNotificationEventCacheModel.uuid = getUuid();
@@ -676,8 +678,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		}
 
 		userNotificationEventCacheModel.userNotificationEventId = getUserNotificationEventId();
-
-		userNotificationEventCacheModel.companyId = getCompanyId();
 
 		userNotificationEventCacheModel.userId = getUserId();
 
@@ -716,14 +716,14 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", userNotificationEventId=");
 		sb.append(getUserNotificationEventId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", type=");
@@ -756,6 +756,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
@@ -766,10 +770,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(
 			"<column><column-name>userNotificationEventId</column-name><column-value><![CDATA[");
 		sb.append(getUserNotificationEventId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -817,13 +817,13 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			UserNotificationEvent.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _userNotificationEventId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

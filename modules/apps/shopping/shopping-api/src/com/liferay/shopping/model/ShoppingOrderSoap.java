@@ -34,9 +34,9 @@ public class ShoppingOrderSoap implements Serializable {
 	public static ShoppingOrderSoap toSoapModel(ShoppingOrder model) {
 		ShoppingOrderSoap soapModel = new ShoppingOrderSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setOrderId(model.getOrderId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -137,6 +137,14 @@ public class ShoppingOrderSoap implements Serializable {
 		setOrderId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getOrderId() {
 		return _orderId;
 	}
@@ -151,14 +159,6 @@ public class ShoppingOrderSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -565,9 +565,9 @@ public class ShoppingOrderSoap implements Serializable {
 		_sendShippingEmail = sendShippingEmail;
 	}
 
+	private long _companyId;
 	private long _orderId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

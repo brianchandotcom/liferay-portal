@@ -81,14 +81,14 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", subscriptionId=");
 		sb.append(subscriptionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -112,10 +112,10 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 	public Subscription toEntityModel() {
 		SubscriptionImpl subscriptionImpl = new SubscriptionImpl();
 
+		subscriptionImpl.setCompanyId(companyId);
 		subscriptionImpl.setMvccVersion(mvccVersion);
 		subscriptionImpl.setSubscriptionId(subscriptionId);
 		subscriptionImpl.setGroupId(groupId);
-		subscriptionImpl.setCompanyId(companyId);
 		subscriptionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -156,10 +156,10 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		subscriptionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -172,10 +172,10 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(subscriptionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -198,10 +198,10 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		}
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long subscriptionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

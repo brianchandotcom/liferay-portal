@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -47,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
-	LocalizedModel, StagedGroupedModel {
+	LocalizedModel, PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,6 +68,22 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	 * @param primaryKey the primary key of this document library file entry type
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this document library file entry type.
+	 *
+	 * @return the company ID of this document library file entry type
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this document library file entry type.
+	 *
+	 * @param companyId the company ID of this document library file entry type
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this document library file entry type.
@@ -114,22 +131,6 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this document library file entry type.
-	 *
-	 * @return the company ID of this document library file entry type
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this document library file entry type.
-	 *
-	 * @param companyId the company ID of this document library file entry type
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this document library file entry type.

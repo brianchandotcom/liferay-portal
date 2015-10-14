@@ -35,8 +35,8 @@ public class AssetCategoryPropertySoap implements Serializable {
 		AssetCategoryProperty model) {
 		AssetCategoryPropertySoap soapModel = new AssetCategoryPropertySoap();
 
-		soapModel.setCategoryPropertyId(model.getCategoryPropertyId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setCategoryPropertyId(model.getCategoryPropertyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -99,20 +99,20 @@ public class AssetCategoryPropertySoap implements Serializable {
 		setCategoryPropertyId(pk);
 	}
 
-	public long getCategoryPropertyId() {
-		return _categoryPropertyId;
-	}
-
-	public void setCategoryPropertyId(long categoryPropertyId) {
-		_categoryPropertyId = categoryPropertyId;
-	}
-
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public long getCategoryPropertyId() {
+		return _categoryPropertyId;
+	}
+
+	public void setCategoryPropertyId(long categoryPropertyId) {
+		_categoryPropertyId = categoryPropertyId;
 	}
 
 	public long getUserId() {
@@ -171,8 +171,8 @@ public class AssetCategoryPropertySoap implements Serializable {
 		_value = value;
 	}
 
-	private long _categoryPropertyId;
 	private long _companyId;
+	private long _categoryPropertyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

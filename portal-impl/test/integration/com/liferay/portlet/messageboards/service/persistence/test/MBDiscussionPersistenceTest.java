@@ -119,11 +119,11 @@ public class MBDiscussionPersistenceTest {
 
 		MBDiscussion newMBDiscussion = _persistence.create(pk);
 
+		newMBDiscussion.setCompanyId(RandomTestUtil.nextLong());
+
 		newMBDiscussion.setUuid(RandomTestUtil.randomString());
 
 		newMBDiscussion.setGroupId(RandomTestUtil.nextLong());
-
-		newMBDiscussion.setCompanyId(RandomTestUtil.nextLong());
 
 		newMBDiscussion.setUserId(RandomTestUtil.nextLong());
 
@@ -145,14 +145,14 @@ public class MBDiscussionPersistenceTest {
 
 		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
+		Assert.assertEquals(existingMBDiscussion.getCompanyId(),
+			newMBDiscussion.getCompanyId());
 		Assert.assertEquals(existingMBDiscussion.getUuid(),
 			newMBDiscussion.getUuid());
 		Assert.assertEquals(existingMBDiscussion.getDiscussionId(),
 			newMBDiscussion.getDiscussionId());
 		Assert.assertEquals(existingMBDiscussion.getGroupId(),
 			newMBDiscussion.getGroupId());
-		Assert.assertEquals(existingMBDiscussion.getCompanyId(),
-			newMBDiscussion.getCompanyId());
 		Assert.assertEquals(existingMBDiscussion.getUserId(),
 			newMBDiscussion.getUserId());
 		Assert.assertEquals(existingMBDiscussion.getUserName(),
@@ -246,8 +246,8 @@ public class MBDiscussionPersistenceTest {
 	}
 
 	protected OrderByComparator<MBDiscussion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MBDiscussion", "uuid",
-			true, "discussionId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("MBDiscussion", "companyId",
+			true, "uuid", true, "discussionId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"threadId", true, "lastPublishDate", true);
@@ -479,11 +479,11 @@ public class MBDiscussionPersistenceTest {
 
 		MBDiscussion mbDiscussion = _persistence.create(pk);
 
+		mbDiscussion.setCompanyId(RandomTestUtil.nextLong());
+
 		mbDiscussion.setUuid(RandomTestUtil.randomString());
 
 		mbDiscussion.setGroupId(RandomTestUtil.nextLong());
-
-		mbDiscussion.setCompanyId(RandomTestUtil.nextLong());
 
 		mbDiscussion.setUserId(RandomTestUtil.nextLong());
 

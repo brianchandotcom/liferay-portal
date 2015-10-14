@@ -2,10 +2,10 @@
 
 <model-hints>
 	<model name="com.liferay.portal.background.task.model.BackgroundTask">
+		<field name="companyId" type="long" />
 		<field name="mvccVersion" type="long" />
 		<field name="backgroundTaskId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />

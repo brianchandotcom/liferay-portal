@@ -124,11 +124,11 @@ public class JournalFolderPersistenceTest {
 
 		JournalFolder newJournalFolder = _persistence.create(pk);
 
+		newJournalFolder.setCompanyId(RandomTestUtil.nextLong());
+
 		newJournalFolder.setUuid(RandomTestUtil.randomString());
 
 		newJournalFolder.setGroupId(RandomTestUtil.nextLong());
-
-		newJournalFolder.setCompanyId(RandomTestUtil.nextLong());
 
 		newJournalFolder.setUserId(RandomTestUtil.nextLong());
 
@@ -162,14 +162,14 @@ public class JournalFolderPersistenceTest {
 
 		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(newJournalFolder.getPrimaryKey());
 
+		Assert.assertEquals(existingJournalFolder.getCompanyId(),
+			newJournalFolder.getCompanyId());
 		Assert.assertEquals(existingJournalFolder.getUuid(),
 			newJournalFolder.getUuid());
 		Assert.assertEquals(existingJournalFolder.getFolderId(),
 			newJournalFolder.getFolderId());
 		Assert.assertEquals(existingJournalFolder.getGroupId(),
 			newJournalFolder.getGroupId());
-		Assert.assertEquals(existingJournalFolder.getCompanyId(),
-			newJournalFolder.getCompanyId());
 		Assert.assertEquals(existingJournalFolder.getUserId(),
 			newJournalFolder.getUserId());
 		Assert.assertEquals(existingJournalFolder.getUserName(),
@@ -232,6 +232,13 @@ public class JournalFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -239,10 +246,11 @@ public class JournalFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByC_NotS() throws Exception {
+		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByCompanyId(0L);
+		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
@@ -260,14 +268,6 @@ public class JournalFolderPersistenceTest {
 		_persistence.countByG_N(0L, StringPool.NULL);
 
 		_persistence.countByG_N(0L, (String)null);
-	}
-
-	@Test
-	public void testCountByC_NotS() throws Exception {
-		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
@@ -334,8 +334,8 @@ public class JournalFolderPersistenceTest {
 	}
 
 	protected OrderByComparator<JournalFolder> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("JournalFolder", "uuid",
-			true, "folderId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("JournalFolder",
+			"companyId", true, "uuid", true, "folderId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentFolderId", true, "treePath", true,
 			"name", true, "description", true, "restrictionType", true,
@@ -574,11 +574,11 @@ public class JournalFolderPersistenceTest {
 
 		JournalFolder journalFolder = _persistence.create(pk);
 
+		journalFolder.setCompanyId(RandomTestUtil.nextLong());
+
 		journalFolder.setUuid(RandomTestUtil.randomString());
 
 		journalFolder.setGroupId(RandomTestUtil.nextLong());
-
-		journalFolder.setCompanyId(RandomTestUtil.nextLong());
 
 		journalFolder.setUserId(RandomTestUtil.nextLong());
 

@@ -52,8 +52,8 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("valueId", getValueId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("valueId", getValueId());
 		attributes.put("tableId", getTableId());
 		attributes.put("columnId", getColumnId());
 		attributes.put("rowId", getRowId());
@@ -66,16 +66,16 @@ public class ExpandoValueWrapper implements ExpandoValue,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long valueId = (Long)attributes.get("valueId");
-
-		if (valueId != null) {
-			setValueId(valueId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long valueId = (Long)attributes.get("valueId");
+
+		if (valueId != null) {
+			setValueId(valueId);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");

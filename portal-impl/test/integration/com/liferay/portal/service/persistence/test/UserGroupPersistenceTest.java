@@ -118,11 +118,11 @@ public class UserGroupPersistenceTest {
 
 		UserGroup newUserGroup = _persistence.create(pk);
 
+		newUserGroup.setCompanyId(RandomTestUtil.nextLong());
+
 		newUserGroup.setMvccVersion(RandomTestUtil.nextLong());
 
 		newUserGroup.setUuid(RandomTestUtil.randomString());
-
-		newUserGroup.setCompanyId(RandomTestUtil.nextLong());
 
 		newUserGroup.setUserId(RandomTestUtil.nextLong());
 
@@ -146,13 +146,13 @@ public class UserGroupPersistenceTest {
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
 
+		Assert.assertEquals(existingUserGroup.getCompanyId(),
+			newUserGroup.getCompanyId());
 		Assert.assertEquals(existingUserGroup.getMvccVersion(),
 			newUserGroup.getMvccVersion());
 		Assert.assertEquals(existingUserGroup.getUuid(), newUserGroup.getUuid());
 		Assert.assertEquals(existingUserGroup.getUserGroupId(),
 			newUserGroup.getUserGroupId());
-		Assert.assertEquals(existingUserGroup.getCompanyId(),
-			newUserGroup.getCompanyId());
 		Assert.assertEquals(existingUserGroup.getUserId(),
 			newUserGroup.getUserId());
 		Assert.assertEquals(existingUserGroup.getUserName(),
@@ -240,8 +240,8 @@ public class UserGroupPersistenceTest {
 	}
 
 	protected OrderByComparator<UserGroup> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("UserGroup", "mvccVersion",
-			true, "uuid", true, "userGroupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("UserGroup", "companyId",
+			true, "mvccVersion", true, "uuid", true, "userGroupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentUserGroupId", true, "name", true,
 			"description", true, "addedByLDAPImport", true, "lastPublishDate",
@@ -461,11 +461,11 @@ public class UserGroupPersistenceTest {
 
 		UserGroup userGroup = _persistence.create(pk);
 
+		userGroup.setCompanyId(RandomTestUtil.nextLong());
+
 		userGroup.setMvccVersion(RandomTestUtil.nextLong());
 
 		userGroup.setUuid(RandomTestUtil.randomString());
-
-		userGroup.setCompanyId(RandomTestUtil.nextLong());
 
 		userGroup.setUserId(RandomTestUtil.nextLong());
 

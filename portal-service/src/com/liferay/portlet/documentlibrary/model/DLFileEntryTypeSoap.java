@@ -34,10 +34,10 @@ public class DLFileEntryTypeSoap implements Serializable {
 	public static DLFileEntryTypeSoap toSoapModel(DLFileEntryType model) {
 		DLFileEntryTypeSoap soapModel = new DLFileEntryTypeSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFileEntryTypeId(model.getFileEntryTypeId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -100,6 +100,14 @@ public class DLFileEntryTypeSoap implements Serializable {
 		setFileEntryTypeId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -122,14 +130,6 @@ public class DLFileEntryTypeSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -196,10 +196,10 @@ public class DLFileEntryTypeSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _fileEntryTypeId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

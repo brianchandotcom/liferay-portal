@@ -123,6 +123,8 @@ public class ModulePersistenceTest {
 
 		Module newModule = _persistence.create(pk);
 
+		newModule.setCompanyId(RandomTestUtil.nextLong());
+
 		newModule.setUuid(RandomTestUtil.randomString());
 
 		newModule.setAppId(RandomTestUtil.nextLong());
@@ -137,6 +139,8 @@ public class ModulePersistenceTest {
 
 		Module existingModule = _persistence.findByPrimaryKey(newModule.getPrimaryKey());
 
+		Assert.assertEquals(existingModule.getCompanyId(),
+			newModule.getCompanyId());
 		Assert.assertEquals(existingModule.getUuid(), newModule.getUuid());
 		Assert.assertEquals(existingModule.getModuleId(),
 			newModule.getModuleId());
@@ -156,6 +160,15 @@ public class ModulePersistenceTest {
 		_persistence.countByUuid(StringPool.NULL);
 
 		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -226,7 +239,7 @@ public class ModulePersistenceTest {
 
 	protected OrderByComparator<Module> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Marketplace_Module",
-			"uuid", true, "moduleId", true, "appId", true,
+			"companyId", true, "uuid", true, "moduleId", true, "appId", true,
 			"bundleSymbolicName", true, "bundleVersion", true, "contextName",
 			true);
 	}
@@ -450,6 +463,8 @@ public class ModulePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		Module module = _persistence.create(pk);
+
+		module.setCompanyId(RandomTestUtil.nextLong());
 
 		module.setUuid(RandomTestUtil.randomString());
 

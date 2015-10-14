@@ -68,12 +68,12 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{couponId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", couponId=");
 		sb.append(couponId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -113,9 +113,9 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 	public ShoppingCoupon toEntityModel() {
 		ShoppingCouponImpl shoppingCouponImpl = new ShoppingCouponImpl();
 
+		shoppingCouponImpl.setCompanyId(companyId);
 		shoppingCouponImpl.setCouponId(couponId);
 		shoppingCouponImpl.setGroupId(groupId);
-		shoppingCouponImpl.setCompanyId(companyId);
 		shoppingCouponImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -207,9 +207,9 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		couponId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -230,9 +230,9 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(couponId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -295,9 +295,9 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 		}
 	}
 
+	public long companyId;
 	public long couponId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -79,14 +79,14 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(45);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", creatorUserId=");
 		sb.append(creatorUserId);
 		sb.append(", classNameId=");
@@ -132,6 +132,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 	public Group toEntityModel() {
 		GroupImpl groupImpl = new GroupImpl();
 
+		groupImpl.setCompanyId(companyId);
 		groupImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -142,7 +143,6 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		}
 
 		groupImpl.setGroupId(groupId);
-		groupImpl.setCompanyId(companyId);
 		groupImpl.setCreatorUserId(creatorUserId);
 		groupImpl.setClassNameId(classNameId);
 		groupImpl.setClassPK(classPK);
@@ -208,10 +208,10 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		creatorUserId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
@@ -235,6 +235,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -245,7 +246,6 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		}
 
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(creatorUserId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
@@ -305,10 +305,10 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		objectOutput.writeBoolean(active);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long groupId;
-	public long companyId;
 	public long creatorUserId;
 	public long classNameId;
 	public long classPK;

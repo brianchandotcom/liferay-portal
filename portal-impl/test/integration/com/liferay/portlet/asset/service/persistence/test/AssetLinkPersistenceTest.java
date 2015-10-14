@@ -137,10 +137,10 @@ public class AssetLinkPersistenceTest {
 
 		AssetLink existingAssetLink = _persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetLink.getLinkId(),
-			newAssetLink.getLinkId());
 		Assert.assertEquals(existingAssetLink.getCompanyId(),
 			newAssetLink.getCompanyId());
+		Assert.assertEquals(existingAssetLink.getLinkId(),
+			newAssetLink.getLinkId());
 		Assert.assertEquals(existingAssetLink.getUserId(),
 			newAssetLink.getUserId());
 		Assert.assertEquals(existingAssetLink.getUserName(),
@@ -226,10 +226,10 @@ public class AssetLinkPersistenceTest {
 	}
 
 	protected OrderByComparator<AssetLink> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("AssetLink", "linkId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "entryId1", true, "entryId2", true, "type", true, "weight",
-			true);
+		return OrderByComparatorFactoryUtil.create("AssetLink", "companyId",
+			true, "linkId", true, "userId", true, "userName", true,
+			"createDate", true, "entryId1", true, "entryId2", true, "type",
+			true, "weight", true);
 	}
 
 	@Test

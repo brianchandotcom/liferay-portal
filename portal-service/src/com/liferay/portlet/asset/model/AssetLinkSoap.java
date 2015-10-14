@@ -33,8 +33,8 @@ public class AssetLinkSoap implements Serializable {
 	public static AssetLinkSoap toSoapModel(AssetLink model) {
 		AssetLinkSoap soapModel = new AssetLinkSoap();
 
-		soapModel.setLinkId(model.getLinkId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setLinkId(model.getLinkId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -94,20 +94,20 @@ public class AssetLinkSoap implements Serializable {
 		setLinkId(pk);
 	}
 
-	public long getLinkId() {
-		return _linkId;
-	}
-
-	public void setLinkId(long linkId) {
-		_linkId = linkId;
-	}
-
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public long getLinkId() {
+		return _linkId;
+	}
+
+	public void setLinkId(long linkId) {
+		_linkId = linkId;
 	}
 
 	public long getUserId() {
@@ -166,8 +166,8 @@ public class AssetLinkSoap implements Serializable {
 		_weight = weight;
 	}
 
-	private long _linkId;
 	private long _companyId;
+	private long _linkId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

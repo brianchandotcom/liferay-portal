@@ -23,6 +23,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.MVCCModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -49,7 +50,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ExportImportConfigurationModel extends BaseModel<ExportImportConfiguration>,
-	GroupedModel, MVCCModel, TrashedModel, WorkflowedModel {
+	GroupedModel, MVCCModel, PartitionableModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -69,6 +70,22 @@ public interface ExportImportConfigurationModel extends BaseModel<ExportImportCo
 	 * @param primaryKey the primary key of this export import configuration
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this export import configuration.
+	 *
+	 * @return the company ID of this export import configuration
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this export import configuration.
+	 *
+	 * @param companyId the company ID of this export import configuration
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this export import configuration.
@@ -115,22 +132,6 @@ public interface ExportImportConfigurationModel extends BaseModel<ExportImportCo
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this export import configuration.
-	 *
-	 * @return the company ID of this export import configuration
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this export import configuration.
-	 *
-	 * @param companyId the company ID of this export import configuration
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this export import configuration.

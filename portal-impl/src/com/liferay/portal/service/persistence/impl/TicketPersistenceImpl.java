@@ -1039,6 +1039,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		ticket.setNew(true);
 		ticket.setPrimaryKey(ticketId);
 
+		ticket.setCompanyId(0);
+
 		return ticket;
 	}
 
@@ -1204,9 +1206,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		ticketImpl.setNew(ticket.isNew());
 		ticketImpl.setPrimaryKey(ticket.getPrimaryKey());
 
+		ticketImpl.setCompanyId(ticket.getCompanyId());
 		ticketImpl.setMvccVersion(ticket.getMvccVersion());
 		ticketImpl.setTicketId(ticket.getTicketId());
-		ticketImpl.setCompanyId(ticket.getCompanyId());
 		ticketImpl.setCreateDate(ticket.getCreateDate());
 		ticketImpl.setClassNameId(ticket.getClassNameId());
 		ticketImpl.setClassPK(ticket.getClassPK());

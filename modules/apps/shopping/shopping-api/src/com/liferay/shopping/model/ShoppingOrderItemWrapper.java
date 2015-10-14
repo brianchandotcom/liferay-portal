@@ -53,6 +53,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("orderItemId", getOrderItemId());
 		attributes.put("orderId", getOrderId());
 		attributes.put("itemId", getItemId());
@@ -69,6 +70,12 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long orderItemId = (Long)attributes.get("orderItemId");
 
 		if (orderItemId != null) {
@@ -139,6 +146,16 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	public int compareTo(
 		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
 		return _shoppingOrderItem.compareTo(shoppingOrderItem);
+	}
+
+	/**
+	* Returns the company ID of this shopping order item.
+	*
+	* @return the company ID of this shopping order item
+	*/
+	@Override
+	public long getCompanyId() {
+		return _shoppingOrderItem.getCompanyId();
 	}
 
 	/**
@@ -289,6 +306,16 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_shoppingOrderItem.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this shopping order item.
+	*
+	* @param companyId the company ID of this shopping order item
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_shoppingOrderItem.setCompanyId(companyId);
 	}
 
 	/**

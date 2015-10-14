@@ -62,9 +62,9 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	 */
 	public static final String TABLE_NAME = "Ticket";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "ticketId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
@@ -76,9 +76,9 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ticketId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
@@ -88,7 +88,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Ticket (mvccVersion LONG default 0,ticketId LONG not null primary key,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,key_ VARCHAR(75) null,type_ INTEGER,extraInfo TEXT null,expirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Ticket (companyId LONG,mvccVersion LONG default 0,ticketId LONG not null primary key,createDate DATE null,classNameId LONG,classPK LONG,key_ VARCHAR(75) null,type_ INTEGER,extraInfo TEXT null,expirationDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Ticket";
 	public static final String ORDER_BY_JPQL = " ORDER BY ticket.ticketId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Ticket.ticketId ASC";
@@ -149,9 +149,9 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ticketId", getTicketId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -168,6 +168,12 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -178,12 +184,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 		if (ticketId != null) {
 			setTicketId(ticketId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -230,6 +230,16 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -249,16 +259,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		_columnBitmask = -1L;
 
 		_ticketId = ticketId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -438,9 +438,9 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public Object clone() {
 		TicketImpl ticketImpl = new TicketImpl();
 
+		ticketImpl.setCompanyId(getCompanyId());
 		ticketImpl.setMvccVersion(getMvccVersion());
 		ticketImpl.setTicketId(getTicketId());
-		ticketImpl.setCompanyId(getCompanyId());
 		ticketImpl.setCreateDate(getCreateDate());
 		ticketImpl.setClassNameId(getClassNameId());
 		ticketImpl.setClassPK(getClassPK());
@@ -537,11 +537,11 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public CacheModel<Ticket> toCacheModel() {
 		TicketCacheModel ticketCacheModel = new TicketCacheModel();
 
+		ticketCacheModel.companyId = getCompanyId();
+
 		ticketCacheModel.mvccVersion = getMvccVersion();
 
 		ticketCacheModel.ticketId = getTicketId();
-
-		ticketCacheModel.companyId = getCompanyId();
 
 		Date createDate = getCreateDate();
 
@@ -590,12 +590,12 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", ticketId=");
 		sb.append(getTicketId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", classNameId=");
@@ -624,16 +624,16 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>ticketId</column-name><column-value><![CDATA[");
 		sb.append(getTicketId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -673,9 +673,9 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			Ticket.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _ticketId;
-	private long _companyId;
 	private Date _createDate;
 	private long _classNameId;
 	private long _originalClassNameId;

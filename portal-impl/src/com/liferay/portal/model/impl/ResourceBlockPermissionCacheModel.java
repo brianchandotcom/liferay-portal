@@ -76,9 +76,11 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", resourceBlockPermissionId=");
 		sb.append(resourceBlockPermissionId);
@@ -97,6 +99,7 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 	public ResourceBlockPermission toEntityModel() {
 		ResourceBlockPermissionImpl resourceBlockPermissionImpl = new ResourceBlockPermissionImpl();
 
+		resourceBlockPermissionImpl.setCompanyId(companyId);
 		resourceBlockPermissionImpl.setMvccVersion(mvccVersion);
 		resourceBlockPermissionImpl.setResourceBlockPermissionId(resourceBlockPermissionId);
 		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockId);
@@ -110,6 +113,7 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		resourceBlockPermissionId = objectInput.readLong();
 		resourceBlockId = objectInput.readLong();
@@ -120,6 +124,7 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(resourceBlockPermissionId);
 		objectOutput.writeLong(resourceBlockId);
@@ -127,6 +132,7 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 		objectOutput.writeLong(actionIds);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long resourceBlockPermissionId;
 	public long resourceBlockId;

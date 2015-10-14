@@ -81,7 +81,9 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(65);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
@@ -89,8 +91,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		sb.append(plid);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -154,6 +154,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 	public Layout toEntityModel() {
 		LayoutImpl layoutImpl = new LayoutImpl();
 
+		layoutImpl.setCompanyId(companyId);
 		layoutImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -165,7 +166,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 		layoutImpl.setPlid(plid);
 		layoutImpl.setGroupId(groupId);
-		layoutImpl.setCompanyId(companyId);
 		layoutImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -320,11 +320,11 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		plid = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -357,6 +357,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -368,7 +369,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 		objectOutput.writeLong(plid);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -500,11 +500,11 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long plid;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -33,6 +33,7 @@ public class MBStatsUserSoap implements Serializable {
 	public static MBStatsUserSoap toSoapModel(MBStatsUser model) {
 		MBStatsUserSoap soapModel = new MBStatsUserSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setStatsUserId(model.getStatsUserId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setUserId(model.getUserId());
@@ -90,6 +91,14 @@ public class MBStatsUserSoap implements Serializable {
 		setStatsUserId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getStatsUserId() {
 		return _statsUserId;
 	}
@@ -130,6 +139,7 @@ public class MBStatsUserSoap implements Serializable {
 		_lastPostDate = lastPostDate;
 	}
 
+	private long _companyId;
 	private long _statsUserId;
 	private long _groupId;
 	private long _userId;

@@ -117,9 +117,9 @@ public class PluginSettingPersistenceTest {
 
 		PluginSetting newPluginSetting = _persistence.create(pk);
 
-		newPluginSetting.setMvccVersion(RandomTestUtil.nextLong());
-
 		newPluginSetting.setCompanyId(RandomTestUtil.nextLong());
+
+		newPluginSetting.setMvccVersion(RandomTestUtil.nextLong());
 
 		newPluginSetting.setPluginId(RandomTestUtil.randomString());
 
@@ -133,12 +133,12 @@ public class PluginSettingPersistenceTest {
 
 		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(newPluginSetting.getPrimaryKey());
 
+		Assert.assertEquals(existingPluginSetting.getCompanyId(),
+			newPluginSetting.getCompanyId());
 		Assert.assertEquals(existingPluginSetting.getMvccVersion(),
 			newPluginSetting.getMvccVersion());
 		Assert.assertEquals(existingPluginSetting.getPluginSettingId(),
 			newPluginSetting.getPluginSettingId());
-		Assert.assertEquals(existingPluginSetting.getCompanyId(),
-			newPluginSetting.getCompanyId());
 		Assert.assertEquals(existingPluginSetting.getPluginId(),
 			newPluginSetting.getPluginId());
 		Assert.assertEquals(existingPluginSetting.getPluginType(),
@@ -190,7 +190,7 @@ public class PluginSettingPersistenceTest {
 
 	protected OrderByComparator<PluginSetting> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PluginSetting",
-			"mvccVersion", true, "pluginSettingId", true, "companyId", true,
+			"companyId", true, "mvccVersion", true, "pluginSettingId", true,
 			"pluginId", true, "pluginType", true, "roles", true, "active", true);
 	}
 
@@ -414,9 +414,9 @@ public class PluginSettingPersistenceTest {
 
 		PluginSetting pluginSetting = _persistence.create(pk);
 
-		pluginSetting.setMvccVersion(RandomTestUtil.nextLong());
-
 		pluginSetting.setCompanyId(RandomTestUtil.nextLong());
+
+		pluginSetting.setMvccVersion(RandomTestUtil.nextLong());
 
 		pluginSetting.setPluginId(RandomTestUtil.randomString());
 

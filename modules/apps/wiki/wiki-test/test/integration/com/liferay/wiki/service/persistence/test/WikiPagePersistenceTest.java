@@ -125,13 +125,13 @@ public class WikiPagePersistenceTest {
 
 		WikiPage newWikiPage = _persistence.create(pk);
 
+		newWikiPage.setCompanyId(RandomTestUtil.nextLong());
+
 		newWikiPage.setUuid(RandomTestUtil.randomString());
 
 		newWikiPage.setResourcePrimKey(RandomTestUtil.nextLong());
 
 		newWikiPage.setGroupId(RandomTestUtil.nextLong());
-
-		newWikiPage.setCompanyId(RandomTestUtil.nextLong());
 
 		newWikiPage.setUserId(RandomTestUtil.nextLong());
 
@@ -175,6 +175,8 @@ public class WikiPagePersistenceTest {
 
 		WikiPage existingWikiPage = _persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
 
+		Assert.assertEquals(existingWikiPage.getCompanyId(),
+			newWikiPage.getCompanyId());
 		Assert.assertEquals(existingWikiPage.getUuid(), newWikiPage.getUuid());
 		Assert.assertEquals(existingWikiPage.getPageId(),
 			newWikiPage.getPageId());
@@ -182,8 +184,6 @@ public class WikiPagePersistenceTest {
 			newWikiPage.getResourcePrimKey());
 		Assert.assertEquals(existingWikiPage.getGroupId(),
 			newWikiPage.getGroupId());
-		Assert.assertEquals(existingWikiPage.getCompanyId(),
-			newWikiPage.getCompanyId());
 		Assert.assertEquals(existingWikiPage.getUserId(),
 			newWikiPage.getUserId());
 		Assert.assertEquals(existingWikiPage.getUserName(),
@@ -574,9 +574,9 @@ public class WikiPagePersistenceTest {
 	}
 
 	protected OrderByComparator<WikiPage> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("WikiPage", "uuid", true,
-			"pageId", true, "resourcePrimKey", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
+		return OrderByComparatorFactoryUtil.create("WikiPage", "companyId",
+			true, "uuid", true, "pageId", true, "resourcePrimKey", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "nodeId", true, "title", true,
 			"version", true, "minorEdit", true, "summary", true, "format",
 			true, "head", true, "parentTitle", true, "redirectTitle", true,
@@ -817,13 +817,13 @@ public class WikiPagePersistenceTest {
 
 		WikiPage wikiPage = _persistence.create(pk);
 
+		wikiPage.setCompanyId(RandomTestUtil.nextLong());
+
 		wikiPage.setUuid(RandomTestUtil.randomString());
 
 		wikiPage.setResourcePrimKey(RandomTestUtil.nextLong());
 
 		wikiPage.setGroupId(RandomTestUtil.nextLong());
-
-		wikiPage.setCompanyId(RandomTestUtil.nextLong());
 
 		wikiPage.setUserId(RandomTestUtil.nextLong());
 

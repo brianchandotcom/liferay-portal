@@ -1503,6 +1503,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		resourceBlockPermission.setNew(true);
 		resourceBlockPermission.setPrimaryKey(resourceBlockPermissionId);
 
+		resourceBlockPermission.setCompanyId(0);
+
 		return resourceBlockPermission;
 	}
 
@@ -1692,6 +1694,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		resourceBlockPermissionImpl.setNew(resourceBlockPermission.isNew());
 		resourceBlockPermissionImpl.setPrimaryKey(resourceBlockPermission.getPrimaryKey());
 
+		resourceBlockPermissionImpl.setCompanyId(resourceBlockPermission.getCompanyId());
 		resourceBlockPermissionImpl.setMvccVersion(resourceBlockPermission.getMvccVersion());
 		resourceBlockPermissionImpl.setResourceBlockPermissionId(resourceBlockPermission.getResourceBlockPermissionId());
 		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockPermission.getResourceBlockId());

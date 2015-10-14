@@ -123,9 +123,9 @@ public class DLContentPersistenceTest {
 
 		DLContent newDLContent = _persistence.create(pk);
 
-		newDLContent.setGroupId(RandomTestUtil.nextLong());
-
 		newDLContent.setCompanyId(RandomTestUtil.nextLong());
+
+		newDLContent.setGroupId(RandomTestUtil.nextLong());
 
 		newDLContent.setRepositoryId(RandomTestUtil.nextLong());
 
@@ -148,12 +148,12 @@ public class DLContentPersistenceTest {
 
 		DLContent existingDLContent = _persistence.findByPrimaryKey(newDLContent.getPrimaryKey());
 
+		Assert.assertEquals(existingDLContent.getCompanyId(),
+			newDLContent.getCompanyId());
 		Assert.assertEquals(existingDLContent.getContentId(),
 			newDLContent.getContentId());
 		Assert.assertEquals(existingDLContent.getGroupId(),
 			newDLContent.getGroupId());
-		Assert.assertEquals(existingDLContent.getCompanyId(),
-			newDLContent.getCompanyId());
 		Assert.assertEquals(existingDLContent.getRepositoryId(),
 			newDLContent.getRepositoryId());
 		Assert.assertEquals(existingDLContent.getPath(), newDLContent.getPath());
@@ -228,8 +228,8 @@ public class DLContentPersistenceTest {
 	}
 
 	protected OrderByComparator<DLContent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DLContent", "contentId",
-			true, "groupId", true, "companyId", true, "repositoryId", true,
+		return OrderByComparatorFactoryUtil.create("DLContent", "companyId",
+			true, "contentId", true, "groupId", true, "repositoryId", true,
 			"path", true, "version", true, "size", true);
 	}
 
@@ -452,9 +452,9 @@ public class DLContentPersistenceTest {
 
 		DLContent dlContent = _persistence.create(pk);
 
-		dlContent.setGroupId(RandomTestUtil.nextLong());
-
 		dlContent.setCompanyId(RandomTestUtil.nextLong());
+
+		dlContent.setGroupId(RandomTestUtil.nextLong());
 
 		dlContent.setRepositoryId(RandomTestUtil.nextLong());
 

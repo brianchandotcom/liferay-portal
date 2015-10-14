@@ -124,11 +124,11 @@ public class CalendarResourcePersistenceTest {
 
 		CalendarResource newCalendarResource = _persistence.create(pk);
 
+		newCalendarResource.setCompanyId(RandomTestUtil.nextLong());
+
 		newCalendarResource.setUuid(RandomTestUtil.randomString());
 
 		newCalendarResource.setGroupId(RandomTestUtil.nextLong());
-
-		newCalendarResource.setCompanyId(RandomTestUtil.nextLong());
 
 		newCalendarResource.setUserId(RandomTestUtil.nextLong());
 
@@ -160,14 +160,14 @@ public class CalendarResourcePersistenceTest {
 
 		CalendarResource existingCalendarResource = _persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
 
+		Assert.assertEquals(existingCalendarResource.getCompanyId(),
+			newCalendarResource.getCompanyId());
 		Assert.assertEquals(existingCalendarResource.getUuid(),
 			newCalendarResource.getUuid());
 		Assert.assertEquals(existingCalendarResource.getCalendarResourceId(),
 			newCalendarResource.getCalendarResourceId());
 		Assert.assertEquals(existingCalendarResource.getGroupId(),
 			newCalendarResource.getGroupId());
-		Assert.assertEquals(existingCalendarResource.getCompanyId(),
-			newCalendarResource.getCompanyId());
 		Assert.assertEquals(existingCalendarResource.getUserId(),
 			newCalendarResource.getUserId());
 		Assert.assertEquals(existingCalendarResource.getUserName(),
@@ -319,12 +319,12 @@ public class CalendarResourcePersistenceTest {
 	}
 
 	protected OrderByComparator<CalendarResource> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CalendarResource", "uuid",
-			true, "calendarResourceId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "resourceBlockId", true, "classNameId", true,
-			"classPK", true, "classUuid", true, "code", true, "name", true,
-			"description", true, "active", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("CalendarResource",
+			"companyId", true, "uuid", true, "calendarResourceId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "resourceBlockId", true, "classNameId",
+			true, "classPK", true, "classUuid", true, "code", true, "name",
+			true, "description", true, "active", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -550,11 +550,11 @@ public class CalendarResourcePersistenceTest {
 
 		CalendarResource calendarResource = _persistence.create(pk);
 
+		calendarResource.setCompanyId(RandomTestUtil.nextLong());
+
 		calendarResource.setUuid(RandomTestUtil.randomString());
 
 		calendarResource.setGroupId(RandomTestUtil.nextLong());
-
-		calendarResource.setCompanyId(RandomTestUtil.nextLong());
 
 		calendarResource.setUserId(RandomTestUtil.nextLong());
 

@@ -53,8 +53,8 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("deliveryId", getDeliveryId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("deliveryId", getDeliveryId());
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("email", getEmail());
@@ -66,16 +66,16 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long deliveryId = (Long)attributes.get("deliveryId");
-
-		if (deliveryId != null) {
-			setDeliveryId(deliveryId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long deliveryId = (Long)attributes.get("deliveryId");
+
+		if (deliveryId != null) {
+			setDeliveryId(deliveryId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

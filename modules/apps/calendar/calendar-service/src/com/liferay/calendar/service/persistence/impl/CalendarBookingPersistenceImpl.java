@@ -5682,6 +5682,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 
 		calendarBooking.setUuid(uuid);
 
+		calendarBooking.setCompanyId(0);
+
 		return calendarBooking;
 	}
 
@@ -6018,10 +6020,10 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		calendarBookingImpl.setNew(calendarBooking.isNew());
 		calendarBookingImpl.setPrimaryKey(calendarBooking.getPrimaryKey());
 
+		calendarBookingImpl.setCompanyId(calendarBooking.getCompanyId());
 		calendarBookingImpl.setUuid(calendarBooking.getUuid());
 		calendarBookingImpl.setCalendarBookingId(calendarBooking.getCalendarBookingId());
 		calendarBookingImpl.setGroupId(calendarBooking.getGroupId());
-		calendarBookingImpl.setCompanyId(calendarBooking.getCompanyId());
 		calendarBookingImpl.setUserId(calendarBooking.getUserId());
 		calendarBookingImpl.setUserName(calendarBooking.getUserName());
 		calendarBookingImpl.setCreateDate(calendarBooking.getCreateDate());

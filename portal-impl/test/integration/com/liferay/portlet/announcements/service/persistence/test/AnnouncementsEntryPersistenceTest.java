@@ -117,9 +117,9 @@ public class AnnouncementsEntryPersistenceTest {
 
 		AnnouncementsEntry newAnnouncementsEntry = _persistence.create(pk);
 
-		newAnnouncementsEntry.setUuid(RandomTestUtil.randomString());
-
 		newAnnouncementsEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		newAnnouncementsEntry.setUuid(RandomTestUtil.randomString());
 
 		newAnnouncementsEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -153,12 +153,12 @@ public class AnnouncementsEntryPersistenceTest {
 
 		AnnouncementsEntry existingAnnouncementsEntry = _persistence.findByPrimaryKey(newAnnouncementsEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingAnnouncementsEntry.getCompanyId(),
+			newAnnouncementsEntry.getCompanyId());
 		Assert.assertEquals(existingAnnouncementsEntry.getUuid(),
 			newAnnouncementsEntry.getUuid());
 		Assert.assertEquals(existingAnnouncementsEntry.getEntryId(),
 			newAnnouncementsEntry.getEntryId());
-		Assert.assertEquals(existingAnnouncementsEntry.getCompanyId(),
-			newAnnouncementsEntry.getCompanyId());
 		Assert.assertEquals(existingAnnouncementsEntry.getUserId(),
 			newAnnouncementsEntry.getUserId());
 		Assert.assertEquals(existingAnnouncementsEntry.getUserName(),
@@ -258,7 +258,7 @@ public class AnnouncementsEntryPersistenceTest {
 
 	protected OrderByComparator<AnnouncementsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AnnouncementsEntry",
-			"uuid", true, "entryId", true, "companyId", true, "userId", true,
+			"companyId", true, "uuid", true, "entryId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "title", true, "url", true,
 			"type", true, "displayDate", true, "expirationDate", true,
@@ -463,9 +463,9 @@ public class AnnouncementsEntryPersistenceTest {
 
 		AnnouncementsEntry announcementsEntry = _persistence.create(pk);
 
-		announcementsEntry.setUuid(RandomTestUtil.randomString());
-
 		announcementsEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		announcementsEntry.setUuid(RandomTestUtil.randomString());
 
 		announcementsEntry.setUserId(RandomTestUtil.nextLong());
 

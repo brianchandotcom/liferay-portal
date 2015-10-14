@@ -32,8 +32,8 @@ public class SCProductScreenshotSoap implements Serializable {
 	public static SCProductScreenshotSoap toSoapModel(SCProductScreenshot model) {
 		SCProductScreenshotSoap soapModel = new SCProductScreenshotSoap();
 
-		soapModel.setProductScreenshotId(model.getProductScreenshotId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setProductScreenshotId(model.getProductScreenshotId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setProductEntryId(model.getProductEntryId());
 		soapModel.setThumbnailId(model.getThumbnailId());
@@ -94,20 +94,20 @@ public class SCProductScreenshotSoap implements Serializable {
 		setProductScreenshotId(pk);
 	}
 
-	public long getProductScreenshotId() {
-		return _productScreenshotId;
-	}
-
-	public void setProductScreenshotId(long productScreenshotId) {
-		_productScreenshotId = productScreenshotId;
-	}
-
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public long getProductScreenshotId() {
+		return _productScreenshotId;
+	}
+
+	public void setProductScreenshotId(long productScreenshotId) {
+		_productScreenshotId = productScreenshotId;
 	}
 
 	public long getGroupId() {
@@ -150,8 +150,8 @@ public class SCProductScreenshotSoap implements Serializable {
 		_priority = priority;
 	}
 
-	private long _productScreenshotId;
 	private long _companyId;
+	private long _productScreenshotId;
 	private long _groupId;
 	private long _productEntryId;
 	private long _thumbnailId;

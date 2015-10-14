@@ -81,12 +81,12 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", accountId=");
 		sb.append(accountId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -124,9 +124,9 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 	public Account toEntityModel() {
 		AccountImpl accountImpl = new AccountImpl();
 
+		accountImpl.setCompanyId(companyId);
 		accountImpl.setMvccVersion(mvccVersion);
 		accountImpl.setAccountId(accountId);
-		accountImpl.setCompanyId(companyId);
 		accountImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -222,9 +222,9 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		accountId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -244,9 +244,9 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(accountId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -324,9 +324,9 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 		}
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long accountId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -71,9 +71,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	 */
 	public static final String TABLE_NAME = "ShoppingOrder";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "orderId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -126,9 +126,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("orderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -179,7 +179,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		TABLE_COLUMNS_MAP.put("sendShippingEmail", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ShoppingOrder (orderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,number_ VARCHAR(75) null,tax DOUBLE,shipping DOUBLE,altShipping VARCHAR(75) null,requiresShipping BOOLEAN,insure BOOLEAN,insurance DOUBLE,couponCodes VARCHAR(75) null,couponDiscount DOUBLE,billingFirstName VARCHAR(75) null,billingLastName VARCHAR(75) null,billingEmailAddress VARCHAR(75) null,billingCompany VARCHAR(75) null,billingStreet VARCHAR(75) null,billingCity VARCHAR(75) null,billingState VARCHAR(75) null,billingZip VARCHAR(75) null,billingCountry VARCHAR(75) null,billingPhone VARCHAR(75) null,shipToBilling BOOLEAN,shippingFirstName VARCHAR(75) null,shippingLastName VARCHAR(75) null,shippingEmailAddress VARCHAR(75) null,shippingCompany VARCHAR(75) null,shippingStreet VARCHAR(75) null,shippingCity VARCHAR(75) null,shippingState VARCHAR(75) null,shippingZip VARCHAR(75) null,shippingCountry VARCHAR(75) null,shippingPhone VARCHAR(75) null,ccName VARCHAR(75) null,ccType VARCHAR(75) null,ccNumber VARCHAR(75) null,ccExpMonth INTEGER,ccExpYear INTEGER,ccVerNumber VARCHAR(75) null,comments TEXT null,ppTxnId VARCHAR(75) null,ppPaymentStatus VARCHAR(75) null,ppPaymentGross DOUBLE,ppReceiverEmail VARCHAR(75) null,ppPayerEmail VARCHAR(75) null,sendOrderEmail BOOLEAN,sendShippingEmail BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table ShoppingOrder (companyId LONG,orderId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,number_ VARCHAR(75) null,tax DOUBLE,shipping DOUBLE,altShipping VARCHAR(75) null,requiresShipping BOOLEAN,insure BOOLEAN,insurance DOUBLE,couponCodes VARCHAR(75) null,couponDiscount DOUBLE,billingFirstName VARCHAR(75) null,billingLastName VARCHAR(75) null,billingEmailAddress VARCHAR(75) null,billingCompany VARCHAR(75) null,billingStreet VARCHAR(75) null,billingCity VARCHAR(75) null,billingState VARCHAR(75) null,billingZip VARCHAR(75) null,billingCountry VARCHAR(75) null,billingPhone VARCHAR(75) null,shipToBilling BOOLEAN,shippingFirstName VARCHAR(75) null,shippingLastName VARCHAR(75) null,shippingEmailAddress VARCHAR(75) null,shippingCompany VARCHAR(75) null,shippingStreet VARCHAR(75) null,shippingCity VARCHAR(75) null,shippingState VARCHAR(75) null,shippingZip VARCHAR(75) null,shippingCountry VARCHAR(75) null,shippingPhone VARCHAR(75) null,ccName VARCHAR(75) null,ccType VARCHAR(75) null,ccNumber VARCHAR(75) null,ccExpMonth INTEGER,ccExpYear INTEGER,ccVerNumber VARCHAR(75) null,comments TEXT null,ppTxnId VARCHAR(75) null,ppPaymentStatus VARCHAR(75) null,ppPaymentGross DOUBLE,ppReceiverEmail VARCHAR(75) null,ppPayerEmail VARCHAR(75) null,sendOrderEmail BOOLEAN,sendShippingEmail BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingOrder.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ShoppingOrder.createDate DESC";
@@ -215,9 +215,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 		ShoppingOrder model = new ShoppingOrderImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setOrderId(soapModel.getOrderId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -330,9 +330,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("orderId", getOrderId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -390,6 +390,12 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long orderId = (Long)attributes.get("orderId");
 
 		if (orderId != null) {
@@ -400,12 +406,6 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -699,6 +699,17 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getOrderId() {
@@ -731,17 +742,6 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -1559,9 +1559,9 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public Object clone() {
 		ShoppingOrderImpl shoppingOrderImpl = new ShoppingOrderImpl();
 
+		shoppingOrderImpl.setCompanyId(getCompanyId());
 		shoppingOrderImpl.setOrderId(getOrderId());
 		shoppingOrderImpl.setGroupId(getGroupId());
-		shoppingOrderImpl.setCompanyId(getCompanyId());
 		shoppingOrderImpl.setUserId(getUserId());
 		shoppingOrderImpl.setUserName(getUserName());
 		shoppingOrderImpl.setCreateDate(getCreateDate());
@@ -1696,11 +1696,11 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public CacheModel<ShoppingOrder> toCacheModel() {
 		ShoppingOrderCacheModel shoppingOrderCacheModel = new ShoppingOrderCacheModel();
 
+		shoppingOrderCacheModel.companyId = getCompanyId();
+
 		shoppingOrderCacheModel.orderId = getOrderId();
 
 		shoppingOrderCacheModel.groupId = getGroupId();
-
-		shoppingOrderCacheModel.companyId = getCompanyId();
 
 		shoppingOrderCacheModel.userId = getUserId();
 
@@ -2019,12 +2019,12 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public String toString() {
 		StringBundler sb = new StringBundler(103);
 
-		sb.append("{orderId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", orderId=");
 		sb.append(getOrderId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -2135,16 +2135,16 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>orderId</column-name><column-value><![CDATA[");
 		sb.append(getOrderId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -2348,11 +2348,11 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ShoppingOrder.class
 		};
+	private long _companyId;
 	private long _orderId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

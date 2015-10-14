@@ -32,6 +32,7 @@ public class PasswordPolicyRelSoap implements Serializable {
 	public static PasswordPolicyRelSoap toSoapModel(PasswordPolicyRel model) {
 		PasswordPolicyRelSoap soapModel = new PasswordPolicyRelSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setPasswordPolicyRelId(model.getPasswordPolicyRelId());
 		soapModel.setPasswordPolicyId(model.getPasswordPolicyId());
@@ -92,6 +93,14 @@ public class PasswordPolicyRelSoap implements Serializable {
 		setPasswordPolicyRelId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -132,6 +141,7 @@ public class PasswordPolicyRelSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _passwordPolicyRelId;
 	private long _passwordPolicyId;

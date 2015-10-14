@@ -64,10 +64,10 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	 */
 	public static final String TABLE_NAME = "MBMailingList";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "mailingListId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -94,10 +94,10 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("mailingListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -122,7 +122,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBMailingList (uuid_ VARCHAR(75) null,mailingListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,emailAddress VARCHAR(75) null,inProtocol VARCHAR(75) null,inServerName VARCHAR(75) null,inServerPort INTEGER,inUseSSL BOOLEAN,inUserName VARCHAR(75) null,inPassword VARCHAR(75) null,inReadInterval INTEGER,outEmailAddress VARCHAR(75) null,outCustom BOOLEAN,outServerName VARCHAR(75) null,outServerPort INTEGER,outUseSSL BOOLEAN,outUserName VARCHAR(75) null,outPassword VARCHAR(75) null,allowAnonymous BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table MBMailingList (companyId LONG,uuid_ VARCHAR(75) null,mailingListId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,emailAddress VARCHAR(75) null,inProtocol VARCHAR(75) null,inServerName VARCHAR(75) null,inServerPort INTEGER,inUseSSL BOOLEAN,inUserName VARCHAR(75) null,inPassword VARCHAR(75) null,inReadInterval INTEGER,outEmailAddress VARCHAR(75) null,outCustom BOOLEAN,outServerName VARCHAR(75) null,outServerPort INTEGER,outUseSSL BOOLEAN,outUserName VARCHAR(75) null,outPassword VARCHAR(75) null,allowAnonymous BOOLEAN,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table MBMailingList";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbMailingList.mailingListId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBMailingList.mailingListId ASC";
@@ -184,10 +184,10 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("mailingListId", getMailingListId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -219,6 +219,12 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -235,12 +241,6 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -377,6 +377,28 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -429,28 +451,6 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -825,10 +825,10 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public Object clone() {
 		MBMailingListImpl mbMailingListImpl = new MBMailingListImpl();
 
+		mbMailingListImpl.setCompanyId(getCompanyId());
 		mbMailingListImpl.setUuid(getUuid());
 		mbMailingListImpl.setMailingListId(getMailingListId());
 		mbMailingListImpl.setGroupId(getGroupId());
-		mbMailingListImpl.setCompanyId(getCompanyId());
 		mbMailingListImpl.setUserId(getUserId());
 		mbMailingListImpl.setUserName(getUserName());
 		mbMailingListImpl.setCreateDate(getCreateDate());
@@ -913,15 +913,15 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public void resetOriginalValues() {
 		MBMailingListModelImpl mbMailingListModelImpl = this;
 
+		mbMailingListModelImpl._originalCompanyId = mbMailingListModelImpl._companyId;
+
+		mbMailingListModelImpl._setOriginalCompanyId = false;
+
 		mbMailingListModelImpl._originalUuid = mbMailingListModelImpl._uuid;
 
 		mbMailingListModelImpl._originalGroupId = mbMailingListModelImpl._groupId;
 
 		mbMailingListModelImpl._setOriginalGroupId = false;
-
-		mbMailingListModelImpl._originalCompanyId = mbMailingListModelImpl._companyId;
-
-		mbMailingListModelImpl._setOriginalCompanyId = false;
 
 		mbMailingListModelImpl._setModifiedDate = false;
 
@@ -940,6 +940,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public CacheModel<MBMailingList> toCacheModel() {
 		MBMailingListCacheModel mbMailingListCacheModel = new MBMailingListCacheModel();
 
+		mbMailingListCacheModel.companyId = getCompanyId();
+
 		mbMailingListCacheModel.uuid = getUuid();
 
 		String uuid = mbMailingListCacheModel.uuid;
@@ -951,8 +953,6 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		mbMailingListCacheModel.mailingListId = getMailingListId();
 
 		mbMailingListCacheModel.groupId = getGroupId();
-
-		mbMailingListCacheModel.companyId = getCompanyId();
 
 		mbMailingListCacheModel.userId = getUserId();
 
@@ -1079,14 +1079,14 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public String toString() {
 		StringBundler sb = new StringBundler(53);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", mailingListId=");
 		sb.append(getMailingListId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1145,6 +1145,10 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1155,10 +1159,6 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1258,15 +1258,15 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			MBMailingList.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _mailingListId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

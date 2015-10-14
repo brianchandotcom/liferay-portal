@@ -1461,6 +1461,8 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		company.setNew(true);
 		company.setPrimaryKey(companyId);
 
+		company.setCompanyId(0);
+
 		return company;
 	}
 

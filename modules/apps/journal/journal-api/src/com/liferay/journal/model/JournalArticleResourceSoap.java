@@ -33,6 +33,7 @@ public class JournalArticleResourceSoap implements Serializable {
 		JournalArticleResource model) {
 		JournalArticleResourceSoap soapModel = new JournalArticleResourceSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setResourcePrimKey(model.getResourcePrimKey());
 		soapModel.setGroupId(model.getGroupId());
@@ -92,6 +93,14 @@ public class JournalArticleResourceSoap implements Serializable {
 		setResourcePrimKey(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -124,6 +133,7 @@ public class JournalArticleResourceSoap implements Serializable {
 		_articleId = articleId;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _resourcePrimKey;
 	private long _groupId;

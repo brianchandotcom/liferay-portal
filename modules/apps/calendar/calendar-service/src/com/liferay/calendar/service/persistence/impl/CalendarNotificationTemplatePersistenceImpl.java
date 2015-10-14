@@ -2586,6 +2586,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		calendarNotificationTemplate.setUuid(uuid);
 
+		calendarNotificationTemplate.setCompanyId(0);
+
 		return calendarNotificationTemplate;
 	}
 
@@ -2829,10 +2831,10 @@ public class CalendarNotificationTemplatePersistenceImpl
 		calendarNotificationTemplateImpl.setNew(calendarNotificationTemplate.isNew());
 		calendarNotificationTemplateImpl.setPrimaryKey(calendarNotificationTemplate.getPrimaryKey());
 
+		calendarNotificationTemplateImpl.setCompanyId(calendarNotificationTemplate.getCompanyId());
 		calendarNotificationTemplateImpl.setUuid(calendarNotificationTemplate.getUuid());
 		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(calendarNotificationTemplate.getCalendarNotificationTemplateId());
 		calendarNotificationTemplateImpl.setGroupId(calendarNotificationTemplate.getGroupId());
-		calendarNotificationTemplateImpl.setCompanyId(calendarNotificationTemplate.getCompanyId());
 		calendarNotificationTemplateImpl.setUserId(calendarNotificationTemplate.getUserId());
 		calendarNotificationTemplateImpl.setUserName(calendarNotificationTemplate.getUserName());
 		calendarNotificationTemplateImpl.setCreateDate(calendarNotificationTemplate.getCreateDate());

@@ -138,6 +138,17 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 				redirect = stagingGroupAdministrationURL.toString();
 			}
 		}
+		else if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
+			PortletURL groupAdministrationURL =
+				PortalUtil.getControlPanelPortletURL(
+					actionRequest, liveGroup,
+					StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0,
+					PortletRequest.RENDER_PHASE);
+
+			if (groupAdministrationURL != null) {
+				redirect = groupAdministrationURL.toString();
+			}
+		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 

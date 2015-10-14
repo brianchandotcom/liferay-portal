@@ -343,15 +343,15 @@
 
 				<execute function="AssertClick" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET" value1="${assetType}" />
 
-				<execute function="SelectFrameTop" value1="relative=top" />
+				<execute function="SelectFrameTop" />
 
-				<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 				<var name="key_assetTitle" value="${assetTitle}" />
 
 				<execute function="AssertClick" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
 
-				<execute function="SelectFrameTop" value1="relative=top" />
+				<execute function="SelectFrameTop" />
 
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 			</then>
@@ -359,7 +359,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
-		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="configurePaginationPG">

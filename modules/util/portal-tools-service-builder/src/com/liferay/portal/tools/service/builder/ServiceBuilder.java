@@ -1690,7 +1690,13 @@ public class ServiceBuilder {
 	private static void _move(File sourceFile, File destinationFile)
 		throws IOException {
 
-		Files.move(sourceFile.toPath(), destinationFile.toPath());
+		Path destinationPath = destinationFile.toPath();
+
+		if (!Files.exists(destinationPath)) {
+			Files.createDirectories(destinationPath);
+		}
+
+		Files.move(sourceFile.toPath(), destinationPath);
 	}
 
 	private static String _read(File file) throws IOException {

@@ -19,7 +19,14 @@
 <%
 Folder attachmentsFolder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(BlogsPortletKeys.BLOGS_ADMIN, "images-display-style", "icon");
+}
+else {
+	portalPreferences.setValue(BlogsPortletKeys.BLOGS_ADMIN, "images-display-style", displayStyle);
+}
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");

@@ -118,6 +118,7 @@
 	<bean id="com.liferay.portal.security.permission.ResourceActionsUtil" class="com.liferay.portal.security.permission.ResourceActionsUtil">
 		<property name="resourceActions" ref="com.liferay.portal.security.permission.ResourceActions" />
 	</bean>
+	<bean id="com.liferay.portal.security.permission.UserBagFactory" class="com.liferay.portal.security.permission.UserBagFactoryImpl" />
 	<bean id="com.liferay.portal.security.pwd.CompositePasswordEncryptor" class="com.liferay.portal.security.pwd.CompositePasswordEncryptor">
 		<property name="defaultPasswordEncryptor">
 			<bean class="com.liferay.portal.security.pwd.DefaultPasswordEncryptor" />

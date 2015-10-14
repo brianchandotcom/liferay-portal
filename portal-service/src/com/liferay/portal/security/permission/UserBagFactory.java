@@ -14,37 +14,13 @@
 
 package com.liferay.portal.security.permission;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Role;
-
-import java.io.Serializable;
-
-import java.util.List;
-import java.util.Set;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author László Csontos
+ * @author Preston Crary
  */
-@ProviderType
-public interface UserPermissionCheckerBag extends Serializable {
+public interface UserBagFactory {
 
-	public List<Group> getGroups();
-
-	public Set<Role> getRoles();
-
-	public Set<Group> getUserGroups();
-
-	public long getUserId();
-
-	public Set<Group> getUserOrgGroups();
-
-	public List<Organization> getUserOrgs();
-
-	public List<Group> getUserUserGroupGroups();
-
-	public boolean hasRole(Role role);
+	public UserBag create(long userId) throws PortalException;
 
 }

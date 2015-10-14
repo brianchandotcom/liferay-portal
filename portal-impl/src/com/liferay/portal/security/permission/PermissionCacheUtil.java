@@ -47,8 +47,8 @@ public class PermissionCacheUtil {
 	public static final String RESOURCE_BLOCK_IDS_BAG_CACHE_NAME =
 		PermissionCacheUtil.class.getName() + "_RESOURCE_BLOCK_IDS_BAG";
 
-	public static final String USER_PERMISSION_CHECKER_BAG_CACHE_NAME =
-		PermissionCacheUtil.class.getName() + "_USER_PERMISSION_CHECKER_BAG";
+	public static final String USER_BAG_CACHE_NAME =
+		PermissionCacheUtil.class.getName() + "_USER_BAG";
 
 	public static final String USER_PRIMARY_KEY_ROLE_CACHE_NAME =
 		PermissionCacheUtil.class.getName() + "_USER_PRIMARY_KEY_ROLE";
@@ -65,7 +65,7 @@ public class PermissionCacheUtil {
 		_userGroupRoleIdsPortalCache.removeAll();
 		_permissionPortalCache.removeAll();
 		_resourceBlockIdsBagCache.removeAll();
-		_userPermissionCheckerBagPortalCache.removeAll();
+		_userBagPortalCache.removeAll();
 		_userPrimaryKeyRolePortalCache.removeAll();
 	}
 
@@ -75,7 +75,7 @@ public class PermissionCacheUtil {
 		}
 
 		for (long userId : userIds) {
-			_userPermissionCheckerBagPortalCache.remove(userId);
+			_userBagPortalCache.remove(userId);
 
 			_userGroupRoleIdsPortalCacheIndexer.removeKeys(userId);
 			_userPrimaryKeyRolePortalCacheUserIdIndexer.removeKeys(userId);
@@ -150,8 +150,8 @@ public class PermissionCacheUtil {
 		return _resourceBlockIdsBagCache.get(resourceBlockIdsBagKey);
 	}
 
-	public static UserPermissionCheckerBag getUserBag(long userId) {
-		return _userPermissionCheckerBagPortalCache.get(userId);
+	public static UserBag getUserBag(long userId) {
+		return _userBagPortalCache.get(userId);
 	}
 
 	public static long[] getUserGroupRoleIds(long userId, long groupId) {
@@ -179,13 +179,13 @@ public class PermissionCacheUtil {
 			return userRole;
 		}
 
-		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag(userId);
+		UserBag userBag = getUserBag(userId);
 
-		if (userPermissionCheckerBag == null) {
+		if (userBag == null) {
 			return null;
 		}
 
-		userRole = userPermissionCheckerBag.hasRole(role);
+		userRole = userBag.hasRole(role);
 
 		_userRolePortalCache.put(userRoleKey, userRole);
 
@@ -217,11 +217,8 @@ public class PermissionCacheUtil {
 			resourceBlockIdsBagKey, resourceBlockIdsBag);
 	}
 
-	public static void putUserBag(
-		long userId, UserPermissionCheckerBag userPermissionCheckerBag) {
-
-		_userPermissionCheckerBagPortalCache.put(
-			userId, userPermissionCheckerBag);
+	public static void putUserBag(long userId, UserBag userBag) {
+		_userBagPortalCache.put(userId, userBag);
 	}
 
 	public static void putUserGroupRoleIds(
@@ -280,7 +277,7 @@ public class PermissionCacheUtil {
 	}
 
 	public static void removeUserBag(long userId) {
-		_userPermissionCheckerBagPortalCache.remove(userId);
+		_userBagPortalCache.remove(userId);
 	}
 
 	public static void removeUserGroupRoleIds(long userId, long groupId) {
@@ -319,6 +316,9 @@ public class PermissionCacheUtil {
 			_resourceBlockIdsBagCacheIndexer = new PortalCacheIndexer<>(
 				new ResourceBlockIdsBagKeyIndexEncoder(),
 				_resourceBlockIdsBagCache);
+	private static final PortalCache<Long, UserBag> _userBagPortalCache =
+		MultiVMPoolUtil.getPortalCache(
+			USER_BAG_CACHE_NAME, PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCache<UserGroupRoleIdsKey, long[]>
 		_userGroupRoleIdsPortalCache = MultiVMPoolUtil.getPortalCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,
@@ -327,10 +327,6 @@ public class PermissionCacheUtil {
 		_userGroupRoleIdsPortalCacheIndexer = new PortalCacheIndexer<>(
 			new UserGroupRoleIdsKeyIndexEncoder(),
 			_userGroupRoleIdsPortalCache);
-	private static final PortalCache<Long, UserPermissionCheckerBag>
-		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getPortalCache(
-			USER_PERMISSION_CHECKER_BAG_CACHE_NAME,
-			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCache<UserPrimaryKeyRoleKey, Boolean>
 		_userPrimaryKeyRolePortalCache = MultiVMPoolUtil.getPortalCache(
 			USER_PRIMARY_KEY_ROLE_CACHE_NAME,

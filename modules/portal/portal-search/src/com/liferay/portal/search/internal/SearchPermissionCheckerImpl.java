@@ -41,7 +41,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.security.permission.UserPermissionCheckerBag;
+import com.liferay.portal.security.permission.UserBag;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ResourceBlockLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
@@ -405,11 +405,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			Map<Long, List<Role>> groupIdsToRoles)
 		throws Exception {
 
-		UserPermissionCheckerBag userPermissionCheckerBag =
-			permissionChecker.getUserBag();
+		UserBag userBag = permissionChecker.getUserBag();
 
 		if (permissionChecker.isSignedIn()) {
-			roles.addAll(userPermissionCheckerBag.getRoles());
+			roles.addAll(userBag.getRoles());
 
 			roles.add(
 				_roleLocalService.getRole(companyId, RoleConstants.GUEST));
@@ -425,7 +424,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		if (ArrayUtil.isEmpty(groupIds)) {
 			groups.addAll(_groupLocalService.getUserGroups(userId, true));
-			groups.addAll(userPermissionCheckerBag.getGroups());
+			groups.addAll(userBag.getGroups());
 
 			userGroupRoles.addAll(
 				_userGroupRoleLocalService.getUserGroupRoles(userId));

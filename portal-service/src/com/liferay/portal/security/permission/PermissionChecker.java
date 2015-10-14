@@ -65,7 +65,7 @@ public interface PermissionChecker extends Cloneable {
 
 	public User getUser();
 
-	public UserPermissionCheckerBag getUserBag() throws Exception;
+	public UserBag getUserBag() throws Exception;
 
 	/**
 	 * Returns the primary key of the user.

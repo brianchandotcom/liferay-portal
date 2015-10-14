@@ -113,16 +113,11 @@ public class UserTestUtil {
 
 		User organizationUser = addUser(organization.getGroupId());
 
-		long[] userIds = {organizationUser.getUserId()};
+		UserLocalServiceUtil.addOrganizationUser(
+			organization.getOrganizationId(), organizationUser.getUserId());
 
-		UserLocalServiceUtil.addOrganizationUsers(
-			organization.getOrganizationId(), userIds);
-
-		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(), roleName);
-
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			userIds, organization.getGroupId(), role.getRoleId());
+		addUserGroupRole(
+			organizationUser.getUserId(), organization.getGroupId(), roleName);
 
 		return organizationUser;
 	}
@@ -269,6 +264,17 @@ public class UserTestUtil {
 			screenName, LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), groupIds,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static void addUserGroupRole(
+			long userId, long groupId, String roleName)
+		throws Exception {
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), roleName);
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			new long[] {userId}, groupId, role.getRoleId());
 	}
 
 	public static User getAdminUser(long companyId) throws PortalException {

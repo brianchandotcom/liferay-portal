@@ -56,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -722,7 +723,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		List<Group> userSiteGroups = new ArrayList<>();
+		Set<Group> userSiteGroups = new HashSet<>();
 
 		if (classNames == null) {
 			classNames = new String[] {
@@ -738,12 +739,20 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				Group userGroup = user.getGroup();
 
 				userSiteGroups.add(userGroup);
+
+				if (userSiteGroups.size() == max) {
+					return new ArrayList<>(userSiteGroups);
+				}
 			}
 		}
 
 		if (ArrayUtil.contains(classNames, Company.class.getName())) {
 			userSiteGroups.add(
 				groupLocalService.getCompanyGroup(user.getCompanyId()));
+
+			if (userSiteGroups.size() == max) {
+				return new ArrayList<>(userSiteGroups);
+			}
 		}
 
 		UserBag userBag = UserBagFactoryUtil.create(userId);
@@ -753,7 +762,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				if (group.isActive() &&
 					(group.hasPrivateLayouts() || group.hasPublicLayouts())) {
 
-					userSiteGroups.add(group);
+					if (userSiteGroups.add(group) &&
+						(userSiteGroups.size() == max)) {
+
+						return new ArrayList<>(userSiteGroups);
+					}
 				}
 			}
 		}
@@ -771,7 +784,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 						(group.hasPrivateLayouts() ||
 						 group.hasPublicLayouts())) {
 
-						userSiteGroups.add(group);
+						if (userSiteGroups.add(group) &&
+							(userSiteGroups.size() == max)) {
+
+							return new ArrayList<>(userSiteGroups);
+						}
 					}
 				}
 			}
@@ -781,14 +798,17 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 						(group.hasPrivateLayouts() ||
 						 group.hasPublicLayouts())) {
 
-						userSiteGroups.add(group);
+						if (userSiteGroups.add(group) &&
+							(userSiteGroups.size() == max)) {
+
+							return new ArrayList<>(userSiteGroups);
+						}
 					}
 				}
 			}
 		}
 
-		return Collections.unmodifiableList(
-			ListUtil.subList(ListUtil.unique(userSiteGroups), 0, max));
+		return new ArrayList<>(userSiteGroups);
 	}
 
 	/**

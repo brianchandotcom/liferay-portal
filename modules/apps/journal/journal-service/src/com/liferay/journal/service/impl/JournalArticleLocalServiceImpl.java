@@ -6064,28 +6064,19 @@ public class JournalArticleLocalServiceImpl
 	protected String buildArticleURL(
 		String articleURL, long groupId, long folderId, String articleId) {
 
-		StringBundler sb = new StringBundler(13);
-
-		sb.append(articleURL);
-		sb.append(StringPool.AMPERSAND);
-
 		String portletId = PortletProviderUtil.getPortletId(
 			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
 
-		sb.append(PortalUtil.getPortletNamespace(portletId));
+		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		sb.append("groupId=");
-		sb.append(groupId);
-		sb.append(StringPool.AMPERSAND);
-		sb.append(PortalUtil.getPortletNamespace(portletId));
-		sb.append("folderId=");
-		sb.append(folderId);
-		sb.append(StringPool.AMPERSAND);
-		sb.append(PortalUtil.getPortletNamespace(portletId));
-		sb.append("articleId=");
-		sb.append(articleId);
+		articleURL = HttpUtil.addParameter(
+			articleURL, namespace + "groupId", groupId);
+		articleURL = HttpUtil.addParameter(
+			articleURL, namespace + "folderId", folderId);
+		articleURL = HttpUtil.addParameter(
+			articleURL, namespace + "articleId", articleId);
 
-		return sb.toString();
+		return articleURL;
 	}
 
 	protected SearchContext buildSearchContext(

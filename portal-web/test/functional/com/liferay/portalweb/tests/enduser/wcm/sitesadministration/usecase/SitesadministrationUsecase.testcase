@@ -1296,6 +1296,7 @@
 		</execute>
 
 		<execute macro="Team#assignUserGroups">
+			<var name="teamName" value="Site Team Name" />
 			<var name="userGroupName" value="UG UserGroup2 Name" />
 			<var name="userGroupsNameIsNotAvailable" value="true" />
 		</execute>
@@ -1463,6 +1464,7 @@
 
 		<execute macro="PageTemplate#viewDefaultPortletPG">
 			<var name="pageTemplateName" value="Blog" />
+			<var name="portletTtitleList" value="Blogs,Tag Cloud,Recent Bloggers" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">

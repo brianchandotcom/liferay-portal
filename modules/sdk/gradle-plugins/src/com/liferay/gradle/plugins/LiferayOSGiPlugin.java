@@ -38,6 +38,7 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -219,6 +220,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 						return;
 					}
+
+					touchFiles(
+						project, deployedPluginDir, 0,
+						"WEB-INF/liferay-web.xml", "WEB-INF/web.xml",
+						"WEB-INF/tld/*");
 
 					deployedPluginDirName = project.relativePath(
 						deployedPluginDir);
@@ -925,6 +931,29 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		bundleExtension.setJarBuilderFactory(
 			new LiferayJarBuilderFactory(project));
+	}
+
+	protected void touchFile(File file, long time) {
+		boolean success = file.setLastModified(time);
+
+		if (!success) {
+			_logger.error("Unable to touch " + file);
+		}
+	}
+
+	protected void touchFiles(
+		Project project, File dir, long time, String ... includes) {
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", dir);
+		args.put("includes", Arrays.asList(includes));
+
+		FileTree fileTree = project.fileTree(args);
+
+		for (File file : fileTree) {
+			touchFile(file, time);
+		}
 	}
 
 	private static final Logger _logger = Logging.getLogger(

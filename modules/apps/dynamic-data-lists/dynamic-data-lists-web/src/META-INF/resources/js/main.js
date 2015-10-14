@@ -171,7 +171,7 @@ AUI.add(
 
 						fieldsDisplayValues.push(item.name + FIELDS_DISPLAY_INSTANCE_SEPARATOR + instance._randomString(8));
 
-						if (item.fields && isArray(item.fields)) {
+						if (isArray(item.fields)) {
 							item.fields.forEach(
 								function(item) {
 									instance._normalizeFieldData(item, record, fieldsDisplayValues, normalized);

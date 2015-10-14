@@ -183,12 +183,20 @@ public class DDMFormEvaluatorHelper {
 	protected boolean isDDMFormFieldValueEmpty(
 		DDMFormFieldValue ddmFormFieldValue) {
 
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 		Value value = ddmFormFieldValue.getValue();
+
 		String valueString = value.getString(_locale);
-		
-		if (Validator.isNull(valueString) ||
-				(ddmFormField.getDataType().equals("boolean") && valueString.equals("false"))) {
+
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		String dataType = ddmFormField.getDataType();
+
+		if (Validator.isNull(valueString)) {
+			return true;
+		}
+		else if (Validator.equals(dataType, "boolean") &&
+				 Validator.equals(valueString, "false")) {
+
 			return true;
 		}
 

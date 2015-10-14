@@ -7,6 +7,7 @@ AUI.add(
 					dataType: {
 						value: 'boolean'
 					},
+
 					showAsSwitcher: {
 						value: false
 					},

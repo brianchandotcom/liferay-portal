@@ -181,7 +181,7 @@
 		</execute>
 	</command>
 
-	<command name="HideFoldersFromRelatedAssetsSelector" priority="4">
+	<command name="ViewNoFolders" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -6,8 +6,8 @@
 	</set-up>
 
 	<command name="PortalPropertiesDatabaseValue" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#searchPortalPropertiesCP">
@@ -20,8 +20,8 @@
 
 		<execute macro="PortalSettings#enableLDAPCP" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#searchPortalPropertiesCP">

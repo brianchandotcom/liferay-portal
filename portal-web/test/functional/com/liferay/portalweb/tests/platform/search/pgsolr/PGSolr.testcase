@@ -57,8 +57,8 @@
 			<var name="dmDocumentTitle" value="Apple" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#executeServerResourcesActions">

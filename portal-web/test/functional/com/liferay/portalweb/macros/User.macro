@@ -895,6 +895,7 @@
 					<var name="authenticationMethod" value="${authenticationMethod}" />
 					<var name="nodePort" value="${nodePort}" />
 					<var name="password" value="test" />
+					<var name="resetPassword" value="${resetPassword}" />
 					<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 					<var name="userEmailAddress" value="test@liferay.com" />
 					<var name="userScreenName" value="${userScreenName}" />
@@ -922,6 +923,7 @@
 					<var name="authenticationMethod" value="${authenticationMethod}" />
 					<var name="nodePort" value="${nodePort}" />
 					<var name="password" value="test" />
+					<var name="resetPassword" value="${resetPassword}" />
 					<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 					<var name="userEmailAddress" value="test@liferay.com" />
 					<var name="userScreenName" value="${userScreenName}" />
@@ -1145,6 +1147,7 @@
 			<var name="authenticationMethod" value="${authenticationMethod}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="${newPassword}" />
+			<var name="resetPassword" value="${resetPassword}" />
 			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
@@ -1520,18 +1523,21 @@
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
 			<then>
 				<if>
-					<not>
-						<and>
-							<isset var="syntaxCheckingEnabled" />
-							<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
-						</and>
-					</not>
+					<and>
+						<isset var="syntaxCheckingEnabled" />
+						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
+					</and>
 					<then>
+						<execute function="Type" locator1="TextInput#PASSWORD" value1="${resetPassword}" />
+						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${resetPassword}" />
+					</then>
+					<else>
 						<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
 						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
-						<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-					</then>
+					</else>
 				</if>
+
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 			</then>
 		</if>
 
@@ -1694,15 +1700,21 @@
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
 			<then>
 				<if>
-					<not>
+					<and>
+						<isset var="syntaxCheckingEnabled" />
 						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
-					</not>
+					</and>
 					<then>
+						<execute function="Type" locator1="TextInput#PASSWORD" value1="${resetPassword}" />
+						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${resetPassword}" />
+					</then>
+					<else>
 						<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
 						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
-						<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-					</then>
+					</else>
 				</if>
+
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 			</then>
 		</if>
 

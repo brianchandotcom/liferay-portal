@@ -2331,8 +2331,8 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userScreenName" value="socialoffice01" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
@@ -2419,8 +2419,8 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userScreenName" value="socialoffice01" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">

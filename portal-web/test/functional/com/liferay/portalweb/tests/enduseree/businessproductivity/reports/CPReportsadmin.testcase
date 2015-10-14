@@ -201,8 +201,8 @@
 		<var method="TestPropsUtil#get('email.password.1')" name="emailPassword1" />
 		<var method="TestPropsUtil#get('email.password.3')" name="emailPassword3" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
@@ -550,8 +550,8 @@
 		<var method="TestPropsUtil#get('email.password.1')" name="emailPassword1" />
 		<var method="TestPropsUtil#get('email.password.2')" name="emailPassword2" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
@@ -629,8 +629,8 @@
 		<var method="TestPropsUtil#get('email.password.1')" name="emailPassword1" />
 		<var method="TestPropsUtil#get('email.password.2')" name="emailPassword2" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">

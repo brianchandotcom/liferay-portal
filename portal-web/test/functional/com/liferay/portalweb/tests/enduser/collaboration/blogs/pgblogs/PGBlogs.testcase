@@ -1222,8 +1222,8 @@
 	</command>
 
 	<command name="UserFlagsEntryAndAdminViewsNotificationInGmail" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
@@ -1293,8 +1293,8 @@
 	<command name="UserSubscribeToBlogsAndViewEntryInGmail" priority="3">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">

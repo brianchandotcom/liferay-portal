@@ -179,8 +179,8 @@
 	</command>
 
 	<command name="AssignSORolePortalInstance" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Instances" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#addCP">

@@ -475,8 +475,8 @@
 		<var name="videoGenerationTimeCounter" value="0" />
 		<var name="videoGenerationTimeMaxWaitTime" value="6" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">
@@ -490,8 +490,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">
@@ -709,8 +709,8 @@
 			<var name="dmDocumentTypeName" value="Photos" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#executeServerResourcesActions">

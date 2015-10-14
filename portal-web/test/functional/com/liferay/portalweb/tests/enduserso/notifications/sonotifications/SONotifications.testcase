@@ -4457,8 +4457,8 @@
 		<var name="userScreenName1" value="socialoffice01" />
 		<var name="userScreenName2" value="socialoffice02" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">

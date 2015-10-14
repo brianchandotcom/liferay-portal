@@ -844,8 +844,8 @@
 	</command>
 
 	<command name="ViewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
@@ -853,8 +853,8 @@
 			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Instances" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#editCP">
@@ -972,8 +972,8 @@
 	<command name="ViewMBThreadAndReplyThreadInGmail" priority="4">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
@@ -981,8 +981,8 @@
 			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Instances" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#editCP">

@@ -599,8 +599,8 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">

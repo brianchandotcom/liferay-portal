@@ -904,8 +904,8 @@
 	</command>
 
 	<command name="AssetPublisherHasOpenOfficeFileTypeLinks" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">

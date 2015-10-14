@@ -334,8 +334,8 @@
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry2 Title" />
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry2 Content" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Instances" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#addCP">
@@ -712,8 +712,8 @@
 			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Instances" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#addCP">

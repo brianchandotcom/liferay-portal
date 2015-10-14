@@ -22,8 +22,8 @@
 			<var name="portletName" value="License Manager" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 	</command>
 

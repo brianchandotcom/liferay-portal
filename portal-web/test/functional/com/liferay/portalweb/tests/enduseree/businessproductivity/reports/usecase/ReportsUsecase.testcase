@@ -119,8 +119,8 @@
 		<var method="TestPropsUtil#get('email.password.2')" name="emailPassword2" />
 		<var method="TestPropsUtil#get('email.password.4')" name="emailPassword4" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">

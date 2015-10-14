@@ -309,8 +309,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SYNTAX_CHECKING_ENABLED</td>
-	<td>//label[contains(.,'Syntax Checking Enabled')]/input[@type='checkbox']</td>
+	<td>ENABLE_SYNTAX_CHECKING</td>
+	<td>//label[contains(.,'Enable Syntax Checking')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

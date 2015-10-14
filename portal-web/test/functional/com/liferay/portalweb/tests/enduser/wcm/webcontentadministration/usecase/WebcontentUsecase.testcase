@@ -24,8 +24,8 @@
 	</tear-down>
 
 	<command name="AddAudioViaWebContent" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">
@@ -41,8 +41,8 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">

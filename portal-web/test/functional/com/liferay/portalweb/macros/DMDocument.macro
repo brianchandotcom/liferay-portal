@@ -747,11 +747,11 @@
 		<var name="key_assetType" value="${assetType}" />
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="MediaGallery#ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		<execute function="AssertClick" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
 
 		<execute function="AssertClick" locator1="MediaGallery#ENTRY_RECYCLE_BIN_ICON" value1="Move to the Recycle Bin" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
-		<execute function="AssertElementNotPresent" locator1="MediaGallery#ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
 	</command>
 
 	<command name="deleteViaActionsPG">
@@ -992,7 +992,7 @@
 	<command name="editPGViaMG">
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="MediaGallery#ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		<execute function="AssertClick" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="MediaGallery#MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
 		<execute function="Click" locator1="MediaGallery#ENTRY_EDIT_ICON" />
@@ -1002,7 +1002,7 @@
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="MediaGallery#ENTRY_TITLE" value1="${mgDocumentTitleEdit}" />
+		<execute function="AssertTextEquals" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitleEdit}" />
 	</command>
 
 	<command name="editPublishPG">
@@ -2250,7 +2250,7 @@
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute function="AssertElementPresent" locator1="MediaGallery#ENTRY_THUMBNAIL" />
-		<execute function="AssertElementPresent" locator1="MediaGallery#ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		<execute function="AssertElementPresent" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
 	</command>
 
 	<command name="viewPGViaSearch">

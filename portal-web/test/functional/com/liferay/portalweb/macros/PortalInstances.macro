@@ -61,8 +61,8 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Instances" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
 		</execute>
 
 		<while>

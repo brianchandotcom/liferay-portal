@@ -1906,8 +1906,8 @@
 		<var name="user3LastName" value="Updater" />
 		<var name="user3ScreenName" value="updater" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
@@ -7773,8 +7773,8 @@
 		<var name="user3LastName" value="Administrator" />
 		<var name="user3ScreenName" value="admin" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">

@@ -52,8 +52,8 @@
 	</command>
 
 	<command name="configureFileUploadOverallMaximumFileSize">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#FILE_UPLOADS" value1="File Uploads" />
@@ -114,8 +114,8 @@
 	</command>
 
 	<command name="tearDownDMFileUploadSettings">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#FILE_UPLOADS" value1="File Uploads" />
@@ -124,8 +124,8 @@
 	</command>
 
 	<command name="tearDownMailServerSettings">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#MAIL" value1="Mail" />

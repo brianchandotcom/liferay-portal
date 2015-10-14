@@ -3054,8 +3054,8 @@
 		<var name="wikiFrontPageTitle" value="FrontPage" />
 		<var name="wikiNodeName" value="Main" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">

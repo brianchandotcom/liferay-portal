@@ -98,6 +98,11 @@
 	<td>//iframe[contains(@id,'changeLogo_iframe')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VARIATION_IFRAME</td>
+	<td>//iframe[contains(@id,'layoutSetBranches_iframe')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

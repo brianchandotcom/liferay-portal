@@ -106,8 +106,9 @@ public class BookmarksEntryStagedModelDataHandler
 		importedEntry.setGroupId(portletDataContext.getScopeGroupId());
 		importedEntry.setFolderId(folderId);
 
-		BookmarksEntry existingEntry = fetchStagedModelByUuidAndGroupId(
-			entry.getUuid(), portletDataContext.getScopeGroupId());
+		BookmarksEntry existingEntry =
+			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+				entry.getUuid(), portletDataContext.getScopeGroupId());
 
 		if (existingEntry == null) {
 			importedEntry =_stagedModelRepository.addStagedModel(

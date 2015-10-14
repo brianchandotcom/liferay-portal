@@ -24,18 +24,19 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 
 String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 
-Map<String, Object> cardData = new HashMap<String, Object>();
-cardData.put("change-enabled", ddmTemplates.size() > 1);
-cardData.put("group-id", (article != null) ? article.getGroupId() : scopeGroupId);
-cardData.put("structure-id", (ddmStructure != null) ? ddmStructure.getClassNameId() : 0);
-cardData.put("structure-key", (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0);
-cardData.put("template-id", (ddmTemplate != null) ? ddmTemplate.getTemplateId() : StringPool.BLANK);
-cardData.put("template-key", ddmTemplate.getTemplateKey());
+Map<String, Object> data = new HashMap<String, Object>();
+
+data.put("change-enabled", ddmTemplates.size() > 1);
+data.put("group-id", (article != null) ? article.getGroupId() : scopeGroupId);
+data.put("structure-id", (ddmStructure != null) ? ddmStructure.getClassNameId() : 0);
+data.put("structure-key", (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0);
+data.put("template-id", (ddmTemplate != null) ? ddmTemplate.getTemplateId() : StringPool.BLANK);
+data.put("template-key", ddmTemplate.getTemplateKey());
 %>
 
 <liferay-frontend:card
 	cssClass="template-preview-content"
-	data="<%= cardData %>"
+	data="<%= data %>"
 	horizontal="<%= true %>"
 	imageCSSClass='<%= Validator.isNotNull(ddmTemplateImageURL) ? "icon-monospaced" : StringPool.BLANK %>'
 	imageUrl="<%= ddmTemplateImageURL %>"

@@ -967,14 +967,6 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -1028,14 +1020,6 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -1082,14 +1066,6 @@
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1147,10 +1123,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

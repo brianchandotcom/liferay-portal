@@ -694,6 +694,9 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX" />
+
+		<var name="key_assetEntry" value="${webContentTitle}" />
+
 		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
 

@@ -190,10 +190,15 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_CATEGORY" value1="${categoryName}" />
-		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
+
+		<var name="key_listEntry" value="${categoryName}" />
+
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Click" locator1="CategoriesEditCategory#PROPERTIES_DELETE_ROW_BUTTON_2" />
+		<var name="key_rowIndexNumber" value="2" />
+
+		<execute function="Click" locator1="Button#DELETE_ROW_N" />
 		<execute function="AssertElementPresent" locator1="CategoriesEditCategory#PROPERTIES_UNDO_MESSAGE" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
@@ -207,7 +212,8 @@
 		<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="Message#INFO_RESPONSE" value1="The following items could not be deleted: ${categoryName}" />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="editCategoryPropertyCP">

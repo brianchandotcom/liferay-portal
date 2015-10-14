@@ -640,10 +640,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="This is a test document." />
 			<var name="dmDocumentFile" value="Document_1.doc" />
@@ -1233,14 +1229,6 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

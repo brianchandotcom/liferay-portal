@@ -8,14 +8,6 @@
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Solr Page" />
 		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Solr Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
 	</set-up>
 
 	<tear-down>

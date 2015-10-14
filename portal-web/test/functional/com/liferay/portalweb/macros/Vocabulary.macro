@@ -4,7 +4,9 @@
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<var name="key_listEntry" value="${vocabularyName}" />
+
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>

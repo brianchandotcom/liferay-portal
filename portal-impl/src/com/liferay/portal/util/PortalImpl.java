@@ -4389,7 +4389,10 @@ public class PortalImpl implements Portal {
 		String portletId = (String)portletRequest.getAttribute(
 			WebKeys.PORTLET_ID);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+		long companyId = PortalUtil.getCompanyId(portletRequest);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletId);
 
 		HttpServletRequest request = getHttpServletRequest(portletRequest);
 

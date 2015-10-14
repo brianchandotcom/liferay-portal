@@ -1511,10 +1511,9 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public String getUniqueTitle(
-			long groupId, long folderId, long fileEntryId, String title)
+			long groupId, long folderId, long fileEntryId, String title,
+			String extension)
 		throws PortalException {
-
-		String extension = FileUtil.stripExtension(title);
 
 		String uniqueTitle = title;
 

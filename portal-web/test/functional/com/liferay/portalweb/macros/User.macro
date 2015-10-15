@@ -7,7 +7,7 @@
 
 		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
 		<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Select" locator1="UsersAndOrganizations#ADVANCED_SEARCH_STATUS_SELECT" value1="Inactive" />
+		<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />

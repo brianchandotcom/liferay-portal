@@ -32,6 +32,79 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddFormTemplate" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLList#addViaDDLDisplayPG" />
+
+		<execute macro="DDLDataDefinition#addViaDDLDisplayPG" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Boolean" />
+			<var name="fieldFieldLabel" value="Boolean" />
+			<var name="fieldName" value="Boolean" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveViaDDLDisplayPG" />
+
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG" />
+
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLTemplate#addFormTemplateViaDDLDisplayPG">
+			<var name="ddlFormTemplateName" value="Form Template" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCannotAddField">
+			<var name="field" value="Boolean" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#deleteField">
+			<var name="fieldFieldLabel" value="Boolean" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCanAddField">
+			<var name="field" value="Boolean" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
+			<var name="field" value="Separator" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
+			<var name="field" value="Paragraph" />
+		</execute>
+
+		<execute macro="DDLTemplate#saveFormTemplateViaDDLDisplayPG" />
+
+		<execute macro="DDLList#selectViaDDLDisplayPG" />
+
+		<execute macro="DDLTemplate#selectFormTemplateViaDDLDisplayPG">
+			<var name="ddlFormTemplateName" value="Form Template" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLRecord#addViaDDLDisplayPG" />
+
+		<execute macro="DDLRecord#viewFieldFormTemplateSpecific">
+			<var name="field" value="Separator" />
+		</execute>
+
+		<execute macro="DDLRecord#viewFieldFormTemplateSpecific">
+			<var name="field" value="Paragraph" />
+			<var name="fieldText" value="Paragraph" />
+		</execute>
+	</command>
+
 	<command name="AddList" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		<var name="ddlListName" value="List Name" />

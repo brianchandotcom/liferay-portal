@@ -387,7 +387,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.filterCountByG_U_NotS(
-				groupId, userId, status);
+				groupId, userId, WorkflowConstants.STATUS_IN_TRASH);
 		}
 		else {
 			return blogsEntryPersistence.filterCountByG_U_S(

@@ -46,7 +46,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:card
+			<liferay-frontend:vertical-card
 				imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"

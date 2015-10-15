@@ -39,7 +39,7 @@ User userDisplay = UserLocalServiceUtil.fetchUserById(assetRenderer.getUserId())
 	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
 </liferay-util:buffer>
 
-<liferay-frontend:card
+<liferay-frontend:vertical-card
 	cssClass="article-preview-content"
 	footer="<%= statusHtml %>"
 	imageUrl="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>"

@@ -34,11 +34,10 @@ data.put("template-id", (ddmTemplate != null) ? ddmTemplate.getTemplateId() : St
 data.put("template-key", ddmTemplate.getTemplateKey());
 %>
 
-<liferay-frontend:card
+<liferay-frontend:horizontal-card
 	cssClass="template-preview-content"
 	data="<%= data %>"
-	horizontal="<%= true %>"
 	imageCSSClass='<%= Validator.isNotNull(ddmTemplateImageURL) ? "icon-monospaced" : StringPool.BLANK %>'
 	imageUrl="<%= ddmTemplateImageURL %>"
-	title="<%= ddmTemplate.getName(locale) %>"
+	text="<%= ddmTemplate.getName(locale) %>"
 />

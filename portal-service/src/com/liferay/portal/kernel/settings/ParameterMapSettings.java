@@ -35,6 +35,14 @@ public class ParameterMapSettings extends BaseSettings {
 		_parameterMap = parameterMap;
 	}
 
+	public String getParameterNamePrefix() {
+		return _parameterNamePrefix;
+	}
+
+	public void setParameterNamePrefix(String parameterNamePrefix) {
+		_parameterNamePrefix = parameterNamePrefix;
+	}
+
 	@Override
 	protected String doGetValue(String key) {
 		String[] values = doGetValues(key);
@@ -48,7 +56,15 @@ public class ParameterMapSettings extends BaseSettings {
 
 	@Override
 	protected String[] doGetValues(String key) {
-		String[] values = _parameterMap.get(key);
+		String[] values = null;
+
+		if (_parameterNamePrefix != null) {
+			values = _parameterMap.get(_parameterNamePrefix + key);
+		}
+
+		if (values == null) {
+			values = _parameterMap.get(key);
+		}
 
 		if (values == null) {
 			values = _parameterMap.get(
@@ -64,5 +80,6 @@ public class ParameterMapSettings extends BaseSettings {
 	}
 
 	private final Map<String, String[]> _parameterMap;
+	private String _parameterNamePrefix;
 
 }

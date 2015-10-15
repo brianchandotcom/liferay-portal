@@ -30,7 +30,12 @@ import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.io.Closeable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -39,6 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Raymond Augé
+ * @author Tomas Polesovsky
  */
 public class ResourceBundleTracker implements Closeable {
 
@@ -104,12 +110,52 @@ public class ResourceBundleTracker implements Closeable {
 
 	private final ClassLoader _classLoader;
 	private final Portlet _portlet;
-	private final Map<String, ResourceBundle> _resourceBundles =
+	private final Map<String, MergingResourceBundle> _resourceBundles =
 		new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<ResourceBundle>
 		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private final ServiceTracker<ResourceBundle, ResourceBundle>
 		_serviceTracker;
+
+	private class MergingResourceBundle extends ResourceBundle {
+
+		public List<ResourceBundle> getBundles() {
+			return _bundles;
+		}
+
+		@Override
+		public Enumeration<String> getKeys() {
+			return Collections.enumeration(handleKeySet());
+		}
+
+		@Override
+		protected Object handleGetObject(String key) {
+			for (int i = _bundles.size() - 1; i >= 0; i--) {
+				ResourceBundle resourceBundle = _bundles.get(i);
+
+				if (resourceBundle.containsKey(key)) {
+					return resourceBundle.getObject(key);
+				}
+			}
+
+			return null;
+		}
+
+		@Override
+		protected Set<String> handleKeySet() {
+			HashSet<String> keySet = new HashSet<>();
+
+			for (int i = _bundles.size() - 1; i >= 0; i--) {
+				ResourceBundle resourceBundle = _bundles.get(i);
+				keySet.addAll(resourceBundle.keySet());
+			}
+
+			return keySet;
+		}
+
+		private final List<ResourceBundle> _bundles = new ArrayList<>();
+
+	}
 
 	private class ResourceBundleServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<ResourceBundle, ResourceBundle> {
@@ -123,9 +169,18 @@ public class ResourceBundleTracker implements Closeable {
 			ResourceBundle resourceBundle = registry.getService(
 				serviceReference);
 
-			_resourceBundles.put(
-				(String)serviceReference.getProperty("language.id"),
-				resourceBundle);
+			String languageId = (String)serviceReference.getProperty(
+				"language.id");
+
+			MergingResourceBundle mergingResourceBundle = _resourceBundles.get(
+				languageId);
+
+			if (mergingResourceBundle == null) {
+				mergingResourceBundle = new MergingResourceBundle();
+				_resourceBundles.put(languageId, mergingResourceBundle);
+			}
+
+			mergingResourceBundle.getBundles().add(resourceBundle);
 
 			return resourceBundle;
 		}
@@ -134,6 +189,9 @@ public class ResourceBundleTracker implements Closeable {
 		public void modifiedService(
 			ServiceReference<ResourceBundle> serviceReference,
 			ResourceBundle resourceBundle) {
+
+			removedService(serviceReference, resourceBundle);
+			addingService(serviceReference);
 		}
 
 		@Override
@@ -145,8 +203,10 @@ public class ResourceBundleTracker implements Closeable {
 
 			registry.ungetService(serviceReference);
 
-			_resourceBundles.remove(
+			MergingResourceBundle mergingResourceBundle = _resourceBundles.get(
 				serviceReference.getProperty("language.id"));
+
+			mergingResourceBundle.getBundles().remove(resourceBundle);
 		}
 
 	}

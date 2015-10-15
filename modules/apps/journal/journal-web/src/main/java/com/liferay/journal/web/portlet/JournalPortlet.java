@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
@@ -58,6 +60,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
+import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.journal.web.util.JournalRSSUtil;
 import com.liferay.portal.LocaleException;
@@ -137,14 +140,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.journal.web.configuration.JournalWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-journal",
@@ -384,6 +391,9 @@ public class JournalPortlet extends MVCPortlet {
 				JournalWebKeys.ITEM_SELECTOR, _itemSelector);
 		}
 
+		renderRequest.setAttribute(
+			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
+		
 		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 
@@ -927,6 +937,13 @@ public class JournalPortlet extends MVCPortlet {
 			ddmStructureIds, restrinctionType, false, serviceContext);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_journalWebConfiguration = Configurable.createConfigurable(
+			JournalWebConfiguration.class, properties);
+	}
+
 	protected void deleteArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			boolean moveToTrash)
@@ -1423,6 +1440,7 @@ public class JournalPortlet extends MVCPortlet {
 	private JournalFeedService _journalFeedService;
 	private JournalFolderService _journalFolderService;
 	private JournalRSSUtil _journalRSSUtil;
+	private volatile JournalWebConfiguration _journalWebConfiguration;
 	private LayoutLocalService _layoutLocalService;
 	private TrashEntryService _trashEntryService;
 

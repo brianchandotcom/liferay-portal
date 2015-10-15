@@ -14,8 +14,11 @@
 
 package com.liferay.journal.web.portlet.action;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.display.context.util.JournalWebRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
@@ -24,6 +27,8 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
@@ -31,8 +36,12 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -40,7 +49,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.journal.web.configuration.JournalWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = ConfigurationAction.class
 )
@@ -50,6 +60,18 @@ public class JournalConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest request) {
 		return "/configuration.jsp";
+	}
+
+	@Override
+	public void include(
+			PortletConfig portletConfig, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		request.setAttribute(
+			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
+
+		super.include(portletConfig, request, response);
 	}
 
 	@Override
@@ -158,5 +180,14 @@ public class JournalConfigurationAction
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_journalWebConfiguration = Configurable.createConfigurable(
+			JournalWebConfiguration.class, properties);
+	}
+
+	private volatile JournalWebConfiguration _journalWebConfiguration;
 
 }

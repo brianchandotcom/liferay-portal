@@ -149,7 +149,6 @@ private String _getURL(long groupId, long plid, PortletURL addPortletURL, String
 
 	String addPortletURLString = addPortletURL.toString();
 
-	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
 	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
 
 	String namespace = PortalUtil.getPortletNamespace(portletId);

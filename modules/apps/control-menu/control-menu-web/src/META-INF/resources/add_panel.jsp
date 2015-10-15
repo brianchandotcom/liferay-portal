@@ -99,7 +99,7 @@
 							<liferay-ui:section>
 
 								<%
-								PortletURL newPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+								PortletURL newPageURL = PortletProviderUtil.getPortletURL(request, groupDisplayContextHelper.getLiveGroup(), Layout.class.getName(), PortletProvider.Action.EDIT);
 
 								newPageURL.setParameter("tabs1", layout.isPrivateLayout() ? "private-pages" : "public-pages");
 								newPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
@@ -107,9 +107,7 @@
 								newPageURL.setParameter("treeId", "layoutsTree");
 								newPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
-								String newPageURLString = HttpUtil.setParameter(newPageURL.toString(), "doAsGroupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
-
-								newPageURLString = HttpUtil.setParameter(newPageURLString, "refererPlid", String.valueOf(selPlid));
+								String newPageURLString = HttpUtil.setParameter(newPageURL.toString(), "refererPlid", String.valueOf(selPlid));
 								%>
 
 								<aui:button-row>

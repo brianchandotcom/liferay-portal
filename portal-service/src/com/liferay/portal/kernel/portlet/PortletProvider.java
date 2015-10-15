@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Group;
 
 import javax.portlet.PortletURL;
 
@@ -28,6 +29,9 @@ public interface PortletProvider {
 	public String getPortletId();
 
 	public PortletURL getPortletURL(HttpServletRequest request)
+		throws PortalException;
+
+	public PortletURL getPortletURL(HttpServletRequest request, Group group)
 		throws PortalException;
 
 	public enum Action {

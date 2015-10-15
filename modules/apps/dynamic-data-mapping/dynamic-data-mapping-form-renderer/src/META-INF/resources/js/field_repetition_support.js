@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Renderer = Liferay.DDM.Renderer;
 
+		var FieldTypes = Renderer.FieldTypes;
+
 		var Util = Renderer.Util;
 
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-form-field-repeatable-add-button, .lfr-ddm-form-field-repeatable-delete-button';
@@ -87,29 +89,41 @@ AUI.add(
 			repeat: function() {
 				var instance = this;
 
-				var container = instance.get('container');
-				var parent = instance.get('parent');
 				var repetitions = instance.get('repetitions');
 				var type = instance.get('type');
+
+				var fieldType = FieldTypes.get(type);
+				var settings = fieldType.get('settings');
+
+				var config = settings.fields.reduce(
+					function(prev, item) {
+						prev[item.name] = instance.get(item.name);
+
+						return prev;
+					},
+					{}
+				);
 
 				var fieldClass = Util.getFieldClass(type);
 
 				var field = new fieldClass(
-					{
-						label: instance.get('label'),
-						name: instance.get('name'),
-						parent: parent,
-						portletNamespace: instance.get('portletNamespace'),
-						repeatable: instance.get('repeatable'),
-						repeatedIndex: instance.getRepeatedSiblings().length,
-						repetitions: repetitions,
-						type: type
-					}
+					A.merge(
+						config,
+						{
+							parent: instance.get('parent'),
+							portletNamespace: instance.get('portletNamespace'),
+							repeatedIndex: instance.getRepeatedSiblings().length,
+							repetitions: repetitions,
+							type: type
+						}
+					)
 				).render();
 
 				var index = repetitions.indexOf(instance) + 1;
 
 				repetitions.splice(index, 0, field);
+
+				var container = instance.get('container');
 
 				container.insert(field.get('container'), 'after');
 

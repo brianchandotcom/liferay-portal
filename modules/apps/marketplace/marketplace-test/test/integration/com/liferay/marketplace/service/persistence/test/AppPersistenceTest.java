@@ -344,11 +344,9 @@ public class AppPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AppLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<App>() {
 				@Override
-				public void performAction(Object object) {
-					App app = (App)object;
-
+				public void performAction(App app) {
 					Assert.assertNotNull(app);
 
 					count.increment();

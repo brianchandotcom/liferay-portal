@@ -303,12 +303,10 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBThreadFlag>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MBThreadFlag stagedModel)
 					throws PortalException {
-					MBThreadFlag stagedModel = (MBThreadFlag)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

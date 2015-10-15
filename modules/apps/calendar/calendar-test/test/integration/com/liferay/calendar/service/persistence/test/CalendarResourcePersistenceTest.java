@@ -433,11 +433,9 @@ public class CalendarResourcePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = CalendarResourceLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CalendarResource>() {
 				@Override
-				public void performAction(Object object) {
-					CalendarResource calendarResource = (CalendarResource)object;
-
+				public void performAction(CalendarResource calendarResource) {
 					Assert.assertNotNull(calendarResource);
 
 					count.increment();

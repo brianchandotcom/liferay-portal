@@ -337,11 +337,9 @@ public class MeetupsEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MeetupsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MeetupsEntry>() {
 				@Override
-				public void performAction(Object object) {
-					MeetupsEntry meetupsEntry = (MeetupsEntry)object;
-
+				public void performAction(MeetupsEntry meetupsEntry) {
 					Assert.assertNotNull(meetupsEntry);
 
 					count.increment();

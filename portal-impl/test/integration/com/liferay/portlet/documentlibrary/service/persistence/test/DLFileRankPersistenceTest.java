@@ -322,11 +322,9 @@ public class DLFileRankPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLFileRankLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileRank>() {
 				@Override
-				public void performAction(Object object) {
-					DLFileRank dlFileRank = (DLFileRank)object;
-
+				public void performAction(DLFileRank dlFileRank) {
 					Assert.assertNotNull(dlFileRank);
 
 					count.increment();

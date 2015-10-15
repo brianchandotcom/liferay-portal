@@ -183,12 +183,10 @@ public class ContactIndexer extends BaseIndexer<Contact> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Contact>() {
 
 				@Override
-				public void performAction(Object object) {
-					Contact contact = (Contact)object;
-
+				public void performAction(Contact contact) {
 					try {
 						Document document = getDocument(contact);
 

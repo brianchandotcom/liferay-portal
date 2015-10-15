@@ -157,12 +157,10 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 			});
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
 
 				@Override
-				public void performAction(Object object) {
-					WikiNode node = (WikiNode)object;
-
+				public void performAction(WikiNode node) {
 					try {
 						Document document = getDocument(node);
 

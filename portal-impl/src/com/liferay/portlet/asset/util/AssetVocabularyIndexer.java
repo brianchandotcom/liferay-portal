@@ -173,12 +173,10 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<AssetVocabulary>() {
 
 				@Override
-				public void performAction(Object object) {
-					AssetVocabulary assetVocabulary = (AssetVocabulary)object;
-
+				public void performAction(AssetVocabulary assetVocabulary) {
 					try {
 						Document document = getDocument(assetVocabulary);
 

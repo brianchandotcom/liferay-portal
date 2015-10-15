@@ -373,11 +373,9 @@ public class EmailAddressPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = EmailAddressLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<EmailAddress>() {
 				@Override
-				public void performAction(Object object) {
-					EmailAddress emailAddress = (EmailAddress)object;
-
+				public void performAction(EmailAddress emailAddress) {
 					Assert.assertNotNull(emailAddress);
 
 					count.increment();

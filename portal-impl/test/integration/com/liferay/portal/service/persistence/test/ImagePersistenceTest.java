@@ -280,11 +280,9 @@ public class ImagePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ImageLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Image>() {
 				@Override
-				public void performAction(Object object) {
-					Image image = (Image)object;
-
+				public void performAction(Image image) {
 					Assert.assertNotNull(image);
 
 					count.increment();

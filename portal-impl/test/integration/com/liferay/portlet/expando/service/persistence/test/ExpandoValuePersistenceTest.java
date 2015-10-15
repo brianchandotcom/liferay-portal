@@ -366,11 +366,9 @@ public class ExpandoValuePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ExpandoValueLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ExpandoValue>() {
 				@Override
-				public void performAction(Object object) {
-					ExpandoValue expandoValue = (ExpandoValue)object;
-
+				public void performAction(ExpandoValue expandoValue) {
 					Assert.assertNotNull(expandoValue);
 
 					count.increment();

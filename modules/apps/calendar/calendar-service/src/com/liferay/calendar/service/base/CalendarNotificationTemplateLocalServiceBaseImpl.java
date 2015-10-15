@@ -317,12 +317,11 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CalendarNotificationTemplate>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(
+					CalendarNotificationTemplate stagedModel)
 					throws PortalException {
-					CalendarNotificationTemplate stagedModel = (CalendarNotificationTemplate)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

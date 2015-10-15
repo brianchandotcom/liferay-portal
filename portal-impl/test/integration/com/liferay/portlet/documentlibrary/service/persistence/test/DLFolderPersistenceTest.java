@@ -522,11 +522,9 @@ public class DLFolderPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLFolderLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFolder>() {
 				@Override
-				public void performAction(Object object) {
-					DLFolder dlFolder = (DLFolder)object;
-
+				public void performAction(DLFolder dlFolder) {
 					Assert.assertNotNull(dlFolder);
 
 					count.increment();

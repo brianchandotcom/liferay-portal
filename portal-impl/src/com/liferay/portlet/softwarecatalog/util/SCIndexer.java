@@ -201,12 +201,10 @@ public class SCIndexer extends BaseIndexer<SCProductEntry> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<SCProductEntry>() {
 
 				@Override
-				public void performAction(Object object) {
-					SCProductEntry productEntry = (SCProductEntry)object;
-
+				public void performAction(SCProductEntry productEntry) {
 					try {
 						Document document = getDocument(productEntry);
 

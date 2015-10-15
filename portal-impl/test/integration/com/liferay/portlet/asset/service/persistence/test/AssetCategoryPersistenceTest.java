@@ -465,11 +465,9 @@ public class AssetCategoryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AssetCategoryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetCategory>() {
 				@Override
-				public void performAction(Object object) {
-					AssetCategory assetCategory = (AssetCategory)object;
-
+				public void performAction(AssetCategory assetCategory) {
 					Assert.assertNotNull(assetCategory);
 
 					count.increment();

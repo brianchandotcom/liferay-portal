@@ -448,11 +448,9 @@ public class ShoppingItemPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ShoppingItemLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ShoppingItem>() {
 				@Override
-				public void performAction(Object object) {
-					ShoppingItem shoppingItem = (ShoppingItem)object;
-
+				public void performAction(ShoppingItem shoppingItem) {
 					Assert.assertNotNull(shoppingItem);
 
 					count.increment();

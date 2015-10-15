@@ -353,11 +353,9 @@ public class SAPEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SAPEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SAPEntry>() {
 				@Override
-				public void performAction(Object object) {
-					SAPEntry sapEntry = (SAPEntry)object;
-
+				public void performAction(SAPEntry sapEntry) {
 					Assert.assertNotNull(sapEntry);
 
 					count.increment();

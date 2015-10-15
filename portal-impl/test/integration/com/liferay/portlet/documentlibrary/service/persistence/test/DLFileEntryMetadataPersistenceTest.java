@@ -310,11 +310,10 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLFileEntryMetadataLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileEntryMetadata>() {
 				@Override
-				public void performAction(Object object) {
-					DLFileEntryMetadata dlFileEntryMetadata = (DLFileEntryMetadata)object;
-
+				public void performAction(
+					DLFileEntryMetadata dlFileEntryMetadata) {
 					Assert.assertNotNull(dlFileEntryMetadata);
 
 					count.increment();

@@ -327,11 +327,10 @@ public class SocialActivityLimitPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SocialActivityLimitLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SocialActivityLimit>() {
 				@Override
-				public void performAction(Object object) {
-					SocialActivityLimit socialActivityLimit = (SocialActivityLimit)object;
-
+				public void performAction(
+					SocialActivityLimit socialActivityLimit) {
 					Assert.assertNotNull(socialActivityLimit);
 
 					count.increment();

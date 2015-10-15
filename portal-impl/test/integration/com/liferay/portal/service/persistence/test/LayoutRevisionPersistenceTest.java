@@ -475,11 +475,9 @@ public class LayoutRevisionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = LayoutRevisionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutRevision>() {
 				@Override
-				public void performAction(Object object) {
-					LayoutRevision layoutRevision = (LayoutRevision)object;
-
+				public void performAction(LayoutRevision layoutRevision) {
 					Assert.assertNotNull(layoutRevision);
 
 					count.increment();

@@ -369,11 +369,9 @@ public class KaleoTransitionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoTransitionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoTransition>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoTransition kaleoTransition = (KaleoTransition)object;
-
+				public void performAction(KaleoTransition kaleoTransition) {
 					Assert.assertNotNull(kaleoTransition);
 
 					count.increment();

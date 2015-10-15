@@ -319,12 +319,10 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRAction>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MDRAction stagedModel)
 					throws PortalException {
-					MDRAction stagedModel = (MDRAction)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

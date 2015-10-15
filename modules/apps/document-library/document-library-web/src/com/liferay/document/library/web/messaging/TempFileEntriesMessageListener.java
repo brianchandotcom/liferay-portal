@@ -113,12 +113,10 @@ public class TempFileEntriesMessageListener
 			RepositoryLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Repository>() {
 
 				@Override
-				public void performAction(Object object) {
-					Repository repository = (Repository)object;
-
+				public void performAction(Repository repository) {
 					deleteExpiredTemporaryFileEntries(repository);
 				}
 

@@ -297,11 +297,9 @@ public class DDMTemplateLinkPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMTemplateLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMTemplateLink>() {
 				@Override
-				public void performAction(Object object) {
-					DDMTemplateLink ddmTemplateLink = (DDMTemplateLink)object;
-
+				public void performAction(DDMTemplateLink ddmTemplateLink) {
 					Assert.assertNotNull(ddmTemplateLink);
 
 					count.increment();

@@ -313,12 +313,10 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetCategory>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(AssetCategory stagedModel)
 					throws PortalException {
-					AssetCategory stagedModel = (AssetCategory)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

@@ -412,11 +412,9 @@ public class JournalFeedPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = JournalFeedLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalFeed>() {
 				@Override
-				public void performAction(Object object) {
-					JournalFeed journalFeed = (JournalFeed)object;
-
+				public void performAction(JournalFeed journalFeed) {
 					Assert.assertNotNull(journalFeed);
 
 					count.increment();

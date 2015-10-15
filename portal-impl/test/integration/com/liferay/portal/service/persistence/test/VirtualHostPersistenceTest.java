@@ -292,11 +292,9 @@ public class VirtualHostPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = VirtualHostLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<VirtualHost>() {
 				@Override
-				public void performAction(Object object) {
-					VirtualHost virtualHost = (VirtualHost)object;
-
+				public void performAction(VirtualHost virtualHost) {
 					Assert.assertNotNull(virtualHost);
 
 					count.increment();

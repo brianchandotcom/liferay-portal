@@ -1234,13 +1234,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		layoutPrototypeActionableDynamicQuery.setCompanyId(companyId);
 		layoutPrototypeActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<LayoutPrototype>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(LayoutPrototype layoutPrototype)
 					throws PortalException {
-
-					LayoutPrototype layoutPrototype = (LayoutPrototype)object;
 
 					layoutPrototypeLocalService.deleteLayoutPrototype(
 						layoutPrototype);
@@ -1257,14 +1255,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		layoutSetPrototypeActionableDynamicQuery.setCompanyId(companyId);
 		layoutSetPrototypeActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.
+			PerformActionMethod<LayoutSetPrototype>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(LayoutSetPrototype layoutSetPrototype)
 					throws PortalException {
-
-					LayoutSetPrototype layoutSetPrototype =
-						(LayoutSetPrototype)object;
 
 					layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
 						layoutSetPrototype);
@@ -1291,14 +1287,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		roleActionableDynamicQuery.setCompanyId(companyId);
 		roleActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Role>() {
 
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					Role role = (Role)object;
-
+				public void performAction(Role role) throws PortalException {
 					roleLocalService.deleteRole(role);
 				}
 
@@ -1344,14 +1336,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		userActionableDynamicQuery.setCompanyId(companyId);
 		userActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<User>() {
 
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					User user = (User)object;
-
+				public void performAction(User user) throws PortalException {
 					if (!user.isDefaultUser()) {
 						userLocalService.deleteUser(user.getUserId());
 					}
@@ -1551,13 +1539,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 				});
 			_actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+				new ActionableDynamicQuery.PerformActionMethod<Group>() {
 
 					@Override
-					public void performAction(Object object)
+					public void performAction(Group group)
 						throws PortalException {
-
-						Group group = (Group)object;
 
 						if (!PortalUtil.isSystemGroup(group.getGroupKey()) &&
 							!group.isCompany()) {
@@ -1626,13 +1612,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 				});
 			_actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+				new ActionableDynamicQuery.PerformActionMethod<Organization>() {
 
 					@Override
-					public void performAction(Object object)
+					public void performAction(Organization organization)
 						throws PortalException {
-
-						Organization organization = (Organization)object;
 
 						deleteOrganization(organization);
 					}

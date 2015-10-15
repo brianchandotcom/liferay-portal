@@ -415,11 +415,10 @@ public class UserNotificationEventPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserNotificationEventLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserNotificationEvent>() {
 				@Override
-				public void performAction(Object object) {
-					UserNotificationEvent userNotificationEvent = (UserNotificationEvent)object;
-
+				public void performAction(
+					UserNotificationEvent userNotificationEvent) {
 					Assert.assertNotNull(userNotificationEvent);
 
 					count.increment();

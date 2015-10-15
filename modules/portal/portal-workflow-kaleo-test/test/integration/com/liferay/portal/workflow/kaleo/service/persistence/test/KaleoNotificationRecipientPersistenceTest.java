@@ -369,11 +369,10 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoNotificationRecipientLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoNotificationRecipient>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoNotificationRecipient kaleoNotificationRecipient = (KaleoNotificationRecipient)object;
-
+				public void performAction(
+					KaleoNotificationRecipient kaleoNotificationRecipient) {
 					Assert.assertNotNull(kaleoNotificationRecipient);
 
 					count.increment();

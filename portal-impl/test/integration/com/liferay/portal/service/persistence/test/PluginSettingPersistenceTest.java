@@ -300,11 +300,9 @@ public class PluginSettingPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PluginSettingLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PluginSetting>() {
 				@Override
-				public void performAction(Object object) {
-					PluginSetting pluginSetting = (PluginSetting)object;
-
+				public void performAction(PluginSetting pluginSetting) {
 					Assert.assertNotNull(pluginSetting);
 
 					count.increment();

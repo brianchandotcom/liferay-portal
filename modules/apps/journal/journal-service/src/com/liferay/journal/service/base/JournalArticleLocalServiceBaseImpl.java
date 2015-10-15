@@ -382,12 +382,10 @@ public abstract class JournalArticleLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(JournalArticle stagedModel)
 					throws PortalException {
-					JournalArticle stagedModel = (JournalArticle)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

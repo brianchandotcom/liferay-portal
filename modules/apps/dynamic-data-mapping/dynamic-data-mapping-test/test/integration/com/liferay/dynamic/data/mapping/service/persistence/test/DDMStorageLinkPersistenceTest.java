@@ -303,11 +303,9 @@ public class DDMStorageLinkPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMStorageLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMStorageLink>() {
 				@Override
-				public void performAction(Object object) {
-					DDMStorageLink ddmStorageLink = (DDMStorageLink)object;
-
+				public void performAction(DDMStorageLink ddmStorageLink) {
 					Assert.assertNotNull(ddmStorageLink);
 
 					count.increment();

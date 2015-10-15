@@ -322,11 +322,10 @@ public class MeetupsRegistrationPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MeetupsRegistrationLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MeetupsRegistration>() {
 				@Override
-				public void performAction(Object object) {
-					MeetupsRegistration meetupsRegistration = (MeetupsRegistration)object;
-
+				public void performAction(
+					MeetupsRegistration meetupsRegistration) {
 					Assert.assertNotNull(meetupsRegistration);
 
 					count.increment();

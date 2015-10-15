@@ -342,11 +342,10 @@ public class SocialActivityAchievementPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SocialActivityAchievementLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SocialActivityAchievement>() {
 				@Override
-				public void performAction(Object object) {
-					SocialActivityAchievement socialActivityAchievement = (SocialActivityAchievement)object;
-
+				public void performAction(
+					SocialActivityAchievement socialActivityAchievement) {
 					Assert.assertNotNull(socialActivityAchievement);
 
 					count.increment();

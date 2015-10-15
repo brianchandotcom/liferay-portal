@@ -363,11 +363,9 @@ public class MDRActionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MDRActionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRAction>() {
 				@Override
-				public void performAction(Object object) {
-					MDRAction mdrAction = (MDRAction)object;
-
+				public void performAction(MDRAction mdrAction) {
 					Assert.assertNotNull(mdrAction);
 
 					count.increment();

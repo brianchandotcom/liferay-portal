@@ -288,11 +288,9 @@ public class DLSyncEventPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLSyncEventLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLSyncEvent>() {
 				@Override
-				public void performAction(Object object) {
-					DLSyncEvent dlSyncEvent = (DLSyncEvent)object;
-
+				public void performAction(DLSyncEvent dlSyncEvent) {
 					Assert.assertNotNull(dlSyncEvent);
 
 					count.increment();

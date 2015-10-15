@@ -312,11 +312,10 @@ public class SCProductScreenshotPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SCProductScreenshotLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SCProductScreenshot>() {
 				@Override
-				public void performAction(Object object) {
-					SCProductScreenshot scProductScreenshot = (SCProductScreenshot)object;
-
+				public void performAction(
+					SCProductScreenshot scProductScreenshot) {
 					Assert.assertNotNull(scProductScreenshot);
 
 					count.increment();

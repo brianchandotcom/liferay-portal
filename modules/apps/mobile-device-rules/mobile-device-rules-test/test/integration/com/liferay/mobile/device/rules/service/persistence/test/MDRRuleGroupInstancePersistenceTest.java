@@ -392,11 +392,10 @@ public class MDRRuleGroupInstancePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MDRRuleGroupInstanceLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRRuleGroupInstance>() {
 				@Override
-				public void performAction(Object object) {
-					MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)object;
-
+				public void performAction(
+					MDRRuleGroupInstance mdrRuleGroupInstance) {
 					Assert.assertNotNull(mdrRuleGroupInstance);
 
 					count.increment();

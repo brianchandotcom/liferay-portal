@@ -275,11 +275,9 @@ public class ClassNamePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ClassNameLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ClassName>() {
 				@Override
-				public void performAction(Object object) {
-					ClassName className = (ClassName)object;
-
+				public void performAction(ClassName className) {
 					Assert.assertNotNull(className);
 
 					count.increment();

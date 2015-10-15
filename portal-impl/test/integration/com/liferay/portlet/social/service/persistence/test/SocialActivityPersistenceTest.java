@@ -406,11 +406,9 @@ public class SocialActivityPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SocialActivityLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SocialActivity>() {
 				@Override
-				public void performAction(Object object) {
-					SocialActivity socialActivity = (SocialActivity)object;
-
+				public void performAction(SocialActivity socialActivity) {
 					Assert.assertNotNull(socialActivity);
 
 					count.increment();

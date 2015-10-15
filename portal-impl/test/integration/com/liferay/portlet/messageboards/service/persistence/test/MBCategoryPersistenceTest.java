@@ -470,11 +470,9 @@ public class MBCategoryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MBCategoryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBCategory>() {
 				@Override
-				public void performAction(Object object) {
-					MBCategory mbCategory = (MBCategory)object;
-
+				public void performAction(MBCategory mbCategory) {
 					Assert.assertNotNull(mbCategory);
 
 					count.increment();

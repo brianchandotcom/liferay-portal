@@ -355,11 +355,9 @@ public class KaleoTimerPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoTimerLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoTimer>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoTimer kaleoTimer = (KaleoTimer)object;
-
+				public void performAction(KaleoTimer kaleoTimer) {
 					Assert.assertNotNull(kaleoTimer);
 
 					count.increment();

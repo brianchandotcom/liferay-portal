@@ -351,11 +351,9 @@ public class DDLRecordVersionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDLRecordVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDLRecordVersion>() {
 				@Override
-				public void performAction(Object object) {
-					DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)object;
-
+				public void performAction(DDLRecordVersion ddlRecordVersion) {
 					Assert.assertNotNull(ddlRecordVersion);
 
 					count.increment();

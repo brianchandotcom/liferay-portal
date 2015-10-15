@@ -314,12 +314,10 @@ public class DLFileShortcutLocalServiceImpl
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileShortcut>() {
 
 				@Override
-				public void performAction(Object object) {
-					DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
-
+				public void performAction(DLFileShortcut dlFileShortcut) {
 					dlFileShortcut.setTreePath(treePath);
 
 					updateDLFileShortcut(dlFileShortcut);

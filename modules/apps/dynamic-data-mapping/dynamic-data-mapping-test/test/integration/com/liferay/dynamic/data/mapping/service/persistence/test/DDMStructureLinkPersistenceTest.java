@@ -305,11 +305,9 @@ public class DDMStructureLinkPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMStructureLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMStructureLink>() {
 				@Override
-				public void performAction(Object object) {
-					DDMStructureLink ddmStructureLink = (DDMStructureLink)object;
-
+				public void performAction(DDMStructureLink ddmStructureLink) {
 					Assert.assertNotNull(ddmStructureLink);
 
 					count.increment();

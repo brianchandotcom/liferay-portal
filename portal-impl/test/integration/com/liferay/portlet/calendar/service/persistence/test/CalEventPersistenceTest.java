@@ -451,11 +451,9 @@ public class CalEventPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = CalEventLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CalEvent>() {
 				@Override
-				public void performAction(Object object) {
-					CalEvent calEvent = (CalEvent)object;
-
+				public void performAction(CalEvent calEvent) {
 					Assert.assertNotNull(calEvent);
 
 					count.increment();

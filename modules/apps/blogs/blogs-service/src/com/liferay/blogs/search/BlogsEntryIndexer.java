@@ -179,12 +179,10 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 			});
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<BlogsEntry>() {
 
 				@Override
-				public void performAction(Object object) {
-					BlogsEntry entry = (BlogsEntry)object;
-
+				public void performAction(BlogsEntry entry) {
 					try {
 						Document document = getDocument(entry);
 

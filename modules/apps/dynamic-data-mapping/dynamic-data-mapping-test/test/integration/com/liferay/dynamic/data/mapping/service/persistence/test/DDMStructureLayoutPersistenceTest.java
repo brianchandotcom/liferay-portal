@@ -339,11 +339,9 @@ public class DDMStructureLayoutPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMStructureLayoutLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMStructureLayout>() {
 				@Override
-				public void performAction(Object object) {
-					DDMStructureLayout ddmStructureLayout = (DDMStructureLayout)object;
-
+				public void performAction(DDMStructureLayout ddmStructureLayout) {
 					Assert.assertNotNull(ddmStructureLayout);
 
 					count.increment();

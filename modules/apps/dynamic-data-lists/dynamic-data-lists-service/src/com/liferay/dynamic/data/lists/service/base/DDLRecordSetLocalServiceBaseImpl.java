@@ -308,12 +308,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDLRecordSet>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(DDLRecordSet stagedModel)
 					throws PortalException {
-					DDLRecordSet stagedModel = (DDLRecordSet)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

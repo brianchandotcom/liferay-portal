@@ -331,11 +331,9 @@ public class MembershipRequestPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MembershipRequestLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MembershipRequest>() {
 				@Override
-				public void performAction(Object object) {
-					MembershipRequest membershipRequest = (MembershipRequest)object;
-
+				public void performAction(MembershipRequest membershipRequest) {
 					Assert.assertNotNull(membershipRequest);
 
 					count.increment();

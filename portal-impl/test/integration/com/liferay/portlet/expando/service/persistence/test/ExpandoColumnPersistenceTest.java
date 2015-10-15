@@ -308,11 +308,9 @@ public class ExpandoColumnPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ExpandoColumnLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ExpandoColumn>() {
 				@Override
-				public void performAction(Object object) {
-					ExpandoColumn expandoColumn = (ExpandoColumn)object;
-
+				public void performAction(ExpandoColumn expandoColumn) {
 					Assert.assertNotNull(expandoColumn);
 
 					count.increment();

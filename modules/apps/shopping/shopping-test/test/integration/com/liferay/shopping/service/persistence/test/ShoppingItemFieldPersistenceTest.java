@@ -285,11 +285,9 @@ public class ShoppingItemFieldPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ShoppingItemFieldLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ShoppingItemField>() {
 				@Override
-				public void performAction(Object object) {
-					ShoppingItemField shoppingItemField = (ShoppingItemField)object;
-
+				public void performAction(ShoppingItemField shoppingItemField) {
 					Assert.assertNotNull(shoppingItemField);
 
 					count.increment();

@@ -350,11 +350,9 @@ public class MBThreadFlagPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MBThreadFlagLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBThreadFlag>() {
 				@Override
-				public void performAction(Object object) {
-					MBThreadFlag mbThreadFlag = (MBThreadFlag)object;
-
+				public void performAction(MBThreadFlag mbThreadFlag) {
 					Assert.assertNotNull(mbThreadFlag);
 
 					count.increment();

@@ -350,11 +350,9 @@ public class DDMContentPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMContentLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMContent>() {
 				@Override
-				public void performAction(Object object) {
-					DDMContent ddmContent = (DDMContent)object;
-
+				public void performAction(DDMContent ddmContent) {
 					Assert.assertNotNull(ddmContent);
 
 					count.increment();

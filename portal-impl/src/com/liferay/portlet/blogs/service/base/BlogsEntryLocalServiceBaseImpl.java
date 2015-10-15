@@ -354,12 +354,10 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BlogsEntry>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(BlogsEntry stagedModel)
 					throws PortalException {
-					BlogsEntry stagedModel = (BlogsEntry)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

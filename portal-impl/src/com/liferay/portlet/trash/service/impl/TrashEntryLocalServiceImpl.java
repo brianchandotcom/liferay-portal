@@ -133,13 +133,11 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			trashEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<TrashEntry>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(TrashEntry trashEntry)
 					throws PortalException {
-
-					TrashEntry trashEntry = (TrashEntry)object;
 
 					Date createDate = trashEntry.getCreateDate();
 

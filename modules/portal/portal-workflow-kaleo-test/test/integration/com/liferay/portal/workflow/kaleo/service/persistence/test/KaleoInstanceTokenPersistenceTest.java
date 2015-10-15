@@ -366,11 +366,9 @@ public class KaleoInstanceTokenPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoInstanceTokenLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoInstanceToken>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoInstanceToken kaleoInstanceToken = (KaleoInstanceToken)object;
-
+				public void performAction(KaleoInstanceToken kaleoInstanceToken) {
 					Assert.assertNotNull(kaleoInstanceToken);
 
 					count.increment();

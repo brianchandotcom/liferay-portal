@@ -440,11 +440,9 @@ public class KaleoLogPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoLogLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoLog>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoLog kaleoLog = (KaleoLog)object;
-
+				public void performAction(KaleoLog kaleoLog) {
 					Assert.assertNotNull(kaleoLog);
 
 					count.increment();

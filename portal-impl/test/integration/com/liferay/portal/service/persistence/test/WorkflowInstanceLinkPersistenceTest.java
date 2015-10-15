@@ -312,11 +312,10 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = WorkflowInstanceLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WorkflowInstanceLink>() {
 				@Override
-				public void performAction(Object object) {
-					WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)object;
-
+				public void performAction(
+					WorkflowInstanceLink workflowInstanceLink) {
 					Assert.assertNotNull(workflowInstanceLink);
 
 					count.increment();

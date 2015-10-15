@@ -339,12 +339,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileVersion>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(DLFileVersion stagedModel)
 					throws PortalException {
-					DLFileVersion stagedModel = (DLFileVersion)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

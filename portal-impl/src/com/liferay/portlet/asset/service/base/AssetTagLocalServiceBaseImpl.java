@@ -305,12 +305,10 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetTag>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(AssetTag stagedModel)
 					throws PortalException {
-					AssetTag stagedModel = (AssetTag)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

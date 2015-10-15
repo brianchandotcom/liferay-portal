@@ -344,11 +344,9 @@ public class LayoutPrototypePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = LayoutPrototypeLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutPrototype>() {
 				@Override
-				public void performAction(Object object) {
-					LayoutPrototype layoutPrototype = (LayoutPrototype)object;
-
+				public void performAction(LayoutPrototype layoutPrototype) {
 					Assert.assertNotNull(layoutPrototype);
 
 					count.increment();

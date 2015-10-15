@@ -304,11 +304,9 @@ public class UserIdMapperPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserIdMapperLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserIdMapper>() {
 				@Override
-				public void performAction(Object object) {
-					UserIdMapper userIdMapper = (UserIdMapper)object;
-
+				public void performAction(UserIdMapper userIdMapper) {
 					Assert.assertNotNull(userIdMapper);
 
 					count.increment();

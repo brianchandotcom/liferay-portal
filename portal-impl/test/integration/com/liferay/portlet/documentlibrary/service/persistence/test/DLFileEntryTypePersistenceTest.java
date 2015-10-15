@@ -364,11 +364,9 @@ public class DLFileEntryTypePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLFileEntryTypeLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileEntryType>() {
 				@Override
-				public void performAction(Object object) {
-					DLFileEntryType dlFileEntryType = (DLFileEntryType)object;
-
+				public void performAction(DLFileEntryType dlFileEntryType) {
 					Assert.assertNotNull(dlFileEntryType);
 
 					count.increment();

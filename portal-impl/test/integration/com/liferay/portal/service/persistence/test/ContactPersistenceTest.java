@@ -413,11 +413,9 @@ public class ContactPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ContactLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Contact>() {
 				@Override
-				public void performAction(Object object) {
-					Contact contact = (Contact)object;
-
+				public void performAction(Contact contact) {
 					Assert.assertNotNull(contact);
 
 					count.increment();

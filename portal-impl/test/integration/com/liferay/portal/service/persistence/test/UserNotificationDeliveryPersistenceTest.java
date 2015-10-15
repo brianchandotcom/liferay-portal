@@ -318,11 +318,10 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserNotificationDeliveryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserNotificationDelivery>() {
 				@Override
-				public void performAction(Object object) {
-					UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)object;
-
+				public void performAction(
+					UserNotificationDelivery userNotificationDelivery) {
 					Assert.assertNotNull(userNotificationDelivery);
 
 					count.increment();

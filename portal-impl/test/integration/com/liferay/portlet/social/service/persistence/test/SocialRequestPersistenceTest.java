@@ -409,11 +409,9 @@ public class SocialRequestPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SocialRequestLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SocialRequest>() {
 				@Override
-				public void performAction(Object object) {
-					SocialRequest socialRequest = (SocialRequest)object;
-
+				public void performAction(SocialRequest socialRequest) {
 					Assert.assertNotNull(socialRequest);
 
 					count.increment();

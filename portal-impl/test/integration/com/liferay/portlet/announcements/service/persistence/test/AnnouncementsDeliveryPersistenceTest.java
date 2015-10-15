@@ -307,11 +307,10 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AnnouncementsDeliveryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AnnouncementsDelivery>() {
 				@Override
-				public void performAction(Object object) {
-					AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)object;
-
+				public void performAction(
+					AnnouncementsDelivery announcementsDelivery) {
 					Assert.assertNotNull(announcementsDelivery);
 
 					count.increment();

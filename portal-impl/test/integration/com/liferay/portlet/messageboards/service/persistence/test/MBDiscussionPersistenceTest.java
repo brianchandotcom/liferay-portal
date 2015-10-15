@@ -359,11 +359,9 @@ public class MBDiscussionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MBDiscussionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBDiscussion>() {
 				@Override
-				public void performAction(Object object) {
-					MBDiscussion mbDiscussion = (MBDiscussion)object;
-
+				public void performAction(MBDiscussion mbDiscussion) {
 					Assert.assertNotNull(mbDiscussion);
 
 					count.increment();

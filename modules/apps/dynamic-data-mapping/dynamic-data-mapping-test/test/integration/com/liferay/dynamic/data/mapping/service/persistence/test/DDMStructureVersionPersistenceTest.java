@@ -363,11 +363,10 @@ public class DDMStructureVersionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMStructureVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMStructureVersion>() {
 				@Override
-				public void performAction(Object object) {
-					DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)object;
-
+				public void performAction(
+					DDMStructureVersion ddmStructureVersion) {
 					Assert.assertNotNull(ddmStructureVersion);
 
 					count.increment();

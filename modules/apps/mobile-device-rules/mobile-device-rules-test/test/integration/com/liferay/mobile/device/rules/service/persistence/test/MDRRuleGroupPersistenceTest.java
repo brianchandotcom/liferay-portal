@@ -356,11 +356,9 @@ public class MDRRuleGroupPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MDRRuleGroupLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRRuleGroup>() {
 				@Override
-				public void performAction(Object object) {
-					MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)object;
-
+				public void performAction(MDRRuleGroup mdrRuleGroup) {
 					Assert.assertNotNull(mdrRuleGroup);
 
 					count.increment();

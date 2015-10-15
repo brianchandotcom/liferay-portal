@@ -363,11 +363,9 @@ public class DDMTemplateVersionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMTemplateVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMTemplateVersion>() {
 				@Override
-				public void performAction(Object object) {
-					DDMTemplateVersion ddmTemplateVersion = (DDMTemplateVersion)object;
-
+				public void performAction(DDMTemplateVersion ddmTemplateVersion) {
 					Assert.assertNotNull(ddmTemplateVersion);
 
 					count.increment();

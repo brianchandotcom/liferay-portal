@@ -291,11 +291,9 @@ public class SCLicensePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SCLicenseLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SCLicense>() {
 				@Override
-				public void performAction(Object object) {
-					SCLicense scLicense = (SCLicense)object;
-
+				public void performAction(SCLicense scLicense) {
 					Assert.assertNotNull(scLicense);
 
 					count.increment();

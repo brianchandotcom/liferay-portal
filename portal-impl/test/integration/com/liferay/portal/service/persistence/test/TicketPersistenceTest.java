@@ -309,11 +309,9 @@ public class TicketPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = TicketLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Ticket>() {
 				@Override
-				public void performAction(Object object) {
-					Ticket ticket = (Ticket)object;
-
+				public void performAction(Ticket ticket) {
 					Assert.assertNotNull(ticket);
 
 					count.increment();

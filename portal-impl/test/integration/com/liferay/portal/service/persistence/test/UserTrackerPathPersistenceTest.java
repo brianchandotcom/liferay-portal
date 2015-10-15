@@ -281,11 +281,9 @@ public class UserTrackerPathPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserTrackerPathLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserTrackerPath>() {
 				@Override
-				public void performAction(Object object) {
-					UserTrackerPath userTrackerPath = (UserTrackerPath)object;
-
+				public void performAction(UserTrackerPath userTrackerPath) {
 					Assert.assertNotNull(userTrackerPath);
 
 					count.increment();

@@ -305,14 +305,15 @@ public class AssetPublisherUtil {
 
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod
+					<com.liferay.portal.model.PortletPreferences>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(
+						com.liferay.portal.model.PortletPreferences preferences)
 					throws PortalException {
 
-					_checkAssetEntries(
-						(com.liferay.portal.model.PortletPreferences)object);
+					_checkAssetEntries(preferences);
 				}
 
 			});

@@ -370,11 +370,9 @@ public class KaleoActionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoActionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoAction>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoAction kaleoAction = (KaleoAction)object;
-
+				public void performAction(KaleoAction kaleoAction) {
 					Assert.assertNotNull(kaleoAction);
 
 					count.increment();

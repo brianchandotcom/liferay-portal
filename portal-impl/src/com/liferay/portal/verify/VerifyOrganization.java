@@ -54,12 +54,10 @@ public class VerifyOrganization extends VerifyProcess {
 			OrganizationLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Organization>() {
 
 				@Override
-				public void performAction(Object object) {
-					Organization organization = (Organization)object;
-
+				public void performAction(Organization organization) {
 					try {
 						AssetEntry assetEntry =
 							AssetEntryLocalServiceUtil.getEntry(

@@ -228,12 +228,10 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<CalendarBooking>() {
 
 				@Override
-				public void performAction(Object object) {
-					CalendarBooking calendarBooking = (CalendarBooking)object;
-
+				public void performAction(CalendarBooking calendarBooking) {
 					try {
 						Document document = getDocument(calendarBooking);
 

@@ -405,11 +405,9 @@ public class OrganizationPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = OrganizationLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Organization>() {
 				@Override
-				public void performAction(Object object) {
-					Organization organization = (Organization)object;
-
+				public void performAction(Organization organization) {
 					Assert.assertNotNull(organization);
 
 					count.increment();

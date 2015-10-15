@@ -376,11 +376,9 @@ public class DDLRecordPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDLRecordLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {
 				@Override
-				public void performAction(Object object) {
-					DDLRecord ddlRecord = (DDLRecord)object;
-
+				public void performAction(DDLRecord ddlRecord) {
 					Assert.assertNotNull(ddlRecord);
 
 					count.increment();

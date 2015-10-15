@@ -337,12 +337,10 @@ public abstract class RepositoryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Repository>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(Repository stagedModel)
 					throws PortalException {
-					Repository stagedModel = (Repository)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

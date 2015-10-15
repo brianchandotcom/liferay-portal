@@ -356,11 +356,9 @@ public class PortletPreferencesPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PortletPreferencesLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PortletPreferences>() {
 				@Override
-				public void performAction(Object object) {
-					PortletPreferences portletPreferences = (PortletPreferences)object;
-
+				public void performAction(PortletPreferences portletPreferences) {
 					Assert.assertNotNull(portletPreferences);
 
 					count.increment();

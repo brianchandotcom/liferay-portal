@@ -201,12 +201,10 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileVersion>() {
 
 				@Override
-				public void performAction(Object object) {
-					DLFileVersion dlFileVersion = (DLFileVersion)object;
-
+				public void performAction(DLFileVersion dlFileVersion) {
 					InputStream inputStream = null;
 
 					try {
@@ -331,12 +329,10 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
 				@Override
-				public void performAction(Object object) {
-					DLFileEntry dlFileEntry = (DLFileEntry)object;
-
+				public void performAction(DLFileEntry dlFileEntry) {
 					if (dlFileEntry.isInTrash()) {
 						return;
 					}

@@ -167,11 +167,10 @@ public class DeletionSystemEventExporter {
 			});
 		actionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<SystemEvent>() {
 
 				@Override
-				public void performAction(Object object) {
-					SystemEvent systemEvent = (SystemEvent)object;
+				public void performAction(SystemEvent systemEvent) {
 
 					exportDeletionSystemEvent(
 						portletDataContext, systemEvent, rootElement);

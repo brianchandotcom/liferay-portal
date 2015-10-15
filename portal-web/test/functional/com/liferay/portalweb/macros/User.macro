@@ -6,7 +6,7 @@
 		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
 
 		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
-		<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}" />
 		<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
@@ -402,7 +402,7 @@
 		<if>
 			<equals arg1="${userAdvancedSearch}" arg2="First Name" />
 			<then>
-				<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}" />
+				<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}" />
 				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 				<var name="key_userScreenName" value="${userScreenName}" />
@@ -411,14 +411,14 @@
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-				<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}1" />
+				<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}1" />
 				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 			</then>
 			<elseif>
 				<equals arg1="${userAdvancedSearch}" arg2="Middle Name" />
 				<then>
-					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -427,7 +427,7 @@
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName}" />
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${userMiddleName}1" />
+					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${userMiddleName}1" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>
@@ -435,7 +435,7 @@
 			<elseif>
 				<equals arg1="${userAdvancedSearch}" arg2="Last Name" />
 				<then>
-					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${userLastName}" />
+					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${userLastName}" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -444,7 +444,7 @@
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName}" />
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${userLastName}1" />
+					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${userLastName}1" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>
@@ -452,7 +452,7 @@
 			<elseif>
 				<equals arg1="${userAdvancedSearch}" arg2="Screen Name" />
 				<then>
-					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${userScreenName}" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -461,7 +461,7 @@
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName}" />
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${userScreenName}1" />
+					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${userScreenName}1" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>
@@ -469,7 +469,7 @@
 			<elseif>
 				<equals arg1="${userAdvancedSearch}" arg2="Email Address" />
 				<then>
-					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -478,7 +478,7 @@
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName}" />
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}1" />
+					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}1" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>
@@ -959,7 +959,7 @@
 				<then>
 					<var name="key_userScreenName" value="${userScreenName}" />
 
-					<execute function="Check" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
+					<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
 
 					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
 
@@ -969,9 +969,9 @@
 				</then>
 			</elseif>
 			<elseif>
-				<condition function="IsElementPresent" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
+				<condition function="IsElementPresent" locator1="Checkbox#CHECK_ALL_NAME" />
 				<then>
-					<execute function="Check" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
+					<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
 
 					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
 
@@ -994,9 +994,9 @@
 			<then>
 				<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
 				<if>
-					<condition function="IsElementPresent" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
+					<condition function="IsElementPresent" locator1="Checkbox#CHECK_ALL_NAME" />
 					<then>
-						<execute function="Check" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
+						<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
 						<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 						<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
 						<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

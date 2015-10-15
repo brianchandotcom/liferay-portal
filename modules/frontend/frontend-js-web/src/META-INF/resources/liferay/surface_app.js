@@ -133,6 +133,13 @@ AUI.add(
 				);
 
 				Liferay.on(
+					'*:portletRefreshed',
+					function(event) {
+						Surface.clearCache();
+					}
+				);
+
+				Liferay.on(
 					'surfaceScreenLoad',
 					function(event) {
 						Surface.resetAllPortlets();

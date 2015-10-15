@@ -31,6 +31,16 @@ String minuteParam = GetterUtil.getString((String)request.getAttribute("liferay-
 int minuteValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:minuteValue"));
 int minuteInterval = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:minuteInterval"));
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:name"));
+String timeFormat = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:timeFormat"));
+
+boolean amPm = DateUtil.isFormatAmPm(locale);
+
+if (timeFormat.equals("am-pm")) {
+	amPm = true;
+}
+else if (timeFormat.equals("24-hour")) {
+	amPm = false;
+}
 
 if (minuteInterval < 1) {
 	minuteInterval = 30;
@@ -55,13 +65,13 @@ String simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_ISO;
 if (BrowserSnifferUtil.isMobile(request)) {
 	simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_HTML5;
 }
-else if (DateUtil.isFormatAmPm(locale)) {
+else if (amPm) {
 	simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN;
 }
 
 String placeholder = _PLACEHOLDER_DEFAULT;
 
-if (!DateUtil.isFormatAmPm(locale)) {
+if (!amPm) {
 	placeholder = _PLACEHOLDER_ISO;
 }
 
@@ -91,7 +101,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			var timePicker = new A.TimePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
 				{
 					container: '#<%= randomNamespace %>displayTime',
-					mask: '<%= DateUtil.isFormatAmPm(locale) ? "%I:%M %p" : "%H:%M" %>',
+					mask: '<%= amPm ? "%I:%M %p" : "%H:%M" %>',
 					on: {
 						selectionChange: function(event) {
 							var instance = this;
@@ -104,7 +114,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 							var amPm = 0;
 
-							<c:if test="<%= DateUtil.isFormatAmPm(locale) %>">
+							<c:if test="<%= amPm %>">
 								if (hours > 11) {
 									amPm = 1;
 									hours -= 12;

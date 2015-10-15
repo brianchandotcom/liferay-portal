@@ -257,6 +257,26 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<name>management-bar-navigation</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarNavigationTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>navigationKeys</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>navigationParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>management-bar-sort</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarSortTag</tag-class>
 		<body-content>JSP</body-content>

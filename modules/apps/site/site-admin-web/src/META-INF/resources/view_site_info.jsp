@@ -95,11 +95,11 @@ request.setAttribute("view_entries.jspf-site", group);
 
 	<%
 	String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getName(), PortletProvider.Action.VIEW);
-	%>
 
-	<liferay-portlet:renderURL doAsGroupId="<%= groupId %>" portletName="<%= portletId %>" var="assignMembersURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</liferay-portlet:renderURL>
+	PortletURL assignMembersURL = PortalUtil.getControlPanelPortletURL(request, portletId, 0, PortletRequest.RENDER_PHASE);
+
+	assignMembersURL.setParameter("redirect", currentURL);
+	%>
 
 	<c:if test="<%= usersCount > 0 %>">
 		<p>

@@ -90,10 +90,9 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.MANAGE_LAYOUTS) %>">
 
 		<%
-		LiferayPortletURL managePagesURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+		LiferayPortletURL managePagesURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, userGroupGroup, Layout.class.getName(), PortletProvider.Action.EDIT);
 
 		managePagesURL.setParameter("redirect", redirect);
-		managePagesURL.setDoAsGroupId(userGroupGroup.getGroupId());
 		managePagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 

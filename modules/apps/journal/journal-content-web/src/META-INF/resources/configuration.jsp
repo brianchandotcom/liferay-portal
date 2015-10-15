@@ -171,11 +171,9 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 			selectWebContentURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
 			selectWebContentURL.setParameter("eventName", "selectContent");
 			selectWebContentURL.setWindowState(LiferayWindowState.POP_UP);
-
-			String selectWebContentURI = HttpUtil.addParameter(selectWebContentURL.toString(), "doAsGroupId", scopeGroupId);
 			%>
 
-			var baseSelectWebContentURI = '<%= selectWebContentURI %>';
+			var baseSelectWebContentURI = '<%= selectWebContentURL.toString() %>';
 
 			Liferay.Util.selectEntity(
 				{

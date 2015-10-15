@@ -94,9 +94,8 @@ if (row == null) {
 	<c:if test="<%= organizationGroup.isSite() && (GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.MANAGE_STAGING) || hasUpdatePermission) %>">
 
 		<%
-		LiferayPortletURL editSettingsURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.EDIT);
+		LiferayPortletURL editSettingsURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, organizationGroup, Group.class.getName(), PortletProvider.Action.EDIT);
 
-		editSettingsURL.setDoAsGroupId(organizationGroupId);
 		editSettingsURL.setParameter("viewOrganizationsRedirect", currentURL);
 		%>
 

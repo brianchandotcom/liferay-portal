@@ -159,7 +159,8 @@ public class HorizontalCardTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:horizontal-card:actionJsp", _actionJsp);
+		request.setAttribute(
+			"liferay-frontend:horizontal-card:actionJsp", _actionJsp);
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:actionJspServletContext",
 			getActionJspServletContext());
@@ -167,25 +168,31 @@ public class HorizontalCardTag extends IncludeTag {
 			"liferay-frontend:horizontal-card:checkboxChecked",
 			String.valueOf(_checkboxChecked));
 		request.setAttribute(
-			"liferay-frontend:horizontal-card:checkboxCSSClass", _checkboxCSSClass);
+			"liferay-frontend:horizontal-card:checkboxCSSClass",
+			_checkboxCSSClass);
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:checkboxData", _checkboxData);
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:checkboxDisabled",
 			String.valueOf(_checkboxDisabled));
-		request.setAttribute("liferay-frontend:horizontal-card:checkboxId", _checkboxId);
+		request.setAttribute(
+			"liferay-frontend:horizontal-card:checkboxId", _checkboxId);
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:checkboxName", _checkboxName);
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:checkboxValue", _checkboxValue);
-		request.setAttribute("liferay-frontend:horizontal-card:cssClass", _cssClass);
+		request.setAttribute(
+			"liferay-frontend:horizontal-card:cssClass", _cssClass);
 		request.setAttribute("liferay-frontend:horizontal-card:data", _data);
 		request.setAttribute("liferay-frontend:horizontal-card:icon", _icon);
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:imageCSSClass", _imageCSSClass);
-		request.setAttribute("liferay-frontend:horizontal-card:imageUrl", _imageUrl);
-		request.setAttribute("liferay-frontend:horizontal-card:resultRow", _resultRow);
-		request.setAttribute("liferay-frontend:horizontal-card:rowChecker", _rowChecker);
+		request.setAttribute(
+			"liferay-frontend:horizontal-card:imageUrl", _imageUrl);
+		request.setAttribute(
+			"liferay-frontend:horizontal-card:resultRow", _resultRow);
+		request.setAttribute(
+			"liferay-frontend:horizontal-card:rowChecker", _rowChecker);
 
 		if (_rowChecker != null) {
 			_showCheckbox = true;
@@ -219,6 +226,5 @@ public class HorizontalCardTag extends IncludeTag {
 	private boolean _showCheckbox;
 	private String _text;
 	private String _url;
-
 
 }

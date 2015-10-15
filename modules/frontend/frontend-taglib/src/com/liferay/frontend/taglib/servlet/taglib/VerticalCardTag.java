@@ -184,7 +184,8 @@ public class VerticalCardTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:vertical-card:actionJsp", _actionJsp);
+		request.setAttribute(
+			"liferay-frontend:vertical-card:actionJsp", _actionJsp);
 		request.setAttribute(
 			"liferay-frontend:vertical-card:actionJspServletContext",
 			getActionJspServletContext());
@@ -194,26 +195,32 @@ public class VerticalCardTag extends IncludeTag {
 			"liferay-frontend:vertical-card:checkboxChecked",
 			String.valueOf(_checkboxChecked));
 		request.setAttribute(
-			"liferay-frontend:vertical-card:checkboxCSSClass", _checkboxCSSClass);
+			"liferay-frontend:vertical-card:checkboxCSSClass",
+			_checkboxCSSClass);
 		request.setAttribute(
 			"liferay-frontend:vertical-card:checkboxData", _checkboxData);
 		request.setAttribute(
 			"liferay-frontend:vertical-card:checkboxDisabled",
 			String.valueOf(_checkboxDisabled));
-		request.setAttribute("liferay-frontend:vertical-card:checkboxId", _checkboxId);
+		request.setAttribute(
+			"liferay-frontend:vertical-card:checkboxId", _checkboxId);
 		request.setAttribute(
 			"liferay-frontend:vertical-card:checkboxName", _checkboxName);
 		request.setAttribute(
 			"liferay-frontend:vertical-card:checkboxValue", _checkboxValue);
-		request.setAttribute("liferay-frontend:vertical-card:cssClass", _cssClass);
+		request.setAttribute(
+			"liferay-frontend:vertical-card:cssClass", _cssClass);
 		request.setAttribute("liferay-frontend:vertical-card:data", _data);
 		request.setAttribute("liferay-frontend:vertical-card:footer", _footer);
 		request.setAttribute("liferay-frontend:vertical-card:header", _header);
 		request.setAttribute(
 			"liferay-frontend:vertical-card:imageCSSClass", _imageCSSClass);
-		request.setAttribute("liferay-frontend:vertical-card:imageUrl", _imageUrl);
-		request.setAttribute("liferay-frontend:vertical-card:resultRow", _resultRow);
-		request.setAttribute("liferay-frontend:vertical-card:rowChecker", _rowChecker);
+		request.setAttribute(
+			"liferay-frontend:vertical-card:imageUrl", _imageUrl);
+		request.setAttribute(
+			"liferay-frontend:vertical-card:resultRow", _resultRow);
+		request.setAttribute(
+			"liferay-frontend:vertical-card:rowChecker", _rowChecker);
 
 		if (_rowChecker != null) {
 			_showCheckbox = true;
@@ -223,10 +230,12 @@ public class VerticalCardTag extends IncludeTag {
 			"liferay-frontend:vertical-card:showCheckbox", _showCheckbox);
 
 		request.setAttribute(
-			"liferay-frontend:vertical-card:smallImageCSSClass", _smallImageCSSClass);
+			"liferay-frontend:vertical-card:smallImageCSSClass",
+			_smallImageCSSClass);
 		request.setAttribute(
 			"liferay-frontend:vertical-card:smallImageUrl", _smallImageUrl);
-		request.setAttribute("liferay-frontend:vertical-card:subtitle", _subtitle);
+		request.setAttribute(
+			"liferay-frontend:vertical-card:subtitle", _subtitle);
 		request.setAttribute("liferay-frontend:vertical-card:title", _title);
 		request.setAttribute("liferay-frontend:vertical-card:url", _url);
 

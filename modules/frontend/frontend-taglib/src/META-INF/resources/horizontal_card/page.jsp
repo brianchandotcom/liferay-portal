@@ -35,7 +35,7 @@
 			<div class="card-col-field">
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(imageUrl) %>">
-						<img alt="" class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %>" src="<%= imageUrl %>"/>
+						<img alt="" class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %>" src="<%= imageUrl %>" />
 					</c:when>
 					<c:otherwise>
 						<span class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %> <%= icon %>"></span>

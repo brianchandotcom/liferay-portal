@@ -510,16 +510,6 @@ public interface GroupService extends BaseService {
 		java.lang.String[] classNames, int max) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getUserSitesGroups(
-	long, String[], int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		long userId, java.lang.String[] classNames,
-		boolean includeControlPanel, int max) throws PortalException;
-
-	/**
 	* Returns the user's groups &quot;sites&quot; associated with the group
 	* entity class names, including the Control Panel group if the user is
 	* permitted to view the Control Panel.

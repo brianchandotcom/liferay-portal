@@ -69,6 +69,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 		};
 
 	/**
+	* Adds an application type.
+	*
+	* @param applicationType an application type
+	*/
+	public void addApplicationType(
+		com.liferay.portal.kernel.application.type.ApplicationType applicationType);
+
+	/**
 	* Adds a processing event.
 	*/
 	public void addProcessingEvent(
@@ -93,14 +101,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void addSchedulerEntry(
 		com.liferay.portal.kernel.scheduler.SchedulerEntry schedulerEntry);
-
-	/**
-	* Adds an application type.
-	*
-	* @param applicationType an application type
-	*/
-	public void addApplicationType(
-		com.liferay.portal.kernel.application.type.ApplicationType applicationType);
 
 	/**
 	* Checks whether this portlet is equal to the specified object.

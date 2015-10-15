@@ -14,14 +14,4 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
-
-<%
-PortletURL displayStyleURL = renderResponse.createRenderURL();
-%>
-
-<liferay-frontend:management-bar-display-buttons
-	displayViews="<%= ddlFormAdminDisplayContext.getDisplayViews() %>"
-	portletURL="<%= displayStyleURL %>"
-	selectedDisplayStyle="<%= ddlFormAdminDisplayContext.getDisplayStyle() %>"
-/>
+<%@ include file="/init.jsp" %>

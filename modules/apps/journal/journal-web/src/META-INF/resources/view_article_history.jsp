@@ -73,8 +73,8 @@ JournalArticle article = ActionUtil.getArticle(request);
 				%>
 
 				<liferay-frontend:management-bar-display-buttons
-					displayStyleURL="<%= displayStyleURL %>"
 					displayViews='<%= new String[] {"list"} %>'
+					portletURL="<%= displayStyleURL %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
 			</liferay-frontend:management-bar-buttons>

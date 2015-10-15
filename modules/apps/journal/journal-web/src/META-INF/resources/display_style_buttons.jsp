@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-frontend:management-bar-display-buttons
-	displayStyleURL="<%= journalDisplayContext.getPortletURL() %>"
 	displayViews="<%= journalDisplayContext.getDisplayViews() %>"
+	portletURL="<%= journalDisplayContext.getPortletURL() %>"
 	selectedDisplayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
 />

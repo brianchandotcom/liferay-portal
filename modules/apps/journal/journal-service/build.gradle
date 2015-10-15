@@ -11,6 +11,7 @@ dependencies {
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
+	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }

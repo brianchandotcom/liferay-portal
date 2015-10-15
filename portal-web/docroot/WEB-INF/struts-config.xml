@@ -184,10 +184,6 @@
 		<!-- Software Catalog -->
 		<action path="/software_catalog/view" forward="portlet.software_catalog.view" />
 
-		<action path="/software_catalog/view_product_entry" type="com.liferay.portlet.softwarecatalog.action.ViewProductEntryAction">
-			<forward name="portlet.software_catalog.view_product_entry" path="portlet.software_catalog.view_product_entry" />
-			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />
-		</action>
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

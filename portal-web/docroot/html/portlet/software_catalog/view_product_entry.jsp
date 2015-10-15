@@ -31,7 +31,7 @@ SCProductVersion latestProductVersion = productEntry.getLatestVersion();
 
 PortletURL addProductVersionURL = renderResponse.createRenderURL();
 
-addProductVersionURL.setParameter("mvcRenderName", "/software_catalog/edit_product_version");
+addProductVersionURL.setParameter("mvcRenderCommandName", "/software_catalog/edit_product_version");
 addProductVersionURL.setParameter(Constants.CMD, Constants.ADD);
 addProductVersionURL.setParameter("tabs2", tabs2);
 addProductVersionURL.setParameter("redirect", currentURL);
@@ -39,14 +39,14 @@ addProductVersionURL.setParameter("productEntryId", String.valueOf(productEntryI
 
 PortletURL editProductEntryURL = renderResponse.createRenderURL();
 
-editProductEntryURL.setParameter("mvcRenderName", "/software_catalog/edit_product_entry");
+editProductEntryURL.setParameter("mvcRenderCommandName", "/software_catalog/edit_product_entry");
 editProductEntryURL.setParameter("tabs2", tabs2);
 editProductEntryURL.setParameter("redirect", currentURL);
 editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId));
 
 PortletURL viewProductEntryURL = renderResponse.createRenderURL();
 
-viewProductEntryURL.setParameter("struts_action", "/software_catalog/view_product_entry");
+viewProductEntryURL.setParameter("mvcRenderCommandName", "/software_catalog/view_product_entry");
 viewProductEntryURL.setParameter("tabs2", tabs2);
 viewProductEntryURL.setParameter("redirect", redirect);
 viewProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId));
@@ -267,7 +267,7 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 		<%
 		PortletURL viewProductVersionURL = renderResponse.createRenderURL();
 
-		viewProductVersionURL.setParameter("struts_action", "/software_catalog/view_product_entry");
+		viewProductVersionURL.setParameter("mvcRenderCommandName", "/software_catalog/view_product_entry");
 		viewProductVersionURL.setParameter("productEntryId", String.valueOf(productEntryId));
 
 		List<String> headerNames = new ArrayList<String>();

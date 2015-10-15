@@ -166,7 +166,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/software_catalog/view_product_entry");
+			rowURL.setParameter("mvcRenderCommandName", "/software_catalog/view_product_entry");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("productEntryId", String.valueOf(productEntryId));
 
@@ -372,7 +372,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/software_catalog/view_product_entry");
+			rowURL.setParameter("mvcRenderCommandName", "/software_catalog/view_product_entry");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("productEntryId", String.valueOf(productEntryId));
 

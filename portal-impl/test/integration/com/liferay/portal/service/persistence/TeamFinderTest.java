@@ -15,6 +15,7 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -28,15 +29,13 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,8 +52,8 @@ public class TeamFinderTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
 		_userGroup = UserGroupTestUtil.addUserGroup();
@@ -63,13 +62,6 @@ public class TeamFinderTest {
 
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			_user.getUserId(), _userGroup);
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
-		UserLocalServiceUtil.deleteUser(_user);
-		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
 	}
 
 	@Test
@@ -107,8 +99,13 @@ public class TeamFinderTest {
 		Assert.assertTrue(directAndGroupTeams.contains(groupTeam));
 	}
 
-	private static Group _group;
-	private static User _user;
-	private static UserGroup _userGroup;
+	@DeleteAfterTestRun
+	private Group _group;
+	
+	@DeleteAfterTestRun
+	private User _user;
+	
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
 
 }

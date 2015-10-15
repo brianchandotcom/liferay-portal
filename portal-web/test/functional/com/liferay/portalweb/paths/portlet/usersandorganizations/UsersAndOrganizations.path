@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ALL_ORGANIZATIONS_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'All Organizations')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_USERS_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'All Users')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD</td>
 	<td>//ul[@role='menubar']/li/a[@title='Add']/span</td>
 	<td></td>
@@ -41,11 +26,6 @@
 <tr>
 	<td>ADVANCED_SEARCH_ICON</td>
 	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BACK</td>
-	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,11 +110,6 @@
 	<td></td>
 </tr>
 <!--ORGANIZATION_TABLE-->
-<tr>
-	<td>ORGANIZATION_TABLE_ALL_CHECKBOX</td>
-	<td>//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a</td>

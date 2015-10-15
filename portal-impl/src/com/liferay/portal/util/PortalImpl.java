@@ -143,6 +143,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -1620,16 +1621,24 @@ public class PortalImpl implements Portal {
 				false));
 
 		sb.append(getPathFriendlyURLPrivateGroup());
-		sb.append(group.getFriendlyURL());
-		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
+
+		Group controlPanelDisplayGroup = getControlPanelDisplayGroup(
+			group.getCompanyId(), PrincipalThreadLocal.getUserId(),
+			scopeGroupId, 0, ppid);
+
+		if (controlPanelDisplayGroup != null) {
+			sb.append(controlPanelDisplayGroup.getFriendlyURL());
+			sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
+		}
+
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
 		if (params != null) {
-			params = new HashMap<>(params);
+			params = new LinkedHashMap<>(params);
 		}
 		else {
-			params = new HashMap<>();
+			params = new LinkedHashMap<>();
 		}
 
 		params.put("p_p_id", new String[] {ppid});
@@ -7505,6 +7514,52 @@ public class PortalImpl implements Portal {
 		return contextPath;
 	}
 
+	protected Group getControlPanelDisplayGroup(
+		long companyId, long userId, long scopeGroupId, long doAsGroupId,
+		String portletId) {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletId);
+
+		String portletCategory = portlet.getControlPanelEntryCategory();
+
+		if (portletCategory.equals(
+				PortletCategoryKeys.CONTROL_PANEL_APPS) ||
+			portletCategory.equals(
+				PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION) ||
+			portletCategory.equals(
+				PortletCategoryKeys.CONTROL_PANEL_SITES) ||
+			portletCategory.equals(
+				PortletCategoryKeys.CONTROL_PANEL_SYSTEM) ||
+			portletCategory.equals(
+				PortletCategoryKeys.CONTROL_PANEL_USERS)) {
+
+			return null;
+		}
+		else if (portletCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
+			User user = UserLocalServiceUtil.fetchUser(userId);
+
+			if (user != null) {
+				return user.getGroup();
+			}
+
+			return null;
+		}
+		else {
+			Group group = null;
+
+			if (doAsGroupId > 0) {
+				group = GroupLocalServiceUtil.fetchGroup(doAsGroupId);
+			}
+
+			if (group == null) {
+				group = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+			}
+
+			return group;
+		}
+	}
+
 	protected Layout getControlPanelLayout(
 		ThemeDisplay themeDisplay, Group group, String portletId) {
 
@@ -7522,50 +7577,13 @@ public class PortalImpl implements Portal {
 		}
 
 		if (group == null) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(), portletId);
+			group = getControlPanelDisplayGroup(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				themeDisplay.getScopeGroupId(), themeDisplay.getDoAsGroupId(),
+				portletId);
 
-			String portletCategory = portlet.getControlPanelEntryCategory();
-
-			if (portletCategory.equals(
-					PortletCategoryKeys.CONTROL_PANEL_APPS) ||
-				portletCategory.equals(
-					PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION) ||
-				portletCategory.equals(
-					PortletCategoryKeys.CONTROL_PANEL_SITES) ||
-				portletCategory.equals(
-					PortletCategoryKeys.CONTROL_PANEL_SYSTEM) ||
-				portletCategory.equals(
-					PortletCategoryKeys.CONTROL_PANEL_USERS)) {
-
+			if (group == null) {
 				return layout;
-			}
-			else if (portletCategory.equals(
-						PortletCategoryKeys.USER_MY_ACCOUNT)) {
-
-				User user = null;
-
-				try {
-					user = UserLocalServiceUtil.getUser(
-						themeDisplay.getUserId());
-				}
-				catch (PortalException pe) {
-					_log.error(
-						"Unable to get user " + themeDisplay.getUserId());
-				}
-
-				group = user.getGroup();
-			}
-			else {
-				long groupId = themeDisplay.getDoAsGroupId();
-
-				if (groupId > 0) {
-					group = GroupLocalServiceUtil.fetchGroup(groupId);
-				}
-
-				if (group == null) {
-					group = themeDisplay.getScopeGroup();
-				}
 			}
 		}
 

@@ -33,12 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
-	property = {
-		"tab-name=cas"
-	},
-	service = DynamicInclude.class
-)
+@Component(property = {"tab-name=cas"}, service = DynamicInclude.class)
 public class PortalSettingsCASAuthenticationDynamicInclude
 	extends BaseDynamicInclude {
 
@@ -78,8 +73,7 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH =
-		"/portal-settings/cas.jsp";
+	private static final String _JSP_PATH = "/portal-settings/cas.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsCASAuthenticationDynamicInclude.class);

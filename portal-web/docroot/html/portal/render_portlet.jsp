@@ -864,7 +864,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		}
 	}
 
-	if (portletDecorator != null) {
+	if ((portletDecorator != null) && portletDisplay.isPortletDecorate()) {
 		portletDisplay.setPortletDecoratorId(portletDecorator.getPortletDecoratorId());
 
 		cssClasses += StringPool.SPACE + portletDecorator.getCssClass();

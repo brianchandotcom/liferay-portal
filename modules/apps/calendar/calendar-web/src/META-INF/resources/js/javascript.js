@@ -268,6 +268,7 @@ AUI.add(
 						firstReminder: calendarBooking.firstReminder,
 						firstReminderType: calendarBooking.firstReminderType,
 						hasChildCalendarBookings: calendarBooking.hasChildCalendarBookings,
+						hasWorkflowInstanceLink: calendarBooking.hasWorkflowInstanceLink,
 						instanceIndex: calendarBooking.instanceIndex,
 						location: calendarBooking.location,
 						parentCalendarBookingId: calendarBooking.parentCalendarBookingId,
@@ -964,6 +965,11 @@ AUI.add(
 					},
 
 					hasChildCalendarBookings: {
+						validator: isBoolean,
+						value: false
+					},
+
+					hasWorkflowInstanceLink: {
 						validator: isBoolean,
 						value: false
 					},
@@ -1858,6 +1864,7 @@ AUI.add(
 								declineLinkEnabled: instance._hasWorkflowStatusPermission(schedulerEvent, CalendarWorkflow.STATUS_DENIED),
 								editing: editing,
 								endTime: templateData.endDate,
+								hasWorkflowInstanceLink:  schedulerEvent.get('hasWorkflowInstanceLink'),
 								instanceIndex: schedulerEvent.get('instanceIndex'),
 								maybeLinkEnabled: instance._hasWorkflowStatusPermission(schedulerEvent, CalendarWorkflow.STATUS_MAYBE),
 								permissions: permissions,

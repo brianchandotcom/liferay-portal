@@ -39,7 +39,7 @@
 
 		<div class="scheduler-event-recorder-body">
 			<table>
-				<tpl if="values.permissions.MANAGE_BOOKINGS && (status != Liferay.CalendarWorkflow.STATUS_DRAFT)">
+				<tpl if="values.permissions.MANAGE_BOOKINGS && !values.hasWorkflowInstanceLink && (status != Liferay.CalendarWorkflow.STATUS_DRAFT)">
 					<tr class="calendar-portlet-event-recorder-status-row">
 						<td>
 							<liferay-ui:message key="attend" />?

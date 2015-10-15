@@ -52,7 +52,9 @@ else {
 	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<portlet:actionURL name="/bookmarks/edit_folder" var="editFolderURL" />
+<portlet:actionURL name="/bookmarks/edit_folder" var="editFolderURL">
+	<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
+</portlet:actionURL>
 
 <aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFolder();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

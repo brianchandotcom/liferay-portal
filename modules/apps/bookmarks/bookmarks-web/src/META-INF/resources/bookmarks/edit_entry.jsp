@@ -50,7 +50,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL" />
+<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
+</portlet:actionURL>
 
 <aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

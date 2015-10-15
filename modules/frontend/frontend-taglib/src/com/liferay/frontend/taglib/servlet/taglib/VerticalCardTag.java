@@ -29,7 +29,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Carlos Lancha
  */
-public class CardTag extends IncludeTag {
+public class VerticalCardTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {

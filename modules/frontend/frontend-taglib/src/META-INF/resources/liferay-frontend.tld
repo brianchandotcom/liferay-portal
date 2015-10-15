@@ -52,8 +52,8 @@
 	</tag>
 	<tag>
 		<description>Creates a lexicon-based card component. It can be a vertical or horizontal card.</description>
-		<name>card</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.CardTag</tag-class>
+		<name>vertical-card</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>The path to an action JSP. It is generally the JSP for the card dropdown menu.</description>

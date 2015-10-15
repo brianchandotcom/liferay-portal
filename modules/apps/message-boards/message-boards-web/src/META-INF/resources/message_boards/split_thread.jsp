@@ -38,97 +38,99 @@ boolean quote = false;
 boolean splitThread = true;
 %>
 
-<portlet:actionURL name="/message_boards/split_thread" var="splitThreadURL">
-	<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
-</portlet:actionURL>
+<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<portlet:actionURL name="/message_boards/split_thread" var="splitThreadURL">
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
+	</portlet:actionURL>
 
-<aui:form action="<%= splitThreadURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "splitThread();" %>'>
-	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
-	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
+	<aui:form action="<%= splitThreadURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "splitThread();" %>'>
+		<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
+		<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="message"
-	/>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			title="message"
+		/>
 
-	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
-	<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
-	<liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="please-enter-a-valid-category" />
-	<liferay-ui:error exception="<%= SplitThreadException.class %>" message="a-thread-cannot-be-split-at-its-root-message" />
+		<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
+		<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
+		<liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="please-enter-a-valid-category" />
+		<liferay-ui:error exception="<%= SplitThreadException.class %>" message="a-thread-cannot-be-split-at-its-root-message" />
 
-	<%
-	long breadcrumbsMessageId = message.getMessageId();
-	%>
+		<%
+		long breadcrumbsMessageId = message.getMessageId();
+		%>
 
-	<div class="alert alert-info">
-		<liferay-ui:message key="click-ok-to-create-a-new-thread-with-the-following-messages" />
-	</div>
-
-	<%
-	MBMessageDisplay messageDisplay = MBMessageServiceUtil.getMessageDisplay(messageId, WorkflowConstants.STATUS_APPROVED, MBThreadConstants.THREAD_VIEW_TREE, false);
-
-	MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-
-	List messages = new ArrayList();
-
-	messages.addAll(treeWalker.getMessages());
-
-	messages = ListUtil.sort(messages, new MessageCreateDateComparator(true));
-	%>
-
-	<table class="toggle_id_message_boards_view_message_thread" id="toggle_id_message_boards_view_message_thread" style="display: <liferay-ui:toggle-value id="toggle_id_message_boards_view_message_thread" />;">
-
-	<%
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-	%>
-
-	<liferay-util:include page="/message_boards/view_thread_shortcut.jsp" servletContext="<%= application %>" />
-
-	</table>
-
-	<br />
-
-	<aui:fieldset>
-		<div id="<portlet:namespace />splitThreadSubject">
-			<aui:input fieldParam="splitThreadSubject" label="subject-of-the-new-thread" model="<%= MBMessage.class %>" name="subject" value="<%= message.getSubject() %>" />
+		<div class="alert alert-info">
+			<liferay-ui:message key="click-ok-to-create-a-new-thread-with-the-following-messages" />
 		</div>
 
-		<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post-to-the-source-thread" name="addExplanationPost" onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
+		<%
+		MBMessageDisplay messageDisplay = MBMessageServiceUtil.getMessageDisplay(messageId, WorkflowConstants.STATUS_APPROVED, MBThreadConstants.THREAD_VIEW_TREE, false);
 
-		<div id="<portlet:namespace />explanationPost" style="display: none;">
-			<div class="alert alert-info">
-				<liferay-ui:message key="the-following-post-will-be-added-in-place-of-the-moved-message" />
+		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
+
+		List messages = new ArrayList();
+
+		messages.addAll(treeWalker.getMessages());
+
+		messages = ListUtil.sort(messages, new MessageCreateDateComparator(true));
+		%>
+
+		<table class="toggle_id_message_boards_view_message_thread" id="toggle_id_message_boards_view_message_thread" style="display: <liferay-ui:toggle-value id="toggle_id_message_boards_view_message_thread" />;">
+
+		<%
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
+		%>
+
+		<liferay-util:include page="/message_boards/view_thread_shortcut.jsp" servletContext="<%= application %>" />
+
+		</table>
+
+		<br />
+
+		<aui:fieldset>
+			<div id="<portlet:namespace />splitThreadSubject">
+				<aui:input fieldParam="splitThreadSubject" label="subject-of-the-new-thread" model="<%= MBMessage.class %>" name="subject" value="<%= message.getSubject() %>" />
 			</div>
 
-			<aui:input model="<%= MBMessage.class %>" name="subject" value='<%= LanguageUtil.get(request, "thread-split") %>' />
+			<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post-to-the-source-thread" name="addExplanationPost" onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
 
-			<aui:field-wrapper label="body">
-				<c:choose>
-					<c:when test="<%= message.isFormatBBCode() %>">
-						<%@ include file="/message_boards/bbcode_editor.jspf" %>
-					</c:when>
-					<c:otherwise>
-						<%@ include file="/message_boards/html_editor.jspf" %>
-					</c:otherwise>
-				</c:choose>
+			<div id="<portlet:namespace />explanationPost" style="display: none;">
+				<div class="alert alert-info">
+					<liferay-ui:message key="the-following-post-will-be-added-in-place-of-the-moved-message" />
+				</div>
 
-				<aui:input name="body" type="hidden" />
-			</aui:field-wrapper>
-		</div>
-	</aui:fieldset>
+				<aui:input model="<%= MBMessage.class %>" name="subject" value='<%= LanguageUtil.get(request, "thread-split") %>' />
 
-	<aui:button-row>
-		<aui:button type="submit" value="ok" />
+				<aui:field-wrapper label="body">
+					<c:choose>
+						<c:when test="<%= message.isFormatBBCode() %>">
+							<%@ include file="/message_boards/bbcode_editor.jspf" %>
+						</c:when>
+						<c:otherwise>
+							<%@ include file="/message_boards/html_editor.jspf" %>
+						</c:otherwise>
+					</c:choose>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+					<aui:input name="body" type="hidden" />
+				</aui:field-wrapper>
+			</div>
+		</aui:fieldset>
+
+		<aui:button-row>
+			<aui:button type="submit" value="ok" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
 
 <aui:script>
 	function <portlet:namespace />splitThread() {

@@ -95,20 +95,19 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupTags(long groupId) {
-		return assetTagPersistence.filterFindByGroupId(groupId);
+		return assetTagPersistence.findByGroupId(groupId);
 	}
 
 	@Override
 	public List<AssetTag> getGroupTags(
 		long groupId, int start, int end, OrderByComparator<AssetTag> obc) {
 
-		return assetTagPersistence.filterFindByGroupId(
-			groupId, start, end, obc);
+		return assetTagPersistence.findByGroupId(groupId, start, end, obc);
 	}
 
 	@Override
 	public int getGroupTagsCount(long groupId) {
-		return assetTagPersistence.filterCountByGroupId(groupId);
+		return assetTagPersistence.countByGroupId(groupId);
 	}
 
 	@Override
@@ -180,7 +179,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getTags(long groupId, long classNameId, String name) {
-		return assetTagFinder.filterFindByG_C_N(
+		return assetTagFinder.findByG_C_N(
 			groupId, classNameId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -190,7 +189,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		long groupId, long classNameId, String name, int start, int end,
 		OrderByComparator<AssetTag> obc) {
 
-		return assetTagFinder.filterFindByG_C_N(
+		return assetTagFinder.findByG_C_N(
 			groupId, classNameId, name, start, end, obc);
 	}
 
@@ -206,11 +205,11 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		long[] groupIds, String name, int start, int end) {
 
 		if (Validator.isNull(name)) {
-			return assetTagPersistence.filterFindByGroupId(
+			return assetTagPersistence.findByGroupId(
 				groupIds, start, end, new AssetTagNameComparator());
 		}
 
-		return assetTagPersistence.filterFindByG_LikeN(
+		return assetTagPersistence.findByG_LikeN(
 			groupIds, name, start, end, new AssetTagNameComparator());
 	}
 
@@ -222,22 +221,22 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	@Override
 	public int getTagsCount(long groupId, String name) {
 		if (Validator.isNull(name)) {
-			return assetTagPersistence.filterCountByGroupId(groupId);
+			return assetTagPersistence.countByGroupId(groupId);
 		}
 
-		return assetTagPersistence.filterCountByG_LikeN(groupId, name);
+		return assetTagPersistence.countByG_LikeN(groupId, name);
 	}
 
 	@Override
 	public int getVisibleAssetsTagsCount(
 		long groupId, long classNameId, String name) {
 
-		return assetTagFinder.filterCountByG_C_N(groupId, classNameId, name);
+		return assetTagFinder.countByG_C_N(groupId, classNameId, name);
 	}
 
 	@Override
 	public int getVisibleAssetsTagsCount(long groupId, String name) {
-		return assetTagFinder.filterCountByG_N(groupId, name);
+		return assetTagFinder.countByG_N(groupId, name);
 	}
 
 	@Override

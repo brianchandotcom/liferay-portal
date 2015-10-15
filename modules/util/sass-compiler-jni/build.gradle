@@ -86,7 +86,7 @@ compileJava {
 }
 
 downloadSassSpec {
-	File sassSpecDir = project.file("test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
+	File sassSpecDir = file("src/test/java/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
 
 	eachFile new StripPathSegmentsAction(3)
 
@@ -107,7 +107,7 @@ downloadSassSpec {
 }
 
 generateJNALibrary {
-	File jnaLibraryFile = project.file("src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java")
+	File jnaLibraryFile = file("src/main/java/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java")
 
 	doLast {
 		copy {
@@ -122,7 +122,7 @@ generateJNALibrary {
 			args "-f"
 			args "-library", "liferaysass"
 			args "-mode", "Directory"
-			args "-o", FileUtil.relativize(file("src"), libSassDir)
+			args "-o", FileUtil.relativize(file("src/main/java"), libSassDir)
 			args "-package", "com.liferay.sass.compiler.jni.internal.libsass"
 			args "-runtime", "JNAerator"
 			args "sass_context.h"
@@ -173,7 +173,7 @@ class BuildLibSassTask extends DefaultTask {
 
 	@OutputDirectory
 	File getResourcesDir() {
-		project.file("resources/" + resourcesDirName)
+		project.file("src/main/resources/" + resourcesDirName)
 	}
 
 	@TaskAction

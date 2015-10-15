@@ -12,77 +12,60 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.context.util;
+package com.liferay.dynamic.data.lists.form.web.context.util;
 
-import com.liferay.dynamic.data.lists.configuration.DDLServiceConfiguration;
-import com.liferay.dynamic.data.lists.constants.DDLConstants;
+import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormConstants;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
-import com.liferay.portal.kernel.util.JavaConstants;
-
-import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Leonardo Barros
+ * @author Lino Alves
  */
-public class DDLRequestHelper extends BaseRequestHelper {
+public class DDLFormWebRequestHelper extends BaseRequestHelper {
 
-	public DDLRequestHelper(HttpServletRequest request) {
+	public DDLFormWebRequestHelper(HttpServletRequest request) {
 		super(request);
-
-		_renderRequest = (RenderRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		_portletPreferences = _renderRequest.getPreferences();
 	}
 
-	public DDLServiceConfiguration getDDLServiceConfiguration() {
+	public DDLFormWebConfiguration getDDLFormWebConfiguration() {
 		try {
-			if (_ddlServiceConfiguration == null) {
+			if (_ddlFormWebConfiguration == null) {
 				if (getPortletResource() != null) {
 					HttpServletRequest request = getRequest();
 
-					_ddlServiceConfiguration =
+					_ddlFormWebConfiguration =
 						ConfigurationFactoryUtil.getConfiguration(
-							DDLServiceConfiguration.class,
+							DDLFormWebConfiguration.class,
 						new ParameterMapSettingsLocator(
 							request.getParameterMap(),
 							new GroupServiceSettingsLocator(
-								getSiteGroupId(), DDLConstants.SERVICE_NAME)));
+								getSiteGroupId(),
+								DDLFormConstants.SERVICE_NAME)));
 				}
 				else {
-					_ddlServiceConfiguration =
+					_ddlFormWebConfiguration =
 						ConfigurationFactoryUtil.getConfiguration(
-							DDLServiceConfiguration.class,
+							DDLFormWebConfiguration.class,
 							new GroupServiceSettingsLocator(
-								getSiteGroupId(), DDLConstants.SERVICE_NAME));
+								getSiteGroupId(),
+								DDLFormConstants.SERVICE_NAME));
 				}
 			}
 
-			return _ddlServiceConfiguration;
+			return _ddlFormWebConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
 	}
 
-	public PortletPreferences getPortletPreferences() {
-		return _portletPreferences;
-	}
-
-	public RenderRequest getRenderRequest() {
-		return _renderRequest;
-	}
-
-	private DDLServiceConfiguration _ddlServiceConfiguration;
-	private final PortletPreferences _portletPreferences;
-	private final RenderRequest _renderRequest;
+	private DDLFormWebConfiguration _ddlFormWebConfiguration;
 
 }

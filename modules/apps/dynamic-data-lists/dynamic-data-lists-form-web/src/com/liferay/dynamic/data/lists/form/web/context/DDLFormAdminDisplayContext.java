@@ -15,8 +15,9 @@
 package com.liferay.dynamic.data.lists.form.web.context;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
-import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationValues;
+import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 import com.liferay.dynamic.data.lists.form.web.context.util.DDLFormAdminRequestHelper;
+import com.liferay.dynamic.data.lists.form.web.context.util.DDLFormWebRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 
@@ -106,11 +108,18 @@ public class DDLFormAdminDisplayContext {
 
 	public String[] getDisplayViews() {
 		if (_displayViews == null) {
+			DDLFormWebRequestHelper ddlFormWebRequestHelper =
+					new DDLFormWebRequestHelper(
+						PortalUtil.getHttpServletRequest(_renderRequest));
+
+			DDLFormWebConfiguration ddlFormWebConfiguration =
+				ddlFormWebRequestHelper.getDDLFormWebConfiguration();
+
 			_displayViews = StringUtil.split(
 				PrefsParamUtil.getString(
 					_portletPreferences, _renderRequest, "displayViews",
 					StringUtil.merge(
-						DDLFormWebConfigurationValues.DISPLAY_VIEWS)));
+						ddlFormWebConfiguration.supportedDisplayView())));
 		}
 
 		return _displayViews;

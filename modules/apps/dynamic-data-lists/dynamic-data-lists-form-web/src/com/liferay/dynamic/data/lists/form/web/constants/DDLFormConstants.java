@@ -12,30 +12,17 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.constants;
+package com.liferay.dynamic.data.lists.form.web.constants;
 
 /**
- * @author Marcellus Tavares
- * @author Eduardo Lundgren
+ *
+ * @author Lino Alves
+ *
  */
-public class DDLConstants {
 
-	public static final String RESERVED_DDM_STRUCTURE_ID =
-		"reserved_ddm_structure_id";
-
-	public static final String RESERVED_DDM_TEMPLATE_ID =
-		"reserved_ddm_template_id";
-
-	public static final String RESERVED_RECORD_SET_DESCRIPTION =
-		"reserved_record_set_description";
-
-	public static final String RESERVED_RECORD_SET_ID =
-		"reserved_record_set_id";
-
-	public static final String RESERVED_RECORD_SET_NAME =
-		"reserved_record_set_name";
+public class DDLFormConstants {
 
 	public static final String SERVICE_NAME =
-		"com_liferay_dynamic_data_lists_web_portlet_DDLPortlet";
+		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet";
 
 }

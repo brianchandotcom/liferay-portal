@@ -539,9 +539,9 @@
 				<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#CURRENT_TAB" value1="Current" />
 
 				<if>
-					<condition function="IsElementPresent#isVisible" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_ALL_CHECKBOX" />
+					<condition function="IsElementPresent#isVisible" locator1="Checkbox#CHECK_ALL_NAME" />
 					<then>
-						<execute function="Uncheck" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_ALL_CHECKBOX" />
+						<execute function="Uncheck" locator1="Checkbox#CHECK_ALL_NAME" />
 						<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 						<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 					</then>

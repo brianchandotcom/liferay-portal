@@ -18,8 +18,6 @@
 
 <%
 String browseBy = ParamUtil.getString(request, "browseBy");
-
-String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
@@ -38,7 +36,9 @@ String keywords = ParamUtil.getString(request, "keywords");
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<div class="sidenav-menu-slider">
 			<div class="sidebar sidebar-default sidenav-menu">
-				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+				<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
+					<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+				</c:if>
 			</div>
 		</div>
 
@@ -61,7 +61,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
 					<c:choose>
-						<c:when test="<%= Validator.isNotNull(keywords) %>">
+						<c:when test="<%= journalDisplayContext.isSearch() %>">
 							<liferay-util:include page="/search_resources.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
@@ -76,7 +76,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</div>
 </div>
 
-<c:if test="<%= Validator.isNull(keywords) %>">
+<c:if test="<%= !journalDisplayContext.isSearch() %>">
 	<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 </c:if>
 

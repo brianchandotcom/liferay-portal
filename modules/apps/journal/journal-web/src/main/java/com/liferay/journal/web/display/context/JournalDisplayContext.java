@@ -163,6 +163,16 @@ public class JournalDisplayContext {
 			JournalWebKeys.JOURNAL_CONVERTER);
 	}
 
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -261,6 +271,14 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowEditActions() {
 		if (_showEditActions != null) {
 			return _showEditActions;
@@ -270,6 +288,29 @@ public class JournalDisplayContext {
 			_request, "showEditActions", true);
 
 		return _showEditActions;
+	}
+
+	public boolean isShowInfoPanel() {
+		String ddmStructureKey = ParamUtil.getString(
+			_request, "ddmStructureKey");
+
+		if (Validator.isNotNull(ddmStructureKey)) {
+			return false;
+		}
+
+		if (isNavigationMine()) {
+			return false;
+		}
+
+		if (isNavigationRecent()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected String getDisplayStyle(
@@ -312,6 +353,7 @@ public class JournalDisplayContext {
 	private String[] _displayViews;
 	private JournalFolder _folder;
 	private Long _folderId;
+	private String _keywords;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
 	private final PortletPreferences _portletPreferences;

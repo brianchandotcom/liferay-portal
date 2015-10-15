@@ -266,6 +266,19 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
+	<command name="selectFormTemplateViaDDLDisplayPG">
+		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="Select" locator1="DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT" value1="${ddlFormTemplateName}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertSelectedLabel" locator1="DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT" value1="${ddlFormTemplateName}" />
+
+		<execute function="SelectFrameTop" />
+	</command>
+
 	<command name="tearDownTemplateCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />

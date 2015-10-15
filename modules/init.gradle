@@ -1,9 +1,9 @@
 import org.gradle.internal.hash.HashUtil
 import org.gradle.internal.hash.HashValue
 
-if (System.getenv("JENKINS_HOME")) {
-	System.setProperty "http.proxyHost", "squid.lax.liferay.com"
-	System.setProperty "http.proxyPort", "3128"
+if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
+	println "Using proxy ${System.properties['http.proxyHost']}:${System.properties['http.proxyPort']}."
+
 	System.setProperty "repository.url", "http://repository.liferay.com/nexus/content/groups/public"
 }
 

@@ -55,7 +55,6 @@ import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.portlet.action.ActionUtil;
-import com.liferay.journal.web.upgrade.JournalWebUpgrade;
 import com.liferay.journal.web.util.JournalRSSUtil;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
@@ -1280,10 +1279,6 @@ public class JournalPortlet extends MVCPortlet {
 		JournalFolderService journalFolderService) {
 
 		_journalFolderService = journalFolderService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalWebUpgrade(JournalWebUpgrade journalWebUpgrade) {
 	}
 
 	@Reference

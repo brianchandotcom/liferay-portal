@@ -326,6 +326,17 @@ public class MVCPortlet extends LiferayPortlet {
 					actionName);
 
 			if (mvcActionCommand != MVCActionCommand.EMPTY) {
+				if (mvcActionCommand instanceof FormMVCActionCommand) {
+					FormMVCActionCommand formMVCActionCommand =
+						(FormMVCActionCommand)mvcActionCommand;
+
+					if (!formMVCActionCommand.validateForm(
+							actionRequest, actionResponse)) {
+
+						return false;
+					}
+				}
+
 				return mvcActionCommand.processAction(
 					actionRequest, actionResponse);
 			}
@@ -336,6 +347,22 @@ public class MVCPortlet extends LiferayPortlet {
 					actionName);
 
 			if (!mvcActionCommands.isEmpty()) {
+				boolean validated = true;
+
+				for (MVCActionCommand mvcActionCommand : mvcActionCommands) {
+					if (mvcActionCommand instanceof FormMVCActionCommand) {
+						FormMVCActionCommand formMVCActionCommand =
+							(FormMVCActionCommand)mvcActionCommand;
+
+						validated &= formMVCActionCommand.validateForm(
+							actionRequest, actionResponse);
+					}
+				}
+
+				if (!validated) {
+					return false;
+				}
+
 				for (MVCActionCommand mvcActionCommand : mvcActionCommands) {
 					if (!mvcActionCommand.processAction(
 							actionRequest, actionResponse)) {

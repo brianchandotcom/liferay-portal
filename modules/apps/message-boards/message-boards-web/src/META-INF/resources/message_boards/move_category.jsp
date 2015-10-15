@@ -26,56 +26,58 @@ long categoryId = MBUtil.getCategoryId(request, category);
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= (category == null) %>"
-	title='<%= LanguageUtil.format(request, "move-x", category.getName(), false) %>'
-/>
+<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<liferay-ui:header
+		backURL="<%= redirect %>"
+		localizeTitle="<%= (category == null) %>"
+		title='<%= LanguageUtil.format(request, "move-x", category.getName(), false) %>'
+	/>
 
-<portlet:actionURL name="/message_boards/move_category" var="moveCategoryURL" />
+	<portlet:actionURL name="/message_boards/move_category" var="moveCategoryURL" />
 
-<aui:form action="<%= moveCategoryURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
-	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
+	<aui:form action="<%= moveCategoryURL %>" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
+		<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
 
-	<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
+		<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 
-	<aui:fieldset>
-
-		<%
-		String parentCategoryName = StringPool.BLANK;
-
-		try {
-			MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
-
-			parentCategoryName = parentCategory.getName();
-		}
-		catch (NoSuchCategoryException nsce) {
-		}
-		%>
-
-		<div class="form-group">
-			<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
-
-			<aui:button name="selectCategoryButton" value="select" />
+		<aui:fieldset>
 
 			<%
-			String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '" + renderResponse.getNamespace() + "');";
+			String parentCategoryName = StringPool.BLANK;
+
+			try {
+				MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
+
+				parentCategoryName = parentCategory.getName();
+			}
+			catch (NoSuchCategoryException nsce) {
+			}
 			%>
 
-			<aui:button disabled="<%= (parentCategoryId <= 0) %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-		</div>
+			<div class="form-group">
+				<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
-		<aui:input label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
-	</aui:fieldset>
+				<aui:button name="selectCategoryButton" value="select" />
 
-	<aui:button-row>
-		<aui:button type="submit" value="move" />
+				<%
+				String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '" + renderResponse.getNamespace() + "');";
+				%>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+				<aui:button disabled="<%= (parentCategoryId <= 0) %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+			</div>
+
+			<aui:input label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
+		</aui:fieldset>
+
+		<aui:button-row>
+			<aui:button type="submit" value="move" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
 
 <%
 if (category != null) {

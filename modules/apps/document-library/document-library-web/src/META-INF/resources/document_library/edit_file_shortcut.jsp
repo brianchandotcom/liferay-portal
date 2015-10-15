@@ -62,74 +62,76 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 %>
 
-<liferay-util:include page="/document_library/top_links.jsp"  servletContext="<%= application %>" />
+<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<liferay-util:include page="/document_library/top_links.jsp"  servletContext="<%= application %>" />
 
-<portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL">
-	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
-</portlet:actionURL>
+	<portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
+	</portlet:actionURL>
 
-<aui:form action="<%= editFileShortcutURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileShortcut();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="fileShortcutId" type="hidden" value="<%= fileShortcutId %>" />
-	<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
-	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-	<aui:input name="toGroupId" type="hidden" value="<%= toGroupId %>" />
-	<aui:input name="toFileEntryId" type="hidden" value="<%= toFileEntryId %>" />
+	<aui:form action="<%= editFileShortcutURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileShortcut();" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="fileShortcutId" type="hidden" value="<%= fileShortcutId %>" />
+		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
+		<aui:input name="toGroupId" type="hidden" value="<%= toGroupId %>" />
+		<aui:input name="toFileEntryId" type="hidden" value="<%= toFileEntryId %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title='<%= (fileShortcut != null)? LanguageUtil.format(request, "shortcut-to-x", fileShortcut.getToTitle(), false) : "new-file-shortcut" %>'
-	/>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			title='<%= (fileShortcut != null)? LanguageUtil.format(request, "shortcut-to-x", fileShortcut.getToTitle(), false) : "new-file-shortcut" %>'
+		/>
 
-	<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />
-	<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />
+		<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />
+		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />
 
-	<aui:fieldset>
-		<div class="alert alert-info">
-			<liferay-ui:message key="you-can-create-a-shortcut-to-any-document-that-you-have-read-access-for" />
-		</div>
+		<aui:fieldset>
+			<div class="alert alert-info">
+				<liferay-ui:message key="you-can-create-a-shortcut-to-any-document-that-you-have-read-access-for" />
+			</div>
 
-		<%
-		String toGroupName = StringPool.BLANK;
+			<%
+			String toGroupName = StringPool.BLANK;
 
-		if (toGroup != null) {
-			toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
-		}
-		%>
+			if (toGroup != null) {
+				toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
+			}
+			%>
 
-		<div class="form-group">
-			<aui:input label="site" name="toGroupName" type="resource" value="<%= toGroupName %>" />
+			<div class="form-group">
+				<aui:input label="site" name="toGroupName" type="resource" value="<%= toGroupName %>" />
 
-			<aui:button name="selectGroupButton" value="select" />
-		</div>
+				<aui:button name="selectGroupButton" value="select" />
+			</div>
 
-		<%
-		String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
-		%>
+			<%
+			String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
+			%>
 
-		<div class="form-group">
-			<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= toFileEntryTitle %>" />
+			<div class="form-group">
+				<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= toFileEntryTitle %>" />
 
-			<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
-		</div>
+				<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
+			</div>
 
-		<c:if test="<%= fileShortcut == null %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= DLFileShortcutConstants.getClassName() %>"
-				/>
-			</aui:field-wrapper>
-		</c:if>
+			<c:if test="<%= fileShortcut == null %>">
+				<aui:field-wrapper label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= DLFileShortcutConstants.getClassName() %>"
+					/>
+				</aui:field-wrapper>
+			</c:if>
 
-		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button-row>
+				<aui:button type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
-</aui:form>
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</aui:button-row>
+		</aui:fieldset>
+	</aui:form>
+</div>
 
 <aui:script sandbox="<%= true %>">
 	$('#<portlet:namespace />selectGroupButton').on(

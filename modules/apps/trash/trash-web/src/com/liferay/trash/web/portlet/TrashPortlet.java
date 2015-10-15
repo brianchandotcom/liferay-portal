@@ -30,7 +30,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.util.RestoreEntryUtil;
 import com.liferay.taglib.util.TrashUndoUtil;
@@ -85,7 +85,7 @@ public class TrashPortlet extends MVCPortlet {
 		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		if (trashEntryId > 0) {
-			TrashEntryServiceUtil.deleteEntry(trashEntryId);
+			_trashEntryService.deleteEntry(trashEntryId);
 
 			return;
 		}
@@ -95,7 +95,7 @@ public class TrashPortlet extends MVCPortlet {
 
 		if (deleteEntryIds.length > 0) {
 			for (int i = 0; i < deleteEntryIds.length; i++) {
-				TrashEntryServiceUtil.deleteEntry(deleteEntryIds[i]);
+				_trashEntryService.deleteEntry(deleteEntryIds[i]);
 			}
 
 			return;
@@ -105,7 +105,7 @@ public class TrashPortlet extends MVCPortlet {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		if (Validator.isNotNull(className) && (classPK > 0)) {
-			TrashEntryServiceUtil.deleteEntry(className, classPK);
+			_trashEntryService.deleteEntry(className, classPK);
 		}
 
 		sendRedirect(actionRequest, actionResponse);
@@ -121,7 +121,7 @@ public class TrashPortlet extends MVCPortlet {
 		long groupId = ParamUtil.getLong(
 			actionRequest, "groupId", themeDisplay.getScopeGroupId());
 
-		TrashEntryServiceUtil.deleteEntries(groupId);
+		_trashEntryService.deleteEntries(groupId);
 	}
 
 	public void moveEntry(
@@ -136,7 +136,7 @@ public class TrashPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			className, actionRequest);
 
-		TrashEntryServiceUtil.moveEntry(
+		_trashEntryService.moveEntry(
 			className, classPK, containerModelId, serviceContext);
 
 		TrashUndoUtil.addRestoreData(actionRequest, className, classPK);
@@ -153,7 +153,7 @@ public class TrashPortlet extends MVCPortlet {
 		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		if (trashEntryId > 0) {
-			TrashEntry entry = TrashEntryServiceUtil.restoreEntry(trashEntryId);
+			TrashEntry entry = _trashEntryService.restoreEntry(trashEntryId);
 
 			entries.add(
 				new ObjectValuePair<>(
@@ -164,7 +164,7 @@ public class TrashPortlet extends MVCPortlet {
 				ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 			for (long restoreEntryId : restoreEntryIds) {
-				TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
+				TrashEntry entry = _trashEntryService.restoreEntry(
 					restoreEntryId);
 
 				entries.add(
@@ -201,7 +201,7 @@ public class TrashPortlet extends MVCPortlet {
 		long duplicateEntryId = ParamUtil.getLong(
 			actionRequest, "duplicateEntryId");
 
-		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
+		TrashEntry entry = _trashEntryService.restoreEntry(
 			trashEntryId, duplicateEntryId, null);
 
 		TrashUndoUtil.addRestoreData(
@@ -227,7 +227,7 @@ public class TrashPortlet extends MVCPortlet {
 			newName = TrashUtil.getNewName(themeDisplay, null, 0, oldName);
 		}
 
-		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
+		TrashEntry entry = _trashEntryService.restoreEntry(
 			trashEntryId, 0, newName);
 
 		TrashUndoUtil.addRestoreData(
@@ -271,7 +271,14 @@ public class TrashPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setTrashWebUpgrade(TrashWebUpgrade trashWebUpgrade) {
 	}
+
+	private TrashEntryService _trashEntryService;
 
 }

@@ -26,7 +26,7 @@ long repositoryId = BeanParamUtil.getLong(repository, request, "repositoryId");
 long folderId = ParamUtil.getLong(request, "folderId");
 %>
 
-<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> >
+<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 
 	<portlet:actionURL name="/document_library/edit_repository" var="editRepositoryURL">

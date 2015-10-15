@@ -26,7 +26,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 %>
 
-<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> >
+<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (category == null) %>"

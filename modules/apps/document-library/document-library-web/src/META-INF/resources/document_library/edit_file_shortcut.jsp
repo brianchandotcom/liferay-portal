@@ -62,7 +62,7 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 %>
 
-<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> >
+<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-util:include page="/document_library/top_links.jsp"  servletContext="<%= application %>" />
 
 	<portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL">

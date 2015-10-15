@@ -38,7 +38,7 @@ long threadId = ParamUtil.getLong(request, "threadId");
 String keywords = ParamUtil.getString(request, "keywords");
 %>
 
-<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> >
+<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-portlet:renderURL varImpl="searchURL">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
 	</liferay-portlet:renderURL>

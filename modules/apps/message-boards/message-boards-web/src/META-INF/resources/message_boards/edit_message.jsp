@@ -102,7 +102,7 @@ else {
 }
 %>
 
-<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> >
+<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<c:if test="<%= Validator.isNull(referringPortletResource) %>">
 		<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 	</c:if>

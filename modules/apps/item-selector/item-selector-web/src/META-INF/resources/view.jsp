@@ -89,7 +89,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 				%>
 
 				<aui:nav-bar-search>
-					<aui:form action="<%= searchURL %>" name="searchFm">
+					<aui:form action='<%= HttpUtil.removeParameter(searchURL.toString(), liferayPortletResponse.getNamespace() + "keywords") %>' name="searchFm">
 						<liferay-ui:input-search markupView="lexicon" />
 					</aui:form>
 				</aui:nav-bar-search>

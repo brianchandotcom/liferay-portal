@@ -66,12 +66,12 @@ public class DDLFormViewRecordsDisplayContext {
 	public DDLFormViewRecordsDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			DDLRecordSet recordSet)
+			DDLRecordSet ddlRecordSet)
 		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_recordSet = recordSet;
+		_ddlRecordSet = ddlRecordSet;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
@@ -83,7 +83,7 @@ public class DDLFormViewRecordsDisplayContext {
 		portletDisplay.setURLBack(
 			ParamUtil.getString(_liferayPortletRequest, "redirect"));
 
-		createRecordSearchContainer(recordSet.getDDMStructure());
+		createRecordSearchContainer(ddlRecordSet.getDDMStructure());
 	}
 
 	public String getColumnName(int index, DDMFormValues ddmFormValues) {
@@ -116,6 +116,10 @@ public class DDLFormViewRecordsDisplayContext {
 
 		return StringUtil.merge(
 			renderedDDMFormFielValues, StringPool.COMMA_AND_SPACE);
+	}
+
+	public DDLRecordSet getDDLRecordSet() {
+		return _ddlRecordSet;
 	}
 
 	public DDMFormValues getDDMFormValues(DDLRecord ddlRecord)
@@ -214,19 +218,19 @@ public class DDLFormViewRecordsDisplayContext {
 
 		if (Validator.isNull(displayTerms.getKeywords())) {
 			results = DDLRecordLocalServiceUtil.getRecords(
-				_recordSet.getRecordSetId(), status,
+				_ddlRecordSet.getRecordSetId(), status,
 				_recordSearchContainer.getStart(),
 				_recordSearchContainer.getEnd(),
 				_recordSearchContainer.getOrderByComparator());
 			total = DDLRecordLocalServiceUtil.getRecordsCount(
-				_recordSet.getRecordSetId(), status);
+				_ddlRecordSet.getRecordSetId(), status);
 		}
 		else {
 			SearchContext searchContext = SearchContextFactory.getInstance(
 				_liferayPortletRequest.getHttpServletRequest());
 
 			searchContext.setAttribute(
-				"recordSetId", _recordSet.getRecordSetId());
+				"recordSetId", _ddlRecordSet.getRecordSetId());
 			searchContext.setAttribute(Field.STATUS, status);
 			searchContext.setEnd(_recordSearchContainer.getEnd());
 			searchContext.setKeywords(displayTerms.getKeywords());
@@ -245,10 +249,10 @@ public class DDLFormViewRecordsDisplayContext {
 
 	private static final int _MAX_COLUMNS = 5;
 
+	private final DDLRecordSet _ddlRecordSet;
 	private final List<DDMFormField> _ddmFormFields = new ArrayList<>();
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private RecordSearch _recordSearchContainer;
-	private final DDLRecordSet _recordSet;
 
 }

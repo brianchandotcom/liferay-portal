@@ -29,6 +29,10 @@ AUI.add(
 						valueFn: '_valueInstanceId'
 					},
 
+					indexType: {
+						value: 'keyword'
+					},
+
 					label: {
 						getter: '_getLabel',
 						value: ''

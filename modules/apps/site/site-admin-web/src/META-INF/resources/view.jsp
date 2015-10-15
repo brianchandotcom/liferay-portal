@@ -72,8 +72,8 @@ if (group != null) {
 		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayStyleURL="<%= portletURL %>"
 			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

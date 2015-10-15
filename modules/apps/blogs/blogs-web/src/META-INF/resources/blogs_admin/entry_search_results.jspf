@@ -27,11 +27,21 @@ if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
 	}
 }
 else if (Validator.isNull(searchTerms.getKeywords())) {
-	total = BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, WorkflowConstants.STATUS_ANY);
+	if (navigationFilter.equals("mine")) {
+		total = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_ANY);
+	}
+	else {
+		total = BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, WorkflowConstants.STATUS_ANY);
+	}
 
 	searchContainer.setTotal(total);
 
-	results = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	if (navigationFilter.equals("mine")) {
+		results = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	}
+	else {
+		results = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	}
 }
 else {
 	Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);

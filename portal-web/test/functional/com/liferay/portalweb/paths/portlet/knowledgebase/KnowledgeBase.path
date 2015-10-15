@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_NO_ARTICLES_FOUND</td>
+	<td>//div[contains(@class,'alert') and contains(.,'No articles were found.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -144,7 +149,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_TITLE</td>
-	<td>//div[@class='kb-article-container']//h1[@class='kb-title']</td>
+	<td>//div[@class='kb-article-container']//h1</td>
 	<td></td>
 </tr>
 <tr>
@@ -175,7 +180,7 @@
 <!--FOLDER-->
 <tr>
 	<td>FOLDER_BREADCRUMBS</td>
-	<td>//ul[@class='breadcrumb']//a[contains(.,'${kbFolderName}')]</td>
+	<td>//ul[contains(@class,'breadcrumb')]//a[contains(.,'${kbFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -901,11 +901,9 @@
 			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="KBArticle#viewRelatedAssetViaKBDisplayPG">
-			<var name="kbArticleRelatedAssetTitle" value="Knowledge Base Article Title" />
+		<execute macro="KBArticle#viewBlogsEntryRelatedAssetViaKBDisplayPG">
 			<var name="RelatedAssetContent" value="Blogs Entry Content" />
 			<var name="RelatedAssetTitle" value="Blogs Entry Title" />
-			<var name="RelatedAssetType" value="Blogs Entry" />
 		</execute>
 	</command>
 

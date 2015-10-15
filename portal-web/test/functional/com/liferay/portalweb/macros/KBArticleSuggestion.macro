@@ -11,7 +11,7 @@
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
-		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
+		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" value1="${kbSuggestionBody}" />
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 		<execute function="AssertNotVisible" locator1="KnowledgeBaseSuggestions#CONTENT" />
 		<execute function="AssertNotVisible" locator1="KnowledgeBaseSuggestions#CONTENT" />

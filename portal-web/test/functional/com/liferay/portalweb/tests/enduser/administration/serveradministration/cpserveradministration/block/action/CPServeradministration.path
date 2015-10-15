@@ -144,37 +144,37 @@
 <!--FILE_UPLOADS-->
 <tr>
 	<td>FILE_UPLOADS_GENERAL_OVERALL_MAX_FILE_SIZE_FIELD</td>
-	<td>//input[@id='_137_uploadServletRequestImplMaxSize']</td>
+	<td>//input[contains(@id,'uploadServletRequestImplMaxSize')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILE_UPLOADS_GENERAL_TEMP_STORAGE_DIRECTORY_FIELD</td>
-	<td>//input[@id='_137_uploadServletRequestImplTempDir']</td>
+	<td>//input[contains(@id'uploadServletRequestImplTempDir')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILE_UPLOADS_DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD</td>
-	<td>//input[@id='_137_dlFileMaxSize']</td>
+	<td>//input[contains(@id,'dlFileMaxSize')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILE_UPLOADS_DOCS_AND_MEDIA_MAX_PREVIEWABLE_FILE_SIZE_FIELD</td>
-	<td>//input[@id='_137_dlFileEntryPreviewableProcessorMaxSize']</td>
+	<td>//input[contains(@id,'dlFileEntryPreviewableProcessorMaxSize')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILE_UPLOADS_DOCS_AND_MEDIA_MAX_THUMBNAIL_HEIGHT_FIELD</td>
-	<td>//input[@id='_137_dlFileEntryThumbnailMaxHeight']</td>
+	<td>//input[contains(@id,'dlFileEntryThumbnailMaxHeight')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILE_UPLOADS_DOCS_AND_MEDIA_MAX_THUMBNAIL_WIDTH_FIELD</td>
-	<td>//input[@id='_137_dlFileEntryThumbnailMaxWidth']</td>
+	<td>//input[contains(@id,'dlFileEntryThumbnailMaxWidth')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILE_UPLOADS_DOCS_AND_MEDIA_ALLOWED_FILE_EXTENSIONS_FIELD</td>
-	<td>//input[@id='_137_dlFileExtensions']</td>
+	<td>//input[contains(@id,'dlFileExtensions')]</td>
 	<td></td>
 </tr>
 </tbody>

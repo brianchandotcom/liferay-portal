@@ -189,6 +189,11 @@
 </tr>
 <!--HISTORY-->
 <tr>
+	<td>HISTORY_TITLE</td>
+	<td>//div[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HISTORY_CONTENT_ADDED_DIFF</td>
 	<td>//div[@class='kb-entity-body']/div/span[contains(@class,'diff-html-added')]</td>
 	<td></td>

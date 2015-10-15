@@ -119,7 +119,7 @@
 		</execute>
 
 		<execute function="Close" locator1="title=Welcome - Liferay" />
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Audit Reports" />

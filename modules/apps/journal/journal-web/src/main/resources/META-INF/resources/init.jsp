@@ -94,7 +94,7 @@ page import="com.liferay.journal.util.comparator.FolderArticleDisplayDateCompara
 page import="com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator" %><%@
 page import="com.liferay.journal.util.impl.JournalUtil" %><%@
 page import="com.liferay.journal.web.asset.JournalArticleAssetRenderer" %><%@
-page import="com.liferay.journal.web.configuration.JournalWebConfigurationValues" %><%@
+page import="com.liferay.journal.web.configuration.JournalWebConfiguration" %><%@
 page import="com.liferay.journal.web.dao.search.JournalResultRowSplitter" %><%@
 page import="com.liferay.journal.web.display.context.JournalDisplayContext" %><%@
 page import="com.liferay.journal.web.display.context.util.JournalWebRequestHelper" %><%@
@@ -217,6 +217,8 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 String currentURL = currentURLObj.toString();
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
+
+JournalWebConfiguration journalWebConfiguration = (JournalWebConfiguration)request.getAttribute(JournalWebConfiguration.class.getName());
 
 JournalDisplayContext journalDisplayContext = new JournalDisplayContext(request, liferayPortletResponse, portletPreferences);
 

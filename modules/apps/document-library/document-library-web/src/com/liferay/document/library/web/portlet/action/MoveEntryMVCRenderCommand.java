@@ -50,6 +50,7 @@ public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			ActionUtil.getFileEntry(renderRequest);
 			ActionUtil.getFileEntries(renderRequest);
 			ActionUtil.getFileShortcuts(renderRequest);
 			ActionUtil.getFolders(renderRequest);

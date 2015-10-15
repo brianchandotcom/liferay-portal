@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.search;
 
 import com.liferay.calendar.model.Calendar;
 import com.liferay.portal.kernel.search.BaseSearcher;

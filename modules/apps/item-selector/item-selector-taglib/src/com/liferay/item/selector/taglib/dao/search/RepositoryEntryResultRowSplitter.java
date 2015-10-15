@@ -12,44 +12,44 @@
  * details.
  */
 
-package com.liferay.journal.web.util;
+package com.liferay.item.selector.taglib.dao.search;
 
-import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
+import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Eudaldo Alonso
+ * @author Sergio González
  */
-public class JournalResultRowSplitter implements ResultRowSplitter {
+public class RepositoryEntryResultRowSplitter implements ResultRowSplitter {
 
 	@Override
 	public List<List<ResultRow>> split(List<ResultRow> resultRows) {
 		List<List<ResultRow>> resultRowsList = new ArrayList<>();
 
-		List<ResultRow> journalArticleResultRows = new ArrayList<>();
-		List<ResultRow> journalFolderResultRows = new ArrayList<>();
+		List<ResultRow> fileEntryResultRows = new ArrayList<>();
+		List<ResultRow> folderResultRows = new ArrayList<>();
 
 		for (ResultRow resultRow : resultRows) {
 			Object object = resultRow.getObject();
 
-			if (object instanceof JournalFolder) {
-				journalFolderResultRows.add(resultRow);
+			if (object instanceof Folder) {
+				folderResultRows.add(resultRow);
 			}
 			else {
-				journalArticleResultRows.add(resultRow);
+				fileEntryResultRows.add(resultRow);
 			}
 		}
 
-		if (!journalFolderResultRows.isEmpty()) {
-			resultRowsList.add(journalFolderResultRows);
+		if (!folderResultRows.isEmpty()) {
+			resultRowsList.add(folderResultRows);
 		}
 
-		if (!journalArticleResultRows.isEmpty()) {
-			resultRowsList.add(journalArticleResultRows);
+		if (!fileEntryResultRows.isEmpty()) {
+			resultRowsList.add(fileEntryResultRows);
 		}
 
 		return resultRowsList;

@@ -88,7 +88,40 @@ public class MVCActionCommandTest {
 			ActionRequest.ACTION_NAME,
 			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME +
 				StringPool.COMMA +
-					TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
+				TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
+
+		_genericPortlet.processAction(
+			mockActionRequest, new MockActionResponse());
+
+		Assert.assertNotNull(
+			mockActionRequest.getAttribute(
+				TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+		Assert.assertEquals(
+			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE,
+			mockActionRequest.getAttribute(
+				TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+		Assert.assertNotNull(
+			mockActionRequest.getAttribute(
+				TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+		Assert.assertEquals(
+			TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE,
+			mockActionRequest.getAttribute(
+				TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+	}
+
+	@Test
+	public void testMultipleMVCActionCommandsWithMultipleParameters()
+		throws Exception {
+
+		MockActionRequest mockActionRequest = new MockLiferayPortletRequest();
+
+		mockActionRequest.addParameter(
+			ActionRequest.ACTION_NAME,
+			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME);
+
+		mockActionRequest.addParameter(
+			ActionRequest.ACTION_NAME,
+			TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
 
 		_genericPortlet.processAction(
 			mockActionRequest, new MockActionResponse());
@@ -137,13 +170,19 @@ public class MVCActionCommandTest {
 		implements LiferayPortletRequest {
 
 		@Override
+		public void addParameter(String name, String value) {
+			_httpServletRequest.addParameter(name, value);
+			super.addParameter(name, value);
+		}
+
+		@Override
 		public void defineObjects(
 			PortletConfig portletConfig, PortletResponse portletResponse) {
 		}
 
 		@Override
 		public HttpServletRequest getHttpServletRequest() {
-			return new MockHttpServletRequest();
+			return _httpServletRequest;
 		}
 
 		@Override
@@ -160,6 +199,9 @@ public class MVCActionCommandTest {
 		public Map<String, String[]> getRenderParameters() {
 			return null;
 		}
+
+		private final MockHttpServletRequest _httpServletRequest =
+			new MockHttpServletRequest();
 
 	}
 

@@ -9,67 +9,67 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
+	<td>MATCH_SELECT</td>
 	<td>//select[contains(@id,'Operator')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_NAME_FIELD</td>
+	<td>NAME_FIELD</td>
 	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_TITLE_FIELD</td>
+	<td>TITLE_FIELD</td>
 	<td>//input[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_DESCRIPTION_FIELD</td>
+	<td>DESCRIPTION_FIELD</td>
 	<td>//input[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
+	<td>FIRST_NAME_FIELD</td>
 	<td>//input[contains(@id,'firstName')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
+	<td>MIDDLE_NAME_FIELD</td>
 	<td>//input[contains(@id,'middleName')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
+	<td>LAST_NAME_FIELD</td>
 	<td>//input[contains(@id,'lastName')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
+	<td>SCREEN_NAME_FIELD</td>
 	<td>//input[contains(@id,'screenName')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_STREET_FIELD</td>
+	<td>STREET_FIELD</td>
 	<td>//input[contains(@id,'street')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_CITY_FIELD</td>
+	<td>CITY_FIELD</td>
 	<td>//input[contains(@id,'city')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_POSTAL_CODE_FIELD</td>
+	<td>POSTAL_CODE_FIELD</td>
 	<td>//input[contains(@id,'zip')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
+	<td>EMAIL_ADDRESS_FIELD</td>
 	<td>//input[contains(@id,'emailAddress')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_MY_SITES_SELECTION</td>
+	<td>MY_SITES_SELECTION</td>
 	<td>xpath=(//div[contains(@id,'searchadvancedContent')]//select)[2]</td>
 	<td></td>
 </tr>

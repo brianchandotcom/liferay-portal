@@ -306,7 +306,7 @@
 		<if>
 			<equals arg1="${orgAdvancedSearch}" arg2="Name" />
 			<then>
-				<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_NAME_FIELD" value1="${orgName}" />
+				<execute function="Type" locator1="AdvancedSearch#NAME_FIELD" value1="${orgName}" />
 				<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 				<var name="key_orgName" value="${orgName}" />
@@ -317,7 +317,7 @@
 			<elseif>
 				<equals arg1="${orgAdvancedSearch}" arg2="Street" />
 				<then>
-					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_STREET_FIELD" value1="${orgAddressStreet}" />
+					<execute function="Type" locator1="AdvancedSearch#STREET_FIELD" value1="${orgAddressStreet}" />
 					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 					<var name="key_orgName" value="${orgName}" />
@@ -332,7 +332,7 @@
 			<elseif>
 				<equals arg1="${orgAdvancedSearch}" arg2="City" />
 				<then>
-					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_CITY_FIELD" value1="${orgAddressCity}" />
+					<execute function="Type" locator1="AdvancedSearch#CITY_FIELD" value1="${orgAddressCity}" />
 					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 					<var name="key_orgName" value="${orgName}" />
@@ -347,7 +347,7 @@
 			<elseif>
 				<equals arg1="${orgAdvancedSearch}" arg2="Postal" />
 				<then>
-					<execute function="Type" locator1="AdvancedSearch#ADVANCED_SEARCH_POSTAL_CODE_FIELD" value1="${orgAddressPostal}" />
+					<execute function="Type" locator1="AdvancedSearch#POSTAL_CODE_FIELD" value1="${orgAddressPostal}" />
 					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 					<var name="key_orgName" value="${orgName}" />

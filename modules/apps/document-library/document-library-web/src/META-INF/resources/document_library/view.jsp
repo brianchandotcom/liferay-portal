@@ -107,8 +107,8 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<div id="<portlet:namespace />documentLibraryContainer">
+<div id="<portlet:namespace />documentLibraryContainer">
+	<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 		<aui:row cssClass="lfr-app-column-view">
 			<aui:col cssClass="navigation-pane" width="<%= 25 %>">
 				<liferay-util:include page="/document_library/view_folders.jsp" servletContext="<%= application %>" />

@@ -37,15 +37,9 @@ RenderResponseImpl renderResponseImpl = (RenderResponseImpl)PortletResponseImpl.
 
 // Portlet decorate
 
-boolean portletDecorateDefault = false;
+boolean portletDecorate = tilesPortletDecorate;
 
-if (tilesPortletDecorate) {
-	portletDecorateDefault = GetterUtil.getBoolean(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), PropsValues.THEME_PORTLET_DECORATE_DEFAULT);
-}
-
-boolean portletDecorate = GetterUtil.getBoolean(portletSetup.getValue("portletSetupShowBorders", String.valueOf(portletDecorateDefault)));
-
-Boolean portletDecorateObj = (Boolean)renderRequest.getAttribute(WebKeys.PORTLET_DECORATE);
+Boolean portletDecorateObj = (Boolean)request.getAttribute(WebKeys.PORTLET_DECORATE);
 
 if (portletDecorateObj != null) {
 	portletDecorate = portletDecorateObj.booleanValue();

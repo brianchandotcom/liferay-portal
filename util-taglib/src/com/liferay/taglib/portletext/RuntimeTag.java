@@ -205,8 +205,6 @@ public class RuntimeTag extends TagSupport {
 
 			Layout layout = themeDisplay.getLayout();
 
-			request.setAttribute(WebKeys.PORTLET_DECORATE, false);
-
 			Portlet portlet = getPortlet(
 				themeDisplay.getCompanyId(),
 				portletInstance.getPortletInstanceKey());

@@ -1,34 +1,12 @@
 .portlet-journal-content {
 	.journal-content-article {
-		clear: right;
-
-		&:after {
-			clear: both;
-			content: '';
-			display: block;
-			height: 0;
-		}
-
 		img {
 			max-width: 100%;
 		}
 	}
 
-	.user-tool-asset-addon-entries {
-		text-align: right;
-
-		.user-tool-asset-addon-entry {
-			display: inline-block;
-			margin: 0 1em 2em 0;
-
-			&:last-child {
-				margin-right: 0;
-			}
-		}
-	}
-
 	.content-metadata-asset-addon-entries {
-		.content-metadata-asset-addon-entry {
+		.content-metadata-entry {
 			display: block;
 			margin: 3em 0;
 

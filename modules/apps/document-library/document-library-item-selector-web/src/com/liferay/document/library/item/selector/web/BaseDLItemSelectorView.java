@@ -52,7 +52,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content/Language", locale, getClass());
 
-		return resourceBundle.getString("documents-and-media");
+		return ResourceBundleUtil.getString(
+			resourceBundle, "documents-and-media");
 	}
 
 	@Override

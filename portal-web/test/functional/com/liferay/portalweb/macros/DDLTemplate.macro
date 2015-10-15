@@ -1,4 +1,8 @@
 <definition>
+	<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+	<var name="ddlDataDefinitionName" value="Data Definition Name" />
+	<var name="ddlListName" value="List Name" />
+
 	<command name="_showDetails">
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DETAILS_LANGUAGE_SELECT" />

@@ -1,4 +1,8 @@
 <definition>
+	<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+	<var name="ddlDataDefinitionName" value="Data Definition Name" />
+	<var name="ddlListName" value="List Name" />
+
 	<command name="addCP">
 		<execute function="Click" locator1="Button#PLUS" />
 

@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
@@ -54,38 +52,6 @@ public class AssetTagFinderImpl
 
 	public static final String FIND_BY_G_N_S_E =
 		AssetTagFinder.class.getName() + ".findByG_N_S_E";
-
-	@Override
-	public int countByG_C_N(long groupId, long classNameId, String name) {
-		return doCountByG_C_N(groupId, classNameId, name, false);
-	}
-
-	@Override
-	public int filterCountByG_N(long groupId, String name) {
-		return doCountByG_N(groupId, name, true);
-	}
-
-	@Override
-	public int filterCountByG_C_N(long groupId, long classNameId, String name) {
-		return doCountByG_C_N(groupId, classNameId, name, true);
-	}
-
-	@Override
-	public List<AssetTag> filterFindByG_C_N(
-		long groupId, long classNameId, String name, int start, int end,
-		OrderByComparator<AssetTag> obc) {
-
-		return doFindByG_C_N(groupId, classNameId, name, start, end, obc, true);
-	}
-
-	@Override
-	public List<AssetTag> findByG_C_N(
-		long groupId, long classNameId, String name, int start, int end,
-		OrderByComparator<AssetTag> obc) {
-
-		return doFindByG_C_N(
-			groupId, classNameId, name, start, end, obc, false);
-	}
 
 	@Override
 	public List<AssetTag> findByG_N_S_E(
@@ -135,21 +101,14 @@ public class AssetTagFinderImpl
 		}
 	}
 
-	protected int doCountByG_N(
-		long groupId, String name, boolean inlineSQLHelper) {
-
+	@Override
+	public int countByG_N(long groupId, String name) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_N);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, AssetTag.class.getName(), "AssetTag.tagId",
-					PortalUtil.getSiteGroupId(groupId));
-			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -183,21 +142,14 @@ public class AssetTagFinderImpl
 		}
 	}
 
-	protected int doCountByG_C_N(
-		long groupId, long classNameId, String name, boolean inlineSQLHelper) {
-
+	@Override
+	public int countByG_C_N(long groupId, long classNameId, String name) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_C_N);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, AssetTag.class.getName(), "AssetTag.tagId",
-					PortalUtil.getSiteGroupId(groupId));
-			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -233,9 +185,10 @@ public class AssetTagFinderImpl
 		}
 	}
 
-	protected List<AssetTag> doFindByG_C_N(
+	@Override
+	public List<AssetTag> findByG_C_N(
 		long groupId, long classNameId, String name, int start, int end,
-		OrderByComparator<AssetTag> obc, boolean inlineSQLHelper) {
+		OrderByComparator<AssetTag> obc) {
 
 		Session session = null;
 
@@ -245,12 +198,6 @@ public class AssetTagFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_G_C_N);
 
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, AssetTag.class.getName(), "AssetTag.tagId",
-					PortalUtil.getSiteGroupId(groupId));
-			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

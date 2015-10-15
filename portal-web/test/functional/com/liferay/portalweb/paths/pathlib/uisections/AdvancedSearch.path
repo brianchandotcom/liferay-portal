@@ -49,6 +49,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADVANCED_SEARCH_STREET_FIELD</td>
+	<td>//input[contains(@id,'street')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_CITY_FIELD</td>
+	<td>//input[contains(@id,'city')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_POSTAL_CODE_FIELD</td>
+	<td>//input[contains(@id,'zip')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
 	<td>//input[contains(@id,'emailAddress')]</td>
 	<td></td>

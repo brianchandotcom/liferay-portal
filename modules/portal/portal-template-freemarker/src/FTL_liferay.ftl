@@ -8,15 +8,19 @@ LPS-30525.
 <#setting number_format = "computer">
 
 <#assign css_main_file = "" />
-
-<#if themeDisplay??>
-	<#assign css_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeCss()}/main.css")) />
-</#if>
-
+<#assign is_signed_in = false />
 <#assign js_main_file = "" />
 
 <#if themeDisplay??>
+	<#assign css_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeCss()}/main.css")) />
+	<#assign is_signed_in = themeDisplay.isSignedIn() />
 	<#assign js_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeJavaScript()}/main.js")) />
+</#if>
+
+<#assign is_setup_complete = false />
+
+<#if user??>
+	<#assign is_setup_complete = user.isSetupComplete() />
 </#if>
 
 <#function max x y>
@@ -42,7 +46,7 @@ LPS-30525.
 </#macro>
 
 <#macro control_menu>
-	<#if $is_setup_complete && $is_signed_in>
+	<#if is_setup_complete && is_signed_in>
 		${theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", portletProviderAction.VIEW)}
 	</#if>
 </#macro>
@@ -96,7 +100,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 </#macro>
 
 <#macro product_menu>
-	<#if $is_setup_complete && $is_signed_in>
+	<#if is_setup_complete && is_signed_in>
 		${theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", portletProviderAction.VIEW)}
 	</#if>
 </#macro>
@@ -104,10 +108,10 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 <#macro product_menu_sidebar
 	state
 >
-	<#if $is_setup_complete && $is_signed_in>
+	<#if is_setup_complete && is_signed_in>
 		<div class="${state} lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
 			<div class="product-menu sidebar sidenav-menu">
-				<@liferay.product_menu() />
+				<@liferay.product_menu />
 			</div>
 		</div>
 	</#if>
@@ -122,7 +126,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 <#macro search
 	default_preferences = ""
 >
-	<#if $is_setup_complete>
+	<#if is_setup_complete>
 		${theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", portletProviderAction.VIEW, "", default_preferences)}
 	</#if>
 </#macro>
@@ -134,7 +138,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 </#macro>
 
 <#macro user_personal_bar>
-	<#if $is_setup_complete>
+	<#if is_setup_complete>
 		${theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", portletProviderAction.VIEW)}
 	</#if>
 </#macro>

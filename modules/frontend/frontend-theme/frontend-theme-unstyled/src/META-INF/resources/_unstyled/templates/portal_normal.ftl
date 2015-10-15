@@ -18,18 +18,18 @@
 
 ${theme.include(body_top_include)}
 
-<@liferay.product_menu_sidebar(liferay_product_menu_state) />
+<@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
 
 <div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
 		<div id="heading">
 			<h1 class="site-title">
-				<a class="${logo_css_class}" href="${site_default_url}" key="go-to-x" title="<@liferay.language_format arguments="${site_name}" />">
+				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 					<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}" />
 				</a>
 
 				<#if show_site_name>
-					<span class="site-name" key="go-to-x" title="<@liferay.language_format arguments="${site_name}" />">
+					<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x"/>">
 						${site_name}
 					</span>
 				</#if>

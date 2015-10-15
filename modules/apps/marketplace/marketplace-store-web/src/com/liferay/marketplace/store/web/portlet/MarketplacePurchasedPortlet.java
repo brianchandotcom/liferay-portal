@@ -53,6 +53,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MarketplacePurchasedPortlet extends MarketplaceStorePortlet {
 
+	@Override
+	protected String getClientPortletId() {
+		return MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED;
+	}
+
 	@Reference
 	protected void setAppLocalService(AppLocalService appLocalService) {
 		super.setAppLocalService(appLocalService);

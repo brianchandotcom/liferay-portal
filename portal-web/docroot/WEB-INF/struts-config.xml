@@ -181,9 +181,6 @@
 
 		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
 
-		<!-- Software Catalog -->
-		<action path="/software_catalog/view" forward="portlet.software_catalog.view" />
-
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

@@ -105,7 +105,7 @@ long frameworkVersionId = BeanParamUtil.getLong(frameworkVersion, request, "fram
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/software_catalog/view");
+portletURL.setParameter("mvcRenderCommandName", "/software_catalog/view");
 portletURL.setParameter("tabs1", "framework_versions");
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "framework-versions"), portletURL.toString());

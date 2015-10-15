@@ -217,10 +217,6 @@
 		<put name="portlet_content" value="/portlet/software_catalog/search.jsp" />
 	</definition>
 
-	<definition name="portlet.software_catalog.view" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/view.jsp" />
-	</definition>
-
 	<!-- User Statistics -->
 
 	<definition name="portlet.user_statistics" extends="portlet" />

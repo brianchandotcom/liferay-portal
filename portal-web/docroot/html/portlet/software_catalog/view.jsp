@@ -42,7 +42,7 @@ String type = ParamUtil.getString(request, "type");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/software_catalog/view");
+portletURL.setParameter("mvcRenderCommandName", "/software_catalog/view");
 portletURL.setParameter("tabs1", tabs1);
 %>
 

@@ -103,7 +103,7 @@ long licenseId = BeanParamUtil.getLong(license, request, "licenseId");
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/software_catalog/view");
+portletURL.setParameter("mvcRenderCommandName", "/software_catalog/view");
 portletURL.setParameter("tabs1", "licenses");
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "licenses"), portletURL.toString());

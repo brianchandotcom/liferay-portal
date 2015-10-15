@@ -44,10 +44,10 @@ public class ViewProductEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ActionUtil.getProductEntry(renderRequest);
+		ActionUtil.getProductEntry(actionRequest);
 
 		SCProductEntry productEntry =
-			(SCProductEntry)renderRequest.getAttribute(
+			(SCProductEntry)actionRequest.getAttribute(
 				WebKeys.SOFTWARE_CATALOG_PRODUCT_ENTRY);
 
 		if (productEntry == null) {

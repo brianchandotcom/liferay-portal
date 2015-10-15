@@ -50,8 +50,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
-		"mvc.command.name=/bookmarks/edit_folder",
-		"mvc.command.name=/bookmarks/select_folder"
+		"mvc.command.name=/bookmarks/edit_folder"
 	},
 	service = MVCActionCommand.class
 )

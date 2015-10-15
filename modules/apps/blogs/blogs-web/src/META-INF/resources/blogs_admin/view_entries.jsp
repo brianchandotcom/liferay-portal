@@ -44,16 +44,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 portletURL.setParameter("navigationFilter", navigationFilter);
+
+String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-frontend:management-bar
 	checkBoxContainerId="blogEntriesSearchContainer"
 	includeCheckBox="<%= true %>"
 >
-	<%
-	String keywords = ParamUtil.getString(request, "keywords");
-	%>
-
 	<c:if test="<%= Validator.isNull(keywords) %>">
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons

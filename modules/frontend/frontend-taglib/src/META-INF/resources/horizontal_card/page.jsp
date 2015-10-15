@@ -31,15 +31,22 @@
 			</div>
 		</c:if>
 
-		<c:if test="<%= Validator.isNotNull(imageUrl) %>">
+		<c:if test="<%= Validator.isNotNull(imageUrl) || Validator.isNotNull(icon) %>">
 			<div class="card-col-field">
-				<span class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %> <%= Validator.isNotNull(imageUrl) ? imageUrl : StringPool.BLANK %>"></span>
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(imageUrl) %>">
+						<img alt="" class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %>" src="<%= imageUrl %>"/>
+					</c:when>
+					<c:otherwise>
+						<span class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %> <%= icon %>"></span>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</c:if>
 
 		<div class="card-col-content card-col-gutters">
 			<h4>
-				<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(title) %>" />
+				<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(text) %>" />
 			</h4>
 		</div>
 

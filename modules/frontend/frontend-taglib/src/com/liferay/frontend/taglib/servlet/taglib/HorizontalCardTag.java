@@ -46,10 +46,6 @@ public class HorizontalCardTag extends IncludeTag {
 		_actionJspServletContext = actionJspServletContext;
 	}
 
-	public void setBackgroundImage(boolean backgroundImage) {
-		_backgroundImage = backgroundImage;
-	}
-
 	public void setCheckboxChecked(boolean checkboxChecked) {
 		_checkboxChecked = checkboxChecked;
 	}
@@ -86,12 +82,8 @@ public class HorizontalCardTag extends IncludeTag {
 		_data = data;
 	}
 
-	public void setFooter(String footer) {
-		_footer = footer;
-	}
-
-	public void setHeader(String header) {
-		_header = header;
+	public void setIcon(String icon) {
+		_icon = icon;
 	}
 
 	public void setImageCSSClass(String imageCSSClass) {
@@ -121,20 +113,8 @@ public class HorizontalCardTag extends IncludeTag {
 		_showCheckbox = showCheckbox;
 	}
 
-	public void setSmallImageCSSClass(String smallImageCSSClass) {
-		_smallImageCSSClass = smallImageCSSClass;
-	}
-
-	public void setSmallImageUrl(String smallImageUrl) {
-		_smallImageUrl = smallImageUrl;
-	}
-
-	public void setSubtitle(String subtitle) {
-		_subtitle = subtitle;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
+	public void setText(String text) {
+		_text = text;
 	}
 
 	public void setUrl(String url) {
@@ -145,7 +125,6 @@ public class HorizontalCardTag extends IncludeTag {
 	protected void cleanUp() {
 		_actionJsp = null;
 		_actionJspServletContext = null;
-		_backgroundImage = true;
 		_checkboxChecked = null;
 		_checkboxCSSClass = null;
 		_checkboxData = null;
@@ -155,17 +134,13 @@ public class HorizontalCardTag extends IncludeTag {
 		_checkboxValue = null;
 		_cssClass = null;
 		_data = null;
-		_footer = null;
-		_header = null;
+		_icon = null;
 		_imageUrl = null;
 		_imageCSSClass = null;
 		_resultRow = null;
 		_rowChecker = null;
 		_showCheckbox = false;
-		_smallImageCSSClass = null;
-		_smallImageUrl = null;
-		_subtitle = null;
-		_title = null;
+		_text = null;
 		_url = null;
 	}
 
@@ -179,7 +154,7 @@ public class HorizontalCardTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		return "/horizontal-card/page.jsp";
+		return "/horizontal_card/page.jsp";
 	}
 
 	@Override
@@ -188,8 +163,6 @@ public class HorizontalCardTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:actionJspServletContext",
 			getActionJspServletContext());
-		request.setAttribute(
-			"liferay-frontend:horizontal-card:backgroundImage", _backgroundImage);
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:checkboxChecked",
 			String.valueOf(_checkboxChecked));
@@ -207,8 +180,7 @@ public class HorizontalCardTag extends IncludeTag {
 			"liferay-frontend:horizontal-card:checkboxValue", _checkboxValue);
 		request.setAttribute("liferay-frontend:horizontal-card:cssClass", _cssClass);
 		request.setAttribute("liferay-frontend:horizontal-card:data", _data);
-		request.setAttribute("liferay-frontend:horizontal-card:footer", _footer);
-		request.setAttribute("liferay-frontend:horizontal-card:header", _header);
+		request.setAttribute("liferay-frontend:horizontal-card:icon", _icon);
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:imageCSSClass", _imageCSSClass);
 		request.setAttribute("liferay-frontend:horizontal-card:imageUrl", _imageUrl);
@@ -222,12 +194,7 @@ public class HorizontalCardTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:horizontal-card:showCheckbox", _showCheckbox);
 
-		request.setAttribute(
-			"liferay-frontend:horizontal-card:smallImageCSSClass", _smallImageCSSClass);
-		request.setAttribute(
-			"liferay-frontend:horizontal-card:smallImageUrl", _smallImageUrl);
-		request.setAttribute("liferay-frontend:horizontal-card:subtitle", _subtitle);
-		request.setAttribute("liferay-frontend:horizontal-card:title", _title);
+		request.setAttribute("liferay-frontend:horizontal-card:text", _text);
 		request.setAttribute("liferay-frontend:horizontal-card:url", _url);
 
 		request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, _resultRow);
@@ -235,7 +202,6 @@ public class HorizontalCardTag extends IncludeTag {
 
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
-	private boolean _backgroundImage = true;
 	private Boolean _checkboxChecked;
 	private String _checkboxCSSClass;
 	private Map<String, Object> _checkboxData;
@@ -245,17 +211,14 @@ public class HorizontalCardTag extends IncludeTag {
 	private String _checkboxValue;
 	private String _cssClass;
 	private Map<String, Object> _data;
-	private String _footer;
-	private String _header;
+	private String _icon;
 	private String _imageCSSClass;
 	private String _imageUrl;
 	private ResultRow _resultRow;
 	private RowChecker _rowChecker;
 	private boolean _showCheckbox;
-	private String _smallImageCSSClass;
-	private String _smallImageUrl;
-	private String _subtitle;
-	private String _title;
+	private String _text;
 	private String _url;
+
 
 }

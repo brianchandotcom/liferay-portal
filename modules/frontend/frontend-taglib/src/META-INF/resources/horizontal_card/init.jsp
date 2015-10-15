@@ -19,7 +19,6 @@
 <%
 String actionJsp = (String)request.getAttribute("liferay-frontend:horizontal-card:actionJsp");
 ServletContext actionJspServletContext = (ServletContext)request.getAttribute("liferay-frontend:horizontal-card:actionJspServletContext");
-boolean backgroundImage = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:horizontal-card:backgroundImage"));
 boolean checkboxChecked = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:horizontal-card:checkboxChecked"));
 String checkboxCSSClass = (String)request.getAttribute("liferay-frontend:horizontal-card:checkboxCSSClass");
 Map<String, Object> checkboxData = (Map<String, Object>)request.getAttribute("liferay-frontend:horizontal-card:checkboxData");
@@ -29,16 +28,12 @@ String checkboxName = (String)request.getAttribute("liferay-frontend:horizontal-
 String checkboxValue = (String)request.getAttribute("liferay-frontend:horizontal-card:checkboxValue");
 String cssClass = (String)request.getAttribute("liferay-frontend:horizontal-card:cssClass");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-frontend:horizontal-card:data");
-String footer = (String)request.getAttribute("liferay-frontend:horizontal-card:footer");
-String header = (String)request.getAttribute("liferay-frontend:horizontal-card:header");
+String icon = (String)request.getAttribute("liferay-frontend:horizontal-card:icon");
 String imageCSSClass = (String)request.getAttribute("liferay-frontend:horizontal-card:imageCSSClass");
 String imageUrl = (String)request.getAttribute("liferay-frontend:horizontal-card:imageUrl");
 ResultRow resultRow = (ResultRow)request.getAttribute("liferay-frontend:horizontal-card:resultRow");
 RowChecker rowChecker = (RowChecker)request.getAttribute("liferay-frontend:horizontal-card:rowChecker");
 boolean showCheckbox = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:horizontal-card:showCheckbox"));
-String smallImageCSSClass = GetterUtil.getString(request.getAttribute("liferay-frontend:horizontal-card:smallImageCSSClass"));
-String smallImageUrl = GetterUtil.getString(request.getAttribute("liferay-frontend:horizontal-card:smallImageUrl"));
-String subtitle = (String)request.getAttribute("liferay-frontend:horizontal-card:subtitle");
-String title = (String)request.getAttribute("liferay-frontend:horizontal-card:title");
+String text = (String)request.getAttribute("liferay-frontend:horizontal-card:text");
 String url = (String)request.getAttribute("liferay-frontend:horizontal-card:url");
 %>

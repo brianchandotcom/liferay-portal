@@ -224,12 +224,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to display the image as a background image</description>
-			<name>backgroundImage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>Whether to select the card checkbox. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>checkboxChecked</name>
 			<required>false</required>
@@ -284,14 +278,8 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add to the card text zone footer, if the card is vertical</description>
-			<name>footer</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Text to add to the card text zone header, if the card is vertical</description>
-			<name>header</name>
+			<description>A CSS icon class for styling the card icon</description>
+			<name>icon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -326,26 +314,8 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the small image</description>
-			<name>smallImageCSSClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A URL for the card's small image, if the card is vertical</description>
-			<name>smallImageUrl</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Text to add as a subtitle in the text zone, if the card is vertical</description>
-			<name>subtitle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A title for the card</description>
-			<name>title</name>
+			<description>A text for the card</description>
+			<name>text</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

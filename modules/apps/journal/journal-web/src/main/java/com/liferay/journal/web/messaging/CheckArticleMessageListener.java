@@ -14,9 +14,11 @@
 
 package com.liferay.journal.web.messaging;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.upgrade.JournalServiceUpgrade;
-import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
+import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -25,8 +27,11 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,16 +40,24 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Tina Tian
  */
-@Component(immediate = true, service = CheckArticleMessageListener.class)
+@Component(
+	configurationPid = "com.liferay.journal.web.configuration.JournalWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = CheckArticleMessageListener.class
+)
 public class CheckArticleMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
+		JournalWebConfiguration journalWebConfiguration =
+			Configurable.createConfigurable(
+				JournalWebConfiguration.class, properties);
+
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
-				JournalWebConfigurationValues.CHECK_INTERVAL, TimeUnit.MINUTE));
+				journalWebConfiguration.checkInterval(), TimeUnit.MINUTE));
 
 		_schedulerEngineHelper.register(this, schedulerEntryImpl);
 	}

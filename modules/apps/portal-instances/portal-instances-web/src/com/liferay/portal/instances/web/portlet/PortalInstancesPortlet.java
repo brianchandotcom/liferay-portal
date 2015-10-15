@@ -15,13 +15,11 @@
 package com.liferay.portal.instances.web.portlet;
 
 import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
-import com.liferay.portal.instances.web.upgrade.PortalInstancesWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -49,10 +47,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class PortalInstancesPortlet extends MVCPortlet {
-
-	@Reference(unbind = "-")
-	protected void setPortalInstancesWebUpgrade(
-		PortalInstancesWebUpgrade portalInstancesWebUpgrade) {
-	}
-
 }

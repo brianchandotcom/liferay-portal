@@ -38,8 +38,8 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayStyleURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			displayViews="<%= BrowserTag.DISPLAY_STYLES %>"
+			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

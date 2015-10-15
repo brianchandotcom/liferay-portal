@@ -37,6 +37,8 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 	<liferay-ui:error key="casLogoutURLInvalid" message="the-cas-logout-url-is-invalid" />
 	<liferay-ui:error key="casNoSuchUserURLInvalid" message="the-cas-no-such-user-url-is-invalid" />
 
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/edit_company_cas_configuration" />
+
 	<aui:input label="enabled" name="cas--enabled" type="checkbox" value="<%= enabled %>" />
 
 	<aui:input helpMessage="import-cas-users-from-ldap-help" label="import-cas-users-from-ldap" name="cas--importFromLDAP" type="checkbox" value="<%= importFromLDAP %>" />

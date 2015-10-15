@@ -233,13 +233,14 @@ if (layout != null) {
 
 				<%
 				String portletId = request.getParameter("p_p_id");
+				boolean singlePageApplicationClearCache = GetterUtil.getBoolean((Boolean)request.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE));
 				String singlePageApplicationLastPortletId = (String)session.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID);
 
 				String scrollElementId = HtmlUtil.escape(ParamUtil.getString(request, "scroll"));
 				%>
 
 				{
-					"clearScreensCache": <%= (Validator.isNotNull(portletId) && Validator.isNotNull(singlePageApplicationLastPortletId) && !Validator.equals(portletId, singlePageApplicationLastPortletId)) %>,
+					"clearScreensCache": <%= singlePageApplicationClearCache || ((Validator.isNotNull(portletId) && Validator.isNotNull(singlePageApplicationLastPortletId) && !Validator.equals(portletId, singlePageApplicationLastPortletId))) %>,
 					"scrollElementId": "<%= scrollElementId %>"
 				}
 

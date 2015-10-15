@@ -220,6 +220,8 @@ public interface WebKeys {
 
 	public static final String SETTINGS_SCOPE = "SETTINGS_SCOPE";
 
+	public static final String SINGLE_PAGE_APPLICATION_CLEAR_CACHE = "SINGLE_PAGE_APPLICATION_CLEAR_CACHE";
+
 	public static final String SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID = "SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID";
 
 	public static final String SOURCE_VERSION = "SOURCE_VERSION";

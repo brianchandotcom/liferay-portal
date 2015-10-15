@@ -20,6 +20,8 @@
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
 
+String navigationFilter = ParamUtil.getString(request, "navigationFilter");
+
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -34,9 +36,14 @@ else {
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+PortletURL navigationPortletURL = renderResponse.createRenderURL();
+
+navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+portletURL.setParameter("navigationFilter", navigationFilter);
 %>
 
 <liferay-frontend:management-bar
@@ -52,6 +59,12 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all", "mine"} %>'
+			navigationParam="navigationFilter"
+			portletURL="<%= navigationPortletURL %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"

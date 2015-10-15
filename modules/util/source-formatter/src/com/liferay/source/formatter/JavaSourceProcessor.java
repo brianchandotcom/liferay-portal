@@ -914,6 +914,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-59076
 
 		if (_checkModulesServiceUtil && isModulesFile(absolutePath) &&
+			!fileName.endsWith("MessageListener.java") &&
 			newContent.contains("@Component") &&
 			newContent.contains("ServiceUtil.")) {
 

@@ -44,11 +44,11 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 	public static final String COUNT_BY_G_N_D =
 		TeamFinder.class.getName() + ".countByG_N_D";
 
-	public static final String FIND_BY_G_N_D =
-		TeamFinder.class.getName() + ".findByG_N_D";
-
 	public static final String FIND_BY_G_U =
 		TeamFinder.class.getName() + ".findByG_U";
+
+	public static final String FIND_BY_G_N_D =
+		TeamFinder.class.getName() + ".findByG_N_D";
 
 	public static final String JOIN_BY_USERS_TEAMS =
 		TeamFinder.class.getName() + ".joinByUsersTeams";
@@ -83,6 +83,14 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 	}
 
 	@Override
+	public List<Team> findByG_U(
+		long groupId, long userId, int start, int end,
+		OrderByComparator<Team> obc) {
+
+		return doFindByG_U(groupId, userId, start, end, obc);
+	}
+
+	@Override
 	public List<Team> findByG_N_D(
 		long groupId, String name, String description,
 		LinkedHashMap<String, Object> params, int start, int end,
@@ -90,14 +98,6 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 
 		return doFindByG_N_D(
 			groupId, name, description, params, start, end, obc, false);
-	}
-
-	@Override
-	public List<Team> findByG_U(
-		long groupId, long userId, int start, int end,
-		OrderByComparator<Team> obc) {
-
-		return doFindByG_U(groupId, userId, start, end, obc);
 	}
 
 	protected int doCountByG_N_D(

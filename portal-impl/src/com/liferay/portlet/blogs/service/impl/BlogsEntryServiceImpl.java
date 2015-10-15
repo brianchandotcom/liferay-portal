@@ -368,6 +368,34 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int status, int start, int end,
+		OrderByComparator<BlogsEntry> obc) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.filterFindByG_U_NotS(
+				groupId, userId, WorkflowConstants.STATUS_IN_TRASH, start, end,
+				obc);
+		}
+		else {
+			return blogsEntryPersistence.filterFindByG_U_S(
+				groupId, userId, status, start, end, obc);
+		}
+	}
+
+	@Override
+	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.filterCountByG_U_NotS(
+				groupId, userId, status);
+		}
+		else {
+			return blogsEntryPersistence.filterCountByG_U_S(
+				groupId, userId, status);
+		}
+	}
+
+	@Override
 	public List<BlogsEntry> getOrganizationEntries(
 			long organizationId, Date displayDate, int status, int max)
 		throws PortalException {

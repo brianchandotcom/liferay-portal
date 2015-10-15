@@ -59,6 +59,8 @@ if (Validator.isNull(displayStyle)) {
 else {
 	if (ArrayUtil.contains(displayViews, displayStyle)) {
 		portalPreferences.setValue(DLPortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
+
+		request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, true);
 	}
 }
 

@@ -225,6 +225,9 @@ public class JournalDisplayContext {
 			if (ArrayUtil.contains(displayViews, displayStyle)) {
 				portalPreferences.setValue(
 					JournalPortletKeys.JOURNAL, "display-style", displayStyle);
+
+				request.setAttribute(
+					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, true);
 			}
 		}
 

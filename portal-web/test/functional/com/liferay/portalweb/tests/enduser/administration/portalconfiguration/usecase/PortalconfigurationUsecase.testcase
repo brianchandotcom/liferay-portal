@@ -289,7 +289,7 @@
 			<var name="virtualHostsURL" value="http://www.charlie.com:8080" />
 		</execute>
 
-		<execute function="AssertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
+		<execute function="AssertHTMLSourceTextPresent" locator1="http://www.charlie.com:8080" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />

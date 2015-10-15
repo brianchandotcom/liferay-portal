@@ -59,6 +59,7 @@
 	<command name="addPG" summary="Add a page named '${pageName}'">
 		<execute macro="Page#gotoPagesCP">
 			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletName" value="Site Pages" />

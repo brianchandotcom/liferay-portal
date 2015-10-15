@@ -60,12 +60,12 @@
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
@@ -89,27 +89,12 @@
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
-			<var name="pageName" value="Test Page2" />
-		</execute>
-
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
@@ -162,24 +147,23 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page2" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Entry1" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entrySearchTerm" value="Blogs Entry1 Title" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
+		<execute macro="Search#viewSearchNoPG">
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Entry1" />
 		</execute>
 	</command>
 
@@ -209,12 +193,12 @@
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="User#logoutPG">
@@ -239,7 +223,7 @@
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="User#logoutPG">

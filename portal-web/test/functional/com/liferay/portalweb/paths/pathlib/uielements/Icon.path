@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS</td>
+	<td>//h2[contains(.,'${key_assetHeader}')]//..//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//div[contains(.,'Details')]/span/a/i[@class='icon-file-alt']</td>
 	<td></td>

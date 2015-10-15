@@ -296,12 +296,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the card type is horizontal. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>horizontal</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>A CSS class for styling the card image</description>
 			<name>imageCSSClass</name>
 			<required>false</required>

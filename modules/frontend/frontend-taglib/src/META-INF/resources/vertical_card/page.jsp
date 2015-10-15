@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/card/init.jsp" %>
+<%@ include file="/vertical_card/init.jsp" %>
 
 <div class="<%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 	<div class="<%= showCheckbox ? "checkbox checkbox-default toggle-card-dm" : StringPool.BLANK %>">

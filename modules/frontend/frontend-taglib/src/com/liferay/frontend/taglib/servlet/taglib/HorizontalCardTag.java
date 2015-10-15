@@ -94,10 +94,6 @@ public class HorizontalCardTag extends IncludeTag {
 		_header = header;
 	}
 
-	public void setHorizontal(boolean horizontal) {
-		_horizontal = horizontal;
-	}
-
 	public void setImageCSSClass(String imageCSSClass) {
 		_imageCSSClass = imageCSSClass;
 	}
@@ -161,7 +157,6 @@ public class HorizontalCardTag extends IncludeTag {
 		_data = null;
 		_footer = null;
 		_header = null;
-		_horizontal = false;
 		_imageUrl = null;
 		_imageCSSClass = null;
 		_resultRow = null;
@@ -184,60 +179,56 @@ public class HorizontalCardTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		if (_horizontal) {
-			return "/card/horizontal.jsp";
-		}
-
-		return "/card/vertical.jsp";
+		return "/horizontal-card/page.jsp";
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:card:actionJsp", _actionJsp);
+		request.setAttribute("liferay-frontend:horizontal-card:actionJsp", _actionJsp);
 		request.setAttribute(
-			"liferay-frontend:card:actionJspServletContext",
+			"liferay-frontend:horizontal-card:actionJspServletContext",
 			getActionJspServletContext());
 		request.setAttribute(
-			"liferay-frontend:card:backgroundImage", _backgroundImage);
+			"liferay-frontend:horizontal-card:backgroundImage", _backgroundImage);
 		request.setAttribute(
-			"liferay-frontend:card:checkboxChecked",
+			"liferay-frontend:horizontal-card:checkboxChecked",
 			String.valueOf(_checkboxChecked));
 		request.setAttribute(
-			"liferay-frontend:card:checkboxCSSClass", _checkboxCSSClass);
+			"liferay-frontend:horizontal-card:checkboxCSSClass", _checkboxCSSClass);
 		request.setAttribute(
-			"liferay-frontend:card:checkboxData", _checkboxData);
+			"liferay-frontend:horizontal-card:checkboxData", _checkboxData);
 		request.setAttribute(
-			"liferay-frontend:card:checkboxDisabled",
+			"liferay-frontend:horizontal-card:checkboxDisabled",
 			String.valueOf(_checkboxDisabled));
-		request.setAttribute("liferay-frontend:card:checkboxId", _checkboxId);
+		request.setAttribute("liferay-frontend:horizontal-card:checkboxId", _checkboxId);
 		request.setAttribute(
-			"liferay-frontend:card:checkboxName", _checkboxName);
+			"liferay-frontend:horizontal-card:checkboxName", _checkboxName);
 		request.setAttribute(
-			"liferay-frontend:card:checkboxValue", _checkboxValue);
-		request.setAttribute("liferay-frontend:card:cssClass", _cssClass);
-		request.setAttribute("liferay-frontend:card:data", _data);
-		request.setAttribute("liferay-frontend:card:footer", _footer);
-		request.setAttribute("liferay-frontend:card:header", _header);
+			"liferay-frontend:horizontal-card:checkboxValue", _checkboxValue);
+		request.setAttribute("liferay-frontend:horizontal-card:cssClass", _cssClass);
+		request.setAttribute("liferay-frontend:horizontal-card:data", _data);
+		request.setAttribute("liferay-frontend:horizontal-card:footer", _footer);
+		request.setAttribute("liferay-frontend:horizontal-card:header", _header);
 		request.setAttribute(
-			"liferay-frontend:card:imageCSSClass", _imageCSSClass);
-		request.setAttribute("liferay-frontend:card:imageUrl", _imageUrl);
-		request.setAttribute("liferay-frontend:card:resultRow", _resultRow);
-		request.setAttribute("liferay-frontend:card:rowChecker", _rowChecker);
+			"liferay-frontend:horizontal-card:imageCSSClass", _imageCSSClass);
+		request.setAttribute("liferay-frontend:horizontal-card:imageUrl", _imageUrl);
+		request.setAttribute("liferay-frontend:horizontal-card:resultRow", _resultRow);
+		request.setAttribute("liferay-frontend:horizontal-card:rowChecker", _rowChecker);
 
 		if (_rowChecker != null) {
 			_showCheckbox = true;
 		}
 
 		request.setAttribute(
-			"liferay-frontend:card:showCheckbox", _showCheckbox);
+			"liferay-frontend:horizontal-card:showCheckbox", _showCheckbox);
 
 		request.setAttribute(
-			"liferay-frontend:card:smallImageCSSClass", _smallImageCSSClass);
+			"liferay-frontend:horizontal-card:smallImageCSSClass", _smallImageCSSClass);
 		request.setAttribute(
-			"liferay-frontend:card:smallImageUrl", _smallImageUrl);
-		request.setAttribute("liferay-frontend:card:subtitle", _subtitle);
-		request.setAttribute("liferay-frontend:card:title", _title);
-		request.setAttribute("liferay-frontend:card:url", _url);
+			"liferay-frontend:horizontal-card:smallImageUrl", _smallImageUrl);
+		request.setAttribute("liferay-frontend:horizontal-card:subtitle", _subtitle);
+		request.setAttribute("liferay-frontend:horizontal-card:title", _title);
+		request.setAttribute("liferay-frontend:horizontal-card:url", _url);
 
 		request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, _resultRow);
 	}
@@ -256,7 +247,6 @@ public class HorizontalCardTag extends IncludeTag {
 	private Map<String, Object> _data;
 	private String _footer;
 	private String _header;
-	private boolean _horizontal = false;
 	private String _imageCSSClass;
 	private String _imageUrl;
 	private ResultRow _resultRow;

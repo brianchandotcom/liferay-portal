@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/card/init.jsp" %>
+<%@ include file="/horizontal_card/init.jsp" %>
 
 <div class="card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
 	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">

@@ -25,8 +25,6 @@ if (Validator.isBlank(tilesPortletContent)) {
 	tilesPortletContent = GetterUtil.getString(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_content"));
 }
 
-boolean tilesPortletDecorate = GetterUtil.getBoolean(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_decorate"), true);
-
 TilesAttributeUtil.removeComponentContext(pageContext);
 
 Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
@@ -34,20 +32,6 @@ Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 PortletPreferences portletSetup = portletDisplay.getPortletSetup();
 
 RenderResponseImpl renderResponseImpl = (RenderResponseImpl)PortletResponseImpl.getPortletResponseImpl(renderResponse);
-
-// Portlet decorate
-
-boolean portletDecorate = tilesPortletDecorate;
-
-Boolean portletDecorateObj = (Boolean)request.getAttribute(WebKeys.PORTLET_DECORATE);
-
-if (portletDecorateObj != null) {
-	portletDecorate = portletDecorateObj.booleanValue();
-
-	request.removeAttribute(WebKeys.PORTLET_DECORATE);
-}
-
-portletDisplay.setPortletDecorate(portletDecorate);
 
 // Portlet title
 

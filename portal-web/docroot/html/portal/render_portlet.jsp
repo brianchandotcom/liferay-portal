@@ -343,6 +343,20 @@ if (siteGroup.isStaged() && !siteGroup.isStagedRemotely() && !siteGroup.isStaged
 	themeDisplay.setSiteGroupId(siteGroup.getGroupId());
 }
 
+// Portlet decorate
+
+boolean tilesPortletDecorate = GetterUtil.getBoolean(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_decorate"), true);
+
+boolean portletDecorate = tilesPortletDecorate;
+
+Boolean portletDecorateObj = (Boolean)request.getAttribute(WebKeys.PORTLET_DECORATE);
+
+if (portletDecorateObj != null) {
+	portletDecorate = portletDecorateObj.booleanValue();
+
+	request.removeAttribute(WebKeys.PORTLET_DECORATE);
+}
+
 portletDisplay.recycle();
 
 portletDisplay.setActive(portlet.isActive());
@@ -361,6 +375,7 @@ portletDisplay.setModePreview(modePreview);
 portletDisplay.setModePrint(modePrint);
 portletDisplay.setModeView(portletMode.equals(PortletMode.VIEW));
 portletDisplay.setNamespace(PortalUtil.getPortletNamespace(portletId));
+portletDisplay.setPortletDecorate(portletDecorate);
 portletDisplay.setPortletName(portletConfig.getPortletName());
 portletDisplay.setPortletResource(portletResource);
 portletDisplay.setResourcePK(portletPrimaryKey);

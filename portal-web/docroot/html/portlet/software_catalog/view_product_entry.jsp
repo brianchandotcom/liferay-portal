@@ -339,7 +339,7 @@ SCProductEntry unescapedProductEntry = productEntry.toUnescapedModel();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/software_catalog/view_product");
+portletURL.setParameter("mvcRenderCommandName", "/software_catalog/view_product");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("productEntryId", String.valueOf(productEntry.getProductEntryId()));
 

@@ -49,7 +49,7 @@ boolean testDirectDownloadURL = ParamUtil.getBoolean(request, "testDirectDownloa
 
 PortletURL editProductEntryURL = renderResponse.createRenderURL();
 
-editProductEntryURL.setParameter("struts_action", "/software_catalog/edit_product_entry");
+editProductEntryURL.setParameter("mvcRenderCommandName", "/software_catalog/edit_product_entry");
 editProductEntryURL.setParameter("redirect", currentURL);
 editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId));
 %>

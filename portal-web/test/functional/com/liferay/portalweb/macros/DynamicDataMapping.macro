@@ -501,6 +501,12 @@
 			<then>
 				<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 			</then>
+			<elseif>
+				<condition function="IsElementPresent" locator1="BasePortlet#IFRAME" />
+				<then>
+					<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+				</then>
+			</elseif>
 		</if>
 	</command>
 

@@ -38,10 +38,6 @@ public class ManagementBarDisplayButtonsTag
 		return super.doStartTag();
 	}
 
-	public void setDisplayStyleURL(PortletURL displayStyleURL) {
-		_displayStyleURL = displayStyleURL;
-	}
-
 	public void setDisplayViews(String[] displayViews) {
 		_displayViews = displayViews;
 	}
@@ -53,14 +49,18 @@ public class ManagementBarDisplayButtonsTag
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
+	}
+
 	public void setSelectedDisplayStyle(String selectedDisplayStyle) {
 		_selectedDisplayStyle = selectedDisplayStyle;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_displayStyleURL = null;
 		_displayViews = null;
+		_portletURL = null;
 		_selectedDisplayStyle = StringPool.BLANK;
 	}
 
@@ -82,11 +82,11 @@ public class ManagementBarDisplayButtonsTag
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-frontend:management-bar-display-buttons:displayStyleURL",
-			_displayStyleURL);
-		request.setAttribute(
 			"liferay-frontend:management-bar-display-buttons:displayViews",
 			_displayViews);
+		request.setAttribute(
+			"liferay-frontend:management-bar-display-buttons:portletURL",
+			_portletURL);
 		request.setAttribute(
 			"liferay-frontend:management-bar-display-buttons:" +
 				"selectedDisplayStyle",
@@ -101,8 +101,8 @@ public class ManagementBarDisplayButtonsTag
 	private static final String _PAGE =
 		"/management_bar_display_buttons/page.jsp";
 
-	private PortletURL _displayStyleURL;
 	private String[] _displayViews;
+	private PortletURL _portletURL;
 	private String _selectedDisplayStyle;
 
 }

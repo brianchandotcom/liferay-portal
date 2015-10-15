@@ -232,7 +232,7 @@ public class AssetPublisherConfigurationAction
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		Group selectedGroup = _groupLocalService.fetchGroup(groupId);
+		Group selectedGroup = groupLocalService.fetchGroup(groupId);
 
 		String scopeId = AssetPublisherUtil.getScopeId(
 			selectedGroup, themeDisplay.getScopeGroupId());
@@ -473,26 +473,26 @@ public class AssetPublisherConfigurationAction
 	protected void setAssetTagLocalService(
 		AssetTagLocalService assetTagLocalService) {
 
-		_assetTagLocalService = assetTagLocalService;
+		this.assetTagLocalService = assetTagLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
+		this.groupLocalService = groupLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
-		_layoutLocalService = layoutLocalService;
+		this.layoutLocalService = layoutLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setLayoutRevisionLocalService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 
-		_layoutRevisionLocalService = layoutRevisionLocalService;
+		this.layoutRevisionLocalService = layoutRevisionLocalService;
 	}
 
 	protected void setScopes(
@@ -568,7 +568,7 @@ public class AssetPublisherConfigurationAction
 			}
 		}
 
-		layout = _layoutLocalService.updateLayout(
+		layout = layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
@@ -585,7 +585,7 @@ public class AssetPublisherConfigurationAction
 				request, layoutSetBranchId, layout.getPlid());
 
 			LayoutRevision layoutRevision =
-				_layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
+				layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
 
 			PortletPreferencesImpl portletPreferences =
 				(PortletPreferencesImpl)actionRequest.getPreferences();
@@ -679,7 +679,7 @@ public class AssetPublisherConfigurationAction
 		String name = queryRule.getName();
 
 		if (name.equals("assetTags")) {
-			_assetTagLocalService.checkTags(
+			assetTagLocalService.checkTags(
 				userId, groupId, queryRule.getValues());
 		}
 
@@ -690,9 +690,9 @@ public class AssetPublisherConfigurationAction
 		}
 	}
 
-	private AssetTagLocalService _assetTagLocalService;
-	private GroupLocalService _groupLocalService;
-	private LayoutLocalService _layoutLocalService;
-	private LayoutRevisionLocalService _layoutRevisionLocalService;
+	protected AssetTagLocalService assetTagLocalService;
+	protected GroupLocalService groupLocalService;
+	protected LayoutLocalService layoutLocalService;
+	protected LayoutRevisionLocalService layoutRevisionLocalService;
 
 }

@@ -15,9 +15,9 @@
 package com.liferay.bookmarks.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.social.BookmarksFolderActivityInterpreter;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -28,11 +28,16 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
+import com.liferay.social.activity.test.util.SocialActivityInterpreterHelper;
 
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Zsolt Berentey
@@ -49,6 +54,10 @@ public class BookmarksFolderActivityInterpreterTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	public String getClassName() {
+		return BookmarksFolder.class.getName();
+	}
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -64,7 +73,16 @@ public class BookmarksFolderActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new BookmarksFolderActivityInterpreter();
+		SocialActivityInterpreterHelper socialActivityInterpreterHelper =
+			new SocialActivityInterpreterHelper(
+				getClassName(), BookmarksPortletKeys.BOOKMARKS);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return socialActivityInterpreterHelper.getActivityInterpreter(
+			bundleContext);
 	}
 
 	@Override

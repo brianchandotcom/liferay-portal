@@ -612,7 +612,6 @@
 	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCActionCommand" />
 	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCRenderCommand" />
 	<bean id="com.liferay.portlet.softwarecatalog.action.SoftwareCatalogViewMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.SoftwareCatalogViewMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.ViewProductEntryMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.ViewProductEntryMVCActionCommand" />
 	<bean id="com.liferay.portlet.softwarecatalog.action.ViewProductEntryMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.ViewProductEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" class="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil">
 		<property name="socialActivityPermission">

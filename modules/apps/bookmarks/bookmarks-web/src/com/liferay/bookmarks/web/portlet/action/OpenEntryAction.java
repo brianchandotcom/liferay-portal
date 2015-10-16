@@ -16,7 +16,7 @@ package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
+import com.liferay.bookmarks.service.BookmarksEntryService;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,7 +45,7 @@ public class OpenEntryAction extends BaseStrutsAction {
 		try {
 			long entryId = ParamUtil.getLong(request, "entryId");
 
-			BookmarksEntry entry = BookmarksEntryServiceUtil.getEntry(entryId);
+			BookmarksEntry entry = _bookmarksEntryService.getEntry(entryId);
 
 			if (entry.isInTrash()) {
 				int status = ParamUtil.getInteger(
@@ -55,7 +56,7 @@ public class OpenEntryAction extends BaseStrutsAction {
 				}
 			}
 
-			entry = BookmarksEntryServiceUtil.openEntry(entry);
+			entry = _bookmarksEntryService.openEntry(entry);
 
 			response.sendRedirect(entry.getUrl());
 
@@ -67,5 +68,14 @@ public class OpenEntryAction extends BaseStrutsAction {
 			return null;
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setBookmarksEntryService(
+		BookmarksEntryService bookmarksEntryService) {
+
+		_bookmarksEntryService = bookmarksEntryService;
+	}
+
+	private BookmarksEntryService _bookmarksEntryService;
 
 }

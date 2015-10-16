@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
 import java.util.Date;
@@ -45,6 +45,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -83,7 +84,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 
 	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
 		return isVisible(entry.getStatus(), status);
 	}
@@ -139,7 +140,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
 		doReindex(entry);
 	}
@@ -153,7 +154,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 
 	protected void reindexEntries(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
-			BlogsEntryLocalServiceUtil.getActionableDynamicQuery();
+			_blogsEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -204,7 +205,16 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryIndexer.class);
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

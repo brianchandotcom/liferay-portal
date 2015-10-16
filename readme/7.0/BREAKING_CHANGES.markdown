@@ -404,7 +404,7 @@ Due to this, the following APIs had breaking changes:
 - `PortalUtil`
 
 #### How should I update my code?
-Code invoking the APIs listed above should should be updated to use an
+Code invoking the APIs listed above should be updated to use an
 `HttpServletRequest` parameter instead of the formerly used `PageContext`
 parameter.
 

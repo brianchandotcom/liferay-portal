@@ -78,6 +78,7 @@ in ascending chronological order.
 - **JIRA Ticket:** LPS-42645
 
 #### What changed?
+
 The Logo Selector tag now supports uploading an image, storing it as a temporary
 file, cropping it, and canceling edits. The tag no longer requires creating a UI
 to include the image. Consequently, the `editLogoURL` parameter is no longer
@@ -91,10 +92,12 @@ support the new features:
 upload
 
 #### Who is affected?
+
 Plugins or templates that are using the `liferay-ui:logo-selector` tag need
 to update their usage of the tag.
 
 #### How should I update my code?
+
 You should remove the parameter `editLogoURL` and include (if neccessary) the
 parameters `currentLogoURL`, `hasUpdateLogoPermission`, `maxFileSize`, and/or
 `tempImageFileName`.
@@ -117,7 +120,6 @@ Old way:
         logoDisplaySelector=".user-logo"
     />
 
-
 New way:
 
     <liferay-ui:logo-selector
@@ -131,6 +133,7 @@ New way:
     />
 
 #### Why was this change made?
+
 This change helps keep a unified UI and consistent experience for uploading
 logos in the portal. The logos can be customized from a single location and used
 throughout the portal. In addition, the change adds new features such as image
@@ -143,6 +146,7 @@ cropping and support for canceling image upload.
 - **JIRA Ticket:** LPS-44599
 
 #### What changed?
+
 The configuration for email signatures of notifications from Message Boards and
 Wiki has been removed. An automatic update process is available that appends
 existing signatures into respective email message bodies for Message Boards and
@@ -151,12 +155,14 @@ the database. In case you declared signatures in portal properties (e.g.,
 `portal-ext.properties`), you must make the manual changes explained below.
 
 #### Who is affected?
+
 Users and system administrators who have configured email signatures for Message
 Boards or Wiki notifications are affected. System administrators who have
 configured portal properties (e.g., `portal-ext.properties`) must make the
 manual changes described below.
 
 #### How should I update my code?
+
 You should modify your `portal-ext.properties` file to remove the properties
 `message.boards.email.message.added.signature`,
 `message.boards.email.message.updated.signature`,
@@ -176,6 +182,7 @@ New way:
     wiki.email.page.updated.body=A wiki page was updated.\n--\nFor any doubts email the system administrator
 
 #### Why was this change made?
+
 This change helps simplify the user interface. The signatures can still be set
 inside the message body. There was no real benefit in keeping the signature and
 body fields separate.
@@ -187,14 +194,17 @@ body fields separate.
 - **JIRA Ticket:** LPS-44342
 
 #### What changed?
+
 All the methods `get()` and `format()` which had the PortletConfig as a
 parameter have been removed.
 
 #### Who is affected?
+
 Any invocations from Java classes or JSPs to these methods in `LanguageUtil` and
 `UnicodeLanguageUtil` are affected.
 
 #### How should I update my code?
+
 Replace invocations to these methods with invocations to methods of the same
 name that take a `ResourceBundle` parameter, instead of taking a
 `PortletConfig` parameter.
@@ -210,6 +220,7 @@ New call:
     LanguageUtil.get(portletConfig.getResourceBundle(locale), key);
 
 #### Why was this change made?
+
 The removed methods didn't work properly and would never work properly, since
 they didn't have all the information they required. Since we expected the
 methods were rarely used, we thought it better to remove them without
@@ -222,21 +233,25 @@ deprecation than to leave them as buggy methods in the API.
 - **JIRA Ticket:** LPS-45107
 
 #### What changed?
+
 Web content is now required to use a structure and template. A default structure
 and template named *Basic Web Content* was added to the global scope, and can be
 modified or deleted.
 
 #### Who is affected?
+
 Applications that use the Journal API to create web content without a structure
 or template are affected.
 
 #### How should I update my code?
+
 You should always use a structure and template when creating web content. You
 can still use the *Basic Web Content* from the global scope (using the
 structure key `basic-web-content`), but you should keep in mind that users can
 modify or delete it.
 
 #### Why was this change made?
+
 This change gives users the flexibility to modify the default structure and
 template.
 
@@ -247,14 +262,17 @@ template.
 - **JIRA Ticket:** LPS-44639 and LPS-44894
 
 #### What changed?
+
 The `getSummary()` method in the AssetRenderer API and the `doGetSummary()`
 method in the Indexer API have changed and must include a `PortletRequest`
 and `PortletResponse` parameter as part of their signatures.
 
 #### Who is affected?
+
 These methods must be updated in all AssetRenderer and Indexer implementations.
 
 #### How should I update my code?
+
 Add a `PortletRequest` and `PortletResponse` parameter to the signatures of
 these methods.
 
@@ -279,6 +297,7 @@ New signature:
     public String getSummary(PortletRequest portletRequest, PortletResponse portletResponse)
 
 #### Why was this change made?
+
 Some content (such as web content) needs the `PortletRequest` and
 `PortletResponse` parameters in order to be rendered.
 
@@ -289,6 +308,7 @@ Some content (such as web content) needs the `PortletRequest` and
 - **JIRA Ticket:** LPS-43134
 
 #### What changed?
+
 Previously, some portlets allowed separate setups per portlet instance,
 regardless of whether the instances were in the same page or in different pages.
 For some of the portlet setup fields, however, it didn't make sense to allow
@@ -311,16 +331,19 @@ discouraged and notoriously problematic, we expect this change will
 inconvenience only a very low minority of portal users.
 
 #### Who is affected?
+
 Affected users are those who have specified varying configurations for multiple
 portlet instances of a portlet type, that stores configurations at the layout
 level.
 
 #### How should I update my code?
+
 The upgrade process chooses one portlet instance's configurations and stores it
 at the service level. After the upgrade, you should review the portlet's
 configuration and make any necessary modifications.
 
 #### Why was this change made?
+
 Unifying portlet and service configuration facilitates managing them.
 
 ---------------------------------------
@@ -330,6 +353,7 @@ Unifying portlet and service configuration facilitates managing them.
 - **JIRA Ticket:** LPS-47559
 
 #### What changed?
+
 The `updateXSDFieldMetadata()` operation was removed from the DDM Structure
 Local Service API.
 
@@ -338,14 +362,17 @@ representation; any call to modify a DDM structure's content should be done
 through the DDMForm model.
 
 #### Who is affected?
+
 Applications that use the DDM Structure Local Service API might be affected.
 
 #### How should I update my code?
+
 You should always use DDMForm to update the DDM Structure content. You can
 retrieve it by calling `ddmStructure.getDDMForm()`. Perform any changes to it and
 then call `DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure)`.
 
 #### Why was this change made?
+
 This change gives users the flexibility to modify the structure content without
 concerning themselves with the DDM Structure's internal content representation
 of data.
@@ -357,16 +384,19 @@ of data.
 - **JIRA Ticket:** LPS-44228
 
 #### What changed?
+
 Whenever the aui:input tag is used to generate an input of type checkbox,
 only an input tag will be generated, instead of the checkbox and hidden field it
 was generating before.
 
 #### Who is affected?
+
 Anyone trying to grab the previously generated fields is affected. The change
 mostly affects JavaScript code trying to add some additional actions when
 clicking on the checkboxes.
 
 #### How should I update my code?
+
 In your front-end JavaScript code, follow these steps:
 
 - Remove the `Checkbox` suffix when querying for the node in any of its forms,
@@ -375,6 +405,7 @@ like `A.one(...)`, `$(...)`, etc.
 previously generated hidden field.
 
 #### Why was this change made?
+
 This change makes generated forms more standard and interoperable since it falls
 back to the checkboxes default behavior. It allows the form to be submitted
 properly even when JavaScript is disabled.
@@ -386,6 +417,7 @@ properly even when JavaScript is disabled.
 - **JIRA Ticket:** LPS-47682
 
 #### What changed?
+
 Several APIs in `portal-service.jar` contained references to the
 `javax.servlet.jsp` package. This forced `util-taglib`, which depended on many
 of the package's features, to be bound to the same JSP implementation.
@@ -404,11 +436,13 @@ Due to this, the following APIs had breaking changes:
 - `PortalUtil`
 
 #### How should I update my code?
+
 Code invoking the APIs listed above should be updated to use an
 `HttpServletRequest` parameter instead of the formerly used `PageContext`
 parameter.
 
 #### Why was this change made?
+
 As stated previously, the use of the `javax.servlet.jsp` API in `portal-service`
 prevented the use of any other JSP impl within plugins (OSGi or otherwise). This
 limited what Liferay could change with respect to providing its own JSP

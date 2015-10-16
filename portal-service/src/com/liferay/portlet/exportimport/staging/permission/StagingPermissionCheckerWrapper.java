@@ -17,7 +17,7 @@ package com.liferay.portlet.exportimport.staging.permission;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerBag;
+import com.liferay.portal.security.permission.UserBag;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 
 import java.util.List;
@@ -43,21 +43,6 @@ public class StagingPermissionCheckerWrapper implements PermissionChecker {
 	@Override
 	public long getCompanyId() {
 		return _permissionChecker.getCompanyId();
-	}
-
-	@Override
-	public List<Long> getGuestResourceBlockIds(
-		long companyId, long groupId, String name, String actionId) {
-
-		long liveGroupId = getLiveGroupId(groupId);
-
-		return _permissionChecker.getGuestResourceBlockIds(
-			companyId, liveGroupId, name, actionId);
-	}
-
-	@Override
-	public PermissionCheckerBag getGuestUserBag() throws Exception {
-		return _permissionChecker.getGuestUserBag();
 	}
 
 	@Override
@@ -99,12 +84,8 @@ public class StagingPermissionCheckerWrapper implements PermissionChecker {
 	}
 
 	@Override
-	public PermissionCheckerBag getUserBag(long userId, long groupId)
-		throws Exception {
-
-		long liveGroupId = getLiveGroupId(groupId);
-
-		return _permissionChecker.getUserBag(userId, liveGroupId);
+	public UserBag getUserBag() throws Exception {
+		return _permissionChecker.getUserBag();
 	}
 
 	@Override

@@ -25,6 +25,12 @@ public class UserGroupRoleLocalServiceStagingAdvice
 		if (methodName.equals("addUserGroupRoles")) {
 			replace(arguments, 1);
 		}
+		else if (methodName.equals("deleteUserGroupRoles") &&
+				 (arguments.length == 2) && (arguments[0] instanceof Long) &&
+				 (arguments[1] instanceof Integer)) {
+
+			replace(arguments, 0);
+		}
 		else if (methodName.equals("deleteUserGroupRoles")) {
 			replace(arguments, 1);
 		}

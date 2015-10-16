@@ -397,7 +397,7 @@
 
 	<command name="advancedSearchCP">
 		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-		<execute function="AssertClick" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
+		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
 
 		<if>
 			<equals arg1="${userAdvancedSearch}" arg2="First Name" />
@@ -826,7 +826,7 @@
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-				<execute function="Type" locator1="TextInput#KEYWORDS" value1="user1*" />
+				<execute function="Type" locator1="TextInput#SEARCH" value1="user1*" />
 				<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 				<execute function="AssertTextPresent" locator1="Message#INFO" value1="No users were found." />
 			</then>
@@ -846,7 +846,7 @@
 
 					<var name="fullName"><![CDATA["${userFirstName} 1 ${userLastName}"]]></var>
 
-					<execute function="Type" locator1="TextInput#KEYWORDS" value1="${fullName}" />
+					<execute function="Type" locator1="TextInput#SEARCH" value1="${fullName}" />
 					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>

@@ -47,8 +47,8 @@ if (Validator.isNotNull(keywords)) {
 	<liferay-frontend:management-bar>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
-				displayStyleURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				displayViews="<%= BrowserTag.DISPLAY_STYLES %>"
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>

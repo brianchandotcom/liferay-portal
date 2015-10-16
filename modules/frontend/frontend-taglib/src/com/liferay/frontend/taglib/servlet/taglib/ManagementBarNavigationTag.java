@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletURL;
@@ -26,10 +25,9 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTag;
 
 /**
- * @author Eudaldo Alonso
+ * @author Sergio González
  */
-public class ManagementBarDisplayButtonsTag
-	extends IncludeTag implements BodyTag {
+public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -38,8 +36,12 @@ public class ManagementBarDisplayButtonsTag
 		return super.doStartTag();
 	}
 
-	public void setDisplayViews(String[] displayViews) {
-		_displayViews = displayViews;
+	public void setNavigationKeys(String[] navigationKeys) {
+		_navigationKeys = navigationKeys;
+	}
+
+	public void setNavigationParam(String navigationParam) {
+		_navigationParam = navigationParam;
 	}
 
 	@Override
@@ -53,15 +55,11 @@ public class ManagementBarDisplayButtonsTag
 		_portletURL = portletURL;
 	}
 
-	public void setSelectedDisplayStyle(String selectedDisplayStyle) {
-		_selectedDisplayStyle = selectedDisplayStyle;
-	}
-
 	@Override
 	protected void cleanUp() {
-		_displayViews = null;
+		_navigationKeys = null;
+		_navigationParam = null;
 		_portletURL = null;
-		_selectedDisplayStyle = StringPool.BLANK;
 	}
 
 	@Override
@@ -82,27 +80,25 @@ public class ManagementBarDisplayButtonsTag
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-frontend:management-bar-display-buttons:displayViews",
-			_displayViews);
+			"liferay-frontend:management-bar-navigation:navigationKeys",
+			_navigationKeys);
 		request.setAttribute(
-			"liferay-frontend:management-bar-display-buttons:portletURL",
+			"liferay-frontend:management-bar-navigation:navigationParam",
+			_navigationParam);
+		request.setAttribute(
+			"liferay-frontend:management-bar-navigation:portletURL",
 			_portletURL);
-		request.setAttribute(
-			"liferay-frontend:management-bar-display-buttons:" +
-				"selectedDisplayStyle",
-			_selectedDisplayStyle);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-frontend:management-bar-display-buttons:";
+		"liferay-frontend:management-bar-navigation:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE =
-		"/management_bar_display_buttons/page.jsp";
+	private static final String _PAGE = "/management_bar_navigation/page.jsp";
 
-	private String[] _displayViews;
+	private String[] _navigationKeys;
+	private String _navigationParam = "navigation";
 	private PortletURL _portletURL;
-	private String _selectedDisplayStyle;
 
 }

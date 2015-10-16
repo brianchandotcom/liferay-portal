@@ -17,6 +17,8 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
+String entriesNavigation = ParamUtil.getString(request, "entriesNavigation");
+
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
 
@@ -34,31 +36,46 @@ else {
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+PortletURL navigationPortletURL = renderResponse.createRenderURL();
+
+navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+portletURL.setParameter("entriesNavigation", entriesNavigation);
+
+String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-frontend:management-bar
 	checkBoxContainerId="blogEntriesSearchContainer"
 	includeCheckBox="<%= true %>"
 >
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayStyleURL="<%= renderResponse.createRenderURL() %>"
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
+	<c:if test="<%= Validator.isNull(keywords) %>">
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+				portletURL="<%= portletURL %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title", "display-date"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all", "mine"} %>'
+				navigationParam="entriesNavigation"
+				portletURL="<%= navigationPortletURL %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"title", "display-date"} %>'
+				portletURL="<%= portletURL %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</c:if>
 
 	<liferay-frontend:management-bar-action-buttons>
 

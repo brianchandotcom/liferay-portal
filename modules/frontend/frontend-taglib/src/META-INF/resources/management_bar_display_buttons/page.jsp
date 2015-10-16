@@ -17,9 +17,11 @@
 <%@ include file="/management_bar_display_buttons/init.jsp" %>
 
 <%
-PortletURL displayStyleURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-display-buttons:displayStyleURL");
 String[] displayViews = (String[])request.getAttribute("liferay-frontend:management-bar-display-buttons:displayViews");
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-display-buttons:portletURL");
 String selectedDisplayStyle = (String)request.getAttribute("liferay-frontend:management-bar-display-buttons:selectedDisplayStyle");
+
+PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 %>
 
 <%

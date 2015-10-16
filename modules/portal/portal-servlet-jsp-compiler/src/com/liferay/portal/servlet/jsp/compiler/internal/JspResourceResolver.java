@@ -84,7 +84,7 @@ public class JspResourceResolver implements ResourceResolver {
 			return classLoader.getResource(name);
 		}
 
-		return bundle.getResource(name);
+		return url;
 	}
 
 	@Override

@@ -18,7 +18,7 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -28,6 +28,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,8 +92,7 @@ public class BookmarksFolderPermissionChecker
 				while (folderId !=
 							BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-					folder = BookmarksFolderLocalServiceUtil.getFolder(
-						folderId);
+					folder = _bookmarksFolderLocalService.getFolder(folderId);
 
 					if (!_hasPermission(permissionChecker, folder, actionId)) {
 						return false;
@@ -125,7 +125,7 @@ public class BookmarksFolderPermissionChecker
 		}
 		else {
 			BookmarksFolder folder =
-				BookmarksFolderLocalServiceUtil.getBookmarksFolder(folderId);
+				_bookmarksFolderLocalService.getBookmarksFolder(folderId);
 
 			return contains(permissionChecker, folder, actionId);
 		}
@@ -138,6 +138,13 @@ public class BookmarksFolderPermissionChecker
 		throws PortalException {
 
 		check(permissionChecker, groupId, primaryKey, actionId);
+	}
+
+	@Reference(unbind = "-")
+	protected void setBookmarksFolderLocalService(
+		BookmarksFolderLocalService bookmarksFolderLocalService) {
+
+		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
 	private static boolean _hasPermission(
@@ -156,5 +163,7 @@ public class BookmarksFolderPermissionChecker
 
 		return false;
 	}
+
+	private static BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.bookmarks.search;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,6 +42,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -70,7 +71,7 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
+		BookmarksFolder folder = _bookmarksFolderLocalService.getFolder(
 			entryClassPK);
 
 		return BookmarksFolderPermissionChecker.contains(
@@ -155,7 +156,7 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
+		BookmarksFolder folder = _bookmarksFolderLocalService.getFolder(
 			classPK);
 
 		doReindex(folder);
@@ -170,7 +171,7 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 
 	protected void reindexFolders(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
-			BookmarksFolderLocalServiceUtil.getActionableDynamicQuery();
+			_bookmarksFolderLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -199,7 +200,16 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setBookmarksFolderLocalService(
+		BookmarksFolderLocalService bookmarksFolderLocalService) {
+
+		_bookmarksFolderLocalService = bookmarksFolderLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksFolderIndexer.class);
+
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

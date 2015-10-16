@@ -127,18 +127,11 @@
 			</liferay-util:buffer>
 
 			<liferay-util:buffer var="publishOnLayoutLink">
-
-				<%
-				LayoutRevision layoutRevision = LayoutRevisionLocalServiceUtil.fetchLayoutRevision(layoutSetBranchId, true, plid);
-				%>
-
-				<c:if test="<%= (layoutSetBranch == null) || ((layoutRevision != null) && layoutRevision.isApproved()) %>">
-					<li class="control-menu-nav-item">
-						<button class="btn btn-default btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>'>
-							<liferay-ui:message key="publish-to-live" />
-						</button>
-					</li>
-				</c:if>
+				<li class="control-menu-nav-item">
+					<button class="btn btn-default btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>'>
+						<liferay-ui:message key="publish-to-live" />
+					</button>
+				</li>
 			</liferay-util:buffer>
 
 			<c:choose>

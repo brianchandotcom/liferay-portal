@@ -30,7 +30,7 @@ import com.liferay.portlet.display.template.exportimport.portlet.preferences.pro
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -82,7 +82,7 @@ public class DLExportImportPortletPreferencesProcessor
 			Folder folder = null;
 
 			try {
-				folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+				folder = _dlAppLocalService.getFolder(rootFolderId);
 			}
 			catch (PortalException pe) {
 				StringBundler sb = new StringBundler(4);
@@ -146,6 +146,11 @@ public class DLExportImportPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortletDisplayTemplateExportCapability(
 		PortletDisplayTemplateExportCapability
 			portletDisplayTemplateExportCapability) {
@@ -166,6 +171,7 @@ public class DLExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLExportImportPortletPreferencesProcessor.class);
 
+	private DLAppLocalService _dlAppLocalService;
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
 	private PortletDisplayTemplateImportCapability

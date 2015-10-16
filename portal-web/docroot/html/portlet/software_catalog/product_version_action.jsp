@@ -47,7 +47,7 @@ SCProductVersion productVersion = (SCProductVersion)row.getObject();
 		<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= editURL %>" />
 
 		<portlet:renderURL var="copyURL">
-			<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_version" >
+			<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_version" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="productEntryId" value="<%= String.valueOf(productVersion.getProductEntryId()) %>" />
 			<portlet:param name="productVersionId" value="0" />

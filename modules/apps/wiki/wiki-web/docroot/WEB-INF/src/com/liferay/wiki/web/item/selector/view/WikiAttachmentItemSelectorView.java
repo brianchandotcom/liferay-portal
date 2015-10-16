@@ -18,8 +18,8 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext;
@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -71,10 +70,7 @@ public class WikiAttachmentItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content/Language", locale, getClass());
-
-		return resourceBundle.getString("page-attachments");
+		return LanguageUtil.get(locale, "page-attachments");
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public class TunnelAuthVerifier implements AuthVerifier {
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 
 				String serviceAccessPolicyName = (String)properties.get(
-					"service.access.profile.name");
+					"service.access.policy.name");
 
 				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
 					serviceAccessPolicyName);

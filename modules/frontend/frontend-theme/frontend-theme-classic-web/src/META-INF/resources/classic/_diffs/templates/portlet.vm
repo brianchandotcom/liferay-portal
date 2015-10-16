@@ -27,11 +27,7 @@
 			#end
 
 			<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_$portlet_id" type="toolbar">
-				#if ($portlet_display.isShowBackIcon())
-					<a class="portlet-icon-back" href="$portlet_back_url">#language ("return-to-full-page")</a>
-				#else
-					$theme.portletIconOptions()
-				#end
+				$theme.portletIconOptions()
 			</menu>
 		</header>
 

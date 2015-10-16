@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.Store;
 
-import java.io.IOException;
-
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -43,22 +41,23 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			bundleContext.getServiceReference(ConfigurationAdmin.class);
 
 		try {
-			_advancedFileSystemStoreConfiguration = getConfiguration(
-				bundleContext, serviceReference,
-				"com.liferay.portal.store.file.system.configuration." +
-					"AdvancedFileSystemStoreConfiguration");
+			Configuration advancedFileSystemStoreConfiguration =
+				getConfiguration(
+					bundleContext, serviceReference,
+					"com.liferay.portal.store.file.system.configuration." +
+						"AdvancedFileSystemStoreConfiguration");
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
 			properties.put("rootDir", _ADVANCED_ROOT_DIR);
 
-			_advancedFileSystemStoreConfiguration.update(properties);
+			advancedFileSystemStoreConfiguration.update(properties);
 
 			waitForService(
-				bundleContext, _advancedFileSystemStoreConfiguration,
+				bundleContext, advancedFileSystemStoreConfiguration,
 				"com.liferay.portal.store.file.system.AdvancedFileSystemStore");
 
-			_fileSystemStoreConfiguration = getConfiguration(
+			Configuration fileSystemStoreConfiguration = getConfiguration(
 				bundleContext, serviceReference,
 				"com.liferay.portal.store.file.system.configuration." +
 					"FileSystemStoreConfiguration");
@@ -67,10 +66,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 			properties.put("rootDir", _ROOT_DIR);
 
-			_fileSystemStoreConfiguration.update(properties);
+			fileSystemStoreConfiguration.update(properties);
 
 			waitForService(
-				bundleContext, _fileSystemStoreConfiguration,
+				bundleContext, fileSystemStoreConfiguration,
 				"com.liferay.portal.store.file.system.FileSystemStore");
 		}
 		finally {
@@ -79,14 +78,33 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws IOException {
-		_advancedFileSystemStoreConfiguration.delete();
+	public void stop(BundleContext bundleContext) throws Exception {
+		ServiceReference<ConfigurationAdmin> serviceReference =
+			bundleContext.getServiceReference(ConfigurationAdmin.class);
 
-		FileUtil.deltree(_ADVANCED_ROOT_DIR);
+		try {
+			Configuration advancedFileSystemStoreConfiguration =
+				getConfiguration(
+					bundleContext, serviceReference,
+					"com.liferay.portal.store.file.system.configuration." +
+						"AdvancedFileSystemStoreConfiguration");
 
-		_fileSystemStoreConfiguration.delete();
+			advancedFileSystemStoreConfiguration.delete();
 
-		FileUtil.deltree(_ROOT_DIR);
+			FileUtil.deltree(_ADVANCED_ROOT_DIR);
+
+			Configuration fileSystemStoreConfiguration = getConfiguration(
+				bundleContext, serviceReference,
+				"com.liferay.portal.store.file.system.configuration." +
+					"FileSystemStoreConfiguration");
+
+			fileSystemStoreConfiguration.delete();
+
+			FileUtil.deltree(_ROOT_DIR);
+		}
+		finally {
+			bundleContext.ungetService(serviceReference);
+		}
 	}
 
 	protected Configuration getConfiguration(
@@ -134,8 +152,5 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	private static final String _ROOT_DIR =
 		PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/test/store/file_system";
-
-	private Configuration _advancedFileSystemStoreConfiguration;
-	private Configuration _fileSystemStoreConfiguration;
 
 }

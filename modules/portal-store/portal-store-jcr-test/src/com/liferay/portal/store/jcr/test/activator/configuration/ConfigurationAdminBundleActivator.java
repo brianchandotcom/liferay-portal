@@ -43,10 +43,11 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			ConfigurationAdmin configurationAdmin = bundleContext.getService(
 				serviceReference);
 
-			_jcrConfiguration = configurationAdmin.getConfiguration(
-				"com.liferay.portal.store.jcr.configuration." +
-					"JCRStoreConfiguration",
-				null);
+			Configuration jcrConfiguration =
+				configurationAdmin.getConfiguration(
+					"com.liferay.portal.store.jcr.configuration." +
+						"JCRStoreConfiguration",
+					null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -61,7 +62,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			properties.put("workspaceName", "liferay");
 			properties.put("wrapSession", Boolean.TRUE);
 
-			_jcrConfiguration.update(properties);
+			jcrConfiguration.update(properties);
 
 			Filter filter = bundleContext.createFilter(
 				"(&(objectClass=" + Store.class.getName() +
@@ -77,7 +78,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			serviceTracker.close();
 
 			if (jcrStore == null) {
-				_jcrConfiguration.delete();
+				jcrConfiguration.delete();
 
 				throw new IllegalStateException(
 					"JCR store was not registered within 10 seconds");
@@ -90,9 +91,24 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws IOException {
-		_jcrConfiguration.delete();
-	}
+		ServiceReference<ConfigurationAdmin> serviceReference =
+			bundleContext.getServiceReference(ConfigurationAdmin.class);
 
-	private Configuration _jcrConfiguration;
+		try {
+			ConfigurationAdmin configurationAdmin = bundleContext.getService(
+				serviceReference);
+
+			Configuration jcrConfiguration =
+				configurationAdmin.getConfiguration(
+					"com.liferay.portal.store.jcr.configuration." +
+						"JCRStoreConfiguration",
+					null);
+
+			jcrConfiguration.delete();
+		}
+		finally {
+			bundleContext.ungetService(serviceReference);
+		}
+	}
 
 }

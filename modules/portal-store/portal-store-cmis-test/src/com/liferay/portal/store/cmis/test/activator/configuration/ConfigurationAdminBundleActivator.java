@@ -55,10 +55,11 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			ConfigurationAdmin configurationAdmin = bundleContext.getService(
 				serviceReference);
 
-			_cmisStoreConfiguration = configurationAdmin.getConfiguration(
-				"com.liferay.portal.store.cmis.configuration." +
-					"CMISStoreConfiguration",
-				null);
+			Configuration cmisStoreConfiguration =
+				configurationAdmin.getConfiguration(
+					"com.liferay.portal.store.cmis.configuration." +
+						"CMISStoreConfiguration",
+					null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -69,7 +70,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 				"http://alfresco.liferay.org.es/alfresco/service/api/cmis");
 			properties.put("systemRootDir", "testStore");
 
-			_cmisStoreConfiguration.update(properties);
+			cmisStoreConfiguration.update(properties);
 
 			Filter filter = bundleContext.createFilter(
 				"(&(objectClass=" + Store.class.getName() +
@@ -85,7 +86,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			serviceTracker.close();
 
 			if (cmisStore == null) {
-				_cmisStoreConfiguration.delete();
+				cmisStoreConfiguration.delete();
 
 				throw new IllegalStateException(
 					"CMIS store was not registered within 10 seconds");
@@ -98,9 +99,24 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws IOException {
-		_cmisStoreConfiguration.delete();
-	}
+		ServiceReference<ConfigurationAdmin> serviceReference =
+			bundleContext.getServiceReference(ConfigurationAdmin.class);
 
-	private Configuration _cmisStoreConfiguration;
+		try {
+			ConfigurationAdmin configurationAdmin = bundleContext.getService(
+				serviceReference);
+
+			Configuration cmisStoreConfiguration =
+				configurationAdmin.getConfiguration(
+					"com.liferay.portal.store.cmis.configuration." +
+						"CMISStoreConfiguration",
+					null);
+
+			cmisStoreConfiguration.delete();
+		}
+		finally {
+			bundleContext.ungetService(serviceReference);
+		}
+	}
 
 }

@@ -39,6 +39,23 @@ public class RequestDispatcherUtil {
 			new HttpServletRequestWrapper(request) {
 
 				@Override
+				public String getHeader(String name) {
+					if (name.equals("If-Modified-Since")) {
+						return null;
+					}
+
+					if (name.equals("If-None-Match")) {
+						return null;
+					}
+
+					if (name.equals("Last-Modified")) {
+						return null;
+					}
+
+					return super.getHeader(name);
+				}
+
+				@Override
 				public String getMethod() {
 					return HttpMethods.GET;
 				}

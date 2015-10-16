@@ -1042,26 +1042,37 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		SourceSet sourceSet = GradleUtil.getSourceSet(project, name);
 
-		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+		if (classesDir != null) {
+			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-		Set<File> srcDirs = Collections.singleton(srcDir);
+			sourceSetOutput.setClassesDir(classesDir);
+			sourceSetOutput.setResourcesDir(classesDir);
+		}
 
-		javaSourceDirectorySet.setSrcDirs(srcDirs);
+		if (srcDir != null) {
+			SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+			Set<File> srcDirs = Collections.singleton(srcDir);
 
-		sourceSetOutput.setClassesDir(classesDir);
-		sourceSetOutput.setResourcesDir(classesDir);
+			javaSourceDirectorySet.setSrcDirs(srcDirs);
 
-		SourceDirectorySet resourcesSourceDirectorySet =
-			sourceSet.getResources();
+			SourceDirectorySet resourcesSourceDirectorySet =
+				sourceSet.getResources();
 
-		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
+			resourcesSourceDirectorySet.setSrcDirs(srcDirs);
+		}
 	}
 
-	protected void configureSourceSetMain(Project project) {
+	protected void configureSourceSetMain(
+		Project project, boolean legacyDirLayout) {
+
 		File classesDir = project.file("classes");
-		File srcDir = project.file("src");
+
+		File srcDir = null;
+
+		if (legacyDirLayout) {
+			srcDir = project.file("src");
+		}
 
 		configureSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
@@ -1070,22 +1081,38 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureSourceSets(Project project) {
 		addSourceSetTestIntegration(project);
 
-		configureSourceSetMain(project);
-		configureSourceSetTest(project);
-		configureSourceSetTestIntegration(project);
+		boolean legacyDirLayout = hasLegacyDirLayout(project);
+
+		configureSourceSetMain(project, legacyDirLayout);
+		configureSourceSetTest(project, legacyDirLayout);
+		configureSourceSetTestIntegration(project, legacyDirLayout);
 	}
 
-	protected void configureSourceSetTest(Project project) {
+	protected void configureSourceSetTest(
+		Project project, boolean legacyDirLayout) {
+
 		File classesDir = project.file("test-classes/unit");
-		File srcDir = project.file("test/unit");
+
+		File srcDir = null;
+
+		if (legacyDirLayout) {
+			srcDir = project.file("test/unit");
+		}
 
 		configureSourceSet(
 			project, SourceSet.TEST_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
-	protected void configureSourceSetTestIntegration(Project project) {
+	protected void configureSourceSetTestIntegration(
+		Project project, boolean legacyDirLayout) {
+
 		File classesDir = project.file("test-classes/integration");
-		File srcDir = project.file("test/integration");
+
+		File srcDir = null;
+
+		if (legacyDirLayout) {
+			srcDir = project.file("test/integration");
+		}
 
 		configureSourceSet(
 			project, TEST_INTEGRATION_SOURCE_SET_NAME, classesDir, srcDir);
@@ -2258,6 +2285,28 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Iterator<File> iterator = srcDirs.iterator();
 
 		return iterator.next();
+	}
+
+	protected boolean hasLegacyDirLayout(Project project) {
+		File dir = project.file("src/" + SourceSet.MAIN_SOURCE_SET_NAME);
+
+		if (dir.exists()) {
+			return false;
+		}
+
+		dir = project.file("src/" + SourceSet.TEST_SOURCE_SET_NAME);
+
+		if (dir.exists()) {
+			return false;
+		}
+
+		dir = project.file("src/" + TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		if (dir.exists()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean isAddDefaultDependencies(Project project) {

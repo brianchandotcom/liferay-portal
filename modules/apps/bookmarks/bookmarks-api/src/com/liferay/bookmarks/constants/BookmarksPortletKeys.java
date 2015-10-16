@@ -19,8 +19,10 @@ package com.liferay.bookmarks.constants;
  */
 public class BookmarksPortletKeys {
 
-	public static final String BOOKMARKS = "28_WAR_bookmarksweb";
+	public static final String BOOKMARKS =
+		"com_liferay_bookmarks_web_portlet_BookmarksPortlet";
 
-	public static final String BOOKMARKS_ADMIN = "198_WAR_bookmarksweb";
+	public static final String BOOKMARKS_ADMIN =
+		"com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet";
 
 }

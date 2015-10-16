@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarFile;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 
 import org.apache.felix.utils.log.Logger;
@@ -164,6 +166,8 @@ public class JspResourceResolver implements ResourceResolver {
 
 		matcherRegex = path + "/" + matcherRegex;
 
+		Pattern pattern = Pattern.compile(matcherRegex);
+
 		for (URL url : urls) {
 			try {
 				JarURLConnection jarUrlConnection =
@@ -178,7 +182,9 @@ public class JspResourceResolver implements ResourceResolver {
 
 					String name = zipEntry.getName();
 
-					if (name.matches(matcherRegex)) {
+					Matcher matcher = pattern.matcher(name);
+
+					if (matcher.matches()) {
 						resources.add(name);
 					}
 				}

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.rss.web.configuration.RSSWebConfiguration;
-import com.liferay.rss.web.upgrade.RSSWebUpgrade;
 
 import java.io.IOException;
 
@@ -33,7 +32,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -78,10 +76,6 @@ public class RSSPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_rssWebConfiguration = Configurable.createConfigurable(
 			RSSWebConfiguration.class, properties);
-	}
-
-	@Reference(unbind = "-")
-	protected void setRSSWebUpgrade(RSSWebUpgrade rssWebUpgrade) {
 	}
 
 	private volatile RSSWebConfiguration _rssWebConfiguration;

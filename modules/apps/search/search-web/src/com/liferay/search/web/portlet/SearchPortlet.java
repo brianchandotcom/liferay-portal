@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.PortalOpenSearchImpl;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.search.web.upgrade.SearchWebUpgrade;
 
 import java.io.IOException;
 
@@ -38,7 +37,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -133,10 +131,6 @@ public class SearchPortlet extends MVCPortlet {
 				request.getQueryString());
 
 		return xml.getBytes();
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchWebUpgrade(SearchWebUpgrade searchWebUpgrade) {
 	}
 
 }

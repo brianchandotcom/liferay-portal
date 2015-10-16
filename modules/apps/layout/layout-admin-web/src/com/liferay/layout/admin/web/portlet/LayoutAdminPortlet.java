@@ -15,7 +15,6 @@
 package com.liferay.layout.admin.web.portlet;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.upgrade.LayoutAdminWebUpgrade;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
@@ -115,7 +114,6 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -767,11 +765,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutAdminWebUpgrade(
-		LayoutAdminWebUpgrade layoutAdminWebUpgrade) {
 	}
 
 	protected void setThemeSettingProperties(

@@ -17,7 +17,6 @@ package com.liferay.site.navigation.language.web.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.site.navigation.language.web.upgrade.SiteNavigationLanguageWebUpgrade;
 
 import java.io.IOException;
 
@@ -73,11 +72,6 @@ public class SiteNavigationLanguagePortlet extends MVCPortlet {
 		PortletDisplayTemplate portletDisplayTemplate) {
 
 		_portletDisplayTemplate = portletDisplayTemplate;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteNavigationLanguageWebUpgrade(
-		SiteNavigationLanguageWebUpgrade siteNavigationLanguageWebUpgrade) {
 	}
 
 	private PortletDisplayTemplate _portletDisplayTemplate;

@@ -27,7 +27,6 @@ import com.liferay.portal.service.TeamLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
-import com.liferay.site.admin.web.upgrade.SiteAdminWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -115,11 +114,6 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 	@Reference(unbind = "-")
 	protected void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteAdminWebUpgrade(
-		SiteAdminWebUpgrade siteAdminWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

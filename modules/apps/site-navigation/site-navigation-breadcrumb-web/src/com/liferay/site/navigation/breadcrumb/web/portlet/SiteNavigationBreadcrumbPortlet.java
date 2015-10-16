@@ -17,7 +17,6 @@ package com.liferay.site.navigation.breadcrumb.web.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.site.navigation.breadcrumb.web.upgrade.SiteNavigationBreadcrumbWebUpgrade;
 
 import java.io.IOException;
 
@@ -74,11 +73,6 @@ public class SiteNavigationBreadcrumbPortlet extends MVCPortlet {
 		PortletDisplayTemplate portletDisplayTemplate) {
 
 		_portletDisplayTemplate = portletDisplayTemplate;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteNavigationBreadcrumbWebUpgrade(
-		SiteNavigationBreadcrumbWebUpgrade siteNavigationBreadcrumbWebUpgrade) {
 	}
 
 	private PortletDisplayTemplate _portletDisplayTemplate;

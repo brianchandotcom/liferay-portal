@@ -18,7 +18,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
-import com.liferay.xsl.content.web.upgrade.XSLContentWebUpgrade;
 
 import java.io.IOException;
 
@@ -32,7 +31,6 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -86,11 +84,6 @@ public class XSLContentPortlet extends MVCPortlet {
 	protected void modified(Map<String, Object> properties) {
 		_xslContentConfiguration = Configurable.createConfigurable(
 			XSLContentConfiguration.class, properties);
-	}
-
-	@Reference(unbind = "-")
-	protected void setXSLContentWebUpgrade(
-		XSLContentWebUpgrade xslContentWebUpgrade) {
 	}
 
 	private volatile XSLContentConfiguration _xslContentConfiguration;

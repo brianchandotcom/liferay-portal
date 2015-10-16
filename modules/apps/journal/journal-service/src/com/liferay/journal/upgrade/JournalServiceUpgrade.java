@@ -14,7 +14,6 @@
 
 package com.liferay.journal.upgrade;
 
-import com.liferay.journal.service.JournalArticleImageLocalService;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleType;
@@ -24,25 +23,52 @@ import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = JournalServiceUpgrade.class)
-public class JournalServiceUpgrade {
+@Component(immediate = true)
+public class JournalServiceUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.journal.service", "0.0.1", "1.0.0",
+			new UpgradeSchema(), new UpgradeClassNames(), new UpgradeJournal(),
+			new UpgradeJournalArticleType(),
+			new UpgradeJournalDisplayPreferences(),
+			new UpgradeLastPublishDate(),
+			new UpgradePortletSettings(_settingsFactory),
+			new UpgradeStep() {
+
+				@Override
+				public void upgrade(DBProcessContext dbProcessContext)
+					throws UpgradeException {
+
+					try {
+						deleteTempImages();
+					}
+					catch (Exception e) {
+						e.printStackTrace(
+							new PrintWriter(
+								dbProcessContext.getOutputStream(), true));
+					}
+				}
+			});
+	}
 
 	protected void deleteTempImages() throws Exception {
 		if (_log.isDebugEnabled()) {
@@ -58,21 +84,9 @@ public class JournalServiceUpgrade {
 		db.runSQL("delete from JournalArticleImage where tempImage = TRUE");
 	}
 
-	@Reference
-	protected void setJournalArticleImageLocalService(
-		JournalArticleImageLocalService journalArticleImageLocalService ) {
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -80,32 +94,9 @@ public class JournalServiceUpgrade {
 		_settingsFactory = settingsFactory;
 	}
 
-	@Activate
-	protected void upgrade() throws Exception {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradeSchema());
-
-		upgradeProcesses.add(new UpgradeClassNames());
-		upgradeProcesses.add(new UpgradeJournal());
-		upgradeProcesses.add(new UpgradeJournalArticleType());
-		upgradeProcesses.add(new UpgradeJournalDisplayPreferences());
-		upgradeProcesses.add(new UpgradeLastPublishDate());
-		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
-
-		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Upgrade process " + upgradeProcess);
-			}
-		}
-
-		deleteTempImages();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceUpgrade.class);
 
-	private ReleaseLocalService _releaseLocalService;
 	private SettingsFactory _settingsFactory;
 
 }

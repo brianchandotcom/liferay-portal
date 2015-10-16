@@ -19,7 +19,6 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.layout.set.prototype.web.upgrade.LayoutSetPrototypeWebUpgrade;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.RequiredLayoutSetPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -218,11 +217,6 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		LayoutSetPrototypeService layoutSetPrototypeService) {
 
 		this.layoutSetPrototypeService = layoutSetPrototypeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeWebUpgrade(
-		LayoutSetPrototypeWebUpgrade layoutSetPrototypeWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

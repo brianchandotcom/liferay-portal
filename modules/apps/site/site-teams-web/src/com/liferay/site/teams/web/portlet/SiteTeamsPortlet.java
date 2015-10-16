@@ -32,7 +32,6 @@ import com.liferay.portal.service.UserGroupService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
-import com.liferay.site.teams.web.upgrade.SiteTeamsWebUpgrade;
 
 import java.io.IOException;
 
@@ -194,11 +193,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 
 		return false;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteTeamsWebUpgrade(
-		SiteTeamsWebUpgrade siteTeamsWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

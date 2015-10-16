@@ -1,6 +1,7 @@
 dependencies {
 	compile project(":apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-common")
 	compile project(":apps:journal:journal-web")
+	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }

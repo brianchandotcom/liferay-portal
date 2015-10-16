@@ -138,29 +138,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 	}
 
-	protected void exportAssetObject(
-			PortletDataContext portletDataContext, AssetEntry assetEntry)
-		throws PortletDataException {
-
-		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
-
-		if ((assetRenderer == null) ||
-			!(assetRenderer.getAssetObject() instanceof StagedModel)) {
-
-			return;
-		}
-
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, portletDataContext.getPortletId(),
-			(StagedModel)assetRenderer.getAssetObject());
-	}
-
 	protected void exportAssetObjects(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
+		Layout layout = _layoutLocalService.getLayout(
 			portletDataContext.getPlid());
 
 		long[] groupIds = AssetPublisherUtil.getGroupIds(
@@ -172,7 +155,17 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			false);
 
 		for (AssetEntry assetEntry : assetEntries) {
-			exportAssetObject(portletDataContext, assetEntry);
+			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
+			if ((assetRenderer == null) ||
+				!(assetRenderer.getAssetObject() instanceof StagedModel)) {
+
+				continue;
+			}
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletDataContext.getPortletId(),
+				(StagedModel)assetRenderer.getAssetObject());
 		}
 	}
 

@@ -14,14 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -44,6 +36,15 @@ import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.service.SCProductEntryServiceUtil;
 import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil;
+
+import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 /**
  * @author Jorge Ferrer
@@ -74,7 +75,6 @@ public class EditProductEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 		sendRedirect(actionRequest, actionResponse, redirect);
-
 	}
 
 	protected void deleteProductEntry(ActionRequest actionRequest)

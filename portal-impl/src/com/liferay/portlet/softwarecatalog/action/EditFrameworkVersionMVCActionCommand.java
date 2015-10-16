@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -27,6 +24,9 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionServiceUtil;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 /**
  * @author Jorge Ferrer
@@ -58,7 +58,7 @@ public class EditFrameworkVersionMVCActionCommand extends BaseMVCActionCommand {
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
-	
+
 	protected void deleteFrameworkVersion(ActionRequest actionRequest)
 		throws Exception {
 

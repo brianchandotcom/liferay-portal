@@ -14,13 +14,12 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Philip Jones
@@ -36,13 +35,14 @@ public class EditProductEntryMVCRenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
-		
+
 		try {
 			ActionUtil.getProductEntry(renderRequest);
 		}
 		catch (Exception e) {
 			return "/html/portlet/software_catalog/error.jsp";
 		}
+
 		return "/html/portlet/software_catalog/edit_product_entry.jsp";
 	}
 

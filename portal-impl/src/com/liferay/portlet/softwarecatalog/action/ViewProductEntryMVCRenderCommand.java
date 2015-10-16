@@ -14,18 +14,16 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Philip Jones
@@ -41,7 +39,7 @@ public class ViewProductEntryMVCRenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
-		
+
 		try {
 			ActionUtil.getProductEntry(renderRequest);
 
@@ -54,13 +52,11 @@ public class ViewProductEntryMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 		catch (Exception e) {
-
 			SessionErrors.add(renderRequest, e.getClass());
 
 			return "/html/portlet/software_catalog/error.jsp";
-
 		}
-		
+
 		return "/html/portlet/software_catalog/view_product_entry.jsp";
 	}
 

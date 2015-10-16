@@ -14,14 +14,13 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Philip Jones

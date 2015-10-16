@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -24,6 +21,9 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 /**
  * @author Jorge Ferrer

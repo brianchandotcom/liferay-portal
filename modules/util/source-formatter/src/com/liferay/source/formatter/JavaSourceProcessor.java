@@ -315,14 +315,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-59076
 
-		if (_checkModulesServiceUtil &&
-			!fileName.endsWith("MessageListener.java") &&
-			content.contains("@Component") &&
-			content.contains("ServiceUtil.")) {
+		if (_checkModulesServiceUtil) {
+			if (!fileName.endsWith("MessageListener.java") &&
+				content.contains("@Component") &&
+				content.contains("ServiceUtil.")) {
 
-			processErrorMessage(
-				fileName,
-				"OSGI Component should not call ServiceUtil: " + fileName);
+				processErrorMessage(
+					fileName,
+					"OSGI Component should not call ServiceUtil: " + fileName);
+			}
+
+			if (!absolutePath.contains("/core/registry-") &&
+				!absolutePath.contains("/test/") &&
+				content.contains("import com.liferay.registry.Registry")) {
+
+				processErrorMessage(
+					fileName, "Do not use Registry in modules: " + fileName);
+			}
 		}
 	}
 

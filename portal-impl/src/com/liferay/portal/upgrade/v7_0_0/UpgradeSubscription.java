@@ -15,8 +15,11 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -67,6 +70,16 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 			String[] groupIdSQLParts = StringUtil.split(
 				_getGroupIdSQLPartsMap.get(className));
+
+			if (ArrayUtil.isEmpty(groupIdSQLParts)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to determine the groupId for the className " +
+							className);
+				}
+
+				return 0;
+			}
 
 			String sql =
 				"select " + groupIdSQLParts[1] + " from " + groupIdSQLParts[0] +
@@ -176,6 +189,9 @@ public class UpgradeSubscription extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeSubscription.class);
 
 	private static final Map<String, String> _getGroupIdSQLPartsMap =
 		new HashMap<>();

@@ -15,7 +15,7 @@
 package com.liferay.marketplace.upgrade;
 
 import com.liferay.marketplace.upgrade.v1_0_0.UpgradeExpando;
-import com.liferay.marketplace.upgrade.v1_0_1.UpgradeModule;
+import com.liferay.marketplace.upgrade.v1_0_0.UpgradeModule;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

@@ -137,12 +137,12 @@
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
 		<execute function="AssertClick" locator1="UserGroupsAssignUsers#AVAILABLE_TAB" value1="Available" />
-		<execute function="Check" locator1="UserGroupsAssignUsers#USER_TABLE_ALL_CHECKBOX" />
+		<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
 		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="AssertClick" locator1="UserGroupsAssignUsers#CURRENT_TAB" value1="Current" />
-		<execute function="AssertChecked" locator1="UserGroupsAssignUsers#USER_TABLE_ALL_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Checkbox#CHECK_ALL_NAME" />
 	</command>
 
 	<command name="assignMemberCP">

@@ -539,7 +539,8 @@ portletURL.setParameter("tabs1", tabs1);
 		<c:if test="<%= showAddFrameworkVersionButton || showPermissionsButton %>">
 			<div class="btn-toolbar">
 				<c:if test="<%= showAddFrameworkVersionButton %>">
-					<portlet:renderURL name="/software_catalog/edit_framework_version" var="addFrameworkURL">
+					<portlet:renderURL var="addFrameworkURL">
+						<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_framework_version"  />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
@@ -657,7 +658,8 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<c:if test="<%= hasAddLicensePermission %>">
 			<div class="btn-toolbar">
-				<portlet:renderURL name="/software_catalog/edit_license" var="addLicenseURL">
+				<portlet:renderURL var="addLicenseURL">
+					<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_license" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
@@ -677,7 +679,8 @@ portletURL.setParameter("tabs1", tabs1);
 
 <aui:script>
 	function <portlet:namespace />addProduct() {
-		var url = '<portlet:renderURL name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
+		var url = '
+		<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
 
 		if (document.<portlet:namespace />fm.<portlet:namespace />keywords) {
 			url += '&<portlet:namespace />name=' + document.<portlet:namespace />fm.<portlet:namespace />keywords.value;

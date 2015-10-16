@@ -26,7 +26,8 @@ String licenseId = String.valueOf(license.getLicenseId());
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= SCLicensePermission.contains(permissionChecker, license.getLicenseId(), ActionKeys.UPDATE) %>">
-		<portlet:renderURL name="/software_catalog/edit_license" var="editURL">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_license" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="licenseId" value="<%= licenseId %>" />
 		</portlet:renderURL>

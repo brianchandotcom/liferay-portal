@@ -37,7 +37,8 @@ SCProductVersion productVersion = (SCProductVersion)row.getObject();
 	</c:if>
 
 	<c:if test="<%= SCProductEntryPermission.contains(permissionChecker, productVersion.getProductEntryId(), ActionKeys.UPDATE) %>">
-		<portlet:renderURL name="/software_catalog/edit_product_version" var="editURL">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_version" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="productEntryId" value="<%= String.valueOf(productVersion.getProductEntryId()) %>" />
 			<portlet:param name="productVersionId" value="<%= String.valueOf(productVersion.getProductVersionId()) %>" />
@@ -45,7 +46,8 @@ SCProductVersion productVersion = (SCProductVersion)row.getObject();
 
 		<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= editURL %>" />
 
-		<portlet:renderURL name="/software_catalog/edit_product_version" var="copyURL">
+		<portlet:renderURL var="copyURL">
+			<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_version" >
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="productEntryId" value="<%= String.valueOf(productVersion.getProductEntryId()) %>" />
 			<portlet:param name="productVersionId" value="0" />

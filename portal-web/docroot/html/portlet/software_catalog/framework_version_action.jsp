@@ -26,7 +26,8 @@ String frameworkVersionId = String.valueOf(frameworkVersion.getFrameworkVersionI
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= SCFrameworkVersionPermission.contains(permissionChecker, frameworkVersion, ActionKeys.UPDATE) %>">
-		<portlet:renderURL name="/software_catalog/edit_framework_version" var="editURL">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_framework_version" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="frameworkVersionId" value="<%= frameworkVersionId %>" />
 		</portlet:renderURL>

@@ -26,7 +26,8 @@ long productEntryId = productEntry.getProductEntryId();
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= SCProductEntryPermission.contains(permissionChecker, productEntry, ActionKeys.UPDATE) %>">
-		<portlet:renderURL name="/software_catalog/edit_product_entry" var="editURL">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="productEntryId" value="<%= String.valueOf(productEntryId) %>" />
 		</portlet:renderURL>

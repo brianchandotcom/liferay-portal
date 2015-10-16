@@ -4,12 +4,15 @@ dependencies {
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
 
 	provided group: "com.vividsolutions", name: "jts", transitive: false, version: "1.13"
+	provided group: "org.antlr", name: "antlr-runtime", transitive: false, version: "3.5"
 	provided group: "org.elasticsearch", name: "elasticsearch", version: "1.7.2"
 	provided group: "org.elasticsearch", name: "elasticsearch-analysis-icu", version: "2.7.0"
 	provided group: "org.elasticsearch", name: "elasticsearch-analysis-kuromoji", version: "2.7.0"
 	provided group: "org.elasticsearch", name: "elasticsearch-analysis-phonetic", version: "2.7.0"
 	provided group: "org.elasticsearch", name: "elasticsearch-analysis-smartcn", version: "2.7.0"
 	provided group: "org.elasticsearch", name: "elasticsearch-analysis-stempel", version: "2.7.0"
+	provided group: "org.ow2.asm", name: "asm", transitive: false, version: "4.1"
+	provided group: "org.ow2.asm", name: "asm-commons", transitive: false, version: "4.1"
 
 	testCompile group: "commons-io", name: "commons-io", version: "2.4"
 }

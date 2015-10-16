@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String browseBy = ParamUtil.getString(request, "browseBy");
-%>
-
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
 
 <liferay-ui:trash-undo
@@ -44,7 +40,7 @@ String browseBy = ParamUtil.getString(request, "browseBy");
 
 		<div class="sidenav-content">
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<c:if test="<%= !journalDisplayContext.isNavigationRecent() && !journalDisplayContext.isNavigationMine() && Validator.isNull(browseBy) %>">
+				<c:if test="<%= journalDisplayContext.isShowBreadcrumb() %>">
 					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
 				</c:if>
 			</div>

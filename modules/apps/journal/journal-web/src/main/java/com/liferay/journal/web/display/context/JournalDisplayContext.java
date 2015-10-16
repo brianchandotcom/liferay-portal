@@ -279,6 +279,28 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isShowBreadcrumb() {
+		String browseBy = ParamUtil.getString(_request, "browseBy");
+
+		if (Validator.isNotNull(browseBy)) {
+			return false;
+		}
+
+		if (isNavigationRecent()) {
+			return false;
+		}
+
+		if (isNavigationMine()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isShowEditActions() {
 		if (_showEditActions != null) {
 			return _showEditActions;

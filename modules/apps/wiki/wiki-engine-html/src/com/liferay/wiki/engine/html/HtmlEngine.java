@@ -30,7 +30,7 @@ import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -104,6 +104,13 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
 	protected void unsetWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
@@ -163,7 +170,7 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 			}
 
 			try {
-				WikiNodeLocalServiceUtil.getNode(page.getGroupId(), nodeName);
+				_wikiNodeLocalService.getNode(page.getGroupId(), nodeName);
 
 				links.put(StringUtil.toLowerCase(title), Boolean.TRUE);
 			}
@@ -182,5 +189,6 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 	private String _friendlyURLMapping;
 	private Router _router;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

@@ -221,25 +221,25 @@ public class JspResourceResolver implements ResourceResolver {
 	private String _replace(String s, char oldSub, String newSub) {
 		int y = s.indexOf(oldSub);
 
-		if (y >= 0) {
-			StringBuilder sb = new StringBuilder();
-
-			int x = 0;
-
-			while (x <= y) {
-				sb.append(s.substring(x, y));
-				sb.append(newSub);
-
-				x = y + 1;
-				y = s.indexOf(oldSub, x);
-			}
-
-			sb.append(s.substring(x));
-
-			return sb.toString();
+		if (y < 0) {
+			return s;
 		}
 
-		return s;
+		StringBuilder sb = new StringBuilder();
+
+		int x = 0;
+
+		while (x <= y) {
+			sb.append(s.substring(x, y));
+			sb.append(newSub);
+
+			x = y + 1;
+			y = s.indexOf(oldSub, x);
+		}
+
+		sb.append(s.substring(x));
+
+		return sb.toString();
 	}
 
 	private final Bundle _bundle;

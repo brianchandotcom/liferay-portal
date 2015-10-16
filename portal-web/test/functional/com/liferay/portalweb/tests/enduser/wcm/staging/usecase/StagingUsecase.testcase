@@ -2667,6 +2667,15 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#configureWebContentWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+		</execute>
+
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -2676,16 +2685,6 @@
 		<execute macro="Staging#activateStagingCP">
 			<var name="pageVersioningEnabled" value="true" />
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Workflow Configuration" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2744,7 +2743,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_UNAPPROVED" value1="Web Content Title 2 is not approved." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="Web Content Title 2 is not approved." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -2798,18 +2797,16 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page 2" />
 			<var name="pageStaging" value="true" />
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#gotoPublishToLive" />
+		<execute macro="Staging#markAsReadyForPublication" />
 
-		<execute macro="Staging#configurePublishToLive">
-			<var name="contentDateRange" value="All" />
-		</execute>
+		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#publishToLive" />
 
@@ -2822,8 +2819,11 @@
 		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Content 2" />
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Web Content" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteScopeName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContent#moveToRecycleBinCP">

@@ -677,20 +677,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getUserSitesGroups(
-	 *             long, String[], int)}
-	 */
-	@Deprecated
-	@Override
-	public List<Group> getUserSitesGroups(
-			long userId, String[] classNames, boolean includeControlPanel,
-			int max)
-		throws PortalException {
-
-		return getUserSitesGroups(userId, classNames, max);
-	}
-
-	/**
 	 * Returns the user's groups &quot;sites&quot; associated with the group
 	 * entity class names, including the Control Panel group if the user is
 	 * permitted to view the Control Panel.

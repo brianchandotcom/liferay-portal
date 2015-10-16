@@ -985,18 +985,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getMySiteGroups();
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
-	int)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
-		java.lang.String[] classNames, boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getMySiteGroups(classNames, includeControlPanel, max);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		java.lang.String[] classNames, int max)

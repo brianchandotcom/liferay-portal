@@ -2415,3 +2415,41 @@ These methods are no longer used and they will not work properly since they
 cannot call the `application-list-api` from the portal context.
 
 ---------------------------------------
+
+
+### Removed Control Panel from the list of sites returned by the method Group.getUserSitesGroups or User.getMySiteGroups
+- **Date:** 2015-Sep-23
+- **JIRA Ticket:** LPS-58862
+
+#### What changed?
+
+The following methods had a boolean parameter to include or not the control panel Group:
+
+- `Group.getUserSitesGroups`
+- `User.getMySiteGroups`
+
+#### Who is affected?
+
+This affects developers that use either of the methods listed above passing the
+includeControlPanel parameter as true.
+
+#### How should I update my code?
+
+If you don't need the Control Panel Site, just remove the 'false' parameter. 
+If you still want to obtain a link to the Control Panel you should do it in a 
+different way.
+The Control Panel is not a site per se; some applications are displayed in
+that context. To create a link to an application that is displayed in Site
+Administration, developers should use the method
+`PortalUtil.getControlPanelURL`. In order to obtain the first application
+displayed in a section of the Product Menu, developers should use the
+`application-list-api` module to call the `PanelCategoryRegistry` and
+`PanelAppRegistry` classes.
+
+#### Why was this change made?
+
+The Control Panel is no longer a site per se, but just a context in which some
+apps are displayed. This concept conflicts with the idea of returning a site 
+called Control Panel in the Sites API.
+
+---------------------------------------

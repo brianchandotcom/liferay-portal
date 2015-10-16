@@ -305,15 +305,6 @@ public interface User extends UserModel, PersistedModel {
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		int max) throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
-	int)}
-	*/
-	@java.lang.Deprecated()
-	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
-		java.lang.String[] classNames, boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException;

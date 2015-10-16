@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -104,7 +104,7 @@ public class RepositorySearchQueryBuilderImpl
 
 		for (long folderId : folderIds) {
 			try {
-				DLAppServiceUtil.getFolder(folderId);
+				_dlAppService.getFolder(folderId);
 			}
 			catch (Exception e) {
 				continue;
@@ -255,12 +255,18 @@ public class RepositorySearchQueryBuilderImpl
 	}
 
 	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setRepositorySearchQueryTermBuilder(
 		RepositorySearchQueryTermBuilder repositorySearchQueryTermBuilder) {
 
 		_repositorySearchQueryTermBuilder = repositorySearchQueryTermBuilder;
 	}
 
+	private DLAppService _dlAppService;
 	private RepositorySearchQueryTermBuilder _repositorySearchQueryTermBuilder;
 
 }

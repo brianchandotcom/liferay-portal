@@ -3,6 +3,7 @@ dependencies {
 	compile project(":portal-cache:portal-cache-ehcache-provider")
 
 	provided group: "net.sf.ehcache", name: "ehcache", version: "2.8.3"
+	testCompile group: "com.liferay", name: "com.liferay.portal.cache.test.common", version: "1.0.0-SNAPSHOT"
 }
 
 liferay {

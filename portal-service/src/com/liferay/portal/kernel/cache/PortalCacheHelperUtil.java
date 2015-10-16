@@ -31,18 +31,18 @@ public class PortalCacheHelperUtil {
 	public static <K extends Serializable, V> void putWithoutReplicator(
 		PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean enabled = SkipReplicationThreadLocal.isEnabled();
 
-		if (!remoteInvoke) {
-			AggregatedPortalCacheListener.setRemoteInvoke(true);
+		if (!enabled) {
+			SkipReplicationThreadLocal.setEnabled(true);
 		}
 
 		try {
 			portalCache.put(key, value, timeToLive);
 		}
 		finally {
-			if (!remoteInvoke) {
-				AggregatedPortalCacheListener.setRemoteInvoke(false);
+			if (!enabled) {
+				SkipReplicationThreadLocal.setEnabled(false);
 			}
 		}
 	}
@@ -50,18 +50,18 @@ public class PortalCacheHelperUtil {
 	public static void removeAllWithoutReplicator(
 		PortalCache<?, ?> portalCache) {
 
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean skip = SkipReplicationThreadLocal.isEnabled();
 
-		if (!remoteInvoke) {
-			AggregatedPortalCacheListener.setRemoteInvoke(true);
+		if (!skip) {
+			SkipReplicationThreadLocal.setEnabled(true);
 		}
 
 		try {
 			portalCache.removeAll();
 		}
 		finally {
-			if (!remoteInvoke) {
-				AggregatedPortalCacheListener.setRemoteInvoke(false);
+			if (!skip) {
+				SkipReplicationThreadLocal.setEnabled(false);
 			}
 		}
 	}
@@ -69,18 +69,18 @@ public class PortalCacheHelperUtil {
 	public static <K extends Serializable> void removeWithoutReplicator(
 		PortalCache<K, ?> portalCache, K key) {
 
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean skip = SkipReplicationThreadLocal.isEnabled();
 
-		if (!remoteInvoke) {
-			AggregatedPortalCacheListener.setRemoteInvoke(true);
+		if (!skip) {
+			SkipReplicationThreadLocal.setEnabled(true);
 		}
 
 		try {
 			portalCache.remove(key);
 		}
 		finally {
-			if (!remoteInvoke) {
-				AggregatedPortalCacheListener.setRemoteInvoke(false);
+			if (!skip) {
+				SkipReplicationThreadLocal.setEnabled(false);
 			}
 		}
 	}

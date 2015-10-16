@@ -6,7 +6,7 @@ Export-Package:\
 	com.liferay.portal.spring.extender.service
 Import-Package:\
 	com.liferay.portal.bean,\
-	com.liferay.portal.cache,\
+	com.liferay.portal.cache.thread.local,\
 	com.liferay.portal.cluster,\
 	com.liferay.portal.increment,\
 	com.liferay.portal.dao.jdbc.aop,\

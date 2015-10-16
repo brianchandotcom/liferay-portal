@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.cache.transactional;
 
-import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -154,24 +154,7 @@ public class TransactionalPortalCacheHelper {
 		portalCacheMap.clear();
 	}
 
-	public static boolean isEnabled() {
-		if (!_isTransactionalCacheEnabled()) {
-			return false;
-		}
-
-		List<PortalCacheMap> portalCacheMaps =
-			_portalCacheMapsThreadLocal.get();
-
-		return !portalCacheMaps.isEmpty();
-	}
-
-	public static void rollback() {
-		PortalCacheMap portalCacheMap = _popPortalCacheMap();
-
-		portalCacheMap.clear();
-	}
-
-	protected static <K extends Serializable, V> V get(
+	public static <K extends Serializable, V> V get(
 		PortalCache<K, V> portalCache, K key) {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
@@ -191,7 +174,22 @@ public class TransactionalPortalCacheHelper {
 		return (V)valueEntry._value;
 	}
 
-	protected static <K extends Serializable, V> void put(
+	public static Serializable getNullHolder() {
+		return _NULL_HOLDER;
+	}
+
+	public static boolean isEnabled() {
+		if (!_isTransactionalCacheEnabled()) {
+			return false;
+		}
+
+		List<PortalCacheMap> portalCacheMaps =
+			_portalCacheMapsThreadLocal.get();
+
+		return !portalCacheMaps.isEmpty();
+	}
+
+	public static <K extends Serializable, V> void put(
 		PortalCache<K, V> portalCache, K key, V value, int ttl) {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
@@ -206,11 +204,10 @@ public class TransactionalPortalCacheHelper {
 
 		uncommittedBuffer.put(
 			key,
-			new ValueEntry(
-				value, ttl, AggregatedPortalCacheListener.isRemoteInvoke()));
+			new ValueEntry(value, ttl, SkipReplicationThreadLocal.isEnabled()));
 	}
 
-	protected static <K extends Serializable, V> void removeAll(
+	public static <K extends Serializable, V> void removeAll(
 		PortalCache<K, V> portalCache) {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
@@ -223,8 +220,13 @@ public class TransactionalPortalCacheHelper {
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
 
-		uncommittedBuffer.removeAll(
-			AggregatedPortalCacheListener.isRemoteInvoke());
+		uncommittedBuffer.removeAll(SkipReplicationThreadLocal.isEnabled());
+	}
+
+	public static void rollback() {
+		PortalCacheMap portalCacheMap = _popPortalCacheMap();
+
+		portalCacheMap.clear();
 	}
 
 	protected static class PortalCacheMap
@@ -255,9 +257,10 @@ public class TransactionalPortalCacheHelper {
 		return portalCacheMaps.remove(portalCacheMaps.size() - 1);
 	}
 
+	private static final Serializable _NULL_HOLDER = "NULL_HOLDER";
+
 	private static final ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
-		TransactionalPortalCache.NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE,
-		false);
+		_NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE, false);
 
 	private static final ThreadLocal<List<List<PortalCacheMap>>>
 		_backupPortalCacheMapsThreadLocal =
@@ -342,7 +345,7 @@ public class TransactionalPortalCacheHelper {
 		public void commitTo(
 			PortalCache<Serializable, Object> portalCache, Serializable key) {
 
-			if (_value == TransactionalPortalCache.NULL_HOLDER) {
+			if (_value == _NULL_HOLDER) {
 				if (_skipReplicator) {
 					PortalCacheHelperUtil.removeWithoutReplicator(
 						portalCache, key);

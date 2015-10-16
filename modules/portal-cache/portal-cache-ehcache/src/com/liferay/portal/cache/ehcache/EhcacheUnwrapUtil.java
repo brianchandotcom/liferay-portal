@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.ehcache;
 
+import com.liferay.portal.cache.PortalCacheWrapper;
 import com.liferay.portal.cache.ehcache.internal.EhcachePortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 
 import net.sf.ehcache.Ehcache;
 

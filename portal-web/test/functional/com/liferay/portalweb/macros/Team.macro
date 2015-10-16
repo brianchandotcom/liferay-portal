@@ -48,8 +48,9 @@
 	<command name="assignUserGroups">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${teamName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${teamName}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 

@@ -325,7 +325,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"OSGI Component should not call ServiceUtil: " + fileName);
 			}
 
-			if (!absolutePath.contains("/core/registry-") &&
+			if (!absolutePath.contains("/modules/core/") &&
 				!absolutePath.contains("/test/") &&
 				content.contains("import com.liferay.registry.Registry")) {
 

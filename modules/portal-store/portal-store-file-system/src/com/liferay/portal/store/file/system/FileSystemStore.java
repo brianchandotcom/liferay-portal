@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration;
 import com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
@@ -634,16 +635,14 @@ public class FileSystemStore extends BaseStore {
 		try {
 			Configuration fileSystemStoreConfiguration =
 				configurationAdmin.getConfiguration(
-					"com.liferay.portal.store.file.system.configuration." +
-						"FileSystemStoreConfiguration");
+					FileSystemStoreConfiguration.class.getName());
 
 			Dictionary<String, Object> fileSystemDictionary =
 				fileSystemStoreConfiguration.getProperties();
 
 			Configuration advancedFileSystemStoreConfiguration =
 				configurationAdmin.getConfiguration(
-					"com.liferay.portal.store.file.system.configuration." +
-						"AdvancedFileSystemStoreConfiguration");
+					AdvancedFileSystemStoreConfiguration.class.getName());
 
 			Dictionary<String, Object> advancedFileSystemDictionary =
 				advancedFileSystemStoreConfiguration.getProperties();

@@ -91,7 +91,25 @@ data.put("qa-id", "navigation");
 				<aui:input name="newFolderId" type="hidden" />
 
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
-					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+					<c:choose>
+						<c:when test="<%= !journalDisplayContext.isSearch() %>">
+							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:tabs
+								names="web-content,comments"
+								portletURL="<%= portletURL %>"
+								type="tabs nav-tabs-default"
+							>
+								<liferay-ui:section>
+									<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+								</liferay-ui:section>
+								<liferay-ui:section>
+									<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>" />
+								</liferay-ui:section>
+							</liferay-ui:tabs>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</aui:form>
 		</div>

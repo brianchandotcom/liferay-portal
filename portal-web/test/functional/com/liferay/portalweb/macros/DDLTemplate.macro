@@ -63,6 +63,24 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addDisplayTemplateTemplateViaDDLDisplayPG">
+		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_DISPLAY_TEMPLATE" />
+
+		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+
+		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateName}" />
+
+		<execute macro="DDLTemplate#_showDetails" />
+
+		<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
+
+		<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${ddlDisplayTemplateScript}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
 	<command name="addFormTemplateCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 

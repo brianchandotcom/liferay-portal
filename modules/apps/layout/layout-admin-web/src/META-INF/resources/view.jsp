@@ -61,7 +61,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, layoutsAdminDisplayContext.getPages
 </liferay-ui:error>
 
 <%
-Group selGroup = layoutsAdminDisplayContext.getSelGroup();
+Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>

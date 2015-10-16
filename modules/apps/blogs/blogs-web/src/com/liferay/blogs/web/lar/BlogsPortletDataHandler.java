@@ -21,8 +21,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
+import com.liferay.portlet.blogs.service.BlogsStatsUserLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -38,6 +38,7 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -89,10 +90,10 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		BlogsEntryLocalServiceUtil.deleteEntries(
+		_blogsEntryLocalService.deleteEntries(
 			portletDataContext.getScopeGroupId());
 
-		BlogsStatsUserLocalServiceUtil.deleteStatsUserByGroupId(
+		_blogsStatsUserLocalService.deleteStatsUserByGroupId(
 			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
@@ -116,7 +117,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			BlogsEntryLocalServiceUtil.getExportActionableDynamicQuery(
+			_blogsEntryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -157,10 +158,27 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			BlogsEntryLocalServiceUtil.getExportActionableDynamicQuery(
+			_blogsEntryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performCount();
 	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsStatsUserLocalService(
+		BlogsStatsUserLocalService blogsStatsUserLocalService) {
+
+		_blogsStatsUserLocalService = blogsStatsUserLocalService;
+	}
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsStatsUserLocalService _blogsStatsUserLocalService;
 
 }

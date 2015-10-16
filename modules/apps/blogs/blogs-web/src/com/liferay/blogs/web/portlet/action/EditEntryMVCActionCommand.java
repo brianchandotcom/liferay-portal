@@ -67,10 +67,10 @@ import com.liferay.portlet.blogs.EntrySmallImageScaleException;
 import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
+import com.liferay.portlet.blogs.service.BlogsEntryService;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
@@ -85,6 +85,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -126,13 +127,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteEntryId : deleteEntryIds) {
 			if (moveToTrash) {
-				BlogsEntry entry = BlogsEntryServiceUtil.moveEntryToTrash(
+				BlogsEntry entry = _blogsEntryService.moveEntryToTrash(
 					deleteEntryId);
 
 				trashedModels.add(entry);
 			}
 			else {
-				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
+				_blogsEntryService.deleteEntry(deleteEntryId);
 			}
 		}
 
@@ -407,22 +408,39 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryService(BlogsEntryService blogsEntryService) {
+		_blogsEntryService = blogsEntryService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
 	}
 
 	protected void subscribe(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		BlogsEntryServiceUtil.subscribe(themeDisplay.getScopeGroupId());
+		_blogsEntryService.subscribe(themeDisplay.getScopeGroupId());
 	}
 
 	protected void unsubscribe(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		BlogsEntryServiceUtil.unsubscribe(themeDisplay.getScopeGroupId());
+		_blogsEntryService.unsubscribe(themeDisplay.getScopeGroupId());
 	}
 
 	protected Object[] updateEntry(ActionRequest actionRequest)
@@ -509,7 +527,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add entry
 
-			entry = BlogsEntryServiceUtil.addEntry(
+			entry = _blogsEntryService.addEntry(
 				title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
@@ -525,7 +543,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					getTempBlogsEntryAttachmentFileEntries(content);
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
-				Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+				Folder folder = _blogsEntryLocalService.addAttachmentsFolder(
 					themeDisplay.getUserId(), entry.getGroupId());
 
 				blogsEntryAttachmentFileEntryReferences =
@@ -540,7 +558,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				entry.setContent(content);
 
-				BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+				_blogsEntryLocalService.updateBlogsEntry(entry);
 			}
 
 			for (FileEntry tempBlogsEntryAttachment :
@@ -566,7 +584,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			serviceContext.setAttribute(
 				"emailEntryUpdatedComment", emailEntryUpdatedComment);
 
-			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+			entry = _blogsEntryLocalService.getEntry(entryId);
 
 			String tempOldUrlTitle = entry.getUrlTitle();
 
@@ -578,7 +596,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					getTempBlogsEntryAttachmentFileEntries(content);
 
 			if (!tempBlogsEntryAttachmentFileEntries.isEmpty()) {
-				Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+				Folder folder = _blogsEntryLocalService.addAttachmentsFolder(
 					themeDisplay.getUserId(), entry.getGroupId());
 
 				blogsEntryAttachmentFileEntryReferences =
@@ -592,7 +610,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					content, blogsEntryAttachmentFileEntryReferences);
 			}
 
-			entry = BlogsEntryServiceUtil.updateEntry(
+			entry = _blogsEntryService.updateEntry(
 				entryId, title, subtitle, description, content,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, allowPingbacks,
@@ -623,6 +641,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private static final TransactionAttribute _transactionAttribute =
 		TransactionAttribute.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryService _blogsEntryService;
+	private TrashEntryService _trashEntryService;
 
 	private class UpdateEntryCallable implements Callable<Object[]> {
 

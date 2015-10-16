@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -66,7 +66,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 			return;
 		}
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
@@ -109,7 +109,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		for (int i = 0; i < mentionedUsersScreenNames.length; i++) {
 			String mentionedUserScreenName = mentionedUsersScreenNames[i];
 
-			User mentionedUser = UserLocalServiceUtil.fetchUserByScreenName(
+			User mentionedUser = _userLocalService.fetchUserByScreenName(
 				user.getCompanyId(), mentionedUserScreenName);
 
 			if (mentionedUser == null) {
@@ -140,7 +140,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 	protected String[] getMentionedUsersScreenNames(long userId, String content)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		SocialInteractionsConfiguration socialInteractionsConfiguration =
 			SocialInteractionsConfigurationUtil.
@@ -178,10 +178,16 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		_mentionsUserFinder = mentionsUserFinder;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Pattern _pattern = Pattern.compile(
 		"(?:\\s|^|\\]|>)(@([^(?:@|>|\\[|\\s|,|.|<)]+))",
 		Pattern.CASE_INSENSITIVE);
 
 	private MentionsUserFinder _mentionsUserFinder;
+	private UserLocalService _userLocalService;
 
 }

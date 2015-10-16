@@ -160,9 +160,9 @@ public class JspResourceResolver implements ResourceResolver {
 			return resources;
 		}
 
-		String matcherRegex = fileRegex.replace("*", "[^/]*");
+		String matcherRegex = _replace(fileRegex, "*", "[^/]*");
 
-		matcherRegex = matcherRegex.replace(".", "\\.");
+		matcherRegex = _replace(matcherRegex, ".", "\\.");
 
 		matcherRegex = path + "/" + matcherRegex;
 
@@ -216,6 +216,31 @@ public class JspResourceResolver implements ResourceResolver {
 		}
 
 		return false;
+	}
+
+	private String _replace(String s, String oldSub, String newSub) {
+		int y = s.indexOf(oldSub);
+
+		if (y >= 0) {
+			StringBuilder sb = new StringBuilder();
+
+			int length = oldSub.length();
+			int x = 0;
+
+			while (x <= y) {
+				sb.append(s.substring(x, y));
+				sb.append(newSub);
+
+				x = y + length;
+				y = s.indexOf(oldSub, x);
+			}
+
+			sb.append(s.substring(x));
+
+			return sb.toString();
+		}
+
+		return s;
 	}
 
 	private final Bundle _bundle;

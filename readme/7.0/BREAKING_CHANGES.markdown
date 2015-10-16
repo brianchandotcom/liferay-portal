@@ -435,6 +435,10 @@ Due to this, the following APIs had breaking changes:
 - `ResourceActionsUtil`
 - `PortalUtil`
 
+#### Who is affected?
+
+This affects anyone calling the classes listed above.
+
 #### How should I update my code?
 
 Code invoking the APIs listed above should be updated to use an

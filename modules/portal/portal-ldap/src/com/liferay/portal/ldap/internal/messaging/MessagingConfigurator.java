@@ -14,8 +14,6 @@
 
 package com.liferay.portal.ldap.internal.messaging;
 
-import aQute.bnd.annotation.component.Activate;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -33,6 +31,7 @@ import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguratio
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;

@@ -27,9 +27,10 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -51,7 +52,7 @@ public class CommentUserNotificationHandler
 		long classPK = jsonObject.getLong("classPK");
 
 		try {
-			return MBDiscussionLocalServiceUtil.fetchDiscussion(classPK);
+			return _mbDiscussionLocalService.fetchDiscussion(classPK);
 		}
 		catch (SystemException se) {
 			return null;
@@ -136,5 +137,14 @@ public class CommentUserNotificationHandler
 
 		return message;
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
+	private MBDiscussionLocalService _mbDiscussionLocalService;
 
 }

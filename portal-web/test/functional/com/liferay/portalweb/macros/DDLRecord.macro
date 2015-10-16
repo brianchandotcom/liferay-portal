@@ -105,6 +105,10 @@
 		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 	</command>
 
+	<command name="gotoRecordPreview">
+		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
+	</command>
+
 	<command name="populateFieldBoolean">
 		<execute macro="DDLRecord#viewFieldLabel">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
@@ -548,7 +552,7 @@
 		<if>
 			<equals arg1="${field}" arg2="HTML" />
 			<then>
-				<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
+				<execute macro="DDLRecord#gotoRecordPreview" />
 
 				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 

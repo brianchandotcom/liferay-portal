@@ -61,7 +61,7 @@ import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
-import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadService;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.io.InputStream;
@@ -270,14 +270,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		long threadId = ParamUtil.getLong(actionRequest, "threadId");
 
 		if (threadId > 0) {
-			MBThreadServiceUtil.lockThread(threadId);
+			_mbThreadService.lockThread(threadId);
 		}
 		else {
 			long[] threadIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "threadIds"), 0L);
 
 			for (int i = 0; i < threadIds.length; i++) {
-				MBThreadServiceUtil.lockThread(threadIds[i]);
+				_mbThreadService.lockThread(threadIds[i]);
 			}
 		}
 	}
@@ -294,6 +294,11 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBThreadService(MBThreadService mbThreadService) {
+		_mbThreadService = mbThreadService;
+	}
+
 	protected void subscribeMessage(ActionRequest actionRequest)
 		throws Exception {
 
@@ -306,14 +311,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		long threadId = ParamUtil.getLong(actionRequest, "threadId");
 
 		if (threadId > 0) {
-			MBThreadServiceUtil.unlockThread(threadId);
+			_mbThreadService.unlockThread(threadId);
 		}
 		else {
 			long[] threadIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "threadIds"), 0L);
 
 			for (int i = 0; i < threadIds.length; i++) {
-				MBThreadServiceUtil.unlockThread(threadIds[i]);
+				_mbThreadService.unlockThread(threadIds[i]);
 			}
 		}
 	}
@@ -470,5 +475,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	private MBMessageService _mbMessageService;
 	private MBThreadLocalService _mbThreadLocalService;
+	private MBThreadService _mbThreadService;
 
 }

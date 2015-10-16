@@ -28,25 +28,15 @@ import com.liferay.portal.security.auth.AuthException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Modified;
-
 /**
  * @author Zsolt Berentey
  */
 public class TunnelAuthVerifier implements AuthVerifier {
-
-	@Activate
-	@Modified
-	public void activate(Map<String, Object> properties) {
-		_properties = properties;
-	}
 
 	@Override
 	public String getAuthType() {
@@ -68,7 +58,7 @@ public class TunnelAuthVerifier implements AuthVerifier {
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 
-				String serviceAccessPolicyName = (String)_properties.get(
+				String serviceAccessPolicyName = (String)properties.get(
 					"service.access.profile.name");
 
 				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
@@ -120,7 +110,5 @@ public class TunnelAuthVerifier implements AuthVerifier {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TunnelAuthVerifier.class);
-
-	private Map<String, Object> _properties;
 
 }

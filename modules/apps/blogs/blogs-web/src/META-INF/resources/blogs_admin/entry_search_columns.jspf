@@ -71,7 +71,7 @@
 				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 			</liferay-util:buffer>
 
-			<liferay-frontend:card
+			<liferay-frontend:vertical-card
 				actionJsp="/blogs_admin/entry_action.jsp"
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"

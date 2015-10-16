@@ -99,7 +99,7 @@ recordSetSearch.setOrderByType(orderByType);
 								User userDisplay = UserLocalServiceUtil.fetchUserById(recordSet.getUserId());
 							%>
 
-							<liferay-frontend:card
+							<liferay-frontend:vertical-card
 								actionJsp="/admin/record_set_action.jsp"
 								actionJspServletContext="<%= application %>"
 								cssClass="entry-display-style"

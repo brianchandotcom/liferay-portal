@@ -308,7 +308,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
 							</liferay-util:buffer>
 
-							<liferay-frontend:card
+							<liferay-frontend:vertical-card
 								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 								actionJspServletContext="<%= application %>"
 								cssClass="entry-display-style"
@@ -436,15 +436,14 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						%>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-							<liferay-frontend:card
+							<liferay-frontend:horizontal-card
 								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/folder_action.jsp" : null %>'
 								actionJspServletContext="<%= application %>"
-								horizontal="<%= true %>"
+								icon="icon-folder-close-alt"
 								imageCSSClass="icon-monospaced"
-								imageUrl="icon-folder-close-alt"
 								resultRow="<%= row %>"
 								rowChecker="<%= entriesChecker %>"
-								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
+								text="<%= HtmlUtil.escape(curFolder.getName()) %>"
 								url="<%= rowURL.toString() %>"
 							/>
 						</liferay-ui:search-container-column-text>

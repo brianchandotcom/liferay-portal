@@ -625,6 +625,10 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="Longitude:" />
 	</command>
 
+	<command name="viewInvalidHTMLfield">
+		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_PREVIEW_INVALID_IMG" />
+	</command>
+
 	<command name="viewRepeatableNestedFieldsVisualGrouping">
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
 	</command>

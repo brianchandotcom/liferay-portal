@@ -961,7 +961,7 @@
 			<elseif>
 				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE" />
 				<then>
-					<var name="permissionNavigationValue" value="Sites" />
+					<var name="permissionNavigationValue" value="Site" />
 				</then>
 			</elseif>
 		</if>

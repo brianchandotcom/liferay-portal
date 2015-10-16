@@ -810,10 +810,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SITE_ADMIN_USERS_SITE_MEMBERSHIPS_RESOURCE_PERMISSIONS_TEAM-->
+<!--SITE_ADMIN_USERS_SITE_TEAMS_RESOURCE_PERMISSIONS_TEAM-->
 <tr>
-	<td>SITE_ADMIN_USERS_SITE_MEMBERSHIPS_RESOURCE_PERMISSIONS_TEAM_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[3]</td>
+	<td>SITE_ADMIN_USERS_SITE_TEAMS_RESOURCE_PERMISSIONS_TEAM_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>

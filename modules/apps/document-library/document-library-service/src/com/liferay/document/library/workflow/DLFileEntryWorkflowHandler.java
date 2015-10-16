@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
@@ -32,9 +32,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
 import java.io.Serializable;
 
@@ -42,6 +42,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -66,7 +67,7 @@ public class DLFileEntryWorkflowHandler
 
 		if (assetRendererFactory != null) {
 			DLFileVersion dlFileVersion =
-				DLFileVersionLocalServiceUtil.getFileVersion(classPK);
+				_dlFileVersionLocalService.getFileVersion(classPK);
 
 			return assetRendererFactory.getAssetRenderer(
 				dlFileVersion.getFileEntryId(),
@@ -99,13 +100,13 @@ public class DLFileEntryWorkflowHandler
 			long companyId, long groupId, long classPK)
 		throws PortalException {
 
-		DLFileVersion dlFileVersion =
-			DLFileVersionLocalServiceUtil.getFileVersion(classPK);
+		DLFileVersion dlFileVersion = _dlFileVersionLocalService.getFileVersion(
+			classPK);
 
 		long folderId = dlFileVersion.getFolderId();
 
 		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+			DLFolder dlFolder = _dlFolderLocalService.getFolder(folderId);
 
 			if (dlFolder.getRestrictionType() !=
 					DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
@@ -117,13 +118,13 @@ public class DLFileEntryWorkflowHandler
 		}
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
 				companyId, groupId, DLFolder.class.getName(), folderId,
 				dlFileVersion.getFileEntryTypeId(), true);
 
 		if (workflowDefinitionLink == null) {
 			workflowDefinitionLink =
-				WorkflowDefinitionLinkLocalServiceUtil.
+				_workflowDefinitionLinkLocalService.
 					fetchWorkflowDefinitionLink(
 						companyId, groupId, DLFolder.class.getName(), folderId,
 						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
@@ -151,7 +152,7 @@ public class DLFileEntryWorkflowHandler
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return DLFileEntryLocalServiceUtil.updateStatus(
+		return _dlFileEntryLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
 
@@ -160,6 +161,40 @@ public class DLFileEntryWorkflowHandler
 		return themeDisplay.getPathThemeImages() + "/common/clip.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+
+		_dlFileVersionLocalService = dlFileVersionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		_dlFolderLocalService = dlFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
 	private static final boolean _VISIBLE = false;
+
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileVersionLocalService _dlFileVersionLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
+	private WorkflowDefinitionLinkLocalService _workflowDefinitionLinkLocalService;
 
 }

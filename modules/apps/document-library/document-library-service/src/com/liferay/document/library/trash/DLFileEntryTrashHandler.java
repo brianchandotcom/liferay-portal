@@ -42,10 +42,10 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -57,6 +57,7 @@ import com.liferay.portlet.trash.model.TrashEntryConstants;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for the file entry entity.
@@ -245,7 +246,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		if ((dlFileEntry == null) ||
 			((dlFileEntry.getFolderId() > 0) &&
-			 (DLFolderLocalServiceUtil.fetchFolder(
+			 (_dlFolderLocalService.fetchFolder(
 				 dlFileEntry.getFolderId()) == null))) {
 
 			return false;
@@ -260,7 +261,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLAppLocalServiceUtil.moveFileEntry(
+		_dlAppLocalService.moveFileEntry(
 			userId, classPK, containerModelId, serviceContext);
 	}
 
@@ -309,7 +310,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		dlFileEntry.setFileName(fileName);
 		dlFileEntry.setTitle(name);
 
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
@@ -317,7 +318,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		dlFileVersion.setTitle(name);
 
-		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+		_dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
 	}
 
 	protected void checkRestorableEntry(
@@ -349,7 +350,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			originalTitle = newName;
 		}
 
-		DLFolder duplicateDLFolder = DLFolderLocalServiceUtil.fetchFolder(
+		DLFolder duplicateDLFolder = _dlFolderLocalService.fetchFolder(
 			dlFileEntry.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateDLFolder != null) {
@@ -365,12 +366,12 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		}
 
 		DLFileEntry duplicateDLFileEntry =
-			DLFileEntryLocalServiceUtil.fetchFileEntry(
+			_dlFileEntryLocalService.fetchFileEntry(
 				dlFileEntry.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateDLFileEntry == null) {
 			duplicateDLFileEntry =
-				DLFileEntryLocalServiceUtil.fetchFileEntryByFileName(
+				_dlFileEntryLocalService.fetchFileEntryByFileName(
 					dlFileEntry.getGroupId(), containerModelId,
 					originalFileName);
 		}
@@ -450,7 +451,38 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+
+		_dlFileVersionLocalService = dlFileVersionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		_dlFolderLocalService = dlFolderLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryTrashHandler.class);
+
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileVersionLocalService _dlFileVersionLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
 
 }

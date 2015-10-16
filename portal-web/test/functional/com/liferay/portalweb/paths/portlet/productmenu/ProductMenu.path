@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME</td>
-	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_siteName}')]</td>
+	<td>//div[contains(@class,'toolbar-group-content') and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

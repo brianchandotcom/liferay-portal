@@ -736,10 +736,6 @@
 			<var name="siteName" value="Child ChildSite2Name" />
 		</execute>
 
-		<execute macro="Site#viewSiteHierarchyInBreadcrumbPG">
-			<var name="breadcrumbListVisible" value="Site Name,Child Site1Name,Site Page" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Child ChildSite1Name" />
@@ -811,9 +807,5 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No sites were found." />
-
-		<execute macro="Site#viewSiteHierarchyInBreadcrumbPG">
-			<var name="breadcrumbListVisible" value="Site Name,Child Site1Name,Child ChildSite1Name,Site Page" />
-		</execute>
 	</command>
 </definition>

@@ -1399,6 +1399,13 @@
 			<var name="columnName" value="1_column" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Home" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Community Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="Page#viewPageLayoutColumn">
 			<var name="pageColumnLayout" value="PAGE_COLUMN_1" />
 		</execute>

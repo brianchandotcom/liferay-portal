@@ -1,37 +1,37 @@
 @import "mixins";
 
 .portlet-currency-converter {
-	.conversion-data .currency-data {
-		text-align: center;
-
-		.currency-header {
-			display: block;
-			font-weight: bold;
-		}
-	}
-
-	.conversion-graph .currency-graph {
-		border: 1px solid #DDD;
-		padding: 5px;
-	}
-
-	.form {
-		input[type="text"] {
-			margin-bottom: 0;
-		}
-
-		.field-wrapper {
-			margin-bottom: 10px;
-		}
-
-		@include respond-to(phone) {
-			.btn {
-				margin-bottom: 10px;
-			}
-		}
-	}
-
 	.portlet-body {
 		overflow-x: auto;
+
+		.conversion-data .currency-data {
+			text-align: center;
+
+			.currency-header {
+				display: block;
+				font-weight: bold;
+			}
+		}
+
+		.conversion-graph .currency-graph {
+			border: 1px solid #DDD;
+			padding: 5px;
+		}
+
+		.form {
+			input[type="text"] {
+				margin-bottom: 0;
+			}
+
+			.field-wrapper {
+				margin-bottom: 10px;
+			}
+
+			@include respond-to(phone) {
+				.btn {
+					margin-bottom: 10px;
+				}
+			}
+		}
 	}
 }

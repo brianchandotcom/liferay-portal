@@ -78,9 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	property = {
-		"importer=MediaWiki", "page=/wiki/import/mediawiki.jsp"
-	},
+	property = {"importer=MediaWiki", "page=/wiki/import/mediawiki.jsp"},
 	service = WikiImporter.class
 )
 public class MediaWikiImporter implements WikiImporter {

@@ -42,7 +42,7 @@ public class TestPropsValues {
 		TestPropsUtil.get("assert.logs"));
 
 	public static final long CI_TEST_TIMEOUT_TIME = GetterUtil.getLong(
-		TestPropsUtil.get("ci.test.timeout.time"), 20 * Time.MINUTE);
+		TestPropsUtil.get("ci.test.timeout.time"), 40 * Time.MINUTE);
 
 	public static final String COMPANY_WEB_ID;
 

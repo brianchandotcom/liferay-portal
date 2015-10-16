@@ -61,7 +61,9 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 		}
 
 		if (originalValues.containsKey("login") ||
-			originalValues.containsKey("password")) {
+			originalValues.containsKey("password") ||
+			originalValues.containsKey("oAuthToken") ||
+			originalValues.containsKey("oAuthTokenSecret")) {
 
 			SessionManager.removeSession(syncAccount.getSyncAccountId());
 

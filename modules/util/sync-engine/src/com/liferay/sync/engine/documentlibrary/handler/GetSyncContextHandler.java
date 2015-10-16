@@ -73,6 +73,10 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 
 		String login = syncAccount.getLogin();
 
+		if (login == null) {
+			login = "";
+		}
+
 		String authType = syncContext.getAuthType();
 
 		if (authType.equals(SyncContext.AUTH_TYPE_EMAIL_ADDRESS)) {

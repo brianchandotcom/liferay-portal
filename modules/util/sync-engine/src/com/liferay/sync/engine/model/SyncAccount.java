@@ -97,6 +97,14 @@ public class SyncAccount extends StateAwareModel {
 		return oAuthEnabled;
 	}
 
+	public String getOAuthToken() {
+		return oAuthToken;
+	}
+
+	public String getOAuthTokenSecret() {
+		return oAuthTokenSecret;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -178,6 +186,14 @@ public class SyncAccount extends StateAwareModel {
 		this.oAuthEnabled = oAuthEnabled;
 	}
 
+	public void setOAuthToken(String oAuthToken) {
+		this.oAuthToken = oAuthToken;
+	}
+
+	public void setOAuthTokenSecret(String oAuthTokenSecret) {
+		this.oAuthTokenSecret = oAuthTokenSecret;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -229,6 +245,12 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true)
 	protected boolean oAuthEnabled;
+
+	@DatabaseField(useGetSet = true, width = 16777216)
+	protected String oAuthToken;
+
+	@DatabaseField(useGetSet = true, width = 16777216)
+	protected String oAuthTokenSecret;
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String password;

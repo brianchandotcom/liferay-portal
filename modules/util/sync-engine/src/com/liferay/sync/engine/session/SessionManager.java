@@ -49,8 +49,8 @@ public class SessionManager {
 				session = new Session(
 					url, syncAccount.getOAuthConsumerKey(),
 					syncAccount.getOAuthConsumerSecret(),
-					syncAccount.getLogin(),
-					Encryptor.decrypt(syncAccount.getPassword()),
+					syncAccount.getOAuthToken(),
+					Encryptor.decrypt(syncAccount.getOAuthTokenSecret()),
 					syncAccount.isTrustSelfSigned(),
 					syncAccount.getMaxConnections());
 			}

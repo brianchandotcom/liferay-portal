@@ -82,16 +82,16 @@ public class SyncAccountService {
 		throws Exception {
 
 		return addSyncAccount(
-			filePathName, login, maxConnections, "", "", false, password,
-			pollInterval, syncSites, syncUser, trustSelfSigned, url);
+			filePathName, login, maxConnections, "", "", "", "", false,
+			password, pollInterval, syncSites, syncUser, trustSelfSigned, url);
 	}
 
 	public static SyncAccount addSyncAccount(
 			String filePathName, String login, int maxConnections,
 			String oAuthConsumerKey, String oAuthConsumerSecret,
-			boolean oAuthEnabled, String password, int pollInterval,
-			SyncSite[] syncSites, SyncUser syncUser, boolean trustSelfSigned,
-			String url)
+			String oAuthToken, String oAuthTokenSecret, boolean oAuthEnabled,
+			String password, int pollInterval, SyncSite[] syncSites,
+			SyncUser syncUser, boolean trustSelfSigned, String url)
 		throws Exception {
 
 		// Sync account
@@ -104,6 +104,8 @@ public class SyncAccountService {
 		syncAccount.setOAuthConsumerKey(oAuthConsumerKey);
 		syncAccount.setOAuthConsumerSecret(oAuthConsumerSecret);
 		syncAccount.setOAuthEnabled(oAuthEnabled);
+		syncAccount.setOAuthToken(oAuthToken);
+		syncAccount.setOAuthTokenSecret(Encryptor.encrypt(oAuthTokenSecret));
 		syncAccount.setPassword(Encryptor.encrypt(password));
 		syncAccount.setPollInterval(pollInterval);
 		syncAccount.setTrustSelfSigned(trustSelfSigned);

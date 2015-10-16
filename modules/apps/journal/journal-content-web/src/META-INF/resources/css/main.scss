@@ -5,8 +5,21 @@
 		}
 	}
 
+	.user-tool-asset-addon-entries {
+		text-align: right;
+
+		.user-tool-asset-addon-entry {
+			display: inline-block;
+			margin: 0 1em 2em 0;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+
 	.content-metadata-asset-addon-entries {
-		.content-metadata-entry {
+		.content-metadata-asset-addon-entry {
 			display: block;
 			margin: 3em 0;
 

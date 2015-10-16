@@ -502,6 +502,40 @@ public class FileSystemStore extends BaseStore {
 		return companyDir;
 	}
 
+	protected Dictionary<String, Object> getConfigurationDictionary(
+			Class<?> configurationClass)
+		throws IOException {
+
+		Configuration configuration = configurationAdmin.getConfiguration(
+			configurationClass.getName());
+
+		boolean allowDeleted = false;
+
+		if ((getClass() == FileSystemStore.class) &&
+			(configurationClass != FileSystemStoreConfiguration.class)) {
+
+			allowDeleted = true;
+		}
+
+		if ((getClass() == AdvancedFileSystemStore.class) &&
+			(configurationClass !=
+				AdvancedFileSystemStoreConfiguration.class)) {
+
+			allowDeleted = true;
+		}
+
+		try {
+			return configuration.getProperties();
+		}
+		catch (IllegalStateException ise) {
+			if (allowDeleted) {
+				return null;
+			}
+
+			throw ise;
+		}
+	}
+
 	protected File getDirNameDir(
 		long companyId, long repositoryId, String dirName) {
 
@@ -633,19 +667,12 @@ public class FileSystemStore extends BaseStore {
 
 	protected void validate() {
 		try {
-			Configuration fileSystemStoreConfiguration =
-				configurationAdmin.getConfiguration(
-					FileSystemStoreConfiguration.class.getName());
-
 			Dictionary<String, Object> fileSystemDictionary =
-				fileSystemStoreConfiguration.getProperties();
-
-			Configuration advancedFileSystemStoreConfiguration =
-				configurationAdmin.getConfiguration(
-					AdvancedFileSystemStoreConfiguration.class.getName());
+				getConfigurationDictionary(FileSystemStoreConfiguration.class);
 
 			Dictionary<String, Object> advancedFileSystemDictionary =
-				advancedFileSystemStoreConfiguration.getProperties();
+				getConfigurationDictionary(
+					AdvancedFileSystemStoreConfiguration.class);
 
 			if ((fileSystemDictionary != null) &&
 				(advancedFileSystemDictionary != null)) {

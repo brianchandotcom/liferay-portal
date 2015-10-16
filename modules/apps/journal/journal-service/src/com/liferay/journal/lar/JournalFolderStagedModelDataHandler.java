@@ -15,7 +15,7 @@
 package com.liferay.journal.lar;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -266,7 +266,7 @@ public class JournalFolderStagedModelDataHandler
 				referenceDDMStructureId);
 
 			DDMStructure existingDDMStructure =
-				DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
+				_ddmStructureLocalService.fetchDDMStructure(ddmStructureId);
 
 			if (existingDDMStructure == null) {
 				continue;
@@ -289,6 +289,13 @@ public class JournalFolderStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
 	@Reference
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
@@ -296,6 +303,7 @@ public class JournalFolderStagedModelDataHandler
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
+	private DDMStructureLocalService _ddmStructureLocalService;
 	private JournalFolderLocalService _journalFolderLocalService;
 
 }

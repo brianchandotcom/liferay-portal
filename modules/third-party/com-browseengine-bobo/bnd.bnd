@@ -1,4 +1,0 @@
-Bundle-SymbolicName: com.browseengine.bobo
-Bundle-Version: 3.2.0.LIFERAY-PATCHED-1
-Export-Package: com.browseengine.bobo.*
-Include-Resource: classes

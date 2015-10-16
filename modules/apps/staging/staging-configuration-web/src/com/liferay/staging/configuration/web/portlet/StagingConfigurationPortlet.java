@@ -98,11 +98,11 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			_groupLocalService.disableStaging(liveGroupId);
 		}
 		else if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
+			stagedGroup = liveGroup.hasStagingGroup();
+
 			_stagingLocalService.enableLocalStaging(
 				themeDisplay.getUserId(), liveGroup, branchingPublic,
 				branchingPrivate, serviceContext);
-
-			stagedGroup = liveGroup.hasStagingGroup();
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 			String remoteAddress = ParamUtil.getString(
@@ -115,12 +115,12 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			long remoteGroupId = ParamUtil.getLong(
 				actionRequest, "remoteGroupId");
 
+			stagedGroup = liveGroup.isStagedRemotely();
+
 			_stagingLocalService.enableRemoteStaging(
 				themeDisplay.getUserId(), liveGroup, branchingPublic,
 				branchingPrivate, remoteAddress, remotePort, remotePathContext,
 				secureConnection, remoteGroupId, serviceContext);
-
-			stagedGroup = liveGroup.isStagedRemotely();
 		}
 		else if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
 			_stagingLocalService.disableStaging(liveGroup, serviceContext);

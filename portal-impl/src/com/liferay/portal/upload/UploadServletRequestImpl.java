@@ -108,6 +108,7 @@ public class UploadServletRequestImpl
 			Collections.sort(
 				fileItems,
 				new Comparator<org.apache.commons.fileupload.FileItem>() {
+
 					@Override
 					public int compare(
 						org.apache.commons.fileupload.FileItem o1,
@@ -125,7 +126,9 @@ public class UploadServletRequestImpl
 						}
 
 						return 0;
-					}});
+					}
+
+				});
 
 			for (org.apache.commons.fileupload.FileItem fileItem : fileItems) {
 				LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;

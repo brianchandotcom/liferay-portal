@@ -94,7 +94,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			{ "facebookSn", Types.VARCHAR },
 			{ "icqSn", Types.VARCHAR },
 			{ "jabberSn", Types.VARCHAR },
-			{ "msnSn", Types.VARCHAR },
 			{ "mySpaceSn", Types.VARCHAR },
 			{ "skypeSn", Types.VARCHAR },
 			{ "twitterSn", Types.VARCHAR },
@@ -132,7 +131,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		TABLE_COLUMNS_MAP.put("facebookSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("icqSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("jabberSn", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("msnSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("mySpaceSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("skypeSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("twitterSn", Types.VARCHAR);
@@ -144,7 +142,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		TABLE_COLUMNS_MAP.put("hoursOfOperation", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,aimSn VARCHAR(75) null,facebookSn VARCHAR(75) null,icqSn VARCHAR(75) null,jabberSn VARCHAR(75) null,msnSn VARCHAR(75) null,mySpaceSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,ymSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,aimSn VARCHAR(75) null,facebookSn VARCHAR(75) null,icqSn VARCHAR(75) null,jabberSn VARCHAR(75) null,mySpaceSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,ymSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 	public static final String ORDER_BY_JPQL = " ORDER BY contact.contactId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Contact_.contactId ASC";
@@ -203,7 +201,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		model.setFacebookSn(soapModel.getFacebookSn());
 		model.setIcqSn(soapModel.getIcqSn());
 		model.setJabberSn(soapModel.getJabberSn());
-		model.setMsnSn(soapModel.getMsnSn());
 		model.setMySpaceSn(soapModel.getMySpaceSn());
 		model.setSkypeSn(soapModel.getSkypeSn());
 		model.setTwitterSn(soapModel.getTwitterSn());
@@ -301,7 +298,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		attributes.put("facebookSn", getFacebookSn());
 		attributes.put("icqSn", getIcqSn());
 		attributes.put("jabberSn", getJabberSn());
-		attributes.put("msnSn", getMsnSn());
 		attributes.put("mySpaceSn", getMySpaceSn());
 		attributes.put("skypeSn", getSkypeSn());
 		attributes.put("twitterSn", getTwitterSn());
@@ -462,12 +458,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 		if (jabberSn != null) {
 			setJabberSn(jabberSn);
-		}
-
-		String msnSn = (String)attributes.get("msnSn");
-
-		if (msnSn != null) {
-			setMsnSn(msnSn);
 		}
 
 		String mySpaceSn = (String)attributes.get("mySpaceSn");
@@ -936,22 +926,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@JSON
 	@Override
-	public String getMsnSn() {
-		if (_msnSn == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _msnSn;
-		}
-	}
-
-	@Override
-	public void setMsnSn(String msnSn) {
-		_msnSn = msnSn;
-	}
-
-	@JSON
-	@Override
 	public String getMySpaceSn() {
 		if (_mySpaceSn == null) {
 			return StringPool.BLANK;
@@ -1149,7 +1123,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		contactImpl.setFacebookSn(getFacebookSn());
 		contactImpl.setIcqSn(getIcqSn());
 		contactImpl.setJabberSn(getJabberSn());
-		contactImpl.setMsnSn(getMsnSn());
 		contactImpl.setMySpaceSn(getMySpaceSn());
 		contactImpl.setSkypeSn(getSkypeSn());
 		contactImpl.setTwitterSn(getTwitterSn());
@@ -1375,14 +1348,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			contactCacheModel.jabberSn = null;
 		}
 
-		contactCacheModel.msnSn = getMsnSn();
-
-		String msnSn = contactCacheModel.msnSn;
-
-		if ((msnSn != null) && (msnSn.length() == 0)) {
-			contactCacheModel.msnSn = null;
-		}
-
 		contactCacheModel.mySpaceSn = getMySpaceSn();
 
 		String mySpaceSn = contactCacheModel.mySpaceSn;
@@ -1460,7 +1425,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1510,8 +1475,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		sb.append(getIcqSn());
 		sb.append(", jabberSn=");
 		sb.append(getJabberSn());
-		sb.append(", msnSn=");
-		sb.append(getMsnSn());
 		sb.append(", mySpaceSn=");
 		sb.append(getMySpaceSn());
 		sb.append(", skypeSn=");
@@ -1537,7 +1500,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(106);
+		StringBundler sb = new StringBundler(103);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Contact");
@@ -1640,10 +1603,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		sb.append(getJabberSn());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>msnSn</column-name><column-value><![CDATA[");
-		sb.append(getMsnSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>mySpaceSn</column-name><column-value><![CDATA[");
 		sb.append(getMySpaceSn());
 		sb.append("]]></column-value></column>");
@@ -1722,7 +1681,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private String _facebookSn;
 	private String _icqSn;
 	private String _jabberSn;
-	private String _msnSn;
 	private String _mySpaceSn;
 	private String _skypeSn;
 	private String _twitterSn;

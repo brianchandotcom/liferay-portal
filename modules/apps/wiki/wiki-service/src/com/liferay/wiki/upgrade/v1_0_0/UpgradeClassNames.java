@@ -20,6 +20,7 @@ import com.liferay.portal.upgrade.util.classname.ClassNameDependencyUpgrader;
 import com.liferay.portal.upgrade.util.classname.dependency.ResourcePermissionClassNameDependency;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.model.WikiPageResource;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,6 +53,12 @@ public class UpgradeClassNames extends UpgradeProcess {
 		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
 			"com.liferay.portlet.wiki.model.WikiPage", WikiPage.class.getName(),
 			classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+
+		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
+			"com.liferay.portlet.wiki.model.WikiPageResource",
+			WikiPageResource.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
 	}

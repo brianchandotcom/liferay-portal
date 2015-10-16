@@ -32,8 +32,8 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.impl.WikiNodeImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
@@ -121,8 +121,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		WikiNodeLocalServiceUtil.deleteNodes(
-			portletDataContext.getScopeGroupId());
+		_wikiNodeLocalService.deleteNodes(portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -146,13 +145,13 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery nodeActionableDynamicQuery =
-			WikiNodeLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiNodeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		nodeActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery pageActionableDynamicQuery =
-			WikiPageLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiPageLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		pageActionableDynamicQuery.performActions();
@@ -211,13 +210,13 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery nodeActionableDynamicQuery =
-			WikiNodeLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiNodeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		nodeActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery pageExportActionableDynamicQuery =
-			WikiPageLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiPageLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		pageExportActionableDynamicQuery.performCount();
@@ -227,5 +226,22 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	private WikiNodeLocalService _wikiNodeLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

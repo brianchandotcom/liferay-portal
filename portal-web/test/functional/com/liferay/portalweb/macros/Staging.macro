@@ -677,6 +677,7 @@
 		<execute function="Click" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="Click" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
 		<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
 		<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />

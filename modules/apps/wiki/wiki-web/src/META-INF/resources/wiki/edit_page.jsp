@@ -168,10 +168,9 @@ if (Validator.isNull(redirect)) {
 
 <portlet:actionURL name="/wiki/edit_page" var="editPageActionURL" />
 
-<portlet:renderURL var="editPageRenderURL" >
+<portlet:renderURL var="editPageRenderURL">
 	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 </portlet:renderURL>
-
 
 <aui:form action="<%= editPageActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

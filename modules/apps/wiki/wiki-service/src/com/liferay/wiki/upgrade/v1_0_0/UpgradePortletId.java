@@ -25,9 +25,11 @@ public class UpgradePortletId
 		return new String[][] {
 			new String[] {"36", "com_liferay_wiki_web_portlet_WikiPortlet"},
 			new String[] {
-				"54", "com_liferay_wiki_web_portlet_WikiDisplayPortlet"},
+				"54", "com_liferay_wiki_web_portlet_WikiDisplayPortlet"
+			},
 			new String[] {
-				"154", "com_liferay_wiki_web_portlet_WikiAdminPortlet"}
+				"154", "com_liferay_wiki_web_portlet_WikiAdminPortlet"
+			}
 		};
 	}
 

@@ -28,7 +28,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSitePageXSS" priority="4">
+	<command name="AddSitePageXSS" priority="3">
 		<var name="sitePage3Name"><![CDATA[<script>alert("Site Page 3")</script> />]]></var>
 
 		<execute macro="Page#addPG">
@@ -170,7 +170,7 @@
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_3" value1="Child Page Name" />
 	</command>
 
-	<command name="DefaultLanguageWithEmptyFriendlyURLThrowsErrorExceptions" priority="4">
+	<command name="DefaultLanguageWithEmptyFriendlyURLThrowsErrorExceptions" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Page Name" />
 		</execute>
@@ -238,7 +238,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesPanelLayout" priority="4">
+	<command name="SitesPanelLayout" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -446,7 +446,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSecureContentAndPageAsGuest" priority="4">
+	<command name="ViewSecureContentAndPageAsGuest" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelSystem">
 			<var name="portlet" value="Server Administration" />
 		</execute>
@@ -645,7 +645,7 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 	</command>
 
-	<command name="ViewSecureContentAndPageAsSiteMember" priority="4">
+	<command name="ViewSecureContentAndPageAsSiteMember" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelSystem">
 			<var name="portlet" value="Server Administration" />
 		</execute>
@@ -895,7 +895,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSecureContentAndPageAsUser" priority="4">
+	<command name="ViewSecureContentAndPageAsUser" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelSystem">
 			<var name="portlet" value="Server Administration" />
 		</execute>

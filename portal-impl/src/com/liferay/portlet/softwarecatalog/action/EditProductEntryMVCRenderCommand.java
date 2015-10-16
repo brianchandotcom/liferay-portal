@@ -36,7 +36,13 @@ public class EditProductEntryMVCRenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
-
+		
+		try {
+			ActionUtil.getProductEntry(renderRequest);
+		}
+		catch (Exception e) {
+			return "/html/portlet/software_catalog/error.jsp";
+		}
 		return "/html/portlet/software_catalog/edit_product_entry.jsp";
 	}
 

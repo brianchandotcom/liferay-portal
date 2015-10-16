@@ -18,6 +18,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
 
@@ -37,6 +38,16 @@ public class EditFrameworkVersionMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		try {
+			ActionUtil.getFrameworkVersion(renderRequest);
+		}
+		catch (Exception e) {
+
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/html/portlet/software_catalog/error.jsp";
+			
+		}
 		return "/html/portlet/software_catalog/edit_framework_version.jsp";
 	}
 

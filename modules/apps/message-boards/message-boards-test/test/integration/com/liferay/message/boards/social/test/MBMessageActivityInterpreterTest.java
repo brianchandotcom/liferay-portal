@@ -15,6 +15,7 @@
 package com.liferay.message.boards.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -30,6 +31,9 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
+import com.liferay.social.activity.test.util.SocialActivityInterpreterHelper;
 
 import java.io.InputStream;
 
@@ -39,13 +43,17 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+
 /**
  * @author Zsolt Berentey
  */
 @RunWith(Arquillian.class)
 @Sync
 public class MBMessageActivityInterpreterTest
-	extends BaseMBSocialActivityInterpreterTestCase {
+	extends BaseSocialActivityInterpreterTestCase {
 
 	@ClassRule
 	@Rule
@@ -86,13 +94,26 @@ public class MBMessageActivityInterpreterTest
 	}
 
 	@Override
+	protected SocialActivityInterpreter getActivityInterpreter() {
+		SocialActivityInterpreterHelper socialActivityInterpreterHelper =
+			new SocialActivityInterpreterHelper(
+				getClassName(), MBPortletKeys.MESSAGE_BOARDS);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return socialActivityInterpreterHelper.getActivityInterpreter(
+			bundleContext);
+	}
+
+	@Override
 	protected int[] getActivityTypes() {
 		return new int[] {
 			MBActivityKeys.ADD_MESSAGE, MBActivityKeys.REPLY_MESSAGE
 		};
 	}
 
-	@Override
 	protected String getClassName() {
 		return MBMessage.class.getName();
 	}

@@ -15,12 +15,12 @@
 package com.liferay.journal.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.journal.web.social.JournalArticleActivityInterpreter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -31,10 +31,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
+import com.liferay.social.activity.test.util.SocialActivityInterpreterHelper;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Zsolt Berentey
@@ -62,7 +67,16 @@ public class JournalArticleActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new JournalArticleActivityInterpreter();
+		SocialActivityInterpreterHelper socialActivityInterpreterHelper =
+			new SocialActivityInterpreterHelper(
+				getClassName(), JournalPortletKeys.JOURNAL);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return socialActivityInterpreterHelper.getActivityInterpreter(
+			bundleContext);
 	}
 
 	@Override
@@ -72,6 +86,10 @@ public class JournalArticleActivityInterpreterTest
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH
 		};
+	}
+
+	protected String getClassName() {
+		return JournalArticle.class.getName();
 	}
 
 	@Override

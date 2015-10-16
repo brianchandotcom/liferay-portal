@@ -36,7 +36,7 @@ import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import java.util.List;
 
@@ -160,7 +160,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 			return layoutURL;
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		if (assetEntry == null) {
@@ -175,39 +175,47 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 		return portletURL.toString();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleService(
 		JournalArticleService journalArticleService) {
 
 		_journalArticleService = journalArticleService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalContentSearchLocalService(
 		JournalContentSearchLocalService journalContentSearchLocalService) {
 
 		_journalContentSearchLocalService = journalContentSearchLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutSetLocalService(
 		LayoutSetLocalService layoutSetLocalService) {
 
 		_layoutSetLocalService = layoutSetLocalService;
 	}
 
+	private AssetEntryLocalService _assetEntryLocalService;
 	private GroupLocalService _groupLocalService;
 	private JournalArticleService _journalArticleService;
 	private JournalContentSearchLocalService _journalContentSearchLocalService;

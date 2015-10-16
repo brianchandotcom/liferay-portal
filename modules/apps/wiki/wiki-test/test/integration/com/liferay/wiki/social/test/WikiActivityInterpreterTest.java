@@ -26,19 +26,24 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
+import com.liferay.social.activity.test.util.SocialActivityInterpreterHelper;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.social.WikiActivityInterpreter;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Zsolt Berentey
@@ -54,6 +59,10 @@ public class WikiActivityInterpreterTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	public String getClassName() {
+		return WikiPage.class.getName();
+	}
 
 	@Override
 	protected void addActivities() throws Exception {
@@ -71,7 +80,16 @@ public class WikiActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new WikiActivityInterpreter();
+		SocialActivityInterpreterHelper socialActivityInterpreterHelper =
+			new SocialActivityInterpreterHelper(
+				getClassName(), WikiPortletKeys.WIKI);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return socialActivityInterpreterHelper.getActivityInterpreter(
+			bundleContext);
 	}
 
 	@Override

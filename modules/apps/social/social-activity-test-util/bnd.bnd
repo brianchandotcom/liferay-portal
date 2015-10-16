@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Social Activity Test Util
+Bundle-SymbolicName: com.liferay.social.activity.test.util
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.social.activity.test.util
+Include-Resource:\
+	classes,\
+	test-classes/integration/

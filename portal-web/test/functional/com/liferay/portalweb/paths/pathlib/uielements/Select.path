@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TIME_ZONE</td>
+	<td>//select[contains(@id,'timeZoneId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TYPE</td>
 	<td>//div[label[contains(.,'Type')]]/select</td>
 	<td></td>

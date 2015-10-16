@@ -52,7 +52,7 @@
 
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP" />
+			<var name="portletName" value="WSRP Admin" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#PRODUCERS" value1="Producers" />
@@ -66,7 +66,7 @@
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="There are no producers." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no producers." />
 		<execute function="AssertClick" locator1="NavTab#CONSUMERS" value1="Consumers" />
 
 		<while>

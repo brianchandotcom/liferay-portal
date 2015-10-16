@@ -145,7 +145,7 @@
 </tr>
 <tr>
 	<td>GOOGLE_ANALYTICS_ID</td>
-	<td>//input[contains(@id,'_165_googleAnalyticsId')]</td>
+	<td>//input[contains(@id,'googleAnalyticsId')]</td>
 	<td></td>
 </tr>
 <tr>

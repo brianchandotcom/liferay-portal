@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD</td>
-	<td>//input[@name='_165_publicVirtualHost']</td>
+	<td>//input[contains(@name,'publicVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_FIELD</td>
-	<td>//input[@name='_165_privateVirtualHost']</td>
+	<td>//input[contains(@name,'privateVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>

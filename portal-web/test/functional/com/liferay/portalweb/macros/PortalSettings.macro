@@ -111,7 +111,7 @@
 	<command name="configureTimeZone">
 		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="Display Settings" />
 
-		<execute function="Select" locator1="CPSitesettingsDisplaysettings#TIME_ZONE_SELECT" value1="${timeZone}" />
+		<execute function="Select" locator1="Select#TIME_ZONE" value1="${timeZone}" />
 
 		<execute macro="PortalSettings#_saveDisplaySettings" />
 	</command>

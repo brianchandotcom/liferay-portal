@@ -134,6 +134,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_RESOURCE_NOT_FOUND</td>
+	<td>xpath=(//div[@class='portlet-content'])[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>URL_ERROR_MESSAGE</td>
 	<td>//code[@class='lfr-url-error']</td>
 	<td></td>

@@ -39,25 +39,25 @@
 		<execute function="Open" locator1="${maliciousURL1}" />
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
 		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
 		<execute function="Open" locator1="${maliciousURL2}" />
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
 		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
 		<execute function="Open" locator1="${maliciousURL3}" />
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
 		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
 		<execute function="Open" locator1="${maliciousURL4}" />
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
 		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 	</command>
 
@@ -74,7 +74,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test ${userLastNameEdit}." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT_USER_NAME" value1="${userLastNameEdit}" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Bookmarks" />
@@ -109,21 +109,21 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Public" />
-		</execute>
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
 
-		<execute macro="Page#openURL" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
-		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
-		<execute function="AssertClick" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="${siteName}" />
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<var name="key_listEntry" value="${siteName}" />
+
+		<execute function="ClickNoError" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<execute function="AssertAlertNotPresent" />
-		<execute function="AssertTextEquals" locator1="Home#CONTROL_PANEL_MANAGE_BUTTON" value1="Manage ${siteName}" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${key_siteName}" />
 	</command>
 
 	<command name="ViewGoogleAnalyticsIDNoXSS" priority="4">

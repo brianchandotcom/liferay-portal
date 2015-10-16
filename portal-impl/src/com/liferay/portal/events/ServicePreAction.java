@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
-import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
@@ -773,18 +772,6 @@ public class ServicePreAction extends Action {
 		themeDisplay.setPathApplet(contextPath.concat("/applets"));
 		themeDisplay.setPathCms(contextPath.concat("/cms"));
 		themeDisplay.setPathContext(contextPath);
-
-		PortalWebResources portalWebResources =
-			PortalWebResourcesUtil.getPortalWebResources(
-				PortalWebResourceConstants.RESOURCE_TYPE_EDITORS);
-
-		if (portalWebResources != null) {
-
-			// Temporary workaround for LPS-56017
-
-			themeDisplay.setPathEditors(portalWebResources.getContextPath());
-		}
-
 		themeDisplay.setPathFlash(contextPath.concat("/flash"));
 		themeDisplay.setPathFriendlyURLPrivateGroup(
 			friendlyURLPrivateGroupPath);

@@ -101,6 +101,34 @@ String backURL = PortalUtil.getCurrentURL(request);
 					},
 					icon: 'icon-calendar',
 					id: 'manage'
+				},
+				{
+					caption: '<liferay-ui:message key="permissions" />',
+					fn: function(event) {
+						var instance = this;
+
+						<liferay-security:permissionsURL
+							modelResource="<%= CalendarPortletPermission.RESOURCE_NAME %>"
+							modelResourceDescription=""
+							resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+							var="permissionsURL"
+							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+						/>
+
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									destroyOnHide: true,
+									modal: true
+								},
+								refreshWindow: window,
+								title: '<liferay-ui:message key="permissions" />',
+								uri: decodeURIComponent('<%= permissionsURL %>')
+							}
+						);
+					},
+					icon: 'icon-lock',
+					id: 'permissions'
 				}
 			],
 			visible: false,

@@ -166,18 +166,6 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 				<liferay-util:param name="permissionsCalendarBookingURL" value="<%= permissionsCalendarBookingURL %>" />
 
-				<liferay-security:permissionsURL
-					modelResource="<%= CalendarPortletPermission.RESOURCE_NAME %>"
-					modelResourceDescription=""
-					resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
-				<liferay-util:param name="permissionsURL" value="<%= permissionsURL %>" />
-
-				<liferay-util:param name="showPermissionsBtn" value="<%= String.valueOf(CalendarPortletPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS)) %>" />
-
 				<liferay-util:param name="showAddEventBtn" value="<%= String.valueOf((userDefaultCalendar != null) && CalendarPermission.contains(permissionChecker, userDefaultCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) %>" />
 
 				<portlet:renderURL var="viewCalendarBookingURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

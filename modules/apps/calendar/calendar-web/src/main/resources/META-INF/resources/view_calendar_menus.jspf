@@ -131,6 +131,19 @@ String backURL = PortalUtil.getCurrentURL(request);
 					id: 'permissions'
 				}
 			],
+			on: {
+				visibleChange: function(event) {
+					var instance = this;
+
+					var hiddenItems = [];
+
+					if (instance.calendarResourceId !== '<%= groupCalendarResource.getCalendarResourceId() %>') {
+						hiddenItems.push('permissions');
+					}
+
+					instance.set('hiddenItems', hiddenItems);
+				}
+			},
 			visible: false,
 			width: 290,
 			zIndex: 500
@@ -452,14 +465,14 @@ String backURL = PortalUtil.getCurrentURL(request);
 		function(event) {
 			var currentTarget = event.currentTarget;
 
+			window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute('data-calendarResourceId');
+
 			window.<portlet:namespace />calendarListsMenu.setAttrs(
 				{
 					alignNode: currentTarget,
 					visible: !window.<portlet:namespace />calendarListsMenu.get('visible')
 				}
 			);
-
-			window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute('data-calendarResourceId');
 
 			event.stopImmediatePropagation();
 		},

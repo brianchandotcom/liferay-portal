@@ -16,6 +16,8 @@ package com.liferay.portal.store.jcr.test.activator.configuration;
 
 import com.liferay.portlet.documentlibrary.store.Store;
 
+import java.io.IOException;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -87,12 +89,8 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) {
-		try {
-			_jcrConfiguration.delete();
-		}
-		catch (Exception e) {
-		}
+	public void stop(BundleContext bundleContext) throws IOException {
+		_jcrConfiguration.delete();
 	}
 
 	private Configuration _jcrConfiguration;

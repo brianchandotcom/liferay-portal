@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.Store;
 
+import java.io.IOException;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -77,18 +79,14 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) {
-		try {
-			_advancedFileSystemStoreConfiguration.delete();
+	public void stop(BundleContext bundleContext) throws IOException {
+		_advancedFileSystemStoreConfiguration.delete();
 
-			FileUtil.deltree(_ADVANCED_ROOT_DIR);
+		FileUtil.deltree(_ADVANCED_ROOT_DIR);
 
-			_fileSystemStoreConfiguration.delete();
+		_fileSystemStoreConfiguration.delete();
 
-			FileUtil.deltree(_ROOT_DIR);
-		}
-		catch (Exception e) {
-		}
+		FileUtil.deltree(_ROOT_DIR);
 	}
 
 	protected Configuration getConfiguration(

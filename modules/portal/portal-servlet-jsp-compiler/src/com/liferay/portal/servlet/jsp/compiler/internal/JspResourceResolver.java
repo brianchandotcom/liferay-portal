@@ -99,7 +99,7 @@ public class JspResourceResolver implements ResourceResolver {
 		if (bundle.equals(_bundle) || bundle.equals(_jspBundle)) {
 			resources = bundleWiring.listResources(path, filePattern, options);
 		}
-		else if (exportsPackage(bundleWiring, path.replace('/', '.'))) {
+		else if (_exportsPackage(bundleWiring, path.replace('/', '.'))) {
 			if (bundle.getBundleId() == 0) {
 				resources = handleSystemBundle(
 					bundleWiring, path, filePattern, options);
@@ -138,7 +138,7 @@ public class JspResourceResolver implements ResourceResolver {
 		}
 
 		if (((urls == null) || urls.isEmpty()) &&
-			exportsPackage(bundleWiring, packageName)) {
+			_exportsPackage(bundleWiring, packageName)) {
 
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
@@ -199,7 +199,7 @@ public class JspResourceResolver implements ResourceResolver {
 		return resources;
 	}
 
-	private boolean exportsPackage(
+	private boolean _exportsPackage(
 		BundleWiring bundleWiring, String packageName) {
 
 		List<BundleWire> providedWires = bundleWiring.getProvidedWires(

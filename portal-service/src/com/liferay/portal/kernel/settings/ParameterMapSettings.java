@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class ParameterMapSettings extends BaseSettings {
 	protected String[] doGetValues(String key) {
 		String[] values = null;
 
-		if (_parameterNamePrefix != null) {
+		if (Validator.isNotNull(_parameterNamePrefix)) {
 			values = _parameterMap.get(_parameterNamePrefix + key);
 		}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Map;
 
 /**
@@ -43,7 +45,7 @@ public class ParameterMapSettingsLocator implements SettingsLocator {
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
 			_parameterMap, settings);
 
-		if (_parameterNamePrefix != null) {
+		if (Validator.isNotNull(_parameterNamePrefix)) {
 			parameterMapSettings.setParameterNamePrefix(_parameterNamePrefix);
 		}
 

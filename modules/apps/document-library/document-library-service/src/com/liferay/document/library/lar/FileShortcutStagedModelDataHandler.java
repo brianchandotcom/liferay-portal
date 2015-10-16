@@ -32,8 +32,8 @@ import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -62,7 +63,7 @@ public class FileShortcutStagedModelDataHandler
 	public void deleteStagedModel(FileShortcut fileShortcut)
 		throws PortalException {
 
-		DLFileShortcutLocalServiceUtil.deleteFileShortcut(
+		_dlFileShortcutLocalService.deleteFileShortcut(
 			fileShortcut.getFileShortcutId());
 	}
 
@@ -85,7 +86,7 @@ public class FileShortcutStagedModelDataHandler
 
 		try {
 			DLFileShortcut dlFileShortcut =
-				DLFileShortcutLocalServiceUtil.
+				_dlFileShortcutLocalService.
 					getDLFileShortcutByUuidAndGroupId(uuid, groupId);
 
 			return new LiferayFileShortcut(dlFileShortcut);
@@ -104,7 +105,7 @@ public class FileShortcutStagedModelDataHandler
 		String uuid, long companyId) {
 
 		List<DLFileShortcut> dlFileShortcuts =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcutsByUuidAndCompanyId(
+			_dlFileShortcutLocalService.getDLFileShortcutsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<DLFileShortcut>());
 
@@ -140,7 +141,7 @@ public class FileShortcutStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
 			fileShortcut.getToFileEntryId());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -213,18 +214,18 @@ public class FileShortcutStagedModelDataHandler
 			if (existingFileShortcut == null) {
 				serviceContext.setUuid(fileShortcut.getUuid());
 
-				importedFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
+				importedFileShortcut = _dlAppLocalService.addFileShortcut(
 					userId, groupId, folderId,
 					importedFileEntry.getFileEntryId(), serviceContext);
 			}
 			else {
-				importedFileShortcut = DLAppLocalServiceUtil.updateFileShortcut(
+				importedFileShortcut = _dlAppLocalService.updateFileShortcut(
 					userId, existingFileShortcut.getFileShortcutId(), folderId,
 					importedFileEntry.getFileEntryId(), serviceContext);
 			}
 		}
 		else {
-			importedFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
+			importedFileShortcut = _dlAppLocalService.addFileShortcut(
 				userId, groupId, folderId, importedFileEntry.getFileEntryId(),
 				serviceContext);
 		}
@@ -267,7 +268,22 @@ public class FileShortcutStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileShortcutLocalService(
+		DLFileShortcutLocalService dlFileShortcutLocalService) {
+
+		_dlFileShortcutLocalService = dlFileShortcutLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileShortcutStagedModelDataHandler.class);
+
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 }

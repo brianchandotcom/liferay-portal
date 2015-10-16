@@ -44,6 +44,10 @@ if (recordVersion != null) {
 	ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
 }
 
+if (recordSet != null) {
+	renderResponse.setTitle(recordSet.getName(locale));
+}
+
 String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
 
 if (Validator.isNull(defaultLanguageId)) {

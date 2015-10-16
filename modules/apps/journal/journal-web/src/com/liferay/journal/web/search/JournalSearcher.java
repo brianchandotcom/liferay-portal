@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.util;
+package com.liferay.journal.web.search;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;

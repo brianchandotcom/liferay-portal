@@ -132,13 +132,24 @@ public class JavadocFormatter {
 			limits = new String[] {StringPool.BLANK};
 		}
 
-		_languagePropertiesFile = new File("src/content/Language.properties");
+		File languagePropertiesFile = new File(
+			"src/content/Language.properties");
 
-		if (_languagePropertiesFile.exists()) {
+		if (!languagePropertiesFile.exists()) {
+			languagePropertiesFile = new File(
+				"src/main/resources/content/Language.properties");
+		}
+
+		if (languagePropertiesFile.exists()) {
 			_languageProperties = new Properties();
+			_languagePropertiesFile = languagePropertiesFile;
 
 			_languageProperties.load(
 				new FileInputStream(_languagePropertiesFile.getAbsolutePath()));
+		}
+		else {
+			_languageProperties = null;
+			_languagePropertiesFile = null;
 		}
 
 		_lowestSupportedJavaVersion = GetterUtil.getDouble(
@@ -1019,7 +1030,31 @@ public class JavadocFormatter {
 	}
 
 	private String _getClassName(String fileName) {
-		int pos = fileName.indexOf("src/");
+		int pos = fileName.indexOf("src/main/java/");
+
+		if (pos != -1) {
+			pos = fileName.indexOf("java/", pos);
+		}
+
+		if (pos == -1) {
+			pos = fileName.indexOf("src/test/java/");
+
+			if (pos != -1) {
+				pos = fileName.indexOf("java/", pos);
+			}
+		}
+
+		if (pos == -1) {
+			pos = fileName.indexOf("src/testIntegration/java/");
+
+			if (pos != -1) {
+				pos = fileName.indexOf("java/", pos);
+			}
+		}
+
+		if (pos == -1) {
+			pos = fileName.indexOf("src/");
+		}
 
 		if (pos == -1) {
 			pos = fileName.indexOf("test/integration/");
@@ -2181,7 +2216,7 @@ public class JavadocFormatter {
 	private final boolean _initializeMissingJavadocs;
 	private final String _inputDirName;
 	private final Map<String, Tuple> _javadocxXmlTuples = new HashMap<>();
-	private Properties _languageProperties;
+	private final Properties _languageProperties;
 	private final File _languagePropertiesFile;
 	private final double _lowestSupportedJavaVersion;
 	private final Set<String> _modifiedFileNames = new HashSet<>();

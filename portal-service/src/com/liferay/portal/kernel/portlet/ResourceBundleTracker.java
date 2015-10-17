@@ -119,19 +119,19 @@ public class ResourceBundleTracker implements Closeable {
 
 	private class MergingResourceBundle extends ResourceBundle {
 
-		public List<ResourceBundle> getBundles() {
-			return _bundles;
-		}
-
 		@Override
 		public Enumeration<String> getKeys() {
 			return Collections.enumeration(handleKeySet());
 		}
 
+		public List<ResourceBundle> getResourceBundles() {
+			return _resourceBundles;
+		}
+
 		@Override
 		protected Object handleGetObject(String key) {
-			for (int i = _bundles.size() - 1; i >= 0; i--) {
-				ResourceBundle resourceBundle = _bundles.get(i);
+			for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
+				ResourceBundle resourceBundle = _resourceBundles.get(i);
 
 				if (resourceBundle.containsKey(key)) {
 					return resourceBundle.getObject(key);
@@ -145,15 +145,16 @@ public class ResourceBundleTracker implements Closeable {
 		protected Set<String> handleKeySet() {
 			HashSet<String> keySet = new HashSet<>();
 
-			for (int i = _bundles.size() - 1; i >= 0; i--) {
-				ResourceBundle resourceBundle = _bundles.get(i);
+			for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
+				ResourceBundle resourceBundle = _resourceBundles.get(i);
+
 				keySet.addAll(resourceBundle.keySet());
 			}
 
 			return keySet;
 		}
 
-		private final List<ResourceBundle> _bundles = new ArrayList<>();
+		private final List<ResourceBundle> _resourceBundles = new ArrayList<>();
 
 	}
 
@@ -177,10 +178,14 @@ public class ResourceBundleTracker implements Closeable {
 
 			if (mergingResourceBundle == null) {
 				mergingResourceBundle = new MergingResourceBundle();
+
 				_resourceBundles.put(languageId, mergingResourceBundle);
 			}
 
-			mergingResourceBundle.getBundles().add(resourceBundle);
+			List<ResourceBundle> resourceBundles =
+				mergingResourceBundle.getResourceBundles();
+
+			resourceBundles.add(resourceBundle);
 
 			return resourceBundle;
 		}
@@ -191,6 +196,7 @@ public class ResourceBundleTracker implements Closeable {
 			ResourceBundle resourceBundle) {
 
 			removedService(serviceReference, resourceBundle);
+
 			addingService(serviceReference);
 		}
 
@@ -203,10 +209,15 @@ public class ResourceBundleTracker implements Closeable {
 
 			registry.ungetService(serviceReference);
 
-			MergingResourceBundle mergingResourceBundle = _resourceBundles.get(
-				serviceReference.getProperty("language.id"));
+			Object languageId = serviceReference.getProperty("language.id");
 
-			mergingResourceBundle.getBundles().remove(resourceBundle);
+			MergingResourceBundle mergingResourceBundle = _resourceBundles.get(
+				languageId);
+
+			List<ResourceBundle> resourceBundles =
+				mergingResourceBundle.getResourceBundles();
+
+			resourceBundles.remove(resourceBundle);
 		}
 
 	}

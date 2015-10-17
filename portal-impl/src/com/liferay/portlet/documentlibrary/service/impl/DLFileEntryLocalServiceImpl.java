@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -1506,6 +1507,38 @@ public class DLFileEntryLocalServiceImpl
 	@Override
 	public int getRepositoryFileEntriesCount(long repositoryId) {
 		return dlFileEntryPersistence.countByRepositoryId(repositoryId);
+	}
+
+	@Override
+	public String getUniqueTitle(
+			long groupId, long folderId, long fileEntryId, String title,
+			String extension)
+		throws PortalException {
+
+		String uniqueTitle = title;
+
+		for (int i = 1;; i++) {
+			String uniqueFileName = DLUtil.getSanitizedFileName(
+				uniqueTitle, extension);
+
+			try {
+				validateFile(
+					groupId, folderId, fileEntryId, uniqueFileName,
+					uniqueTitle);
+
+				return uniqueTitle;
+			}
+			catch (PortalException pe) {
+				if (!(pe instanceof DuplicateFolderNameException) &&
+					 !(pe instanceof DuplicateFileException)) {
+
+					throw pe;
+				}
+			}
+
+			uniqueTitle = FileUtil.appendParentheticalSuffix(
+				title, String.valueOf(i));
+		}
 	}
 
 	@Override

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Modified;
 public class PortalSettingsPortletResourceBundlePublisher {
 
 	@Activate
-	public void activated(BundleContext bundleContext) throws IOException {
+	protected void activated(BundleContext bundleContext) throws IOException {
 		Bundle bundle = bundleContext.getBundle();
 
 		Enumeration<URL> propertiesFiles = bundle.findEntries(
@@ -57,10 +57,9 @@ public class PortalSettingsPortletResourceBundlePublisher {
 	}
 
 	@Deactivate
-	public void deactivated() {
-		for (
-			ServiceRegistration<ResourceBundle> serviceRegistration
-				: _serviceRegistrations) {
+	protected void deactivated() {
+		for (ServiceRegistration<ResourceBundle> serviceRegistration :
+				_serviceRegistrations) {
 
 			serviceRegistration.unregister();
 		}
@@ -69,8 +68,9 @@ public class PortalSettingsPortletResourceBundlePublisher {
 	}
 
 	@Modified
-	public void modified(BundleContext bundleContext) throws IOException {
+	protected void modified(BundleContext bundleContext) throws IOException {
 		deactivated();
+
 		activated(bundleContext);
 	}
 
@@ -89,7 +89,9 @@ public class PortalSettingsPortletResourceBundlePublisher {
 
 		if (name.contains(StringPool.UNDERLINE)) {
 			int start = name.indexOf(StringPool.UNDERLINE) + 1;
+
 			int end = name.indexOf(".properties");
+
 			languageId = name.substring(start, end);
 		}
 

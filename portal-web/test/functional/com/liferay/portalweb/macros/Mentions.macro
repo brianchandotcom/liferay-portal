@@ -117,6 +117,16 @@
 		<execute function="AssertTextEquals" locator1="Mentions#MENTIONS_HEADER" value1="Mentions" />
 	</command>
 
+	<command name="viewCommentMentionTagLink">
+		<var name="key_mentionsUserFullName" value="${mentionsUserFullName}" />
+		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
+		<var name="key_siteName" value="${mentionsUserFullName}" />
+
+		<execute function="AssertClick" locator1="Mentions#MENTIONS_COMMENT_TAG_LINK" value1="@${mentionsUserScreenName}" />
+
+		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${mentionsUserFullName}" />
+	</command>
+
 	<command name="viewDisabledViaPortalSettings">
 		<execute macro="Mentions#gotoMentionsViaPortalSettings" />
 
@@ -142,8 +152,6 @@
 	<command name="viewMentionTagLink">
 		<var name="key_mentionsUserFullName" value="${mentionsUserFullName}" />
 		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
-
-		<execute function="AssertElementPresent" locator1="Mentions#MENTIONS_TAG_LINK" />
 
 		<execute function="AssertClick" locator1="Mentions#MENTIONS_TAG_LINK" value1="@${mentionsUserScreenName}" />
 

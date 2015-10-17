@@ -1180,6 +1180,7 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
+		<var name="key_assetType" value="Wiki Page" />
 		<var name="key_wikiPageTitle" value="FrontPage" />
 
 		<while>

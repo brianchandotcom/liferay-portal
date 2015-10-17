@@ -33,7 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(property = {"tab-name=cas"}, service = DynamicInclude.class)
+@Component(
+	immediate = true, property = {"portalSettingsAuthenticationTabName=cas"},
+	service = DynamicInclude.class
+)
 public class PortalSettingsCASAuthenticationDynamicInclude
 	extends BaseDynamicInclude {
 

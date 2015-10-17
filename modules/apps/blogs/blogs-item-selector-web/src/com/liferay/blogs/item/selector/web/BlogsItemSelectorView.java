@@ -72,7 +72,7 @@ public class BlogsItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content/Language", locale, getClass());
 
-		return resourceBundle.getString("blog-images");
+		return ResourceBundleUtil.getString(resourceBundle, "blog-images");
 	}
 
 	@Override

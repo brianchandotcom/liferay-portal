@@ -30,8 +30,8 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return resourceBundle.getString(
-			_MODEL_RESOURCE_NAME_PREFIX + getClassName());
+		return ResourceBundleUtil.getString(
+			resourceBundle, _MODEL_RESOURCE_NAME_PREFIX + getClassName());
 	}
 
 	private static final String _MODEL_RESOURCE_NAME_PREFIX = "model.resource.";

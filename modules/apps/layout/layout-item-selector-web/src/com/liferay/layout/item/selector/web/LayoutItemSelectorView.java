@@ -71,7 +71,7 @@ public class LayoutItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content/Language", locale, getClass());
 
-		return resourceBundle.getString("layouts");
+		return ResourceBundleUtil.getString(resourceBundle, "layouts");
 	}
 
 	@Override

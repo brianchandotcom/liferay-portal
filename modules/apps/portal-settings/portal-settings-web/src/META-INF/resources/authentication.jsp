@@ -18,6 +18,7 @@
 
 <%
 Collection<DynamicInclude> dynamicIncludes = (Collection)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES);
+
 String tabNames = (String)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_TAB_NAMES);
 
 tabNames = tabNames.length() > 0 ? StringPool.COMMA + tabNames: tabNames;

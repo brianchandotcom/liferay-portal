@@ -29,6 +29,6 @@ public interface TunnelAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {
 
 	@Meta.AD(deflt = "SYSTEM_USER_PASSWORD", required = false)
-	public String serviceAccessProfileName();
+	public String serviceAccessPolicyName();
 
 }

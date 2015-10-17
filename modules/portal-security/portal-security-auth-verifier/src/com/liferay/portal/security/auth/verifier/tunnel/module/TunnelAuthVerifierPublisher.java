@@ -65,8 +65,8 @@ public class TunnelAuthVerifierPublisher extends BaseAuthVerifierPublisher {
 
 	@Override
 	protected String translateKey(String authVerifierPropertyName, String key) {
-		if (key.equals("serviceAccessProfileName")) {
-			key = "service.access.profile.name";
+		if (key.equals("serviceAccessPolicyName")) {
+			key = "service.access.policy.name";
 		}
 
 		return super.translateKey(authVerifierPropertyName, key);

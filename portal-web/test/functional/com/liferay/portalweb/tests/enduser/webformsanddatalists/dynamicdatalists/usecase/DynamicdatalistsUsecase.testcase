@@ -2354,6 +2354,48 @@
 		</execute>
 	</command>
 
+	<command name="ViewUniqueFieldLabels" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text1" />
+			<var name="fieldName" value="Text1" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text2" />
+			<var name="fieldName" value="Text2" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="fieldFieldLabel" value="Text1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="fieldFieldLabel" value="Text2" />
+		</execute>
+	</command>
+
 	<command name="ViewVisualGroupingOfRepeatableNestedFields" priority="3">
 		<description message="This is a use case for LPS-42060." />
 

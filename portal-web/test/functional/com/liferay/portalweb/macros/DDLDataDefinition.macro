@@ -367,7 +367,7 @@
 			<then>
 				<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-				<execute function="AssertElementPresent" locator1="CPDynamicdatalistsDatadefinitionsEdit#FORM_FIELD" value1="${fieldFieldLabel}" />
+				<execute function="AssertElementPresent" locator1="DDMEditStructure#FORM_FIELD" value1="${fieldFieldLabel}" />
 			</then>
 		</if>
 

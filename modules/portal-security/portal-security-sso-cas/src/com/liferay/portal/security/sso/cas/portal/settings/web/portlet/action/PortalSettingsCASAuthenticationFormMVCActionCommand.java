@@ -41,12 +41,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  */
 @Component(
-		property = {
-			"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
-			"mvc.command.name=/portal_settings/edit_company_cas_configuration"
-		},
-		service = MVCActionCommand.class
-	)
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
+		"mvc.command.name=/portal_settings/edit_company_cas_configuration"
+	},
+	service = MVCActionCommand.class
+)
 public class PortalSettingsCASAuthenticationFormMVCActionCommand
 	extends BaseFormMVCActionCommand {
 

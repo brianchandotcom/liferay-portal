@@ -18,6 +18,7 @@ import com.liferay.portal.cluster.ClusterChannel;
 import com.liferay.portal.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.net.InetAddress;
+
+import java.nio.ByteBuffer;
 
 import org.jgroups.JChannel;
 import org.jgroups.protocols.TP;
@@ -110,29 +113,21 @@ public class JGroupsClusterChannel implements ClusterChannel {
 
 	@Override
 	public void sendMulticastMessage(Serializable message) {
-		if (_jChannel.isClosed()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cluster channel " + _clusterName + " is alreay closed");
-			}
-
-			return;
-		}
-
-		try {
-			_jChannel.send(null, message);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Send mullticast message " + message);
-			}
-		}
-		catch (Exception e) {
-			throw new SystemException("Unable to send mullticast message", e);
-		}
+		sendMessage(message, null);
 	}
 
 	@Override
 	public void sendUnicastMessage(Serializable message, Address address) {
+		if (address == null) {
+			throw new SystemException("Target address is null");
+		}
+
+		sendMessage(message, (org.jgroups.Address)address.getRealAddress());
+	}
+
+	protected void sendMessage(
+		Serializable message, org.jgroups.Address address) {
+
 		if (_jChannel.isClosed()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -142,20 +137,34 @@ public class JGroupsClusterChannel implements ClusterChannel {
 			return;
 		}
 
-		if (address == null) {
-			throw new SystemException("Target address is null");
-		}
+		Serializer serializer = new Serializer();
+
+		serializer.writeObject(message);
+
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
 		try {
 			_jChannel.send(
-				(org.jgroups.Address)address.getRealAddress(), message);
+				address, byteBuffer.array(), byteBuffer.position(),
+				byteBuffer.remaining());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Send unicast message " + message);
+				if (address == null) {
+					_log.debug("Send mullticast message " + message);
+				}
+				else {
+					_log.debug("Send unicast message " + message);
+				}
 			}
 		}
 		catch (Exception e) {
-			throw new SystemException("Unable to send unicast message", e);
+			if (address == null) {
+				throw new SystemException(
+					"Unable to send mullticast message", e);
+			}
+			else {
+				throw new SystemException("Unable to send unicast message", e);
+			}
 		}
 	}
 

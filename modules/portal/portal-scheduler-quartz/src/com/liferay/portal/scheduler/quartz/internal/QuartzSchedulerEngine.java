@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.scheduler.JobStateSerializeUtil;
+import com.liferay.portal.scheduler.quartz.QuartzTrigger;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
 import com.liferay.portal.service.PortletLocalService;
 

@@ -16,8 +16,12 @@ package com.liferay.portal.cluster.internal.jgroups;
 
 import com.liferay.portal.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
+
+import java.nio.ByteBuffer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +45,9 @@ public class JGroupsReceiver extends ReceiverAdapter {
 
 	@Override
 	public void receive(Message message) {
-		Object object = message.getObject();
+		byte[] rawBuffer = message.getRawBuffer();
 
-		if (object == null) {
+		if (rawBuffer == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Message content is null");
 			}
@@ -51,7 +55,33 @@ public class JGroupsReceiver extends ReceiverAdapter {
 			return;
 		}
 
-		_clusterReceiver.receive(object, new AddressImpl(message.getSrc()));
+		ByteBuffer byteBuffer = ByteBuffer.wrap(
+			rawBuffer, message.getOffset(), message.getLength());
+
+		Deserializer deserializer = new Deserializer(byteBuffer.slice());
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		ClassLoader aggregatedClassLoader =
+			AggregateClassLoader.getAggregateClassLoader(
+				contextClassLoader, JGroupsReceiver.class.getClassLoader());
+
+		currentThread.setContextClassLoader(aggregatedClassLoader);
+
+		try {
+			_clusterReceiver.receive(
+				deserializer.readObject(), new AddressImpl(message.getSrc()));
+		}
+		catch (ClassNotFoundException cnfe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to deserialize message payload", cnfe);
+			}
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Override

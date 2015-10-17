@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.quartz.internal;
+package com.liferay.portal.scheduler.quartz;
 
 import com.liferay.portal.kernel.scheduler.Trigger;
 

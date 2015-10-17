@@ -46,5 +46,6 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jDocUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
-	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class,\
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class
 Main-Class: com.liferay.javadoc.formatter.JavadocFormatter

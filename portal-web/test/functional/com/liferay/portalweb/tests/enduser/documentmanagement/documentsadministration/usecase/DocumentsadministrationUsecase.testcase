@@ -469,7 +469,7 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureXugglerVideoPreviewSizePG" priority="4">
+	<command name="ConfigureXugglerVideoPreviewSizePG" priority="3">
 		<property name="custom.properties" value="dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0" />
 
 		<var name="videoGenerationTimeCounter" value="0" />
@@ -570,7 +570,7 @@
 		<execute function="AssertElementPresent#assertElementPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 	</command>
 
-	<command name="ImportDocumentWithDBStore" priority="4">
+	<command name="ImportDocumentWithDBStore" priority="3">
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore" />
 
 		<execute macro="Page#gotoContentCP">
@@ -688,7 +688,7 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="UpdateDocumentTypeWithPermissions" priority="4">
+	<command name="UpdateDocumentTypeWithPermissions" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>

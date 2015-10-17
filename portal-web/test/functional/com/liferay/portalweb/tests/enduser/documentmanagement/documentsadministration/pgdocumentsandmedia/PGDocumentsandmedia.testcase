@@ -30,7 +30,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddDocument" priority="4">
+	<command name="AddDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 
 		<execute macro="Page#gotoPG">
@@ -184,7 +184,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDocuments" priority="4">
+	<command name="AddDocuments" priority="5">
 		<var name="dmDocumentCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
@@ -312,7 +312,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder" priority="4">
+	<command name="AddFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -327,7 +327,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolderDocument" priority="4">
+	<command name="AddFolderDocument" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -890,7 +890,7 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteFolder" priority="4">
+	<command name="DeleteFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -905,7 +905,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFolderDocument" priority="4">
+	<command name="DeleteFolderDocument" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1096,7 +1096,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolder" priority="4">
+	<command name="EditFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1113,7 +1113,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolderDocument" priority="4">
+	<command name="EditFolderDocument" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1477,7 +1477,7 @@
 		</execute>
 	</command>
 
-	<command name="RemovePortlet" priority="4" >
+	<command name="RemovePortlet" priority="5" >
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

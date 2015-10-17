@@ -536,11 +536,13 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureSourceSetMain(Project project) {
+	protected void configureSourceSetMain(
+		Project project, boolean legacyDirStructure) {
+
 		File docrootDir = project.file("docroot");
 
 		if (!docrootDir.exists()) {
-			super.configureSourceSetMain(project);
+			super.configureSourceSetMain(project, legacyDirStructure);
 
 			return;
 		}

@@ -39,7 +39,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
+			orderByType="<%= journalDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"display-date", "modified-date"} %>'
+			portletURL="<%= journalDisplayContext.getPortletURL() %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

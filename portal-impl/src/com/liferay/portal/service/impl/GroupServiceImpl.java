@@ -757,9 +757,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		if (ArrayUtil.contains(classNames, Group.class.getName())) {
 			for (Group group : userBag.getUserGroups()) {
-				if (group.isActive() &&
-					(group.hasPrivateLayouts() || group.hasPublicLayouts())) {
-
+				if (group.isActive() && layoutLocalService.hasLayouts(group)) {
 					if (userSiteGroups.add(group) &&
 						(userSiteGroups.size() == max)) {
 
@@ -779,8 +777,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 					Group group = organization.getGroup();
 
 					if (group.isActive() &&
-						(group.hasPrivateLayouts() ||
-						 group.hasPublicLayouts())) {
+						layoutLocalService.hasLayouts(group)) {
 
 						if (userSiteGroups.add(group) &&
 							(userSiteGroups.size() == max)) {
@@ -793,8 +790,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			else {
 				for (Group group : userBag.getUserOrgGroups()) {
 					if (group.isActive() &&
-						(group.hasPrivateLayouts() ||
-						 group.hasPublicLayouts())) {
+						layoutLocalService.hasLayouts(group)) {
 
 						if (userSiteGroups.add(group) &&
 							(userSiteGroups.size() == max)) {

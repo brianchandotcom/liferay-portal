@@ -58,7 +58,8 @@ public class GroupServiceUserSitesGroupsTest {
 		Group group = GroupLocalServiceUtil.getCompanyGroup(
 			_user.getCompanyId());
 
-		Assert.assertTrue(groups.contains(group));
+		Assert.assertTrue(
+			groups + " does not contain " + group, groups.contains(group));
 	}
 
 	@Test
@@ -70,7 +71,8 @@ public class GroupServiceUserSitesGroupsTest {
 		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Assert.assertFalse(groups.contains(_group));
+		Assert.assertFalse(
+			groups + " contains " + _group, groups.contains(_group));
 	}
 
 	@Test
@@ -88,7 +90,8 @@ public class GroupServiceUserSitesGroupsTest {
 		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Assert.assertFalse(groups.contains(_group));
+		Assert.assertFalse(
+			groups + " contains " + _group, groups.contains(_group));
 	}
 
 	@Test
@@ -115,7 +118,8 @@ public class GroupServiceUserSitesGroupsTest {
 		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Assert.assertFalse(groups.contains(organization.getGroup()));
+		Assert.assertFalse(
+			groups + " contains " + group, groups.contains(group));
 	}
 
 	@Test
@@ -142,16 +146,26 @@ public class GroupServiceUserSitesGroupsTest {
 			List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 				_user.getUserId(), null, QueryUtil.ALL_POS);
 
-			Assert.assertFalse(groups.contains(parentOrganizationGroup));
-			Assert.assertFalse(groups.contains(organization.getGroup()));
+			Group organizationGroup = organization.getGroup();
+
+			Assert.assertFalse(
+				groups + " contains " + parentOrganizationGroup,
+				groups.contains(parentOrganizationGroup));
+			Assert.assertFalse(
+				groups + " contains " + organizationGroup,
+				groups.contains(organizationGroup));
 
 			LayoutTestUtil.addLayout(parentOrganizationGroup);
 
 			groups = GroupServiceUtil.getUserSitesGroups(
 				_user.getUserId(), null, QueryUtil.ALL_POS);
 
-			Assert.assertTrue(groups.contains(parentOrganizationGroup));
-			Assert.assertFalse(groups.contains(organization.getGroup()));
+			Assert.assertTrue(
+				groups + " does not contain " + parentOrganizationGroup,
+				groups.contains(parentOrganizationGroup));
+			Assert.assertFalse(
+				groups + " contains " + organizationGroup,
+				groups.contains(organizationGroup));
 		}
 		finally {
 			UserLocalServiceUtil.unsetOrganizationUsers(
@@ -170,12 +184,16 @@ public class GroupServiceUserSitesGroupsTest {
 
 		UserLocalServiceUtil.addGroupUser(organization.getGroupId(), _user);
 
-		LayoutTestUtil.addLayout(organization.getGroup());
+		Group organizationGroup = organization.getGroup();
+
+		LayoutTestUtil.addLayout(organizationGroup);
 
 		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Assert.assertTrue(groups.contains(organization.getGroup()));
+		Assert.assertTrue(
+			groups + " does not contain " + organizationGroup,
+			groups.contains(organizationGroup));
 	}
 
 	@Test
@@ -191,7 +209,11 @@ public class GroupServiceUserSitesGroupsTest {
 		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Assert.assertFalse(groups.contains(organization.getGroup()));
+		Group organizationGroup = organization.getGroup();
+
+		Assert.assertFalse(
+			groups + " contains " + organizationGroup,
+			groups.contains(organizationGroup));
 	}
 
 	@Test
@@ -201,7 +223,11 @@ public class GroupServiceUserSitesGroupsTest {
 		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Assert.assertTrue(groups.contains(_user.getGroup()));
+		Group userGroup = _user.getGroup();
+
+		Assert.assertTrue(
+			groups + " does not contain " + userGroup,
+			groups.contains(userGroup));
 	}
 
 	@Test
@@ -215,7 +241,8 @@ public class GroupServiceUserSitesGroupsTest {
 		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Assert.assertTrue(groups.contains(_group));
+		Assert.assertTrue(
+			groups + " does not contain " + _group, groups.contains(_group));
 	}
 
 	@DeleteAfterTestRun

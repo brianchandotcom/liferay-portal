@@ -29,8 +29,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -98,7 +97,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		Organization organization = OrganizationTestUtil.addOrganization(true);
 
-		_organizations.push(organization);
+		_organizations.addFirst(organization);
 
 		UserLocalServiceUtil.addOrganizationUsers(
 			organization.getOrganizationId(), new long[] {_user.getUserId()});
@@ -128,13 +127,13 @@ public class GroupServiceUserSitesGroupsTest {
 
 		Group parentOrganizationGroup = parentOrganization.getGroup();
 
-		_organizations.push(parentOrganization);
+		_organizations.addFirst(parentOrganization);
 
 		Organization organization = OrganizationTestUtil.addOrganization(
 			parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), false);
 
-		_organizations.push(organization);
+		_organizations.addFirst(organization);
 
 		UserLocalServiceUtil.addOrganizationUsers(
 			organization.getOrganizationId(), new long[] {_user.getUserId()});
@@ -167,7 +166,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		Organization organization = OrganizationTestUtil.addOrganization(true);
 
-		_organizations.push(organization);
+		_organizations.addFirst(organization);
 
 		UserLocalServiceUtil.addGroupUser(organization.getGroupId(), _user);
 
@@ -185,7 +184,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		Organization organization = OrganizationTestUtil.addOrganization(true);
 
-		_organizations.push(organization);
+		_organizations.addFirst(organization);
 
 		UserLocalServiceUtil.addGroupUser(organization.getGroupId(), _user);
 
@@ -223,7 +222,7 @@ public class GroupServiceUserSitesGroupsTest {
 	private Group _group;
 
 	@DeleteAfterTestRun
-	private final Deque<Organization> _organizations = new ArrayDeque<>();
+	private final LinkedList<Organization> _organizations = new LinkedList<>();
 
 	@DeleteAfterTestRun
 	private User _user;

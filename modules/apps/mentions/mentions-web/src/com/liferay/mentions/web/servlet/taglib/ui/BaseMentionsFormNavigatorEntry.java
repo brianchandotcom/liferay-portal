@@ -14,12 +14,11 @@
 
 package com.liferay.mentions.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * @author Sergio González
@@ -35,10 +34,7 @@ public abstract class BaseMentionsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return ResourceBundleUtil.getString(resourceBundle, "mentions");
+		return LanguageUtil.get(locale, "mentions");
 	}
 
 }

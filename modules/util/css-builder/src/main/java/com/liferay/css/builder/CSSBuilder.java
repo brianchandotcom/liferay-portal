@@ -79,6 +79,7 @@ public class CSSBuilder {
 
 		String docrootDirName = GetterUtil.getString(
 			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
+		String generateSourceMap = arguments.get("sass.generate.source.map");
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 		String[] rtlExcludedPathRegexps = StringUtil.split(
 			arguments.get("sass.rtl.excluded.path.regexps"));
@@ -87,7 +88,8 @@ public class CSSBuilder {
 
 		try {
 			CSSBuilder cssBuilder = new CSSBuilder(
-				docrootDirName, portalCommonDirName, rtlExcludedPathRegexps,
+				docrootDirName, Boolean.valueOf(generateSourceMap),
+				portalCommonDirName, rtlExcludedPathRegexps,
 				sassCompilerClassName);
 
 			cssBuilder.execute(dirNames);
@@ -98,11 +100,13 @@ public class CSSBuilder {
 	}
 
 	public CSSBuilder(
-			String docrootDirName, String portalCommonDirName,
-			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
+			String docrootDirName, boolean generateSourceMap,
+			String portalCommonDirName, String[] rtlExcludedPathRegexps,
+			String sassCompilerClassName)
 		throws Exception {
 
 		_docrootDirName = docrootDirName;
+		_generateSourceMap = generateSourceMap;
 		_portalCommonDirName = portalCommonDirName;
 		_rtlExcludedPathPatterns = PatternFactory.compile(
 			rtlExcludedPathRegexps);
@@ -324,7 +328,10 @@ public class CSSBuilder {
 		}
 
 		return _sassCompiler.compileString(
-			content, _portalCommonDirName + File.pathSeparator + cssBasePath);
+			content, filePath,
+			_portalCommonDirName + File.pathSeparator + cssBasePath,
+			_generateSourceMap,
+			filePath + ".map");
 	}
 
 	private void _parseSassFile(SassFile sassFile) throws Exception {
@@ -453,6 +460,7 @@ public class CSSBuilder {
 	private static final String _CSS_IMPORT_END = ");";
 
 	private final String _docrootDirName;
+	private final boolean _generateSourceMap;
 	private final String _portalCommonDirName;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;

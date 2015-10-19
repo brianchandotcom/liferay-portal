@@ -62,7 +62,7 @@ public class BeanShellTask extends Task {
 		Map<String, Object> map = _maps.get(_mapId);
 
 		if (map == null) {
-			map = new HashMap<>();
+			map = new HashMap<String, Object>();
 
 			_maps.put(_mapId, map);
 		}
@@ -71,7 +71,7 @@ public class BeanShellTask extends Task {
 	}
 
 	private static final Map<String, Map<String, Object>> _maps =
-		new HashMap<>();
+		new HashMap<String, Map<String, Object>>();
 
 	private String _mapId;
 	private String _text;

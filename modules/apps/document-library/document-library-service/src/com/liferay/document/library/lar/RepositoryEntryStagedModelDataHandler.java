@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
+import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -44,7 +45,7 @@ public class RepositoryEntryStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(RepositoryEntry repositoryEntry) {
-		RepositoryEntryLocalServiceUtil.deleteRepositoryEntry(repositoryEntry);
+		_repositoryEntryLocalService.deleteRepositoryEntry(repositoryEntry);
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class RepositoryEntryStagedModelDataHandler
 	public RepositoryEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return RepositoryEntryLocalServiceUtil.
+		return _repositoryEntryLocalService.
 			fetchRepositoryEntryByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -71,7 +72,7 @@ public class RepositoryEntryStagedModelDataHandler
 	public List<RepositoryEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return RepositoryEntryLocalServiceUtil.
+		return _repositoryEntryLocalService.
 			getRepositoryEntriesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<RepositoryEntry>());
@@ -129,21 +130,21 @@ public class RepositoryEntryStagedModelDataHandler
 				serviceContext.setUuid(repositoryEntry.getUuid());
 
 				importedRepositoryEntry =
-					RepositoryEntryLocalServiceUtil.addRepositoryEntry(
+					_repositoryEntryLocalService.addRepositoryEntry(
 						userId, portletDataContext.getScopeGroupId(),
 						repositoryId, repositoryEntry.getMappedId(),
 						serviceContext);
 			}
 			else {
 				importedRepositoryEntry =
-					RepositoryEntryLocalServiceUtil.updateRepositoryEntry(
+					_repositoryEntryLocalService.updateRepositoryEntry(
 						existingRepositoryEntry.getRepositoryEntryId(),
 						repositoryEntry.getMappedId());
 			}
 		}
 		else {
 			importedRepositoryEntry =
-				RepositoryEntryLocalServiceUtil.addRepositoryEntry(
+				_repositoryEntryLocalService.addRepositoryEntry(
 					userId, portletDataContext.getScopeGroupId(), repositoryId,
 					repositoryEntry.getMappedId(), serviceContext);
 		}
@@ -151,5 +152,14 @@ public class RepositoryEntryStagedModelDataHandler
 		portletDataContext.importClassedModel(
 			repositoryEntry, importedRepositoryEntry);
 	}
+
+	@Reference(unbind = "-")
+	protected void setRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+
+		_repositoryEntryLocalService = repositoryEntryLocalService;
+	}
+
+	private RepositoryEntryLocalService _repositoryEntryLocalService;
 
 }

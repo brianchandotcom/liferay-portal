@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 
 import java.io.ByteArrayInputStream;
@@ -42,6 +42,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Spasic
@@ -143,7 +144,7 @@ public class FileEntryAtomCollectionAdapter
 
 		long fileEntryId = GetterUtil.getLong(resourceName);
 
-		DLAppServiceUtil.deleteFileEntry(fileEntryId);
+		_dlAppService.deleteFileEntry(fileEntryId);
 	}
 
 	@Override
@@ -153,7 +154,7 @@ public class FileEntryAtomCollectionAdapter
 
 		long fileEntryId = GetterUtil.getLong(resourceName);
 
-		return DLAppServiceUtil.getFileEntry(fileEntryId);
+		return _dlAppService.getFileEntry(fileEntryId);
 	}
 
 	@Override
@@ -166,7 +167,7 @@ public class FileEntryAtomCollectionAdapter
 		long repositoryId = 0;
 
 		if (folderId != 0) {
-			Folder folder = DLAppServiceUtil.getFolder(folderId);
+			Folder folder = _dlAppService.getFolder(folderId);
 
 			repositoryId = folder.getRepositoryId();
 		}
@@ -174,14 +175,13 @@ public class FileEntryAtomCollectionAdapter
 			repositoryId = atomRequestContext.getLongParameter("repositoryId");
 		}
 
-		int count = DLAppServiceUtil.getFileEntriesCount(
-			repositoryId, folderId);
+		int count = _dlAppService.getFileEntriesCount(repositoryId, folderId);
 
 		AtomPager atomPager = new AtomPager(atomRequestContext, count);
 
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-		return DLAppServiceUtil.getFileEntries(
+		return _dlAppService.getFileEntries(
 			repositoryId, folderId, atomPager.getStart(),
 			atomPager.getEnd() + 1,
 			new RepositoryModelTitleComparator<FileEntry>());
@@ -198,7 +198,7 @@ public class FileEntryAtomCollectionAdapter
 		long repositoryId = 0;
 
 		if (folderId != 0) {
-			Folder folder = DLAppServiceUtil.getFolder(folderId);
+			Folder folder = _dlAppService.getFolder(folderId);
 
 			repositoryId = folder.getRepositoryId();
 		}
@@ -219,7 +219,7 @@ public class FileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry = _dlAppService.addFileEntry(
 			repositoryId, folderId, title, mimeType, title, summary, null,
 			contentInputStream, contentDecoded.length, serviceContext);
 
@@ -237,7 +237,7 @@ public class FileEntryAtomCollectionAdapter
 		long repositoryId = 0;
 
 		if (folderId != 0) {
-			Folder folder = DLAppServiceUtil.getFolder(folderId);
+			Folder folder = _dlAppService.getFolder(folderId);
 
 			repositoryId = folder.getRepositoryId();
 		}
@@ -260,7 +260,7 @@ public class FileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry = _dlAppService.addFileEntry(
 			repositoryId, folderId, title, mimeType, title, description, null,
 			contentInputStream, content.length, serviceContext);
 
@@ -286,7 +286,7 @@ public class FileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLAppServiceUtil.updateFileEntry(
+		_dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), title, mimeType, title, summary, null,
 			true, contentInputStream, contentDecoded.length, serviceContext);
 	}
@@ -312,11 +312,18 @@ public class FileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLAppServiceUtil.updateFileEntry(
+		_dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), slug, mimeType, title, description,
 			null, true, contentInputStream, content.length, serviceContext);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
 	protected static final String COLLECTION_NAME = "files";
+
+	private DLAppService _dlAppService;
 
 }

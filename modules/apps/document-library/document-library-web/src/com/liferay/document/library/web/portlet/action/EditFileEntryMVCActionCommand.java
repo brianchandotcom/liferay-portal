@@ -75,11 +75,11 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
@@ -102,6 +102,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileUploadBase;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -214,7 +215,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
-			DLAppServiceUtil.addFileEntry(
+			_dlAppService.addFileEntry(
 				repositoryId, folderId, selectedFileName, mimeType,
 				selectedFileName, description, changeLog, inputStream, size,
 				serviceContext);
@@ -272,7 +273,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			String contentType = uploadPortletRequest.getContentType("file");
 
-			FileEntry fileEntry = DLAppServiceUtil.addTempFileEntry(
+			FileEntry fileEntry = _dlAppService.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), folderId, TEMP_FOLDER_NAME,
 				sb.toString(), inputStream, contentType);
 
@@ -318,14 +319,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		if (fileEntryId > 0) {
-			DLAppServiceUtil.cancelCheckOut(fileEntryId);
+			_dlAppService.cancelCheckOut(fileEntryId);
 		}
 		else {
 			long[] fileEntryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
-				DLAppServiceUtil.cancelCheckOut(fileEntryIds[i]);
+				_dlAppService.cancelCheckOut(fileEntryIds[i]);
 			}
 		}
 	}
@@ -339,7 +340,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		if (fileEntryId > 0) {
-			DLAppServiceUtil.checkInFileEntry(
+			_dlAppService.checkInFileEntry(
 				fileEntryId, false, StringPool.BLANK, serviceContext);
 		}
 		else {
@@ -347,7 +348,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
-				DLAppServiceUtil.checkInFileEntry(
+				_dlAppService.checkInFileEntry(
 					fileEntryIds[i], false, StringPool.BLANK, serviceContext);
 			}
 		}
@@ -362,14 +363,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		if (fileEntryId > 0) {
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
+			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
 		}
 		else {
 			long[] fileEntryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
-				DLAppServiceUtil.checkOutFileEntry(
+				_dlAppService.checkOutFileEntry(
 					fileEntryIds[i], serviceContext);
 			}
 		}
@@ -388,21 +389,21 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		String version = ParamUtil.getString(actionRequest, "version");
 
 		if (Validator.isNotNull(version)) {
-			DLAppServiceUtil.deleteFileVersion(fileEntryId, version);
+			_dlAppService.deleteFileVersion(fileEntryId, version);
 
 			return;
 		}
 
 		if (!moveToTrash) {
-			DLAppServiceUtil.deleteFileEntry(fileEntryId);
+			_dlAppService.deleteFileEntry(fileEntryId);
 
 			return;
 		}
 
-		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 		if (fileEntry.isRepositoryCapabilityProvided(TrashCapability.class)) {
-			fileEntry = DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
+			fileEntry = _dlAppService.moveFileEntryToTrash(fileEntryId);
 
 			TrashUtil.addTrashSessionMessages(
 				actionRequest, (TrashedModel)fileEntry.getModel());
@@ -424,7 +425,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			DLAppServiceUtil.deleteTempFileEntry(
+			_dlAppService.deleteTempFileEntry(
 				themeDisplay.getScopeGroupId(), folderId, TEMP_FOLDER_NAME,
 				fileName);
 
@@ -894,7 +895,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
 	}
 
@@ -907,7 +908,17 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
-		DLAppServiceUtil.revertFileEntry(fileEntryId, version, serviceContext);
+		_dlAppService.revertFileEntry(fileEntryId, version, serviceContext);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
 	}
 
 	protected FileEntry updateFileEntry(
@@ -939,7 +950,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "majorVersion");
 
 		if (folderId > 0) {
-			Folder folder = DLAppServiceUtil.getFolder(folderId);
+			Folder folder = _dlAppService.getFolder(folderId);
 
 			if (folder.getGroupId() != themeDisplay.getScopeGroupId()) {
 				throw new NoSuchFolderException("{folderId=" + folderId + "}");
@@ -993,7 +1004,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				// Add file entry
 
-				fileEntry = DLAppServiceUtil.addFileEntry(
+				fileEntry = _dlAppService.addFileEntry(
 					repositoryId, folderId, sourceFileName, contentType, title,
 					description, changeLog, inputStream, size, serviceContext);
 
@@ -1010,7 +1021,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				// Update file entry and checkin
 
-				fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
+				fileEntry = _dlAppService.updateFileEntryAndCheckIn(
 					fileEntryId, sourceFileName, contentType, title,
 					description, changeLog, majorVersion, inputStream, size,
 					serviceContext);
@@ -1019,7 +1030,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				// Update file entry
 
-				fileEntry = DLAppServiceUtil.updateFileEntry(
+				fileEntry = _dlAppService.updateFileEntry(
 					fileEntryId, sourceFileName, contentType, title,
 					description, changeLog, majorVersion, inputStream, size,
 					serviceContext);
@@ -1047,5 +1058,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
+
+	private DLAppService _dlAppService;
+	private TrashEntryService _trashEntryService;
 
 }

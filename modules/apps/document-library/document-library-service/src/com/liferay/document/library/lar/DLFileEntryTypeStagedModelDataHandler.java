@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
@@ -59,7 +59,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	public void deleteStagedModel(DLFileEntryType fileEntryType)
 		throws PortalException {
 
-		DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(fileEntryType);
+		_dlFileEntryTypeLocalService.deleteFileEntryType(fileEntryType);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	public DLFileEntryType fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return DLFileEntryTypeLocalServiceUtil.
+		return _dlFileEntryTypeLocalService.
 			fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -87,7 +87,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	public List<DLFileEntryType> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return DLFileEntryTypeLocalServiceUtil.
+		return _dlFileEntryTypeLocalService.
 			getDLFileEntryTypesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<DLFileEntryType>());
@@ -110,7 +110,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 		long defaultUserId = UserConstants.USER_ID_DEFAULT;
 
 		try {
-			defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			defaultUserId = _userLocalService.getDefaultUserId(
 				fileEntryType.getCompanyId());
 		}
 		catch (Exception e) {
@@ -227,7 +227,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 				StringUtil.valueOf(ddmStructure.getStructureId()));
 		}
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+		long defaultUserId = _userLocalService.getDefaultUserId(
 			fileEntryType.getCompanyId());
 
 		if (defaultUserId == fileEntryType.getUserId()) {
@@ -292,7 +292,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 				serviceContext.setUuid(fileEntryType.getUuid());
 
 				importedDLFileEntryType =
-					DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+					_dlFileEntryTypeLocalService.addFileEntryType(
 						userId, portletDataContext.getScopeGroupId(),
 						fileEntryType.getFileEntryTypeKey(),
 						fileEntryType.getNameMap(),
@@ -300,20 +300,20 @@ public class DLFileEntryTypeStagedModelDataHandler
 						serviceContext);
 			}
 			else {
-				DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
+				_dlFileEntryTypeLocalService.updateFileEntryType(
 					userId, existingDLFileEntryType.getFileEntryTypeId(),
 					fileEntryType.getNameMap(),
 					fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
 					serviceContext);
 
 				importedDLFileEntryType =
-					DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+					_dlFileEntryTypeLocalService.fetchDLFileEntryType(
 						existingDLFileEntryType.getFileEntryTypeId());
 			}
 		}
 		else {
 			importedDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				_dlFileEntryTypeLocalService.addFileEntryType(
 					userId, portletDataContext.getScopeGroupId(),
 					fileEntryType.getFileEntryTypeKey(),
 					fileEntryType.getNameMap(),
@@ -368,7 +368,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 		}
 		else {
 			existingDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
+				_dlFileEntryTypeLocalService.fetchFileEntryType(
 					groupId, fileEntryTypeKey);
 		}
 
@@ -382,6 +382,20 @@ public class DLFileEntryTypeStagedModelDataHandler
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLFileEntryTypeLocalService(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private UserLocalService _userLocalService;
 
 }

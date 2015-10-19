@@ -26,7 +26,7 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
@@ -36,6 +36,7 @@ import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -58,7 +59,7 @@ public class DLFileEntryActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
 			activity.getClassPK());
 
 		if (TrashUtil.isInTrash(
@@ -171,6 +172,13 @@ public class DLFileEntryActivityInterpreter
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {DLFileEntry.class.getName()};
+
+	private DLAppLocalService _dlAppLocalService;
 
 }

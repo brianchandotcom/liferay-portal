@@ -17,12 +17,19 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 
 /**
  * @author Cristina González
  */
 public class UpgradeSharding extends UpgradeProcess {
+
+	protected void addCompanyIdColumn(String tableName)
+		throws IOException, SQLException {
+
+		runSQL("alter table " + tableName + "add companyId LONG default 0");
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -62,12 +69,6 @@ public class UpgradeSharding extends UpgradeProcess {
 		addCompanyIdColumn("Users_Teams");
 		addCompanyIdColumn("Users_UserGroups");
 		addCompanyIdColumn("UserTrackerPath");
-	}
-
-	protected void addCompanyIdColumn(String tableName)
-		throws IOException, SQLException {
-
-		runSQL("alter table " + tableName + "add companyId LONG default 0");
 	}
 
 }

@@ -74,6 +74,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -775,9 +779,11 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 
 		if (!unpackWar) {
-			File tempDir = new File(
-				SystemProperties.get(SystemProperties.TMP_DIR) +
-					File.separator + Time.getTimestamp());
+			Path tempDirPath = Files.createTempDirectory(
+				Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)),
+				null);
+
+			File tempDir = tempDirPath.toFile();
 
 			excludes += "/WEB-INF/web.xml";
 
@@ -1072,9 +1078,10 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			return false;
 		}
 
-		File tempDir = new File(
-			SystemProperties.get(SystemProperties.TMP_DIR) + File.separator +
-				Time.getTimestamp());
+		Path tempDirPath = Files.createTempDirectory(
+			Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)), null);
+
+		File tempDir = tempDirPath.toFile();
 
 		ExpandTask.expand(srcFile, tempDir);
 

@@ -757,7 +757,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		if (ArrayUtil.contains(classNames, Group.class.getName())) {
 			for (Group group : userBag.getUserGroups()) {
-				if (group.isActive() && layoutLocalService.hasLayouts(group)) {
+				if (group.isActive() && group.isSite()) {
 					if (userSiteGroups.add(group) &&
 						(userSiteGroups.size() == max)) {
 

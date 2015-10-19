@@ -478,10 +478,10 @@
 		<if>
 			<and>
 				<condition function="IsElementPresent" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" />
-				<condition function="IsElementPresent" locator1="SitePages#STAGING_BUTTON" />
+				<condition function="IsElementPresent" locator1="Staging#STAGING_BUTTON" />
 			</and>
 			<then>
-				<execute function="AssertClick" locator1="SitePages#STAGING_BUTTON" value1="Staging" />
+				<execute function="AssertClick" locator1="Staging#STAGING_BUTTON" value1="Staging" />
 			</then>
 		</if>
 

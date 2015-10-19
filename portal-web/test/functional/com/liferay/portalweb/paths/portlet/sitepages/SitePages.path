@@ -275,21 +275,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_BUTTON</td>
-	<td>//div/ul/li[contains(.,'Staging')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_MENULIST_PUBLISH_TO_LIVE</td>
-	<td>//a[contains(.,'Publish to Live')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_MENULIST_MANAGE_SITE_PAGES_VARIATIONS</td>
-	<td>//li[@class='publish-link-container']/a[contains(.,'Manage Site Pages Variation')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIVE_BUTTON</td>
-	<td>//li[contains(@class,'live-link') and contains(@class,'staging-toggle')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

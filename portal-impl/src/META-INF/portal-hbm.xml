@@ -179,7 +179,6 @@
 		<property name="typeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="mailing" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.BrowserTrackerImpl" table="BrowserTracker" dynamic-update="true">
 		<id name="browserTrackerId" type="long">
@@ -286,7 +285,6 @@
 		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="typeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.GroupImpl" table="Group_" dynamic-update="true">
 		<id name="groupId" type="long">
@@ -409,7 +407,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" column="settings_" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutRevisionImpl" table="LayoutRevision" dynamic-update="true">
 		<id name="layoutRevisionId" type="long">
@@ -507,7 +504,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" column="settings_" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ListTypeImpl" table="ListType" dynamic-update="true">
 		<id name="listTypeId" type="long">
@@ -553,7 +549,6 @@
 		<property name="statusId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.OrgGroupRoleImpl" table="OrgGroupRole" dynamic-update="true">
 		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.OrgGroupRolePK">
@@ -623,7 +618,6 @@
 		<property name="requireUnlock" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="resetFailureCount" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="resetTicketMaxAge" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PasswordPolicyRelImpl" table="PasswordPolicyRel" dynamic-update="true">
 		<id name="passwordPolicyRelId" type="long">
@@ -660,7 +654,6 @@
 		<property name="extension" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="typeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PluginSettingImpl" table="PluginSetting" dynamic-update="true">
 		<id name="pluginSettingId" type="long">
@@ -853,7 +846,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 		<property name="subtype" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ServiceComponentImpl" table="ServiceComponent" dynamic-update="true">
 		<id name="serviceComponentId" type="long">
@@ -972,7 +964,6 @@
 		<property name="lockoutDate" type="org.hibernate.type.TimestampType" />
 		<property name="agreedToTermsOfUse" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="emailAddressVerified" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserGroupImpl" table="UserGroup" dynamic-update="true">
@@ -1789,7 +1780,6 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="score" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.ratings.model.impl.RatingsStatsImpl" table="RatingsStats">
 		<id name="statsId" type="long">

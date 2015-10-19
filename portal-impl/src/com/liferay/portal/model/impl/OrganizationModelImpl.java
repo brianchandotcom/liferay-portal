@@ -87,8 +87,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			{ "countryId", Types.BIGINT },
 			{ "statusId", Types.BIGINT },
 			{ "comments", Types.VARCHAR },
-			{ "logoId", Types.BIGINT },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "logoId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -111,10 +110,9 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		TABLE_COLUMNS_MAP.put("statusId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Organization_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId LONG,comments STRING null,logoId LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Organization_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId LONG,comments STRING null,logoId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 	public static final String ORDER_BY_JPQL = " ORDER BY organization.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Organization_.name ASC";
@@ -168,7 +166,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		model.setStatusId(soapModel.getStatusId());
 		model.setComments(soapModel.getComments());
 		model.setLogoId(soapModel.getLogoId());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -269,7 +266,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		attributes.put("statusId", getStatusId());
 		attributes.put("comments", getComments());
 		attributes.put("logoId", getLogoId());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -385,12 +381,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		if (logoId != null) {
 			setLogoId(logoId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -713,17 +703,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_logoId = logoId;
 	}
 
-	@JSON
-	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -779,7 +758,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		organizationImpl.setStatusId(getStatusId());
 		organizationImpl.setComments(getComments());
 		organizationImpl.setLogoId(getLogoId());
-		organizationImpl.setLastPublishDate(getLastPublishDate());
 
 		organizationImpl.resetOriginalValues();
 
@@ -953,21 +931,12 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		organizationCacheModel.logoId = getLogoId();
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			organizationCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			organizationCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
 		return organizationCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1005,8 +974,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		sb.append(getComments());
 		sb.append(", logoId=");
 		sb.append(getLogoId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1014,7 +981,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Organization");
@@ -1092,10 +1059,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			"<column><column-name>logoId</column-name><column-value><![CDATA[");
 		sb.append(getLogoId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1134,7 +1097,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private long _statusId;
 	private String _comments;
 	private long _logoId;
-	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private Organization _escapedModel;
 }

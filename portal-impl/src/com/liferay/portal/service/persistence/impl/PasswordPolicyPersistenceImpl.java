@@ -3869,7 +3869,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		passwordPolicyImpl.setRequireUnlock(passwordPolicy.isRequireUnlock());
 		passwordPolicyImpl.setResetFailureCount(passwordPolicy.getResetFailureCount());
 		passwordPolicyImpl.setResetTicketMaxAge(passwordPolicy.getResetTicketMaxAge());
-		passwordPolicyImpl.setLastPublishDate(passwordPolicy.getLastPublishDate());
 
 		return passwordPolicyImpl;
 	}

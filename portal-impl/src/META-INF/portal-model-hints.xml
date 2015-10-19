@@ -77,7 +77,6 @@
 		<field name="typeId" type="long" />
 		<field name="mailing" type="boolean" />
 		<field name="primary" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.BrowserTracker">
 		<field name="mvccVersion" type="long" />
@@ -193,7 +192,6 @@
 		</field>
 		<field name="typeId" type="long" />
 		<field name="primary" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.Group">
 		<field name="mvccVersion" type="long" />
@@ -354,7 +352,6 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="active" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutRevision">
 		<field name="mvccVersion" type="long" />
@@ -475,7 +472,6 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="active" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.ListType">
 		<field name="mvccVersion" type="long" />
@@ -530,7 +526,6 @@
 			<hint name="display-width">400</hint>
 		</field>
 		<field name="logoId" type="long" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.OrgGroupRole">
 		<field name="mvccVersion" type="long" />
@@ -612,7 +607,6 @@
 		<field name="requireUnlock" type="boolean" />
 		<field name="resetFailureCount" type="long" />
 		<field name="resetTicketMaxAge" type="long" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.PasswordPolicyRel">
 		<field name="mvccVersion" type="long" />
@@ -647,7 +641,6 @@
 		</field>
 		<field name="typeId" type="long" />
 		<field name="primary" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.PluginSetting">
 		<field name="mvccVersion" type="long" />
@@ -847,7 +840,6 @@
 		</field>
 		<field name="type" type="int" />
 		<field name="subtype" type="String" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.ServiceComponent">
 		<field name="mvccVersion" type="long" />
@@ -983,7 +975,6 @@
 		<field name="lockoutDate" type="Date" />
 		<field name="agreedToTermsOfUse" type="boolean" />
 		<field name="emailAddressVerified" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.model.UserGroup">
@@ -1852,7 +1843,6 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="score" type="double" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.ratings.model.RatingsStats">
 		<field name="statsId" type="long" />

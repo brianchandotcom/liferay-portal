@@ -196,8 +196,6 @@ public class UserPersistenceTest {
 
 		newUser.setEmailAddressVerified(RandomTestUtil.randomBoolean());
 
-		newUser.setLastPublishDate(RandomTestUtil.nextDate());
-
 		newUser.setStatus(RandomTestUtil.nextInt());
 
 		_users.add(_persistence.update(newUser));
@@ -275,9 +273,6 @@ public class UserPersistenceTest {
 			newUser.getAgreedToTermsOfUse());
 		Assert.assertEquals(existingUser.getEmailAddressVerified(),
 			newUser.getEmailAddressVerified());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingUser.getLastPublishDate()),
-			Time.getShortTimestamp(newUser.getLastPublishDate()));
 		Assert.assertEquals(existingUser.getStatus(), newUser.getStatus());
 	}
 
@@ -458,8 +453,8 @@ public class UserPersistenceTest {
 			"loginDate", true, "loginIP", true, "lastLoginDate", true,
 			"lastLoginIP", true, "lastFailedLoginDate", true,
 			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
-			"agreedToTermsOfUse", true, "emailAddressVerified", true,
-			"lastPublishDate", true, "status", true);
+			"agreedToTermsOfUse", true, "emailAddressVerified", true, "status",
+			true);
 	}
 
 	@Test
@@ -791,8 +786,6 @@ public class UserPersistenceTest {
 		user.setAgreedToTermsOfUse(RandomTestUtil.randomBoolean());
 
 		user.setEmailAddressVerified(RandomTestUtil.randomBoolean());
-
-		user.setLastPublishDate(RandomTestUtil.nextDate());
 
 		user.setStatus(RandomTestUtil.nextInt());
 

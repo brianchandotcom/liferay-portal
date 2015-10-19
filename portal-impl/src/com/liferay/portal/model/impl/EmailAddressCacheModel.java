@@ -79,7 +79,7 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,8 +107,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		sb.append(typeId);
 		sb.append(", primary=");
 		sb.append(primary);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -165,13 +163,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		emailAddressImpl.setTypeId(typeId);
 		emailAddressImpl.setPrimary(primary);
 
-		if (lastPublishDate == Long.MIN_VALUE) {
-			emailAddressImpl.setLastPublishDate(null);
-		}
-		else {
-			emailAddressImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
 		emailAddressImpl.resetOriginalValues();
 
 		return emailAddressImpl;
@@ -192,7 +183,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		address = objectInput.readUTF();
 		typeId = objectInput.readLong();
 		primary = objectInput.readBoolean();
-		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -232,7 +222,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 
 		objectOutput.writeLong(typeId);
 		objectOutput.writeBoolean(primary);
-		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -248,5 +237,4 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 	public String address;
 	public long typeId;
 	public boolean primary;
-	public long lastPublishDate;
 }

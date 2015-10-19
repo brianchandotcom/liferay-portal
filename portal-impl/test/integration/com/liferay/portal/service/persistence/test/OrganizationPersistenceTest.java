@@ -152,8 +152,6 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setLogoId(RandomTestUtil.nextLong());
 
-		newOrganization.setLastPublishDate(RandomTestUtil.nextDate());
-
 		_organizations.add(_persistence.update(newOrganization));
 
 		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
@@ -196,9 +194,6 @@ public class OrganizationPersistenceTest {
 			newOrganization.getComments());
 		Assert.assertEquals(existingOrganization.getLogoId(),
 			newOrganization.getLogoId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingOrganization.getLastPublishDate()),
-			Time.getShortTimestamp(newOrganization.getLastPublishDate()));
 	}
 
 	@Test
@@ -296,7 +291,7 @@ public class OrganizationPersistenceTest {
 			true, "modifiedDate", true, "parentOrganizationId", true,
 			"treePath", true, "name", true, "type", true, "recursable", true,
 			"regionId", true, "countryId", true, "statusId", true, "comments",
-			true, "logoId", true, "lastPublishDate", true);
+			true, "logoId", true);
 	}
 
 	@Test
@@ -547,8 +542,6 @@ public class OrganizationPersistenceTest {
 		organization.setComments(RandomTestUtil.randomString());
 
 		organization.setLogoId(RandomTestUtil.nextLong());
-
-		organization.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_organizations.add(_persistence.update(organization));
 

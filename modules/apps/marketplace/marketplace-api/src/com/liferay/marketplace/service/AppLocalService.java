@@ -240,6 +240,10 @@ public interface AppLocalService extends BaseLocalService,
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

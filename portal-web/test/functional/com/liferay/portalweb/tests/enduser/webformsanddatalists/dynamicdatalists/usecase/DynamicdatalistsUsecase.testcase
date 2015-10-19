@@ -61,6 +61,37 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid definition." />
 	</command>
 
+	<command name="AddListWithXSSWorkflowDefinition" priority="4">
+		<description message="This is a use case for LPS-50557." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow Definition" />
+		</execute>
+
+		<execute macro="Workflow#uploadDefinition">
+			<var name="workflowDefinitionFile" value="workflow_definition_xss.xml" />
+			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP" />
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="To Do" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#viewCP" />
+	</command>
+
 	<command name="AddRecord" priority="4">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />

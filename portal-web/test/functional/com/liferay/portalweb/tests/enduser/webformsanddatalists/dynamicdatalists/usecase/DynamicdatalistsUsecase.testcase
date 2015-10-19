@@ -2361,9 +2361,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		</execute>
+		<execute macro="DDLDataDefinition#addCP" />
 
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />
@@ -2384,7 +2382,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#viewCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
 			<var name="fieldFieldLabel" value="Text1" />
 		</execute>
 
@@ -2393,7 +2390,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#viewCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
 			<var name="fieldFieldLabel" value="Text2" />
 		</execute>
 	</command>

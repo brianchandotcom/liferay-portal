@@ -185,6 +185,29 @@ public class GroupServiceUserSitesGroupsTest {
 	}
 
 	@Test
+	public void testOrganizationUser() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		_organizations.addFirst(organization);
+
+		UserLocalServiceUtil.addOrganizationUser(
+			organization.getOrganizationId(), _user);
+
+		Group organizationGroup = organization.getGroup();
+
+		LayoutTestUtil.addLayout(organizationGroup);
+
+		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+			_user.getUserId(), null, QueryUtil.ALL_POS);
+
+		Assert.assertTrue(
+			groups + " does not contain " + organizationGroup,
+			groups.contains(organizationGroup));
+	}
+
+	@Test
 	public void testOrganizationWithoutLayouts() throws Exception {
 		_user = UserTestUtil.addUser();
 

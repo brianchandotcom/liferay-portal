@@ -51,7 +51,10 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_group = GroupTestUtil.addGroup();
 	}
 

@@ -56,7 +56,10 @@ public class VerifyPortletPreferencesTest extends BaseVerifyProcessTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_group = GroupTestUtil.addGroup();
 	}
 

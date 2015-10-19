@@ -31,7 +31,7 @@ import com.liferay.portlet.announcements.EntryExpirationDateException;
 import com.liferay.portlet.announcements.EntryTitleException;
 import com.liferay.portlet.announcements.EntryURLException;
 import com.liferay.portlet.announcements.NoSuchEntryException;
-import com.liferay.portlet.announcements.service.AnnouncementsEntryServiceUtil;
+import com.liferay.portlet.announcements.service.AnnouncementsEntryService;
 
 import java.util.Calendar;
 
@@ -39,6 +39,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -56,7 +57,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void deleteEntry(ActionRequest actionRequest) throws Exception {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
-		AnnouncementsEntryServiceUtil.deleteEntry(entryId);
+		_announcementsEntryService.deleteEntry(entryId);
 	}
 
 	@Override
@@ -81,6 +82,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionErrors.add(actionRequest, e.getClass());
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setAnnouncementsEntryService(
+		AnnouncementsEntryService announcementsEntryService) {
+
+		_announcementsEntryService = announcementsEntryService;
 	}
 
 	protected void updateEntry(ActionRequest actionRequest) throws Exception {
@@ -152,7 +160,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add entry
 
-			AnnouncementsEntryServiceUtil.addEntry(
+			_announcementsEntryService.addEntry(
 				themeDisplay.getPlid(), classNameId, classPK, title, content,
 				url, type, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, displayImmediately,
@@ -163,7 +171,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update entry
 
-			AnnouncementsEntryServiceUtil.updateEntry(
+			_announcementsEntryService.updateEntry(
 				entryId, title, content, url, type, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, displayImmediately, expirationDateMonth,
@@ -171,5 +179,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				expirationDateMinute, priority);
 		}
 	}
+
+	private AnnouncementsEntryService _announcementsEntryService;
 
 }

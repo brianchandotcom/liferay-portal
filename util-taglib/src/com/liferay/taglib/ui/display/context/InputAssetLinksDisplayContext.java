@@ -288,7 +288,7 @@ public class InputAssetLinksDisplayContext {
 
 		long groupId = scopeGroup.getGroupId();
 
-		if (_isStagedLocally()) {
+		if (_isStagedLocally() && scopeGroup.isStagingGroup()) {
 			boolean stagedReferencePortlet = scopeGroup.isStagedPortlet(
 				assetRendererFactory.getPortletId());
 

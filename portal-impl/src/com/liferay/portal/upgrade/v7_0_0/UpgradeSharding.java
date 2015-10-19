@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 /**
  * @author Cristina González
  */
@@ -23,51 +26,48 @@ public class UpgradeSharding extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table AnnouncementsFlag add companyId LONG default 0");
-		runSQL(
-			"alter table AssetEntries_AssetCategories add companyId " +
-				"LONG default 0");
-		runSQL("alter table AssetEntries_AssetTags add companyId LONG;");
-		runSQL("alter table AssetTagStats add companyId LONG default 0");
-		runSQL("alter table BrowserTracker add companyId LONG default 0");
-		runSQL("alter table DLFileEntryMetadata add companyId LONG default 0");
-		runSQL(
-			"alter table DLFileEntryTypes_DLFolders add companyId " +
-				"LONG default 0");
-		runSQL("alter table DLSyncEvent add companyId LONG default 0");
-		runSQL("alter table Groups_Orgs add companyId LONG default 0");
-		runSQL("alter table Groups_Roles add companyId LONG default 0");
-		runSQL("alter table Groups_UserGroups add companyId LONG default 0");
-		runSQL("alter table Image add companyId LONG default 0");
-		runSQL("alter table Marketplace_Module add companyId LONG default 0");
-		runSQL("alter table MBStatsUser add companyId LONG default 0");
-		runSQL("alter table OrgGroupRole add companyId LONG default 0");
-		runSQL("alter table OrgLabor add companyId LONG default 0");
-		runSQL("alter table PasswordPolicyRel add companyId LONG default 0");
-		runSQL("alter table PasswordTracker add companyId LONG default 0");
-		runSQL("alter table PortletPreferences add companyId LONG default 0");
-		runSQL("alter table RatingsStats add companyId LONG default 0");
-		runSQL(
-			"alter table ResourceBlockPermission add companyId LONG default 0");
-		runSQL(
-			"alter table SCFrameworkVersi_SCProductVers add companyId " +
-				"LONG default 0");
-		runSQL("alter table SCLicense add companyId LONG default 0");
-		runSQL(
-			"alter table SCLicenses_SCProductEntries add companyId " +
-				"LONG default 0");
-		runSQL("alter table ServiceComponent add companyId LONG default 0");
-		runSQL("alter table TrashVersion add companyId LONG default 0");
-		runSQL("alter table UserGroupGroupRole add companyId LONG default 0");
-		runSQL("alter table UserGroupRole add companyId LONG default 0");
-		runSQL("alter table UserGroups_Teams add companyId LONG default 0");
-		runSQL("alter table UserIdMapper add companyId LONG default 0");
-		runSQL("alter table Users_Groups add companyId LONG default 0");
-		runSQL("alter table Users_Orgs add companyId LONG default 0");
-		runSQL("alter table Users_Roles add companyId LONG default 0");
-		runSQL("alter table Users_Teams add companyId LONG default 0");
-		runSQL("alter table Users_UserGroups add companyId LONG default 0");
-		runSQL("alter table UserTrackerPath add companyId LONG default 0");
+		addCompanyIdColumn("AnnouncementsFlag");
+		addCompanyIdColumn("AssetEntries_AssetCategories");
+		addCompanyIdColumn("AssetEntries_AssetTags add companyId LONG;");
+		addCompanyIdColumn("AssetTagStats");
+		addCompanyIdColumn("BrowserTracker");
+		addCompanyIdColumn("DLFileEntryMetadata");
+		addCompanyIdColumn("DLFileEntryTypes_DLFolders");
+		addCompanyIdColumn("DLSyncEvent");
+		addCompanyIdColumn("Groups_Orgs");
+		addCompanyIdColumn("Groups_Roles");
+		addCompanyIdColumn("Groups_UserGroups");
+		addCompanyIdColumn("Image");
+		addCompanyIdColumn("Marketplace_Module");
+		addCompanyIdColumn("MBStatsUser");
+		addCompanyIdColumn("OrgGroupRole");
+		addCompanyIdColumn("OrgLabor");
+		addCompanyIdColumn("PasswordPolicyRel");
+		addCompanyIdColumn("PasswordTracker");
+		addCompanyIdColumn("PortletPreferences");
+		addCompanyIdColumn("RatingsStats");
+		addCompanyIdColumn("ResourceBlockPermission");
+		addCompanyIdColumn("SCFrameworkVersi_SCProductVers");
+		addCompanyIdColumn("SCLicense");
+		addCompanyIdColumn("SCLicenses_SCProductEntries");
+		addCompanyIdColumn("ServiceComponent");
+		addCompanyIdColumn("TrashVersion");
+		addCompanyIdColumn("UserGroupGroupRole");
+		addCompanyIdColumn("UserGroupRole");
+		addCompanyIdColumn("UserGroups_Teams");
+		addCompanyIdColumn("UserIdMapper");
+		addCompanyIdColumn("Users_Groups");
+		addCompanyIdColumn("Users_Orgs");
+		addCompanyIdColumn("Users_Roles");
+		addCompanyIdColumn("Users_Teams");
+		addCompanyIdColumn("Users_UserGroups");
+		addCompanyIdColumn("UserTrackerPath");
+	}
+
+	protected void addCompanyIdColumn(String tableName)
+		throws IOException, SQLException {
+
+		runSQL("alter table " + tableName + "add companyId LONG default 0");
 	}
 
 }

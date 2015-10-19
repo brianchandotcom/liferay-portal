@@ -130,6 +130,18 @@ AUI.add(
 						RadioField.superclass._renderErrorMessage.apply(instance, arguments);
 
 						container.all('.validation-message').appendTo(container);
+					},
+
+					_showFeedback: function() {
+						var instance = this;
+
+						RadioField.superclass._showFeedback.apply(instance, arguments);
+
+						var container = instance.get('container');
+
+						var feedBack = container.one('.form-control-feedback');
+
+						feedBack.appendTo(container);
 					}
 				}
 			}

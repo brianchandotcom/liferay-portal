@@ -2355,6 +2355,8 @@
 	</command>
 
 	<command name="ViewUniqueFieldLabels" priority="4">
+		<description message="This is a use case for LPS-51684." />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>

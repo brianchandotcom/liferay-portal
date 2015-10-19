@@ -29,6 +29,7 @@
  *
  * @param containerId
  * @param definition
+ * @param evaluation
  * @param fieldTypes
  * @param layout
  * @param portletNamespace
@@ -49,6 +50,7 @@
 					{lb}
 						container: '#{$containerId}',
 						definition: {$definition|noAutoescape},
+						evaluation: {$evaluation|noAutoescape},
 
 						{if $layout}
 							layout: {$layout|noAutoescape},

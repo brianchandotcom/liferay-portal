@@ -61,13 +61,14 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 					try {
 						deleteTempImages();
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						e.printStackTrace(
 							new PrintWriter(
 								dbProcessContext.getOutputStream(), true));
 					}
 				}
-			},new UpgradeSharding());
+			}, new UpgradeSharding());
 	}
 
 	protected void deleteTempImages() throws Exception {

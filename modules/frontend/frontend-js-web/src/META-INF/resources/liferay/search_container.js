@@ -404,27 +404,20 @@ AUI.add(
 				restoreTask: function(state, params, node) {
 					var container = node.one('#' + params.containerId);
 
-					var selectedElements = AArray.partition(
-						state.data.elements,
-						function(item) {
-							return container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
-						}
-					);
-
-					AArray.each(
-						selectedElements.matches,
-						function(item) {
-							var onScreenElement = container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
-
-							onScreenElement.attr('checked', true);
-						}
-					);
-
 					var offScreenElementsHtml = AArray.reduce(
-						selectedElements.rejects,
+						state.data.elements,
 						STR_BLANK,
-						function(previousValue, currentValue) {
-							return previousValue + Lang.sub(TPL_HIDDEN_INPUT, currentValue);
+						function(prevVal, item) {
+							var input = container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
+
+							if (input) {
+								input.attr('checked', true);
+							}
+							else {
+								prevVal += Lang.sub(TPL_HIDDEN_INPUT, currentValue);
+							}
+
+							return prevVal;
 						}
 					);
 

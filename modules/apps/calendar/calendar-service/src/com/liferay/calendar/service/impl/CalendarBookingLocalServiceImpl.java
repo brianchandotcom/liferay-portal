@@ -1047,10 +1047,15 @@ public class CalendarBookingLocalServiceImpl
 					continue;
 				}
 
-				updateStatus(
-					userId, childCalendarBooking,
-					CalendarBookingWorkflowConstants.STATUS_PENDING,
-					serviceContext);
+				if (childCalendarBooking.getStatus() ==
+						CalendarBookingWorkflowConstants.
+							STATUS_MASTER_PENDING) {
+
+					updateStatus(
+						userId, childCalendarBooking,
+						CalendarBookingWorkflowConstants.STATUS_PENDING,
+						serviceContext);
+				}
 			}
 		}
 		else {

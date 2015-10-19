@@ -157,18 +157,21 @@ AUI.add(
 			_getTemplate: function(callback) {
 				var instance = this;
 
-				A.io.request(
-					instance._getTemplateResourceURL(),
-					{
-						on: {
-							success: function(event, id, xhr) {
-								if (callback) {
-									callback.call(instance, xhr.responseText);
-								}
+				var config = {
+					data: {
+					},
+					on: {
+						success: function(event, id, xhr) {
+							if (callback) {
+								callback.call(instance, xhr.responseText);
 							}
 						}
 					}
-				);
+				};
+
+				config.data[Liferay.Util.getPortletNamespace(Liferay.PortletKeys.DYNAMIC_DATA_MAPPING) + 'definition'] = JSON.stringify(instance.get('definition'));
+
+				A.io.request(instance._getTemplateResourceURL(), config);
 			},
 
 			_getTemplateResourceURL: function() {
@@ -177,7 +180,6 @@ AUI.add(
 				var portletURL = Liferay.PortletURL.createResourceURL();
 
 				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
-				portletURL.setParameter('definition', JSON.stringify(instance.get('definition')));
 				portletURL.setParameter('fieldName', instance.get('name'));
 				portletURL.setParameter('mode', instance.get('mode'));
 				portletURL.setParameter('namespace', instance.get('namespace'));

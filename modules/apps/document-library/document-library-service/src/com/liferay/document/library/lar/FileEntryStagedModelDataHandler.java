@@ -404,10 +404,9 @@ public class FileEntryStagedModelDataHandler
 					"fileVersionUuid", fileVersion.getUuid());
 				serviceContext.setUuid(fileEntry.getUuid());
 
-				String fileEntryTitle =
-					_dlFileEntryLocalService.getUniqueTitle(
-						portletDataContext.getScopeGroupId(), folderId, 0,
-						fileEntry.getTitle(), fileEntry.getExtension());
+				String fileEntryTitle = _dlFileEntryLocalService.getUniqueTitle(
+					portletDataContext.getScopeGroupId(), folderId, 0,
+					fileEntry.getTitle(), fileEntry.getExtension());
 
 				importedFileEntry = _dlAppLocalService.addFileEntry(
 					userId, portletDataContext.getScopeGroupId(), folderId,
@@ -484,13 +483,11 @@ public class FileEntryStagedModelDataHandler
 								existingFileEntry.getFileEntryId(),
 								fileEntry.getTitle(), fileEntry.getExtension());
 
-						importedFileEntry =
-							_dlAppLocalService.updateFileEntry(
-								userId, existingFileEntry.getFileEntryId(),
-								fileEntry.getFileName(),
-								fileEntry.getMimeType(), fileEntryTitle,
-								fileEntry.getDescription(), null, false, is,
-								fileEntry.getSize(), serviceContext);
+						importedFileEntry = _dlAppLocalService.updateFileEntry(
+							userId, existingFileEntry.getFileEntryId(),
+							fileEntry.getFileName(), fileEntry.getMimeType(),
+							fileEntryTitle, fileEntry.getDescription(), null,
+							false, is, fileEntry.getSize(), serviceContext);
 					}
 					else {
 						_dlAppLocalService.updateAsset(

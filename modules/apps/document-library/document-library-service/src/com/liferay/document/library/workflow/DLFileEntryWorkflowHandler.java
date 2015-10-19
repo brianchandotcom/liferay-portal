@@ -124,10 +124,9 @@ public class DLFileEntryWorkflowHandler
 
 		if (workflowDefinitionLink == null) {
 			workflowDefinitionLink =
-				_workflowDefinitionLinkLocalService.
-					fetchWorkflowDefinitionLink(
-						companyId, groupId, DLFolder.class.getName(), folderId,
-						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+				_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+					companyId, groupId, DLFolder.class.getName(), folderId,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
 		}
 
 		return workflowDefinitionLink;
@@ -195,6 +194,7 @@ public class DLFileEntryWorkflowHandler
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
-	private WorkflowDefinitionLinkLocalService _workflowDefinitionLinkLocalService;
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

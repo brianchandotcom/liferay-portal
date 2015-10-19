@@ -157,6 +157,16 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 		).render();
 
 		searchContainer.updateDataStore(<%= primaryKeysJSONArray.toString() %>);
+
+		var destroySearchContainer = function(event) {
+			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+				searchContainer.destroy();
+
+				Liferay.detach('destroyPortlet', destroySearchContainer);
+			}
+		};
+
+		Liferay.on('destroyPortlet', destroySearchContainer);
 	</aui:script>
 </c:if>
 

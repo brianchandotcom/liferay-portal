@@ -138,8 +138,6 @@ public class LayoutSetPrototypePersistenceTest {
 
 		newLayoutSetPrototype.setActive(RandomTestUtil.randomBoolean());
 
-		newLayoutSetPrototype.setLastPublishDate(RandomTestUtil.nextDate());
-
 		_layoutSetPrototypes.add(_persistence.update(newLayoutSetPrototype));
 
 		LayoutSetPrototype existingLayoutSetPrototype = _persistence.findByPrimaryKey(newLayoutSetPrototype.getPrimaryKey());
@@ -170,9 +168,6 @@ public class LayoutSetPrototypePersistenceTest {
 			newLayoutSetPrototype.getSettings());
 		Assert.assertEquals(existingLayoutSetPrototype.getActive(),
 			newLayoutSetPrototype.getActive());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingLayoutSetPrototype.getLastPublishDate()),
-			Time.getShortTimestamp(newLayoutSetPrototype.getLastPublishDate()));
 	}
 
 	@Test
@@ -235,7 +230,7 @@ public class LayoutSetPrototypePersistenceTest {
 			"mvccVersion", true, "uuid", true, "layoutSetPrototypeId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "description", true,
-			"settings", true, "active", true, "lastPublishDate", true);
+			"settings", true, "active", true);
 	}
 
 	@Test
@@ -460,8 +455,6 @@ public class LayoutSetPrototypePersistenceTest {
 		layoutSetPrototype.setSettings(RandomTestUtil.randomString());
 
 		layoutSetPrototype.setActive(RandomTestUtil.randomBoolean());
-
-		layoutSetPrototype.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_layoutSetPrototypes.add(_persistence.update(layoutSetPrototype));
 

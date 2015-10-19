@@ -104,8 +104,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			{ "lockoutDuration", Types.BIGINT },
 			{ "requireUnlock", Types.BOOLEAN },
 			{ "resetFailureCount", Types.BIGINT },
-			{ "resetTicketMaxAge", Types.BIGINT },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "resetTicketMaxAge", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -145,10 +144,9 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		TABLE_COLUMNS_MAP.put("requireUnlock", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("resetFailureCount", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resetTicketMaxAge", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex VARCHAR(75) null,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex VARCHAR(75) null,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordPolicy";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordPolicy.passwordPolicyId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordPolicy.passwordPolicyId ASC";
@@ -218,7 +216,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		model.setRequireUnlock(soapModel.getRequireUnlock());
 		model.setResetFailureCount(soapModel.getResetFailureCount());
 		model.setResetTicketMaxAge(soapModel.getResetTicketMaxAge());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -318,7 +315,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		attributes.put("requireUnlock", getRequireUnlock());
 		attributes.put("resetFailureCount", getResetFailureCount());
 		attributes.put("resetTicketMaxAge", getResetTicketMaxAge());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -537,12 +533,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 		if (resetTicketMaxAge != null) {
 			setResetTicketMaxAge(resetTicketMaxAge);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -1065,17 +1055,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		_resetTicketMaxAge = resetTicketMaxAge;
 	}
 
-	@JSON
-	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1148,7 +1127,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		passwordPolicyImpl.setRequireUnlock(getRequireUnlock());
 		passwordPolicyImpl.setResetFailureCount(getResetFailureCount());
 		passwordPolicyImpl.setResetTicketMaxAge(getResetTicketMaxAge());
-		passwordPolicyImpl.setLastPublishDate(getLastPublishDate());
 
 		passwordPolicyImpl.resetOriginalValues();
 
@@ -1346,21 +1324,12 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 		passwordPolicyCacheModel.resetTicketMaxAge = getResetTicketMaxAge();
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			passwordPolicyCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			passwordPolicyCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
 		return passwordPolicyCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1432,8 +1401,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		sb.append(getResetFailureCount());
 		sb.append(", resetTicketMaxAge=");
 		sb.append(getResetTicketMaxAge());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1441,7 +1408,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(112);
+		StringBundler sb = new StringBundler(109);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PasswordPolicy");
@@ -1587,10 +1554,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			"<column><column-name>resetTicketMaxAge</column-name><column-value><![CDATA[");
 		sb.append(getResetTicketMaxAge());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1643,7 +1606,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	private boolean _requireUnlock;
 	private long _resetFailureCount;
 	private long _resetTicketMaxAge;
-	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private PasswordPolicy _escapedModel;
 }

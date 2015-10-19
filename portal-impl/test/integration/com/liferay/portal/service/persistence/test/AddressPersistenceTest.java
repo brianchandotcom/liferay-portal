@@ -154,8 +154,6 @@ public class AddressPersistenceTest {
 
 		newAddress.setPrimary(RandomTestUtil.randomBoolean());
 
-		newAddress.setLastPublishDate(RandomTestUtil.nextDate());
-
 		_addresses.add(_persistence.update(newAddress));
 
 		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
@@ -197,9 +195,6 @@ public class AddressPersistenceTest {
 			newAddress.getMailing());
 		Assert.assertEquals(existingAddress.getPrimary(),
 			newAddress.getPrimary());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingAddress.getLastPublishDate()),
-			Time.getShortTimestamp(newAddress.getLastPublishDate()));
 	}
 
 	@Test
@@ -296,8 +291,7 @@ public class AddressPersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "street1", true, "street2",
 			true, "street3", true, "city", true, "zip", true, "regionId", true,
-			"countryId", true, "typeId", true, "mailing", true, "primary",
-			true, "lastPublishDate", true);
+			"countryId", true, "typeId", true, "mailing", true, "primary", true);
 	}
 
 	@Test
@@ -534,8 +528,6 @@ public class AddressPersistenceTest {
 		address.setMailing(RandomTestUtil.randomBoolean());
 
 		address.setPrimary(RandomTestUtil.randomBoolean());
-
-		address.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_addresses.add(_persistence.update(address));
 

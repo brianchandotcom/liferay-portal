@@ -370,6 +370,10 @@ public interface CalEventLocalService extends BaseLocalService,
 	public int getEventsCount(long groupId, java.lang.String[] types);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getNoAssetEvents();
 
 	@Override

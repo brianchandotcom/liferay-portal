@@ -30,9 +30,11 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -419,6 +421,12 @@ public class DDMStructureLayoutModelImpl extends BaseModelImpl<DDMStructureLayou
 
 	public void setDDMFormLayout(
 		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout) {
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				DDMStructureLayout.class.getName()));
 	}
 
 	public long getColumnBitmask() {

@@ -21,6 +21,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -69,10 +70,7 @@ public class BlogsItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content/Language", locale, getClass());
-
-		return ResourceBundleUtil.getString(resourceBundle, "blog-images");
+		return LanguageUtil.get(locale, "blog-images");
 	}
 
 	@Override

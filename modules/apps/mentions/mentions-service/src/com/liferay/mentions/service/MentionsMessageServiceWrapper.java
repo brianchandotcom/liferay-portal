@@ -30,7 +30,6 @@ import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceWrapper;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public class MentionsMessageServiceWrapper
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+		MBMessage message = _mbMessageLocalService.getMessage(messageId);
 
 		int oldStatus = message.getStatus();
 
@@ -131,11 +130,19 @@ public class MentionsMessageServiceWrapper
 	}
 
 	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMentionsNotifier(MentionsNotifier mentionsNotifier) {
 		_mentionsNotifier = mentionsNotifier;
 	}
 
 	private volatile ConfigurationFactory _configurationFactory;
+	private MBMessageLocalService _mbMessageLocalService;
 	private MentionsNotifier _mentionsNotifier;
 
 }

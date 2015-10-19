@@ -51,12 +51,12 @@ gradle.taskGraph.useFilter {
 		}
 	}
 	else if (task.name == "test") {
-		if (!_hasTestClasses(task.project, "test/unit")) {
+		if (!_hasTestClasses(task.project, "src/test/java") && !_hasTestClasses(task.project, "test/unit")) {
 			return false
 		}
 	}
 	else if (task.name == "testIntegration") {
-		if (!_hasTestClasses(task.project, "test/integration")) {
+		if (!_hasTestClasses(task.project, "src/testIntegration/java") && !_hasTestClasses(task.project, "test/integration")) {
 			return false
 		}
 	}

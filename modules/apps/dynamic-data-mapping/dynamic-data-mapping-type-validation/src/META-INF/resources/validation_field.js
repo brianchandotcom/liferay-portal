@@ -107,7 +107,8 @@ AUI.add(
 					},
 
 					value: {
-						setter: '_setValue'
+						setter: '_setValue',
+						valueFn: '_valueValidation'
 					}
 				},
 
@@ -154,7 +155,7 @@ AUI.add(
 							ValidationField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								enableValidationMessage: strings.enableValidation,
-								enableValidationValue: !!value.expression,
+								enableValidationValue: !!(value && value.expression),
 								errorMessagePlaceholder: strings.errorMessageGoesHere,
 								errorMessageValue: instance.get('errorMessageValue'),
 								parameterMessagePlaceholder: parameterMessage,
@@ -322,31 +323,33 @@ AUI.add(
 					_setValue: function(validation) {
 						var instance = this;
 
-						var errorMessage = validation.errorMessage;
+						if (validation) {
+							var errorMessage = validation.errorMessage;
 
-						var expression = validation.expression;
+							var expression = validation.expression;
 
-						A.each(
-							instance.get('validations'),
-							function(validation, type) {
-								validation.forEach(
-									function(item) {
-										var regex = item.regex;
+							A.each(
+								instance.get('validations'),
+								function(validation, type) {
+									validation.forEach(
+										function(item) {
+											var regex = item.regex;
 
-										if (regex.test(expression)) {
-											instance.set('errorMessageValue', errorMessage);
-											instance.set('selectedType', type);
-											instance.set('selectedValidation', item.name);
+											if (regex.test(expression)) {
+												instance.set('errorMessageValue', errorMessage);
+												instance.set('selectedType', type);
+												instance.set('selectedValidation', item.name);
 
-											instance.set(
-												'parameterValue',
-												instance.extractParameterValue(regex, expression)
-											);
+												instance.set(
+													'parameterValue',
+													instance.extractParameterValue(regex, expression)
+												);
+											}
 										}
-									}
-								);
-							}
-						);
+									);
+								}
+							);
+						}
 					},
 
 					_syncValidationUI: function(event) {
@@ -369,6 +372,15 @@ AUI.add(
 						instance.set('selectedValidation', selectedValidation);
 
 						instance.set('value', instance.getValue());
+					},
+
+					_valueValidation: function() {
+						var instance = this;
+
+						return {
+							errorMessage: Liferay.Language.get('is-empty'),
+							expression: '!{name}.isEmpty()'
+						};
 					}
 				}
 			}

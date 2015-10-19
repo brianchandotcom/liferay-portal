@@ -186,6 +186,22 @@ public class DDMFormRendererHelper {
 		return new HashMap<>();
 	}
 
+	protected Map<String, DDMFormFieldEvaluationResult> evaluateDDMForm(
+			Locale locale)
+		throws DDMFormRenderingException {
+
+		try {
+			DDMFormEvaluationResult ddmFormEvaluationResult =
+				_ddmFormEvaluator.evaluate(_ddmForm, _ddmFormValues, locale);
+
+			return ddmFormEvaluationResult.
+				getDDMFormFieldEvaluationResultsMap();
+		}
+		catch (DDMFormEvaluationException ddmfee) {
+			throw new DDMFormRenderingException(ddmfee);
+		}
+	}
+
 	protected String getAffixedDDMFormFieldParameterName(
 		String ddmFormFieldParameterName) {
 
@@ -263,7 +279,6 @@ public class DDMFormRendererHelper {
 			throw new DDMFormRenderingException(pe);
 		}
 	}
-
 
 	protected String renderDDMFormField(
 			DDMFormField ddmFormField, String parentDDMFormFieldParameterName)
@@ -379,6 +394,10 @@ public class DDMFormRendererHelper {
 		return sb.toString();
 	}
 
+	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
+		_ddmFormEvaluator = ddmFormEvaluator;
+	}
+
 	protected void setDDMFormFieldRenderingContextChildElementsHTML(
 		String childElementsHTML,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
@@ -431,52 +450,29 @@ public class DDMFormRendererHelper {
 
 	protected void setDDMFormFieldRenderingContextVisible(
 			String visibilityExpression, String fieldName,
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext) 
+			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
 		throws DDMFormRenderingException {
-			
-			
+
 		boolean visible = isFieldVisible(fieldName);
 
 		if (Validator.isNotNull(visibilityExpression)) {
-			Map<String, DDMFormFieldEvaluationResult> 
-				ddmFormFieldEvaluationResultsMap = 
-					evaluateDDMForm(
-						ddmFormFieldRenderingContext.getLocale());
-			
-			DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult = 
+			Map<String, DDMFormFieldEvaluationResult>
+				ddmFormFieldEvaluationResultsMap = evaluateDDMForm(
+					ddmFormFieldRenderingContext.getLocale());
+
+			DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 				ddmFormFieldEvaluationResultsMap.get(fieldName);
-			
+
 			visible = ddmFormFieldEvaluationResult.isVisible();
 		}
 
 		ddmFormFieldRenderingContext.setVisible(visible);
-	}
-	
-	protected Map<String, DDMFormFieldEvaluationResult> evaluateDDMForm(
-			Locale locale) 
-		throws DDMFormRenderingException {
-		
-		try {
-			DDMFormEvaluationResult ddmFormEvaluationResult =
-				_ddmFormEvaluator.evaluate(
-					_ddmForm, _ddmFormValues, locale);
-			
-			return ddmFormEvaluationResult.
-				getDDMFormFieldEvaluationResultsMap();
-		}
-		catch (DDMFormEvaluationException ddmfee) {
-			throw new DDMFormRenderingException(ddmfee);
-		}
 	}
 
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
-		_ddmFormEvaluator = ddmFormEvaluator;
 	}
 
 	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {

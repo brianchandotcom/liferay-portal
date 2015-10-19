@@ -776,9 +776,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				for (Organization organization : userOrgs) {
 					Group group = organization.getGroup();
 
-					if (group.isActive() &&
-						layoutLocalService.hasLayouts(group)) {
-
+					if (group.isActive() && group.isSite()) {
 						if (userSiteGroups.add(group) &&
 							(userSiteGroups.size() == max)) {
 
@@ -789,9 +787,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			}
 			else {
 				for (Group group : userBag.getUserOrgGroups()) {
-					if (group.isActive() &&
-						layoutLocalService.hasLayouts(group)) {
-
+					if (group.isActive() && group.isSite()) {
 						if (userSiteGroups.add(group) &&
 							(userSiteGroups.size() == max)) {
 

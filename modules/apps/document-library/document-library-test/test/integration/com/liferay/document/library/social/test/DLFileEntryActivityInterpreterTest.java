@@ -15,7 +15,7 @@
 package com.liferay.document.library.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.web.social.DLFileEntryActivityInterpreter;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -36,6 +38,10 @@ import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+
+import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -81,7 +87,33 @@ public class DLFileEntryActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new DLFileEntryActivityInterpreter();
+		try {
+			Registry registry = RegistryUtil.getRegistry();
+
+			Collection<SocialActivityInterpreter> socialActivityInterpreters =
+				registry.getServices(
+					SocialActivityInterpreter.class,
+					"(javax.portlet.name=" +
+						DLPortletKeys.DOCUMENT_LIBRARY + ")");
+
+			for (SocialActivityInterpreter socialActivityInterpreter :
+					socialActivityInterpreters) {
+
+				if (ArrayUtil.contains(
+						socialActivityInterpreter.getClassNames(),
+						DLFileEntry.class.getName())) {
+
+					return socialActivityInterpreter;
+				}
+			}
+
+			throw new IllegalStateException(
+				"No activity interpreter found for class " +
+					DLFileEntry.class.getName());
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

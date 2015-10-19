@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
+import java.util.Enumeration;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -39,6 +41,15 @@ public class RequestDispatcherUtil {
 			new HttpServletRequestWrapper(request) {
 
 				@Override
+				public long getDateHeader(String name) {
+					if (name.equals(HttpHeaders.IF_MODIFIED_SINCE)) {
+						return -1;
+					}
+
+					return super.getDateHeader(name);
+				}
+
+				@Override
 				public String getHeader(String name) {
 					if (name.equals(HttpHeaders.IF_MODIFIED_SINCE) ||
 						name.equals(HttpHeaders.IF_NONE_MATCH) ||
@@ -48,6 +59,18 @@ public class RequestDispatcherUtil {
 					}
 
 					return super.getHeader(name);
+				}
+
+				@Override
+				public Enumeration<String> getHeaders(String name) {
+					if (name.equals(HttpHeaders.IF_MODIFIED_SINCE) ||
+						name.equals(HttpHeaders.IF_NONE_MATCH) ||
+						name.equals(HttpHeaders.LAST_MODIFIED)) {
+
+						return null;
+					}
+
+					return super.getHeaders(name);
 				}
 
 				@Override

@@ -22,7 +22,6 @@ import com.liferay.wiki.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletSettings;
-import com.liferay.wiki.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradeSharding;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradeWikiPageResource;
 
@@ -43,8 +42,7 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradePortletId(), new UpgradePortletPreferences(),
 			new UpgradeClassNames(), new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory),
-			new UpgradeWikiPageResource(), 
-			new UpgradeSharding());
+			new UpgradeWikiPageResource(), new UpgradeSharding());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

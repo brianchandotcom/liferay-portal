@@ -49,7 +49,7 @@ public class SpringDependencyAnalyzerPluginTest {
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
 
-		String value = IO.collect(resource.openInputStream());
+		String value = read(resource);
 
 		Assert.assertEquals(
 			"bar.foo.Dependency\n" + _RELEASE_INFO + "java.lang.String\n",
@@ -63,7 +63,9 @@ public class SpringDependencyAnalyzerPluginTest {
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
 
-		String value = IO.collect(resource.openInputStream());
+		String value = read(resource);
+
+		value = value.replace("\r\n", "\n");
 
 		Assert.assertEquals(_RELEASE_INFO + "java.lang.String\n", value);
 	}
@@ -77,7 +79,7 @@ public class SpringDependencyAnalyzerPluginTest {
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
 
-		String value = IO.collect(resource.openInputStream());
+		String value = read(resource);
 
 		Assert.assertEquals(
 			_RELEASE_INFO + "java.lang.String (service.ranking=1)\n", value);
@@ -94,7 +96,7 @@ public class SpringDependencyAnalyzerPluginTest {
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
 
-		String value = IO.collect(resource.openInputStream());
+		String value = read(resource);
 
 		Assert.assertEquals("bar.foo.Dependency\n" + _RELEASE_INFO, value);
 	}
@@ -110,7 +112,7 @@ public class SpringDependencyAnalyzerPluginTest {
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
 
-		String value = IO.collect(resource.openInputStream());
+		String value = read(resource);
 
 		Assert.assertEquals(_RELEASE_INFO, value);
 	}
@@ -153,6 +155,12 @@ public class SpringDependencyAnalyzerPluginTest {
 		springDependencyAnalyzerPlugin.analyzeJar(analyzer);
 
 		return jar;
+	}
+
+	protected String read(Resource resource) throws Exception {
+		String value = IO.collect(resource.openInputStream());
+
+		return value.replace("\r\n", "\n");
 	}
 
 	private static final String _PACKAGE_NAME_BEAN =

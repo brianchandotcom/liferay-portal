@@ -31,7 +31,7 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
@@ -39,9 +39,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -69,7 +70,7 @@ public class FolderStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(Folder folder) throws PortalException {
-		DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
+		_dlAppLocalService.deleteFolder(folder.getFolderId());
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class FolderStagedModelDataHandler
 		String uuid, long companyId) {
 
 		List<DLFolder> dlFolders =
-			DLFolderLocalServiceUtil.getDLFoldersByUuidAndCompanyId(
+			_dlFolderLocalService.getDLFoldersByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<DLFolder>());
 
@@ -143,7 +144,7 @@ public class FolderStagedModelDataHandler
 		String folderPath = ExportImportPathUtil.getModelPath(folder);
 
 		if (!folder.isDefaultRepository()) {
-			Repository repository = RepositoryLocalServiceUtil.getRepository(
+			Repository repository = _repositoryLocalService.getRepository(
 				folder.getRepositoryId());
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -238,7 +239,7 @@ public class FolderStagedModelDataHandler
 
 				serviceContext.setUuid(folder.getUuid());
 
-				importedFolder = DLAppLocalServiceUtil.addFolder(
+				importedFolder = _dlAppLocalService.addFolder(
 					userId, portletDataContext.getScopeGroupId(),
 					parentFolderId, name, folder.getDescription(),
 					serviceContext);
@@ -248,7 +249,7 @@ public class FolderStagedModelDataHandler
 					folder.getUuid(), portletDataContext.getScopeGroupId(),
 					parentFolderId, folder.getName(), 2);
 
-				importedFolder = DLAppLocalServiceUtil.updateFolder(
+				importedFolder = _dlAppLocalService.updateFolder(
 					existingFolder.getFolderId(), parentFolderId, name,
 					folder.getDescription(), serviceContext);
 			}
@@ -258,7 +259,7 @@ public class FolderStagedModelDataHandler
 				null, portletDataContext.getScopeGroupId(), parentFolderId,
 				folder.getName(), 2);
 
-			importedFolder = DLAppLocalServiceUtil.addFolder(
+			importedFolder = _dlAppLocalService.addFolder(
 				userId, portletDataContext.getScopeGroupId(), parentFolderId,
 				name, folder.getDescription(), serviceContext);
 		}
@@ -318,7 +319,7 @@ public class FolderStagedModelDataHandler
 		}
 
 		List<DLFileEntryType> dlFileEntryTypes =
-			DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(
+			_dlFileEntryTypeLocalService.getFolderFileEntryTypes(
 				new long[] {
 					portletDataContext.getCompanyGroupId(),
 					portletDataContext.getScopeGroupId()
@@ -326,7 +327,7 @@ public class FolderStagedModelDataHandler
 				folder.getFolderId(), false);
 
 		long defaultFileEntryTypeId =
-			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+			_dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(
 				folder.getFolderId());
 
 		String defaultFileEntryTypeUuid = StringPool.BLANK;
@@ -417,7 +418,7 @@ public class FolderStagedModelDataHandler
 				referenceDlFileEntryTypeId);
 
 			DLFileEntryType existingDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+				_dlFileEntryTypeLocalService.fetchDLFileEntryType(
 					dlFileEntryTypeId);
 
 			if (existingDLFileEntryType == null) {
@@ -448,12 +449,38 @@ public class FolderStagedModelDataHandler
 				DLFolderConstants.
 					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
 
-			DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
+			_dlFolderLocalService.updateDLFolder(dlFolder);
 
-			DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
+			_dlFileEntryTypeLocalService.updateFolderFileEntryTypes(
 				dlFolder, currentFolderFileEntryTypeIds, defaultFileEntryTypeId,
 				serviceContext);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryTypeLocalService(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		_dlFolderLocalService = dlFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+
+		_repositoryLocalService = repositoryLocalService;
 	}
 
 	@Override
@@ -487,5 +514,10 @@ public class FolderStagedModelDataHandler
 			}
 		}
 	}
+
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
+	private RepositoryLocalService _repositoryLocalService;
 
 }

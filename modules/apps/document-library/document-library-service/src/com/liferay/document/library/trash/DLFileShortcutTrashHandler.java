@@ -38,7 +38,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -64,7 +64,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		DLAppLocalServiceUtil.deleteFileShortcut(classPK);
+		_dlAppLocalService.deleteFileShortcut(classPK);
 	}
 
 	@Override
@@ -213,7 +213,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		DLAppLocalServiceUtil.updateFileShortcut(
+		_dlAppLocalService.updateFileShortcut(
 			userId, classPK, containerModelId,
 			dlFileShortcut.getToFileEntryId(), serviceContext);
 	}
@@ -305,6 +305,11 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.portlet.documentlibrary.model.DLFileShortcut)",
 		unbind = "-"
@@ -318,6 +323,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileShortcutTrashHandler.class);
 
+	private DLAppLocalService _dlAppLocalService;
 	private TrashRendererFactory _trashRendererFactory;
 
 }

@@ -2890,7 +2890,6 @@ public class DataFactory {
 		roleModel.setClassPK(roleModel.getRoleId());
 		roleModel.setName(name);
 		roleModel.setType(type);
-		roleModel.setLastPublishDate(new Date());
 
 		return roleModel;
 	}
@@ -2965,7 +2964,6 @@ public class DataFactory {
 		userModel.setLockoutDate(new Date());
 		userModel.setAgreedToTermsOfUse(true);
 		userModel.setEmailAddressVerified(true);
-		userModel.setLastPublishDate(new Date());
 
 		return userModel;
 	}

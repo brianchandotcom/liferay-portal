@@ -795,7 +795,9 @@ public class Entity {
 	}
 
 	public boolean isStagedGroupedModel() {
-		if (isGroupedModel() && isStagedModel()) {
+		if (isGroupedModel() && isStagedModel() &&
+			hasColumn("lastPublishDate", "Date")) {
+
 			return true;
 		}
 
@@ -805,7 +807,6 @@ public class Entity {
 	public boolean isStagedModel() {
 		if (hasUuid() && hasColumn("companyId") &&
 			hasColumn("createDate", "Date") &&
-			hasColumn("lastPublishDate", "Date") &&
 			hasColumn("modifiedDate", "Date")) {
 
 			return true;

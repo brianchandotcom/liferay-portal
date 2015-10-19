@@ -199,9 +199,7 @@
 				if (!instance._skipParse) {
 					data = data.replace(REGEX_NEWLINE, STR_BLANK);
 
-					var header = instance._isParentNode(element, 'h1') || instance._isParentNode(element, 'h2') || instance._isParentNode(element, 'h3') || instance._isParentNode(element, 'h4') || instance._isParentNode(element, 'h5') || instance._isParentNode(element, 'h6');
-
-					if (!header) {
+					if (!instance._verbatim) {
 						data = data.replace(
 							REGEX_CREOLE_RESERVED_CHARACTERS,
 							function(match, p1, offset, string) {
@@ -262,15 +260,13 @@
 				if (!instance._isLastItemNewLine()) {
 					instance._endResult.push(NEW_LINE);
 				}
-
-				instance._skipParse = false;
-			}
-			else if (tagName == TAG_TELETYPETEXT) {
-				instance._skipParse = false;
 			}
 			else if (tagName == 'table') {
 				listTagsOut.push(NEW_LINE);
 			}
+
+			instance._skipParse = false;
+			instance._verbatim = false;
 		},
 
 		_handleElementStart: function(element, listTagsIn, listTagsOut) {
@@ -352,6 +348,8 @@
 
 			listTagsIn.push(res, STR_SPACE);
 			listTagsOut.push(STR_SPACE, res, NEW_LINE);
+
+			instance._verbatim = true;
 		},
 
 		_handleHr: function(element, listTagsIn, listTagsOut) {
@@ -380,6 +378,8 @@
 		},
 
 		_handleLink: function(element, listTagsIn, listTagsOut) {
+			var instance = this;
+
 			var hrefAttribute = element.getAttribute('href');
 
 			if (hrefAttribute) {
@@ -391,7 +391,10 @@
 
 				listTagsIn.push('[[');
 
-				if (linkText !== hrefAttribute) {
+				if (linkText === hrefAttribute) {
+					instance._verbatim = true;
+				}
+				else {
 					listTagsIn.push(hrefAttribute, STR_PIPE);
 				}
 
@@ -600,7 +603,9 @@
 
 		_listsStack: [],
 
-		_skipParse: false
+		_skipParse: false,
+
+		_verbatim: true
 	};
 
 	CKEDITOR.plugins.add(

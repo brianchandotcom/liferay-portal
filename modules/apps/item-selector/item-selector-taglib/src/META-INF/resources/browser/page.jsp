@@ -377,13 +377,13 @@ if (Validator.isNotNull(keywords)) {
 										<liferay-ui:app-view-entry
 											author="<%= folder.getUserName() %>"
 											createDate="<%= folder.getCreateDate() %>"
-											description="<%= HtmlUtil.escape(folder.getDescription()) %>"
+											description="<%= folder.getDescription() %>"
 											displayStyle="descriptive"
 											folder="<%= true %>"
 											markupView="lexicon"
 											modifiedDate="<%= folder.getModifiedDate() %>"
 											showCheckbox="<%= false %>"
-											title="<%= HtmlUtil.escape(folder.getName()) %>"
+											title="<%= folder.getName() %>"
 											url="<%= viewFolderURL.toString() %>"
 										/>
 									</liferay-ui:search-container-column-text>
@@ -412,14 +412,14 @@ if (Validator.isNotNull(keywords)) {
 												assetTagClassPK="<%= fileEntry.getFileEntryId() %>"
 												author="<%= fileEntry.getUserName() %>"
 												createDate="<%= fileEntry.getCreateDate() %>"
-												description="<%= HtmlUtil.escape(fileEntry.getDescription()) %>"
+												description="<%= fileEntry.getDescription() %>"
 												displayStyle="descriptive"
 												groupId="<%= fileEntry.getGroupId() %>"
 												markupView="lexicon"
 												modifiedDate="<%= fileEntry.getModifiedDate() %>"
 												showCheckbox="<%= false %>"
 												status="<%= latestFileVersion.getStatus() %>"
-												title="<%= HtmlUtil.escape(title) %>"
+												title="<%= title %>"
 												version="<%= String.valueOf(fileEntry.getVersion()) %>"
 											/>
 										</div>

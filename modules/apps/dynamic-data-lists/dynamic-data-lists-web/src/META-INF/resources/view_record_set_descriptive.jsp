@@ -33,7 +33,7 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 	actionJspServletContext="<%= application %>"
 	author="<%= ddlRecordSet.getUserName() %>"
 	createDate="<%= ddlRecordSet.getCreateDate() %>"
-	description="<%= HtmlUtil.escape(ddlRecordSet.getDescription(locale)) %>"
+	description="<%= ddlRecordSet.getDescription(locale) %>"
 	displayStyle="descriptive"
 	groupId="<%= ddlRecordSet.getGroupId() %>"
 	latestApprovedVersion="<%= ddmStructureVersion.getVersion() %>"
@@ -46,7 +46,7 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 	thumbnailDivStyle="height: 146px; width: 146px;"
 	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
-	title="<%= HtmlUtil.escape(ddlRecordSet.getName(locale)) %>"
+	title="<%= ddlRecordSet.getName(locale) %>"
 	url="<%= href %>"
 	version="<%= ddmStructureVersion.getVersion() %>"
 />

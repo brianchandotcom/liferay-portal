@@ -31,7 +31,7 @@
 				assetTagClassPK="<%= entry.getEntryId() %>"
 				author="<%= entry.getUserName() %>"
 				createDate="<%= entry.getCreateDate() %>"
-				description="<%= HtmlUtil.escape(entry.getDescription()) %>"
+				description="<%= entry.getDescription() %>"
 				displayDate="<%= entry.getDisplayDate() %>"
 				displayStyle="descriptive"
 				markupView="lexicon"
@@ -40,7 +40,7 @@
 				rowCheckerName="<%= BlogsEntry.class.getSimpleName() %>"
 				showCheckbox="<%= true %>"
 				status="<%= entry.getStatus() %>"
-				title="<%= HtmlUtil.escape(entry.getTitle()) %>"
+				title="<%= entry.getTitle() %>"
 				url="<%= rowURL.toString() %>"
 			/>
 		</liferay-ui:search-container-column-text>

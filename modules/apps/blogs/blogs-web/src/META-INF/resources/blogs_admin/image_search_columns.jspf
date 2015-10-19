@@ -28,14 +28,14 @@
 				assetTagClassPK="<%= fileEntry.getFileEntryId() %>"
 				author="<%= fileEntry.getUserName() %>"
 				createDate="<%= fileEntry.getCreateDate() %>"
-				description="<%= HtmlUtil.escape(fileEntry.getDescription()) %>"
+				description="<%= fileEntry.getDescription() %>"
 				displayStyle="descriptive"
 				markupView="lexicon"
 				modifiedDate="<%= fileEntry.getModifiedDate() %>"
 				rowCheckerId="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
 				rowCheckerName="<%= FileEntry.class.getSimpleName() %>"
 				showCheckbox="<%= true %>"
-				title="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
+				title="<%= fileEntry.getTitle() %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

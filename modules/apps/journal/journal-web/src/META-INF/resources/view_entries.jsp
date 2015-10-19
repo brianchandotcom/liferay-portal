@@ -412,7 +412,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								actionJspServletContext="<%= application %>"
 								author="<%= curFolder.getUserName() %>"
 								createDate="<%= curFolder.getCreateDate() %>"
-								description="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
+								description="<%= curFolder.getDescription() %>"
 								displayStyle="descriptive"
 								folder="<%= true %>"
 								markupView="lexicon"
@@ -420,7 +420,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
 								showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
-								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
+								title="<%= curFolder.getName() %>"
 								url="<%= rowURL.toString() %>"
 							/>
 						</liferay-ui:search-container-column-text>

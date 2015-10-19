@@ -14,8 +14,15 @@
 
 package com.liferay.portal.model;
 
+import java.util.Date;
+
 /**
  * @author Michael C. Han
  */
 public interface StagedGroupedModel extends GroupedModel, StagedModel {
+
+	public Date getLastPublishDate();
+
+	public void setLastPublishDate(Date date);
+
 }

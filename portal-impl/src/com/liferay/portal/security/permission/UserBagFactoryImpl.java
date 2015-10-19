@@ -24,6 +24,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -102,7 +103,9 @@ public class UserBagFactoryImpl implements UserBagFactory {
 		Set<Organization> organizations = new LinkedHashSet<>();
 
 		for (Organization organization : userOrgs) {
-			if (organizations.add(organization)) {
+			if (organizations.add(organization) &&
+				!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
+
 				List<Organization> ancestorOrganizations =
 					OrganizationLocalServiceUtil.getParentOrganizations(
 						organization.getOrganizationId());

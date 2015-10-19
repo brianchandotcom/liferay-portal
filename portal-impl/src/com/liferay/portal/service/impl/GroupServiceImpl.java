@@ -56,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -723,7 +722,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		Set<Group> userSiteGroups = new HashSet<>();
+		LinkedHashSet<Group> userSiteGroups = new LinkedHashSet<>();
 
 		if (classNames == null) {
 			classNames = new String[] {
@@ -757,7 +756,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		if (ArrayUtil.contains(classNames, Group.class.getName())) {
 			for (Group group : userBag.getUserGroups()) {
-				if (group.isActive() && layoutLocalService.hasLayouts(group)) {
+				if (group.isActive() && group.isSite()) {
 					if (userSiteGroups.add(group) &&
 						(userSiteGroups.size() == max)) {
 
@@ -768,35 +767,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		if (ArrayUtil.contains(classNames, Organization.class.getName())) {
-			if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-				List<Organization> userOrgs =
-					organizationLocalService.getOrganizations(
-						userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			for (Group group : userBag.getUserOrgGroups()) {
+				if (group.isActive() && group.isSite()) {
+					if (userSiteGroups.add(group) &&
+						(userSiteGroups.size() == max)) {
 
-				for (Organization organization : userOrgs) {
-					Group group = organization.getGroup();
-
-					if (group.isActive() &&
-						layoutLocalService.hasLayouts(group)) {
-
-						if (userSiteGroups.add(group) &&
-							(userSiteGroups.size() == max)) {
-
-							return new ArrayList<>(userSiteGroups);
-						}
-					}
-				}
-			}
-			else {
-				for (Group group : userBag.getUserOrgGroups()) {
-					if (group.isActive() &&
-						layoutLocalService.hasLayouts(group)) {
-
-						if (userSiteGroups.add(group) &&
-							(userSiteGroups.size() == max)) {
-
-							return new ArrayList<>(userSiteGroups);
-						}
+						return new ArrayList<>(userSiteGroups);
 					}
 				}
 			}

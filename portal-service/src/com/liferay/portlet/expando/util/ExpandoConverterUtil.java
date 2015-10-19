@@ -51,8 +51,7 @@ public class ExpandoConverterUtil {
 			return _getDateFromString(attribute);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			return GetterUtil.getDateValues(
-				StringUtil.split(attribute), _getDateFormat());
+			return _getDateArrayFromStringArray(StringUtil.split(attribute));
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return GetterUtil.getDouble(attribute);
@@ -109,7 +108,7 @@ public class ExpandoConverterUtil {
 			return _getDateFromString(attribute[0]);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			return GetterUtil.getDateValues(attribute, _getDateFormat());
+			return _getDateArrayFromStringArray(attribute);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return GetterUtil.getDouble(attribute[0]);
@@ -188,6 +187,18 @@ public class ExpandoConverterUtil {
 		else {
 			return attribute.toString();
 		}
+	}
+
+	private static Date[] _getDateArrayFromStringArray(
+		String[] dateStringArray) {
+
+		Date[] dateArray = new Date[dateStringArray.length];
+
+		for (int i = 0; i < dateStringArray.length; i++) {
+			dateArray[i] = _getDateFromString(dateStringArray[i]);
+		}
+
+		return dateArray;
 	}
 
 	private static DateFormat _getDateFormat() {

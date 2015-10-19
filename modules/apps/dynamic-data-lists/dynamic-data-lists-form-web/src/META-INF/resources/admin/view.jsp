@@ -103,7 +103,6 @@ recordSetSearch.setOrderByType(orderByType);
 								actionJsp="/admin/record_set_action.jsp"
 								actionJspServletContext="<%= application %>"
 								cssClass="entry-display-style"
-								header='<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())}, false) %>'
 								imageUrl='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
 								showCheckbox= "<%= false %>"
@@ -111,7 +110,11 @@ recordSetSearch.setOrderByType(orderByType);
 								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 								title="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
 								url="<%= rowURL %>"
-							/>
+							>
+								<liferay-frontend:vertical-card-header>
+									<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())}, false) %>
+								</liferay-frontend:vertical-card-header>
+							</liferay-frontend:vertical-card>
 						</liferay-ui:search-container-column-text>
 
 					</c:when>

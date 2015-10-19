@@ -420,4 +420,16 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<description>Creates the footer of a card.</description>
+		<name>vertical-card-footer</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardFooterTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<description>Creates the header of a card.</description>
+		<name>vertical-card-header</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardHeaderTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
 </taglib>

@@ -21,20 +21,15 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAssetRenderer();
 
 User assetRendererUser = UserLocalServiceUtil.fetchUserById(assetRenderer.getUserId());
+
+String articleTitle = assetRenderer.getTitle(locale);
+
+if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
+	Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
+
+	articleTitle = articleTitle + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + articleGroup.getDescriptiveName(locale) + StringPool.CLOSE_PARENTHESIS;
+}
 %>
-
-<liferay-util:buffer var="headerHtml">
-	<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>
-
-	<c:if test="<%= article.getGroupId() != themeDisplay.getScopeGroupId() %>">
-
-		<%
-		Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
-		%>
-
-		(<%= articleGroup.getDescriptiveName(locale) %>)
-	</c:if>
-</liferay-util:buffer>
 
 <liferay-util:buffer var="statusHtml">
 	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
@@ -47,5 +42,5 @@ User assetRendererUser = UserLocalServiceUtil.fetchUserById(assetRenderer.getUse
 	smallImageCSSClass="user-icon user-icon-lg"
 	smallImageUrl="<%= (assetRendererUser != null) ? assetRendererUser.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 	subtitle="<%= assetRenderer.getSummary() %>"
-	title="<%= headerHtml %>"
+	title="<%= HtmlUtil.escape(articleTitle) %>"
 />

@@ -22,15 +22,19 @@
 		runTasks: function(node) {
 			var instance = this;
 
-			var tasksLength = instance._scheduledTasks.length;
-			var taskStatesLength = instance._taskStates.length;
+			var scheduledTasks = instance._scheduledTasks;
+			var taskStates = instance._taskStates;
+
+			var tasksLength = scheduledTasks.length;
+			var taskStatesLength = taskStates.length;
 
 			for (var i = 0; i < tasksLength; i++) {
-				var task = instance._scheduledTasks[i];
+				var task = scheduledTasks[i];
+
 				var taskParams = task.params;
 
 				for (var j = 0; j < taskStatesLength; j++) {
-					var state = instance._taskStates[j];
+					var state = taskStates[j];
 
 					if (task.condition(state, taskParams, node)) {
 						task.action(state, taskParams, node);

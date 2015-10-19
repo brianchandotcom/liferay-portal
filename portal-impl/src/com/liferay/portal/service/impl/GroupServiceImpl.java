@@ -768,31 +768,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		if (ArrayUtil.contains(classNames, Organization.class.getName())) {
-			if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-				List<Organization> userOrgs =
-					organizationLocalService.getOrganizations(
-						userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			for (Group group : userBag.getUserOrgGroups()) {
+				if (group.isActive() && group.isSite()) {
+					if (userSiteGroups.add(group) &&
+						(userSiteGroups.size() == max)) {
 
-				for (Organization organization : userOrgs) {
-					Group group = organization.getGroup();
-
-					if (group.isActive() && group.isSite()) {
-						if (userSiteGroups.add(group) &&
-							(userSiteGroups.size() == max)) {
-
-							return new ArrayList<>(userSiteGroups);
-						}
-					}
-				}
-			}
-			else {
-				for (Group group : userBag.getUserOrgGroups()) {
-					if (group.isActive() && group.isSite()) {
-						if (userSiteGroups.add(group) &&
-							(userSiteGroups.size() == max)) {
-
-							return new ArrayList<>(userSiteGroups);
-						}
+						return new ArrayList<>(userSiteGroups);
 					}
 				}
 			}

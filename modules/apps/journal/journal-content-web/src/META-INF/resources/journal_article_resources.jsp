@@ -27,7 +27,7 @@ String articleTitle = assetRenderer.getTitle(locale);
 if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 	Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
 
-	articleTitle = articleTitle + StringPool.OPEN_PARENTHESIS + articleGroup.getDescriptiveName(locale) + StringPool.CLOSE_PARENTHESIS;
+	articleTitle = articleTitle + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + articleGroup.getDescriptiveName(locale) + StringPool.CLOSE_PARENTHESIS;
 }
 %>
 

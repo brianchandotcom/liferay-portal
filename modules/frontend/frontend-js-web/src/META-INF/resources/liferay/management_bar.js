@@ -180,7 +180,13 @@ AUI.add(
 
 						var selectAllCheckBoxes = instance._getSelectAllCheckBoxes();
 
-						selectAllCheckBoxes.attr(ATTR_CHECKED, checked);
+						selectAllCheckBoxes.attr(
+							{
+								checked: checked,
+								indeterminate: partial
+							}
+						);
+
 						selectAllCheckBoxes.toggleClass(STR_SELECTED_PARTIAL, partial);
 					},
 

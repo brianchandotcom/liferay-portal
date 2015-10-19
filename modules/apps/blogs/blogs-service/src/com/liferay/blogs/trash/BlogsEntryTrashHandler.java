@@ -26,13 +26,14 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for the blogs entry entity.
@@ -47,7 +48,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		BlogsEntryLocalServiceUtil.deleteEntry(classPK);
+		_blogsEntryLocalService.deleteEntry(classPK);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 		portletURL.setParameter("urlTitle", entry.getUrlTitle());
@@ -92,7 +93,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public boolean isInTrash(long classPK) throws PortalException {
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
 		return entry.isInTrash();
 	}
@@ -101,7 +102,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		BlogsEntryLocalServiceUtil.restoreEntryFromTrash(userId, classPK);
+		_blogsEntryLocalService.restoreEntryFromTrash(userId, classPK);
 	}
 
 	protected PortletURL getRestoreURL(
@@ -110,7 +111,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 		PortletURL portletURL = null;
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 		String portletId = PortletProviderUtil.getPortletId(
 			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
@@ -145,5 +146,14 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		return BlogsEntryPermission.contains(
 			permissionChecker, classPK, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

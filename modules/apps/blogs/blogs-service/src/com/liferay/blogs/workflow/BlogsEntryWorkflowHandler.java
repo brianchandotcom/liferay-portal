@@ -23,7 +23,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 
 import java.io.Serializable;
 
@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -65,7 +66,7 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return BlogsEntryLocalServiceUtil.updateStatus(
+		return _blogsEntryLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
 
@@ -73,5 +74,14 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/blogs/blogs.png";
 	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

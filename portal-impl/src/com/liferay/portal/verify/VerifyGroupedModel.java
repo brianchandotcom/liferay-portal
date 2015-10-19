@@ -97,15 +97,14 @@ public class VerifyGroupedModel extends VerifyProcess {
 	}
 
 	protected long getGroupId(
-			String tableName, String primaryKeColumnName, long primKey)
+			Connection con, String tableName, String primaryKeColumnName,
+			long primKey)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId from " + tableName + " where " +
@@ -126,7 +125,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -162,7 +161,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 					verifiableGroupedModel.getRelatedPrimaryKeyColumnName());
 
 				long groupId = getGroupId(
-					verifiableGroupedModel.getRelatedTableName(),
+					con, verifiableGroupedModel.getRelatedTableName(),
 					verifiableGroupedModel.getRelatedPrimaryKeyColumnName(),
 					relatedPrimKey);
 
@@ -181,7 +180,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 				sb.append(" = ");
 				sb.append(primKey);
 
-				runSQL(sb.toString());
+				runSQL(con, sb.toString());
 			}
 		}
 		finally {

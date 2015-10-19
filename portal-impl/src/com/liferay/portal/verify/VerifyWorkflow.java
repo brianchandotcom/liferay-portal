@@ -64,7 +64,7 @@ public class VerifyWorkflow extends VerifyProcess {
 						String orphanedColumnName = orphanedAttachedModel[2];
 
 						deleteOrphanedWorkflowDefinitionLinks(
-							orphanedTableName, orphanedColumnName);
+							con, orphanedTableName, orphanedColumnName);
 					}
 				}
 			}
@@ -75,7 +75,7 @@ public class VerifyWorkflow extends VerifyProcess {
 	}
 
 	protected void deleteOrphanedWorkflowDefinitionLinks(
-			String tableName, String columnName)
+			Connection con, String tableName, String columnName)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(6);
@@ -87,7 +87,7 @@ public class VerifyWorkflow extends VerifyProcess {
 		sb.append(tableName);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		runSQL(sb.toString());
+		runSQL(con, sb.toString());
 	}
 
 	@Override

@@ -80,10 +80,10 @@ public class VerifySQLServer extends VerifyProcess {
 
 				if (dataType.equals("varchar")) {
 					convertVarcharColumn(
-						tableName, columnName, length, nullable);
+						con, tableName, columnName, length, nullable);
 				}
 				else if (dataType.equals("ntext") || dataType.equals("text")) {
-					convertTextColumn(tableName, columnName, nullable);
+					convertTextColumn(con, tableName, columnName, nullable);
 				}
 			}
 
@@ -100,7 +100,8 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	protected void convertTextColumn(
-			String tableName, String columnName, boolean nullable)
+			Connection con, String tableName, String columnName,
+			boolean nullable)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -119,19 +120,21 @@ public class VerifySQLServer extends VerifyProcess {
 			sb.append(" not null");
 		}
 
-		runSQL(sb.toString());
+		runSQL(con, sb.toString());
 
-		runSQL("update " + tableName + " set temp = " + columnName);
+		runSQL(con, "update " + tableName + " set temp = " + columnName);
 
-		runSQL("alter table " + tableName + " drop column " + columnName);
+		runSQL(con, "alter table " + tableName + " drop column " + columnName);
 
 		runSQL(
+			con,
 			"exec sp_rename \'" + tableName + ".temp\', \'" + columnName +
 				"\', \'column\'");
 	}
 
 	protected void convertVarcharColumn(
-			String tableName, String columnName, int length, boolean nullable)
+			Connection con, String tableName, String columnName, int length,
+			boolean nullable)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -161,7 +164,7 @@ public class VerifySQLServer extends VerifyProcess {
 			sb.append(" not null");
 		}
 
-		runSQL(sb.toString());
+		runSQL(con, sb.toString());
 	}
 
 	@Override
@@ -226,9 +229,10 @@ public class VerifySQLServer extends VerifyProcess {
 
 				if (indexNameUpperCase.startsWith("PK")) {
 					String primaryKeyColumnNames = StringUtil.merge(
-						getPrimaryKeyColumnNames(indexName));
+						getPrimaryKeyColumnNames(con, indexName));
 
 					runSQL(
+						con,
 						"alter table " + tableName + " drop constraint " +
 							indexName);
 
@@ -237,7 +241,7 @@ public class VerifySQLServer extends VerifyProcess {
 							primaryKeyColumnNames + ")");
 				}
 				else {
-					runSQL("drop index " + indexName + " on " + tableName);
+					runSQL(con, "drop index " + indexName + " on " + tableName);
 				}
 			}
 		}
@@ -249,16 +253,15 @@ public class VerifySQLServer extends VerifyProcess {
 		}
 	}
 
-	protected List<String> getPrimaryKeyColumnNames(String indexName) {
+	protected List<String> getPrimaryKeyColumnNames(
+		Connection con, String indexName) {
+
 		List<String> columnNames = new ArrayList<>();
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(10);
 
 			sb.append("select distinct syscolumns.name as column_name from ");
@@ -288,7 +291,7 @@ public class VerifySQLServer extends VerifyProcess {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 
 		return columnNames;

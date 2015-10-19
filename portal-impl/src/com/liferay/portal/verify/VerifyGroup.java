@@ -83,13 +83,12 @@ public class VerifyGroup extends VerifyProcess {
 			RobotsUtil.getDefaultRobots(virtualHostname));
 	}
 
-	protected void updateName(long groupId, String name) throws Exception {
-		Connection con = null;
+	protected void updateName(Connection con, long groupId, String name)
+		throws Exception {
+
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"update Group_ set name = ? where groupId= " + groupId);
 
@@ -98,7 +97,7 @@ public class VerifyGroup extends VerifyProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -201,7 +200,7 @@ public class VerifyGroup extends VerifyProcess {
 					name.substring(pos + 1) +
 						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
 
-				updateName(groupId, newName);
+				updateName(con, groupId, newName);
 			}
 		}
 		finally {

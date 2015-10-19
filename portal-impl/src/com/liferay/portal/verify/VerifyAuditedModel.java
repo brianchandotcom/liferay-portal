@@ -101,16 +101,13 @@ public class VerifyAuditedModel extends VerifyProcess {
 	}
 
 	protected Object[] getAuditedModelArray(
-			String tableName, String pkColumnName, long primKey)
+			Connection con, String tableName, String pkColumnName, long primKey)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"select companyId, userId, createDate, modifiedDate from " +
 					tableName + " where " + pkColumnName + " = ?");
@@ -126,7 +123,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 
 				return new Object[] {
-					companyId, userId, getUserName(userId), createDate,
+					companyId, userId, getUserName(con, userId), createDate,
 					modifiedDate
 				};
 			}
@@ -138,7 +135,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -185,14 +182,11 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 	}
 
-	protected String getUserName(long userId) throws Exception {
-		Connection con = null;
+	protected String getUserName(Connection con, long userId) throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"select firstName, middleName, lastName from User_ where " +
 					"userId = ?");
@@ -216,21 +210,18 @@ public class VerifyAuditedModel extends VerifyProcess {
 			return StringPool.BLANK;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected void verifyAuditedModel(
-			String tableName, String primaryKeyColumnName, long primKey,
-			Object[] auditedModelArray, boolean updateDates)
+			Connection con, String tableName, String primaryKeyColumnName,
+			long primKey, Object[] auditedModelArray, boolean updateDates)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			long companyId = (Long)auditedModelArray[0];
 
 			if (auditedModelArray[2] == null) {
@@ -283,7 +274,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -331,7 +322,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 						verifiableAuditedModel.getJoinByTableName());
 
 					auditedModelArray = getAuditedModelArray(
-						verifiableAuditedModel.getRelatedModelName(),
+						con, verifiableAuditedModel.getRelatedModelName(),
 						verifiableAuditedModel.getRelatedPKColumnName(),
 						relatedPrimKey);
 				}
@@ -346,7 +337,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 				}
 
 				verifyAuditedModel(
-					verifiableAuditedModel.getTableName(),
+					con, verifiableAuditedModel.getTableName(),
 					verifiableAuditedModel.getPrimaryKeyColumnName(), primKey,
 					auditedModelArray, verifiableAuditedModel.isUpdateDates());
 			}

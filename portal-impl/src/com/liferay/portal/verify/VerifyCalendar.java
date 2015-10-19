@@ -43,15 +43,12 @@ public class VerifyCalendar extends VerifyProcess {
 		verifyRecurrence();
 	}
 
-	protected void updateEvent(long eventId, String recurrence)
+	protected void updateEvent(Connection con, long eventId, String recurrence)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"update CalEvent set recurrence = ? where eventId = ?");
 
@@ -61,7 +58,7 @@ public class VerifyCalendar extends VerifyProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -133,7 +130,7 @@ public class VerifyCalendar extends VerifyProcess {
 
 				String newRecurrence = JSONFactoryUtil.serialize(recurrenceObj);
 
-				updateEvent(eventId, newRecurrence);
+				updateEvent(con, eventId, newRecurrence);
 			}
 		}
 		finally {

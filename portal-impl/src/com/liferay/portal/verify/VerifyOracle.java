@@ -79,6 +79,7 @@ public class VerifyOracle extends VerifyProcess {
 
 				try {
 					runSQL(
+						con,
 						"alter table " + tableName + " modify " + columnName +
 							" varchar2(" + dataLength + " char)");
 				}

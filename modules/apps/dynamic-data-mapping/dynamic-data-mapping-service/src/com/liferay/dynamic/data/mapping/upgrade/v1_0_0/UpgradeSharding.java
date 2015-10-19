@@ -27,32 +27,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table DDMStorageLink add companyId LONG;");
-
-		_updateCompanyId("DDMStorageLink");
-
-		runSQL("alter table DDMStructureLink add companyId LONG;");
-
-		_updateCompanyId("DDMStructureLink");
-	}
-
-	private void _updateCompanyId(String tableName) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update " + tableName + " set companyId = ?");
-
-			ps.setLong(1, 0);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		runSQL("alter table DDMStorageLink add companyId LONG default 0");
+		runSQL("alter table DDMStructureLink add companyId LONG default 0");
 	}
 
 }

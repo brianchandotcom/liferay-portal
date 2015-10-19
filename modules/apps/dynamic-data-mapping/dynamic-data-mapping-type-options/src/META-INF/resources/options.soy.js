@@ -5,7 +5,7 @@ if (typeof ddm == 'undefined') { var ddm = {}; }
 
 
 ddm.options = function(opt_data, opt_ignored) {
-var output = '\t<div class="form-group' + soy.$$escapeHtml(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtml(opt_data.name) + '"><span class="control-label">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<b>*</b>' : '') + '</span><input name="' + soy.$$escapeHtml(opt_data.name) + '" type="hidden" /><div class="auto-fields">';
+var output = '\t<div class="form-group' + soy.$$escapeHtml(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtml(opt_data.name) + '"><label class="control-label">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<b>*</b>' : '') + '</label><input name="' + soy.$$escapeHtml(opt_data.name) + '" type="hidden" /><div class="auto-fields">';
 if (opt_data.value.length == 0) {
 	output += ddm.option(soy.$$augmentMap(opt_data, {label: '', value: ''}));
 } else {
@@ -22,5 +22,5 @@ return output;
 
 
 ddm.option = function(opt_data, opt_ignored) {
-return '\t<div class="ddm-options-row lfr-form-row"><div class="row"><div class="col-md-4"><label>Label</label></div><div class="col-md-4"><label>Value</label></div><div class="col-md-4"></div></div><div class="row"><div class="col-md-4"><input class="ddm-options-field-label" name="label" type="text" value="' + soy.$$escapeHtml(opt_data.label) + '" /></div><div class="col-md-4"><input class="ddm-options-field-value" name="value" type="text" value="' + soy.$$escapeHtml(opt_data.value) + '" /></div><div class="col-md-4"></div></div></div>';
+return '\t<div class="ddm-options-row lfr-form-row"><div class="row"><div class="col-md-5"><label>Label</label></div><div class="col-md-5"><label>Value</label></div><div class="col-md-2"></div></div><div class="row"><div class="col-md-5"><input class="ddm-options-field-label form-control" name="label" type="text" value="' + soy.$$escapeHtml(opt_data.label) + '" /></div><div class="col-md-5"><input class="ddm-options-field-value form-control" name="value" type="text" value="' + soy.$$escapeHtml(opt_data.value) + '" /></div><div class="col-md-2"></div></div></div>';
 };

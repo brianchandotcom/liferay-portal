@@ -19,8 +19,8 @@ import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -30,6 +30,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -93,7 +94,7 @@ public class BookmarksEntryPermissionChecker
 			else {
 				try {
 					BookmarksFolder folder =
-						BookmarksFolderLocalServiceUtil.getFolder(folderId);
+						_bookmarksFolderLocalService.getFolder(folderId);
 
 					if (!BookmarksFolderPermissionChecker.contains(
 							permissionChecker, folder, ActionKeys.ACCESS) &&
@@ -127,7 +128,7 @@ public class BookmarksEntryPermissionChecker
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(entryId);
+		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(entryId);
 
 		return contains(permissionChecker, entry, actionId);
 	}
@@ -140,5 +141,22 @@ public class BookmarksEntryPermissionChecker
 
 		check(permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setBookmarksEntryLocalService(
+		BookmarksEntryLocalService bookmarksEntryLocalService) {
+
+		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBookmarksFolderLocalService(
+		BookmarksFolderLocalService bookmarksFolderLocalService) {
+
+		_bookmarksFolderLocalService = bookmarksFolderLocalService;
+	}
+
+	private static BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private static BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

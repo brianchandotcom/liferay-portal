@@ -18,13 +18,13 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -37,6 +37,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -73,9 +74,9 @@ public class BookmarksExportImportPortletPreferencesProcessor
 		}
 
 		BookmarksFolder folder =
-			BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(rootFolderId);
+			_bookmarksFolderLocalService.fetchBookmarksFolder(rootFolderId);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			portletDataContext.getCompanyId(),
 			portletDataContext.getPortletId());
 
@@ -128,5 +129,22 @@ public class BookmarksExportImportPortletPreferencesProcessor
 
 		return portletPreferences;
 	}
+
+	@Reference(unbind = "-")
+	protected void setBookmarksFolderLocalService(
+		BookmarksFolderLocalService bookmarksFolderLocalService) {
+
+		_bookmarksFolderLocalService = bookmarksFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private PortletLocalService _portletLocalService;
 
 }

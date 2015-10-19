@@ -17,7 +17,7 @@ package com.liferay.bookmarks.asset;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,7 +70,7 @@ public class BookmarksEntryAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
+		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
 
 		BookmarksEntryAssetRenderer bookmarksEntryAssetRenderer =
 			new BookmarksEntryAssetRenderer(entry);
@@ -163,6 +163,14 @@ public class BookmarksEntryAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/ratings/star_hover.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setBookmarksEntryLocalService(
+		BookmarksEntryLocalService bookmarksEntryLocalService) {
+
+		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+	}
+
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 	private ServletContext _servletContext;
 
 }

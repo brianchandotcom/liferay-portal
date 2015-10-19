@@ -16,13 +16,14 @@ package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.struts.FindStrutsAction;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juan Fernández
@@ -34,8 +35,7 @@ public class FindEntryAction extends FindStrutsAction {
 
 	@Override
 	protected long getGroupId(long primaryKey) throws Exception {
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			primaryKey);
+		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(primaryKey);
 
 		return entry.getGroupId();
 	}
@@ -56,5 +56,14 @@ public class FindEntryAction extends FindStrutsAction {
 	protected String[] initPortletIds() {
 		return new String[] {BookmarksPortletKeys.BOOKMARKS};
 	}
+
+	@Reference(unbind = "-")
+	protected void setBookmarksEntryLocalService(
+		BookmarksEntryLocalService bookmarksEntryLocalService) {
+
+		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+	}
+
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }

@@ -34,6 +34,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.UserBag;
+import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.GroupServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -54,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -714,121 +717,92 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long userId, String[] classNames, int max)
 		throws PortalException {
 
-		User user = userPersistence.fetchByPrimaryKey(userId);
+		User user = userPersistence.findByPrimaryKey(userId);
 
 		if (user.isDefaultUser()) {
 			return Collections.emptyList();
 		}
 
-		List<Group> userSiteGroups = new ArrayList<>();
+		Set<Group> userSiteGroups = new HashSet<>();
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (max != QueryUtil.ALL_POS) {
-			start = 0;
-			end = max;
+		if (classNames == null) {
+			classNames = new String[] {
+				Company.class.getName(), Group.class.getName(),
+				Organization.class.getName(), User.class.getName()
+			};
 		}
 
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, User.class.getName())) {
-
+		if (ArrayUtil.contains(classNames, User.class.getName())) {
 			if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
 				PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
 
-				Group userGroup = user.getGroup();
+				userSiteGroups.add(user.getGroup());
 
-				userSiteGroups.add(userGroup);
-
-				if ((max != QueryUtil.ALL_POS) &&
-					(userSiteGroups.size() >= max)) {
-
-					return Collections.unmodifiableList(
-						ListUtil.subList(
-							ListUtil.unique(userSiteGroups), start, end));
+				if (userSiteGroups.size() == max) {
+					return new ArrayList<>(userSiteGroups);
 				}
 			}
 		}
 
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, Company.class.getName())) {
+		if (ArrayUtil.contains(classNames, Company.class.getName())) {
+			userSiteGroups.add(
+				groupLocalService.getCompanyGroup(user.getCompanyId()));
 
-			userSiteGroups.addAll(
-				groupLocalService.search(
-					user.getCompanyId(),
-					new long[] {
-						classNameLocalService.getClassNameId(Company.class)
-					},
-					null, new LinkedHashMap<String, Object>(), start, end));
-
-			if ((max != QueryUtil.ALL_POS) && (userSiteGroups.size() >= max)) {
-				return Collections.unmodifiableList(
-					ListUtil.subList(
-						ListUtil.unique(userSiteGroups), start, end));
+			if (userSiteGroups.size() == max) {
+				return new ArrayList<>(userSiteGroups);
 			}
 		}
 
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, Group.class.getName())) {
+		UserBag userBag = UserBagFactoryUtil.create(userId);
 
-			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+		if (ArrayUtil.contains(classNames, Group.class.getName())) {
+			for (Group group : userBag.getUserGroups()) {
+				if (group.isActive() && layoutLocalService.hasLayouts(group)) {
+					if (userSiteGroups.add(group) &&
+						(userSiteGroups.size() == max)) {
 
-			groupParams.put("active", true);
-			groupParams.put("usersGroups", userId);
-
-			userSiteGroups.addAll(
-				groupLocalService.search(
-					user.getCompanyId(),
-					new long[] {
-						classNameLocalService.getClassNameId(Group.class)
-					},
-					null, groupParams, start, end));
-
-			if ((max != QueryUtil.ALL_POS) && (userSiteGroups.size() >= max)) {
-				return Collections.unmodifiableList(
-					ListUtil.subList(
-						ListUtil.unique(userSiteGroups), start, end));
-			}
-		}
-
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, Organization.class.getName())) {
-
-			List<Organization> userOrgs =
-				organizationLocalService.getOrganizations(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			for (Organization organization : userOrgs) {
-				if (organization.hasPrivateLayouts() ||
-					organization.hasPublicLayouts()) {
-
-					userSiteGroups.add(organization.getGroup());
+						return new ArrayList<>(userSiteGroups);
+					}
 				}
+			}
+		}
 
-				if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-					for (Organization ancestorOrganization :
-							organization.getAncestors()) {
+		if (ArrayUtil.contains(classNames, Organization.class.getName())) {
+			if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
+				List<Organization> userOrgs =
+					organizationLocalService.getOrganizations(
+						userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-						if (ancestorOrganization.hasPrivateLayouts() ||
-							ancestorOrganization.hasPublicLayouts()) {
+				for (Organization organization : userOrgs) {
+					Group group = organization.getGroup();
 
-							userSiteGroups.add(ancestorOrganization.getGroup());
+					if (group.isActive() &&
+						layoutLocalService.hasLayouts(group)) {
+
+						if (userSiteGroups.add(group) &&
+							(userSiteGroups.size() == max)) {
+
+							return new ArrayList<>(userSiteGroups);
 						}
 					}
 				}
+			}
+			else {
+				for (Group group : userBag.getUserOrgGroups()) {
+					if (group.isActive() &&
+						layoutLocalService.hasLayouts(group)) {
 
-				if ((max != QueryUtil.ALL_POS) &&
-					(userSiteGroups.size() >= max)) {
+						if (userSiteGroups.add(group) &&
+							(userSiteGroups.size() == max)) {
 
-					return Collections.unmodifiableList(
-						ListUtil.subList(
-							ListUtil.unique(userSiteGroups), start, end));
+							return new ArrayList<>(userSiteGroups);
+						}
+					}
 				}
 			}
 		}
 
-		return Collections.unmodifiableList(
-			ListUtil.subList(ListUtil.unique(userSiteGroups), start, end));
+		return new ArrayList<>(userSiteGroups);
 	}
 
 	/**

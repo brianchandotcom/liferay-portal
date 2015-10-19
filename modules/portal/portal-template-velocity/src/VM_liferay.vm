@@ -100,13 +100,11 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 #end
 
 #macro (user_personal_bar)
-	#if ($is_setup_complete)
-		#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
+	#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
 
-		$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)
+	$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)
 
-		$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
+	$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
 
-		$request.setAttribute("RENDER_PORTLET_BOUNDARY", $render_portlet_boundary)
-	#end
+	$request.setAttribute("RENDER_PORTLET_BOUNDARY", $render_portlet_boundary)
 #end

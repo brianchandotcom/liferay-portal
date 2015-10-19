@@ -62,7 +62,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 			property="name"
 		/>
 
-		<c:if test="<%= !portletName.equals(myAccountPortletId) && !UserGroupMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), userGroup.getUserGroupId()) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && ((selUser != null) || !UserGroupMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), userGroup.getUserGroupId())) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= userGroup.getUserGroupId() %>" href="javascript:;"><%= removeUserGroupIcon %></a>
 			</liferay-ui:search-container-column-text>
@@ -152,7 +152,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 						<liferay-portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/select_user_group.jsp" />
-							<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+							<portlet:param name="p_u_i_d" value='<%= selUser == null ? "0" : String.valueOf(selUser.getUserId()) %>' />
 						</liferay-portlet:renderURL>
 
 						uri: '<%= selectUserGroupURL.toString() %>'

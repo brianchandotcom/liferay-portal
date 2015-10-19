@@ -67,16 +67,10 @@
 			User userDisplay = UserLocalServiceUtil.fetchUserById(entry.getUserId());
 			%>
 
-			<liferay-util:buffer var="statusHtml">
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-			</liferay-util:buffer>
-
 			<liferay-frontend:vertical-card
 				actionJsp="/blogs_admin/entry_action.jsp"
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
-				footer="<%= statusHtml %>"
-				header='<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true), HtmlUtil.escape(entry.getUserName())}, false) %>'
 				imageUrl='<%= Validator.isNotNull(entryImageURL) ? entryImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
@@ -84,7 +78,15 @@
 				smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 				title="<%= HtmlUtil.escape(entry.getTitle()) %>"
 				url="<%= rowURL.toString() %>"
-			/>
+			>
+				<liferay-frontend:vertical-card-footer>
+					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+				</liferay-frontend:vertical-card-footer>
+
+				<liferay-frontend:vertical-card-header>
+					<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true), HtmlUtil.escape(entry.getUserName())}, false) %>
+				</liferay-frontend:vertical-card-header>
+			</liferay-frontend:vertical-card>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>

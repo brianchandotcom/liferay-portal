@@ -65,6 +65,10 @@ public class CompanySettingsAuthenticationFormNavigatorEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		request.setAttribute(
+			PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES,
+			_tabs.values());
+
 		String[] tabNamesArray = _tabs.keySet().toArray(
 			new String[_tabs.size()]);
 

@@ -64,9 +64,6 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 	@Override
 	public void register(
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
-
-		dynamicIncludeRegistry.register(
-			"portal-settings-web:/authentication.jsp");
 	}
 
 	@Reference(

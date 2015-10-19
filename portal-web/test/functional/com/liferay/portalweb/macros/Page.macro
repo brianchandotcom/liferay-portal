@@ -577,6 +577,13 @@
 				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${portletName}" arg2="Portal Settings" />
+			<then>
+				<execute function="Pause" locator1="5000" />
+			</then>
+		</if>
 	</command>
 
 	<command name="gotoCPLocalized">

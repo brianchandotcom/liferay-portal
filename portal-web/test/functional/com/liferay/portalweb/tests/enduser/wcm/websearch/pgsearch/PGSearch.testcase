@@ -860,6 +860,15 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Search Page" />
 		</execute>
@@ -930,6 +939,15 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 

@@ -14,6 +14,10 @@ AUI.add(
 						valueFn: '_valueContainer'
 					},
 
+					evaluation: {
+						value: null
+					},
+
 					portletNamespace: {
 						value: ''
 					}

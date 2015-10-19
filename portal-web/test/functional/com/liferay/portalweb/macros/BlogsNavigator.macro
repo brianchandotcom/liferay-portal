@@ -1,4 +1,13 @@
 <definition>
+	<command name="gotoAbstractField">
+		<if>
+			<condition function="IsVisible" locator1="Button#COG" />
+			<then>
+				<execute function="Click" locator1="Button#COG" />
+			</then>
+		</if>
+	</command>
+
 	<command name="gotoAddEntry">
 		<if>
 			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
@@ -122,6 +131,16 @@
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
+	</command>
+
+	<command name="gotoEntrySpecific">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#ENTRY_CONTENT_SPECIFIC" value1="${entryContent}" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="gotoEntryTitleSpecialCharacter">

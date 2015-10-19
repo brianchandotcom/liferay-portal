@@ -541,28 +541,6 @@
 		<execute function="AssertTextEquals" locator1="Link#RSS" value1="RSS" />
 	</command>
 
-	<command name="viewDetailsPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySubtitle" value="${entrySubtitle}" />
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryTitleSpecialCharacter" value="${entryTitleSpecialCharacter}" />
-			<var name="viewSpecificEntry" value="${viewSpecificEntry}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntryAuthorPG">
-			<var name="entryAuthorFullName" value="${entryAuthorFullName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySubtitle" value="${entrySubtitle}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-	</command>
-
 	<command name="viewDraftStatusViaAdmin">
 		<var name="key_entryTitle" value="${entryTitle}" />
 

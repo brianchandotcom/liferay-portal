@@ -207,11 +207,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_CONTENT_SPECIFIC</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved')]//div[contains(@class,'entry-body') and contains(.,'${key_entryContent}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_CONTENT_ABSTRACT</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']</td>
 	<td></td>

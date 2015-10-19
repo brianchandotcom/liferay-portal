@@ -45,7 +45,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Writer;
+
 import java.net.URL;
+
 import java.util.List;
 import java.util.Map;
 
@@ -182,8 +184,8 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put("containerId", StringUtil.randomId());
 		template.put(
 			"definition", DDMFormJSONSerializerUtil.serialize(ddmForm));
-		
-		DDMFormEvaluationResult ddmFormEvaluationResult = 
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
 			_ddmFormEvaluator.evaluate(
 				ddmForm, ddmFormRenderingContext.getDDMFormValues(),
 				ddmFormRenderingContext.getLocale());
@@ -242,6 +244,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	@Reference
+	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
+		_ddmFormEvaluator = ddmFormEvaluator;
+	}
+
+	@Reference
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
@@ -249,20 +256,14 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	@Reference
-	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
-		_ddmFormEvaluator = ddmFormEvaluator;
-	}
-	
-	@Reference
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
-	
 
 	private DDM _ddm;
 	private DDMFormEvaluator _ddmFormEvaluator;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-	private TemplateResource _templateResource;
 	private JSONFactory _jsonFactory;
+	private TemplateResource _templateResource;
 
 }

@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
-import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,8 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AnnouncementsEntryModel extends AttachedModel, AuditedModel,
-	BaseModel<AnnouncementsEntry> {
+public interface AnnouncementsEntryModel extends AttachedModel,
+	BaseModel<AnnouncementsEntry>, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -71,6 +71,7 @@ public interface AnnouncementsEntryModel extends AttachedModel, AuditedModel,
 	 * @return the uuid of this announcements entry
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -78,6 +79,7 @@ public interface AnnouncementsEntryModel extends AttachedModel, AuditedModel,
 	 *
 	 * @param uuid the uuid of this announcements entry
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**

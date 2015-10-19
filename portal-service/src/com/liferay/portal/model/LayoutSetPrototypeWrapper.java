@@ -66,7 +66,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
 		attributes.put("active", getActive());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -143,12 +142,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 
 		if (active != null) {
 			setActive(active);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -296,16 +289,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototype.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this layout set prototype.
-	*
-	* @return the last publish date of this layout set prototype
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _layoutSetPrototype.getLastPublishDate();
 	}
 
 	@Override
@@ -663,16 +646,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_layoutSetPrototype.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	/**
-	* Sets the last publish date of this layout set prototype.
-	*
-	* @param lastPublishDate the last publish date of this layout set prototype
-	*/
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_layoutSetPrototype.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

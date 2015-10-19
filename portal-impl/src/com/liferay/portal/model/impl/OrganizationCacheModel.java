@@ -79,7 +79,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -117,8 +117,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		sb.append(comments);
 		sb.append(", logoId=");
 		sb.append(logoId);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -199,13 +197,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 
 		organizationImpl.setLogoId(logoId);
 
-		if (lastPublishDate == Long.MIN_VALUE) {
-			organizationImpl.setLastPublishDate(null);
-		}
-		else {
-			organizationImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
 		organizationImpl.resetOriginalValues();
 
 		return organizationImpl;
@@ -231,7 +222,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		statusId = objectInput.readLong();
 		comments = objectInput.readUTF();
 		logoId = objectInput.readLong();
-		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -295,7 +285,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		}
 
 		objectOutput.writeLong(logoId);
-		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -316,5 +305,4 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	public long statusId;
 	public String comments;
 	public long logoId;
-	public long lastPublishDate;
 }

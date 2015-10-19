@@ -355,22 +355,6 @@ public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
 	 */
 	public void setLogoId(long logoId);
 
-	/**
-	 * Returns the last publish date of this organization.
-	 *
-	 * @return the last publish date of this organization
-	 */
-	@Override
-	public Date getLastPublishDate();
-
-	/**
-	 * Sets the last publish date of this organization.
-	 *
-	 * @param lastPublishDate the last publish date of this organization
-	 */
-	@Override
-	public void setLastPublishDate(Date lastPublishDate);
-
 	@Override
 	public boolean isNew();
 

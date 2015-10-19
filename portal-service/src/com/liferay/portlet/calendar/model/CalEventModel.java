@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -44,7 +45,8 @@ import java.util.Date;
  */
 @Deprecated
 @ProviderType
-public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
+public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel,
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -71,6 +73,7 @@ public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
 	 * @return the uuid of this cal event
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -78,6 +81,7 @@ public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
 	 *
 	 * @param uuid the uuid of this cal event
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**

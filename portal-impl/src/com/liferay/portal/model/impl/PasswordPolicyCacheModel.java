@@ -79,7 +79,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -151,8 +151,6 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		sb.append(resetFailureCount);
 		sb.append(", resetTicketMaxAge=");
 		sb.append(resetTicketMaxAge);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -244,13 +242,6 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		passwordPolicyImpl.setResetFailureCount(resetFailureCount);
 		passwordPolicyImpl.setResetTicketMaxAge(resetTicketMaxAge);
 
-		if (lastPublishDate == Long.MIN_VALUE) {
-			passwordPolicyImpl.setLastPublishDate(null);
-		}
-		else {
-			passwordPolicyImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
 		passwordPolicyImpl.resetOriginalValues();
 
 		return passwordPolicyImpl;
@@ -293,7 +284,6 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		requireUnlock = objectInput.readBoolean();
 		resetFailureCount = objectInput.readLong();
 		resetTicketMaxAge = objectInput.readLong();
-		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -368,7 +358,6 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		objectOutput.writeBoolean(requireUnlock);
 		objectOutput.writeLong(resetFailureCount);
 		objectOutput.writeLong(resetTicketMaxAge);
-		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -406,5 +395,4 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 	public boolean requireUnlock;
 	public long resetFailureCount;
 	public long resetTicketMaxAge;
-	public long lastPublishDate;
 }

@@ -649,22 +649,6 @@ public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>, MVCCMode
 	 */
 	public void setResetTicketMaxAge(long resetTicketMaxAge);
 
-	/**
-	 * Returns the last publish date of this password policy.
-	 *
-	 * @return the last publish date of this password policy
-	 */
-	@Override
-	public Date getLastPublishDate();
-
-	/**
-	 * Sets the last publish date of this password policy.
-	 *
-	 * @param lastPublishDate the last publish date of this password policy
-	 */
-	@Override
-	public void setLastPublishDate(Date lastPublishDate);
-
 	@Override
 	public boolean isNew();
 

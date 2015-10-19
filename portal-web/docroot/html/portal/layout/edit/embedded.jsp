@@ -24,10 +24,7 @@ if (selLayout != null) {
 	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
 
 	url = typeSettingsProperties.getProperty("url", StringPool.BLANK);
-	description = typeSettingsProperties.getProperty("embeddedLayoutDescription", StringPool.BLANK);
 }
 %>
 
 <aui:input cssClass="lfr-input-text-container" id="urlEmbedded" label="url" name="TypeSettingsProperties--url--" type="text" value="<%= url %>" />
-
-<aui:input cssClass="layout-description" id="descriptionEmbedded" label="description" name="TypeSettingsProperties--embeddedLayoutDescription--" type="textarea" value="<%= description %>" wrap="soft" />

@@ -14,11 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 /**
  * @author Cristina González

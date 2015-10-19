@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
@@ -38,10 +37,6 @@ import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-
-import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -87,33 +82,8 @@ public class DLFileEntryActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		try {
-			Registry registry = RegistryUtil.getRegistry();
-
-			Collection<SocialActivityInterpreter> socialActivityInterpreters =
-				registry.getServices(
-					SocialActivityInterpreter.class,
-					"(javax.portlet.name=" +
-						DLPortletKeys.DOCUMENT_LIBRARY + ")");
-
-			for (SocialActivityInterpreter socialActivityInterpreter :
-					socialActivityInterpreters) {
-
-				if (ArrayUtil.contains(
-						socialActivityInterpreter.getClassNames(),
-						DLFileEntry.class.getName())) {
-
-					return socialActivityInterpreter;
-				}
-			}
-
-			throw new IllegalStateException(
-				"No activity interpreter found for class " +
-					DLFileEntry.class.getName());
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return getActivityInterpreter(
+			DLPortletKeys.DOCUMENT_LIBRARY, DLFileEntry.class.getName());
 	}
 
 	@Override

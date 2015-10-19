@@ -2378,7 +2378,7 @@
 
 		<execute macro="Role#viewPermissionCP">
 			<var name="permissionDefinitionValue" value="${permissionDefinition4Value}" />
-			<var name="permissionNavigationValue" value="Sites > Site" />
+			<var name="permissionNavigationValue" value="Site Memberships > Site" />
 		</execute>
 	</command>
 

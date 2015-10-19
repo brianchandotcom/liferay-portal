@@ -71,8 +71,8 @@ public class GroupServiceUserSitesGroupsTest {
 		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Assert.assertFalse(
-			groups + " contains " + _group, groups.contains(_group));
+		Assert.assertTrue(
+			groups + " does not contain " + _group, groups.contains(_group));
 	}
 
 	@Test
@@ -148,18 +148,6 @@ public class GroupServiceUserSitesGroupsTest {
 
 			Group organizationGroup = organization.getGroup();
 
-			Assert.assertFalse(
-				groups + " contains " + parentOrganizationGroup,
-				groups.contains(parentOrganizationGroup));
-			Assert.assertFalse(
-				groups + " contains " + organizationGroup,
-				groups.contains(organizationGroup));
-
-			LayoutTestUtil.addLayout(parentOrganizationGroup);
-
-			groups = GroupServiceUtil.getUserSitesGroups(
-				_user.getUserId(), null, QueryUtil.ALL_POS);
-
 			Assert.assertTrue(
 				groups + " does not contain " + parentOrganizationGroup,
 				groups.contains(parentOrganizationGroup));
@@ -201,6 +189,26 @@ public class GroupServiceUserSitesGroupsTest {
 		_user = UserTestUtil.addUser();
 
 		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		_organizations.addFirst(organization);
+
+		UserLocalServiceUtil.addGroupUser(organization.getGroupId(), _user);
+
+		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+			_user.getUserId(), null, QueryUtil.ALL_POS);
+
+		Group organizationGroup = organization.getGroup();
+
+		Assert.assertTrue(
+			groups + " does not contains " + organizationGroup,
+			groups.contains(organizationGroup));
+	}
+
+	@Test
+	public void testOrganizationWithoutSite() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		Organization organization = OrganizationTestUtil.addOrganization(false);
 
 		_organizations.addFirst(organization);
 

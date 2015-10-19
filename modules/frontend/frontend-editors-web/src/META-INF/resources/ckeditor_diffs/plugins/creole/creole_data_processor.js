@@ -240,10 +240,7 @@
 				tagName = tagName.toLowerCase();
 			}
 
-			if (tagName == 'a') {
-				instance._verbatim = false;
-			}
-			else if (tagName == TAG_PARAGRAPH) {
+			if (tagName == TAG_PARAGRAPH) {
 				if (!instance._isLastItemNewLine()) {
 					instance._endResult.push(NEW_LINE);
 				}
@@ -263,22 +260,13 @@
 				if (!instance._isLastItemNewLine()) {
 					instance._endResult.push(NEW_LINE);
 				}
-
-				instance._skipParse = false;
-			}
-			else if (tagName == TAG_TELETYPETEXT) {
-				instance._skipParse = false;
 			}
 			else if (tagName == 'table') {
 				listTagsOut.push(NEW_LINE);
 			}
-			else {
-				var regexHeader = REGEX_HEADER.exec(tagName);
 
-				if (regexHeader) {
-					instance._verbatim = false;
-				}
-			}
+			instance._skipParse = false;
+			instance._verbatim = false;
 		},
 
 		_handleElementStart: function(element, listTagsIn, listTagsOut) {

@@ -101,12 +101,6 @@ AUI.add(
 						return checkBoxes;
 					},
 
-					_getAllSelectedItemsCount: function() {
-						var instance = this;
-
-						return instance._getAllCheckedCheckBoxes().size();
-					},
-
 					_getPageCheckBoxes: function() {
 						var instance = this;
 
@@ -117,12 +111,6 @@ AUI.add(
 						var instance = this;
 
 						return instance._getAllEnabledCheckBoxes().filter(STR_CHECKED_SELECTOR + STR_VISIBLE_SELECTOR);
-					},
-
-					_getPageSelectedItemsCount: function() {
-						var instance = this;
-
-						return instance._getPageCheckedCheckBoxes().size();
 					},
 
 					_getSelectAllCheckBoxes: function() {
@@ -168,9 +156,9 @@ AUI.add(
 
 						var totalPageCheckboxes = instance._getPageCheckBoxes().size();
 
-						var totalSelectedItems = instance._getAllSelectedItemsCount();
+						var totalSelectedItems = instance._getAllCheckedCheckBoxes().size();
 
-						var totalPageOn = instance._getPageSelectedItemsCount();
+						var totalPageOn = instance._getPageCheckedCheckBoxes().size();
 
 						instance._toggleSecondaryBar(totalSelectedItems > 0);
 
@@ -190,14 +178,10 @@ AUI.add(
 					_toggleSelectAllCheckBoxesCheckBox: function(checked, partial) {
 						var instance = this;
 
-						if (partial) {
-							instance._getSelectAllCheckBoxes().addClass(STR_SELECTED_PARTIAL);
-						}
-						else {
-							instance._getSelectAllCheckBoxes().removeClass(STR_SELECTED_PARTIAL);
-						}
+						var selectAllCheckBoxes = instance._getSelectAllCheckBoxes();
 
-						instance._getSelectAllCheckBoxes().attr(ATTR_CHECKED, checked);
+						selectAllCheckBoxes.attr(ATTR_CHECKED, checked);
+						selectAllCheckBoxes.toggleClass(STR_SELECTED_PARTIAL, partial);
 					},
 
 					_updateItemsCount: function(itemsCount) {
@@ -210,40 +194,35 @@ AUI.add(
 				restoreTask: function(state, params, node) {
 					var checkBoxContainer = node.one(STR_HASH + params.checkBoxContainerId);
 
-					var checkBoxes = checkBoxContainer.all(params.checkBoxesSelector);
+					var selectedElements = A.Array.partition(
+						state.data.elements,
+						function(item) {
+							var valueSelector = '[value="' + item.value + '"]';
 
-					var totalSelectedElements = state.data.elements;
-
-					var itemsCountContainer = node.all('.' + params.itemsCountContainerSelector);
-
-					var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
-
-					var selectAllCheckBoxesCheckBox = node.all(params.selectAllCheckBoxesSelector);
-
-					var totalSelectedItems = 0;
-
-					checkBoxes.each(
-						function(item, index) {
-							for (var i = 0; i < totalSelectedElements.length; i++) {
-								if (item.val() === totalSelectedElements[i].value) {
-									totalSelectedItems++;
-									break;
-								}
-							}
+							return checkBoxContainer.one(params.checkBoxesSelector + valueSelector);
 						}
 					);
 
-					if (totalSelectedItems === checkBoxes.size()) {
-						selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, true);
-					}
-					else if (totalSelectedItems > 0) {
-						selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, true);
+					var onscreenSelectedItems = selectedElements.matches.length;
+
+					var checkBoxes = checkBoxContainer.all(params.checkBoxesSelector);
+
+					var selectAllCheckBoxesCheckBox = node.all(params.selectAllCheckBoxesSelector);
+
+					selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, onscreenSelectedItems);
+
+					if (onscreenSelectedItems !== checkBoxes.size()) {
 						selectAllCheckBoxesCheckBox.addClass(STR_SELECTED_PARTIAL);
 					}
 
-					if (totalSelectedElements.length > 0) {
-						itemsCountContainer.html(totalSelectedElements.length);
-						secondaryBar.toggleClass(STR_ON, true);
+					var totalSelectedItems = onscreenSelectedItems + selectedElements.rejects.length;
+
+					if (totalSelectedItems) {
+						var itemsCountContainer = node.all('.' + params.itemsCountContainerSelector);
+						var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
+
+						itemsCountContainer.html(totalSelectedItems);
+						secondaryBar.addClass(STR_ON);
 					}
 				},
 

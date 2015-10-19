@@ -1,39 +1,46 @@
 AUI.add(
 	'liferay-search-container',
 	function(A) {
+		var AArray = A.Array;
 		var Lang = A.Lang;
 
 		var CSS_TEMPLATE = 'lfr-template';
+
+		var STR_BLANK = '';
+
+		var TPL_HIDDEN_INPUT = '<input class="hide" name="{name}" value="{value}" type="checkbox" checked />';
+
+		var TPL_INPUT_SELECTOR = 'input[type="checkbox"][value="{value}"]';
 
 		var SearchContainer = A.Component.create(
 			{
 				ATTRS: {
 					classNameHover: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					hover: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					id: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					rowClassNameAlternate: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					rowClassNameAlternateHover: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					rowClassNameBody: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					rowClassNameBodyHover: {
-						value: ''
+						value: STR_BLANK
 					}
 				},
 
@@ -397,25 +404,31 @@ AUI.add(
 				restoreTask: function(state, params, node) {
 					var container = node.one('#' + params.containerId);
 
-					var checkBoxes = container.all('input');
-
-					var selectedElements = state.data.elements;
-
-					checkBoxes.each(
-						function(item, index) {
-							for (var i = 0; i < selectedElements.length; i++) {
-								if (item.val() === selectedElements[i].value) {
-									item.attr('checked', true);
-									selectedElements.splice(i, 1);
-									break;
-								}
-							}
+					var selectedElements = AArray.partition(
+						state.data.elements,
+						function(item) {
+							return container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
 						}
 					);
 
-					for (var j = 0; j < selectedElements.length; j++) {
-						container.appendChild(A.Node.create('<input class="hide" name="' + selectedElements[j].name + '" value="' + selectedElements[j].value + '" type="checkbox" checked />'));
-					}
+					AArray.each(
+						selectedElements.matches,
+						function(item) {
+							var onScreenElement = container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
+
+							onScreenElement.attr('checked', true);
+						}
+					);
+
+					var offScreenElementsHtml = AArray.reduce(
+						selectedElements.rejects,
+						STR_BLANK,
+						function(previousValue, currentValue) {
+							return previousValue + Lang.sub(TPL_HIDDEN_INPUT, currentValue);
+						}
+					);
+
+					container.append(offScreenElementsHtml);
 				},
 
 				testRestoreTask: function(state, params, node) {

@@ -39,6 +39,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
+import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -850,6 +851,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				stagingAdvicesThreadLocalEnabled);
 		}
 
+		updatePortletPreferences(layoutRevision, layout);
+
 		layout.setUserId(layoutRevision.getUserId());
 		layout.setUserName(layoutRevision.getUserName());
 		layout.setCreateDate(layoutRevision.getCreateDate());
@@ -869,6 +872,25 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		layout.setCss(layoutRevision.getCss());
 
 		return layoutLocalService.updateLayout(layout);
+	}
+
+	protected void updatePortletPreferences(
+		LayoutRevision layoutRevision, Layout layout) {
+
+		portletPreferencesLocalService.deletePortletPreferencesByPlid(
+			layout.getPlid());
+
+		List<PortletPreferences> portletPreferencesList =
+			portletPreferencesLocalService.getPortletPreferencesByPlid(
+				layoutRevision.getLayoutRevisionId());
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			portletPreferencesLocalService.addPortletPreferences(
+				layoutRevision.getCompanyId(), portletPreferences.getOwnerId(),
+				portletPreferences.getOwnerType(), layout.getPlid(),
+				portletPreferences.getPortletId(), null,
+				portletPreferences.getPreferences());
+		}
 	}
 
 	protected void updateStagedPortlets(

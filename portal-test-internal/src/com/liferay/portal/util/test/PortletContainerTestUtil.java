@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
@@ -34,7 +32,6 @@ import com.liferay.portal.upload.LiferayFileItem;
 import com.liferay.portal.upload.LiferayFileItemFactory;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.upload.UploadServletRequestImpl;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.io.IOException;
@@ -56,7 +53,6 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HeaderElement;
 import org.apache.commons.httpclient.HttpClient;
@@ -132,8 +128,7 @@ public class PortletContainerTestUtil {
 	}
 
 	public static LiferayServletRequest getMultipartRequest(
-			String fileNameParameter, byte[] bytes)
-		throws Exception {
+		String fileNameParameter, byte[] bytes) {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
@@ -153,15 +148,6 @@ public class PortletContainerTestUtil {
 		mockHttpSession.setAttribute(ProgressTracker.PERCENT, new Object());
 
 		mockMultipartHttpServletRequest.setSession(mockHttpSession);
-
-		ServletFileUpload servletFileUpload = new ServletFileUpload(
-			new LiferayFileItemFactory(UploadServletRequestImpl.getTempDir()));
-
-		servletFileUpload.setSizeMax(
-			PrefsPropsUtil.getLong(
-				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
-
-		servletFileUpload.setHeaderEncoding(StringPool.UTF8);
 
 		return new LiferayServletRequest(mockMultipartHttpServletRequest);
 	}

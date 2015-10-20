@@ -215,8 +215,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  folderId the primary key of the web content article folder
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  classPK the primary key of the DDM structure, if the primary key
 	 *         of the DDMStructure class is given as the
 	 *         <code>classNameId</code> parameter, the primary key of the class
@@ -1714,8 +1715,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the primary key of the class name
-	 *         associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  classPK the primary key of the DDM structure, if the the
 	 *         DDMStructure class name is given as the <code>className</code>
 	 *         parameter, the primary key of the class associated with the web
@@ -2934,8 +2936,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the class name associated with the
-	 *         article, or {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         article, or JournalArticleConstants.CLASSNAME_ID_DEFAULT in the
+	 *         journal-api otherwise
 	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
 	 *         class name is given as the <code>className</code> parameter, the
 	 *         primary key of the class associated with the web content article,
@@ -3960,8 +3962,9 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -4032,8 +4035,9 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -4112,8 +4116,9 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -4195,8 +4200,9 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -4272,8 +4278,9 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  title the title keywords (space separated, optionally
@@ -4448,8 +4455,9 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -4500,8 +4508,9 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -4560,8 +4569,9 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -4640,7 +4650,8 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class, the
 	 *         primary key of the class name associated with the article, or
-	 *         {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
@@ -4727,7 +4738,8 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class, the
 	 *         primary key of the class name associated with the article, or
-	 *         {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  title the title keywords (space separated, optionally
@@ -5731,8 +5743,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param groupId the primary key of the web content article's group
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 *        content article is related to a DDM structure, the primary key of
-	 *        the class name associated with the article, or {@link
-	 *        JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *        the class name associated with the article, or
+	 *        JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *        otherwise
 	 * @param oldDDMTemplateKey the primary key of the web content article's old
 	 *        DDM template
 	 * @param newDDMTemplateKey the primary key of the web content article's new
@@ -6050,8 +6063,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param      classNameId the primary key of the DDMStructure class if the
 	 *             web content article is related to a DDM structure, the
 	 *             primary key of the class name associated with the article, or
-	 *             {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *             otherwise
+	 *             JournalArticleConstants.CLASSNAME_ID_DEFAULT in the
+	 *             journal-api otherwise
 	 * @param      oldDDMTemplateKey the primary key of the web content
 	 *             article's old DDM template
 	 * @param      newDDMTemplateKey the primary key of the web content

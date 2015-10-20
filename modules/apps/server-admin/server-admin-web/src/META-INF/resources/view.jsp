@@ -38,11 +38,9 @@
 		</portlet:renderURL>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-			<aui:input name="className" type="hidden" />
 
 			<c:if test="<%= showTabs1 %>">
 				<liferay-ui:tabs
@@ -85,18 +83,19 @@
 				function(event) {
 					var currentTarget = AUI.$(event.currentTarget);
 
-					var form = document.<portlet:namespace />fm;
+					var form = AUI.$('#<portlet:namespace />fm');
 
-					form.<portlet:namespace /><%= Constants.CMD %>.value = currentTarget.data('cmd');
-					form.<portlet:namespace />redirect.value = '<%= redirectURL %>';
+					var data = currentTarget.data();
 
-					var className = currentTarget.data('classname');
+					form.children('#<portlet:namespace />redirect').val('<%= redirectURL %>');
 
-					if (className) {
-						form.<portlet:namespace />className.value = className;
-					}
+					for (var key in data) {
+						if (data.hasOwnProperty(key)) {
+							form.append('<input id="<portlet:namespace />' + key + '" name="<portlet:namespace />' + key + '" type="hidden" value="' + data[key] + '" />');
+						}
+					};
 
-					submitForm(form, '<%= editServerURL %>');
+					submitForm(document.<portlet:namespace />fm, '<%= editServerURL %>');
 				}
 			);
 		</aui:script>

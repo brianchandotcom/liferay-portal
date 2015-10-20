@@ -107,6 +107,8 @@ public class PortletContainerTestUtilTest {
 	public void testGetHttpServletRequestWithNullGroup() throws Exception {
 		try {
 			PortletContainerTestUtil.getHttpServletRequest(null, _layout);
+
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
 		}
@@ -116,6 +118,8 @@ public class PortletContainerTestUtilTest {
 	public void testGetHttpServletRequestWithNullLayout() throws Exception {
 		try {
 			PortletContainerTestUtil.getHttpServletRequest(_group, null);
+
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
 		}

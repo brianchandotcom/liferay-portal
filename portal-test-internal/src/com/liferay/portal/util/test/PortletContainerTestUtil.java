@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
@@ -43,8 +44,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -142,10 +141,8 @@ public class PortletContainerTestUtil {
 		mockMultipartHttpServletRequest.setContentType(
 			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
-		MockMultipartFile multipartFile = new MockMultipartFile(
-			fileNameParameter, bytes);
-
-		mockMultipartHttpServletRequest.addFile(multipartFile);
+		mockMultipartHttpServletRequest.addFile(
+			new MockMultipartFile(fileNameParameter, bytes));
 
 		mockMultipartHttpServletRequest.setCharacterEncoding("UTF-8");
 
@@ -164,13 +161,9 @@ public class PortletContainerTestUtil {
 			PrefsPropsUtil.getLong(
 				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
 
-		servletFileUpload.setHeaderEncoding(
-			StandardCharsets.UTF_8.displayName());
+		servletFileUpload.setHeaderEncoding(StringPool.UTF8);
 
-		LiferayServletRequest liferayServletRequest = new LiferayServletRequest(
-			mockMultipartHttpServletRequest);
-
-		return liferayServletRequest;
+		return new LiferayServletRequest(mockMultipartHttpServletRequest);
 	}
 
 	public static PortalAuthentication getPortalAuthentication(

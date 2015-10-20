@@ -133,8 +133,13 @@ if (sapEntry != null) {
 	</aui:script>
 
 	<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields,liferay-portlet-url">
+		var REGEX_DOT = /\./g;
+
 		var getMethodsURL = Liferay.PortletURL.createURL('<%= getMethodsURL %>');
+
 		var services = <%= JSONFactoryUtil.looseSerialize(request.getAttribute(SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES)) %>;
+
+		var serviceMethods = {};
 
 		var autoFields = new Liferay.AutoFields(
 			{
@@ -174,6 +179,45 @@ if (sapEntry != null) {
 			);
 
 			return service && service.context || 'portal';
+		}
+
+		function getServiceMethods(context, serviceClass, callback) {
+			if (context && serviceClass && callback) {
+				var namespace = context.replace(REGEX_DOT, '_') + '.' + serviceClass.replace(REGEX_DOT, '_');
+
+				var methodObj = A.namespace.call(serviceMethods, namespace);
+
+				var methods = methodObj.methods;
+
+				if (!methods) {
+					if (context == 'portal') {
+						context = '';
+					}
+
+					getMethodsURL.setParameter('context', context);
+					getMethodsURL.setParameter('serviceClass', serviceClass);
+
+					A.io.request(
+						getMethodsURL.toString(),
+						{
+							dataType: 'JSON',
+							method: 'GET',
+							on: {
+								success: function(event, id, xhr) {
+									methods = this.get('responseData');
+
+									methodObj.methods = methods;
+
+									callback(methods);
+								}
+							}
+						}
+					);
+				}
+				else {
+					callback(methods);
+				}
+			}
 		}
 
 		function updateAdvancedModeTextarea() {
@@ -279,35 +323,7 @@ if (sapEntry != null) {
 							serviceInput.attr('data-context', context);
 						}
 
-						if (context.length && serviceClass.length) {
-							if (context == 'portal') {
-								context = '';
-							}
-
-							getMethodsURL.setParameter('serviceClass', serviceClass);
-							getMethodsURL.setParameter('context', context);
-
-							A.io.request(
-								getMethodsURL.toString(),
-								{
-									dataType: 'JSON',
-									method: 'GET',
-									on: {
-										complete: function(event, id, xhr) {
-											var responseData = {};
-
-											try {
-												responseData = A.JSON.parse(xhr.responseText);
-											}
-											catch (e) {
-											}
-
-											callback(responseData);
-										}
-									}
-								}
-							);
-						}
+						getServiceMethods(context, serviceClass, callback);
 					},
 					resultFilters: 'phraseMatch',
 					resultTextLocator: 'methodName'

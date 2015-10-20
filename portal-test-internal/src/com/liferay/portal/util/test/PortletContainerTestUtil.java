@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util.test;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upload.FileItem;
@@ -106,11 +107,7 @@ public class PortletContainerTestUtil {
 
 	public static HttpServletRequest getHttpServletRequest(
 			Group group, Layout layout)
-		throws Exception {
-
-		if ((group == null) || (layout == null)) {
-			throw new IllegalArgumentException("Arguments cannot be null.");
-		}
+		throws PortalException {
 
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cache.test;
+package com.liferay.portal.cache.test.common;
 
-import com.liferay.portal.kernel.cache.AbstractPortalCache;
+import com.liferay.portal.cache.AbstractPortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;

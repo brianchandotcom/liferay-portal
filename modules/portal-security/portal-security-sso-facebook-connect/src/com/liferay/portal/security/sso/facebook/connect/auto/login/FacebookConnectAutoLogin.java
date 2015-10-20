@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,7 +76,7 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		if (Validator.isNotNull(emailAddress)) {
 			session.removeAttribute(WebKeys.FACEBOOK_USER_EMAIL_ADDRESS);
 
-			return UserLocalServiceUtil.getUserByEmailAddress(
+			return _userLocalService.getUserByEmailAddress(
 				companyId, emailAddress);
 		}
 		else {
@@ -85,7 +85,7 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 					FacebookConnectWebKeys.FACEBOOK_USER_ID));
 
 			if (facebookId > 0) {
-				return UserLocalServiceUtil.getUserByFacebookId(
+				return _userLocalService.getUserByFacebookId(
 					companyId, facebookId);
 			}
 		}
@@ -98,6 +98,12 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		_facebookConnect = facebookConnect;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private FacebookConnect _facebookConnect;
+	private UserLocalService _userLocalService;
 
 }

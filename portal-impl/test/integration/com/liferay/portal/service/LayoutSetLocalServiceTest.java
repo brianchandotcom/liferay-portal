@@ -69,6 +69,8 @@ public class LayoutSetLocalServiceTest {
 			group, layoutSetPrototype.getLayoutSetPrototypeId(),
 			layoutSetPrototype.getLayoutSetPrototypeId(), true, true);
 
+		group = _organization.getGroup();
+
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(

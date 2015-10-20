@@ -1,7 +1,3 @@
-import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
-import com.liferay.gradle.util.tasks.ConcatenateTask
-
 dependencies {
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion

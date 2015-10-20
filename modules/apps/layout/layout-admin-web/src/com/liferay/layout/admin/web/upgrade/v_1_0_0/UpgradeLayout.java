@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.LayoutConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +40,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"select plid, typeSettings from Layout where type_ = ?");
 
-			ps.setString(1, LayoutConstants.TYPE_EMBEDDED);
+			ps.setString(1, _TYPE_EMBEDDED);
 
 			rs = ps.executeQuery();
 
@@ -68,9 +67,8 @@ public class UpgradeLayout extends UpgradeProcess {
 
 		typeSettingsProperties.load(typeSettings);
 
-		String url = typeSettingsProperties.getProperty("url");
-
-		typeSettingsProperties.setProperty("embeddedLayoutURL", url);
+		typeSettingsProperties.setProperty(
+			"embeddedLayoutURL", typeSettingsProperties.getProperty("url"));
 
 		typeSettingsProperties.remove("url");
 
@@ -98,5 +96,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps);
 		}
 	}
+
+	private static final String _TYPE_EMBEDDED = "embedded";
 
 }

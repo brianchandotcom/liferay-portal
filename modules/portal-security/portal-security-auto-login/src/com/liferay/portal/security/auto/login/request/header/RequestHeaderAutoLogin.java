@@ -30,7 +30,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auto.login.request.header.constants.RequestHeaderAutoLoginConstants;
 import com.liferay.portal.security.auto.login.request.header.module.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashSet;
@@ -96,8 +96,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		}
 
 		if (user == null) {
-			user = UserLocalServiceUtil.getUserByScreenName(
-				companyId, screenName);
+			user = _userLocalService.getUserByScreenName(companyId, screenName);
 		}
 
 		String[] credentials = new String[3];
@@ -163,6 +162,11 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		_configurationFactory = configurationFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private RequestHeaderAutoLoginConfiguration
 		_getRequestHeaderAutoLoginConfiguration(long companyId) {
 
@@ -189,5 +193,6 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		RequestHeaderAutoLogin.class);
 
 	private volatile ConfigurationFactory _configurationFactory;
+	private UserLocalService _userLocalService;
 
 }

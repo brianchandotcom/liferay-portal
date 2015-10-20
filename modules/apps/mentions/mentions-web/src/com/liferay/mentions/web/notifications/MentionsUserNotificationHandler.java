@@ -27,11 +27,12 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -51,7 +52,7 @@ public class MentionsUserNotificationHandler
 
 	@Override
 	protected AssetRenderer<?> getAssetRenderer(JSONObject jsonObject) {
-		MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(
 			jsonObject.getLong("classPK"));
 
 		if ((mbMessage != null) && mbMessage.isDiscussion()) {
@@ -70,7 +71,7 @@ public class MentionsUserNotificationHandler
 		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
 		ServiceContext serviceContext) {
 
-		MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(
 			jsonObject.getLong("classPK"));
 
 		AssetRendererFactory<?> assetRendererFactory =
@@ -102,5 +103,14 @@ public class MentionsUserNotificationHandler
 				false);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

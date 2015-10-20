@@ -79,13 +79,6 @@ public class PortalImplControlPanelFullURLTest {
 		sb.append(getPortalURL());
 
 		sb.append(_portalImpl.getPathFriendlyURLPrivateGroup());
-
-		User user = TestPropsValues.getUser();
-
-		Group userGroup = user.getGroup();
-
-		sb.append(userGroup.getFriendlyURL());
-		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 

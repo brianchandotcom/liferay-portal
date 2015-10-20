@@ -76,7 +76,7 @@ public class PoshiRunnerGetterUtil {
 		int x = filePath.lastIndexOf("/");
 		int y = filePath.lastIndexOf(".");
 
-		if (OSDetector.isWindows()) {
+		if ((x == -1) && OSDetector.isWindows()) {
 			x = filePath.lastIndexOf("\\");
 		}
 

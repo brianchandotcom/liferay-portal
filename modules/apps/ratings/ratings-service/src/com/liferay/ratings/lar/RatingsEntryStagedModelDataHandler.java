@@ -19,19 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -44,7 +45,7 @@ public class RatingsEntryStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(RatingsEntry ratingsEntry) {
-		RatingsEntryLocalServiceUtil.deleteRatingsEntry(ratingsEntry);
+		_ratingsEntryLocalService.deleteRatingsEntry(ratingsEntry);
 	}
 
 	@Override
@@ -52,10 +53,10 @@ public class RatingsEntryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		RatingsEntry entry =
-			RatingsEntryLocalServiceUtil.fetchRatingsEntryByUuidAndCompanyId(
+			_ratingsEntryLocalService.fetchRatingsEntryByUuidAndCompanyId(
 				uuid, group.getCompanyId());
 
 		if (entry != null) {
@@ -70,7 +71,7 @@ public class RatingsEntryStagedModelDataHandler
 		List<RatingsEntry> ratingsEntries = new ArrayList<>();
 
 		ratingsEntries.add(
-			RatingsEntryLocalServiceUtil.fetchRatingsEntryByUuidAndCompanyId(
+			_ratingsEntryLocalService.fetchRatingsEntryByUuidAndCompanyId(
 				uuid, companyId));
 
 		return ratingsEntries;
@@ -114,11 +115,26 @@ public class RatingsEntryStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			entry);
 
-		RatingsEntry importedEntry = RatingsEntryLocalServiceUtil.updateEntry(
+		RatingsEntry importedEntry = _ratingsEntryLocalService.updateEntry(
 			userId, entry.getClassName(), newClassPK, entry.getScore(),
 			serviceContext);
 
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRatingsEntryLocalService(
+		RatingsEntryLocalService ratingsEntryLocalService) {
+
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

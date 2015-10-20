@@ -46,141 +46,143 @@ else {
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
 
-<c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
-</c:if>
-
-<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
-</portlet:actionURL>
-
-<aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
-	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-
-	<c:if test="<%= showHeader %>">
-		<liferay-ui:header
-			backURL="<%= backURL %>"
-			localizeTitle="<%= (entry == null) %>"
-			title='<%= (entry == null) ? "add-bookmark" : LanguageUtil.format(request, "edit-x", entry.getName(), false) %>'
-		/>
+<div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<c:if test="<%= Validator.isNull(referringPortletResource) %>">
+		<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
-	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
+	<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL">
+		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
+	</portlet:actionURL>
 
-	<liferay-ui:asset-categories-error />
+	<aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+		<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
+		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 
-	<liferay-ui:asset-tags-error />
+		<c:if test="<%= showHeader %>">
+			<liferay-ui:header
+				backURL="<%= backURL %>"
+				localizeTitle="<%= (entry == null) %>"
+				title='<%= (entry == null) ? "add-bookmark" : LanguageUtil.format(request, "edit-x", entry.getName(), false) %>'
+			/>
+		</c:if>
 
-	<aui:model-context bean="<%= entry %>" model="<%= BookmarksEntry.class %>" />
+		<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
+		<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
-	<aui:fieldset>
-		<c:if test="<%= (entry != null) || (folderId <= 0) || Validator.isNotNull(referringPortletResource) %>">
+		<liferay-ui:asset-categories-error />
 
-			<%
-			String folderName = StringPool.BLANK;
+		<liferay-ui:asset-tags-error />
 
-			if (folderId > 0) {
-				BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
+		<aui:model-context bean="<%= entry %>" model="<%= BookmarksEntry.class %>" />
 
-				folderId = folder.getFolderId();
-				folderName = folder.getName();
-			}
-			%>
-
-			<div class="form-group">
-				<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
-
-				<aui:button name="selectFolderButton" value="select" />
-
-				<aui:script>
-					AUI.$('#<portlet:namespace />selectFolderButton').on(
-						'click',
-						function(event) {
-							Liferay.Util.selectEntity(
-								{
-									dialog: {
-										constrain: true,
-										modal: true,
-										width: 680
-									},
-									id: '<portlet:namespace />selectFolder',
-									title: '<liferay-ui:message arguments="folder" key="select-x" />',
-									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
-								},
-								function(event) {
-									var folderData = {
-										idString: 'folderId',
-										idValue: event.folderid,
-										nameString: 'folderName',
-										nameValue: event.name
-									};
-
-									Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-								}
-							);
-						}
-					);
-				</aui:script>
+		<aui:fieldset>
+			<c:if test="<%= (entry != null) || (folderId <= 0) || Validator.isNotNull(referringPortletResource) %>">
 
 				<%
-				String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + renderResponse.getNamespace() + "');";
+				String folderName = StringPool.BLANK;
+
+				if (folderId > 0) {
+					BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
+
+					folderId = folder.getFolderId();
+					folderName = folder.getName();
+				}
 				%>
 
-				<aui:button disabled="<%= (folderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-			</div>
-		</c:if>
+				<div class="form-group">
+					<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+					<aui:button name="selectFolderButton" value="select" />
 
-		<aui:input name="url" />
+					<aui:script>
+						AUI.$('#<portlet:namespace />selectFolderButton').on(
+							'click',
+							function(event) {
+								Liferay.Util.selectEntity(
+									{
+										dialog: {
+											constrain: true,
+											modal: true,
+											width: 680
+										},
+										id: '<portlet:namespace />selectFolder',
+										title: '<liferay-ui:message arguments="folder" key="select-x" />',
+										uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+									},
+									function(event) {
+										var folderData = {
+											idString: 'folderId',
+											idValue: event.folderid,
+											nameString: 'folderName',
+											nameValue: event.name
+										};
 
-		<aui:input name="description" />
+										Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+									}
+								);
+							}
+						);
+					</aui:script>
 
-		<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
-			<liferay-ui:custom-attribute-list
-				className="<%= BookmarksEntry.class.getName() %>"
-				classPK="<%= entryId %>"
-				editable="<%= true %>"
-				label="<%= true %>"
-			/>
-		</liferay-ui:custom-attributes-available>
+					<%
+					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + renderResponse.getNamespace() + "');";
+					%>
 
-		<c:if test="<%= entry == null %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= BookmarksEntry.class.getName() %>"
-				/>
-			</aui:field-wrapper>
-		</c:if>
+					<aui:button disabled="<%= (folderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+				</div>
+			</c:if>
 
-		<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="bookmarksEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
-			<aui:input name="categories" type="assetCategories" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
-			<aui:input name="tags" type="assetTags" />
-		</liferay-ui:panel>
+			<aui:input name="url" />
 
-		<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="bookmarksEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
-			<aui:fieldset>
-				<liferay-ui:input-asset-links
+			<aui:input name="description" />
+
+			<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+				<liferay-ui:custom-attribute-list
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entryId %>"
+					editable="<%= true %>"
+					label="<%= true %>"
 				/>
-			</aui:fieldset>
-		</liferay-ui:panel>
-	</aui:fieldset>
+			</liferay-ui:custom-attributes-available>
 
-	<aui:button-row>
-		<aui:button type="submit" />
+			<c:if test="<%= entry == null %>">
+				<aui:field-wrapper label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= BookmarksEntry.class.getName() %>"
+					/>
+				</aui:field-wrapper>
+			</c:if>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="bookmarksEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
+				<aui:input name="categories" type="assetCategories" />
+
+				<aui:input name="tags" type="assetTags" />
+			</liferay-ui:panel>
+
+			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="bookmarksEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
+				<aui:fieldset>
+					<liferay-ui:input-asset-links
+						className="<%= BookmarksEntry.class.getName() %>"
+						classPK="<%= entryId %>"
+					/>
+				</aui:fieldset>
+			</liferay-ui:panel>
+		</aui:fieldset>
+
+		<aui:button-row>
+			<aui:button type="submit" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
 
 <aui:script>
 	function <portlet:namespace />getSuggestionsContent() {

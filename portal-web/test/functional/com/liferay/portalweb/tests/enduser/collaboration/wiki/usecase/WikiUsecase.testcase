@@ -95,7 +95,7 @@
 		</execute>
 
 		<execute macro="WikiPortlet#viewConfigurationTabs">
-			<var name="isNotPresent" value="NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,SETUP_RSS" />
+			<var name="isNotPresent" value="NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,NAVIGATION_RSS" />
 			<var name="isPresent" value="SETUP_DISPLAY_SETTINGS" />
 		</execute>
 
@@ -107,7 +107,7 @@
 
 		<execute macro="WikiPortlet#viewConfigurationTabs">
 			<var name="isNotPresent" value="SETUP_DISPLAY_SETTINGS" />
-			<var name="isPresent" value="NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,SETUP_RSS" />
+			<var name="isPresent" value="NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,NAVIGATION_RSS" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

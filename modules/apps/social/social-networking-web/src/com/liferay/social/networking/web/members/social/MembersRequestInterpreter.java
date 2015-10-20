@@ -22,7 +22,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.OrganizationLocalService;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.model.BaseSocialRequestInterpreter;
 import com.liferay.portlet.social.model.SocialRequest;
@@ -59,8 +59,7 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 
 		String creatorUserName = getUserName(request.getUserId(), themeDisplay);
 
-		User creatorUser = UserLocalServiceUtil.getUserById(
-			request.getUserId());
+		User creatorUser = _userLocalService.getUserById(request.getUserId());
 
 		int requestType = request.getType();
 
@@ -128,11 +127,11 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 			String className = request.getClassName();
 
 			if (className.equals(Group.class.getName())) {
-				UserLocalServiceUtil.addGroupUsers(
+				_userLocalService.addGroupUsers(
 					request.getClassPK(), new long[] {request.getUserId()});
 			}
 			else {
-				UserLocalServiceUtil.addOrganizationUsers(
+				_userLocalService.addOrganizationUsers(
 					request.getClassPK(), new long[] {request.getUserId()});
 			}
 
@@ -169,6 +168,11 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 		_socialActivityLocalService = socialActivityLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = new String[] {
 		Group.class.getName(), Organization.class.getName()
 	};
@@ -179,5 +183,6 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 	private GroupLocalService _groupLocalService;
 	private OrganizationLocalService _organizationLocalService;
 	private SocialActivityLocalService _socialActivityLocalService;
+	private UserLocalService _userLocalService;
 
 }

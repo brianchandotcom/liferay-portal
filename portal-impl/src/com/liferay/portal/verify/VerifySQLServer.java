@@ -36,14 +36,11 @@ import java.util.List;
 public class VerifySQLServer extends VerifyProcess {
 
 	protected void convertColumnsToUnicode() {
-		dropNonunicodeTableIndexes();
-
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			dropNonunicodeTableIndexes(con);
 
 			StringBundler sb = new StringBundler(12);
 
@@ -88,14 +85,14 @@ public class VerifySQLServer extends VerifyProcess {
 			}
 
 			for (String addPrimaryKeySQL : _addPrimaryKeySQLs) {
-				runSQL(addPrimaryKeySQL);
+				runSQL(con, addPrimaryKeySQL);
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -180,14 +177,11 @@ public class VerifySQLServer extends VerifyProcess {
 		convertColumnsToUnicode();
 	}
 
-	protected void dropNonunicodeTableIndexes() {
-		Connection con = null;
+	protected void dropNonunicodeTableIndexes(Connection con) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(15);
 
 			sb.append("select distinct sysobjects.name as table_name, ");
@@ -249,7 +243,7 @@ public class VerifySQLServer extends VerifyProcess {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.LayoutFriendlyURLException;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -28,6 +29,8 @@ import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
+import java.sql.Connection;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +41,9 @@ import java.util.List;
  */
 public class VerifyLayout extends VerifyProcess {
 
-	protected void deleteOrphanedLayouts() throws Exception {
+	protected void deleteOrphanedLayouts(Connection con) throws Exception {
 		runSQL(
+			con,
 			"delete from Layout where layoutPrototypeUuid != '' and " +
 				"layoutPrototypeUuid not in (select uuid_ from " +
 					"LayoutPrototype)");
@@ -47,11 +51,14 @@ public class VerifyLayout extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		deleteOrphanedLayouts();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			deleteOrphanedLayouts(con);
+			verifyLayoutPrototypeLinkEnabled(con);
+			verifyUuid(con);
+		}
+
 		verifyFriendlyURL();
 		verifyLayoutIdFriendlyURL();
-		verifyLayoutPrototypeLinkEnabled();
-		verifyUuid();
 	}
 
 	protected List<Layout> getInvalidLayoutIdFriendlyURLLayouts()
@@ -188,23 +195,29 @@ public class VerifyLayout extends VerifyProcess {
 		return false;
 	}
 
-	protected void verifyLayoutPrototypeLinkEnabled() throws Exception {
+	protected void verifyLayoutPrototypeLinkEnabled(Connection con)
+		throws Exception {
+
 		runSQL(
+			con,
 			"update Layout set layoutPrototypeLinkEnabled = [$FALSE$] where " +
 				"type_ = 'link_to_layout' and layoutPrototypeLinkEnabled = " +
 				"[$TRUE$]");
 	}
 
-	protected void verifyUuid() throws Exception {
-		verifyUuid("AssetEntry");
+	protected void verifyUuid(Connection con) throws Exception {
+		verifyUuid(con, "AssetEntry");
 
 		runSQL(
+			con,
 			"update Layout set uuid_ = sourcePrototypeLayoutUuid where " +
 				"sourcePrototypeLayoutUuid != '' and uuid_ != " +
 					"sourcePrototypeLayoutUuid");
 	}
 
-	protected void verifyUuid(String tableName) throws Exception {
+	protected void verifyUuid(Connection con, String tableName)
+		throws Exception {
+
 		StringBundler sb = new StringBundler(12);
 
 		sb.append("update ");
@@ -220,7 +233,7 @@ public class VerifyLayout extends VerifyProcess {
 		sb.append("Layout.sourcePrototypeLayoutUuid and ");
 		sb.append("Layout.sourcePrototypeLayoutUuid != '')");
 
-		runSQL(sb.toString());
+		runSQL(con, sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(VerifyLayout.class);

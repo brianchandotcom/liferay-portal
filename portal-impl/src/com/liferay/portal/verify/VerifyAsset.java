@@ -32,16 +32,13 @@ import java.sql.ResultSet;
  */
 public class VerifyAsset extends VerifyProcess {
 
-	protected void deleteOrphanedAssetEntries() throws Exception {
-		Connection con = null;
+	protected void deleteOrphanedAssetEntries(Connection con) throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryConstants.getClassName());
-
-			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(5);
 
@@ -68,24 +65,23 @@ public class VerifyAsset extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	@Override
 	protected void doVerify() throws Exception {
-		deleteOrphanedAssetEntries();
-		rebuildTree();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			deleteOrphanedAssetEntries(con);
+			rebuildTree(con);
+		}
 	}
 
-	protected void rebuildTree() throws Exception {
-		Connection con = null;
+	protected void rebuildTree(Connection con) throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"select distinct groupId from AssetCategory where " +
 					"(leftCategoryId is null) or (rightCategoryId is null)");
@@ -99,7 +95,7 @@ public class VerifyAsset extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

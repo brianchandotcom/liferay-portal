@@ -91,17 +91,20 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	@Activate
 	@Override
 	protected void doVerify() throws Exception {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			verifyArticleContents(con);
+			verifyArticleExpirationDate(con);
+			verifyContentSearch(con);
+			verifyURLTitle(con);
+		}
+
 		verifyArticleAssets();
-		verifyArticleContents();
-		verifyArticleExpirationDate();
 		verifyArticleLayouts();
 		verifyArticleStructures();
-		verifyContentSearch();
 		verifyFolderAssets();
 		verifyOracleNewLine();
 		verifyPermissions();
 		verifyTree();
-		verifyURLTitle();
 	}
 
 	@Reference(unbind = "-")
@@ -159,10 +162,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		_resourceLocalService = resourceLocalService;
 	}
 
-	protected void updateContentSearch(long groupId, String portletId)
+	protected void updateContentSearch(
+			Connection con, long groupId, String portletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -205,7 +208,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -349,15 +352,13 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	}
 
 	protected void updateExpirationDate(
-			long groupId, long articleId, Timestamp expirationDate, int status)
+			Connection con, long groupId, long articleId,
+			Timestamp expirationDate, int status)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"update JournalArticle set expirationDate = ? where " +
 					"groupId = ? and articleId = ? and status = ?");
@@ -370,7 +371,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -482,7 +483,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	}
 
 	protected void updateURLTitle(
-			long groupId, String articleId, String urlTitle)
+			Connection con, long groupId, String articleId, String urlTitle)
 		throws Exception {
 
 		String normalizedURLTitle = FriendlyURLNormalizerUtil.normalize(
@@ -495,12 +496,9 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		normalizedURLTitle = _journalArticleLocalService.getUniqueUrlTitle(
 			groupId, articleId, normalizedURLTitle);
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"update JournalArticle set urlTitle = ? where urlTitle = ?");
 
@@ -510,7 +508,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -599,14 +597,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		updateResourcePrimKey();
 	}
 
-	protected void verifyArticleContents() throws Exception {
-		Connection con = null;
+	protected void verifyArticleContents(Connection con) throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"select id_ from JournalArticle where (content like " +
 					"'%document_library%' or content like '%link_to_layout%')" +
@@ -643,24 +638,23 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
-	protected void verifyArticleExpirationDate() throws Exception {
+	protected void verifyArticleExpirationDate(Connection con)
+		throws Exception {
+
 		if (!JournalServiceConfigurationValues.
 				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
 
 			return;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(15);
 
 			sb.append("select JournalArticle.* from JournalArticle left ");
@@ -690,16 +684,18 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				int status = rs.getInt("status");
 
 				updateExpirationDate(
-					groupId, articleId, expirationDate, status);
+					con, groupId, articleId, expirationDate, status);
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected void verifyArticleLayouts() throws Exception {
-		verifyUuid("JournalArticle");
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			verifyUuid(con, "JournalArticle");
+		}
 	}
 
 	protected void verifyArticleStructures() throws PortalException {
@@ -760,14 +756,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void verifyContentSearch() throws Exception {
-		Connection con = null;
+	protected void verifyContentSearch(Connection con) throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"select groupId, portletId from JournalContentSearch group " +
 					"by groupId, portletId having count(groupId) > 1 and " +
@@ -779,11 +772,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				long groupId = rs.getLong("groupId");
 				String portletId = rs.getString("portletId");
 
-				updateContentSearch(groupId, portletId);
+				updateContentSearch(con, groupId, portletId);
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -891,14 +884,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
-	protected void verifyURLTitle() throws Exception {
-		Connection con = null;
+	protected void verifyURLTitle(Connection con) throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"select distinct groupId, articleId, urlTitle from " +
 					"JournalArticle");
@@ -911,11 +901,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				String urlTitle = GetterUtil.getString(
 					rs.getString("urlTitle"));
 
-				updateURLTitle(groupId, articleId, urlTitle);
+				updateURLTitle(con, groupId, articleId, urlTitle);
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

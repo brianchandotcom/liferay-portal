@@ -38,9 +38,12 @@ public class VerifyCalendar extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyEndDate();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			verifyEndDate(con);
+			verifyRecurrence(con);
+		}
+
 		verifyNoAssets();
-		verifyRecurrence();
 	}
 
 	protected void updateEvent(Connection con, long eventId, String recurrence)
@@ -62,8 +65,9 @@ public class VerifyCalendar extends VerifyProcess {
 		}
 	}
 
-	protected void verifyEndDate() throws Exception {
+	protected void verifyEndDate(Connection con) throws Exception {
 		runSQL(
+			con,
 			"update CalEvent set endDate = null where endDate is not null " +
 				"and (recurrence like '%\"until\":null%' or recurrence like " +
 					"'null')");
@@ -98,18 +102,15 @@ public class VerifyCalendar extends VerifyProcess {
 		}
 	}
 
-	protected void verifyRecurrence() throws Exception {
+	protected void verifyRecurrence(Connection con) throws Exception {
 		JSONSerializer jsonSerializer = new JSONSerializer();
 
 		jsonSerializer.registerDefaultSerializers();
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = con.prepareStatement(
 				"select eventId, recurrence from CalEvent where (CAST_TEXT(" +
 					"recurrence) != '') and recurrence not like " +
@@ -134,7 +135,7 @@ public class VerifyCalendar extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

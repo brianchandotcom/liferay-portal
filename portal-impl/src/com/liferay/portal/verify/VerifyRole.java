@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -25,6 +26,8 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
+
+import java.sql.Connection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -58,10 +61,15 @@ public class VerifyRole extends VerifyProcess {
 	}
 
 	protected void deleteImplicitAssociations(Role role) throws Exception {
-		runSQL(
-			"delete from UserGroupGroupRole where roleId = " +
-				role.getRoleId());
-		runSQL("delete from UserGroupRole where roleId = " + role.getRoleId());
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			runSQL(
+				con,
+				"delete from UserGroupGroupRole where roleId = " +
+					role.getRoleId());
+			runSQL(
+				con,
+				"delete from UserGroupRole where roleId = " + role.getRoleId());
+		}
 	}
 
 	@Override

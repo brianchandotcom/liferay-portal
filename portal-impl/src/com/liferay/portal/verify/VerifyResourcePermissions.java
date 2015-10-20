@@ -182,23 +182,21 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select count(*) from " +
-					verifiableResourcedModel.getTableName() +
-						" where companyId = " + role.getCompanyId());
+			try {
+				ps = con.prepareStatement(
+					"select count(*) from " +
+						verifiableResourcedModel.getTableName() +
+							" where companyId = " + role.getCompanyId());
 
-			rs = ps.executeQuery();
+				rs = ps.executeQuery();
 
-			if (rs.next()) {
-				total = rs.getInt(1);
+				if (rs.next()) {
+					total = rs.getInt(1);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+			finally {
+				DataAccess.cleanUp(null, ps, rs);
+			}
 
 			StringBundler sb = new StringBundler(8);
 

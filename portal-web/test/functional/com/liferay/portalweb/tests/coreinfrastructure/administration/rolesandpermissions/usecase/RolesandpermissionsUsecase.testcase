@@ -2617,11 +2617,22 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="nonAdminUser" value="true" />
-			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#TOGGLE" />
+			</then>
+		</if>
+
+		<var name="key_portletName" value=" Content " />
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="Content" />
+
+		<var name="key_portletName" value="Web Content" />
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="Web Content" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />

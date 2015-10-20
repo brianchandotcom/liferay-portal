@@ -20,7 +20,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xml.formatter", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.19"
-	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "2.2.2"
-	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.6.2"
+	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
+	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.6.3"
 	compile group: "org.zeroturnaround", name: "zt-exec", version: "1.8"
 }

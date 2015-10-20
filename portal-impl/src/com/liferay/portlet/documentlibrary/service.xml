@@ -708,6 +708,7 @@
 		<exception>DirectoryName</exception>
 		<exception>DuplicateDirectory</exception>
 		<exception>DuplicateFile</exception>
+		<exception>DuplicateFileEntry</exception>
 		<exception>DuplicateFileEntryType</exception>
 		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateRepositoryName</exception>

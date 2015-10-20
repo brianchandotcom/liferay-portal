@@ -49,7 +49,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileMimeTypeException;
@@ -164,19 +164,16 @@ public class EditPageAttachmentsAction extends PortletAction {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}
+		catch (NoSuchNodeException | NoSuchPageException |
+				PrincipalException e) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+
+			setForward(actionRequest, "portlet.wiki.error");
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.wiki.error");
-			}
-			else {
-				handleUploadException(
-					portletConfig, actionRequest, actionResponse, cmd, e);
-			}
+			handleUploadException(
+				portletConfig, actionRequest, actionResponse, cmd, e);
 		}
 	}
 
@@ -191,18 +188,12 @@ public class EditPageAttachmentsAction extends PortletAction {
 			ActionUtil.getNode(renderRequest);
 			ActionUtil.getPage(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PrincipalException) {
+		catch (NoSuchNodeException | NoSuchPageException |
+				PrincipalException e) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+			SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward("portlet.wiki.error");
-			}
-			else {
-				throw e;
-			}
+			return actionMapping.findForward("portlet.wiki.error");
 		}
 
 		return actionMapping.findForward(
@@ -503,7 +494,7 @@ public class EditPageAttachmentsAction extends PortletAction {
 					vocabularyTitle);
 			}
 		}
-		else if (e instanceof DuplicateFileException) {
+		else if (e instanceof DuplicateFileEntryException) {
 			errorMessage = themeDisplay.translate(
 				"the-folder-you-selected-already-has-an-entry-with-this-name." +
 					"-please-select-a-different-folder");
@@ -573,7 +564,7 @@ public class EditPageAttachmentsAction extends PortletAction {
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
 		else if (e instanceof AntivirusScannerException ||
-				 e instanceof DuplicateFileException ||
+				 e instanceof DuplicateFileEntryException ||
 				 e instanceof DuplicateFolderNameException ||
 				 e instanceof FileExtensionException ||
 				 e instanceof FileMimeTypeException ||
@@ -616,7 +607,7 @@ public class EditPageAttachmentsAction extends PortletAction {
 			}
 
 			if (e instanceof AntivirusScannerException ||
-				e instanceof DuplicateFileException ||
+				e instanceof DuplicateFileEntryException ||
 				e instanceof FileExtensionException ||
 				e instanceof FileNameException ||
 				e instanceof FileSizeException) {
@@ -643,7 +634,7 @@ public class EditPageAttachmentsAction extends PortletAction {
 						ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
 				}
 
-				if (e instanceof DuplicateFileException) {
+				if (e instanceof DuplicateFileEntryException) {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-unique-document-name");
 					errorType =
@@ -717,8 +708,9 @@ public class EditPageAttachmentsAction extends PortletAction {
 		else {
 			Throwable cause = e.getCause();
 
-			if (cause instanceof DuplicateFileException) {
-				SessionErrors.add(actionRequest, DuplicateFileException.class);
+			if (cause instanceof DuplicateFileEntryException) {
+				SessionErrors.add(
+					actionRequest, DuplicateFileEntryException.class);
 			}
 			else {
 				throw e;

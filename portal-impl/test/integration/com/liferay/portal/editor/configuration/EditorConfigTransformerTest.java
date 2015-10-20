@@ -24,22 +24,21 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.module.framework.test.ModuleFrameworkTestUtil;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -63,34 +62,17 @@ public class EditorConfigTransformerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
-		Collection<ServiceReference<EditorConfigContributor>>
-			serviceReferences = registry.getServiceReferences(
-				EditorConfigContributor.class, null);
+		_bundleIds = ModuleFrameworkTestUtil.getBundleIds(
+			EditorConfigContributor.class, null);
 
-		for (ServiceReference<EditorConfigContributor> serviceReference :
-				serviceReferences) {
-
-			Long bundleId = (Long)serviceReference.getProperty(
-				"service.bundleid");
-
-			_bundleIds.add(bundleId);
-
-			ModuleFrameworkUtilAdapter.stopBundle(bundleId);
-		}
+		ModuleFrameworkTestUtil.stopBundles(_bundleIds);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		for (long bundleId : _bundleIds) {
-			try {
-				ModuleFrameworkUtilAdapter.startBundle(bundleId);
-			}
-			catch (Exception e) {
-				_log.error("Unable to start bundle " + bundleId, e);
-			}
-		}
+		ModuleFrameworkTestUtil.startBundles(_bundleIds);
 	}
 
 	@After
@@ -325,7 +307,7 @@ public class EditorConfigTransformerTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditorConfigTransformerTest.class);
 
-	private static final List<Long> _bundleIds = new ArrayList<>();
+	private static Collection<Long> _bundleIds;
 
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration;

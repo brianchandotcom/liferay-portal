@@ -198,7 +198,7 @@ else {
 			<liferay-ui:message key="<%= ase.getMessageKey() %>" />
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-document-name" />
+		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="please-enter-a-unique-document-name" />
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-document-name" />
 
 		<liferay-ui:error exception="<%= LiferayFileItemException.class %>">

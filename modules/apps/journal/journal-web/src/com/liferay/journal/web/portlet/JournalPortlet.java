@@ -96,7 +96,7 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -1113,7 +1113,7 @@ public class JournalPortlet extends MVCPortlet {
 			cause instanceof AssetCategoryException ||
 			cause instanceof AssetTagException ||
 			cause instanceof DuplicateArticleIdException ||
-			cause instanceof DuplicateFileException ||
+			cause instanceof DuplicateFileEntryException ||
 			cause instanceof DuplicateFolderNameException ||
 			cause instanceof DuplicateFeedIdException ||
 			cause instanceof FeedContentFieldException ||

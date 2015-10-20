@@ -2492,3 +2492,41 @@ applications are displayed. This concept conflicts with the idea of returning a
 site called Control Panel in the Sites API.
 
 ---------------------------------------
+
+### Changed exception thrown by D&M services when duplicate files are found
+- **Date:** 2015-Sep-24
+- **JIRA Ticket:** LPS-53819
+
+#### What changed?
+
+When a duplicate file entry is found by D&M services, a
+`DuplicateFileEntryException` will be thrown. Previously, the
+exception `DuplicateFileException` was used.
+
+The `DuplicateFileException` is now raised only by `Store`
+implementations.
+
+#### Who is affected?
+
+Any caller of the `addFileEntry` methods in `DLApp` and `DLFileEntry`
+local and remote services.
+
+#### How should I update my code?
+
+Change the exception type from `DuplicateFileException` to
+`DuplicateFileEntryException` in `try-catch` blocks surrounding calls
+to D&M services.
+
+#### Why was this change made?
+
+The `DuplicateFileException` exception was used in two different
+contexts:
+- When creating a new file through D&M and a row in the database
+already existed for a file entry with the same title.
+- When the stores tried to save a file and the underlying storage unit
+(a file in the case of FileSystemStore) already existed.
+
+This made it impossible to detect and recover from store corruption
+issues, as they were undifferentiable from other errors.
+
+---------------------------------------

@@ -82,7 +82,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RepositoryUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -1530,7 +1530,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 			catch (PortalException pe) {
 				if (!(pe instanceof DuplicateFolderNameException) &&
-					 !(pe instanceof DuplicateFileException)) {
+					 !(pe instanceof DuplicateFileEntryException)) {
 
 					throw pe;
 				}
@@ -2076,7 +2076,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
-			throw new DuplicateFileException(title);
+			throw new DuplicateFileEntryException(title);
 		}
 
 		dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
@@ -2085,7 +2085,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
-			throw new DuplicateFileException(title);
+			throw new DuplicateFileEntryException(title);
 		}
 	}
 
@@ -2541,15 +2541,6 @@ public class DLFileEntryLocalServiceImpl
 		validateFile(
 			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
 			dlFileEntry.getFileName(), dlFileEntry.getTitle());
-
-		if (DLStoreUtil.hasFile(
-				user.getCompanyId(),
-				DLFolderConstants.getDataRepositoryId(
-					dlFileEntry.getGroupId(), newFolderId),
-				dlFileEntry.getName(), StringPool.BLANK)) {
-
-			throw new DuplicateFileException(dlFileEntry.getName());
-		}
 
 		dlFileEntry.setFolderId(newFolderId);
 		dlFileEntry.setTreePath(dlFileEntry.buildTreePath());

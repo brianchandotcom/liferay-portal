@@ -40,7 +40,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -377,12 +377,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 							dlFileEntry.getFileEntryId(),
 							dlFileEntry.getFileName(), dlFileEntry.getTitle());
 					}
-					catch (PortalException pe) {
-						if (!(pe instanceof DuplicateFileException) &&
-							!(pe instanceof DuplicateFolderNameException)) {
-
-							return;
-						}
+					catch (DuplicateFileEntryException |
+						DuplicateFolderNameException pe) {
 
 						try {
 							renameDuplicateTitle(dlFileEntry);
@@ -397,8 +393,10 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 							}
 						}
 					}
+					catch (PortalException pe) {
+						return;
+					}
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -561,7 +559,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 			try {
 				return renameTitle(dlFileEntry, newTitle);
 			}
-			catch (DuplicateFileException dfe) {
+			catch (DuplicateFileEntryException dfe) {
 			}
 		}
 	}

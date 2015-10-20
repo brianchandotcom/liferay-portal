@@ -31,7 +31,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -81,7 +81,7 @@ public class PortletFileRepositoryTest {
 			workflowCapability.getStatus(fileEntry));
 	}
 
-	@Test(expected = DuplicateFileException.class)
+	@Test(expected = DuplicateFileEntryException.class)
 	public void testFileEntryAddShouldFailIfDuplicateName() throws Exception {
 		String name = RandomTestUtil.randomString();
 

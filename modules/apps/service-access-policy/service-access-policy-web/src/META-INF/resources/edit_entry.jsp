@@ -147,7 +147,21 @@ if (sapEntry != null) {
 				namespace: '<portlet:namespace />',
 				on: {
 					clone: function(event) {
-						initAutoCompleteRow(event.row);
+						var rowNode = event.row;
+
+						var methodInput = rowNode.one('.method-name');
+						var serviceInput = rowNode.one('.service-class');
+
+						methodInput.attr('disabled', true);
+
+						serviceInput.attr(
+							{
+								'data-context': '',
+								'data-service-class': ''
+							}
+						);
+
+						initAutoCompleteRow(rowNode);
 					},
 					delete: updateAdvancedModeTextarea
 				}
@@ -281,15 +295,6 @@ if (sapEntry != null) {
 		function initAutoCompleteRow(rowNode) {
 			var methodInput = rowNode.one('.method-name');
 			var serviceInput = rowNode.one('.service-class');
-
-			methodInput.attr('disabled', true);
-
-			serviceInput.attr(
-				{
-					'data-context': '',
-					'data-service-class': ''
-				}
-			);
 
 			new A.AutoComplete(
 				{

@@ -52,8 +52,7 @@ import org.osgi.service.component.annotations.Component;
 		"mvc.command.name=/wiki/view_page_details",
 		"mvc.command.name=/wiki/view_page_history",
 		"mvc.command.name=/wiki/view_page_incoming_links",
-		"mvc.command.name=/wiki/view_page_outgoing_links",
-		"mvc.command.name=/wiki_admin/view"
+		"mvc.command.name=/wiki/view_page_outgoing_links"
 	},
 	service = MVCRenderCommand.class
 )
@@ -76,7 +75,6 @@ public class ViewPageMVCRenderCommand implements MVCRenderCommand {
 		_jspPaths.put(
 			"/wiki/view_page_outgoing_links",
 			"/wiki/view_page_outgoing_links.jsp");
-		_jspPaths.put("/wiki_admin/view", "/wiki/view.jsp");
 	}
 
 	@Override

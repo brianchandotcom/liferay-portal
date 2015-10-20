@@ -229,21 +229,16 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			portletURL = PortalUtil.getControlPanelPortletURL(
 				portletRequest, WikiPortletKeys.WIKI_ADMIN, 0,
 				PortletRequest.RENDER_PHASE);
-
-			if (!containerModel) {
-				portletURL.setParameter(
-					"mvcRenderCommandName", "/wiki_admin/view_all_pages");
-			}
 		}
 		else {
 			portletURL = PortletURLFactoryUtil.create(
 				portletRequest, WikiPortletKeys.WIKI, plid,
 				PortletRequest.RENDER_PHASE);
+		}
 
-			if (!containerModel) {
-				portletURL.setParameter(
-					"mvcRenderCommandName", "/wiki/view_all_pages");
-			}
+		if (!containerModel) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/wiki/view_all_pages");
 		}
 
 		return portletURL;

@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.poshi.runner
 Bundle-Version: 1.0.22
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources

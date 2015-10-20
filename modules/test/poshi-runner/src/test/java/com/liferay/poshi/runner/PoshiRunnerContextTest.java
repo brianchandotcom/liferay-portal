@@ -92,7 +92,7 @@ public class PoshiRunnerContextTest extends TestCase {
 			"Action2.action");
 
 		String baseDirName = PoshiRunnerGetterUtil.getCanonicalPath(
-			"test/unit/com/liferay/poshi/runner/");
+			"src/test/resources/com/liferay/poshi/runner/");
 
 		File file = new File(baseDirName + "/dependencies/Action2.action");
 

@@ -1446,7 +1446,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 	protected String getFilePath(String fileName) {
 		String filePath =
 			PropsValues.TEST_BASE_DIR_NAME +
-				"unit/com/liferay/poshi/runner/dependencies/validation/" +
+				"resources/com/liferay/poshi/runner/dependencies/validation/" +
 					fileName;
 
 		if (OSDetector.isWindows()) {

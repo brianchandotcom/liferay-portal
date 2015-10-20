@@ -32,180 +32,182 @@ if (searchFolderId > 0) {
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + keywords, currentURL);
 %>
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/bookmarks/search.jsp" />
-</liferay-portlet:renderURL>
+<div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<liferay-portlet:renderURL varImpl="searchURL">
+		<portlet:param name="mvcPath" value="/bookmarks/search.jsp" />
+	</liferay-portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />
-	<aui:input name="searchFolderId" type="hidden" value="<%= searchFolderId %>" />
+	<aui:form action="<%= searchURL %>" method="get" name="fm">
+		<liferay-portlet:renderURLParams varImpl="searchURL" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />
+		<aui:input name="searchFolderId" type="hidden" value="<%= searchFolderId %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="search"
-	/>
-
-	<%
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	portletURL.setParameter("mvcPath", "/bookmarks/search.jsp");
-	portletURL.setParameter("redirect", redirect);
-	portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
-	portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
-	portletURL.setParameter("keywords", keywords);
-	%>
-
-	<liferay-ui:search-container
-		emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>'
-		iteratorURL="<%= portletURL %>"
-	>
-
-		<%
-		Indexer<?> indexer = BookmarksSearcher.getInstance();
-
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-		searchContext.setAttribute("paginationType", "more");
-		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setFolderIds(new long[] {searchFolderId});
-		searchContext.setKeywords(keywords);
-		searchContext.setStart(searchContainer.getStart());
-
-		Hits hits = indexer.search(searchContext);
-
-		searchContainer.setTotal(hits.getLength());
-		%>
-
-		<liferay-ui:search-container-results
-			results="<%= BookmarksUtil.getEntries(hits) %>"
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			title="search"
 		/>
 
-		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="obj"
+		<%
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/bookmarks/search.jsp");
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
+		portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
+		portletURL.setParameter("keywords", keywords);
+		%>
+
+		<liferay-ui:search-container
+			emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>'
+			iteratorURL="<%= portletURL %>"
 		>
 
-			<c:choose>
-				<c:when test="<%= obj instanceof BookmarksEntry %>">
+			<%
+			Indexer<?> indexer = BookmarksSearcher.getInstance();
 
-					<%
-					BookmarksEntry entry = (BookmarksEntry)obj;
+			SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-					entry = entry.toEscapedModel();
+			searchContext.setAttribute("paginationType", "more");
+			searchContext.setEnd(searchContainer.getEnd());
+			searchContext.setFolderIds(new long[] {searchFolderId});
+			searchContext.setKeywords(keywords);
+			searchContext.setStart(searchContainer.getStart());
 
-					BookmarksFolder folder = entry.getFolder();
+			Hits hits = indexer.search(searchContext);
 
-					String rowHREF = themeDisplay.getPathMain().concat("/bookmarks/open_entry?entryId=").concat(String.valueOf(entry.getEntryId()));
-					%>
+			searchContainer.setTotal(hits.getLength());
+			%>
 
-					<liferay-ui:search-container-column-text
-						name="entry"
-						title="<%= entry.getDescription() %>"
-					>
+			<liferay-ui:search-container-results
+				results="<%= BookmarksUtil.getEntries(hits) %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="Object"
+				modelVar="obj"
+			>
+
+				<c:choose>
+					<c:when test="<%= obj instanceof BookmarksEntry %>">
 
 						<%
-						AssetRendererFactory<BookmarksEntry> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksEntry.class);
+						BookmarksEntry entry = (BookmarksEntry)obj;
 
-						AssetRenderer<BookmarksEntry> assetRenderer = assetRendererFactory.getAssetRenderer(entry.getEntryId());
+						entry = entry.toEscapedModel();
+
+						BookmarksFolder folder = entry.getFolder();
+
+						String rowHREF = themeDisplay.getPathMain().concat("/bookmarks/open_entry?entryId=").concat(String.valueOf(entry.getEntryId()));
 						%>
 
-						<liferay-ui:icon
-							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-							label="<%= true %>"
-							localizeMessage="<%= false %>"
-							message="<%= entry.getName() %>"
+						<liferay-ui:search-container-column-text
+							name="entry"
+							title="<%= entry.getDescription() %>"
+						>
+
+							<%
+							AssetRendererFactory<BookmarksEntry> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksEntry.class);
+
+							AssetRenderer<BookmarksEntry> assetRenderer = assetRendererFactory.getAssetRenderer(entry.getEntryId());
+							%>
+
+							<liferay-ui:icon
+								iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+								label="<%= true %>"
+								localizeMessage="<%= false %>"
+								message="<%= entry.getName() %>"
+								target="_blank"
+								url="<%= rowHREF %>"
+							/>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-text
+							href="<%= rowHREF %>"
+							name="type"
 							target="_blank"
-							url="<%= rowHREF %>"
+							title="<%= entry.getDescription() %>"
+							value='<%= LanguageUtil.get(request, "entry") %>'
 						/>
-					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						href="<%= rowHREF %>"
-						name="type"
-						target="_blank"
-						title="<%= entry.getDescription() %>"
-						value='<%= LanguageUtil.get(request, "entry") %>'
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowHREF %>"
-						name="folder"
-						target="_blank"
-						title="<%= entry.getDescription() %>"
-						value="<%= folder.getName() %>"
-					/>
-
-					<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
-						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action"
-							path="/bookmarks/entry_action.jsp"
+						<liferay-ui:search-container-column-text
+							href="<%= rowHREF %>"
+							name="folder"
+							target="_blank"
+							title="<%= entry.getDescription() %>"
+							value="<%= folder.getName() %>"
 						/>
-					</c:if>
-				</c:when>
-				<c:when test="<%= obj instanceof BookmarksFolder %>">
 
-					<%
-					BookmarksFolder folder = (BookmarksFolder)obj;
-
-					BookmarksFolder parentFolder = folder.getParentFolder();
-					%>
-
-					<liferay-portlet:renderURL var="rowURL">
-						<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-					</liferay-portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="entry"
-						title="<%= folder.getDescription() %>"
-					>
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action"
+								path="/bookmarks/entry_action.jsp"
+							/>
+						</c:if>
+					</c:when>
+					<c:when test="<%= obj instanceof BookmarksFolder %>">
 
 						<%
-						AssetRendererFactory<BookmarksFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
+						BookmarksFolder folder = (BookmarksFolder)obj;
 
-						AssetRenderer<BookmarksFolder> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+						BookmarksFolder parentFolder = folder.getParentFolder();
 						%>
 
-						<liferay-ui:icon
-							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-							label="<%= true %>"
-							localizeMessage="<%= false %>"
-							message="<%= HtmlUtil.escape(folder.getName()) %>"
-							url="<%= rowURL %>"
+						<liferay-portlet:renderURL var="rowURL">
+							<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+							<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</liferay-portlet:renderURL>
+
+						<liferay-ui:search-container-column-text
+							name="entry"
+							title="<%= folder.getDescription() %>"
+						>
+
+							<%
+							AssetRendererFactory<BookmarksFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
+
+							AssetRenderer<BookmarksFolder> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+							%>
+
+							<liferay-ui:icon
+								iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+								label="<%= true %>"
+								localizeMessage="<%= false %>"
+								message="<%= HtmlUtil.escape(folder.getName()) %>"
+								url="<%= rowURL %>"
+							/>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="type"
+							title="<%= folder.getDescription() %>"
+							value='<%= LanguageUtil.get(request, "folder") %>'
 						/>
-					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="type"
-						title="<%= folder.getDescription() %>"
-						value='<%= LanguageUtil.get(request, "folder") %>'
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="folder"
-						title="<%= folder.getDescription() %>"
-						value='<%= (parentFolder != null) ? parentFolder.getName() : LanguageUtil.get(request, "home") %>'
-					/>
-
-					<c:if test='<%= ArrayUtil.contains(folderColumns, "action") %>'>
-						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action"
-							path="/bookmarks/folder_action.jsp"
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="folder"
+							title="<%= folder.getDescription() %>"
+							value='<%= (parentFolder != null) ? parentFolder.getName() : LanguageUtil.get(request, "home") %>'
 						/>
-					</c:if>
-				</c:when>
-			</c:choose>
-		</liferay-ui:search-container-row>
 
-		<div class="form-search">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-categories") %>' />
-		</div>
+						<c:if test='<%= ArrayUtil.contains(folderColumns, "action") %>'>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action"
+								path="/bookmarks/folder_action.jsp"
+							/>
+						</c:if>
+					</c:when>
+				</c:choose>
+			</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator type="more" />
-	</liferay-ui:search-container>
-</aui:form>
+			<div class="form-search">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-categories") %>' />
+			</div>
+
+			<liferay-ui:search-iterator type="more" />
+		</liferay-ui:search-container>
+	</aui:form>
+</div>

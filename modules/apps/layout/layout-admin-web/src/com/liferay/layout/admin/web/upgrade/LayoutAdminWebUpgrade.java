@@ -14,10 +14,12 @@
 
 package com.liferay.layout.admin.web.upgrade;
 
-import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.upgrade.v_1_0_0.UpgradeLayout;
+import com.liferay.layout.admin.web.upgrade.v_1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
+
+import java.rmi.registry.Registry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,20 +34,7 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.layout.admin.web", "0.0.1", "1.0.0",
-			new UpgradePortletId() {
-
-				@Override
-				protected String[][] getRenamePortletIdsArray() {
-					return new String[][] {
-						new String[] {
-							"88", LayoutAdminPortletKeys.LAYOUT_ADMIN
-						},
-						new String[] {"140", LayoutAdminPortletKeys.MY_PAGES},
-						new String[] {"156", LayoutAdminPortletKeys.GROUP_PAGES}
-					};
-				}
-
-			});
+			new UpgradePortletId(), new UpgradeLayout());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

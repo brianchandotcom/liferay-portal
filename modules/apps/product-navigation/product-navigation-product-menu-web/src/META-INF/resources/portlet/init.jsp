@@ -27,7 +27,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.util.SessionClicks" %><%@
 page import="com.liferay.product.navigation.product.menu.web.context.ProductMenuDisplayContext" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>

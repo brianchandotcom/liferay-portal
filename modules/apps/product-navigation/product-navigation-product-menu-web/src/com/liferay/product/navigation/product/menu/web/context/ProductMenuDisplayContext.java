@@ -28,12 +28,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 /**
  * @author Julio Camarero
@@ -47,12 +49,19 @@ public class ProductMenuDisplayContext {
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 
+		_themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_panelAppRegistry = (PanelAppRegistry)_portletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY);
 
 		_panelCategoryRegistry =
 			(PanelCategoryRegistry)_portletRequest.getAttribute(
 				ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+
+		_panelCategoryHelper =
+			(PanelCategoryHelper)_portletRequest.getAttribute(
+				ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 	}
 
 	public List<PanelCategory> getChildPanelCategories() {
@@ -60,12 +69,9 @@ public class ProductMenuDisplayContext {
 			return _childPanelCategories;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_childPanelCategories = _panelCategoryRegistry.getChildPanelCategories(
-			PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
-			themeDisplay.getScopeGroup());
+			PanelCategoryKeys.ROOT, _themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroup());
 
 		return _childPanelCategories;
 	}
@@ -75,10 +81,7 @@ public class ProductMenuDisplayContext {
 			return _mySiteGroup;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		User user = themeDisplay.getUser();
+		User user = _themeDisplay.getUser();
 
 		List<Group> mySiteGroups = user.getMySiteGroups(
 			new String[] {User.class.getName()}, 1);
@@ -90,6 +93,14 @@ public class ProductMenuDisplayContext {
 		_mySiteGroup = mySiteGroups.get(0);
 
 		return _mySiteGroup;
+	}
+
+	public String getMySiteGroupURL(boolean privateLayout)
+		throws PortalException {
+
+		Group mySiteGroup = getMySiteGroup();
+
+		return getMySiteGroupURL(mySiteGroup, privateLayout);
 	}
 
 	public String getRootPanelCategoryKey() {
@@ -106,11 +117,7 @@ public class ProductMenuDisplayContext {
 
 			_rootPanelCategoryKey = firstChildPanelCategory.getKey();
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (Validator.isNotNull(themeDisplay.getPpid())) {
+			if (Validator.isNotNull(_themeDisplay.getPpid())) {
 				PanelCategoryHelper panelCategoryHelper =
 					new PanelCategoryHelper(
 						_panelAppRegistry, _panelCategoryRegistry);
@@ -120,7 +127,7 @@ public class ProductMenuDisplayContext {
 							PanelCategoryKeys.ROOT)) {
 
 					if (panelCategoryHelper.containsPortlet(
-							themeDisplay.getPpid(), panelCategory)) {
+							_themeDisplay.getPpid(), panelCategory)) {
 
 						_rootPanelCategoryKey = panelCategory.getKey();
 
@@ -133,15 +140,57 @@ public class ProductMenuDisplayContext {
 		return _rootPanelCategoryKey;
 	}
 
+	public boolean showMySiteGroup(boolean privateLayout)
+		throws PortalException {
+
+		Group mySiteGroup = getMySiteGroup();
+
+		return mySiteGroup.isShowSite(
+			_themeDisplay.getPermissionChecker(), privateLayout);
+	}
+
+	protected String getGroupAdministrationURL(Group group) {
+		PortletURL groupAdministrationURL = null;
+
+		String portletId = _panelCategoryHelper.getFirstPortletId(
+			PanelCategoryKeys.SITE_ADMINISTRATION,
+			_themeDisplay.getPermissionChecker(), group);
+
+		if (Validator.isNotNull(portletId)) {
+			groupAdministrationURL = PortalUtil.getControlPanelPortletURL(
+				_portletRequest, group, portletId, 0,
+				PortletRequest.RENDER_PHASE);
+
+			if (groupAdministrationURL != null) {
+				return groupAdministrationURL.toString();
+			}
+		}
+
+		return null;
+	}
+
+	protected String getMySiteGroupURL(Group group, boolean privateLayout) {
+		String groupDisplayURL = group.getDisplayURL(
+			_themeDisplay, privateLayout);
+
+		if (Validator.isNotNull(groupDisplayURL)) {
+			return groupDisplayURL;
+		}
+
+		return getGroupAdministrationURL(group);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductMenuDisplayContext.class);
 
 	private List<PanelCategory> _childPanelCategories;
 	private Group _mySiteGroup;
 	private final PanelAppRegistry _panelAppRegistry;
+	private final PanelCategoryHelper _panelCategoryHelper;
 	private final PanelCategoryRegistry _panelCategoryRegistry;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 	private String _rootPanelCategoryKey;
+	private final ThemeDisplay _themeDisplay;
 
 }

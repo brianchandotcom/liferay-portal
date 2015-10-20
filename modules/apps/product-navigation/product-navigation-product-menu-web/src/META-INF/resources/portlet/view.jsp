@@ -83,20 +83,15 @@
 			</div>
 
 			<ul class="user-subheading">
-
-				<%
-				Group mySiteGroup = productMenuDisplayContext.getMySiteGroup();
-				%>
-
-				<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
+				<c:if test="<%= productMenuDisplayContext.showMySiteGroup(false) %>">
 					<li>
-						<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, false) %>" label="profile" />
+						<aui:a href="<%= productMenuDisplayContext.getMySiteGroupURL(false) %>" label="profile" />
 					</li>
 				</c:if>
 
-				<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
+				<c:if test="<%= productMenuDisplayContext.showMySiteGroup(true) %>">
 					<li>
-						<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, true) %>" label="dashboard" />
+						<aui:a href="<%= productMenuDisplayContext.getMySiteGroupURL(true) %>" label="dashboard" />
 					</li>
 				</c:if>
 			</ul>

@@ -25,8 +25,10 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -36,16 +38,32 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 
-	public void initGroupServiceBuilderMethods(String relatedEntityName) {
-		if (Validator.isBlank(relatedEntityName)) {
+	public void initCustomMethod(Method method, Integer[] argumentIndexes) {
+		_customMethods.put(method, argumentIndexes);
+	}
+
+	public void initGroupServiceBuilderMethods(Class relatedEntityClass) {
+		if (Validator.isNull(relatedEntityClass)) {
 			return;
 		}
 
-		for (String template : SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES) {
-			String methodName = StringUtil.replace(
+		String className = relatedEntityClass.getName();
+		String relatedEntityName = className.substring(
+			0, className.length() - _LOCAL_SERVICE.length());
+
+		Method[] relatedEntityMethods = relatedEntityClass.getMethods();
+
+		String[] templates = getServiceBuilderTemplates();
+
+		for (String template : templates) {
+			String serviceBuilderMethodName = StringUtil.replace(
 				template, "$1", relatedEntityName);
 
-			_serviceBuilderGeneratedMethods.add(methodName);
+			for (Method method : relatedEntityMethods) {
+				if (method.getName().equals(serviceBuilderMethodName)) {
+					_serviceBuilderGeneratedMethods.add(method);
+				}
+			}
 		}
 	}
 
@@ -55,24 +73,20 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 			return methodInvocation.proceed();
 		}
 
-		Method method = methodInvocation.getMethod();
+		replaceStagingGroupIdsInServiceBuilderGeneratedMethod(methodInvocation);
 
-		String methodName = method.getName();
-
-		Object[] arguments = methodInvocation.getArguments();
-
-		if (_serviceBuilderGeneratedMethods.contains(methodName)) {
-			replace(arguments, 0);
-		}
-		else {
-			replaceStagingGroupIds(methodName, arguments);
-		}
+		replaceStagingGroupIdsInCustomMethod(methodInvocation);
 
 		return methodInvocation.proceed();
 	}
 
-	public abstract void replaceStagingGroupIds(
-		String methodName, Object[] arguments);
+	protected String[] getServiceBuilderTemplates() {
+		return SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES;
+	}
+
+	protected int getServiceBuilderTemplatesArgumentIndex() {
+		return 0;
+	}
 
 	protected Group replace(Group group) {
 		if ((group != null) && group.isStagingGroup() &&
@@ -182,6 +196,38 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		throw new IllegalArgumentException("Unknown type " + object.getClass());
 	}
 
+	protected void replaceStagingGroupIdsInCustomMethod(
+		MethodInvocation methodInvocation) {
+
+		Method method = methodInvocation.getMethod();
+
+		Integer[] argumentIndexes = _customMethods.get(method);
+
+		if (argumentIndexes == null) {
+			return;
+		}
+
+		Object[] arguments = methodInvocation.getArguments();
+
+		for (Integer argumentIndex : argumentIndexes) {
+			replace(arguments, argumentIndex);
+		}
+	}
+
+	protected void replaceStagingGroupIdsInServiceBuilderGeneratedMethod(
+		MethodInvocation methodInvocation) {
+
+		Method method = methodInvocation.getMethod();
+
+		if (!_serviceBuilderGeneratedMethods.contains(method)) {
+			return;
+		}
+
+		Object[] arguments = methodInvocation.getArguments();
+
+		replace(arguments, getServiceBuilderTemplatesArgumentIndex());
+	}
+
 	protected static final String[] SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES =
 		new String[] {
 			"addGroup$1", "addGroup$1s", "clearGroup$1s", "deleteGroup$1",
@@ -192,7 +238,10 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 	@BeanReference(type = GroupLocalService.class)
 	protected GroupLocalService groupLocalService;
 
-	private final List<String> _serviceBuilderGeneratedMethods =
+	private static final String _LOCAL_SERVICE = "LocalService";
+
+	private final Map<Method, Integer[]> _customMethods = new HashMap<>();
+	private final List<Method> _serviceBuilderGeneratedMethods =
 		new ArrayList<>();
 
 }

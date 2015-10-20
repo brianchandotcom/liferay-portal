@@ -23,7 +23,12 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,10 +55,14 @@ public class ZipWriterImplTest {
 	}
 
 	@Before
-	public void setUp() {
-		_tempZipFilePath =
-			SystemProperties.get(SystemProperties.TMP_DIR) +
-				File.separatorChar + System.currentTimeMillis() + "-file.zip";
+	public void setUp() throws IOException {
+		Path tempZipFilePath = Files.createTempFile(
+			Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)), null,
+			"-file.zip");
+
+		Files.delete(tempZipFilePath);
+
+		_tempZipFilePath = tempZipFilePath.toString();
 	}
 
 	@Test

@@ -26,6 +26,7 @@ import com.liferay.util.xml.XMLSafeReader;
 import java.io.File;
 
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,9 +56,11 @@ public class Java2WsddTask {
 
 		// Create temp directory
 
-		File tempDir = new File(
-			SystemProperties.get(SystemProperties.TMP_DIR),
-			String.valueOf(System.currentTimeMillis()));
+		java.nio.file.Path tempDirPath = Files.createTempDirectory(
+				Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)),
+				null);
+
+		File tempDir = tempDirPath.toFile();
 
 		tempDir.mkdir();
 

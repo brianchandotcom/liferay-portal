@@ -27,9 +27,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -214,22 +215,35 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 				return;
 			}
 
-			Iterator it = collection.iterator();
+			Object[] collectionArray = collection.toArray(
+				new Object[collection.size()]);
 
-			if (it.hasNext() && (it.next() instanceof Group)) {
-				ArrayList<Group> groups = new ArrayList(collection);
-
-				collection.clear();
-
-				for (Group group : groups) {
-					collection.add(replace(group));
-				}
-
-				return;
+			for (int i = 0; i < collectionArray.length; i++) {
+				replace(collectionArray, i);
 			}
+
+			if (object instanceof List) {
+				arguments[index] = new ArrayList();
+			}
+			else if (object instanceof Set) {
+				arguments[index] = new LinkedHashSet<>();
+			}
+			else {
+				throw new UnsupportedOperationException(
+					"Unknown collection type " + object.getClass());
+			}
+
+			Collection newCollection = (Collection)arguments[index];
+
+			for (Object group : collectionArray) {
+				newCollection.add(group);
+			}
+
+			return;
 		}
 
-		throw new IllegalArgumentException("Unknown type " + object.getClass());
+		throw new UnsupportedOperationException(
+			"Unknown type " + object.getClass());
 	}
 
 	protected void replaceStagingGroupIdsInCustomMethod(

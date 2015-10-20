@@ -27,9 +27,9 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.OrganizationLocalService;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
@@ -110,7 +110,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 
 		if (className.equals(Organization.class.getName())) {
 			Organization organization =
-				OrganizationLocalServiceUtil.fetchOrganization(primaryKeyLong);
+				_organizationLocalService.fetchOrganization(primaryKeyLong);
 
 			if (organization != null) {
 				uuid = organization.getUuid();
@@ -151,6 +151,20 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortletDisplayTemplateExportCapability(
 		PortletDisplayTemplateExportCapability
 			portletDisplayTemplateExportCapability) {
@@ -168,6 +182,13 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 			portletDisplayTemplateImportCapability;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -177,7 +198,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 			portletPreferences.getValue("organizationId", null));
 
 		if (organizationId > 0) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
 			updateExportPortletPreferencesClassPKs(
@@ -197,7 +218,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 			portletPreferences.getValue("organizationId", null));
 
 		if (organizationId > 0) {
-			Company company = CompanyLocalServiceUtil.getCompanyById(
+			Company company = _companyLocalService.getCompanyById(
 				portletDataContext.getCompanyId());
 
 			Group companyGroup = company.getGroup();
@@ -210,9 +231,12 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
+	private CompanyLocalService _companyLocalService;
+	private OrganizationLocalService _organizationLocalService;
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
 	private PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
+	private PortletLocalService _portletLocalService;
 
 }

@@ -33,10 +33,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
@@ -65,7 +65,7 @@ public class BlogsEntryStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(BlogsEntry entry) throws PortalException {
-		BlogsEntryLocalServiceUtil.deleteEntry(entry);
+		_blogsEntryLocalService.deleteEntry(entry);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class BlogsEntryStagedModelDataHandler
 	public BlogsEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
+		return _blogsEntryLocalService.fetchBlogsEntryByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -92,7 +92,7 @@ public class BlogsEntryStagedModelDataHandler
 	public List<BlogsEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return BlogsEntryLocalServiceUtil.getBlogsEntriesByUuidAndCompanyId(
+		return _blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<BlogsEntry>());
 	}
@@ -115,7 +115,7 @@ public class BlogsEntryStagedModelDataHandler
 		Element entryElement = portletDataContext.getExportDataElement(entry);
 
 		if (entry.isSmallImage()) {
-			Image smallImage = ImageLocalServiceUtil.fetchImage(
+			Image smallImage = _imageLocalService.fetchImage(
 				entry.getSmallImageId());
 
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
@@ -317,7 +317,7 @@ public class BlogsEntryStagedModelDataHandler
 			if (existingEntry == null) {
 				serviceContext.setUuid(entry.getUuid());
 
-				importedEntry = BlogsEntryLocalServiceUtil.addEntry(
+				importedEntry = _blogsEntryLocalService.addEntry(
 					userId, entry.getTitle(), entry.getSubtitle(),
 					entry.getDescription(), entry.getContent(),
 					displayDateMonth, displayDateDay, displayDateYear,
@@ -327,7 +327,7 @@ public class BlogsEntryStagedModelDataHandler
 					serviceContext);
 			}
 			else {
-				importedEntry = BlogsEntryLocalServiceUtil.updateEntry(
+				importedEntry = _blogsEntryLocalService.updateEntry(
 					userId, existingEntry.getEntryId(), entry.getTitle(),
 					entry.getSubtitle(), entry.getDescription(),
 					entry.getContent(), displayDateMonth, displayDateDay,
@@ -338,7 +338,7 @@ public class BlogsEntryStagedModelDataHandler
 			}
 		}
 		else {
-			importedEntry = BlogsEntryLocalServiceUtil.addEntry(
+			importedEntry = _blogsEntryLocalService.addEntry(
 				userId, entry.getTitle(), entry.getSubtitle(),
 				entry.getDescription(), entry.getContent(), displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
@@ -416,10 +416,24 @@ public class BlogsEntryStagedModelDataHandler
 			blogsEntryExportImportContentProcessor;
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setImageLocalService(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);
 
 	private BlogsEntryExportImportContentProcessor
 		_blogsEntryExportImportContentProcessor;
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private ImageLocalService _imageLocalService;
 
 }

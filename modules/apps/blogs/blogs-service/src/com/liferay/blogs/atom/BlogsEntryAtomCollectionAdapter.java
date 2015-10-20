@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Spasic
@@ -107,7 +108,7 @@ public class BlogsEntryAtomCollectionAdapter
 
 		long blogsEntryId = GetterUtil.getLong(resourceName);
 
-		BlogsEntryServiceUtil.deleteEntry(blogsEntryId);
+		_blogsEntryService.deleteEntry(blogsEntryId);
 	}
 
 	@Override
@@ -117,7 +118,7 @@ public class BlogsEntryAtomCollectionAdapter
 
 		long blogsEntryId = GetterUtil.getLong(resourceName);
 
-		return BlogsEntryServiceUtil.getEntry(blogsEntryId);
+		return _blogsEntryService.getEntry(blogsEntryId);
 	}
 
 	@Override
@@ -135,18 +136,17 @@ public class BlogsEntryAtomCollectionAdapter
 			int page = atomRequestContext.getIntParameter("page");
 
 			if (page == 0) {
-				return BlogsEntryServiceUtil.getGroupEntries(
-					groupId, status, max);
+				return _blogsEntryService.getGroupEntries(groupId, status, max);
 			}
 
-			int count = BlogsEntryServiceUtil.getGroupEntriesCount(
+			int count = _blogsEntryService.getGroupEntriesCount(
 				groupId, new Date(), status);
 
 			AtomPager atomPager = new AtomPager(page, max, count);
 
 			AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-			return BlogsEntryServiceUtil.getGroupEntries(
+			return _blogsEntryService.getGroupEntries(
 				groupId, new Date(), status, atomPager.getStart(),
 				atomPager.getEnd() + 1);
 		}
@@ -155,14 +155,14 @@ public class BlogsEntryAtomCollectionAdapter
 			"organizationId");
 
 		if (organizationId > 0) {
-			return BlogsEntryServiceUtil.getOrganizationEntries(
+			return _blogsEntryService.getOrganizationEntries(
 				organizationId, new Date(), status, max);
 		}
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (companyId > 0) {
-			return BlogsEntryServiceUtil.getCompanyEntries(
+			return _blogsEntryService.getCompanyEntries(
 				companyId, new Date(), status, max);
 		}
 
@@ -197,7 +197,7 @@ public class BlogsEntryAtomCollectionAdapter
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		return BlogsEntryServiceUtil.addEntry(
+		return _blogsEntryService.addEntry(
 			title, StringPool.BLANK, summary, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, StringPool.BLANK, null,
@@ -224,7 +224,7 @@ public class BlogsEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		BlogsEntryServiceUtil.updateEntry(
+		_blogsEntryService.updateEntry(
 			blogsEntry.getEntryId(), title, blogsEntry.getSubtitle(), summary,
 			content, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, blogsEntry.getAllowPingbacks(),
@@ -232,6 +232,13 @@ public class BlogsEntryAtomCollectionAdapter
 			null, serviceContext);
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryService(BlogsEntryService blogsEntryService) {
+		_blogsEntryService = blogsEntryService;
+	}
+
 	private static final String _COLLECTION_NAME = "blogs";
+
+	private BlogsEntryService _blogsEntryService;
 
 }

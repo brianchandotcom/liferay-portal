@@ -31,13 +31,14 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -68,7 +69,7 @@ public class EditImageMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getString(actionRequest, "deleteFileEntryIds"), 0L);
 		}
 
-		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+		Folder folder = _blogsEntryLocalService.addAttachmentsFolder(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
 
 		for (long deleteFileEntryId : deleteFileEntryIds) {
@@ -126,7 +127,16 @@ public class EditImageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditImageMVCActionCommand.class);
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

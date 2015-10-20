@@ -203,8 +203,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	@Test
 	public void testBuildServiceContext() throws Exception {
-		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl(
-			_commentManager);
+		PingbackMethodImpl pingbackMethodImpl = getPingbackMethodImpl();
 
 		ServiceContext serviceContext = pingbackMethodImpl.buildServiceContext(
 			_COMPANY_ID, _GROUP_ID, _URL_TITLE);
@@ -356,12 +355,22 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected void execute(String targetURI) {
-		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl(
-			_commentManager);
+		PingbackMethodImpl pingbackMethodImpl = getPingbackMethodImpl();
 
 		pingbackMethodImpl.setArguments(new Object[] {_SOURCE_URI, targetURI});
 
 		pingbackMethodImpl.execute(_COMPANY_ID);
+	}
+
+	protected PingbackMethodImpl getPingbackMethodImpl() {
+		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl(
+			_commentManager);
+
+		pingbackMethodImpl.setBlogsEntryLocalService(_blogsEntryLocalService);
+		pingbackMethodImpl.setPortletLocalService(_portletLocalService);
+		pingbackMethodImpl.setUserLocalService(_userLocalService);
+
+		return pingbackMethodImpl;
 	}
 
 	protected void setUpBlogsEntryLocalServiceUtil() throws Exception {
@@ -394,15 +403,6 @@ public class PingbackMethodImplTest extends PowerMockito {
 				Matchers.anyLong(), Matchers.anyString())
 		).thenReturn(
 			_blogsEntry
-		);
-
-		mockStatic(
-			BlogsEntryLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(BlogsEntryLocalServiceUtil.class, "getService")
-		).toReturn(
-			_blogsEntryLocalService
 		);
 	}
 
@@ -457,7 +457,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		portalUtil.setPortal(_portal);
 	}
 
-	protected void setUpPortletLocalServiceUtil() throws Exception {
+	protected void setUpPortletLocalServiceUtil() {
 		Portlet portlet = Mockito.mock(Portlet.class);
 
 		when(
@@ -472,28 +472,17 @@ public class PingbackMethodImplTest extends PowerMockito {
 			_FRIENDLY_URL_MAPPING
 		);
 
-		PortletLocalService portletLocalService = Mockito.mock(
-			PortletLocalService.class);
-
 		when(
-			portletLocalService.getPortletById(BlogsPortletKeys.BLOGS)
+			_portletLocalService.getPortletById(BlogsPortletKeys.BLOGS)
 		).thenReturn(
 			portlet
 		);
 
 		when(
-			portletLocalService.getPortletById(
+			_portletLocalService.getPortletById(
 				Matchers.anyLong(), Matchers.eq(BlogsPortletKeys.BLOGS))
 		).thenReturn(
 			portlet
-		);
-
-		mockStatic(PortletLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(PortletLocalServiceUtil.class, "getService")
-		).toReturn(
-			portletLocalService
 		);
 	}
 
@@ -520,21 +509,10 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected void setUpUserLocalServiceUtil() throws Exception {
-		UserLocalService userLocalService = Mockito.mock(
-			UserLocalService.class);
-
 		when(
-			userLocalService.getDefaultUserId(Matchers.anyLong())
+			_userLocalService.getDefaultUserId(Matchers.anyLong())
 		).thenReturn(
 			_USER_ID
-		);
-
-		mockStatic(UserLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(UserLocalServiceUtil.class, "getService")
-		).toReturn(
-			userLocalService
 		);
 	}
 
@@ -708,7 +686,13 @@ public class PingbackMethodImplTest extends PowerMockito {
 	private Portal _portal;
 
 	@Mock
+	private PortletLocalService _portletLocalService;
+
+	@Mock
 	private ServiceTrackerMap<String, PortletProvider> _serviceTrackerMap;
+
+	@Mock
+	private UserLocalService _userLocalService;
 
 	@Mock
 	private XmlRpc _xmlRpc;

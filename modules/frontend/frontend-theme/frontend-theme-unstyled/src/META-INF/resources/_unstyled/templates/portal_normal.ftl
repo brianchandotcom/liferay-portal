@@ -20,6 +20,8 @@ ${theme.include(body_top_include)}
 
 <@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
 
+<@liferay.control_menu />
+
 <div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
 		<div id="heading">
@@ -69,10 +71,6 @@ ${theme.include(body_top_include)}
 		</p>
 	</footer>
 </div>
-
-<#if is_signed_in>
-	<@liferay.control_menu />
-</#if>
 
 ${theme.include(body_bottom_include)}
 

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,26 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portal/layout/edit/init.jsp" %>
+package com.liferay.layout.admin.web.upgrade.v_1_0_0;
 
-<%
-String url = StringPool.BLANK;
-String description = StringPool.BLANK;
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 
-if (selLayout != null) {
-	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
+/**
+ * @author Jürgen Kappler
+ */
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
-	url = typeSettingsProperties.getProperty("url", StringPool.BLANK);
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {
+				"88", LayoutAdminPortletKeys.LAYOUT_ADMIN
+			},
+			new String[] {"140", LayoutAdminPortletKeys.MY_PAGES},
+			new String[] {"156", LayoutAdminPortletKeys.GROUP_PAGES}
+		};
+	}
+
 }
-%>
-
-<aui:input cssClass="lfr-input-text-container" id="url" label="url" name="TypeSettingsProperties--url--" type="text" value="<%= url %>" />

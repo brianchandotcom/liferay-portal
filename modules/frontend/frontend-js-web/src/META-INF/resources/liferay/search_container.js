@@ -340,7 +340,10 @@ AUI.add(
 						var instance = this;
 
 						instance._parentContainer.show();
-						instance._emptyResultsMessage.hide();
+
+						if (instance._emptyResultsMessage != null) {
+							instance._emptyResultsMessage.hide();
+						}
 					},
 
 					_deleteRow: function(event) {
@@ -351,7 +354,9 @@ AUI.add(
 						if (instance._ids.length == 0) {
 							action = 'hide';
 
-							instance._emptyResultsMessage.show();
+							if (instance._emptyResultsMessage != null) {
+								instance._emptyResultsMessage.show();
+							}
 						}
 
 						instance._parentContainer[action]();

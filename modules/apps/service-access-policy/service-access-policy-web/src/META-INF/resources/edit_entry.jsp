@@ -126,6 +126,12 @@ if (sapEntry != null) {
 
 	</div>
 
+	<aui:script>
+		function <portlet:namespace />toggleAdvancedMode(argument) {
+			AUI.$('#<portlet:namespace />advancedMode, #<portlet:namespace />friendlyMode, #<portlet:namespace />allowedServiceSignatures, #<portlet:namespace />allowedServiceSignaturesFriendlyContentBox').toggleClass('hide');
+		}
+	</aui:script>
+
 	<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields,liferay-portlet-url">
 		var getMethodsURL = Liferay.PortletURL.createURL('<%= getMethodsURL %>');
 		var services = <%= JSONFactoryUtil.looseSerialize(request.getAttribute(SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES)) %>;
@@ -294,24 +300,6 @@ if (sapEntry != null) {
 				}
 			).render();
 		}
-
-		Liferay.provide(
-			window,
-			'<portlet:namespace />toggleAdvancedMode',
-			function() {
-				var A = AUI();
-
-				var advancedButton = A.one('#<portlet:namespace />advancedMode');
-				var friendlyButton = A.one('#<portlet:namespace />friendlyMode');
-				var allowedServiceSignaturesTextarea = A.one('#<portlet:namespace />allowedServiceSignatures');
-				var allowedServiceSignaturesFriendlyContentBox = A.one('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox');
-
-				advancedButton.toggleClass('hide');
-				friendlyButton.toggleClass('hide');
-				allowedServiceSignaturesTextarea.toggleClass('hide');
-				allowedServiceSignaturesFriendlyContentBox.toggleClass('hide');
-			}
-		);
 	</aui:script>
 
 	<aui:button-row>

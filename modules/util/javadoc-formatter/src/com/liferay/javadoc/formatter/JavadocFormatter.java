@@ -1034,24 +1034,16 @@ public class JavadocFormatter {
 	private String _getClassName(String fileName) {
 		int pos = fileName.indexOf("src/main/java/");
 
-		if (pos != -1) {
-			pos = fileName.indexOf("java/", pos);
-		}
-
 		if (pos == -1) {
 			pos = fileName.indexOf("src/test/java/");
-
-			if (pos != -1) {
-				pos = fileName.indexOf("java/", pos);
-			}
 		}
 
 		if (pos == -1) {
 			pos = fileName.indexOf("src/testIntegration/java/");
+		}
 
-			if (pos != -1) {
-				pos = fileName.indexOf("java/", pos);
-			}
+		if (pos != -1) {
+			pos = fileName.indexOf("java/", pos);
 		}
 
 		if (pos == -1) {

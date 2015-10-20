@@ -17,8 +17,8 @@ package com.liferay.mobile.device.rules.lar;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -54,7 +55,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MDRRuleGroupInstance ruleGroupInstance) {
-		MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
+		_mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
 			ruleGroupInstance);
 	}
 
@@ -74,7 +75,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 	public MDRRuleGroupInstance fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return MDRRuleGroupInstanceLocalServiceUtil.
+		return _mdrRuleGroupInstanceLocalService.
 			fetchMDRRuleGroupInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -82,7 +83,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 	public List<MDRRuleGroupInstance> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MDRRuleGroupInstanceLocalServiceUtil.
+		return _mdrRuleGroupInstanceLocalService.
 			getMDRRuleGroupInstancesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<MDRRuleGroupInstance>());
@@ -99,7 +100,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			MDRRuleGroupInstance ruleGroupInstance)
 		throws Exception {
 
-		MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.getRuleGroup(
+		MDRRuleGroup ruleGroup = _mdrRuleGroupLocalService.getRuleGroup(
 			ruleGroupInstance.getRuleGroupId());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -112,7 +113,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 		String className = ruleGroupInstance.getClassName();
 
 		if (className.equals(Layout.class.getName())) {
-			Layout layout = LayoutLocalServiceUtil.getLayout(
+			Layout layout = _layoutLocalService.getLayout(
 				ruleGroupInstance.getClassPK());
 
 			ruleGroupInstanceElement.addAttribute(
@@ -153,15 +154,14 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 
 		try {
 			if (Validator.isNotNull(layoutUuid)) {
-				Layout layout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						layoutUuid, portletDataContext.getScopeGroupId(),
-						portletDataContext.isPrivateLayout());
+				Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+					layoutUuid, portletDataContext.getScopeGroupId(),
+					portletDataContext.isPrivateLayout());
 
 				classPK = layout.getPrimaryKey();
 			}
 			else {
-				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 					portletDataContext.getScopeGroupId(),
 					portletDataContext.isPrivateLayout());
 
@@ -201,23 +201,21 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 				serviceContext.setUuid(ruleGroupInstance.getUuid());
 
 				importedRuleGroupInstance =
-					MDRRuleGroupInstanceLocalServiceUtil.addRuleGroupInstance(
+					_mdrRuleGroupInstanceLocalService.addRuleGroupInstance(
 						portletDataContext.getScopeGroupId(),
 						ruleGroupInstance.getClassName(), classPK, ruleGroupId,
 						ruleGroupInstance.getPriority(), serviceContext);
 			}
 			else {
 				importedRuleGroupInstance =
-					MDRRuleGroupInstanceLocalServiceUtil.
-						updateRuleGroupInstance(
-							existingMDRRuleGroupInstance.
-								getRuleGroupInstanceId(),
-							ruleGroupInstance.getPriority());
+					_mdrRuleGroupInstanceLocalService.updateRuleGroupInstance(
+						existingMDRRuleGroupInstance.getRuleGroupInstanceId(),
+						ruleGroupInstance.getPriority());
 			}
 		}
 		else {
 			importedRuleGroupInstance =
-				MDRRuleGroupInstanceLocalServiceUtil.addRuleGroupInstance(
+				_mdrRuleGroupInstanceLocalService.addRuleGroupInstance(
 					portletDataContext.getScopeGroupId(),
 					ruleGroupInstance.getClassName(), classPK, ruleGroupId,
 					ruleGroupInstance.getPriority(), serviceContext);
@@ -227,7 +225,40 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			ruleGroupInstance, importedRuleGroupInstance);
 	}
 
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupLocalService(
+		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
+
+		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MDRRuleGroupInstanceStagedModelDataHandler.class);
+
+	private LayoutLocalService _layoutLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

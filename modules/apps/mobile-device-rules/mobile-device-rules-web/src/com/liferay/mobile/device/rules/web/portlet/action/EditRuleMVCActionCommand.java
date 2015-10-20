@@ -20,7 +20,7 @@ import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
 import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
 import com.liferay.mobile.device.rules.rule.RuleHandler;
 import com.liferay.mobile.device.rules.rule.UnknownRuleHandlerException;
-import com.liferay.mobile.device.rules.service.MDRRuleServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -39,6 +39,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward Han
@@ -57,7 +58,7 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 	protected void deleteRule(ActionRequest request) throws Exception {
 		long ruleId = ParamUtil.getLong(request, "ruleId");
 
-		MDRRuleServiceUtil.deleteRule(ruleId);
+		_mdrRuleService.deleteRule(ruleId);
 	}
 
 	@Override
@@ -91,6 +92,11 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setMDRRuleService(MDRRuleService mdrRuleService) {
+		_mdrRuleService = mdrRuleService;
+	}
+
 	protected void updateRule(ActionRequest actionRequest) throws Exception {
 		long ruleId = ParamUtil.getLong(actionRequest, "ruleId");
 
@@ -115,15 +121,17 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		if (ruleId <= 0) {
-			MDRRuleServiceUtil.addRule(
+			_mdrRuleService.addRule(
 				ruleGroupId, nameMap, descriptionMap, type,
 				typeSettingsProperties, serviceContext);
 		}
 		else {
-			MDRRuleServiceUtil.updateRule(
+			_mdrRuleService.updateRule(
 				ruleId, nameMap, descriptionMap, type, typeSettingsProperties,
 				serviceContext);
 		}
 	}
+
+	private MDRRuleService _mdrRuleService;
 
 }

@@ -17,8 +17,8 @@ package com.liferay.mobile.device.rules.web.portlet.action;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupService;
+import com.liferay.mobile.device.rules.service.MDRRuleService;
 import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -30,6 +30,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -51,7 +52,7 @@ public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 		try {
 			long ruleId = ParamUtil.getLong(renderRequest, "ruleId");
 
-			MDRRule rule = MDRRuleServiceUtil.fetchRule(ruleId);
+			MDRRule rule = _mdrRuleService.fetchRule(ruleId);
 
 			renderRequest.setAttribute(
 				MDRWebKeys.MOBILE_DEVICE_RULES_RULE, rule);
@@ -68,7 +69,7 @@ public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 			long ruleGroupId = BeanParamUtil.getLong(
 				rule, renderRequest, "ruleGroupId");
 
-			MDRRuleGroup ruleGroup = MDRRuleGroupServiceUtil.getRuleGroup(
+			MDRRuleGroup ruleGroup = _mdrRuleGroupService.getRuleGroup(
 				ruleGroupId);
 
 			renderRequest.setAttribute(
@@ -80,5 +81,20 @@ public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 			return "/error.jsp";
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupService(
+		MDRRuleGroupService mdrRuleGroupService) {
+
+		_mdrRuleGroupService = mdrRuleGroupService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleService(MDRRuleService mdrRuleService) {
+		_mdrRuleService = mdrRuleService;
+	}
+
+	private MDRRuleGroupService _mdrRuleGroupService;
+	private MDRRuleService _mdrRuleService;
 
 }

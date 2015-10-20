@@ -18,8 +18,8 @@ import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.service.MDRActionServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRActionService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -31,6 +31,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -52,7 +53,7 @@ public class EditActionMVCRenderCommand implements MVCRenderCommand {
 		try {
 			long actionId = ParamUtil.getLong(renderRequest, "actionId");
 
-			MDRAction action = MDRActionServiceUtil.fetchAction(actionId);
+			MDRAction action = _mdrActionService.fetchAction(actionId);
 
 			renderRequest.setAttribute(
 				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION, action);
@@ -75,7 +76,7 @@ public class EditActionMVCRenderCommand implements MVCRenderCommand {
 				action, renderRequest, "ruleGroupInstanceId");
 
 			MDRRuleGroupInstance ruleGroupInstance =
-				MDRRuleGroupInstanceLocalServiceUtil.getMDRRuleGroupInstance(
+				_mdrRuleGroupInstanceLocalService.getMDRRuleGroupInstance(
 					ruleGroupInstanceId);
 
 			renderRequest.setAttribute(
@@ -94,5 +95,20 @@ public class EditActionMVCRenderCommand implements MVCRenderCommand {
 			return "/error.jsp";
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRActionService(MDRActionService mdrActionService) {
+		_mdrActionService = mdrActionService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	private MDRActionService _mdrActionService;
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
 
 }

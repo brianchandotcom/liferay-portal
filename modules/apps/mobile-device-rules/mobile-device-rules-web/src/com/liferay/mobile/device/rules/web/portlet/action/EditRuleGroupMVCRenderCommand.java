@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupService;
 import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -27,6 +27,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -48,7 +49,7 @@ public class EditRuleGroupMVCRenderCommand implements MVCRenderCommand {
 		try {
 			long ruleGroupId = ParamUtil.getLong(renderRequest, "ruleGroupId");
 
-			MDRRuleGroup ruleGroup = MDRRuleGroupServiceUtil.fetchRuleGroup(
+			MDRRuleGroup ruleGroup = _mdrRuleGroupService.fetchRuleGroup(
 				ruleGroupId);
 
 			renderRequest.setAttribute(
@@ -62,5 +63,14 @@ public class EditRuleGroupMVCRenderCommand implements MVCRenderCommand {
 			return "/error.jsp";
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupService(
+		MDRRuleGroupService mdrRuleGroupService) {
+
+		_mdrRuleGroupService = mdrRuleGroupService;
+	}
+
+	private MDRRuleGroupService _mdrRuleGroupService;
 
 }

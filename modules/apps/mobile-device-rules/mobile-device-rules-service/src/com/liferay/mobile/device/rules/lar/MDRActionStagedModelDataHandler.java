@@ -18,8 +18,8 @@ import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.rule.group.action.SiteRedirectActionHandler;
-import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRActionLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -54,7 +55,7 @@ public class MDRActionStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MDRAction action) {
-		MDRActionLocalServiceUtil.deleteAction(action);
+		_mdrActionLocalService.deleteAction(action);
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class MDRActionStagedModelDataHandler
 	public MDRAction fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return MDRActionLocalServiceUtil.fetchMDRActionByUuidAndGroupId(
+		return _mdrActionLocalService.fetchMDRActionByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -80,7 +81,7 @@ public class MDRActionStagedModelDataHandler
 	public List<MDRAction> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MDRActionLocalServiceUtil.getMDRActionsByUuidAndCompanyId(
+		return _mdrActionLocalService.getMDRActionsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MDRAction>());
 	}
@@ -101,7 +102,7 @@ public class MDRActionStagedModelDataHandler
 		throws Exception {
 
 		MDRRuleGroupInstance ruleGroupInstance =
-			MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(
+			_mdrRuleGroupInstanceLocalService.getRuleGroupInstance(
 				action.getRuleGroupInstanceId());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -120,7 +121,7 @@ public class MDRActionStagedModelDataHandler
 				typeSettingsProperties.getProperty("plid"));
 
 			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+				Layout layout = _layoutLocalService.getLayout(plid);
 
 				actionElement.addAttribute("layout-uuid", layout.getUuid());
 			}
@@ -171,26 +172,47 @@ public class MDRActionStagedModelDataHandler
 			if (existingAction == null) {
 				serviceContext.setUuid(action.getUuid());
 
-				importedAction = MDRActionLocalServiceUtil.addAction(
+				importedAction = _mdrActionLocalService.addAction(
 					ruleGroupInstanceId, action.getNameMap(),
 					action.getDescriptionMap(), action.getType(),
 					action.getTypeSettingsProperties(), serviceContext);
 			}
 			else {
-				importedAction = MDRActionLocalServiceUtil.updateAction(
+				importedAction = _mdrActionLocalService.updateAction(
 					existingAction.getActionId(), action.getNameMap(),
 					action.getDescriptionMap(), action.getType(),
 					action.getTypeSettingsProperties(), serviceContext);
 			}
 		}
 		else {
-			importedAction = MDRActionLocalServiceUtil.addAction(
+			importedAction = _mdrActionLocalService.addAction(
 				ruleGroupInstanceId, action.getNameMap(),
 				action.getDescriptionMap(), action.getType(),
 				action.getTypeSettingsProperties(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(action, importedAction);
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRActionLocalService(
+		MDRActionLocalService mdrActionLocalService) {
+
+		_mdrActionLocalService = mdrActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
 	}
 
 	protected void validateLayout(Element actionElement, MDRAction action) {
@@ -215,7 +237,7 @@ public class MDRActionStagedModelDataHandler
 			actionElement.attributeValue("private-layout"));
 
 		try {
-			Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 				layoutUuid, groupId, privateLayout);
 
 			typeSettingsProperties.setProperty(
@@ -238,5 +260,9 @@ public class MDRActionStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MDRActionStagedModelDataHandler.class);
+
+	private LayoutLocalService _layoutLocalService;
+	private MDRActionLocalService _mdrActionLocalService;
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
 
 }

@@ -24,10 +24,10 @@ import com.liferay.mobile.device.rules.model.impl.MDRActionImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleImpl;
-import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRActionLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -102,7 +102,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		MDRRuleGroupLocalServiceUtil.deleteRuleGroups(
+		_mdrRuleGroupLocalService.deleteRuleGroups(
 			portletDataContext.getGroupId());
 
 		return portletPreferences;
@@ -120,7 +120,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "rules")) {
 			ActionableDynamicQuery rulesActionableDynamicQuery =
-				MDRRuleLocalServiceUtil.getExportActionableDynamicQuery(
+				_mdrRuleLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			rulesActionableDynamicQuery.performActions();
@@ -128,7 +128,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "actions")) {
 			ExportActionableDynamicQuery actionsExportActionableDynamicQuery =
-				MDRActionLocalServiceUtil.getExportActionableDynamicQuery(
+				_mdrActionLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			actionsExportActionableDynamicQuery.setStagedModelType(
@@ -184,7 +184,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ExportActionableDynamicQuery actionsExportActionableDynamicQuery =
-			MDRActionLocalServiceUtil.getExportActionableDynamicQuery(
+			_mdrActionLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionsExportActionableDynamicQuery.setStagedModelType(
@@ -194,20 +194,20 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		actionsExportActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery rulesActionableDynamicQuery =
-			MDRRuleLocalServiceUtil.getExportActionableDynamicQuery(
+			_mdrRuleLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		rulesActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery ruleGroupsActionableDynamicQuery =
-			MDRRuleGroupLocalServiceUtil.getExportActionableDynamicQuery(
+			_mdrRuleGroupLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		ruleGroupsActionableDynamicQuery.performCount();
 
 		ExportActionableDynamicQuery
 			ruleGroupInstancesExportActionableDynamicQuery =
-				MDRRuleGroupInstanceLocalServiceUtil.
+				_mdrRuleGroupInstanceLocalService.
 					getExportActionableDynamicQuery(portletDataContext);
 
 		ruleGroupInstancesExportActionableDynamicQuery.setStagedModelType(
@@ -217,9 +217,42 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		ruleGroupInstancesExportActionableDynamicQuery.performCount();
 	}
 
+	@Reference(unbind = "-")
+	protected void setMDRActionLocalService(
+		MDRActionLocalService mdrActionLocalService) {
+
+		_mdrActionLocalService = mdrActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupLocalService(
+		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
+
+		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleLocalService(
+		MDRRuleLocalService mdrRuleLocalService) {
+
+		_mdrRuleLocalService = mdrRuleLocalService;
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private MDRActionLocalService _mdrActionLocalService;
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+	private MDRRuleLocalService _mdrRuleLocalService;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,6 +34,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward Han
@@ -56,7 +57,7 @@ public class EditRuleGroupInstanceMVCActionCommand
 		long ruleGroupInstanceId = ParamUtil.getLong(
 			actionRequest, "ruleGroupInstanceId");
 
-		MDRRuleGroupInstanceServiceUtil.deleteRuleGroupInstance(
+		_mdrRuleGroupInstanceService.deleteRuleGroupInstance(
 			ruleGroupInstanceId);
 	}
 
@@ -112,6 +113,13 @@ public class EditRuleGroupInstanceMVCActionCommand
 		return portletURL.toString();
 	}
 
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceService(
+		MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
+
+		_mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
+	}
+
 	protected void updateRuleGroupInstancesPriorities(
 			ActionRequest actionRequest)
 		throws PortalException {
@@ -131,9 +139,11 @@ public class EditRuleGroupInstanceMVCActionCommand
 
 			int priority = ruleGroupInstanceJSONObject.getInt("priority");
 
-			MDRRuleGroupInstanceServiceUtil.updateRuleGroupInstance(
+			_mdrRuleGroupInstanceService.updateRuleGroupInstance(
 				ruleGroupInstanceId, priority);
 		}
 	}
+
+	private MDRRuleGroupInstanceService _mdrRuleGroupInstanceService;
 
 }

@@ -224,8 +224,10 @@ if (sapEntry != null) {
 		}
 
 		function initAutoCompleteRow(rowNode) {
-			var serviceInput = rowNode.one('.service-class');
 			var methodInput = rowNode.one('.method-name');
+			var serviceInput = rowNode.one('.service-class');
+
+			methodInput.attr('disabled', true);
 
 			new A.AutoComplete(
 				{
@@ -239,6 +241,8 @@ if (sapEntry != null) {
 
 							serviceInput.attr('data-service-class', result.serviceClass);
 							serviceInput.attr('data-context', result.context);
+
+							methodInput.attr('disabled', false);
 						}
 					}
 				}

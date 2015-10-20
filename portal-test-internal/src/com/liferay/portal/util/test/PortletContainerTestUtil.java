@@ -360,9 +360,7 @@ public class PortletContainerTestUtil {
 	private static FileItem[] _getFileItems(Class<?> clazz, String dependency)
 		throws IOException {
 
-		InputStream inputStream = clazz.getResourceAsStream(dependency);
-
-		byte[] bytes = FileUtil.getBytes(inputStream);
+		byte[] bytes = FileUtil.getBytes(clazz.getResourceAsStream(dependency));
 
 		LiferayFileItem[] liferayFileItems = new LiferayFileItem[2];
 
@@ -374,13 +372,11 @@ public class PortletContainerTestUtil {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				true, RandomTestUtil.randomString());
 
-			OutputStream outputStream = liferayFileItems[i].getOutputStream();
+			try (OutputStream outputStream =
+				liferayFileItems[i].getOutputStream()) {
 
-			outputStream.write(bytes);
-
-			outputStream.flush();
-
-			outputStream.close();
+				outputStream.write(bytes);
+			}
 		}
 
 		return liferayFileItems;

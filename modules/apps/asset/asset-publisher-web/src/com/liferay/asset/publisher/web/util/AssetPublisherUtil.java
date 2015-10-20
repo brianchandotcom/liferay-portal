@@ -56,10 +56,10 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.PortletPreferencesLocalService;
+import com.liferay.portal.service.SubscriptionLocalService;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
@@ -76,10 +76,10 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.ClassType;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetCategoryLocalService;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetEntryService;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -146,8 +146,7 @@ public class AssetPublisherUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			themeDisplay.getPlid());
+		Layout layout = _layoutLocalService.getLayout(themeDisplay.getPlid());
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -164,7 +163,7 @@ public class AssetPublisherUtil {
 			return;
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
 
 		addSelection(
@@ -199,8 +198,7 @@ public class AssetPublisherUtil {
 			String assetEntryType)
 		throws Exception {
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			assetEntryId);
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(assetEntryId);
 
 		String[] assetEntryXmls = portletPreferences.getValues(
 			"assetEntryXml", new String[0]);
@@ -242,7 +240,7 @@ public class AssetPublisherUtil {
 			return;
 		}
 
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			user.getCompanyId());
 
 		long[] allCategoryIds = assetEntryQuery.getAllCategoryIds();
@@ -271,7 +269,7 @@ public class AssetPublisherUtil {
 			String userCustomFieldValueString = userCustomFieldValue.toString();
 
 			List<AssetCategory> assetCategories =
-				AssetCategoryLocalServiceUtil.search(
+				_assetCategoryLocalService.search(
 					companyGroup.getGroupId(), userCustomFieldValueString,
 					new String[0], QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -285,7 +283,7 @@ public class AssetPublisherUtil {
 
 	public static void checkAssetEntries() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
-			PortletPreferencesLocalServiceUtil.getActionableDynamicQuery();
+			_portletPreferencesLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -329,12 +327,11 @@ public class AssetPublisherUtil {
 
 		String[] assetTagNamesArray = StringUtil.split(assetTagNames);
 
-		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+		long[] assetTagIds = _assetTagLocalService.getTagIds(
 			groupId, assetTagNamesArray);
 
 		for (long assetTagId : assetTagIds) {
-			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(
-				assetTagId);
+			AssetTag assetTag = _assetTagLocalService.fetchAssetTag(assetTagId);
 
 			if (assetTag != null) {
 				filteredAssetTagNames.add(assetTag.getName());
@@ -450,10 +447,10 @@ public class AssetPublisherUtil {
 		assetEntryQuery.setStart(0);
 
 		if (checkPermission) {
-			return AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			return _assetEntryService.getEntries(assetEntryQuery);
 		}
 		else {
-			return AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			return _assetEntryLocalService.getEntries(assetEntryQuery);
 		}
 	}
 
@@ -494,7 +491,7 @@ public class AssetPublisherUtil {
 			AssetEntry assetEntry = null;
 
 			for (long groupId : groupIds) {
-				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				assetEntry = _assetEntryLocalService.fetchEntry(
 					groupId, assetEntryUuid);
 
 				if (assetEntry != null) {
@@ -669,7 +666,7 @@ public class AssetPublisherUtil {
 		long[] siteGroupIds = getSiteGroupIds(scopeGroupIds);
 
 		for (String assetTagName : allAssetTagNames) {
-			long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+			long[] allAssetTagIds = _assetTagLocalService.getTagIds(
 				siteGroupIds, assetTagName);
 
 			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
@@ -677,7 +674,7 @@ public class AssetPublisherUtil {
 
 		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
 
-		long[] anyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+		long[] anyAssetTagIds = _assetTagLocalService.getTagIds(
 			siteGroupIds, anyAssetTagNames);
 
 		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
@@ -685,7 +682,7 @@ public class AssetPublisherUtil {
 		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
 
 		for (String assetTagName : notAllAssetTagNames) {
-			long[] notAllAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+			long[] notAllAssetTagIds = _assetTagLocalService.getTagIds(
 				siteGroupIds, assetTagName);
 
 			assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
@@ -693,7 +690,7 @@ public class AssetPublisherUtil {
 
 		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
 
-		long[] notAnyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+		long[] notAnyAssetTagIds = _assetTagLocalService.getTagIds(
 			siteGroupIds, notAnyAssetTagNames);
 
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
@@ -947,7 +944,7 @@ public class AssetPublisherUtil {
 
 			long childGroupId = GetterUtil.getLong(scopeIdSuffix);
 
-			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
+			Group childGroup = _groupLocalService.getGroup(childGroupId);
 
 			if (!childGroup.hasAncestor(siteGroupId)) {
 				throw new PrincipalException();
@@ -965,7 +962,7 @@ public class AssetPublisherUtil {
 
 			long scopeGroupId = GetterUtil.getLong(scopeIdSuffix);
 
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+			Group scopeGroup = _groupLocalService.getGroup(scopeGroupId);
 
 			return scopeGroup.getGroupId();
 		}
@@ -974,7 +971,7 @@ public class AssetPublisherUtil {
 				SCOPE_ID_LAYOUT_UUID_PREFIX.length());
 
 			Layout scopeIdLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+				_layoutLocalService.getLayoutByUuidAndGroupId(
 					layoutUuid, siteGroupId, privateLayout);
 
 			Group scopeIdGroup = null;
@@ -989,7 +986,7 @@ public class AssetPublisherUtil {
 					LocaleUtil.getDefault(),
 					String.valueOf(scopeIdLayout.getPlid()));
 
-				scopeIdGroup = GroupLocalServiceUtil.addGroup(
+				scopeIdGroup = _groupLocalService.addGroup(
 					PrincipalThreadLocal.getUserId(),
 					GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					Layout.class.getName(), scopeIdLayout.getPlid(),
@@ -1009,7 +1006,7 @@ public class AssetPublisherUtil {
 
 			long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
 
-			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
+			Layout scopeIdLayout = _layoutLocalService.getLayout(
 				siteGroupId, privateLayout, scopeIdLayoutId);
 
 			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
@@ -1022,13 +1019,13 @@ public class AssetPublisherUtil {
 
 			long parentGroupId = GetterUtil.getLong(scopeIdSuffix);
 
-			Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+			Group parentGroup = _groupLocalService.getGroup(parentGroupId);
 
 			if (!SitesUtil.isContentSharingWithChildrenEnabled(parentGroup)) {
 				throw new PrincipalException();
 			}
 
-			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
+			Group group = _groupLocalService.getGroup(siteGroupId);
 
 			if (!group.hasAncestor(parentGroupId)) {
 				throw new PrincipalException();
@@ -1071,8 +1068,7 @@ public class AssetPublisherUtil {
 		String key = null;
 
 		if (group.isLayout()) {
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				group.getClassPK());
+			Layout layout = _layoutLocalService.getLayout(group.getClassPK());
 
 			key = SCOPE_ID_LAYOUT_UUID_PREFIX + layout.getUuid();
 		}
@@ -1082,7 +1078,7 @@ public class AssetPublisherUtil {
 			key = SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT;
 		}
 		else {
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+			Group scopeGroup = _groupLocalService.getGroup(scopeGroupId);
 
 			if (scopeGroup.hasAncestor(group.getGroupId()) &&
 				SitesUtil.isContentSharingWithChildrenEnabled(group)) {
@@ -1104,7 +1100,7 @@ public class AssetPublisherUtil {
 		throws PortalException {
 
 		com.liferay.portal.model.PortletPreferences portletPreferencesModel =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+			_portletPreferencesLocalService.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
 
@@ -1120,7 +1116,7 @@ public class AssetPublisherUtil {
 			scopeId, layout.getGroupId(), layout.isPrivateLayout());
 
 		if (scopeId.startsWith(SCOPE_ID_CHILD_GROUP_PREFIX)) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			if (!group.hasAncestor(layout.getGroupId())) {
 				return false;
@@ -1133,7 +1129,7 @@ public class AssetPublisherUtil {
 				return false;
 			}
 
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			if (SitesUtil.isContentSharingWithChildrenEnabled(group)) {
 				return true;
@@ -1162,7 +1158,7 @@ public class AssetPublisherUtil {
 			long companyId, long userId, long plid, String portletId)
 		throws PortalException {
 
-		return SubscriptionLocalServiceUtil.isSubscribed(
+		return _subscriptionLocalService.isSubscribed(
 			companyId, userId,
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
@@ -1277,13 +1273,13 @@ public class AssetPublisherUtil {
 			String portletId)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		PortletPermissionUtil.check(
 			permissionChecker, 0, layout, portletId, ActionKeys.SUBSCRIBE,
 			false, false);
 
-		SubscriptionLocalServiceUtil.addSubscription(
+		_subscriptionLocalService.addSubscription(
 			permissionChecker.getUserId(), groupId,
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
@@ -1301,13 +1297,13 @@ public class AssetPublisherUtil {
 			PermissionChecker permissionChecker, long plid, String portletId)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		PortletPermissionUtil.check(
 			permissionChecker, 0, layout, portletId, ActionKeys.SUBSCRIBE,
 			false, false);
 
-		SubscriptionLocalServiceUtil.deleteSubscription(
+		_subscriptionLocalService.deleteSubscription(
 			permissionChecker.getUserId(),
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
@@ -1328,6 +1324,20 @@ public class AssetPublisherUtil {
 		_instance = this;
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetCategoryLocalService(
+		AssetCategoryLocalService assetCategoryLocalService) {
+
+		_assetCategoryLocalService = assetCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -1337,6 +1347,44 @@ public class AssetPublisherUtil {
 		AssetEntryQueryProcessor assetEntryQueryProcessor) {
 
 		_assetEntryQueryProcessors.add(assetEntryQueryProcessor);
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryService(AssetEntryService assetEntryService) {
+		_assetEntryService = assetEntryService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetTagLocalService(
+		AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletPreferencesLocalService(
+		PortletPreferencesLocalService portletPreferencesLocalService) {
+
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
 	}
 
 	protected void unsetAssetEntryQueryProcessor(
@@ -1350,7 +1398,7 @@ public class AssetPublisherUtil {
 				portletPreferencesModel)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+		Layout layout = _layoutLocalService.fetchLayout(
 			portletPreferencesModel.getPlid());
 
 		if (layout == null) {
@@ -1436,8 +1484,7 @@ public class AssetPublisherUtil {
 
 		for (long assetCategoryId : assetCategoryIds) {
 			AssetCategory category =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					assetCategoryId);
+				_assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
 
 			if (category == null) {
 				continue;
@@ -1511,6 +1558,16 @@ public class AssetPublisherUtil {
 		AssetPublisherUtil.class);
 
 	private static AssetPublisherUtil _instance;
+
+	private static AssetCategoryLocalService _assetCategoryLocalService;
+	private static AssetEntryLocalService _assetEntryLocalService;
+	private static AssetEntryService _assetEntryService;
+	private static AssetTagLocalService _assetTagLocalService;
+	private static GroupLocalService _groupLocalService;
+	private static LayoutLocalService _layoutLocalService;
+	private static PortletPreferencesLocalService
+		_portletPreferencesLocalService;
+	private static SubscriptionLocalService _subscriptionLocalService;
 
 	private static final Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {

@@ -42,7 +42,7 @@ public interface LDAPServerConfiguration {
 	public String[] contactCustomMappings();
 
 	@Meta.AD(
-		deflt = "aimSn=|birthday=|facebookSn=|icqSn=|jabberSn=|jobTitle=|msnSn=|mySpaceSn=|skypeSn=|smsSn=|twitterSn=|ymSn=",
+		deflt = "aimSn=|birthday=|facebookSn=|icqSn=|jabberSn=|jobTitle=|mySpaceSn=|skypeSn=|smsSn=|twitterSn=|ymSn=",
 		required = false
 	)
 	public String[] contactMappings();

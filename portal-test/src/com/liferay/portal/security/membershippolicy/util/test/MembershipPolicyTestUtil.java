@@ -194,8 +194,6 @@ public class MembershipPolicyTestUtil {
 		String facebookSn = RandomTestUtil.randomString();
 		String icqSn = RandomTestUtil.randomString();
 		String jabberSn = RandomTestUtil.randomString();
-		String msnSn =
-			"UserServiceTestMsnSn." + RandomTestUtil.nextInt() + "@liferay.com";
 		String mySpaceSn = RandomTestUtil.randomString();
 		String skypeSn = RandomTestUtil.randomString();
 		String twitterSn = RandomTestUtil.randomString();
@@ -215,10 +213,10 @@ public class MembershipPolicyTestUtil {
 			emailAddress, facebookId, openId, false, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, siteIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDelivers, serviceContext);
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
+			twitterSn, ymSn, jobTitle, siteIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
+			websites, announcementsDelivers, serviceContext);
 	}
 
 	protected static Map<String, Serializable> addExpandoMap(Class<?> clazz)

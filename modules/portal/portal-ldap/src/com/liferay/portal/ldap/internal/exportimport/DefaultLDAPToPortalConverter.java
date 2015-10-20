@@ -211,9 +211,6 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		contact.setJabberSn(
 			LDAPUtil.getAttributeString(
 				attributes, contactMappings, ContactConverterKeys.JABBER_SN));
-		contact.setMsnSn(
-			LDAPUtil.getAttributeString(
-				attributes, contactMappings, ContactConverterKeys.MSN_SN));
 		contact.setMySpaceSn(
 			LDAPUtil.getAttributeString(
 				attributes, contactMappings, ContactConverterKeys.MYSPACE_SN));

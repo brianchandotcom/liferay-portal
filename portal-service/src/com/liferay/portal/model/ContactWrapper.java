@@ -75,7 +75,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		attributes.put("facebookSn", getFacebookSn());
 		attributes.put("icqSn", getIcqSn());
 		attributes.put("jabberSn", getJabberSn());
-		attributes.put("msnSn", getMsnSn());
 		attributes.put("mySpaceSn", getMySpaceSn());
 		attributes.put("skypeSn", getSkypeSn());
 		attributes.put("twitterSn", getTwitterSn());
@@ -233,12 +232,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		if (jabberSn != null) {
 			setJabberSn(jabberSn);
-		}
-
-		String msnSn = (String)attributes.get("msnSn");
-
-		if (msnSn != null) {
-			setMsnSn(msnSn);
 		}
 
 		String mySpaceSn = (String)attributes.get("mySpaceSn");
@@ -544,16 +537,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public Date getModifiedDate() {
 		return _contact.getModifiedDate();
-	}
-
-	/**
-	* Returns the msn sn of this contact.
-	*
-	* @return the msn sn of this contact
-	*/
-	@Override
-	public java.lang.String getMsnSn() {
-		return _contact.getMsnSn();
 	}
 
 	/**
@@ -976,16 +959,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_contact.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the msn sn of this contact.
-	*
-	* @param msnSn the msn sn of this contact
-	*/
-	@Override
-	public void setMsnSn(java.lang.String msnSn) {
-		_contact.setMsnSn(msnSn);
 	}
 
 	/**

@@ -33,8 +33,6 @@ public interface ContactConverterKeys {
 
 	public static final String JOB_TITLE = "jobTitle";
 
-	public static final String MSN_SN = "msnSn";
-
 	public static final String MYSPACE_SN = "mySpaceSn";
 
 	public static final String PREFIX = "prefix";

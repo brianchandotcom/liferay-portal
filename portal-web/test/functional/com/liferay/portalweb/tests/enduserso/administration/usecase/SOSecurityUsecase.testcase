@@ -807,7 +807,6 @@
 		<var name="userInstantMessengerICQ" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
 		<var name="userInstantMessengerJabber" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
 		<var name="userInstantMessengerSkype" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
-		<var name="userInstantMessengerWindowsLiveMessenger" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
 		<var name="userInstantMessengerYM" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
 		<var name="userIntroduction" value="&lt;script&gt;alert(&quot;Introduction Content&quot;);&lt;/script&gt;" />
 		<var name="userLastName" value="&lt;script&gt;alert(&quot;User01&quot;);&lt;/script&gt;" />
@@ -876,7 +875,6 @@
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 

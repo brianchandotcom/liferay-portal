@@ -236,7 +236,6 @@
 		<column name="facebookSn" type="String" />
 		<column name="icqSn" type="String" />
 		<column name="jabberSn" type="String" />
-		<column name="msnSn" type="String" />
 		<column name="mySpaceSn" type="String" />
 		<column name="skypeSn" type="String" />
 		<column name="twitterSn" type="String" />

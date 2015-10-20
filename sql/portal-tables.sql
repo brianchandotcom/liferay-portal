@@ -334,7 +334,6 @@ create table Contact_ (
 	facebookSn VARCHAR(75) null,
 	icqSn VARCHAR(75) null,
 	jabberSn VARCHAR(75) null,
-	msnSn VARCHAR(75) null,
 	mySpaceSn VARCHAR(75) null,
 	skypeSn VARCHAR(75) null,
 	twitterSn VARCHAR(75) null,

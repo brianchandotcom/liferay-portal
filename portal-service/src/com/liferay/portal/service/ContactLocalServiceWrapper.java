@@ -50,16 +50,15 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle)
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _contactLocalService.addContact(userId, className, classPK,
 			emailAddress, firstName, middleName, lastName, prefixId, suffixId,
 			male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn,
-			facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn,
-			ymSn, jobTitle);
+			facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn,
+			jobTitle);
 	}
 
 	/**
@@ -301,16 +300,14 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle)
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _contactLocalService.updateContact(contactId, emailAddress,
 			firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
-			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
-			jobTitle);
+			icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle);
 	}
 
 	/**

@@ -456,11 +456,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INSTANT_MESSENGER_WINDOWS_LIVE_MESSENGER_FIELD</td>
-	<td>//input[@id='_2_msnSn']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INSTANT_MESSENGER_YM_FIELD</td>
 	<td>//input[@id='_2_ymSn']</td>
 	<td></td>

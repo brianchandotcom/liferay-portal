@@ -464,11 +464,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WINDOWS_LIVE_MESSENGER</td>
-	<td>//div[label[contains(.,'Windows Live Messenger')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>YEARS</td>
 	<td>//div[label[contains(.,'Years')]]//input[@type='text']</td>
 	<td></td>

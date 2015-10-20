@@ -392,7 +392,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			contact.getSuffixId(), male, birthdayMonth, birthdayDay,
 			birthdayYear, contact.getSmsSn(), contact.getAimSn(),
 			contact.getFacebookSn(), contact.getIcqSn(), contact.getJabberSn(),
-			contact.getMsnSn(), contact.getMySpaceSn(), contact.getSkypeSn(),
+			contact.getMySpaceSn(), contact.getSkypeSn(),
 			contact.getTwitterSn(), contact.getYmSn(), contact.getJobTitle(),
 			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);

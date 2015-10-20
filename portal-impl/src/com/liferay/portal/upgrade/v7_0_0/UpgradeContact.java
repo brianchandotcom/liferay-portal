@@ -28,6 +28,7 @@ public class UpgradeContact extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try {
 			runSQL("alter_column_type Contact_ typeId LONG");
+			runSQL("alter table Contact_ drop column msnSn");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

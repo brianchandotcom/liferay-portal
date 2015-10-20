@@ -1959,7 +1959,6 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		contactImpl.setFacebookSn(contact.getFacebookSn());
 		contactImpl.setIcqSn(contact.getIcqSn());
 		contactImpl.setJabberSn(contact.getJabberSn());
-		contactImpl.setMsnSn(contact.getMsnSn());
 		contactImpl.setMySpaceSn(contact.getMySpaceSn());
 		contactImpl.setSkypeSn(contact.getSkypeSn());
 		contactImpl.setTwitterSn(contact.getTwitterSn());

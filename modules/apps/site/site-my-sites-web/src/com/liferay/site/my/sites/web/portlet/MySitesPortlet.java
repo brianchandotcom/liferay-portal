@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.MembershipRequestServiceUtil;
+import com.liferay.portal.service.MembershipRequestService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.HashSet;
@@ -38,6 +38,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -75,7 +76,7 @@ public class MySitesPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		MembershipRequestServiceUtil.addMembershipRequest(
+		_membershipRequestService.addMembershipRequest(
 			groupId, comments, serviceContext);
 
 		SessionMessages.add(actionRequest, "membershipRequestSent");
@@ -107,8 +108,8 @@ public class MySitesPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		UserServiceUtil.addGroupUsers(groupId, addUserIds, serviceContext);
-		UserServiceUtil.unsetGroupUsers(groupId, removeUserIds, serviceContext);
+		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
+		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
 
 		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
 		LiveUsers.leaveGroup(
@@ -121,7 +122,7 @@ public class MySitesPortlet extends MVCPortlet {
 		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
 
 		for (long userId : userIds) {
-			if (!UserLocalServiceUtil.hasGroupUser(groupId, userId)) {
+			if (!_userLocalService.hasGroupUser(groupId, userId)) {
 				filteredUserIds.add(userId);
 			}
 		}
@@ -136,7 +137,7 @@ public class MySitesPortlet extends MVCPortlet {
 		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
 
 		for (long userId : userIds) {
-			if (UserLocalServiceUtil.hasGroupUser(groupId, userId)) {
+			if (_userLocalService.hasGroupUser(groupId, userId)) {
 				filteredUserIds.add(userId);
 			}
 		}
@@ -156,5 +157,26 @@ public class MySitesPortlet extends MVCPortlet {
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setMembershipRequestService(
+		MembershipRequestService membershipRequestService) {
+
+		_membershipRequestService = membershipRequestService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
+	}
+
+	private MembershipRequestService _membershipRequestService;
+	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }

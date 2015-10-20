@@ -16,6 +16,8 @@ package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
 
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,7 +28,8 @@ public class BaseJSONHandlerTest {
 
 	@Test
 	public void testGetException() {
-		Handler handler = new BaseJSONHandler(new GetSyncContextEvent(0, null));
+		Handler handler = new BaseJSONHandler(
+			new GetSyncContextEvent(0, Collections.<String, Object>emptyMap()));
 
 		String expectedException =
 			"com.liferay.portal.kernel.jsonwebservice." +

@@ -23,6 +23,7 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.ReleaseInfo;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -102,7 +103,9 @@ public class DownloadFileEvent extends BaseEvent {
 
 		Path tempFilePath = FileUtil.getTempFilePath(syncFile);
 
-		if (Files.exists(tempFilePath)) {
+		if (ReleaseInfo.isServerCompatible(getSyncAccountId(), 5) &&
+			Files.exists(tempFilePath)) {
+
 			httpGet.setHeader(
 				"Range", "bytes=" + Files.size(tempFilePath) + "-");
 		}

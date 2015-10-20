@@ -20,9 +20,6 @@ import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.ReleaseInfo;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import java.util.Map;
 
 /**
@@ -60,17 +57,13 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 		syncSite = SyncSiteService.fetchSyncSite(
 			syncSite.getGroupId(), syncSite.getSyncAccountId());
 
+		if (!syncSite.getActive()) {
+			return;
+		}
+
 		syncSite.setState(SyncSite.STATE_IN_PROGRESS);
 
 		SyncSiteService.update(syncSite);
-
-		if (syncSite.getRemoteSyncTime() == -1) {
-			String filePathName = syncSite.getFilePathName();
-
-			if (!Files.exists(Paths.get(filePathName))) {
-				Files.createDirectories(Paths.get(filePathName));
-			}
-		}
 
 		Map<String, Object> parameters = getParameters();
 

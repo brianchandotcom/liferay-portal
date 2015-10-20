@@ -21,6 +21,7 @@ import com.liferay.sync.engine.documentlibrary.event.CheckInFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.CheckOutFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.CopyFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.DownloadFileEvent;
+import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.event.GetAllFolderSyncDLObjectsEvent;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
 import com.liferay.sync.engine.documentlibrary.event.MoveFileEntryEvent;
@@ -47,6 +48,10 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Shinn Lok
@@ -204,6 +209,21 @@ public class FileEventUtil {
 	public static void downloadFile(
 		long syncAccountId, SyncFile syncFile, boolean batch) {
 
+		Set<Event> events = FileEventManager.getEvents(
+			syncFile.getSyncFileId());
+
+		for (Event event : events) {
+			if (event instanceof DownloadFileEvent) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(
+						"Download already in progress {}",
+						syncFile.getFilePathName());
+				}
+
+				return;
+			}
+		}
+
 		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put("batch", batch);
@@ -219,6 +239,21 @@ public class FileEventUtil {
 	public static void downloadPatch(
 		long sourceVersionId, long syncAccountId, SyncFile syncFile,
 		long targetVersionId) {
+
+		Set<Event> events = FileEventManager.getEvents(
+			syncFile.getSyncFileId());
+
+		for (Event event : events) {
+			if (event instanceof DownloadFileEvent) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(
+						"Download already in progress {}",
+						syncFile.getFilePathName());
+				}
+
+				return;
+			}
+		}
 
 		Map<String, Object> parameters = new HashMap<>();
 
@@ -469,5 +504,8 @@ public class FileEventUtil {
 
 		updateFolderEvent.run();
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		FileEventUtil.class);
 
 }

@@ -134,12 +134,16 @@ public class DownloadFilesHandler extends BaseHandler {
 						new CloseShieldInputStream(zipInputStream), false);
 				}
 				catch (Exception e) {
-					_logger.error(e.getMessage(), e);
+					if (!isEventCancelled()) {
+						_logger.error(e.getMessage(), e);
+					}
 				}
 			}
 		}
 		catch (Exception e) {
-			_logger.debug(e.getMessage(), e);
+			if (!isEventCancelled() && _logger.isDebugEnabled()) {
+				_logger.debug(e.getMessage(), e);
+			}
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

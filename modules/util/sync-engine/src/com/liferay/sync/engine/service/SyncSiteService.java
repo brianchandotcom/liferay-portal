@@ -14,6 +14,8 @@
 
 package com.liferay.sync.engine.service;
 
+import com.liferay.sync.engine.documentlibrary.event.Event;
+import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
@@ -47,7 +49,11 @@ import org.slf4j.LoggerFactory;
  */
 public class SyncSiteService {
 
-	public static SyncSite activateSyncSite(long syncSiteId, boolean reset) {
+	public static SyncSite activateSyncSite(long syncSiteId, boolean reset)
+		throws Exception {
+
+		// Sync site
+
 		SyncSite syncSite = fetchSyncSite(syncSiteId);
 
 		if (syncSite.isActive()) {
@@ -63,6 +69,14 @@ public class SyncSiteService {
 		}
 
 		update(syncSite);
+
+		// Sync file
+
+		String filePathName = syncSite.getFilePathName();
+
+		if (!Files.exists(Paths.get(filePathName))) {
+			Files.createDirectories(Paths.get(filePathName));
+		}
 
 		return syncSite;
 	}
@@ -263,11 +277,28 @@ public class SyncSiteService {
 
 		// Sync files
 
+		List<SyncFile> syncFiles = SyncFileService.findSyncFiles(
+			syncSite.getGroupId(), SyncFile.STATE_IN_PROGRESS,
+			syncSite.getSyncAccountId());
+
+		for (SyncFile syncFile : syncFiles) {
+			Set<Event> events = FileEventManager.getEvents(
+				syncFile.getSyncFileId());
+
+			for (Event event : events) {
+				event.cancel();
+			}
+		}
+
 		try {
 			deleteSyncFiles(syncSite);
 		}
 		catch (IOException ioe) {
 			_logger.error(ioe.getMessage(), ioe);
+		}
+
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Sync site {} deactivated", syncSite.getName());
 		}
 
 		return syncSite;

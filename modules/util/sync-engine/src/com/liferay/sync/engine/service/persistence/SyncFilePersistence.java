@@ -202,6 +202,19 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return queryForFieldValues(fieldValues);
 	}
 
+	public List<SyncFile> findByR_S_S(
+			long repositoryId, int state, long syncAccountId)
+		throws SQLException {
+
+		Map<String, Object> fieldValues = new HashMap<>();
+
+		fieldValues.put("repositoryId", repositoryId);
+		fieldValues.put("state", state);
+		fieldValues.put("syncAccountId", syncAccountId);
+
+		return queryForFieldValues(fieldValues);
+	}
+
 	public List<SyncFile> findByS_U(
 			long syncAccountId, int uiEvent, String orderByColumn,
 			boolean ascending)

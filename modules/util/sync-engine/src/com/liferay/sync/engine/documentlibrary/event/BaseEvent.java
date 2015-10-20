@@ -18,6 +18,7 @@ import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.documentlibrary.util.BatchEvent;
 import com.liferay.sync.engine.documentlibrary.util.BatchEventManager;
+import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
@@ -43,6 +44,8 @@ public abstract class BaseEvent implements Event {
 		_syncAccountId = syncAccountId;
 		_urlPath = urlPath;
 		_parameters = parameters;
+
+		FileEventManager.addEvent(this);
 	}
 
 	@Override
@@ -54,6 +57,10 @@ public abstract class BaseEvent implements Event {
 		if (_httpPost != null) {
 			_httpPost.abort();
 		}
+
+		FileEventManager.removeEvent(this);
+
+		_cancelled = true;
 	}
 
 	public void executeAsynchronousGet(HttpGet httpGet) throws Exception {
@@ -134,6 +141,11 @@ public abstract class BaseEvent implements Event {
 	}
 
 	@Override
+	public boolean isCancelled() {
+		return _cancelled;
+	}
+
+	@Override
 	public void run() {
 		if (!SyncEngine.isRunning()) {
 			return;
@@ -181,6 +193,7 @@ public abstract class BaseEvent implements Event {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		BaseEvent.class);
 
+	private boolean _cancelled;
 	private Handler<Void> _handler;
 	private HttpGet _httpGet;
 	private HttpPost _httpPost;

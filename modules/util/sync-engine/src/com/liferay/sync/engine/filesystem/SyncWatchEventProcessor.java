@@ -81,10 +81,12 @@ public class SyncWatchEventProcessor implements Runnable {
 
 					for (SyncWatchEvent syncWatchEvent : syncWatchEvents) {
 						try {
-							_logger.debug(
-								"Processing queued event {} {}",
-								syncWatchEvent.getFilePathName(),
-								syncWatchEvent.getEventType());
+							if (_logger.isDebugEnabled()) {
+								_logger.debug(
+									"Processing queued event {} {}",
+									syncWatchEvent.getFilePathName(),
+									syncWatchEvent.getEventType());
+							}
 
 							processSyncWatchEvent(syncWatchEvent);
 						}
@@ -694,9 +696,11 @@ public class SyncWatchEventProcessor implements Runnable {
 			}
 		}
 
-		_logger.debug(
-			"Queueing event {} {}", syncWatchEvent.getEventType(),
-			syncWatchEvent.getFilePathName());
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
+				"Queueing event {} {}", syncWatchEvent.getEventType(),
+				syncWatchEvent.getFilePathName());
+		}
 
 		syncWatchEvents.add(syncWatchEvent);
 	}

@@ -35,4 +35,6 @@ public interface Event extends Runnable {
 
 	public String getURLPath();
 
+	public boolean isCancelled();
+
 }

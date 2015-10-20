@@ -17,6 +17,7 @@ package com.liferay.sync.engine.documentlibrary.handler;
 import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
+import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
 import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
@@ -63,6 +64,10 @@ public class BaseHandler implements Handler<Void> {
 
 	@Override
 	public void handleException(Exception e) {
+		if (_event.isCancelled()) {
+			return;
+		}
+
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
 
@@ -148,6 +153,10 @@ public class BaseHandler implements Handler<Void> {
 
 	@Override
 	public Void handleResponse(HttpResponse httpResponse) {
+		if (_event.isCancelled()) {
+			return null;
+		}
+
 		try {
 			StatusLine statusLine = httpResponse.getStatusLine();
 
@@ -183,6 +192,8 @@ public class BaseHandler implements Handler<Void> {
 		}
 		finally {
 			processFinally();
+
+			removeEvent();
 		}
 
 		return null;
@@ -240,6 +251,14 @@ public class BaseHandler implements Handler<Void> {
 
 			SyncSiteService.deleteSyncSite(syncSite.getSyncSiteId());
 		}
+	}
+
+	protected boolean isEventCancelled() {
+		return _event.isCancelled();
+	}
+
+	protected void removeEvent() {
+		FileEventManager.removeEvent(_event);
 	}
 
 	protected void retryServerConnection(int uiEvent) {

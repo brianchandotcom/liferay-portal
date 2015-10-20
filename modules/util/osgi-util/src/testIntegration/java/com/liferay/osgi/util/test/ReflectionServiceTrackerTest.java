@@ -42,7 +42,7 @@ import org.osgi.framework.ServiceRegistration;
 @RunWith(Enclosed.class)
 public class ReflectionServiceTrackerTest {
 
-	@BndFile("test/integration/bnd.bnd")
+	@BndFile("src/testIntegration/resources/bnd.bnd")
 	@RunWith(Arquillian.class)
 	public static class WhenTrackingClasses {
 
@@ -106,7 +106,7 @@ public class ReflectionServiceTrackerTest {
 
 	}
 
-	@BndFile("test/integration/bnd.bnd")
+	@BndFile("src/testIntegration/resources/bnd.bnd")
 	@RunWith(Arquillian.class)
 	public static class WhenTrackingInterfaces {
 

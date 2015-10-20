@@ -35,7 +35,8 @@ public class SourceFormatterTest {
 		sourceFormatterArgs.setUseProperties(false);
 
 		String fileName =
-			"test/unit/com/liferay/source/formatter/dependencies/wrong.foo";
+			"src/test/resources/com/liferay/source/formatter/dependencies" +
+				"/wrong.foo";
 
 		sourceFormatterArgs.setFileNames(Collections.singletonList(fileName));
 

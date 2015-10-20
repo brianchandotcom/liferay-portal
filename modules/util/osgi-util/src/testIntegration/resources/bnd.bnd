@@ -4,5 +4,5 @@ Bundle-Version: 2.0.0
 Export-Package: com.liferay.osgi.util.service
 Import-Package: !org.junit.experimental.runners,*
 Include-Resource:\
-	../../classes,\
-	com/liferay/osgi/util/test=../../test-classes/integration/com/liferay/osgi/util/test
+	../../../classes,\
+	com/liferay/osgi/util/test=../../../test-classes/integration/com/liferay/osgi/util/test

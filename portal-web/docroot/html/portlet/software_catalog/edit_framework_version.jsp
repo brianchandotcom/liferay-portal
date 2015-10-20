@@ -24,7 +24,7 @@ SCFrameworkVersion frameworkVersion = (SCFrameworkVersion)request.getAttribute(W
 long frameworkVersionId = BeanParamUtil.getLong(frameworkVersion, request, "frameworkVersionId");
 %>
 
-<form action="<portlet:actionURL name="/software_catalog/edit_framework_version" var="" />" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveFrameworkVersion(); return false;">
+<form action="<portlet:actionURL name="/software_catalog/edit_framework_version" />" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveFrameworkVersion(); return false;">
 <input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="" />
 <input name="<portlet:namespace />redirect" type="hidden" value="<%= HtmlUtil.escapeAttribute(redirect) %>" />
 <input name="<portlet:namespace />frameworkVersionId" type="hidden" value="<%= frameworkVersionId %>" />

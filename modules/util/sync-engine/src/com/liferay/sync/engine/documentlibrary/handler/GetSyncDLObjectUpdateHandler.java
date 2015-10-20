@@ -217,7 +217,13 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				return;
 			}
 
-			syncSite.setRemoteSyncTime(_syncDLObjectUpdate.getLastAccessTime());
+			long lastAccessTime = _syncDLObjectUpdate.getLastAccessTime();
+
+			if (lastAccessTime == -1) {
+				lastAccessTime = 0;
+			}
+
+			syncSite.setRemoteSyncTime(lastAccessTime);
 
 			if (_syncDLObjectUpdate.getResultsTotal() <= syncFiles.size()) {
 				syncSite.setState(SyncSite.STATE_SYNCED);

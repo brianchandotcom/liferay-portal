@@ -370,13 +370,9 @@ public class PortletContainerTestUtil {
 			UploadServletRequestImpl.getTempDir());
 
 		for (int i = 0; i < fileItems.length; i++) {
-			org.apache.commons.fileupload.FileItem fileItem =
-				fileItemFactory.createItem(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), true,
-					RandomTestUtil.randomString());
-
-			LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+			LiferayFileItem liferayFileItem = fileItemFactory.createItem(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				true, RandomTestUtil.randomString());
 
 			OutputStream outputStream = liferayFileItem.getOutputStream();
 

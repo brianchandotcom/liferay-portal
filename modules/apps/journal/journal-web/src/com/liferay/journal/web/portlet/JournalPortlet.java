@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -755,22 +756,26 @@ public class JournalPortlet extends MVCPortlet {
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		long referringPlid = ParamUtil.getLong(actionRequest, "referringPlid");
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				themeDisplay.getLayout(), portletResource);
+		if (Validator.isNotNull(portletResource) && (referringPlid > 0)) {
+			Layout layout = _layoutLocalService.getLayout(referringPlid);
 
-		if (portletPreferences != null) {
-			portletPreferences.setValue(
-				"groupId", String.valueOf(article.getGroupId()));
-			portletPreferences.setValue("articleId", article.getArticleId());
+			PortletPreferences portletPreferences =
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
+					layout, portletResource);
 
-			portletPreferences.store();
+			if (portletPreferences != null) {
+				portletPreferences.setValue(
+					"groupId", String.valueOf(article.getGroupId()));
+				portletPreferences.setValue(
+					"articleId", article.getArticleId());
 
-			updateContentSearch(
-				actionRequest, portletResource, article.getArticleId());
+				portletPreferences.store();
+
+				updateContentSearch(
+					actionRequest, portletResource, article.getArticleId());
+			}
 		}
 
 		sendEditArticleRedirect(
@@ -1282,6 +1287,13 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
 	}
@@ -1316,6 +1328,12 @@ public class JournalPortlet extends MVCPortlet {
 		_journalFolderService = null;
 	}
 
+	protected void unsetLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = null;
+	}
+
 	protected void unsetTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = null;
 	}
@@ -1343,6 +1361,7 @@ public class JournalPortlet extends MVCPortlet {
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
 	private JournalFeedService _journalFeedService;
 	private JournalFolderService _journalFolderService;
+	private LayoutLocalService _layoutLocalService;
 	private TrashEntryService _trashEntryService;
 
 }

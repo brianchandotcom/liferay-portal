@@ -6,7 +6,7 @@ task buildTinyMCE(type: Copy)
 String tinyMCEVersion = "4.1.7"
 
 File editorsDestinationDir = file("tmp/META-INF/resources")
-File editorsSrcDir = file("src/META-INF/resources")
+File editorsSrcDir = file("src/main/resources/META-INF/resources")
 File thirdPartyDir = file("../../../../portal-web/third-party")
 
 buildTinyMCE {

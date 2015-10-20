@@ -11,7 +11,7 @@ task publishNodeModule(type: PublishNodeModuleTask)
 String alloyVersion = "3.0.1"
 String lexiconVersion = "0.1.19"
 
-File themeDestinationDir = file("src/META-INF/resources/_unstyled");
+File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 File thirdPartyDir = file("../../../../portal-web/third-party")
 
 buildAlloyTheme {
@@ -148,5 +148,5 @@ liferay {
 }
 
 publishNodeModule {
-	workingDir = "src/META-INF/resources/_unstyled"
+	workingDir = "src/main/resources/META-INF/resources/_unstyled"
 }

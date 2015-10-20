@@ -308,6 +308,7 @@ AUI.add(
 								condition: Liferay.SearchContainer.testRestoreTask,
 								params: {
 									containerId: instance.get('contentBox').attr('id'),
+									elementActiveClass: instance.get('elementActiveClass'),
 									searchContainerId: instance.get('id')
 								}
 							}
@@ -430,6 +431,7 @@ AUI.add(
 
 							if (input) {
 								input.attr('checked', true);
+								input.ancestor('li,tr').addClass(params.elementActiveClass);
 							}
 							else {
 								offScreenElementsHtml += Lang.sub(TPL_HIDDEN_INPUT, item);

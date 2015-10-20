@@ -49,8 +49,8 @@ public class PollsServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyAuditedModels() throws Exception {
-		_verifyAuditedModel.verify(new PollsChoiceVerifiableModel());
-		_verifyAuditedModel.verify(new PollsVoteVerifiableModel());
+		_verifyAuditedModel.verify(
+			new PollsChoiceVerifiableModel(), new PollsVoteVerifiableModel());
 	}
 
 	protected void verifyResourcedModels() throws Exception {

@@ -372,26 +372,27 @@ if (Validator.isNotNull(historyKey)) {
 					}
 				);
 
-				var currentUrl = new A.Url(location.href);
-
-				var currentAnchor = currentUrl.getAnchor();
-
-				if (!currentAnchor) {
-					currentAnchor = currentUrl.getParameter('<portlet:namespace />historyKey');
+				if (<%= error %>) {
+					history.addValue('<portlet:namespace />tab', '<portlet:namespace /><%= errorSection %>');
 				}
+				else {
+					var currentUrl = new A.Url(location.href);
 
-				if (currentAnchor) {
-					var locationSectionId = currentAnchor.substring(currentAnchor.indexOf('=') + 1);
+					var currentAnchor = currentUrl.getAnchor();
 
-					if (locationSectionId.indexOf('<portlet:namespace />') === -1) {
-						locationSectionId = '<portlet:namespace />' + locationSectionId;
+					if (!currentAnchor) {
+						currentAnchor = currentUrl.getParameter('<portlet:namespace />historyKey');
 					}
 
-					selectTabBySectionId(locationSectionId);
-				}
+					if (currentAnchor) {
+						var locationSectionId = currentAnchor.substring(currentAnchor.indexOf('=') + 1);
 
-				if (<%= error %>) {
-					Liferay.fire('formNavigator:reveal<portlet:namespace /><%= errorSection %>');
+						if (locationSectionId.indexOf('<portlet:namespace />') === -1) {
+							locationSectionId = '<portlet:namespace />' + locationSectionId;
+						}
+
+						selectTabBySectionId(locationSectionId);
+					}
 				}
 
 				if (formNode) {

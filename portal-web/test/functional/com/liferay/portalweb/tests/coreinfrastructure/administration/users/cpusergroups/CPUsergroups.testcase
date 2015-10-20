@@ -64,7 +64,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameAsterisk" priority="4">
+	<command name="AddUserGroupNameAsterisk" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -84,7 +84,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameComma" priority="4">
+	<command name="AddUserGroupNameComma" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -104,7 +104,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameDuplicate" priority="4">
+	<command name="AddUserGroupNameDuplicate" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -127,7 +127,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameNull" priority="4">
+	<command name="AddUserGroupNameNull" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -147,7 +147,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameNumber" priority="4">
+	<command name="AddUserGroupNameNumber" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -340,7 +340,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchCurrentMembersAssignedToUserGroup" priority="4">
+	<command name="SearchCurrentMembersAssignedToUserGroup" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -386,7 +386,7 @@
 		<execute function="AssertNotVisible" locator1="CPUsergroupsAssignmembers#USER_TABLE_GENERIC_SCREEN_NAME_2" />
 	</command>
 
-	<command name="SearchUserGroup" priority="4">
+	<command name="SearchUserGroup" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>

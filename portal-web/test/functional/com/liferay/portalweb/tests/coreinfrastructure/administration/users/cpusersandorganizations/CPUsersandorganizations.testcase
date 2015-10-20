@@ -665,7 +665,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserEmailAddressEqual" priority="4">
+	<command name="AddUserEmailAddressEqual" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -825,7 +825,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserEmailAddressUnderline" priority="4">
+	<command name="AddUserEmailAddressUnderline" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -909,7 +909,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserScreenNameInvalid" priority="4">
+	<command name="AddUserScreenNameInvalid" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -935,7 +935,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserScreenNameNumber" priority="4">
+	<command name="AddUserScreenNameNumber" priority="3">
 		<property name="custom.properties" value="users.screen.name.allow.numeric=true" />
 
 		<execute macro="Page#gotoCP">
@@ -1862,7 +1862,7 @@
 		<execute macro="Organization#viewMembersNotFoundCP" />
 	</command>
 
-	<command name="ViewBack" priority="4">
+	<command name="ViewBack" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

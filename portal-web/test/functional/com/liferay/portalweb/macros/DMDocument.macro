@@ -312,6 +312,9 @@
 		</if>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
+
+		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+
 		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="${dmDocumentTitle}" />
 
 		<if>

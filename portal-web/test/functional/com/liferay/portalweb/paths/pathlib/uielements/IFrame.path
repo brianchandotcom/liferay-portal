@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STRUCTURES</td>
+	<td>//iframe[contains(@src,'scopeTitle=Structures')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEMPLATES</td>
 	<td>//iframe[contains(@src,'scopeTitle=Templates')]</td>
 	<td></td>

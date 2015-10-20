@@ -123,7 +123,10 @@
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<if>
-			<condition function="IsVisible" locator1="ProductMenu#BACK_ARROW" />
+			<and>
+				<condition function="IsElementPresent" locator1="ProductMenu#BACK_ARROW" />
+				<condition function="IsVisible" locator1="ProductMenu#BACK_ARROW" />
+			</and>
 			<then>
 				<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
 			</then>

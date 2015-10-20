@@ -240,6 +240,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!-- CONTENT_AUDIO_LINK -->
+<tr>
+	<td>CONTENT_AUDIO_LINK_URL_FIELD</td>
+	<td>//input[@id='cke_99_textInput']</td>
+	<td></td>
+</tr>
 <!--CONTENT_IMAGE_LINK-->
 <tr>
 	<td>CONTENT_IMAGE_LINK</td>

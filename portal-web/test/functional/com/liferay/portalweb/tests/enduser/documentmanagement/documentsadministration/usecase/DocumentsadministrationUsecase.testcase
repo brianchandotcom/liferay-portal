@@ -704,7 +704,7 @@
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="Images" />
-			<var name="dmDocumentTypeFieldNames" value="Text Box,Date" />
+			<var name="dmDocumentTypeFieldNames" value="TextBox,Date" />
 			<var name="dmDocumentTypeName" value="Photos" />
 		</execute>
 

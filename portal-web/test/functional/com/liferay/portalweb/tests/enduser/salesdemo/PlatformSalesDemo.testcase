@@ -61,7 +61,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 

@@ -59,6 +59,14 @@
 			<var name="dmDocumentTitle" value="Document_1.mp3" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="Document_1.mp3" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Link#URL" value1="URL" />
+
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="dmDocumentURL" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -70,7 +78,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#uploadAudio" />
+		<execute macro="WebContent#uploadAudio">
+			<var name="dmDocumentURL" value="${dmDocumentURL}" />
+		</execute>
 
 		<execute macro="WebContent#publish" />
 
@@ -117,7 +127,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -677,7 +687,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -983,8 +993,10 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1488,6 +1500,12 @@
 			<var name="webContentTitle" value="WC WebContent 3 Title" />
 		</execute>
 
+		<execute macro="WebContentDisplayPortlet#configureSetupPG">
+			<var name="metadataNameList" value="Related Assets" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -1514,11 +1532,11 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#saveAsDraft" />
+		<execute function="AssertClickNoError" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute macro="WebContentStructures#viewTemplateValidation" />
 
-		<execute macro="WebContent#publish" />
+		<execute function="AssertClickNoError" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute macro="WebContentStructures#viewTemplateValidation" />
 	</command>

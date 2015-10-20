@@ -48,6 +48,10 @@
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 
+		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${assetTitle}" />
+
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
 		<execute function="Click" locator1="Button#CHOOSE" value1="Choose" />
 
 		<execute function="SelectFrameTop" />
@@ -791,7 +795,6 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="WCSelectDisplayPage#NAVIGATION_PUBLIC_PAGE" value1="Public Pages" />
 		<execute function="AssertClick" locator1="WCSelectDisplayPage#PUBLIC_PAGES_SELECTION" value1="${pageName}" />
 		<execute function="AssertTextEquals" locator1="WCSelectDisplayPage#SELECTED_PAGE_INFO_MESSAGE" value1="Public Pages > ${pageName}" />
 		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
@@ -1092,12 +1095,8 @@
 	</command>
 
 	<command name="uploadAudio">
-		<execute function="Click" locator1="WCEditWebContent#AUDIO_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#BROWSE_SERVER_BUTTON" value1="Browse Server" />
-		<execute function="Pause" locator1="10000" />
-		<execute function="SelectFrame" locator1="WCEditWebContent#BROWSE_IFRAME" />
-		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="Click#pauseClickAt" locator1="WCEditWebContent#AUDIO_BUTTON" />
+		<execute function="Type" locator1="CKEditor#CONTENT_AUDIO_LINK_URL_FIELD" value1="${dmDocumentURL}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#OK_BUTTON" value1="OK" />
 	</command>
 

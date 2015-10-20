@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SCRIPT_FIELD</td>
-	<td>//div[@class='palette-section' and contains(.,'Fields')]/ul/li/span[contains(.,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(@id,'fields')]//ul/li/span[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

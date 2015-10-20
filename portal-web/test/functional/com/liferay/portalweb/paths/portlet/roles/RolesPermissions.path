@@ -326,7 +326,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>

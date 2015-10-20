@@ -93,6 +93,11 @@
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Unsubscribe')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>URL</td>
+	<td>//a[contains(@class,'show-url-file')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

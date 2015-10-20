@@ -31,7 +31,7 @@
 			<execute macro="DMMetadataSet#addField">
 				<var name="field" value="${dmMetadataSetFieldName}" />
 				<var name="fieldFieldLabel" value="${dmMetadataSetFieldName}" />
-				<var method="StringUtil#replace('${dmMetadataSetFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${dmMetadataSetFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 

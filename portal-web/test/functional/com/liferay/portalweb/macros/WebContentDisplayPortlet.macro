@@ -84,6 +84,8 @@
 
 					<execute function="Pause" locator1="1000" />
 
+					<execute function="SelectFrameTop" />
+
 					<if>
 						<condition function="IsElementPresent#isVisible" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE_OFF" />
 						<then>
@@ -99,11 +101,13 @@
 		<if>
 			<equals arg1="${enableViewCountIncrement}" arg2="true" />
 			<then>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 				<execute function="Check" locator1="WCDConfiguration#ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX" />
+
+				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editTemplate">

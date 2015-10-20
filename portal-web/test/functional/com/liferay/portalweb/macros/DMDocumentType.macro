@@ -14,7 +14,7 @@
 			<execute macro="DMDocumentType#addField">
 				<var name="field" value="${dmDocumentTypeFieldName}" />
 				<var name="fieldFieldLabel" value="${dmDocumentTypeFieldName}" />
-				<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -63,7 +63,7 @@
 			<execute macro="DMDocumentType#addField">
 				<var name="field" value="${dmDocumentTypeFieldName}" />
 				<var name="fieldFieldLabel" value="${dmDocumentTypeFieldName}" />
-				<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -126,7 +126,7 @@
 					<execute macro="DMDocumentType#addField">
 						<var name="field" value="${dmDocumentTypeFieldName}" />
 						<var name="fieldFieldLabel" value="${dmDocumentTypeFieldName}" />
-						<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '_')" name="fieldName" />
+						<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '')" name="fieldName" />
 					</execute>
 				</for>
 			</then>

@@ -122,7 +122,12 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				<liferay-ui:message key="reindex-all-search-indexes" />
 			</td>
 			<td>
-				<aui:button cssClass="save-server-button" data-cmd="reindex" value="execute" />
+
+				<%
+				long timeout = ParamUtil.getLong(request, "timeout");
+				%>
+
+				<aui:button cssClass="save-server-button" data-blocking='<%= ParamUtil.getBoolean(request, "blocking", false) %>' data-cmd="reindex" data-timeout="<%= timeout == 0 ? StringPool.BLANK : timeout %>" value="execute" />
 			</td>
 		</tr>
 		<tr>

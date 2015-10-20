@@ -7552,16 +7552,9 @@ public class PortalImpl implements Portal {
 			portletCategory.equals(
 				PortletCategoryKeys.CONTROL_PANEL_SYSTEM) ||
 			portletCategory.equals(
-				PortletCategoryKeys.CONTROL_PANEL_USERS)) {
-
-			return null;
-		}
-		else if (portletCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
-			User user = UserLocalServiceUtil.fetchUser(userId);
-
-			if (user != null) {
-				return user.getGroup();
-			}
+				PortletCategoryKeys.CONTROL_PANEL_USERS) ||
+			portletCategory.equals(
+				PortletCategoryKeys.USER_MY_ACCOUNT)) {
 
 			return null;
 		}

@@ -37,6 +37,10 @@ import com.liferay.portal.util.PropsUtil;
 import java.io.FileReader;
 import java.io.FileWriter;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -146,9 +150,11 @@ public class Table {
 
 		boolean empty = true;
 
-		String tempFileName =
-			SystemProperties.get(SystemProperties.TMP_DIR) + "/temp-db-" +
-				_tableName + "-" + System.currentTimeMillis();
+		Path tempFilePath = Files.createTempFile(
+			Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)),
+			"/temp-db-" + _tableName + "-", null);
+
+		String tempFileName = tempFilePath.toString();
 
 		StopWatch stopWatch = new StopWatch();
 

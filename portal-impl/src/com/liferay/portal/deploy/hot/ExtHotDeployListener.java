@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.tools.WebXMLBuilder;
 import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.PortalUtil;
@@ -35,7 +34,12 @@ import com.liferay.util.ant.CopyTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.Map;
 import java.util.Set;
@@ -226,33 +230,36 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		ExtRegistry.registerExt(servletContext);
 	}
 
-	protected void mergeWebXml(String portalWebDir, String pluginWebDir) {
+	protected void mergeWebXml(String portalWebDir, String pluginWebDir)
+		throws IOException {
+
 		if (!FileUtil.exists(
 				pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/web.xml")) {
 
 			return;
 		}
 
-		String tmpDir =
-			SystemProperties.get(SystemProperties.TMP_DIR) + StringPool.SLASH +
-				Time.getTimestamp();
+		Path tempDirPath = Files.createTempDirectory(
+			Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)), null);
+
+		File tempDir = tempDirPath.toFile();
 
 		WebXMLBuilder.main(
 			new String[] {
 				portalWebDir + "WEB-INF/web.xml",
 				pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/web.xml",
-				tmpDir + "/web.xml"
+				tempDir.getAbsolutePath() + "/web.xml"
 			});
 
 		File portalWebXml = new File(portalWebDir + "WEB-INF/web.xml");
-		File tmpWebXml = new File(tmpDir + "/web.xml");
+		File tmpWebXml = new File(tempDir + "/web.xml");
 
 		tmpWebXml.setLastModified(portalWebXml.lastModified());
 
 		CopyTask.copyFile(
 			tmpWebXml, new File(portalWebDir + "WEB-INF"), true, true);
 
-		FileUtil.deltree(tmpDir);
+		FileUtil.deltree(tempDir);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

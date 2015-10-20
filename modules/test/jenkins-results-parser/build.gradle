@@ -23,13 +23,27 @@ deployWithDependencies {
 	into GradleUtil.getProperty(project, "destinationDir", (File)null)
 }
 
-task generateTestData(dependsOn: ["compileJava", "compileTestJava"], type: JavaExec) {
-	def console = System.console()
-	String url
-	if (console) {
-		url = console.readLine("> Please enter the Jenkins report URL: ")
-		main = "com.liferay.jenkins.results.junit.TestDataGenerator"
-		classpath = sourceSets.main.runtimeClasspath + files("${projectDir}/test-classes/unit")
-		args "${url}"
+gradle.taskGraph.whenReady { taskGraph ->
+	def reportURL = null
+
+	if(taskGraph.hasTask(':test:jenkins-results-parser:generateTestData')) {
+		def url = System.console().readLine("\n> Please enter the Jenkins report URL: ")
+
+		reportURL = new String(url)
 	}
+
+	if (reportURL != null && reportURL.length() > 0) {
+		javaexec {
+			main = "com.liferay.jenkins.results.junit.TestDataGenerator"
+
+			classpath = sourceSets.main.runtimeClasspath + files("${projectDir}/test-classes/unit")
+
+			args "${reportURL}"	
+		}
+	} else {
+		println "Aborting, you must provide a Jenkins report URL"
+	}
+}
+
+task generateTestData(dependsOn: ["compileJava", "compileTestJava"]) {
 }

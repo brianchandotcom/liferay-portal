@@ -28,7 +28,7 @@ task generateTestData(dependsOn: ["compileJava", "compileTestJava"], type: JavaE
 	String url
 	if (console) {
 		url = console.readLine("> Please enter the Jenkins report URL: ")
-		main = "com.liferay.jenkins.results.test.TestDataGenerator"
+		main = "com.liferay.jenkins.results.junit.TestDataGenerator"
 		classpath = sourceSets.main.runtimeClasspath + files("${projectDir}/test-classes/unit")
 		args "${url}"
 	}

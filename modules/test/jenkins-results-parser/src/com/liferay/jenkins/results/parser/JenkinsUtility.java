@@ -20,7 +20,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.net.URL;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,34 +39,36 @@ public class JenkinsUtility {
 		int bufferSize = 1024;
 		FileReader fileReader = null;
 		StringBuilder sb = new StringBuilder();
-		
+
 		try {
 			fileReader = new FileReader(file);
 			char[] readBuffer = new char[bufferSize];
-			while(true) {
+			while (true) {
 				int charsRead = 0;
 
 				charsRead = fileReader.read(readBuffer);
-				
+
 				if (charsRead > 0) {
 					sb.append(readBuffer, 0, charsRead);
 				}
-				
+
 				if (charsRead < bufferSize) {
 					break;
 				}
 			}
-		} finally {
+		}
+		finally {
 			if (fileReader != null) {
 				fileReader.close();
 			}
 		}
+
 		return sb.toString();
 	}
-	
+
 	public static String fixJSON(String json) {
 		json = json.replaceAll("\t", "&#09;");
-		json = json.replaceAll("\\\"", "&#34;");
+		json = json.replaceAll("\\\"", "&#34; ");
 		json = json.replaceAll("'", "&#39;");
 		json = json.replaceAll("\\(", "&#40;");
 		json = json.replaceAll("\\)", "&#41;");
@@ -79,7 +83,7 @@ public class JenkinsUtility {
 
 		return json;
 	}
-	
+
 	public static String fixURL(String url) {
 		if (url.contains("(")) {
 			url = url.replace("(", "%28");
@@ -99,43 +103,47 @@ public class JenkinsUtility {
 
 		return url;
 	}
-	
+
 	public static String getJobVariant(JSONObject jsonObject) {
 		try {
-		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
-		for (int i = 0; i < actionsJSONArray.length(); i++) {
-			Object object = actionsJSONArray.get(i);
+			for (int i = 0; i < actionsJSONArray.length(); i++) {
+				Object object = actionsJSONArray.get(i);
 
-			if (object.equals(org.json.JSONObject.NULL)) {
-				continue;
-			}
+				if (object.equals(org.json.JSONObject.NULL)) {
+					continue;
+				}
 
-			JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
+				JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(
+					i);
 
-			if (actionsJSONObject.has("parameters")) {
-				JSONArray parametersJSONArray = actionsJSONObject.getJSONArray("parameters");
+				if (actionsJSONObject.has("parameters")) {
+					JSONArray parametersJSONArray =
+						actionsJSONObject.getJSONArray("parameters");
 
-				for (int j = 0; j < parametersJSONArray.length(); j++) {
-					JSONObject parametersJSONObject = parametersJSONArray.getJSONObject(j);
+					for (int j = 0; j < parametersJSONArray.length(); j++) {
+						JSONObject parametersJSONObject =
+							parametersJSONArray.getJSONObject(j);
 
-					if ("JOB_VARIANT".contains(parametersJSONObject.getString("name"))) {
-						return parametersJSONObject.getString("value");
+						if ("JOB_VARIANT".contains(
+								parametersJSONObject.getString("name"))) {
+
+							return parametersJSONObject.getString("value");
+						}
 					}
 				}
 			}
-		}
 
-		return "";
-		} catch (JSONException je) {
+			return "";
+		}
+		catch (JSONException je) {
 			throw new RuntimeException(je);
 		}
 	}
-	
-	public static String getLocalURL(String remoteURL) {
-		Pattern pattern = Pattern.compile("https://test.liferay.com/([0-9]+)/");
 
-		Matcher matcher = pattern.matcher(remoteURL);
+	public static String getLocalURL(String remoteURL) {
+		Matcher matcher = _pattern1.matcher(remoteURL);
 
 		if (matcher.find()) {
 			StringBuilder sb = new StringBuilder();
@@ -149,9 +157,7 @@ public class JenkinsUtility {
 			return remoteURL.replaceAll(matcher.group(0), sb.toString());
 		}
 
-		pattern = Pattern.compile("https://(test-[0-9]+-[0-9]+).liferay.com/");
-
-		matcher = pattern.matcher(remoteURL);
+		matcher = _pattern2.matcher(remoteURL);
 
 		if (matcher.find()) {
 			StringBuilder sb = new StringBuilder();
@@ -165,11 +171,12 @@ public class JenkinsUtility {
 
 		return remoteURL;
 	}
-	
+
 	public static JSONObject toJSONObject(String url) throws IOException {
 		try {
 			return new JSONObject(toString(fixURL(url)));
-		} catch (JSONException je) {
+		}
+		catch (JSONException je) {
 			throw new RuntimeException(je);
 		}
 	}
@@ -178,7 +185,8 @@ public class JenkinsUtility {
 		StringBuilder sb = new StringBuilder();
 		URL urlObject = new URL(fixURL(url));
 
-		InputStreamReader inputStreamReader = new InputStreamReader(urlObject.openStream());
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			urlObject.openStream());
 
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -193,15 +201,16 @@ public class JenkinsUtility {
 
 		return sb.toString();
 	}
-	
+
 	public static void writeFile(File file, String content) throws IOException {
 		if (file.exists()) {
 			file.delete();
 		}
-		
+
 		file.createNewFile();
 
 		FileWriter writer = null;
+
 		try {
 			writer = new FileWriter(file);
 			writer.write(content);
@@ -210,5 +219,11 @@ public class JenkinsUtility {
 		finally {
 			writer.close();
 		}
-	}		
+	}
+
+	private static final Pattern _pattern1 = Pattern.compile(
+		"https://test.liferay.com/([0-9]+)/");
+	private static final Pattern _pattern2 = Pattern.compile(
+		"https://(test-[0-9]+-[0-9]+).liferay.com/");
+
 }

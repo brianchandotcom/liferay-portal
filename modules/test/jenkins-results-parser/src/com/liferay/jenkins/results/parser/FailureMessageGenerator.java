@@ -12,23 +12,27 @@
  * details.
  */
 
-/**
- * @author Peter Yoo
- */
 package com.liferay.jenkins.results.parser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.tools.ant.Project;
+
 import org.json.JSONObject;
 
+/**
+ * @author Peter Yoo
+ */
 public class FailureMessageGenerator {
-	
-	public static String getFailureMessage(Project project, String buildURL) throws Exception {
+
+	public static String getFailureMessage(Project project, String buildURL)
+		throws Exception {
+
 		StringBuilder sb = new StringBuilder();
 
-		String consoleOutput = JenkinsUtility.toString(JenkinsUtility.getLocalURL(buildURL + "/logText/progressiveText"));
+		String consoleOutput = JenkinsUtility.toString(
+			JenkinsUtility.getLocalURL(buildURL + "/logText/progressiveText"));
 
 		if (consoleOutput.indexOf("--abort") != -1) {
 			sb.append("<p>Please fix <strong>rebase errors</strong> on ");
@@ -75,20 +79,31 @@ public class FailureMessageGenerator {
 			sb.append(".</strong></p>");
 		}
 		else if (buildURL.contains("portal-acceptance")) {
-			JSONObject jsonObject = JenkinsUtility.toJSONObject(JenkinsUtility.getLocalURL(buildURL + "api/json"));
+			JSONObject jsonObject = JenkinsUtility.toJSONObject(
+				JenkinsUtility.getLocalURL(buildURL + "api/json"));
 
 			String jobVariant = JenkinsUtility.getJobVariant(jsonObject);
 
-			if (buildURL.contains("plugins") || jobVariant.contains("plugins")) {
-				sb.append("<p>To include a plugin fix for this pull request, please edit your ");
+			if (buildURL.contains("plugins") ||
+				jobVariant.contains("plugins")) {
+
+				sb.append(
+					"<p>To include a plugin fix for this pull request, please" +
+					" edit your ");
 				sb.append("<a href=\\\"https://github.com/");
-				sb.append(project.getProperty("github.pull.request.head.username"));
+				sb.append(
+					project.getProperty("github.pull.request.head.username"));
 				sb.append("/");
 				sb.append(project.getProperty("portal.repository"));
 				sb.append("/blob/");
-				sb.append(project.getProperty("github.pull.request.head.branch"));
-				sb.append("/git-commit-plugins\\\">git-commit-plugins</a>. Click ");
-				sb.append("<a href=\\\"https://in.liferay.com/web/global.engineering/blog/-/blogs/new-tests-for-the-pull-request-tester-\\\">here</a>");
+				sb.append(
+					project.getProperty("github.pull.request.head.branch"));
+				sb.append(
+					"/git-commit-plugins\\\">git-commit-plugins</a>. Click ");
+				sb.append(
+					"<a href=\\\"https://in.liferay.com/web/global.engineeri" +
+					"ng/blog/-/blogs/new-tests-for-the-pull-request-tester-" +
+					"\\\">here</a>");
 				sb.append(" for more details.</p>");
 			}
 		}
@@ -115,9 +130,7 @@ public class FailureMessageGenerator {
 			consoleOutput = consoleOutput.substring(0, x);
 		}
 
-		Pattern pattern = Pattern.compile("\\n[a-z\\-\\.]+\\:\\n");
-
-		Matcher matcher = pattern.matcher(consoleOutput);
+		Matcher matcher = _pattern.matcher(consoleOutput);
 
 		while (matcher.find()) {
 			x = matcher.start() + 1;
@@ -141,5 +154,8 @@ public class FailureMessageGenerator {
 
 		return sb.toString();
 	}
-	
+
+	private static final Pattern _pattern = Pattern.compile(
+		"\\n[a-z\\-\\.]+\\:\\n");
+
 }

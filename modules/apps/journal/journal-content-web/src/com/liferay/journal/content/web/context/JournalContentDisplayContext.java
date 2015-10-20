@@ -88,13 +88,7 @@ public class JournalContentDisplayContext {
 			return;
 		}
 
-		JournalArticle article = getArticle();
-		JournalArticleDisplay articleDisplay = getArticleDisplay();
-
-		if ((article == null) || !hasViewPermission() ||
-			(articleDisplay == null) || isExpired() || article.isScheduled()
-			|| article.isPending()) {
-
+		if (!isShowArticle()) {
 			portletRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
@@ -583,6 +577,40 @@ public class JournalContentDisplayContext {
 		return _showAddArticleIcon;
 	}
 
+	public boolean isShowArticle() throws PortalException {
+		if (_showArticle != null) {
+			return _showArticle;
+		}
+
+		JournalArticle article = getArticle();
+
+		if (article == null) {
+			_showArticle = false;
+
+			return _showArticle;
+		}
+
+		JournalArticleDisplay articleDisplay = getArticleDisplay();
+
+		if (articleDisplay == null) {
+			_showArticle = false;
+
+			return _showArticle;
+		}
+
+		if (!hasViewPermission() || isExpired() || article.isScheduled() ||
+			article.isPending()) {
+
+			_showArticle = false;
+
+			return _showArticle;
+		}
+
+		_showArticle = true;
+
+		return _showArticle;
+	}
+
 	public boolean isShowEditArticleIcon() throws PortalException {
 		if (_showEditArticleIcon != null) {
 			return _showEditArticleIcon;
@@ -706,6 +734,7 @@ public class JournalContentDisplayContext {
 	private final PortletResponse _portletResponse;
 	private Boolean _print;
 	private Boolean _showAddArticleIcon;
+	private Boolean _showArticle;
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;
 	private Boolean _showIconsActions;

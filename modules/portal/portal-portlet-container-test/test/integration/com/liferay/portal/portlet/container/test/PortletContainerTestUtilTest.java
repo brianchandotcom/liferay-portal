@@ -104,24 +104,20 @@ public class PortletContainerTestUtilTest {
 	}
 
 	@Test
-	public void testGetHttpServletRequestWithNullGroup() {
+	public void testGetHttpServletRequestWithNullGroup() throws Exception {
 		try {
 			PortletContainerTestUtil.getHttpServletRequest(null, _layout);
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof IllegalArgumentException);
-			Assert.assertEquals("Arguments cannot be null.", e.getMessage());
+		catch (NullPointerException npe) {
 		}
 	}
 
 	@Test
-	public void testGetHttpServletRequestWithNullLayout() {
+	public void testGetHttpServletRequestWithNullLayout() throws Exception {
 		try {
 			PortletContainerTestUtil.getHttpServletRequest(_group, null);
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof IllegalArgumentException);
-			Assert.assertEquals("Arguments cannot be null.", e.getMessage());
+		catch (NullPointerException npe) {
 		}
 	}
 

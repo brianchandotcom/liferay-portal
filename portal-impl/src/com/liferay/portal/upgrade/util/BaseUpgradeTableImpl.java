@@ -37,10 +37,6 @@ public abstract class BaseUpgradeTableImpl extends Table {
 		super(tableName);
 	}
 
-	public BaseUpgradeTableImpl(String tableName, Object[][] columns) {
-		super(tableName, columns);
-	}
-
 	public String[] getIndexesSQL() throws Exception {
 		return _indexesSQL;
 	}

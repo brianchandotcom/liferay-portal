@@ -180,14 +180,16 @@ AUI.add(
 
 						var selectAllCheckBoxes = instance._getSelectAllCheckBoxes();
 
-						selectAllCheckBoxes.attr(
-							{
-								checked: checked,
-								indeterminate: partial
-							}
-						);
+						partial = partial && checked;
 
-						selectAllCheckBoxes.toggleClass(STR_SELECTED_PARTIAL, partial);
+						selectAllCheckBoxes.attr(ATTR_CHECKED, checked);
+
+						if (A.UA.gecko > 0 || A.UA.ie > 0) {
+							selectAllCheckBoxes.attr('indeterminate', partial);
+						}
+						else {
+							selectAllCheckBoxes.toggleClass(STR_SELECTED_PARTIAL, partial);
+						}
 					},
 
 					_updateItemsCount: function(itemsCount) {

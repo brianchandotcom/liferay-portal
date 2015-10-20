@@ -404,20 +404,19 @@ AUI.add(
 				restoreTask: function(state, params, node) {
 					var container = node.one('#' + params.containerId);
 
-					var offScreenElementsHtml = AArray.reduce(
+					var offScreenElementsHtml = '';
+
+					AArray.each(
 						state.data.elements,
-						STR_BLANK,
-						function(prevVal, item) {
+						function(item) {
 							var input = container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
 
 							if (input) {
 								input.attr('checked', true);
 							}
 							else {
-								prevVal += Lang.sub(TPL_HIDDEN_INPUT, currentValue);
+								offScreenElementsHtml += Lang.sub(TPL_HIDDEN_INPUT, item);
 							}
-
-							return prevVal;
 						}
 					);
 

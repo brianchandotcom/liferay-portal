@@ -62,7 +62,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  classPK the primary key of the DDM structure, if the primary key
 	 *         of the DDMStructure class is given as the
 	 *         <code>classNameId</code> parameter, the primary key of the class
@@ -173,7 +173,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  classPK the primary key of the DDM structure, if the primary key
 	 *         of the DDMStructure class is given as the
 	 *         <code>classNameId</code> parameter, the primary key of the class
@@ -516,7 +516,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         is related to a DDM structure, the primary key of the class name
 	 *         associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
 	 *         class name is given as the <code>className</code> parameter, the
 	 *         primary key of the class associated with the web content article,
@@ -811,7 +811,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
@@ -934,7 +934,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
@@ -1280,7 +1280,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the class name associated with the
 	 *         article, or JournalArticleConstants.CLASSNAME_ID_DEFAULT in the
-	 *         journal-api otherwise
+	 *         journal-api module otherwise
 	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
 	 *         class name is given as the <code>className</code> parameter, the
 	 *         primary key of the class associated with the web content article,
@@ -1620,7 +1620,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -1690,7 +1690,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -1771,7 +1771,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -1844,7 +1844,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -1897,7 +1897,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -1958,7 +1958,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
-	 *         otherwise
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally

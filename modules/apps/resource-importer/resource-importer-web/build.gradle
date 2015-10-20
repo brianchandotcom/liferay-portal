@@ -1,0 +1,7 @@
+dependencies {
+	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

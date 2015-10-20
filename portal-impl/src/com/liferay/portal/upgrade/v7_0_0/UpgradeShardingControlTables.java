@@ -125,37 +125,17 @@ public class UpgradeShardingControlTables extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		List<String> shardNames;
+		List<String> shardNames = new ArrayList<>();
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			String sql = "select count(*) from Shard";
-
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
-
-			int shardsCount = 0;
-
-			if (rs.next()) {
-				shardsCount = rs.getInt(1);
-			}
-
-			shardNames = new ArrayList<>(shardsCount);
-
-			if (shardsCount == 0) {
-				return shardNames;
-			}
-
-			sql = "select name from Shard";
-
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement("select name from Shard");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				shardNames.add(rs.getString(1));
+				shardNames.add(rs.getString("name"));
 			}
 		}
 		finally {

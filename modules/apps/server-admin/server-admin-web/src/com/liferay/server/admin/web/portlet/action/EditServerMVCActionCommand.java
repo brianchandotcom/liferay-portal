@@ -14,7 +14,7 @@
 
 package com.liferay.server.admin.web.portlet.action;
 
-import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.mail.service.MailService;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
@@ -76,7 +76,7 @@ import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryU
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
+import com.liferay.portal.service.ServiceComponentLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -112,6 +112,7 @@ import javax.portlet.WindowState;
 import org.apache.log4j.Level;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -462,6 +463,18 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setMailService(MailService mailService) {
+		_mailService = mailService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setServiceComponentLocalService(
+		ServiceComponentLocalService serviceComponentLocalService) {
+
+		_serviceComponentLocalService = serviceComponentLocalService;
+	}
+
 	protected void shutdown(ActionRequest actionRequest) throws Exception {
 		if (ShutdownUtil.isInProcess()) {
 			ShutdownUtil.cancel();
@@ -794,7 +807,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		portletPreferences.store();
 
-		MailServiceUtil.clearSession();
+		_mailService.clearSession();
 	}
 
 	protected void validateCaptcha(ActionRequest actionRequest)
@@ -844,7 +857,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void verifyPluginTables() throws Exception {
-		ServiceComponentLocalServiceUtil.verifyDB();
+		_serviceComponentLocalService.verifyDB();
 	}
 
 	private static final String
@@ -859,5 +872,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditServerMVCActionCommand.class);
+
+	private MailService _mailService;
+	private ServiceComponentLocalService _serviceComponentLocalService;
 
 }

@@ -14,17 +14,33 @@
 
 package com.liferay.portal.settings.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.settings.web.constants.PortalSettingsWebKeys;
+
+import java.io.IOException;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pei-Jung Lan
  * @author Philip Jones
+ * @author Tomas Polesovsky
  */
 @Component(
 	immediate = true, property = {"service.ranking:Integer=70"},
@@ -45,6 +61,26 @@ public class CompanySettingsAuthenticationFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(
+			PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES,
+			_tabs.values());
+
+		String[] tabNamesArray = _tabs.keySet().toArray(
+			new String[_tabs.size()]);
+
+		String tabNames = StringUtil.merge(tabNamesArray);
+
+		request.setAttribute(
+			PortalSettingsWebKeys.AUTHENTICATION_TAB_NAMES, tabNames);
+
+		super.include(request, response);
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
 		unbind = "-"
@@ -53,9 +89,40 @@ public class CompanySettingsAuthenticationFormNavigatorEntry
 		super.setServletContext(servletContext);
 	}
 
+	@Deactivate
+	protected void deactivated() {
+		_tabs.clear();
+	}
+
 	@Override
 	protected String getJspPath() {
 		return "/authentication.jsp";
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(portalSettingsAuthenticationTabName=*)"
+	)
+	protected void setDynamicInclude(
+		DynamicInclude dynamicInclude, Map<String, Object> properties) {
+
+		String tabName = MapUtil.getString(
+			properties, "portalSettingsAuthenticationTabName");
+
+		_tabs.put(tabName, dynamicInclude);
+	}
+
+	protected void unsetDynamicInclude(
+		DynamicInclude dynamicInclude, Map<String, Object> properties) {
+
+		String tabName = MapUtil.getString(
+			properties, "portalSettingsAuthenticationTabName");
+
+		_tabs.remove(tabName);
+	}
+
+	private final Map<String, DynamicInclude> _tabs = new ConcurrentHashMap<>();
 
 }

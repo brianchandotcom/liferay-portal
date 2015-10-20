@@ -1524,7 +1524,7 @@ public class SitesImpl implements Sites {
 		}
 
 		String portletTitle = PortalUtil.getPortletTitle(
-			sourcePortletId, languageId);
+			PortletConstants.getRootPortletId(sourcePortletId), languageId);
 
 		String newPortletTitle = PortalUtil.getNewPortletTitle(
 			portletTitle, String.valueOf(sourceLayout.getLayoutId()),

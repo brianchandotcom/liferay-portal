@@ -266,14 +266,14 @@
 			getAvailableLangPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, "available_languages.jsp", jsLastModified) %>';
 			},
+			getCKEditorPath: function() {
+				return '<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>';
+			},
 			getCombine: function() {
 				return <%= themeDisplay.isThemeJsFastLoad() %>;
 			},
 			getComboPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", jsLastModified) %>&';
-			},
-			getEditorsPath: function() {
-				return '<%= themeDisplay.getPathEditors() %>';
 			},
 			getFilter: function() {
 				var filter = 'raw';

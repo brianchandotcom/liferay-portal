@@ -16,29 +16,6 @@
 
 <%@ include file="/portlet/init.jsp" %>
 
-<%
-PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
-
-List<PanelCategory> childPanelCategories = panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT, permissionChecker, themeDisplay.getScopeGroup());
-
-PanelCategory firstChildPanelCategory = childPanelCategories.get(0);
-
-String rootPanelCategoryKey = firstChildPanelCategory.getKey();
-
-if (Validator.isNotNull(themeDisplay.getPpid())) {
-	PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
-
-	for (PanelCategory panelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
-		if (panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory)) {
-			rootPanelCategoryKey = panelCategory.getKey();
-
-			break;
-		}
-	}
-}
-%>
-
 <h4 class="sidebar-header">
 	<span class="company-details">
 		<img alt="" class="company-logo" src="<%= themeDisplay.getCompanyLogo() %>" />
@@ -51,10 +28,12 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 <ul class="nav nav-tabs product-menu-tabs">
 
 	<%
+	List<PanelCategory> childPanelCategories = productMenuDisplayContext.getChildPanelCategories();
+
 	for (PanelCategory childPanelCategory : childPanelCategories) {
 	%>
 
-		<li class="<%= "col-xs-" + (12 / childPanelCategories.size()) %> <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
+		<li class="<%= "col-xs-" + (12 / childPanelCategories.size()) %> <%= Validator.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? "active" : StringPool.BLANK %>">
 			<a aria-expanded="true" data-toggle="tab" href="#<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>">
 				<div class="product-menu-tab-icon">
 					<span class="<%= childPanelCategory.getIconCssClass() %> icon-monospaced"></span>
@@ -79,7 +58,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 		for (PanelCategory childPanelCategory : childPanelCategories) {
 		%>
 
-			<div class="fade in tab-pane <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>">
+			<div class="fade in tab-pane <%= Validator.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>">
 				<liferay-application-list:panel-content panelCategory="<%= childPanelCategory %>" />
 			</div>
 
@@ -106,27 +85,20 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 			<ul class="user-subheading">
 
 				<%
-				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, QueryUtil.ALL_POS);
-
-				for (Group mySiteGroup : mySiteGroups) {
+				Group mySiteGroup = productMenuDisplayContext.getMySiteGroup();
 				%>
 
-					<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
-						<li>
-							<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, false) %>" label="profile" />
-						</li>
-					</c:if>
+				<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
+					<li>
+						<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, false) %>" label="profile" />
+					</li>
+				</c:if>
 
-					<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
-						<li>
-							<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, true) %>" label="dashboard" />
-						</li>
-					</c:if>
-
-				<%
-				}
-				%>
-
+				<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
+					<li>
+						<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, true) %>" label="dashboard" />
+					</li>
+				</c:if>
 			</ul>
 		</div>
 

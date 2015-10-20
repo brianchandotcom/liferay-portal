@@ -85,7 +85,7 @@ if (sapEntry != null) {
 
 	<aui:input cssClass="hide" helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />
 
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="false" var="getMethodsURL">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="getMethodsURL">
 		<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="getMethods" />
 	</liferay-portlet:resourceURL>
 

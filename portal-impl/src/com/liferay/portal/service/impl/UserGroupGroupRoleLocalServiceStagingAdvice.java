@@ -14,40 +14,53 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.service.UserGroupGroupRoleLocalService;
+
 /**
  * @author Tomas Polesovsky
  */
 public class UserGroupGroupRoleLocalServiceStagingAdvice
 	extends LiveGroupStagingAdvice {
 
-	@Override
-	public void replaceStagingGroupIds(String methodName, Object[] arguments) {
-		if (methodName.equals("addUserGroupGroupRoles")) {
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("deleteUserGroupGroupRoles") &&
-				 (arguments.length == 2) && (arguments[0] instanceof Long) &&
-				 (arguments[1] instanceof Integer)) {
+	public UserGroupGroupRoleLocalServiceStagingAdvice()
+		throws NoSuchMethodException {
 
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("deleteUserGroupGroupRoles")) {
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("deleteUserGroupGroupRolesByGroupId")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("getUserGroupGroupRoles") &&
-				 (arguments.length == 2) && (arguments[1] instanceof Long)) {
+		super(UserGroupGroupRoleLocalService.class);
 
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("getUserGroupGroupRolesByGroupAndRole")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("hasUserGroupGroupRole")) {
-			replace(arguments, 1);
-		}
+		initCustomMethod(
+			"addUserGroupGroupRoles", 1, long.class, long.class, long[].class);
+
+		initCustomMethod(
+			"addUserGroupGroupRoles", 1, long[].class, long.class, long.class);
+
+		initCustomMethod("deleteUserGroupGroupRoles", 0, long.class, int.class);
+
+		initCustomMethod(
+			"deleteUserGroupGroupRoles", 1, long.class, long.class,
+			long[].class);
+
+		initCustomMethod(
+			"deleteUserGroupGroupRoles", 1, long.class, long[].class);
+
+		initCustomMethod(
+			"deleteUserGroupGroupRoles", 1, long[].class, long.class);
+
+		initCustomMethod(
+			"deleteUserGroupGroupRoles", 1, long[].class, long.class,
+			long.class);
+
+		initCustomMethod("deleteUserGroupGroupRolesByGroupId", 0, long.class);
+
+		initCustomMethod("getUserGroupGroupRoles", 1, long.class, long.class);
+
+		initCustomMethod(
+			"getUserGroupGroupRolesByGroupAndRole", 0, long.class, long.class);
+
+		initCustomMethod(
+			"hasUserGroupGroupRole", 1, long.class, long.class, long.class);
+
+		initCustomMethod(
+			"hasUserGroupGroupRole", 1, long.class, long.class, String.class);
 	}
 
 }

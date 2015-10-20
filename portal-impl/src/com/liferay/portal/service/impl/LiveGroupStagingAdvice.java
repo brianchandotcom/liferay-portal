@@ -15,8 +15,9 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
@@ -38,30 +39,42 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 
-	public void initCustomMethod(Method method, Integer[] argumentIndexes) {
-		_customMethods.put(method, argumentIndexes);
+	public LiveGroupStagingAdvice(Class localServiceClass) {
+		_localServiceClass = localServiceClass;
 	}
 
-	public void initGroupServiceBuilderMethods(Class relatedEntityClass) {
-		if (Validator.isNull(relatedEntityClass)) {
-			return;
+	public void initCustomMethod(
+			String methodName, Integer index, Class... parameterTypes)
+		throws NoSuchMethodException {
+
+		Method customMethod = _localServiceClass.getMethod(
+			methodName, parameterTypes);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Registering " + customMethod);
 		}
 
-		String className = relatedEntityClass.getName();
+		_customMethods.put(customMethod, new Integer[] {index});
+	}
+
+	public void initGroupServiceBuilderMethods() {
+		String className = _localServiceClass.getSimpleName();
 		String relatedEntityName = className.substring(
 			0, className.length() - _LOCAL_SERVICE.length());
 
-		Method[] relatedEntityMethods = relatedEntityClass.getMethods();
+		Method[] relatedEntityMethods = _localServiceClass.getMethods();
 
-		String[] templates = getServiceBuilderTemplates();
-
-		for (String template : templates) {
+		for (String template : _SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES) {
 			String serviceBuilderMethodName = StringUtil.replace(
 				template, "$1", relatedEntityName);
 
 			for (Method method : relatedEntityMethods) {
 				if (method.getName().equals(serviceBuilderMethodName)) {
 					_serviceBuilderGeneratedMethods.add(method);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug("Registering " + method);
+					}
 				}
 			}
 		}
@@ -78,14 +91,6 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		replaceStagingGroupIdsInCustomMethod(methodInvocation);
 
 		return methodInvocation.proceed();
-	}
-
-	protected String[] getServiceBuilderTemplates() {
-		return SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES;
-	}
-
-	protected int getServiceBuilderTemplatesArgumentIndex() {
-		return 0;
 	}
 
 	protected Group replace(Group group) {
@@ -225,22 +230,26 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 
 		Object[] arguments = methodInvocation.getArguments();
 
-		replace(arguments, getServiceBuilderTemplatesArgumentIndex());
+		replace(arguments, 0);
 	}
-
-	protected static final String[] SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES =
-		new String[] {
-			"addGroup$1", "addGroup$1s", "clearGroup$1s", "deleteGroup$1",
-			"deleteGroup$1s", "getGroup$1s", "getGroup$1sCount", "hasGroup$1",
-			"hasGroup$1s", "setGroup$1s", "unsetGroup$1s"
-		};
 
 	@BeanReference(type = GroupLocalService.class)
 	protected GroupLocalService groupLocalService;
 
 	private static final String _LOCAL_SERVICE = "LocalService";
 
+	private static final String[] _SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES =
+		new String[] {
+			"addGroup$1", "addGroup$1s", "clearGroup$1s", "deleteGroup$1",
+			"deleteGroup$1s", "getGroup$1s", "getGroup$1sCount", "hasGroup$1",
+			"hasGroup$1s", "setGroup$1s", "unsetGroup$1s"
+		};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiveGroupStagingAdvice.class);
+
 	private final Map<Method, Integer[]> _customMethods = new HashMap<>();
+	private final Class _localServiceClass;
 	private final List<Method> _serviceBuilderGeneratedMethods =
 		new ArrayList<>();
 

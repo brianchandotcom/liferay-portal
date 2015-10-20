@@ -14,55 +14,54 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.service.UserGroupRoleLocalService;
+
 /**
  * @author Tomas Polesovsky
  */
 public class UserGroupRoleLocalServiceStagingAdvice
 	extends LiveGroupStagingAdvice {
 
-	@Override
-	public void replaceStagingGroupIds(String methodName, Object[] arguments) {
-		if (methodName.equals("addUserGroupRoles")) {
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("deleteUserGroupRoles") &&
-				 (arguments.length == 2) && (arguments[0] instanceof Long) &&
-				 (arguments[1] instanceof Integer)) {
+	public UserGroupRoleLocalServiceStagingAdvice()
+		throws NoSuchMethodException {
 
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("deleteUserGroupRoles")) {
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("deleteUserGroupRolesByGroupId")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("getUserGroupRoles") &&
-				 ((arguments.length == 4) ||
-				  ((arguments.length == 2) &&
-				   (arguments[1] instanceof Long)))) {
+		super(UserGroupRoleLocalService.class);
 
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("getUserGroupRolesByGroup")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("getUserGroupRolesByGroupAndRole")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals(
-					"getUserGroupRolesByUserUserGroupAndGroup")) {
-
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("getUserGroupRolesCount") &&
-				 (arguments.length == 2)) {
-
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("hasUserGroupRole")) {
-			replace(arguments, 1);
-		}
+		initCustomMethod(
+			"addUserGroupRoles", 1, long.class, long.class, long[].class);
+		initCustomMethod(
+			"addUserGroupRoles", 1, long[].class, long.class, long.class);
+		initCustomMethod("deleteUserGroupRoles", 0, long.class, int.class);
+		initCustomMethod(
+			"deleteUserGroupRoles", 1, long.class, long.class, long[].class);
+		initCustomMethod("deleteUserGroupRoles", 1, long.class, long[].class);
+		initCustomMethod("deleteUserGroupRoles", 1, long[].class, long.class);
+		initCustomMethod(
+			"deleteUserGroupRoles", 1, long[].class, long.class, long.class);
+		initCustomMethod(
+			"deleteUserGroupRoles", 1, long[].class, long.class, int.class);
+		initCustomMethod("deleteUserGroupRolesByGroupId", 0, long.class);
+		initCustomMethod("getUserGroupRoles", 1, long.class, long.class);
+		initCustomMethod(
+			"getUserGroupRoles", 1, long.class, long.class, int.class,
+			int.class);
+		initCustomMethod("getUserGroupRolesByGroup", 0, long.class);
+		initCustomMethod(
+			"getUserGroupRolesByGroupAndRole", 0, long.class, long.class);
+		initCustomMethod(
+			"getUserGroupRolesByUserUserGroupAndGroup", 1, long.class,
+			long.class);
+		initCustomMethod("getUserGroupRolesCount", 1, long.class, long.class);
+		initCustomMethod(
+			"hasUserGroupRole", 1, long.class, long.class, long.class);
+		initCustomMethod(
+			"hasUserGroupRole", 1, long.class, long.class, long.class,
+			boolean.class);
+		initCustomMethod(
+			"hasUserGroupRole", 1, long.class, long.class, String.class);
+		initCustomMethod(
+			"hasUserGroupRole", 1, long.class, long.class, String.class,
+			boolean.class);
 	}
 
 }

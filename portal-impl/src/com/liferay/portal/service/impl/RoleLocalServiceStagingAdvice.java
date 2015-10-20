@@ -14,44 +14,35 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.service.RoleLocalService;
+
+import java.util.List;
+
 /**
  * @author Tomas Polesovsky
  */
 public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
-	public RoleLocalServiceStagingAdvice() {
-		initGroupServiceBuilderMethods("Role");
-	}
+	public RoleLocalServiceStagingAdvice() throws NoSuchMethodException {
+		super(RoleLocalService.class);
 
-	@Override
-	public void replaceStagingGroupIds(String methodName, Object[] arguments) {
-		if (methodName.equals("getDefaultGroupRole")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("getGroupRelatedRoles")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("getTeamRoleMap")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("getTeamRoles")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("getUserGroupGroupRoles")) {
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("getUserGroupGroupRolesCount")) {
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("getUserGroupRoles")) {
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("getUserRelatedRoles")) {
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("getUserRelatedRoles")) {
-			replace(arguments, 1);
-		}
+		initGroupServiceBuilderMethods();
+
+		initCustomMethod("getDefaultGroupRole", 0, long.class);
+		initCustomMethod("getGroupRelatedRoles", 0, long.class);
+		initCustomMethod("getTeamRoleMap", 0, long.class);
+		initCustomMethod("getTeamRoles", 0, long.class);
+		initCustomMethod("getTeamRoles", 0, long.class, long[].class);
+		initCustomMethod("getUserGroupGroupRoles", 1, long.class, long.class);
+		initCustomMethod(
+			"getUserGroupGroupRoles", 1, long.class, long.class, int.class,
+			int.class);
+		initCustomMethod(
+			"getUserGroupGroupRolesCount", 1, long.class, long.class);
+		initCustomMethod("getUserGroupRoles", 1, long.class, long.class);
+		initCustomMethod("getUserRelatedRoles", 1, long.class, long.class);
+		initCustomMethod("getUserRelatedRoles", 1, long.class, long[].class);
+		initCustomMethod("getUserRelatedRoles", 1, long.class, List.class);
 	}
 
 }

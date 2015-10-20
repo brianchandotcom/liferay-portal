@@ -14,20 +14,19 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.service.UserGroupLocalService;
+
 /**
  * @author Tomas Polesovsky
  */
 public class UserGroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
-	public UserGroupLocalServiceStagingAdvice() {
-		initGroupServiceBuilderMethods("UserGroup");
-	}
+	public UserGroupLocalServiceStagingAdvice() throws NoSuchMethodException {
+		super(UserGroupLocalService.class);
 
-	@Override
-	public void replaceStagingGroupIds(String methodName, Object[] arguments) {
-		if (methodName.equals("getGroupUserUserGroups")) {
-			replace(arguments, 0);
-		}
+		initGroupServiceBuilderMethods();
+
+		initCustomMethod("getGroupUserUserGroups", 0, long.class, long.class);
 	}
 
 }

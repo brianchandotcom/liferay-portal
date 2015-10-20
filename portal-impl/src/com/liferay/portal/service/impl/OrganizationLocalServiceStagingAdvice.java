@@ -14,21 +14,23 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.service.OrganizationLocalService;
+
 /**
  * @author Tomas Polesovsky
  */
 public class OrganizationLocalServiceStagingAdvice
 	extends LiveGroupStagingAdvice {
 
-	public OrganizationLocalServiceStagingAdvice() {
-		initGroupServiceBuilderMethods("Organization");
-	}
+	public OrganizationLocalServiceStagingAdvice()
+		throws NoSuchMethodException {
 
-	@Override
-	public void replaceStagingGroupIds(String methodName, Object[] arguments) {
-		if (methodName.equals("getGroupUserOrganizations")) {
-			replace(arguments, 0);
-		}
+		super(OrganizationLocalService.class);
+
+		initGroupServiceBuilderMethods();
+
+		initCustomMethod(
+			"getGroupUserOrganizations", 0, long.class, long.class);
 	}
 
 }

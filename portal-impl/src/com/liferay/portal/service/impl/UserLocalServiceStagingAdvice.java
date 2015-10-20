@@ -14,31 +14,34 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalService;
+
 /**
  * @author Tomas Polesovsky
  */
 public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
-	public UserLocalServiceStagingAdvice() {
-		initGroupServiceBuilderMethods("User");
-	}
+	public UserLocalServiceStagingAdvice() throws NoSuchMethodException {
+		super(UserLocalService.class);
 
-	@Override
-	public void replaceStagingGroupIds(String methodName, Object[] arguments) {
-		if (methodName.equals("getGroupUserIds")) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("searchSocial") && (arguments.length == 5) &&
-				 (arguments[1] instanceof Long[])) {
+		initGroupServiceBuilderMethods();
 
-			replace(arguments, 1);
-		}
-		else if (methodName.equals("searchSocial") && (arguments.length == 6)) {
-			replace(arguments, 0);
-		}
-		else if (methodName.equals("unsetGroupTeamsUsers")) {
-			replace(arguments, 0);
-		}
+		initCustomMethod("getGroupUserIds", 0, long.class);
+
+		initCustomMethod(
+			"searchSocial", 1, long.class, long[].class, String.class,
+			int.class, int.class);
+
+		initCustomMethod(
+			"searchSocial", 0, long[].class, long.class, int[].class,
+			String.class, int.class, int.class);
+
+		initCustomMethod(
+			"updateGroups", 1, long.class, long[].class, ServiceContext.class);
+
+		initCustomMethod("unsetGroupTeamsUsers", 0, long.class, long[].class);
+
 	}
 
 }

@@ -13,8 +13,9 @@
 	<bean id="com.liferay.portal.service.impl.GroupLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.GroupLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" />
-	<bean id="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.OrganizationLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.OrganizationLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.RoleLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.RoleLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.UserGroupLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.UserGroupLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.UserGroupRoleLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.UserGroupRoleLocalServiceStagingAdvice" />
@@ -35,8 +36,9 @@
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.GroupLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.GroupLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutSetLocalService)" />
-		<aop:advisor advice-ref="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.PortletPreferencesLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.OrganizationLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.OrganizationLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.PortletPreferencesLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.RoleLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.RoleLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.UserGroupGroupRoleLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.UserGroupLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.UserGroupLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.UserGroupRoleLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.UserGroupRoleLocalService)" />

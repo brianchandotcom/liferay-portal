@@ -40,7 +40,7 @@ import com.liferay.portal.security.sso.openid.OpenIdProvider;
 import com.liferay.portal.security.sso.openid.OpenIdProviderRegistry;
 import com.liferay.portal.security.sso.openid.constants.OpenIdWebKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -370,7 +370,7 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 
 		String openId = normalize(authSuccess.getIdentity());
 
-		User user = UserLocalServiceUtil.fetchUserByOpenId(
+		User user = _userLocalService.fetchUserByOpenId(
 			themeDisplay.getCompanyId(), openId);
 
 		if (user != null) {
@@ -426,7 +426,7 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		user = UserLocalServiceUtil.addUser(
+		user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
@@ -472,7 +472,7 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 			discoveryInformation, portletURL.toString(),
 			themeDisplay.getPortalURL());
 
-		if (UserLocalServiceUtil.fetchUserByOpenId(
+		if (_userLocalService.fetchUserByOpenId(
 				themeDisplay.getCompanyId(), openId) != null) {
 
 			response.sendRedirect(authRequest.getDestinationUrl(true));
@@ -482,11 +482,11 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 
 		String screenName = getScreenName(openId);
 
-		User user = UserLocalServiceUtil.fetchUserByScreenName(
+		User user = _userLocalService.fetchUserByScreenName(
 			themeDisplay.getCompanyId(), screenName);
 
 		if (user != null) {
-			UserLocalServiceUtil.updateOpenId(user.getUserId(), openId);
+			_userLocalService.updateOpenId(user.getUserId(), openId);
 
 			response.sendRedirect(authRequest.getDestinationUrl(true));
 
@@ -521,6 +521,11 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 	@Reference
 	protected void setOpenId(OpenId openId) {
 		_openId = openId;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	protected String[] splitFullName(String fullName) {
@@ -560,5 +565,6 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 	private final Map<String, String> _forwards = new HashMap<>();
 	private OpenId _openId;
 	private OpenIdProviderRegistry _openIdProviderRegistry;
+	private UserLocalService _userLocalService;
 
 }

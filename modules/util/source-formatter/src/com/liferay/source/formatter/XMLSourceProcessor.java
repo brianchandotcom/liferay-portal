@@ -370,8 +370,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"**/.bnd/**", "**/.idea/**", "**/.ivy/**", "**/bin/**",
 			"**/javadocs-*.xml", "**/logs/**", "**/portal-impl/**/*.action",
 			"**/portal-impl/**/*.function", "**/portal-impl/**/*.macro",
-			"**/portal-impl/**/*.testcase", "**/test-classes/unit/**",
-			"**/test-results/**", "**/test/unit/**", "**/tools/node**"
+			"**/portal-impl/**/*.testcase", "**/src/test/**",
+			"**/test-classes/unit/**", "**/test-results/**", "**/test/unit/**",
+			"**/tools/node**"
 		};
 
 		_numericalPortletNameElementExclusionFiles = getPropertyList(

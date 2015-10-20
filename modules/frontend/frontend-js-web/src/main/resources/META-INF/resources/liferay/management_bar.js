@@ -129,7 +129,7 @@ AUI.add(
 						var selectAllCheckBoxes = instance._selectAllCheckBoxes;
 
 						if (!selectAllCheckBoxes) {
-							selectAllCheckBoxes = instance.all(instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR));
+							selectAllCheckBoxes = instance.get('secondaryBar').all(instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR));
 
 							instance._selectAllCheckBoxes = selectAllCheckBoxes;
 						}
@@ -179,6 +179,10 @@ AUI.add(
 
 					_toggleSelectAll: function(event) {
 						var instance = this;
+
+						if (!event.currentTarget.ancestor('#' + instance.get('secondaryBar').attr('id'))) {
+							event.preventDefault();
+						}
 
 						var checked = event.currentTarget.attr(ATTR_CHECKED);
 

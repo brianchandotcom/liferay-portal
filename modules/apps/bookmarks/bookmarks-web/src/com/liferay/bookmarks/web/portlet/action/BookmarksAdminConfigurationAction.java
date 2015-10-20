@@ -16,7 +16,7 @@ package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -72,6 +72,13 @@ public class BookmarksAdminConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
+	@Reference(unbind = "-")
+	protected void setBookmarksFolderLocalService(
+		BookmarksFolderLocalService bookmarksFolderLocalService) {
+
+		_bookmarksFolderLocalService = bookmarksFolderLocalService;
+	}
+
 	protected void validateRootFolder(ActionRequest actionRequest)
 		throws Exception {
 
@@ -80,12 +87,14 @@ public class BookmarksAdminConfigurationAction
 
 		if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			try {
-				BookmarksFolderLocalServiceUtil.getFolder(rootFolderId);
+				_bookmarksFolderLocalService.getFolder(rootFolderId);
 			}
 			catch (NoSuchFolderException nsfe) {
 				SessionErrors.add(actionRequest, "rootFolderIdInvalid");
 			}
 		}
 	}
+
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

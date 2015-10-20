@@ -18,7 +18,7 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.FolderNameException;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -31,7 +31,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
@@ -41,6 +41,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -77,13 +78,12 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
 				BookmarksFolder folder =
-					BookmarksFolderServiceUtil.moveFolderToTrash(
-						deleteFolderId);
+					_bookmarksFolderService.moveFolderToTrash(deleteFolderId);
 
 				trashedModels.add(folder);
 			}
 			else {
-				BookmarksFolderServiceUtil.deleteFolder(deleteFolderId);
+				_bookmarksFolderService.deleteFolder(deleteFolderId);
 			}
 		}
 
@@ -146,8 +146,20 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setBookmarksFolderService(
+		BookmarksFolderService bookmarksFolderService) {
+
+		_bookmarksFolderService = bookmarksFolderService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
 	}
 
 	protected void subscribeFolder(ActionRequest actionRequest)
@@ -158,7 +170,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		BookmarksFolderServiceUtil.subscribeFolder(
+		_bookmarksFolderService.subscribeFolder(
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
@@ -170,7 +182,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		BookmarksFolderServiceUtil.unsubscribeFolder(
+		_bookmarksFolderService.unsubscribeFolder(
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
@@ -189,16 +201,19 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			BookmarksFolder.class.getName(), actionRequest);
 
 		if (folderId <= 0) {
-			BookmarksFolderServiceUtil.addFolder(
+			_bookmarksFolderService.addFolder(
 				parentFolderId, name, description, serviceContext);
 		}
 		else if (mergeWithParentFolder) {
-			BookmarksFolderServiceUtil.mergeFolders(folderId, parentFolderId);
+			_bookmarksFolderService.mergeFolders(folderId, parentFolderId);
 		}
 		else {
-			BookmarksFolderServiceUtil.updateFolder(
+			_bookmarksFolderService.updateFolder(
 				folderId, parentFolderId, name, description, serviceContext);
 		}
 	}
+
+	private BookmarksFolderService _bookmarksFolderService;
+	private TrashEntryService _trashEntryService;
 
 }

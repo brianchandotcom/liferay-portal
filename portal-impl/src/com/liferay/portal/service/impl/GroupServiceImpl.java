@@ -752,27 +752,31 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			}
 		}
 
-		UserBag userBag = UserBagFactoryUtil.create(userId);
+		if (ArrayUtil.contains(classNames, Group.class.getName()) ||
+			ArrayUtil.contains(classNames, Organization.class.getName())) {
 
-		if (ArrayUtil.contains(classNames, Group.class.getName())) {
-			for (Group group : userBag.getUserGroups()) {
-				if (group.isActive() && group.isSite()) {
-					if (userSiteGroups.add(group) &&
-						(userSiteGroups.size() == max)) {
+			UserBag userBag = UserBagFactoryUtil.create(userId);
 
-						return new ArrayList<>(userSiteGroups);
+			if (ArrayUtil.contains(classNames, Group.class.getName())) {
+				for (Group group : userBag.getUserGroups()) {
+					if (group.isActive() && group.isSite()) {
+						if (userSiteGroups.add(group) &&
+							(userSiteGroups.size() == max)) {
+
+							return new ArrayList<>(userSiteGroups);
+						}
 					}
 				}
 			}
-		}
 
-		if (ArrayUtil.contains(classNames, Organization.class.getName())) {
-			for (Group group : userBag.getUserOrgGroups()) {
-				if (group.isActive() && group.isSite()) {
-					if (userSiteGroups.add(group) &&
-						(userSiteGroups.size() == max)) {
+			if (ArrayUtil.contains(classNames, Organization.class.getName())) {
+				for (Group group : userBag.getUserOrgGroups()) {
+					if (group.isActive() && group.isSite()) {
+						if (userSiteGroups.add(group) &&
+							(userSiteGroups.size() == max)) {
 
-						return new ArrayList<>(userSiteGroups);
+							return new ArrayList<>(userSiteGroups);
+						}
 					}
 				}
 			}

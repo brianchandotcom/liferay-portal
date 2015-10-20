@@ -39,11 +39,6 @@ public class BaseOutputProcessorTestCase {
 				}
 
 				@Override
-				public int read(byte[] bytes) throws IOException {
-					throw ioException;
-				}
-
-				@Override
 				public int read(byte[] bytes, int offset, int length)
 					throws IOException {
 

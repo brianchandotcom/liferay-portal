@@ -16,8 +16,8 @@ package com.liferay.journal.web.webdav;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDavUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -126,7 +127,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<>();
 
 		List<DDMStructure> ddmStructures =
-			DDMStructureLocalServiceUtil.getStructures(
+			_ddmStructureLocalService.getStructures(
 				webDAVRequest.getGroupId(),
 				PortalUtil.getClassNameId(JournalArticle.class));
 
@@ -146,7 +147,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<>();
 
 		List<DDMTemplate> ddmTemplates =
-			DDMTemplateLocalServiceUtil.getTemplatesByStructureClassNameId(
+			_ddmTemplateLocalService.getTemplatesByStructureClassNameId(
 				webDAVRequest.getGroupId(),
 				PortalUtil.getClassNameId(JournalArticle.class),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
@@ -161,5 +162,22 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		return resources;
 	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

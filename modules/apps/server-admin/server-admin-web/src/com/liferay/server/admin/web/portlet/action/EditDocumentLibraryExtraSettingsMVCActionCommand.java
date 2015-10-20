@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoPresetUtil;
@@ -33,6 +33,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -103,7 +104,16 @@ public class EditDocumentLibraryExtraSettingsMVCActionCommand
 				themeDisplay.getCompanyId(), keys[i], presets[i]);
 		}
 
-		DLFileEntryLocalServiceUtil.convertExtraSettings(keys);
+		_dlFileEntryLocalService.convertExtraSettings(keys);
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.cache.memory.internal;
 
-import com.liferay.portal.cache.test.TestPortalCacheListener;
-import com.liferay.portal.cache.test.TestPortalCacheManager;
-import com.liferay.portal.cache.test.TestPortalCacheReplicator;
-import com.liferay.portal.kernel.cache.AbstractPortalCache;
+import com.liferay.portal.cache.AbstractPortalCache;
+import com.liferay.portal.cache.test.common.TestPortalCacheListener;
+import com.liferay.portal.cache.test.common.TestPortalCacheManager;
+import com.liferay.portal.cache.test.common.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;

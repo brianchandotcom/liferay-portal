@@ -358,34 +358,32 @@ public class PortletContainerTestUtil {
 	}
 
 	private static FileItem[] _getFileItems(Class<?> clazz, String dependency)
-		throws Exception {
+		throws IOException {
 
 		InputStream inputStream = clazz.getResourceAsStream(dependency);
 
 		byte[] bytes = FileUtil.getBytes(inputStream);
 
-		FileItem[] fileItems = new FileItem[2];
+		LiferayFileItem[] liferayFileItems = new LiferayFileItem[2];
 
 		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(
 			UploadServletRequestImpl.getTempDir());
 
-		for (int i = 0; i < fileItems.length; i++) {
-			LiferayFileItem liferayFileItem = fileItemFactory.createItem(
+		for (int i = 0; i < liferayFileItems.length; i++) {
+			liferayFileItems[i] = fileItemFactory.createItem(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				true, RandomTestUtil.randomString());
 
-			OutputStream outputStream = liferayFileItem.getOutputStream();
+			OutputStream outputStream = liferayFileItems[i].getOutputStream();
 
 			outputStream.write(bytes);
 
 			outputStream.flush();
 
 			outputStream.close();
-
-			fileItems[i] = liferayFileItem;
 		}
 
-		return fileItems;
+		return liferayFileItems;
 	}
 
 }

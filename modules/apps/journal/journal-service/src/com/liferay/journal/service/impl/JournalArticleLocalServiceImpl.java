@@ -1278,18 +1278,19 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Deletes all web content articles and their resources matching the group,
-	 * class name and class PK
+	 * Deletes all the group's web content articles and resources matching the
+	 * class name and class primary key.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the primary key of the class name
-	 *         associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	 * @param  classPK the primary key of the DDM structure, if the the
-	 *         DDMStructure class name is given as the <code>className</code>
-	 *         parameter, the primary key of the class associated with the web
-	 *         content article, or <code>0</code> otherwise
+	 *         associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
+	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
+	 *         class name is given as the <code>className</code> parameter, the
+	 *         primary key of the class associated with the web content article,
+	 *         or <code>0</code> otherwise
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override

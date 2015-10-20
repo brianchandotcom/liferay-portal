@@ -256,40 +256,43 @@ if (sapEntry != null) {
 		}
 
 		function updateFriendlyModeInputs() {
-			var advancedInput = A.one('#<portlet:namespace />allowedServiceSignatures').val();
 			var contentBox = A.one('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox');
+
+			contentBox.all('.lfr-form-row:not(.hide)').remove();
+
+			var advancedInput = A.one('#<portlet:namespace />allowedServiceSignatures').val();
+
 			var entries = advancedInput.split('\n');
-			var rows = contentBox.all('.lfr-form-row:not(.hide)');
 
-			rows.remove();
+			entries = A.Array.dedupe(entries);
 
-			for (var i = 0; i < entries.length; i++) {
-				var entry = entries[i];
-				var row = rowTemplate.clone();
+			entries.forEach(
+				function(item, index) {
+					var row = rowTemplate.clone();
 
-				if (entry.length) {
-					var serviceInput = row.one('.service-class');
-					var methodInput = row.one('.method-name');
+					if (item) {
+						var serviceInput = row.one('.service-class');
+						var methodInput = row.one('.method-name');
 
-					entry = entry.split('#');
+						item = item.split('#');
 
-					contentBox.append(row);
+						var serviceClass = item[0];
+						var method = item[1];
 
-					initAutoCompleteRow(row);
+						serviceInput.val(serviceClass);
 
-					serviceInput.val(entry[0]);
-					serviceInput.attr('data-service-class', entry[0]);
+						serviceInput.attr('data-service-class', serviceClass);
 
-					if (entry[1]) {
-						methodInput.val(entry[1]);
+						if (method) {
+							methodInput.val(method);
+						}
+
+						initAutoCompleteRow(row);
+
+						contentBox.append(row);
 					}
 				}
-				else {
-					contentBox.append(row);
-
-					initAutoCompleteRow(row);
-				}
-			}
+			);
 		}
 
 		function initAutoCompleteRow(rowNode) {

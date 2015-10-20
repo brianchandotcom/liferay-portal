@@ -679,8 +679,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 <aui:script>
 	function <portlet:namespace />addProduct() {
-		var url = '
-		<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
+		var url = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
 
 		if (document.<portlet:namespace />fm.<portlet:namespace />keywords) {
 			url += '&<portlet:namespace />name=' + document.<portlet:namespace />fm.<portlet:namespace />keywords.value;

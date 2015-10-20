@@ -45,7 +45,7 @@
 				<equals arg1="${userGroupNameVariation}" arg2="Number" />
 				<then>
 					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid name." />
+					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The User Group Name cannot be blank, numeric or a reserved word such as null. The User Group Name cannot contain the following invalid characters: , *." />
 				</then>
 			</elseif>
 			<else>

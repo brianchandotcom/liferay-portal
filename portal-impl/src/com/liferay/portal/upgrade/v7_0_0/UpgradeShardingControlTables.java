@@ -16,6 +16,8 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
@@ -58,37 +60,48 @@ public class UpgradeShardingControlTables extends UpgradeProcess {
 		Connection sourceConnection =
 			DataAccess.getUpgradeOptimizedConnection();
 
-		updateUpgradeTable(
-			sourceConnection, targetConnection, ClassNameTable.TABLE_NAME,
-			ClassNameTable.TABLE_COLUMNS, ClassNameTable.TABLE_SQL_CREATE);
-		updateUpgradeTable(
-			sourceConnection, targetConnection, ClusterGroupTable.TABLE_NAME,
-			ClusterGroupTable.TABLE_COLUMNS,
-			ClusterGroupTable.TABLE_SQL_CREATE);
-		updateUpgradeTable(
-			sourceConnection, targetConnection, CounterTable.TABLE_NAME,
-			CounterTable.TABLE_COLUMNS, CounterTable.TABLE_SQL_CREATE);
-		updateUpgradeTable(
-			sourceConnection, targetConnection, CountryTable.TABLE_NAME,
-			CountryTable.TABLE_COLUMNS, CountryTable.TABLE_SQL_CREATE);
-		updateUpgradeTable(
-			sourceConnection, targetConnection,
-			PortalPreferencesTable.TABLE_NAME,
-			PortalPreferencesTable.TABLE_COLUMNS,
-			PortalPreferencesTable.TABLE_SQL_CREATE);
-		updateUpgradeTable(
-			sourceConnection, targetConnection, RegionTable.TABLE_NAME,
-			RegionTable.TABLE_COLUMNS, RegionTable.TABLE_SQL_CREATE);
-		updateUpgradeTable(
-			sourceConnection, targetConnection, ReleaseTable.TABLE_NAME,
-			ReleaseTable.TABLE_COLUMNS, ReleaseTable.TABLE_SQL_CREATE);
-		updateUpgradeTable(
-			sourceConnection, targetConnection, ResourceActionTable.TABLE_NAME,
-			ResourceActionTable.TABLE_COLUMNS,
-			ResourceActionTable.TABLE_SQL_CREATE);
-		updateUpgradeTable(
-			sourceConnection, targetConnection, VirtualHostTable.TABLE_NAME,
-			VirtualHostTable.TABLE_COLUMNS, VirtualHostTable.TABLE_SQL_CREATE);
+		try {
+			updateUpgradeTable(
+				sourceConnection, targetConnection, ClassNameTable.TABLE_NAME,
+				ClassNameTable.TABLE_COLUMNS, ClassNameTable.TABLE_SQL_CREATE);
+			updateUpgradeTable(
+				sourceConnection, targetConnection,
+				ClusterGroupTable.TABLE_NAME, ClusterGroupTable.TABLE_COLUMNS,
+				ClusterGroupTable.TABLE_SQL_CREATE);
+			updateUpgradeTable(
+				sourceConnection, targetConnection, CounterTable.TABLE_NAME,
+				CounterTable.TABLE_COLUMNS, CounterTable.TABLE_SQL_CREATE);
+			updateUpgradeTable(
+				sourceConnection, targetConnection, CountryTable.TABLE_NAME,
+				CountryTable.TABLE_COLUMNS, CountryTable.TABLE_SQL_CREATE);
+			updateUpgradeTable(
+				sourceConnection, targetConnection,
+				PortalPreferencesTable.TABLE_NAME,
+				PortalPreferencesTable.TABLE_COLUMNS,
+				PortalPreferencesTable.TABLE_SQL_CREATE);
+			updateUpgradeTable(
+				sourceConnection, targetConnection, RegionTable.TABLE_NAME,
+				RegionTable.TABLE_COLUMNS, RegionTable.TABLE_SQL_CREATE);
+			updateUpgradeTable(
+				sourceConnection, targetConnection, ReleaseTable.TABLE_NAME,
+				ReleaseTable.TABLE_COLUMNS, ReleaseTable.TABLE_SQL_CREATE);
+			updateUpgradeTable(
+				sourceConnection, targetConnection,
+				ResourceActionTable.TABLE_NAME,
+				ResourceActionTable.TABLE_COLUMNS,
+				ResourceActionTable.TABLE_SQL_CREATE);
+			updateUpgradeTable(
+				sourceConnection, targetConnection, VirtualHostTable.TABLE_NAME,
+				VirtualHostTable.TABLE_COLUMNS,
+				VirtualHostTable.TABLE_SQL_CREATE);
+		}
+		catch (Exception e) {
+			_log.error("Unexpected errors while moving the control tables", e);
+		}
+		finally {
+			DataAccess.cleanUp(sourceConnection);
+			DataAccess.cleanUp(targetConnection);
+		}
 	}
 
 	protected void copyControlTablesToShards(List<String> shardNames)
@@ -157,5 +170,8 @@ public class UpgradeShardingControlTables extends UpgradeProcess {
 
 		upgradeTable.updateTable(sourceConnection, targetConnection, false);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeShardingControlTables.class);
 
 }

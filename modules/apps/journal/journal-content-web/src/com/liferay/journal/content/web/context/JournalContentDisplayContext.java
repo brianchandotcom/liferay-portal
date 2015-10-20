@@ -84,11 +84,7 @@ public class JournalContentDisplayContext {
 		_journalContentPortletInstanceConfiguration =
 			journalContentPortletInstanceConfiguration;
 
-		if (Validator.isNotNull(getPortletResource())) {
-			return;
-		}
-
-		if (!isShowArticle()) {
+		if (Validator.isNull(getPortletResource()) && !isShowArticle()) {
 			portletRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}

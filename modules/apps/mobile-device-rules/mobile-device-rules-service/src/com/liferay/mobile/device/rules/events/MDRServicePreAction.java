@@ -19,7 +19,7 @@ import com.liferay.mobile.device.rules.internal.MDRRuleGroupInstanceImpl;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
-import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRActionLocalService;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward Han
@@ -120,7 +121,7 @@ public class MDRServicePreAction extends Action {
 		}
 
 		try {
-			List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(
+			List<MDRAction> mdrActions = _mdrActionLocalService.getActions(
 				mdrRuleGroupInstance.getRuleGroupInstanceId());
 
 			ActionHandlerManagerUtil.applyActions(
@@ -133,7 +134,16 @@ public class MDRServicePreAction extends Action {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setMDRActionLocalService(
+		MDRActionLocalService mdrActionLocalService) {
+
+		_mdrActionLocalService = mdrActionLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MDRServicePreAction.class);
+
+	private MDRActionLocalService _mdrActionLocalService;
 
 }

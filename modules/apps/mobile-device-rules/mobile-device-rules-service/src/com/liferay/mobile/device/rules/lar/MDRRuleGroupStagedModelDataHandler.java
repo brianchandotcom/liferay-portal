@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -28,6 +28,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -40,7 +41,7 @@ public class MDRRuleGroupStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MDRRuleGroup ruleGroup) {
-		MDRRuleGroupLocalServiceUtil.deleteRuleGroup(ruleGroup);
+		_mdrRuleGroupLocalService.deleteRuleGroup(ruleGroup);
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class MDRRuleGroupStagedModelDataHandler
 	public MDRRuleGroup fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
+		return _mdrRuleGroupLocalService.fetchMDRRuleGroupByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -67,7 +68,7 @@ public class MDRRuleGroupStagedModelDataHandler
 	public List<MDRRuleGroup> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MDRRuleGroupLocalServiceUtil.getMDRRuleGroupsByUuidAndCompanyId(
+		return _mdrRuleGroupLocalService.getMDRRuleGroupsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MDRRuleGroup>());
 	}
@@ -116,26 +117,33 @@ public class MDRRuleGroupStagedModelDataHandler
 			if (existingRuleGroup == null) {
 				serviceContext.setUuid(ruleGroup.getUuid());
 
-				importedRuleGroup = MDRRuleGroupLocalServiceUtil.addRuleGroup(
+				importedRuleGroup = _mdrRuleGroupLocalService.addRuleGroup(
 					portletDataContext.getScopeGroupId(),
 					ruleGroup.getNameMap(), ruleGroup.getDescriptionMap(),
 					serviceContext);
 			}
 			else {
-				importedRuleGroup =
-					MDRRuleGroupLocalServiceUtil.updateRuleGroup(
-						existingRuleGroup.getRuleGroupId(),
-						ruleGroup.getNameMap(), ruleGroup.getDescriptionMap(),
-						serviceContext);
+				importedRuleGroup = _mdrRuleGroupLocalService.updateRuleGroup(
+					existingRuleGroup.getRuleGroupId(), ruleGroup.getNameMap(),
+					ruleGroup.getDescriptionMap(), serviceContext);
 			}
 		}
 		else {
-			importedRuleGroup = MDRRuleGroupLocalServiceUtil.addRuleGroup(
+			importedRuleGroup = _mdrRuleGroupLocalService.addRuleGroup(
 				portletDataContext.getScopeGroupId(), ruleGroup.getNameMap(),
 				ruleGroup.getDescriptionMap(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(ruleGroup, importedRuleGroup);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupLocalService(
+		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
+
+		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
+	}
+
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

@@ -92,7 +92,8 @@ public class JournalContentDisplayContext {
 		JournalArticleDisplay articleDisplay = getArticleDisplay();
 
 		if ((article == null) || !hasViewPermission() ||
-			(articleDisplay == null) || isExpired() || article.isScheduled()) {
+			(articleDisplay == null) || isExpired() || article.isScheduled()
+			|| article.isPending()) {
 
 			portletRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);

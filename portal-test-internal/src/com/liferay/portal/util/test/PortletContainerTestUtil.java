@@ -48,7 +48,6 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,7 +140,7 @@ public class PortletContainerTestUtil {
 			new MockMultipartHttpServletRequest();
 
 		mockMultipartHttpServletRequest.setContentType(
-			"multipart/form-data;boundary=" + new Date().getTime());
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
 		MockMultipartFile multipartFile = new MockMultipartFile(
 			fileNameParameter, bytes);

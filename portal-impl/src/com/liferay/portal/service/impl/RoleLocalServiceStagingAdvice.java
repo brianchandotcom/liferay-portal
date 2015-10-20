@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.service.RoleLocalService;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,6 +44,11 @@ public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initCustomMethod("getUserRelatedRoles", 1, long.class, long.class);
 		initCustomMethod("getUserRelatedRoles", 1, long.class, long[].class);
 		initCustomMethod("getUserRelatedRoles", 1, long.class, List.class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(
+		new String[] {"getGroupPrimaryKeys"});
 
 }

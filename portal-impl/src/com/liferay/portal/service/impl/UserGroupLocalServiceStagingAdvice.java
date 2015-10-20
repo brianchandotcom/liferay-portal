@@ -16,6 +16,9 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.service.UserGroupLocalService;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Tomas Polesovsky
  */
@@ -27,6 +30,11 @@ public class UserGroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initGroupServiceBuilderMethods();
 
 		initCustomMethod("getGroupUserUserGroups", 0, long.class, long.class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(
+		new String[] {"getGroupPrimaryKeys"});
 
 }

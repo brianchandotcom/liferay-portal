@@ -16,6 +16,9 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.service.UserGroupGroupRoleLocalService;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Tomas Polesovsky
  */
@@ -61,6 +64,18 @@ public class UserGroupGroupRoleLocalServiceStagingAdvice
 
 		initCustomMethod(
 			"hasUserGroupGroupRole", 1, long.class, long.class, String.class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST =
+		Arrays.asList(new String[] {
+			"addUserGroupGroupRole", "createUserGroupGroupRole",
+			"deleteUserGroupGroupRole", "deleteUserGroupGroupRolesByRoleId",
+			"deleteUserGroupGroupRolesByUserGroupId", "fetchUserGroupGroupRole",
+			"getUserGroupGroupRole", "getUserGroupGroupRoles",
+			"getUserGroupGroupRolesByUser", "getUserGroupGroupRolesCount",
+			"updateUserGroupGroupRole"
+		});
 
 }

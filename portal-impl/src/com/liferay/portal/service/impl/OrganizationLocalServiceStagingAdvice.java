@@ -16,6 +16,9 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.service.OrganizationLocalService;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Tomas Polesovsky
  */
@@ -31,6 +34,11 @@ public class OrganizationLocalServiceStagingAdvice
 
 		initCustomMethod(
 			"getGroupUserOrganizations", 0, long.class, long.class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(
+		new String[] {"getGroupPrimaryKeys"});
 
 }

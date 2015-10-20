@@ -574,7 +574,15 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
+				<if>
+					<equals arg1="${portletName}" arg2="Workflow Configuration" />
+					<then>
+						<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM_2" value1="${portletName}" />
+					</then>
+					<else>
+						<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
+					</else>
+				</if>
 			</then>
 		</if>
 

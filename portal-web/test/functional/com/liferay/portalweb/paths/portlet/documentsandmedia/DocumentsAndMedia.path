@@ -174,27 +174,27 @@
 <!--LIST_DOCUMENT-->
 <tr>
 	<td>LIST_DOCUMENT</td>
-	<td>//table[@class='table table-list']//tr[contains(.,'DM Folder Document Title')]</td>
+	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_DOCUMENT_CHECKBOX</td>
-	<td>//table[@class='table table-list']//tr[contains(.,'DM Folder Document Title')]/td/input</td>
+	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]/td/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_DOCUMENT_ACTIONS</td>
-	<td>//table[@class='table table-list']//tr[contains(.,'DM Folder Document Title')]//span/div/a</td>
+	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]//span/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_DOCUMENT_TITLE</td>
-	<td>//table[@class='table table-list']//tr[contains(.,'DM Folder Document Title')]/td[2]/div/span</td>
+	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]/td[2]/div/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_DOCUMENT_WORKFLOW_STATUS</td>
-	<td>//table[@class='table table-list']//tr[contains(.,'DM Folder Document Title')]//span[@class='workflow-status']/strong</td>
+	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
 <tr>

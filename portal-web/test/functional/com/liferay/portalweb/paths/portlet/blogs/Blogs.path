@@ -124,12 +124,12 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_AUTHOR</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_TABLE_CREATE_DATE</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td[4]/a</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[4]/span</td>
 	<td></td>
 </tr>
 <tr>

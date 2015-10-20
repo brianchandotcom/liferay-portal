@@ -1718,10 +1718,10 @@ public class JournalArticleLocalServiceImpl
 	 *         associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
 	 *         otherwise
-	 * @param  classPK the primary key of the DDM structure, if the the
-	 *         DDMStructure class name is given as the <code>className</code>
-	 *         parameter, the primary key of the class associated with the web
-	 *         content article, or <code>0</code> otherwise
+	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
+	 *         class name is given as the <code>className</code> parameter, the
+	 *         primary key of the class associated with the web content article,
+	 *         or <code>0</code> otherwise
 	 * @return the matching web content article
 	 * @throws PortalException if a matching web content article could not be
 	 *         found

@@ -517,10 +517,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         associated with the article, or
 	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
 	 *         otherwise
-	 * @param  classPK the primary key of the DDM structure, if the the
-	 *         DDMStructure class name is given as the <code>className</code>
-	 *         parameter, the primary key of the class associated with the web
-	 *         content article, or <code>0</code> otherwise
+	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
+	 *         class name is given as the <code>className</code> parameter, the
+	 *         primary key of the class associated with the web content article,
+	 *         or <code>0</code> otherwise
 	 * @return the matching web content article
 	 * @throws PortalException if a matching web content article could not be
 	 *         found or if the user did not have permission to view the web
@@ -1306,7 +1306,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Moves all versions of the the web content article matching the group and
+	 * Moves all versions of the web content article matching the group and
 	 * article ID to the folder.
 	 *
 	 * @param      groupId the primary key of the web content article's group
@@ -1329,7 +1329,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Moves all versions of the the web content article matching the group and
+	 * Moves all versions of the web content article matching the group and
 	 * article ID to the folder.
 	 *
 	 * @param  groupId the primary key of the web content article's group
@@ -1474,8 +1474,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  languageId the primary key of the language locale to remove
 	 * @throws PortalException if the user did not have permission to update any
-	 *         one of the the web content articles or if web content matching
-	 *         the language could not be found for any one of the articles
+	 *         one of the web content articles or if web content matching the
+	 *         language could not be found for any one of the articles
 	 */
 	@Override
 	public void removeArticleLocale(long companyId, String languageId)

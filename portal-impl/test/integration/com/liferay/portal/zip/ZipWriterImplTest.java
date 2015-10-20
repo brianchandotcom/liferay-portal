@@ -23,7 +23,12 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,17 +55,17 @@ public class ZipWriterImplTest {
 	}
 
 	@Before
-	public void setUp() {
-		_tempZipFilePath =
-			SystemProperties.get(SystemProperties.TMP_DIR) +
-				File.separatorChar + System.currentTimeMillis() + "-file.zip";
+	public void setUp() throws IOException {
+		Path tempZipFilePath = Files.createTempFile(
+			Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)), "-file",
+			".zip");
+
+		_tempZipFile = tempZipFilePath.toFile();
 	}
 
 	@Test
 	public void testAddEntryFromBytes() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		File dependencyFile = DependenciesTestUtil.getDependencyAsFile(
 			getClass(), _ENTRY_FILE_PATH);
@@ -84,9 +89,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromBytesThatAreEmpty() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		zipWriter.addEntry("empty.txt", new byte[0]);
 
@@ -103,9 +106,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromInputStream() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		zipWriter.addEntry(
 			_ENTRY_FILE_PATH,
@@ -127,9 +128,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromInputStreamThatIsNull() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		InputStream nullableInputStream = null;
 
@@ -150,9 +149,7 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromInputStreamThatStartsWithSlash()
 		throws Exception {
 
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		zipWriter.addEntry(
 			"/" + _ENTRY_FILE_PATH,
@@ -174,9 +171,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromString() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		zipWriter.addEntry("string.txt", "This is a string.");
 
@@ -194,9 +189,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilder() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -218,9 +211,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilderThatIsEmpty() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -239,9 +230,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilderThatIsNull() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		StringBuilder sb = null;
 
@@ -260,9 +249,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringThatIsEmpty() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		String string = "";
 
@@ -281,9 +268,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringThatIsNull() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		String string = null;
 
@@ -312,9 +297,7 @@ public class ZipWriterImplTest {
 
 		file.delete();
 
-		File zipFile = new File(_tempZipFilePath);
-
-		zipWriter = new ZipWriterImpl(zipFile);
+		zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		Assert.assertNotNull(zipWriter);
 
@@ -322,16 +305,14 @@ public class ZipWriterImplTest {
 
 		Assert.assertNotNull(file);
 		Assert.assertTrue(file.exists());
-		Assert.assertEquals(zipFile.getPath(), file.getPath());
+		Assert.assertEquals(_tempZipFile.getPath(), file.getPath());
 
 		file.delete();
 	}
 
 	@Test
 	public void testFinish() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -341,7 +322,7 @@ public class ZipWriterImplTest {
 
 		byte[] bytes = zipWriter.finish();
 
-		Assert.assertArrayEquals(FileUtil.getBytes(tempZipFile), bytes);
+		Assert.assertArrayEquals(FileUtil.getBytes(_tempZipFile), bytes);
 
 		File file = zipWriter.getFile();
 
@@ -375,9 +356,7 @@ public class ZipWriterImplTest {
 	 */
 	@Test
 	public void testFinishIfZipFileIsSet() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(_tempZipFile);
 
 		zipWriter.finish();
 
@@ -390,6 +369,6 @@ public class ZipWriterImplTest {
 
 	private static String _expectedEntryContent;
 
-	private String _tempZipFilePath;
+	private File _tempZipFile;
 
 }

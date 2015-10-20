@@ -3,6 +3,6 @@ Bundle-SymbolicName: com.liferay.frontend.theme.admin.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /frontend-theme-admin-web
 -donotcopy: (.*_diffs.*)

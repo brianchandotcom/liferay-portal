@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.frontend.editor.bbcode.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /frontend-editor-bbcode-web
 
 -donotcopy: (\.touch|.*_diffs.*)

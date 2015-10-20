@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.expando.util;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+
 import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 
 /**
  * @author Renato Rego
@@ -28,21 +28,11 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 public class ExpandoConverterUtilTest {
 
 	@Test
-	public void testGetDateAttributeFromString() {
-		long time = 0L;
-
-		Date date = (Date) ExpandoConverterUtil.getAttributeFromString(
-			ExpandoColumnConstants.DATE, String.valueOf(time));
-
-		Assert.assertEquals(time, date.getTime());
-	}
-
-	@Test
 	public void testGetDateArrayAttributeFromString() {
 		long[] expectedTimeArray = { 0L, 10L, 100L };
 		long[] actualTimeArray = new long[3];
 
-		Date[] dateArray = (Date[]) ExpandoConverterUtil.getAttributeFromString(
+		Date[] dateArray = (Date[])ExpandoConverterUtil.getAttributeFromString(
 			ExpandoColumnConstants.DATE_ARRAY,
 			StringUtil.merge(expectedTimeArray));
 
@@ -51,20 +41,6 @@ public class ExpandoConverterUtilTest {
 		}
 
 		Assert.assertArrayEquals(expectedTimeArray, actualTimeArray);
-	}
-
-	@Test
-	public void testGetDateAttributeFromStringArray() {
-		long time = 0L;
-
-		String[] timeStringArray = new String[1];
-
-		timeStringArray[0] = String.valueOf(time);
-
-		Date date = (Date) ExpandoConverterUtil.getAttributeFromStringArray(
-			ExpandoColumnConstants.DATE, timeStringArray);
-
-		Assert.assertEquals(time, date.getTime());
 	}
 
 	@Test
@@ -79,7 +55,7 @@ public class ExpandoConverterUtilTest {
 		}
 
 		Date[] dateArray =
-			(Date[]) ExpandoConverterUtil.getAttributeFromStringArray(
+			(Date[])ExpandoConverterUtil.getAttributeFromStringArray(
 				ExpandoColumnConstants.DATE_ARRAY, expectedTimeStringArray);
 
 		for (int i = 0; i < dateArray.length; i++) {
@@ -87,6 +63,30 @@ public class ExpandoConverterUtilTest {
 		}
 
 		Assert.assertArrayEquals(expectedTimeArray, actualTimeArray);
+	}
+
+	@Test
+	public void testGetDateAttributeFromString() {
+		long time = 0L;
+
+		Date date = (Date)ExpandoConverterUtil.getAttributeFromString(
+			ExpandoColumnConstants.DATE, String.valueOf(time));
+
+		Assert.assertEquals(time, date.getTime());
+	}
+
+	@Test
+	public void testGetDateAttributeFromStringArray() {
+		long time = 0L;
+
+		String[] timeStringArray = new String[1];
+
+		timeStringArray[0] = String.valueOf(time);
+
+		Date date = (Date)ExpandoConverterUtil.getAttributeFromStringArray(
+			ExpandoColumnConstants.DATE, timeStringArray);
+
+		Assert.assertEquals(time, date.getTime());
 	}
 
 }

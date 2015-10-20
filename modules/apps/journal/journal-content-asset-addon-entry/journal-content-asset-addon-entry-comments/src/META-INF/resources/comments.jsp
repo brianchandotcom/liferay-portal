@@ -40,7 +40,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 String viewMode = ParamUtil.getString(request, "viewMode");
 %>
 
-<div class="content-metadata-asset-addon-entry content-metadata-ratings">
+<div class="content-metadata-asset-addon-entry content-metadata-comments">
 	<c:if test="<%= CommentManagerUtil.getCommentsCount(JournalArticle.class.getName(), articleDisplay.getResourcePrimKey()) > 0 %>">
 		<liferay-ui:header
 			title="comments"

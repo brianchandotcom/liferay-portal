@@ -17,7 +17,7 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-	String topLink = ParamUtil.getString(request, "topLink", "home");
+String topLink = ParamUtil.getString(request, "topLink", "home");
 
 BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER);
 

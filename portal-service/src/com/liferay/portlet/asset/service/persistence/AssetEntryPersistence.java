@@ -41,137 +41,6 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	 */
 
 	/**
-	* Returns all the asset entries where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the matching asset entries
-	*/
-	public java.util.List<AssetEntry> findByGroupId(long groupId);
-
-	/**
-	* Returns a range of all the asset entries where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of asset entries
-	* @param end the upper bound of the range of asset entries (not inclusive)
-	* @return the range of matching asset entries
-	*/
-	public java.util.List<AssetEntry> findByGroupId(long groupId, int start,
-		int end);
-
-	/**
-	* Returns an ordered range of all the asset entries where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of asset entries
-	* @param end the upper bound of the range of asset entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching asset entries
-	*/
-	public java.util.List<AssetEntry> findByGroupId(long groupId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the asset entries where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of asset entries
-	* @param end the upper bound of the range of asset entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching asset entries
-	*/
-	public java.util.List<AssetEntry> findByGroupId(long groupId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first asset entry in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching asset entry
-	* @throws NoSuchEntryException if a matching asset entry could not be found
-	*/
-	public AssetEntry findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchEntryException;
-
-	/**
-	* Returns the first asset entry in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	*/
-	public AssetEntry fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
-
-	/**
-	* Returns the last asset entry in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching asset entry
-	* @throws NoSuchEntryException if a matching asset entry could not be found
-	*/
-	public AssetEntry findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchEntryException;
-
-	/**
-	* Returns the last asset entry in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	*/
-	public AssetEntry fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
-
-	/**
-	* Returns the asset entries before and after the current asset entry in the ordered set where groupId = &#63;.
-	*
-	* @param entryId the primary key of the current asset entry
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next asset entry
-	* @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	*/
-	public AssetEntry[] findByGroupId_PrevAndNext(long entryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchEntryException;
-
-	/**
-	* Removes all the asset entries where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	*/
-	public void removeByGroupId(long groupId);
-
-	/**
-	* Returns the number of asset entries where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching asset entries
-	*/
-	public int countByGroupId(long groupId);
-
-	/**
 	* Returns all the asset entries where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -302,6 +171,137 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @return the number of matching asset entries
 	*/
 	public int countByCompanyId(long companyId);
+
+	/**
+	* Returns all the asset entries where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching asset entries
+	*/
+	public java.util.List<AssetEntry> findByGroupId(long groupId);
+
+	/**
+	* Returns a range of all the asset entries where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of asset entries
+	* @param end the upper bound of the range of asset entries (not inclusive)
+	* @return the range of matching asset entries
+	*/
+	public java.util.List<AssetEntry> findByGroupId(long groupId, int start,
+		int end);
+
+	/**
+	* Returns an ordered range of all the asset entries where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of asset entries
+	* @param end the upper bound of the range of asset entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset entries
+	*/
+	public java.util.List<AssetEntry> findByGroupId(long groupId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the asset entries where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of asset entries
+	* @param end the upper bound of the range of asset entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching asset entries
+	*/
+	public java.util.List<AssetEntry> findByGroupId(long groupId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry
+	* @throws NoSuchEntryException if a matching asset entry could not be found
+	*/
+	public AssetEntry findByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Returns the first asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	*/
+	public AssetEntry fetchByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
+
+	/**
+	* Returns the last asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry
+	* @throws NoSuchEntryException if a matching asset entry could not be found
+	*/
+	public AssetEntry findByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Returns the last asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	*/
+	public AssetEntry fetchByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
+
+	/**
+	* Returns the asset entries before and after the current asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param entryId the primary key of the current asset entry
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next asset entry
+	* @throws NoSuchEntryException if a asset entry with the primary key could not be found
+	*/
+	public AssetEntry[] findByGroupId_PrevAndNext(long entryId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Removes all the asset entries where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	*/
+	public void removeByGroupId(long groupId);
+
+	/**
+	* Returns the number of asset entries where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching asset entries
+	*/
+	public int countByGroupId(long groupId);
 
 	/**
 	* Returns all the asset entries where visible = &#63;.

@@ -53,9 +53,9 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("activitySettingId", getActivitySettingId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("activityType", getActivityType());
 		attributes.put("name", getName());
@@ -66,6 +66,12 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long activitySettingId = (Long)attributes.get("activitySettingId");
 
 		if (activitySettingId != null) {
@@ -76,12 +82,6 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");

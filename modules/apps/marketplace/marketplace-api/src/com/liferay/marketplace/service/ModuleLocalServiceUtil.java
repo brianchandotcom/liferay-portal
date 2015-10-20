@@ -198,6 +198,18 @@ public class ModuleLocalServiceUtil {
 		return getService().fetchModule(moduleId);
 	}
 
+	/**
+	* Returns the module with the matching UUID and company.
+	*
+	* @param uuid the module's UUID
+	* @param companyId the primary key of the company
+	* @return the matching module, or <code>null</code> if a matching module could not be found
+	*/
+	public static com.liferay.marketplace.model.Module fetchModuleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().fetchModuleByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -221,6 +233,20 @@ public class ModuleLocalServiceUtil {
 	public static com.liferay.marketplace.model.Module getModule(long moduleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getModule(moduleId);
+	}
+
+	/**
+	* Returns the module with the matching UUID and company.
+	*
+	* @param uuid the module's UUID
+	* @param companyId the primary key of the company
+	* @return the matching module
+	* @throws PortalException if a matching module could not be found
+	*/
+	public static com.liferay.marketplace.model.Module getModuleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getModuleByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static java.util.List<com.liferay.marketplace.model.Module> getModules(

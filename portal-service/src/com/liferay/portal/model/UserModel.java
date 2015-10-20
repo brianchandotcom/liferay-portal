@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
+public interface UserModel extends BaseModel<User>, MVCCModel, PartitionableModel,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,6 +60,22 @@ public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
 	 * @param primaryKey the primary key of this user
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this user.
+	 *
+	 * @return the company ID of this user
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user.
+	 *
+	 * @param companyId the company ID of this user
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this user.
@@ -120,22 +137,6 @@ public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
 	 * @param userUuid the user uuid of this user
 	 */
 	public void setUserUuid(String userUuid);
-
-	/**
-	 * Returns the company ID of this user.
-	 *
-	 * @return the company ID of this user
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this user.
-	 *
-	 * @param companyId the company ID of this user
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the create date of this user.

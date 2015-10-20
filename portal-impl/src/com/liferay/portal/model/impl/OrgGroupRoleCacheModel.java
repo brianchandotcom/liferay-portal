@@ -77,9 +77,11 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", organizationId=");
 		sb.append(organizationId);
@@ -96,6 +98,7 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 	public OrgGroupRole toEntityModel() {
 		OrgGroupRoleImpl orgGroupRoleImpl = new OrgGroupRoleImpl();
 
+		orgGroupRoleImpl.setCompanyId(companyId);
 		orgGroupRoleImpl.setMvccVersion(mvccVersion);
 		orgGroupRoleImpl.setOrganizationId(organizationId);
 		orgGroupRoleImpl.setGroupId(groupId);
@@ -108,6 +111,7 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		organizationId = objectInput.readLong();
 		groupId = objectInput.readLong();
@@ -119,12 +123,14 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(organizationId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(roleId);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long organizationId;
 	public long groupId;

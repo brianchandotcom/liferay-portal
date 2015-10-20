@@ -122,9 +122,9 @@ public class KaleoTimerPersistenceTest {
 
 		KaleoTimer newKaleoTimer = _persistence.create(pk);
 
-		newKaleoTimer.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoTimer.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoTimer.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTimer.setUserId(RandomTestUtil.nextLong());
 
@@ -158,12 +158,12 @@ public class KaleoTimerPersistenceTest {
 
 		KaleoTimer existingKaleoTimer = _persistence.findByPrimaryKey(newKaleoTimer.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTimer.getCompanyId(),
+			newKaleoTimer.getCompanyId());
 		Assert.assertEquals(existingKaleoTimer.getKaleoTimerId(),
 			newKaleoTimer.getKaleoTimerId());
 		Assert.assertEquals(existingKaleoTimer.getGroupId(),
 			newKaleoTimer.getGroupId());
-		Assert.assertEquals(existingKaleoTimer.getCompanyId(),
-			newKaleoTimer.getCompanyId());
 		Assert.assertEquals(existingKaleoTimer.getUserId(),
 			newKaleoTimer.getUserId());
 		Assert.assertEquals(existingKaleoTimer.getUserName(),
@@ -240,9 +240,9 @@ public class KaleoTimerPersistenceTest {
 	}
 
 	protected OrderByComparator<KaleoTimer> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("KaleoTimer",
-			"kaleoTimerId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
+		return OrderByComparatorFactoryUtil.create("KaleoTimer", "companyId",
+			true, "kaleoTimerId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
 			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
 			true, "name", true, "blocking", true, "description", true,
 			"duration", true, "scale", true, "recurrenceDuration", true,
@@ -448,9 +448,9 @@ public class KaleoTimerPersistenceTest {
 
 		KaleoTimer kaleoTimer = _persistence.create(pk);
 
-		kaleoTimer.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoTimer.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoTimer.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoTimer.setUserId(RandomTestUtil.nextLong());
 

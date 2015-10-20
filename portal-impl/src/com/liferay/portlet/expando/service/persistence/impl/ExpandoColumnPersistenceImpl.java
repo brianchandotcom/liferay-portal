@@ -1863,6 +1863,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		expandoColumn.setNew(true);
 		expandoColumn.setPrimaryKey(columnId);
 
+		expandoColumn.setCompanyId(0);
+
 		return expandoColumn;
 	}
 
@@ -2047,8 +2049,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		expandoColumnImpl.setNew(expandoColumn.isNew());
 		expandoColumnImpl.setPrimaryKey(expandoColumn.getPrimaryKey());
 
-		expandoColumnImpl.setColumnId(expandoColumn.getColumnId());
 		expandoColumnImpl.setCompanyId(expandoColumn.getCompanyId());
+		expandoColumnImpl.setColumnId(expandoColumn.getColumnId());
 		expandoColumnImpl.setTableId(expandoColumn.getTableId());
 		expandoColumnImpl.setName(expandoColumn.getName());
 		expandoColumnImpl.setType(expandoColumn.getType());

@@ -68,8 +68,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	 */
 	public static final String TABLE_NAME = "AnnouncementsDelivery";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "deliveryId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "deliveryId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
 			{ "email", Types.BOOLEAN },
@@ -79,8 +79,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("deliveryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("deliveryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("email", Types.BOOLEAN);
@@ -88,7 +88,7 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		TABLE_COLUMNS_MAP.put("website", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AnnouncementsDelivery (deliveryId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table AnnouncementsDelivery (companyId LONG,deliveryId LONG not null primary key,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsDelivery";
 	public static final String ORDER_BY_JPQL = " ORDER BY announcementsDelivery.deliveryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AnnouncementsDelivery.deliveryId ASC";
@@ -122,8 +122,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 		AnnouncementsDelivery model = new AnnouncementsDeliveryImpl();
 
-		model.setDeliveryId(soapModel.getDeliveryId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setDeliveryId(soapModel.getDeliveryId());
 		model.setUserId(soapModel.getUserId());
 		model.setType(soapModel.getType());
 		model.setEmail(soapModel.getEmail());
@@ -194,8 +194,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("deliveryId", getDeliveryId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("deliveryId", getDeliveryId());
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("email", getEmail());
@@ -210,16 +210,16 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long deliveryId = (Long)attributes.get("deliveryId");
-
-		if (deliveryId != null) {
-			setDeliveryId(deliveryId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long deliveryId = (Long)attributes.get("deliveryId");
+
+		if (deliveryId != null) {
+			setDeliveryId(deliveryId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -253,6 +253,17 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getDeliveryId() {
@@ -262,17 +273,6 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	@Override
 	public void setDeliveryId(long deliveryId) {
 		_deliveryId = deliveryId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -419,8 +419,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public Object clone() {
 		AnnouncementsDeliveryImpl announcementsDeliveryImpl = new AnnouncementsDeliveryImpl();
 
-		announcementsDeliveryImpl.setDeliveryId(getDeliveryId());
 		announcementsDeliveryImpl.setCompanyId(getCompanyId());
+		announcementsDeliveryImpl.setDeliveryId(getDeliveryId());
 		announcementsDeliveryImpl.setUserId(getUserId());
 		announcementsDeliveryImpl.setType(getType());
 		announcementsDeliveryImpl.setEmail(getEmail());
@@ -501,9 +501,9 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public CacheModel<AnnouncementsDelivery> toCacheModel() {
 		AnnouncementsDeliveryCacheModel announcementsDeliveryCacheModel = new AnnouncementsDeliveryCacheModel();
 
-		announcementsDeliveryCacheModel.deliveryId = getDeliveryId();
-
 		announcementsDeliveryCacheModel.companyId = getCompanyId();
+
+		announcementsDeliveryCacheModel.deliveryId = getDeliveryId();
 
 		announcementsDeliveryCacheModel.userId = getUserId();
 
@@ -528,10 +528,10 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{deliveryId=");
-		sb.append(getDeliveryId());
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(getCompanyId());
+		sb.append(", deliveryId=");
+		sb.append(getDeliveryId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", type=");
@@ -557,12 +557,12 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>deliveryId</column-name><column-value><![CDATA[");
-		sb.append(getDeliveryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deliveryId</column-name><column-value><![CDATA[");
+		sb.append(getDeliveryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -594,8 +594,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AnnouncementsDelivery.class
 		};
-	private long _deliveryId;
 	private long _companyId;
+	private long _deliveryId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

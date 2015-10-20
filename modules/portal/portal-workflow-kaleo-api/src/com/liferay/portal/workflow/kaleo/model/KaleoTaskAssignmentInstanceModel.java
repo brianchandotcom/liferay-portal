@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface KaleoTaskAssignmentInstanceModel extends BaseModel<KaleoTaskAssignmentInstance>,
-	GroupedModel {
+	GroupedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -63,6 +64,22 @@ public interface KaleoTaskAssignmentInstanceModel extends BaseModel<KaleoTaskAss
 	 * @param primaryKey the primary key of this kaleo task assignment instance
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this kaleo task assignment instance.
+	 *
+	 * @return the company ID of this kaleo task assignment instance
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo task assignment instance.
+	 *
+	 * @param companyId the company ID of this kaleo task assignment instance
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the kaleo task assignment instance ID of this kaleo task assignment instance.
@@ -94,22 +111,6 @@ public interface KaleoTaskAssignmentInstanceModel extends BaseModel<KaleoTaskAss
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo task assignment instance.
-	 *
-	 * @return the company ID of this kaleo task assignment instance
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo task assignment instance.
-	 *
-	 * @param companyId the company ID of this kaleo task assignment instance
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo task assignment instance.

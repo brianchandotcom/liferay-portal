@@ -4536,8 +4536,11 @@ public class ServiceBuilder {
 			entityElement.attributeValue("uuid-accessor"));
 		boolean localService = GetterUtil.getBoolean(
 			entityElement.attributeValue("local-service"));
+		boolean partitionable = GetterUtil.getBoolean(
+			entityElement.attributeValue("partitionable"), true);
 		boolean remoteService = GetterUtil.getBoolean(
 			entityElement.attributeValue("remote-service"), true);
+
 		String persistenceClass = GetterUtil.getString(
 			entityElement.attributeValue("persistence-class"),
 			_packagePath + ".service.persistence.impl." + ejbName +
@@ -4717,6 +4720,19 @@ public class ServiceBuilder {
 					_entityMappings.put(mappingTable, entityMapping);
 				}
 			}
+		}
+
+		if (partitionable &&
+			!columnList.contains(new EntityColumn("companyId")) &&
+			!columnList.isEmpty()) {
+
+			EntityColumn col = new EntityColumn(
+				"companyId", "companyId", "long", false, false, false, null,
+				null, null, null, true, true, false, false, false, false);
+
+			columnList.add(0, col);
+
+			regularColList.add(0, col);
 		}
 
 		EntityOrder order = null;
@@ -4976,7 +4992,7 @@ public class ServiceBuilder {
 				jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
 				regularColList, blobList, collectionList, columnList, order,
 				finderList, referenceList, unresolvedReferenceList,
-				txRequiredList, resourceActionModel));
+				txRequiredList, resourceActionModel, partitionable));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)

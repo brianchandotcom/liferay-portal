@@ -77,9 +77,9 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	 */
 	public static final String TABLE_NAME = "AssetEntry";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "entryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -108,9 +108,9 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -137,7 +137,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetEntry (companyId LONG,entryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetEntry.entryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetEntry.entryId ASC";
@@ -177,9 +177,9 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		AssetEntry model = new AssetEntryImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -291,9 +291,9 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("entryId", getEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -327,6 +327,12 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long entryId = (Long)attributes.get("entryId");
 
 		if (entryId != null) {
@@ -337,12 +343,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -490,6 +490,29 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public long getEntryId() {
@@ -522,29 +545,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1366,9 +1366,9 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public Object clone() {
 		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
 
+		assetEntryImpl.setCompanyId(getCompanyId());
 		assetEntryImpl.setEntryId(getEntryId());
 		assetEntryImpl.setGroupId(getGroupId());
-		assetEntryImpl.setCompanyId(getCompanyId());
 		assetEntryImpl.setUserId(getUserId());
 		assetEntryImpl.setUserName(getUserName());
 		assetEntryImpl.setCreateDate(getCreateDate());
@@ -1455,13 +1455,13 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public void resetOriginalValues() {
 		AssetEntryModelImpl assetEntryModelImpl = this;
 
-		assetEntryModelImpl._originalGroupId = assetEntryModelImpl._groupId;
-
-		assetEntryModelImpl._setOriginalGroupId = false;
-
 		assetEntryModelImpl._originalCompanyId = assetEntryModelImpl._companyId;
 
 		assetEntryModelImpl._setOriginalCompanyId = false;
+
+		assetEntryModelImpl._originalGroupId = assetEntryModelImpl._groupId;
+
+		assetEntryModelImpl._setOriginalGroupId = false;
 
 		assetEntryModelImpl._setModifiedDate = false;
 
@@ -1492,11 +1492,11 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public CacheModel<AssetEntry> toCacheModel() {
 		AssetEntryCacheModel assetEntryCacheModel = new AssetEntryCacheModel();
 
+		assetEntryCacheModel.companyId = getCompanyId();
+
 		assetEntryCacheModel.entryId = getEntryId();
 
 		assetEntryCacheModel.groupId = getGroupId();
-
-		assetEntryCacheModel.companyId = getCompanyId();
 
 		assetEntryCacheModel.userId = getUserId();
 
@@ -1643,12 +1643,12 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public String toString() {
 		StringBundler sb = new StringBundler(55);
 
-		sb.append("{entryId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", entryId=");
 		sb.append(getEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1711,16 +1711,16 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>entryId</column-name><column-value><![CDATA[");
 		sb.append(getEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1828,13 +1828,13 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetEntry.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _entryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

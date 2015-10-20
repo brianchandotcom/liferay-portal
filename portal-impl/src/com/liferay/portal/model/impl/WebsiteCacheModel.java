@@ -81,14 +81,14 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", websiteId=");
 		sb.append(websiteId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -118,6 +118,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 	public Website toEntityModel() {
 		WebsiteImpl websiteImpl = new WebsiteImpl();
 
+		websiteImpl.setCompanyId(companyId);
 		websiteImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -128,7 +129,6 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		}
 
 		websiteImpl.setWebsiteId(websiteId);
-		websiteImpl.setCompanyId(companyId);
 		websiteImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -179,10 +179,10 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		websiteId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -198,6 +198,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -208,7 +209,6 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		}
 
 		objectOutput.writeLong(websiteId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -235,10 +235,10 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long websiteId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

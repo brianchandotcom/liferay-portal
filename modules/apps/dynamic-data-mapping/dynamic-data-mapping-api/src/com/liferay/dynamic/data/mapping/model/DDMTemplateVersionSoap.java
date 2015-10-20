@@ -34,9 +34,9 @@ public class DDMTemplateVersionSoap implements Serializable {
 	public static DDMTemplateVersionSoap toSoapModel(DDMTemplateVersion model) {
 		DDMTemplateVersionSoap soapModel = new DDMTemplateVersionSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setTemplateVersionId(model.getTemplateVersionId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -107,6 +107,14 @@ public class DDMTemplateVersionSoap implements Serializable {
 		setTemplateVersionId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getTemplateVersionId() {
 		return _templateVersionId;
 	}
@@ -121,14 +129,6 @@ public class DDMTemplateVersionSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -251,9 +251,9 @@ public class DDMTemplateVersionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _companyId;
 	private long _templateVersionId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

@@ -145,10 +145,10 @@ public class SCProductVersionPersistenceTest {
 
 		SCProductVersion existingSCProductVersion = _persistence.findByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingSCProductVersion.getProductVersionId(),
-			newSCProductVersion.getProductVersionId());
 		Assert.assertEquals(existingSCProductVersion.getCompanyId(),
 			newSCProductVersion.getCompanyId());
+		Assert.assertEquals(existingSCProductVersion.getProductVersionId(),
+			newSCProductVersion.getProductVersionId());
 		Assert.assertEquals(existingSCProductVersion.getUserId(),
 			newSCProductVersion.getUserId());
 		Assert.assertEquals(existingSCProductVersion.getUserName(),
@@ -213,7 +213,7 @@ public class SCProductVersionPersistenceTest {
 
 	protected OrderByComparator<SCProductVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductVersion",
-			"productVersionId", true, "companyId", true, "userId", true,
+			"companyId", true, "productVersionId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"productEntryId", true, "version", true, "changeLog", true,
 			"downloadPageURL", true, "directDownloadURL", true,

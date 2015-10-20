@@ -67,12 +67,12 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
 
-		sb.append("{kaleoTaskAssignmentId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoTaskAssignmentId=");
 		sb.append(kaleoTaskAssignmentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -110,9 +110,9 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 	public KaleoTaskAssignment toEntityModel() {
 		KaleoTaskAssignmentImpl kaleoTaskAssignmentImpl = new KaleoTaskAssignmentImpl();
 
+		kaleoTaskAssignmentImpl.setCompanyId(companyId);
 		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(kaleoTaskAssignmentId);
 		kaleoTaskAssignmentImpl.setGroupId(groupId);
-		kaleoTaskAssignmentImpl.setCompanyId(companyId);
 		kaleoTaskAssignmentImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -191,9 +191,9 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoTaskAssignmentId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -213,9 +213,9 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoTaskAssignmentId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -277,9 +277,9 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		}
 	}
 
+	public long companyId;
 	public long kaleoTaskAssignmentId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

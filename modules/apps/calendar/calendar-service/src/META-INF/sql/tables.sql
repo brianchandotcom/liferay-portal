@@ -1,8 +1,8 @@
 create table Calendar (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	calendarId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -20,10 +20,10 @@ create table Calendar (
 );
 
 create table CalendarBooking (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	calendarBookingId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -52,10 +52,10 @@ create table CalendarBooking (
 );
 
 create table CalendarNotificationTemplate (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	calendarNotificationTemplateId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -70,10 +70,10 @@ create table CalendarNotificationTemplate (
 );
 
 create table CalendarResource (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	calendarResourceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

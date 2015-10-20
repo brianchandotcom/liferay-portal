@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ContactModel extends AttachedModel, AuditedModel,
-	BaseModel<Contact>, MVCCModel {
+	BaseModel<Contact>, MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	 * @param primaryKey the primary key of this contact
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this contact.
+	 *
+	 * @return the company ID of this contact
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this contact.
+	 *
+	 * @param companyId the company ID of this contact
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this contact.
@@ -90,22 +106,6 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	 * @param contactId the contact ID of this contact
 	 */
 	public void setContactId(long contactId);
-
-	/**
-	 * Returns the company ID of this contact.
-	 *
-	 * @return the company ID of this contact
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this contact.
-	 *
-	 * @param companyId the company ID of this contact
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this contact.

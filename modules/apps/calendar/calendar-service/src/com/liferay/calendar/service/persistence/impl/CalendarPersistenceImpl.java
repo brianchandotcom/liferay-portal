@@ -3922,6 +3922,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 		calendar.setUuid(uuid);
 
+		calendar.setCompanyId(0);
+
 		return calendar;
 	}
 
@@ -4194,10 +4196,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		calendarImpl.setNew(calendar.isNew());
 		calendarImpl.setPrimaryKey(calendar.getPrimaryKey());
 
+		calendarImpl.setCompanyId(calendar.getCompanyId());
 		calendarImpl.setUuid(calendar.getUuid());
 		calendarImpl.setCalendarId(calendar.getCalendarId());
 		calendarImpl.setGroupId(calendar.getGroupId());
-		calendarImpl.setCompanyId(calendar.getCompanyId());
 		calendarImpl.setUserId(calendar.getUserId());
 		calendarImpl.setUserName(calendar.getUserName());
 		calendarImpl.setCreateDate(calendar.getCreateDate());

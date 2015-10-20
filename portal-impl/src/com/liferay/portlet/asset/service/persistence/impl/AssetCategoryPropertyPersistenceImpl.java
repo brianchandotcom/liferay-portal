@@ -2121,6 +2121,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		assetCategoryProperty.setNew(true);
 		assetCategoryProperty.setPrimaryKey(categoryPropertyId);
 
+		assetCategoryProperty.setCompanyId(0);
+
 		return assetCategoryProperty;
 	}
 
@@ -2354,8 +2356,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		assetCategoryPropertyImpl.setNew(assetCategoryProperty.isNew());
 		assetCategoryPropertyImpl.setPrimaryKey(assetCategoryProperty.getPrimaryKey());
 
-		assetCategoryPropertyImpl.setCategoryPropertyId(assetCategoryProperty.getCategoryPropertyId());
 		assetCategoryPropertyImpl.setCompanyId(assetCategoryProperty.getCompanyId());
+		assetCategoryPropertyImpl.setCategoryPropertyId(assetCategoryProperty.getCategoryPropertyId());
 		assetCategoryPropertyImpl.setUserId(assetCategoryProperty.getUserId());
 		assetCategoryPropertyImpl.setUserName(assetCategoryProperty.getUserName());
 		assetCategoryPropertyImpl.setCreateDate(assetCategoryProperty.getCreateDate());

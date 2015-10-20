@@ -116,9 +116,9 @@ public class WebDAVPropsPersistenceTest {
 
 		WebDAVProps newWebDAVProps = _persistence.create(pk);
 
-		newWebDAVProps.setMvccVersion(RandomTestUtil.nextLong());
-
 		newWebDAVProps.setCompanyId(RandomTestUtil.nextLong());
+
+		newWebDAVProps.setMvccVersion(RandomTestUtil.nextLong());
 
 		newWebDAVProps.setCreateDate(RandomTestUtil.nextDate());
 
@@ -134,12 +134,12 @@ public class WebDAVPropsPersistenceTest {
 
 		WebDAVProps existingWebDAVProps = _persistence.findByPrimaryKey(newWebDAVProps.getPrimaryKey());
 
+		Assert.assertEquals(existingWebDAVProps.getCompanyId(),
+			newWebDAVProps.getCompanyId());
 		Assert.assertEquals(existingWebDAVProps.getMvccVersion(),
 			newWebDAVProps.getMvccVersion());
 		Assert.assertEquals(existingWebDAVProps.getWebDavPropsId(),
 			newWebDAVProps.getWebDavPropsId());
-		Assert.assertEquals(existingWebDAVProps.getCompanyId(),
-			newWebDAVProps.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingWebDAVProps.getCreateDate()),
 			Time.getShortTimestamp(newWebDAVProps.getCreateDate()));
@@ -185,10 +185,9 @@ public class WebDAVPropsPersistenceTest {
 	}
 
 	protected OrderByComparator<WebDAVProps> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("WebDAVProps",
-			"mvccVersion", true, "webDavPropsId", true, "companyId", true,
-			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true);
+		return OrderByComparatorFactoryUtil.create("WebDAVProps", "companyId",
+			true, "mvccVersion", true, "webDavPropsId", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true);
 	}
 
 	@Test
@@ -406,9 +405,9 @@ public class WebDAVPropsPersistenceTest {
 
 		WebDAVProps webDAVProps = _persistence.create(pk);
 
-		webDAVProps.setMvccVersion(RandomTestUtil.nextLong());
-
 		webDAVProps.setCompanyId(RandomTestUtil.nextLong());
+
+		webDAVProps.setMvccVersion(RandomTestUtil.nextLong());
 
 		webDAVProps.setCreateDate(RandomTestUtil.nextDate());
 

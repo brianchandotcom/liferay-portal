@@ -66,10 +66,10 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{deliveryId=");
-		sb.append(deliveryId);
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(companyId);
+		sb.append(", deliveryId=");
+		sb.append(deliveryId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", type=");
@@ -89,8 +89,8 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 	public AnnouncementsDelivery toEntityModel() {
 		AnnouncementsDeliveryImpl announcementsDeliveryImpl = new AnnouncementsDeliveryImpl();
 
-		announcementsDeliveryImpl.setDeliveryId(deliveryId);
 		announcementsDeliveryImpl.setCompanyId(companyId);
+		announcementsDeliveryImpl.setDeliveryId(deliveryId);
 		announcementsDeliveryImpl.setUserId(userId);
 
 		if (type == null) {
@@ -111,8 +111,8 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		deliveryId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		deliveryId = objectInput.readLong();
 		userId = objectInput.readLong();
 		type = objectInput.readUTF();
 		email = objectInput.readBoolean();
@@ -123,8 +123,8 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(deliveryId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(deliveryId);
 		objectOutput.writeLong(userId);
 
 		if (type == null) {
@@ -139,8 +139,8 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 		objectOutput.writeBoolean(website);
 	}
 
-	public long deliveryId;
 	public long companyId;
+	public long deliveryId;
 	public long userId;
 	public String type;
 	public boolean email;

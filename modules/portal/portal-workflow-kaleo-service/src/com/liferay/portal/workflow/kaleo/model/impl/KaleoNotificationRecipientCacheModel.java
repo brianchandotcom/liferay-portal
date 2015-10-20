@@ -68,12 +68,12 @@ public class KaleoNotificationRecipientCacheModel implements CacheModel<KaleoNot
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
 
-		sb.append("{kaleoNotificationRecipientId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoNotificationRecipientId=");
 		sb.append(kaleoNotificationRecipientId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -111,9 +111,9 @@ public class KaleoNotificationRecipientCacheModel implements CacheModel<KaleoNot
 	public KaleoNotificationRecipient toEntityModel() {
 		KaleoNotificationRecipientImpl kaleoNotificationRecipientImpl = new KaleoNotificationRecipientImpl();
 
+		kaleoNotificationRecipientImpl.setCompanyId(companyId);
 		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(kaleoNotificationRecipientId);
 		kaleoNotificationRecipientImpl.setGroupId(groupId);
-		kaleoNotificationRecipientImpl.setCompanyId(companyId);
 		kaleoNotificationRecipientImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -193,9 +193,9 @@ public class KaleoNotificationRecipientCacheModel implements CacheModel<KaleoNot
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoNotificationRecipientId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -215,9 +215,9 @@ public class KaleoNotificationRecipientCacheModel implements CacheModel<KaleoNot
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoNotificationRecipientId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -278,9 +278,9 @@ public class KaleoNotificationRecipientCacheModel implements CacheModel<KaleoNot
 		}
 	}
 
+	public long companyId;
 	public long kaleoNotificationRecipientId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

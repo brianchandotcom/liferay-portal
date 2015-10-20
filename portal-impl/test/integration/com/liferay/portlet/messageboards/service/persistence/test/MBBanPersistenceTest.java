@@ -119,11 +119,11 @@ public class MBBanPersistenceTest {
 
 		MBBan newMBBan = _persistence.create(pk);
 
+		newMBBan.setCompanyId(RandomTestUtil.nextLong());
+
 		newMBBan.setUuid(RandomTestUtil.randomString());
 
 		newMBBan.setGroupId(RandomTestUtil.nextLong());
-
-		newMBBan.setCompanyId(RandomTestUtil.nextLong());
 
 		newMBBan.setUserId(RandomTestUtil.nextLong());
 
@@ -141,11 +141,11 @@ public class MBBanPersistenceTest {
 
 		MBBan existingMBBan = _persistence.findByPrimaryKey(newMBBan.getPrimaryKey());
 
+		Assert.assertEquals(existingMBBan.getCompanyId(),
+			newMBBan.getCompanyId());
 		Assert.assertEquals(existingMBBan.getUuid(), newMBBan.getUuid());
 		Assert.assertEquals(existingMBBan.getBanId(), newMBBan.getBanId());
 		Assert.assertEquals(existingMBBan.getGroupId(), newMBBan.getGroupId());
-		Assert.assertEquals(existingMBBan.getCompanyId(),
-			newMBBan.getCompanyId());
 		Assert.assertEquals(existingMBBan.getUserId(), newMBBan.getUserId());
 		Assert.assertEquals(existingMBBan.getUserName(), newMBBan.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -240,8 +240,8 @@ public class MBBanPersistenceTest {
 	}
 
 	protected OrderByComparator<MBBan> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MBBan", "uuid", true,
-			"banId", true, "groupId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("MBBan", "companyId", true,
+			"uuid", true, "banId", true, "groupId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"banUserId", true, "lastPublishDate", true);
 	}
@@ -461,11 +461,11 @@ public class MBBanPersistenceTest {
 
 		MBBan mbBan = _persistence.create(pk);
 
+		mbBan.setCompanyId(RandomTestUtil.nextLong());
+
 		mbBan.setUuid(RandomTestUtil.randomString());
 
 		mbBan.setGroupId(RandomTestUtil.nextLong());
-
-		mbBan.setCompanyId(RandomTestUtil.nextLong());
 
 		mbBan.setUserId(RandomTestUtil.nextLong());
 

@@ -117,9 +117,9 @@ public class ResourceTypePermissionPersistenceTest {
 
 		ResourceTypePermission newResourceTypePermission = _persistence.create(pk);
 
-		newResourceTypePermission.setMvccVersion(RandomTestUtil.nextLong());
-
 		newResourceTypePermission.setCompanyId(RandomTestUtil.nextLong());
+
+		newResourceTypePermission.setMvccVersion(RandomTestUtil.nextLong());
 
 		newResourceTypePermission.setGroupId(RandomTestUtil.nextLong());
 
@@ -134,12 +134,12 @@ public class ResourceTypePermissionPersistenceTest {
 
 		ResourceTypePermission existingResourceTypePermission = _persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
+		Assert.assertEquals(existingResourceTypePermission.getCompanyId(),
+			newResourceTypePermission.getCompanyId());
 		Assert.assertEquals(existingResourceTypePermission.getMvccVersion(),
 			newResourceTypePermission.getMvccVersion());
 		Assert.assertEquals(existingResourceTypePermission.getResourceTypePermissionId(),
 			newResourceTypePermission.getResourceTypePermissionId());
-		Assert.assertEquals(existingResourceTypePermission.getCompanyId(),
-			newResourceTypePermission.getCompanyId());
 		Assert.assertEquals(existingResourceTypePermission.getGroupId(),
 			newResourceTypePermission.getGroupId());
 		Assert.assertEquals(existingResourceTypePermission.getName(),
@@ -203,7 +203,7 @@ public class ResourceTypePermissionPersistenceTest {
 
 	protected OrderByComparator<ResourceTypePermission> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceTypePermission",
-			"mvccVersion", true, "resourceTypePermissionId", true, "companyId",
+			"companyId", true, "mvccVersion", true, "resourceTypePermissionId",
 			true, "groupId", true, "name", true, "roleId", true, "actionIds",
 			true);
 	}
@@ -445,9 +445,9 @@ public class ResourceTypePermissionPersistenceTest {
 
 		ResourceTypePermission resourceTypePermission = _persistence.create(pk);
 
-		resourceTypePermission.setMvccVersion(RandomTestUtil.nextLong());
-
 		resourceTypePermission.setCompanyId(RandomTestUtil.nextLong());
+
+		resourceTypePermission.setMvccVersion(RandomTestUtil.nextLong());
 
 		resourceTypePermission.setGroupId(RandomTestUtil.nextLong());
 

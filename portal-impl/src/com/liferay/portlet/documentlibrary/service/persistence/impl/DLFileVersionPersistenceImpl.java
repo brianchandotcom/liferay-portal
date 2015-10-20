@@ -5879,6 +5879,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		dlFileVersion.setUuid(uuid);
 
+		dlFileVersion.setCompanyId(0);
+
 		return dlFileVersion;
 	}
 
@@ -6213,10 +6215,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		dlFileVersionImpl.setNew(dlFileVersion.isNew());
 		dlFileVersionImpl.setPrimaryKey(dlFileVersion.getPrimaryKey());
 
+		dlFileVersionImpl.setCompanyId(dlFileVersion.getCompanyId());
 		dlFileVersionImpl.setUuid(dlFileVersion.getUuid());
 		dlFileVersionImpl.setFileVersionId(dlFileVersion.getFileVersionId());
 		dlFileVersionImpl.setGroupId(dlFileVersion.getGroupId());
-		dlFileVersionImpl.setCompanyId(dlFileVersion.getCompanyId());
 		dlFileVersionImpl.setUserId(dlFileVersion.getUserId());
 		dlFileVersionImpl.setUserName(dlFileVersion.getUserName());
 		dlFileVersionImpl.setCreateDate(dlFileVersion.getCreateDate());

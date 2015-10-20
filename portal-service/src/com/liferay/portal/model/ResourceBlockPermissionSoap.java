@@ -33,6 +33,7 @@ public class ResourceBlockPermissionSoap implements Serializable {
 		ResourceBlockPermission model) {
 		ResourceBlockPermissionSoap soapModel = new ResourceBlockPermissionSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setResourceBlockPermissionId(model.getResourceBlockPermissionId());
 		soapModel.setResourceBlockId(model.getResourceBlockId());
@@ -93,6 +94,14 @@ public class ResourceBlockPermissionSoap implements Serializable {
 		setResourceBlockPermissionId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -133,6 +142,7 @@ public class ResourceBlockPermissionSoap implements Serializable {
 		_actionIds = actionIds;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _resourceBlockPermissionId;
 	private long _resourceBlockId;

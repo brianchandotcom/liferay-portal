@@ -66,12 +66,12 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{activityLimitId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", activityLimitId=");
 		sb.append(activityLimitId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", classNameId=");
@@ -93,9 +93,9 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 	public SocialActivityLimit toEntityModel() {
 		SocialActivityLimitImpl socialActivityLimitImpl = new SocialActivityLimitImpl();
 
+		socialActivityLimitImpl.setCompanyId(companyId);
 		socialActivityLimitImpl.setActivityLimitId(activityLimitId);
 		socialActivityLimitImpl.setGroupId(groupId);
-		socialActivityLimitImpl.setCompanyId(companyId);
 		socialActivityLimitImpl.setUserId(userId);
 		socialActivityLimitImpl.setClassNameId(classNameId);
 		socialActivityLimitImpl.setClassPK(classPK);
@@ -122,9 +122,9 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		activityLimitId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
@@ -136,9 +136,9 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(activityLimitId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
@@ -159,9 +159,9 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 		}
 	}
 
+	public long companyId;
 	public long activityLimitId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long classNameId;
 	public long classPK;

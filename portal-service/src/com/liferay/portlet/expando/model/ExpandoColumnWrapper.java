@@ -52,8 +52,8 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("columnId", getColumnId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("columnId", getColumnId());
 		attributes.put("tableId", getTableId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
@@ -65,16 +65,16 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long columnId = (Long)attributes.get("columnId");
-
-		if (columnId != null) {
-			setColumnId(columnId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long columnId = (Long)attributes.get("columnId");
+
+		if (columnId != null) {
+			setColumnId(columnId);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");

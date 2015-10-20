@@ -2134,6 +2134,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		mdrAction.setUuid(uuid);
 
+		mdrAction.setCompanyId(0);
+
 		return mdrAction;
 	}
 
@@ -2364,10 +2366,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		mdrActionImpl.setNew(mdrAction.isNew());
 		mdrActionImpl.setPrimaryKey(mdrAction.getPrimaryKey());
 
+		mdrActionImpl.setCompanyId(mdrAction.getCompanyId());
 		mdrActionImpl.setUuid(mdrAction.getUuid());
 		mdrActionImpl.setActionId(mdrAction.getActionId());
 		mdrActionImpl.setGroupId(mdrAction.getGroupId());
-		mdrActionImpl.setCompanyId(mdrAction.getCompanyId());
 		mdrActionImpl.setUserId(mdrAction.getUserId());
 		mdrActionImpl.setUserName(mdrAction.getUserName());
 		mdrActionImpl.setCreateDate(mdrAction.getCreateDate());

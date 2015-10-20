@@ -67,12 +67,12 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
 
-		sb.append("{kaleoTimerId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoTimerId=");
 		sb.append(kaleoTimerId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -110,9 +110,9 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 	public KaleoTimer toEntityModel() {
 		KaleoTimerImpl kaleoTimerImpl = new KaleoTimerImpl();
 
+		kaleoTimerImpl.setCompanyId(companyId);
 		kaleoTimerImpl.setKaleoTimerId(kaleoTimerId);
 		kaleoTimerImpl.setGroupId(groupId);
-		kaleoTimerImpl.setCompanyId(companyId);
 		kaleoTimerImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -187,9 +187,9 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoTimerId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -209,9 +209,9 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoTimerId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -269,9 +269,9 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 		}
 	}
 
+	public long companyId;
 	public long kaleoTimerId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

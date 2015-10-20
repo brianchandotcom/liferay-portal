@@ -115,11 +115,11 @@ public class MembershipRequestPersistenceTest {
 
 		MembershipRequest newMembershipRequest = _persistence.create(pk);
 
+		newMembershipRequest.setCompanyId(RandomTestUtil.nextLong());
+
 		newMembershipRequest.setMvccVersion(RandomTestUtil.nextLong());
 
 		newMembershipRequest.setGroupId(RandomTestUtil.nextLong());
-
-		newMembershipRequest.setCompanyId(RandomTestUtil.nextLong());
 
 		newMembershipRequest.setUserId(RandomTestUtil.nextLong());
 
@@ -139,14 +139,14 @@ public class MembershipRequestPersistenceTest {
 
 		MembershipRequest existingMembershipRequest = _persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
+		Assert.assertEquals(existingMembershipRequest.getCompanyId(),
+			newMembershipRequest.getCompanyId());
 		Assert.assertEquals(existingMembershipRequest.getMvccVersion(),
 			newMembershipRequest.getMvccVersion());
 		Assert.assertEquals(existingMembershipRequest.getMembershipRequestId(),
 			newMembershipRequest.getMembershipRequestId());
 		Assert.assertEquals(existingMembershipRequest.getGroupId(),
 			newMembershipRequest.getGroupId());
-		Assert.assertEquals(existingMembershipRequest.getCompanyId(),
-			newMembershipRequest.getCompanyId());
 		Assert.assertEquals(existingMembershipRequest.getUserId(),
 			newMembershipRequest.getUserId());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -219,10 +219,10 @@ public class MembershipRequestPersistenceTest {
 
 	protected OrderByComparator<MembershipRequest> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MembershipRequest",
-			"mvccVersion", true, "membershipRequestId", true, "groupId", true,
-			"companyId", true, "userId", true, "createDate", true, "comments",
-			true, "replyComments", true, "replyDate", true, "replierUserId",
-			true, "statusId", true);
+			"companyId", true, "mvccVersion", true, "membershipRequestId",
+			true, "groupId", true, "userId", true, "createDate", true,
+			"comments", true, "replyComments", true, "replyDate", true,
+			"replierUserId", true, "statusId", true);
 	}
 
 	@Test
@@ -425,11 +425,11 @@ public class MembershipRequestPersistenceTest {
 
 		MembershipRequest membershipRequest = _persistence.create(pk);
 
+		membershipRequest.setCompanyId(RandomTestUtil.nextLong());
+
 		membershipRequest.setMvccVersion(RandomTestUtil.nextLong());
 
 		membershipRequest.setGroupId(RandomTestUtil.nextLong());
-
-		membershipRequest.setCompanyId(RandomTestUtil.nextLong());
 
 		membershipRequest.setUserId(RandomTestUtil.nextLong());
 

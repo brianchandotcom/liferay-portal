@@ -87,11 +87,11 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	 */
 	public static final String TABLE_NAME = "JournalArticle";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "id_", Types.BIGINT },
 			{ "resourcePrimKey", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -125,11 +125,11 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("id_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -161,7 +161,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description TEXT null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticle (companyId LONG,uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description TEXT null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";
@@ -209,11 +209,11 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		JournalArticle model = new JournalArticleImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setId(soapModel.getId());
 		model.setResourcePrimKey(soapModel.getResourcePrimKey());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -307,11 +307,11 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("id", getId());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -350,6 +350,12 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -372,12 +378,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -555,6 +555,29 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -639,29 +662,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1781,11 +1781,11 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public Object clone() {
 		JournalArticleImpl journalArticleImpl = new JournalArticleImpl();
 
+		journalArticleImpl.setCompanyId(getCompanyId());
 		journalArticleImpl.setUuid(getUuid());
 		journalArticleImpl.setId(getId());
 		journalArticleImpl.setResourcePrimKey(getResourcePrimKey());
 		journalArticleImpl.setGroupId(getGroupId());
-		journalArticleImpl.setCompanyId(getCompanyId());
 		journalArticleImpl.setUserId(getUserId());
 		journalArticleImpl.setUserName(getUserName());
 		journalArticleImpl.setCreateDate(getCreateDate());
@@ -1891,6 +1891,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public void resetOriginalValues() {
 		JournalArticleModelImpl journalArticleModelImpl = this;
 
+		journalArticleModelImpl._originalCompanyId = journalArticleModelImpl._companyId;
+
+		journalArticleModelImpl._setOriginalCompanyId = false;
+
 		journalArticleModelImpl._originalUuid = journalArticleModelImpl._uuid;
 
 		journalArticleModelImpl._originalResourcePrimKey = journalArticleModelImpl._resourcePrimKey;
@@ -1900,10 +1904,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleModelImpl._originalGroupId = journalArticleModelImpl._groupId;
 
 		journalArticleModelImpl._setOriginalGroupId = false;
-
-		journalArticleModelImpl._originalCompanyId = journalArticleModelImpl._companyId;
-
-		journalArticleModelImpl._setOriginalCompanyId = false;
 
 		journalArticleModelImpl._originalUserId = journalArticleModelImpl._userId;
 
@@ -1962,6 +1962,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public CacheModel<JournalArticle> toCacheModel() {
 		JournalArticleCacheModel journalArticleCacheModel = new JournalArticleCacheModel();
 
+		journalArticleCacheModel.companyId = getCompanyId();
+
 		journalArticleCacheModel.uuid = getUuid();
 
 		String uuid = journalArticleCacheModel.uuid;
@@ -1975,8 +1977,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleCacheModel.resourcePrimKey = getResourcePrimKey();
 
 		journalArticleCacheModel.groupId = getGroupId();
-
-		journalArticleCacheModel.companyId = getCompanyId();
 
 		journalArticleCacheModel.userId = getUserId();
 
@@ -2168,7 +2168,9 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public String toString() {
 		StringBundler sb = new StringBundler(69);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", id=");
 		sb.append(getId());
@@ -2176,8 +2178,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(getResourcePrimKey());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -2250,6 +2250,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -2264,10 +2268,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -2395,6 +2395,9 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			JournalArticle.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;
@@ -2404,9 +2407,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

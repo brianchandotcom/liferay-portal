@@ -1498,6 +1498,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		scProductScreenshot.setNew(true);
 		scProductScreenshot.setPrimaryKey(productScreenshotId);
 
+		scProductScreenshot.setCompanyId(0);
+
 		return scProductScreenshot;
 	}
 
@@ -1669,8 +1671,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		scProductScreenshotImpl.setNew(scProductScreenshot.isNew());
 		scProductScreenshotImpl.setPrimaryKey(scProductScreenshot.getPrimaryKey());
 
-		scProductScreenshotImpl.setProductScreenshotId(scProductScreenshot.getProductScreenshotId());
 		scProductScreenshotImpl.setCompanyId(scProductScreenshot.getCompanyId());
+		scProductScreenshotImpl.setProductScreenshotId(scProductScreenshot.getProductScreenshotId());
 		scProductScreenshotImpl.setGroupId(scProductScreenshot.getGroupId());
 		scProductScreenshotImpl.setProductEntryId(scProductScreenshot.getProductEntryId());
 		scProductScreenshotImpl.setThumbnailId(scProductScreenshot.getThumbnailId());

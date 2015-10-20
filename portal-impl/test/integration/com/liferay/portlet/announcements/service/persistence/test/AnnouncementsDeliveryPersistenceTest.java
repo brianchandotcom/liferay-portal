@@ -135,10 +135,10 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		AnnouncementsDelivery existingAnnouncementsDelivery = _persistence.findByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
-		Assert.assertEquals(existingAnnouncementsDelivery.getDeliveryId(),
-			newAnnouncementsDelivery.getDeliveryId());
 		Assert.assertEquals(existingAnnouncementsDelivery.getCompanyId(),
 			newAnnouncementsDelivery.getCompanyId());
+		Assert.assertEquals(existingAnnouncementsDelivery.getDeliveryId(),
+			newAnnouncementsDelivery.getDeliveryId());
 		Assert.assertEquals(existingAnnouncementsDelivery.getUserId(),
 			newAnnouncementsDelivery.getUserId());
 		Assert.assertEquals(existingAnnouncementsDelivery.getType(),
@@ -192,7 +192,7 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 	protected OrderByComparator<AnnouncementsDelivery> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AnnouncementsDelivery",
-			"deliveryId", true, "companyId", true, "userId", true, "type",
+			"companyId", true, "deliveryId", true, "userId", true, "type",
 			true, "email", true, "sms", true, "website", true);
 	}
 

@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
-	StagedAuditedModel {
+	PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
 	 * @param primaryKey the primary key of this organization
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this organization.
+	 *
+	 * @return the company ID of this organization
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this organization.
+	 *
+	 * @param companyId the company ID of this organization
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this organization.
@@ -107,22 +123,6 @@ public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
 	 * @param organizationId the organization ID of this organization
 	 */
 	public void setOrganizationId(long organizationId);
-
-	/**
-	 * Returns the company ID of this organization.
-	 *
-	 * @return the company ID of this organization
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this organization.
-	 *
-	 * @param companyId the company ID of this organization
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this organization.

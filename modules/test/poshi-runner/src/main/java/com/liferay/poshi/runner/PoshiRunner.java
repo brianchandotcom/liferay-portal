@@ -23,6 +23,7 @@ import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.dom4j.Element;
@@ -44,26 +45,37 @@ public class PoshiRunner {
 	public static List<String> getList() throws Exception {
 		PoshiRunnerContext.readFiles();
 
-		String testName = PropsValues.TEST_NAME;
-
-		PoshiRunnerValidation.validate(testName);
-
 		List<String> classCommandNames = new ArrayList<>();
+		String testNameString = PropsValues.TEST_NAME;
+		List<String> testNames = new ArrayList<>();
 
-		if (testName.contains("#")) {
-			classCommandNames.add(testName);
+		if (testNameString.contains(",")) {
+			testNames = Arrays.asList(testNameString.split("\\s*,\\s*"));
 		}
 		else {
-			String className = testName;
+			testNames = Arrays.asList(testNameString);
+		}
 
-			Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
-				className);
+		for (String testName : testNames) {
+			PoshiRunnerValidation.validate(testName);
 
-			List<Element> commandElements = rootElement.elements("command");
+			if (testName.contains("#")) {
+				classCommandNames.add(testName);
+			}
+			else {
+				String className = testName;
 
-			for (Element commandElement : commandElements) {
-				classCommandNames.add(
-					className + "#" + commandElement.attributeValue("name"));
+				Element rootElement =
+					PoshiRunnerContext.getTestCaseRootElement(className);
+
+				List<Element> commandElements = rootElement.elements(
+					"command");
+
+				for (Element commandElement : commandElements) {
+					classCommandNames.add(
+						className + "#" +
+						commandElement.attributeValue("name"));
+				}
 			}
 		}
 

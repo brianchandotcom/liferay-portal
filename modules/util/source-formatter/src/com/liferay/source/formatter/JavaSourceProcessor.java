@@ -275,7 +275,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-56706 and LPS-57722
 
 		if (fileName.endsWith("Test.java")) {
-			if (absolutePath.contains("/test/integration/")) {
+			if (absolutePath.contains("/test/integration/") ||
+				absolutePath.contains("/src/testIntegration/java/")) {
+
 				if (content.contains("@RunWith(Arquillian.class)") &&
 					content.contains("import org.powermock.")) {
 
@@ -292,7 +294,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							"subpackage" + fileName);
 				}
 			}
-			else if (absolutePath.contains("/test/unit/") &&
+			else if ((absolutePath.contains("/test/unit/") ||
+					  absolutePath.contains("/src/test/java/")) &&
 					 packagePath.endsWith(".test")) {
 
 				processErrorMessage(
@@ -325,6 +328,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if (!absolutePath.contains("/modules/core/") &&
 				!absolutePath.contains("/test/") &&
+				!absolutePath.contains("/testIntegration/") &&
 				content.contains("import com.liferay.registry.Registry")) {
 
 				processErrorMessage(
@@ -734,6 +738,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			!isExcludedFile(_upgradeServiceUtilExclusionFiles, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
+			!fileName.contains("/testIntegration/") &&
 			newContent.contains("ServiceUtil.")) {
 
 			processErrorMessage(fileName, "ServiceUtil: " + fileName);
@@ -820,7 +825,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-36174
 
-		if (_checkUnprocessedExceptions && !fileName.contains("/test/")) {
+		if (_checkUnprocessedExceptions && !fileName.contains("/test/") &&
+			!fileName.contains("/testIntegration/")) {
+
 			checkUnprocessedExceptions(newContent, file, packagePath, fileName);
 		}
 
@@ -868,7 +875,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-47648
 
-		if (portalSource && fileName.contains("/test/integration/")) {
+		if (portalSource &&
+			(fileName.contains("/test/integration/") ||
+			 fileName.contains("/testIntegration/java"))) {
+
 			newContent = StringUtil.replace(
 				newContent, "FinderCacheUtil.clearCache();", StringPool.BLANK);
 		}
@@ -902,6 +912,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-50479
 
 		if (!fileName.contains("/test/") &&
+			!fileName.contains("/testIntegration/") &&
 			!isExcludedFile(_secureXmlExclusionFiles, absolutePath)) {
 
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);

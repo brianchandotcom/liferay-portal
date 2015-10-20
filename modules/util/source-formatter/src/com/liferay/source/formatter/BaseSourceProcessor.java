@@ -1293,13 +1293,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			sb.append("WEB-INF/src/");
 		}
 		else {
-			pos = fileName.indexOf("src/");
+			pos = fileName.indexOf("src/main/resources/");
+
+			if (pos != -1) {
+				sb.append(fileName.substring(0, pos + 19));
+			}
+			else {
+				pos = fileName.indexOf("src/");
+
+				if (pos != -1) {
+					sb.append(fileName.substring(0, pos + 4));
+				}
+			}
 
 			if (pos == -1) {
 				return null;
 			}
-
-			sb.append(fileName.substring(0, pos + 4));
 		}
 
 		sb.append("content/Language.properties");

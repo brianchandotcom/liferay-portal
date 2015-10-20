@@ -62,7 +62,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					<c:when test="<%= !article.isApproved() %>">
 
 						<%
-							AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
+						AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
 						%>
 
 						<c:choose>

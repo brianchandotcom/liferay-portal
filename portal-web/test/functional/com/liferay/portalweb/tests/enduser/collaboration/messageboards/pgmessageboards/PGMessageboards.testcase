@@ -18,6 +18,10 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -498,6 +502,10 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
 		<execute macro="ServerAdministration#configureFileUploadOverallMaximumFileSize">
 			<var name="maxFileSize" value="10000" />
 		</execute>
@@ -528,7 +536,9 @@
 			</execute>
 		</for>
 
-		<execute macro="MessageboardsCategory#tearDownCP" />
+		<execute macro="MessageboardsCategory#tearDownCP">
+			<var name="assetType" value="3 items" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

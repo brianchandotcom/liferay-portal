@@ -86,6 +86,8 @@ public class PoshiRunner {
 
 		XMLLoggerHandler.generateXMLLog(classCommandName);
 
+		CommandLoggerHandler.startRunning();
+
 		LoggerUtil.startLogger();
 
 		SeleniumUtil.startSelenium();
@@ -94,8 +96,6 @@ public class PoshiRunner {
 	@Test
 	public void test() throws Exception {
 		try {
-			CommandLoggerHandler.startRunning();
-
 			_runSetUp();
 
 			_runCommand();
@@ -127,9 +127,9 @@ public class PoshiRunner {
 				PoshiRunnerStackTraceUtil.emptyStackTrace();
 			}
 			finally {
-				CommandLoggerHandler.stopRunning();
-
 				LoggerUtil.stopLogger();
+
+				CommandLoggerHandler.stopRunning();
 
 				SeleniumUtil.stopSelenium();
 			}

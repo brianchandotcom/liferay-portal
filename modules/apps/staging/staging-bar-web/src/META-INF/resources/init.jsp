@@ -88,6 +88,8 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 
 String currentURL = currentURLObj.toString();
 
+layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
 Layout selLayout = layout;
 
 long selPlid = ParamUtil.getLong(request, "selPlid");

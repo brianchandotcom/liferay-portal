@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Portal POP Notifications
+Bundle-SymbolicName: com.liferay.portal.pop.notifications
+Bundle-Version: 1.0.0
+Import-Package:\
+	*
+Include-Resource:\
+	classes,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/mail/MailEngine.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/mail/MailEngineException.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/mail/LiferayMimeMessage.class
+
+

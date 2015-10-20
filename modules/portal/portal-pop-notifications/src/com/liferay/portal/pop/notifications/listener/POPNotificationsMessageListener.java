@@ -12,18 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.pop.messaging;
+package com.liferay.portal.pop.notifications.listener;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.Account;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.pop.POPServerUtil;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.pop.notifications.portlet.POPNotificationPortlet;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.mail.MailEngine;
 
 import javax.mail.Address;
@@ -36,11 +44,34 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.InternetAddress;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = {"javax.portlet.name=" + POPNotificationPortlet.PORTLET_ID},
+	service = SchedulerEntry.class
+)
 public class POPNotificationsMessageListener
-	extends com.liferay.portal.kernel.messaging.BaseMessageListener {
+	extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate() {
+		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+			schedulerEntryImpl.setTrigger(
+				TriggerFactoryUtil.createTrigger(
+					getEventListenerClass(), getEventListenerClass(), 1,
+					TimeUnit.MINUTE));
+		}
+	}
 
 	@Override
 	protected void doReceive(
@@ -178,6 +209,36 @@ public class POPNotificationsMessageListener
 				}
 			}
 		}
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.RELUCTANT,
+		service = MessageListener.class
+	)
+	protected void setMessageListener(MessageListener messageListener) {
+		POPServerUtil.addListener(messageListener);
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(
+		target =
+			"(javax.portlet.name=" + POPNotificationPortlet.PORTLET_ID + ")"
+	)
+	protected void setPortlet(Portlet portlet) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+	}
+
+	protected void unsetMessageListener(MessageListener messageListener) {
+		POPServerUtil.deleteListener(messageListener);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

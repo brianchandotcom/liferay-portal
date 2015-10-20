@@ -40,7 +40,6 @@ page import="com.liferay.wiki.model.WikiPageConstants" %><%@
 page import="com.liferay.wiki.model.WikiPageDisplay" %><%@
 page import="com.liferay.wiki.model.WikiPageResource" %><%@
 page import="com.liferay.wiki.model.impl.WikiPageImpl" %><%@
-page import="com.liferay.wiki.service.WikiNodeLocalServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageResourceLocalServiceUtil" %><%@

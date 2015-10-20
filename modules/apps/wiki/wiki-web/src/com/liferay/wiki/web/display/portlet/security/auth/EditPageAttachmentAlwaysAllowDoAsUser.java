@@ -35,6 +35,6 @@ public class EditPageAttachmentAlwaysAllowDoAsUser
 	}
 
 	private final Collection<String> _strutsActions = Arrays.asList(
-		"/wiki_display/edit_page_attachment");
+		"/wiki/edit_page_attachment");
 
 }

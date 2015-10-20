@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Component;
 		"auth.public.path=/wiki/edit_page_discussion",
 		"auth.public.path=/wiki/find_page",
 		"auth.public.path=/wiki/get_page_attachment",
-		"auth.public.path=/wiki/rss",
-		"auth.public.path=/wiki_admin/edit_page_attachment",
-		"auth.public.path=/wiki_display/edit_page_attachment",
-		"auth.public.path=/wiki_display/edit_page_discussion"
+		"auth.public.path=/wiki/rss"
 	},
 	service = Object.class
 )

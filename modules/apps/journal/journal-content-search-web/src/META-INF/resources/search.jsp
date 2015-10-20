@@ -36,7 +36,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 String defaultKeywords = LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD;
 
-String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
+String keywords = StringUtil.unquote(ParamUtil.getString(request, "keywords", defaultKeywords));
 %>
 
 <portlet:renderURL var="searchURL">

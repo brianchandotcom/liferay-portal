@@ -316,7 +316,9 @@ if (sapEntry != null) {
 
 	<aui:button-row>
 		<aui:button type="submit" value="save" />
-		<aui:button id="advancedMode" onClick='<%= renderResponse.getNamespace() + "toggleAdvancedMode();" %>' value="Switch to Advanced mode" />
-		<aui:button cssClass="hide" id="friendlyMode" onClick='<%= renderResponse.getNamespace() + "toggleAdvancedMode();" %>' value="Switch to Friendly mode" />
+
+		<aui:button id="advancedMode" onClick='<%= renderResponse.getNamespace() + "toggleAdvancedMode();" %>' value="switch-to-advanced-mode" />
+
+		<aui:button cssClass="hide" id="friendlyMode" onClick='<%= renderResponse.getNamespace() + "toggleAdvancedMode();" %>' value="switch-to-friendly-mode" />
 	</aui:button-row>
 </aui:form>

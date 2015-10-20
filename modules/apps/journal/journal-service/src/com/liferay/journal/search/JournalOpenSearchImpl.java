@@ -36,7 +36,7 @@ import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import java.util.List;
 
@@ -160,7 +160,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 			return layoutURL;
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		if (assetEntry == null) {
@@ -173,6 +173,13 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 		portletURL.setParameter("articleId", articleId);
 
 		return portletURL.toString();
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
 	}
 
 	@Reference
@@ -208,6 +215,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 		_layoutSetLocalService = layoutSetLocalService;
 	}
 
+	private AssetEntryLocalService _assetEntryLocalService;
 	private GroupLocalService _groupLocalService;
 	private JournalArticleService _journalArticleService;
 	private JournalContentSearchLocalService _journalContentSearchLocalService;

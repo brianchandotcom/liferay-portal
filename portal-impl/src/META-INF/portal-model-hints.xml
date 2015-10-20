@@ -153,7 +153,6 @@
 		<field name="facebookSn" type="String" />
 		<field name="icqSn" type="String" />
 		<field name="jabberSn" type="String" />
-		<field name="msnSn" type="String" />
 		<field name="mySpaceSn" type="String" />
 		<field name="skypeSn" type="String" />
 		<field name="twitterSn" type="String" />

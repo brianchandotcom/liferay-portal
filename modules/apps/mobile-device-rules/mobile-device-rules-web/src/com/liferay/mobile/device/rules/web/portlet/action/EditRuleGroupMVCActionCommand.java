@@ -17,7 +17,7 @@ package com.liferay.mobile.device.rules.web.portlet.action;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupService;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -39,6 +39,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward Han
@@ -64,7 +65,7 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		return MDRRuleGroupServiceUtil.copyRuleGroup(
+		return _mdrRuleGroupService.copyRuleGroup(
 			ruleGroupId, groupId, serviceContext);
 	}
 
@@ -84,7 +85,7 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long deleteRuleGroupId : deleteRuleGroupIds) {
-			MDRRuleGroupServiceUtil.deleteRuleGroup(deleteRuleGroupId);
+			_mdrRuleGroupService.deleteRuleGroup(deleteRuleGroupId);
 		}
 	}
 
@@ -174,6 +175,13 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 		return portletURL.toString();
 	}
 
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupService(
+		MDRRuleGroupService mdrRuleGroupService) {
+
+		_mdrRuleGroupService = mdrRuleGroupService;
+	}
+
 	protected MDRRuleGroup updateRuleGroup(ActionRequest actionRequest)
 		throws Exception {
 
@@ -191,15 +199,17 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 		MDRRuleGroup ruleGroup = null;
 
 		if (ruleGroupId <= 0) {
-			ruleGroup = MDRRuleGroupServiceUtil.addRuleGroup(
+			ruleGroup = _mdrRuleGroupService.addRuleGroup(
 				groupId, nameMap, descriptionMap, serviceContext);
 		}
 		else {
-			ruleGroup = MDRRuleGroupServiceUtil.updateRuleGroup(
+			ruleGroup = _mdrRuleGroupService.updateRuleGroup(
 				ruleGroupId, nameMap, descriptionMap, serviceContext);
 		}
 
 		return ruleGroup;
 	}
+
+	private MDRRuleGroupService _mdrRuleGroupService;
 
 }

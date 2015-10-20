@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
-import com.liferay.mobile.device.rules.service.MDRActionServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRActionService;
 import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -26,6 +26,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -47,7 +48,7 @@ public class EditActionMVCResourceCommand extends BaseMVCResourceCommand {
 
 		long actionId = ParamUtil.getLong(resourceRequest, "actionId");
 
-		MDRAction action = MDRActionServiceUtil.fetchAction(actionId);
+		MDRAction action = _mdrActionService.fetchAction(actionId);
 
 		resourceRequest.setAttribute(
 			MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION, action);
@@ -58,5 +59,12 @@ public class EditActionMVCResourceCommand extends BaseMVCResourceCommand {
 			getPortletConfig(resourceRequest), resourceRequest,
 			resourceResponse, ActionUtil.getActionEditorJSP(type));
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRActionService(MDRActionService mdrActionService) {
+		_mdrActionService = mdrActionService;
+	}
+
+	private MDRActionService _mdrActionService;
 
 }

@@ -1001,10 +1001,10 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
 			<var name="pageStaging" value="true" />
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 

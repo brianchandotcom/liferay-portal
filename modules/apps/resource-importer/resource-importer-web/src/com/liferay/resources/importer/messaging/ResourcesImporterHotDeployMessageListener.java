@@ -16,14 +16,17 @@ package com.liferay.resources.importer.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.resources.importer.util.Importer;
 import com.liferay.resources.importer.util.ImporterException;
@@ -36,10 +39,18 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ryan Park
  * @author Raymond Augé
  */
+@Component(
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.HOT_DEPLOY},
+	service = MessageListener.class
+)
 public class ResourcesImporterHotDeployMessageListener
 	extends HotDeployMessageListener {
 
@@ -67,7 +78,7 @@ public class ResourcesImporterHotDeployMessageListener
 			return;
 		}
 
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
+		List<Company> companies = _companyLocalService.getCompanies();
 
 		try {
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
@@ -88,6 +99,20 @@ public class ResourcesImporterHotDeployMessageListener
 	@Override
 	protected void onDeploy(Message message) throws Exception {
 		initialize(message);
+	}
+
+	@Reference
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.HOT_DEPLOY + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 	private void importResources(
@@ -176,7 +201,9 @@ public class ResourcesImporterHotDeployMessageListener
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ResourcesImporterHotDeployMessageListener.class);
+
+	private CompanyLocalService _companyLocalService;
 
 }

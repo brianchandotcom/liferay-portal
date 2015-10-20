@@ -165,6 +165,17 @@ if (sapEntry != null) {
 		A.one('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox').delegate('blur', updateAdvancedModeTextarea, '.service-class, .method-name');
 		A.one('#<portlet:namespace />allowedServiceSignatures').on('blur', updateFriendlyModeInputs);
 
+		function getServiceContext(serviceClass) {
+			var service = A.Array.find(
+				services,
+				function(item, index) {
+					return item.serviceClass === serviceClass;
+				}
+			);
+
+			return service && service.context || 'portal';
+		}
+
 		function updateAdvancedModeTextarea() {
 			var updatedInput = '';
 
@@ -262,18 +273,10 @@ if (sapEntry != null) {
 						var context = serviceInput.attr('data-context');
 						var serviceClass = serviceInput.attr('data-service-class');
 
-						if (context.length == 0) {
-							A.Array.each(services, function(item, index) {
-								if (item.serviceClass == serviceClass) {
-									context = item.context;
+						if (!context) {
+							context = getServiceContext(serviceClass);
 
-									if (context.length == 0) {
-										context = 'portal';
-									}
-
-									serviceInput.attr('data-context', context);
-								}
-							});
+							serviceInput.attr('data-context', context);
 						}
 
 						if (context.length && serviceClass.length) {

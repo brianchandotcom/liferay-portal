@@ -30,6 +30,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>START_DATE_TIME_24_HOUR</td>
+	<td>//input[contains(@name,'CalendarPortlet_startTime') and @placeholder='h:mm']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -43,6 +48,11 @@
 <tr>
 	<td>END_DATE_TIME</td>
 	<td>//input[contains(@name,'CalendarPortlet_endTime') and @placeholder='h:mm am/pm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>END_DATE_TIME_24_HOUR</td>
+	<td>//input[contains(@name,'CalendarPortlet_endTime') and @placeholder='h:mm']</td>
 	<td></td>
 </tr>
 <tr>

@@ -52,7 +52,7 @@
 <!--USER_SETTINGS-->
 <tr>
 	<td>USER_SETTINGS_TIME_FORMAT_SELECT</td>
-	<td>//select[contains(@id,'TimeFormat')]</td>
+	<td>//select[contains(@id,'timeFormat')]</td>
 	<td></td>
 </tr>
 <tr>

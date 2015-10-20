@@ -229,6 +229,13 @@ if (sapEntry != null) {
 
 			methodInput.attr('disabled', true);
 
+			serviceInput.attr(
+				{
+					'data-context': '',
+					'data-service-class': ''
+				}
+			);
+
 			new A.AutoComplete(
 				{
 					inputNode: serviceInput,

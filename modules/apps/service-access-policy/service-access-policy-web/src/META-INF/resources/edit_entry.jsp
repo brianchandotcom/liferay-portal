@@ -141,50 +141,7 @@ if (sapEntry != null) {
 
 		var serviceMethods = {};
 
-		var autoFields = new Liferay.AutoFields(
-			{
-				contentBox: '#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox',
-				namespace: '<portlet:namespace />',
-				on: {
-					clone: function(event) {
-						var rowNode = event.row;
-
-						var methodInput = rowNode.one('.method-name');
-						var serviceInput = rowNode.one('.service-class');
-
-						methodInput.attr('disabled', true);
-
-						serviceInput.attr(
-							{
-								'data-context': '',
-								'data-service-class': ''
-							}
-						);
-
-						initAutoCompleteRow(rowNode);
-					},
-					delete: updateAdvancedModeTextarea
-				}
-			}
-		).render();
-
-		var rows = A.all('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox .lfr-form-row');
-
-		var rowTemplate = rows.first().clone();
-
-		rowTemplate.all('input').val('');
-
-		A.each(
-			rows,
-			function(item, index) {
-				initAutoCompleteRow(item);
-			}
-		);
-
-		A.one('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox').delegate('blur', updateAdvancedModeTextarea, '.service-class, .method-name');
-		A.one('#<portlet:namespace />allowedServiceSignatures').on('blur', updateFriendlyModeInputs);
-
-		function getServiceContext(serviceClass) {
+		var getServiceContext = function(serviceClass) {
 			var service = A.Array.find(
 				services,
 				function(item, index) {
@@ -193,9 +150,9 @@ if (sapEntry != null) {
 			);
 
 			return service && service.context || 'portal';
-		}
+		};
 
-		function getServiceMethods(context, serviceClass, callback) {
+		var getServiceMethods = function(context, serviceClass, callback) {
 			if (context && serviceClass && callback) {
 				var namespace = context.replace(REGEX_DOT, '_') + '.' + serviceClass.replace(REGEX_DOT, '_');
 
@@ -232,19 +189,63 @@ if (sapEntry != null) {
 					callback(methods);
 				}
 			}
-		}
+		};
 
-		function updateAdvancedModeTextarea() {
+		var initAutoCompleteRow = function(rowNode) {
+			var methodInput = rowNode.one('.method-name');
+			var serviceInput = rowNode.one('.service-class');
+
+			new A.AutoComplete(
+				{
+					inputNode: serviceInput,
+					on: {
+						select: function(event) {
+							var result = event.result.raw;
+
+							serviceInput.attr('data-service-class', result.serviceClass);
+							serviceInput.attr('data-context', result.context);
+
+							methodInput.attr('disabled', false);
+						}
+					},
+					resultFilters: 'phraseMatch',
+					resultTextLocator: 'serviceClass',
+					source: services
+				}
+			).render();
+
+			new A.AutoComplete(
+				{
+					inputNode: methodInput,
+					resultFilters: 'phraseMatch',
+					resultTextLocator: 'methodName',
+					source: function(query, callback) {
+						var context = serviceInput.attr('data-context');
+						var serviceClass = serviceInput.attr('data-service-class');
+
+						if (!context) {
+							context = getServiceContext(serviceClass);
+
+							serviceInput.attr('data-context', context);
+						}
+
+						getServiceMethods(context, serviceClass, callback);
+					}
+				}
+			).render();
+		};
+
+		var updateAdvancedModeTextarea = function() {
 			var updatedInput = '';
 
 			A.all('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox .lfr-form-row:not(.hide)').each(
 				function(item, index) {
-					var serviceClass = item.one('.service-class').val();
 					var methodName = item.one('.method-name').val();
+					var serviceClass = item.one('.service-class').val();
 
 					updatedInput += serviceClass;
 
-					if (methodName.length > 0) {
+					if (methodName) {
 						updatedInput += '#' + methodName;
 					}
 
@@ -253,9 +254,9 @@ if (sapEntry != null) {
 			);
 
 			A.one('#<portlet:namespace />allowedServiceSignatures').val(updatedInput);
-		}
+		};
 
-		function updateFriendlyModeInputs() {
+		var updateFriendlyModeInputs = function() {
 			var contentBox = A.one('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox');
 
 			contentBox.all('.lfr-form-row:not(.hide)').remove();
@@ -271,17 +272,18 @@ if (sapEntry != null) {
 					var row = rowTemplate.clone();
 
 					if (item) {
-						var serviceInput = row.one('.service-class');
 						var methodInput = row.one('.method-name');
+						var serviceInput = row.one('.service-class');
 
 						item = item.split('#');
 
 						var serviceClass = item[0];
-						var method = item[1];
 
 						serviceInput.val(serviceClass);
 
 						serviceInput.attr('data-service-class', serviceClass);
+
+						var method = item[1];
 
 						if (method) {
 							methodInput.val(method);
@@ -293,51 +295,45 @@ if (sapEntry != null) {
 					}
 				}
 			);
-		}
+		};
 
-		function initAutoCompleteRow(rowNode) {
-			var methodInput = rowNode.one('.method-name');
-			var serviceInput = rowNode.one('.service-class');
+		new Liferay.AutoFields(
+			{
+				contentBox: '#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox',
+				namespace: '<portlet:namespace />',
+				on: {
+					clone: function(event) {
+						var rowNode = event.row;
 
-			new A.AutoComplete(
-				{
-					inputNode: serviceInput,
-					source: services,
-					resultFilters: 'phraseMatch',
-					resultTextLocator: 'serviceClass',
-					on: {
-						select: function(event) {
-							var result = event.result.raw;
+						var methodInput = rowNode.one('.method-name');
+						var serviceInput = rowNode.one('.service-class');
 
-							serviceInput.attr('data-service-class', result.serviceClass);
-							serviceInput.attr('data-context', result.context);
+						methodInput.attr('disabled', true);
 
-							methodInput.attr('disabled', false);
-						}
-					}
-				}
-			).render();
+						serviceInput.attr(
+							{
+								'data-context': '',
+								'data-service-class': ''
+							}
+						);
 
-			new A.AutoComplete(
-				{
-					inputNode: methodInput,
-					source: function(query, callback) {
-						var context = serviceInput.attr('data-context');
-						var serviceClass = serviceInput.attr('data-service-class');
-
-						if (!context) {
-							context = getServiceContext(serviceClass);
-
-							serviceInput.attr('data-context', context);
-						}
-
-						getServiceMethods(context, serviceClass, callback);
+						initAutoCompleteRow(rowNode);
 					},
-					resultFilters: 'phraseMatch',
-					resultTextLocator: 'methodName'
+					delete: updateAdvancedModeTextarea
 				}
-			).render();
-		}
+			}
+		).render();
+
+		var rows = A.all('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox .lfr-form-row');
+
+		var rowTemplate = rows.first().clone();
+
+		rowTemplate.all('input').val('');
+
+		A.each(rows, initAutoCompleteRow);
+
+		A.one('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox').delegate('blur', updateAdvancedModeTextarea, '.service-class, .method-name');
+		A.one('#<portlet:namespace />allowedServiceSignatures').on('blur', updateFriendlyModeInputs);
 	</aui:script>
 
 	<aui:button-row>

@@ -537,6 +537,15 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 					actionRequest, modelResource, resourcePrimKey, roleIds);
 			}
 		}
+
+		// Force updating layout modified date. See LPS-59246
+
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+
+		portletPreferences.store();
 	}
 
 	@Override

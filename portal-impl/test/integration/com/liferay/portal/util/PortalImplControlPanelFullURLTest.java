@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -79,13 +78,6 @@ public class PortalImplControlPanelFullURLTest {
 		sb.append(getPortalURL());
 
 		sb.append(_portalImpl.getPathFriendlyURLPrivateGroup());
-
-		User user = TestPropsValues.getUser();
-
-		Group userGroup = user.getGroup();
-
-		sb.append(userGroup.getFriendlyURL());
-		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 

@@ -143,7 +143,6 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -1624,8 +1623,7 @@ public class PortalImpl implements Portal {
 		sb.append(getPathFriendlyURLPrivateGroup());
 
 		Group controlPanelDisplayGroup = getControlPanelDisplayGroup(
-			group.getCompanyId(), PrincipalThreadLocal.getUserId(),
-			scopeGroupId, 0, ppid);
+			group.getCompanyId(), scopeGroupId, 0, ppid);
 
 		if (controlPanelDisplayGroup != null) {
 			sb.append(controlPanelDisplayGroup.getFriendlyURL());
@@ -7535,8 +7533,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected Group getControlPanelDisplayGroup(
-		long companyId, long userId, long scopeGroupId, long doAsGroupId,
-		String portletId) {
+		long companyId, long scopeGroupId, long doAsGroupId, String portletId) {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
@@ -7552,16 +7549,9 @@ public class PortalImpl implements Portal {
 			portletCategory.equals(
 				PortletCategoryKeys.CONTROL_PANEL_SYSTEM) ||
 			portletCategory.equals(
-				PortletCategoryKeys.CONTROL_PANEL_USERS)) {
-
-			return null;
-		}
-		else if (portletCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
-			User user = UserLocalServiceUtil.fetchUser(userId);
-
-			if (user != null) {
-				return user.getGroup();
-			}
+				PortletCategoryKeys.CONTROL_PANEL_USERS) ||
+			portletCategory.equals(
+				PortletCategoryKeys.USER_MY_ACCOUNT)) {
 
 			return null;
 		}
@@ -7598,9 +7588,8 @@ public class PortalImpl implements Portal {
 
 		if (group == null) {
 			group = getControlPanelDisplayGroup(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				themeDisplay.getScopeGroupId(), themeDisplay.getDoAsGroupId(),
-				portletId);
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getDoAsGroupId(), portletId);
 
 			if (group == null) {
 				return layout;

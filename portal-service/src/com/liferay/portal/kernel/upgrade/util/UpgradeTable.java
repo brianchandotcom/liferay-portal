@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -61,5 +62,9 @@ public interface UpgradeTable {
 	public void setIndexesSQL(String[] indexesSQL) throws Exception;
 
 	public void updateTable() throws Exception;
+
+	public void updateTable(
+			Connection sourceConnection, Connection targetConnection)
+		throws Exception;
 
 }

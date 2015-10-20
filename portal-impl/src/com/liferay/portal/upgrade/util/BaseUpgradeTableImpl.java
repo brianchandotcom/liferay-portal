@@ -17,12 +17,15 @@ package com.liferay.portal.upgrade.util;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.sql.Connection;
 
 /**
  * @author Alexander Chow
@@ -75,9 +78,23 @@ public abstract class BaseUpgradeTableImpl extends Table {
 	}
 
 	public void updateTable() throws Exception {
+		Connection connection = DataAccess.getUpgradeOptimizedConnection();
+
+		try {
+			updateTable(connection, connection);
+		}
+		finally {
+			DataAccess.cleanUp(connection);
+		}
+	}
+
+	public void updateTable(
+			Connection sourceConnection, Connection targetConnection)
+		throws Exception {
+
 		_calledUpdateTable = true;
 
-		generateTempFile();
+		generateTempFile(sourceConnection);
 
 		String tempFileName = getTempFileName();
 
@@ -87,18 +104,18 @@ public abstract class BaseUpgradeTableImpl extends Table {
 			if (Validator.isNotNull(tempFileName)) {
 				String deleteSQL = getDeleteSQL();
 
-				db.runSQL(deleteSQL);
+				db.runSQL(sourceConnection, deleteSQL);
 			}
 
 			String createSQL = getCreateSQL();
 
 			if (Validator.isNotNull(createSQL)) {
-				db.runSQL("drop table " + getTableName());
+				db.runSQL(sourceConnection, "drop table " + getTableName());
 
-				db.runSQL(createSQL);
+				db.runSQL(targetConnection, createSQL);
 			}
 
-			populateTable();
+			populateTable(targetConnection);
 
 			String[] indexesSQL = getIndexesSQL();
 
@@ -115,7 +132,7 @@ public abstract class BaseUpgradeTableImpl extends Table {
 				}
 
 				try {
-					db.runSQL(indexSQL);
+					db.runSQL(targetConnection, indexSQL);
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {

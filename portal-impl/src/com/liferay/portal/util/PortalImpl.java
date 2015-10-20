@@ -1624,8 +1624,7 @@ public class PortalImpl implements Portal {
 		sb.append(getPathFriendlyURLPrivateGroup());
 
 		Group controlPanelDisplayGroup = getControlPanelDisplayGroup(
-			group.getCompanyId(), PrincipalThreadLocal.getUserId(),
-			scopeGroupId, 0, ppid);
+			group.getCompanyId(), scopeGroupId, 0, ppid);
 
 		if (controlPanelDisplayGroup != null) {
 			sb.append(controlPanelDisplayGroup.getFriendlyURL());
@@ -7535,8 +7534,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected Group getControlPanelDisplayGroup(
-		long companyId, long userId, long scopeGroupId, long doAsGroupId,
-		String portletId) {
+		long companyId, long scopeGroupId, long doAsGroupId, String portletId) {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
@@ -7591,9 +7589,8 @@ public class PortalImpl implements Portal {
 
 		if (group == null) {
 			group = getControlPanelDisplayGroup(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				themeDisplay.getScopeGroupId(), themeDisplay.getDoAsGroupId(),
-				portletId);
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getDoAsGroupId(), portletId);
 
 			if (group == null) {
 				return layout;

@@ -10,19 +10,22 @@
  * @param name
  * @param placeholder
  * @param required
+ * @param showLabel
  * @param tip
  * @param value
  * @param visible
  */
 {template .text}
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		<label class="control-label" for="{$name}">
-			{$label}
+		{if $showLabel}
+			<label class="control-label" for="{$name}">
+				{$label}
 
-			{if $required}
-				<b>*</b>
-			{/if}
-		</label>
+				{if $required}
+					<b>*</b>
+				{/if}
+			</label>
+		{/if}
 
 		<div class="input-group-container {if $tip}input-group-default{/if}">
 			{if $displayStyle == 'multiline'}

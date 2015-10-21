@@ -366,6 +366,16 @@
 		</while>
 	</command>
 
+	 <command name="viewPortletOptionsMenulist">
+	 	<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#MAXIMIZE" value1="Maximize" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#MINIMIZE" value1="Minimize" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#OPTION_MENULIST_REMOVE" value1="Remove" />
+	 </command>
+
 	<command name="viewNoSpecificPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 

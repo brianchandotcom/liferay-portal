@@ -1,5 +1,7 @@
 import com.liferay.gradle.util.GradleUtil
 
+task deployWithDependencies(type: Copy)
+
 buildCSS {
 	ext {
 		autoClean = false
@@ -19,8 +21,6 @@ dependencies {
 	compile group: "org.seleniumhq.selenium", name: "selenium-java", version: "2.47.1"
 	compile group: "org.sikuli", name: "sikuli-api", version: "1.2.0"
 }
-
-task deployWithDependencies(type: Copy)
 
 deployWithDependencies {
 	from configurations.runtime

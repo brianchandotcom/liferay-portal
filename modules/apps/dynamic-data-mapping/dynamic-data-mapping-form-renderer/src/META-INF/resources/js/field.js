@@ -320,13 +320,7 @@ AUI.add(
 
 						instance.eachField(
 							function(field) {
-								var container = field.fetchContainer();
-
-								if (!container) {
-									container = field._createContainer();
-								}
-
-								field.set('container', container);
+								field.updateContainer();
 							}
 						);
 
@@ -357,6 +351,18 @@ AUI.add(
 						}
 
 						return fieldJSON;
+					},
+
+					updateContainer: function() {
+						var instance = this;
+
+						var fieldContainer = instance.fetchContainer();
+
+						if (!fieldContainer) {
+							fieldContainer = instance._createContainer();
+						}
+
+						instance.set('container', fieldContainer);
 					},
 
 					_afterLocalizableChange: function() {

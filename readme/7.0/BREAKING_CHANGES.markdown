@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `616fcb4`.*
+*This document has been reviewed through commit `d6e41b2`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2422,62 +2422,6 @@ cannot call the `application-list-api` from the portal context.
 
 ---------------------------------------
 
-### Removed all references to Windows Live Messenger
-- **Date:** 2015-Oct-15
-- **JIRA Ticket:** LPS-30883
-
-#### What changed?
-
-*Overview:*
-- All references to the `msnSn` column in the Contacts table have been removed from portal.
-- All references to Windows Live Messenger have been removed from the properties, tests, classes, and frontend.
-- `getMsnSn` and `setMsnSn` have been removed from the Contact and LDAPUser models.
-
-*The following classes have been removed:*
-- `MSNConnector`
-- `MSNMessageAdapter`
-
-*The following constants have been removed:*
-- `ContactConverterKeys.MSN_SN`
-- `CalEventConstants.REMIND_BY_MSN`
-- `PropsKeys.MSN_LOGIN`
-- `PropsKeys.MSN_PASSWORD`
-
-*The following methods have been removed:*
-- `Contact.setMsnSn`
-- `Contact.getMsnSn`
-- `LDAPUser.setMsnSn`
-- `LDAPUser.getMsnSn`
-
-*The following methods have been changed:*
-- `AdminUtil.updateUser`
-- `ContactLocalServiceUtil.addContact`
-- `ContactLocalServiceUtil.updateContact`
-- `UserLocalServiceUtil.addContact`
-- `UserLocalServiceUtil.updateContact`
-- `UserLocalServiceUtil.updateUser`
-- `UserServiceUtil.updateUser`
-
-
-#### Who is affected?
-
-This affects developers who use any of the classes, constants, or methods listed
-above.
-
-#### How should I update my code?
-
-- When updating or adding a user or a contact using one of the changed methods
-above, simply remove the `msnSn` argument from the method call.
-- If using one of the removed items above, you will need to remove all
-references to them from your code and look for alternatives if necessary.
-- Remove any references to the `msnSN` column in the Contact table from your SQL
-queries.
-
-#### Why was this change made?
-
-Since Microsoft dropped support for Windows Live Messenger, Liferay will no longer continue to support it.
-
----------------------------------------
 ### Removed ThemeDisplay Methods Related to Control Panel and Site Administration
 - **Date:** 2015-Sep-23
 - **JIRA Ticket:** LPS-58210
@@ -2584,5 +2528,62 @@ already existed for a file entry with the same title.
 
 This made it impossible to detect and recover from store corruption
 issues, as they were undifferentiable from other errors.
+
+---------------------------------------
+
+### Removed all references to Windows Live Messenger
+- **Date:** 2015-Oct-15
+- **JIRA Ticket:** LPS-30883
+
+#### What changed?
+
+*Overview:*
+- All references to the `msnSn` column in the Contacts table have been removed from portal.
+- All references to Windows Live Messenger have been removed from the properties, tests, classes, and frontend.
+- `getMsnSn` and `setMsnSn` have been removed from the Contact and LDAPUser models.
+
+*The following classes have been removed:*
+- `MSNConnector`
+- `MSNMessageAdapter`
+
+*The following constants have been removed:*
+- `ContactConverterKeys.MSN_SN`
+- `CalEventConstants.REMIND_BY_MSN`
+- `PropsKeys.MSN_LOGIN`
+- `PropsKeys.MSN_PASSWORD`
+
+*The following methods have been removed:*
+- `Contact.setMsnSn`
+- `Contact.getMsnSn`
+- `LDAPUser.setMsnSn`
+- `LDAPUser.getMsnSn`
+
+*The following methods have been changed:*
+- `AdminUtil.updateUser`
+- `ContactLocalServiceUtil.addContact`
+- `ContactLocalServiceUtil.updateContact`
+- `UserLocalServiceUtil.addContact`
+- `UserLocalServiceUtil.updateContact`
+- `UserLocalServiceUtil.updateUser`
+- `UserServiceUtil.updateUser`
+
+
+#### Who is affected?
+
+This affects developers who use any of the classes, constants, or methods listed
+above.
+
+#### How should I update my code?
+
+- When updating or adding a user or a contact using one of the changed methods
+above, simply remove the `msnSn` argument from the method call.
+- If using one of the removed items above, you will need to remove all
+references to them from your code and look for alternatives if necessary.
+- Remove any references to the `msnSN` column in the Contact table from your SQL
+queries.
+
+#### Why was this change made?
+
+Since Microsoft dropped support for Windows Live Messenger, Liferay will no longer continue to support it.
 
 ---------------------------------------

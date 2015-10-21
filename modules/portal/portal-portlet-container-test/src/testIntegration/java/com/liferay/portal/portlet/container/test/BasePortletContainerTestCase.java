@@ -96,11 +96,10 @@ public class BasePortletContainerTestCase {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		serviceRegistration = bundleContext.registerService(
-			new String[] {Object.class.getName(), Portlet.class.getName()},
-			portlet, properties);
-
-		serviceRegistrations.add(serviceRegistration);
+		serviceRegistrations.add(
+			bundleContext.registerService(
+				new String[] {Object.class.getName(), Portlet.class.getName()},
+				portlet, properties));
 
 		if (addToLayout) {
 			LayoutTestUtil.addPortletToLayout(
@@ -117,7 +116,6 @@ public class BasePortletContainerTestCase {
 	protected Layout layout;
 	protected Map<String, String> map = new ConcurrentHashMap<>();
 	protected Dictionary<String, Object> properties = new HashMapDictionary<>();
-	protected ServiceRegistration<?> serviceRegistration;
 	protected List<ServiceRegistration<?>> serviceRegistrations =
 		new CopyOnWriteArrayList<>();
 	protected TestPortlet testPortlet;

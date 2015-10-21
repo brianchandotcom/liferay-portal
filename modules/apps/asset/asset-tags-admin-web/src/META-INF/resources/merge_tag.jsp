@@ -124,11 +124,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 		'submit',
 		function(event) {
 			var mergeTagNames = $('#<portlet:namespace />mergeTagNames').val();
-	        var mergeTagNamesArray = mergeTagNames.split(',');
+
+			var mergeTagNamesArray = mergeTagNames.split(',');
 
 			if(mergeTagNamesArray.length < 2) {
 				alert('<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />');
-	        	return;
+
+				return;
 			}
 
 			var mergeText = '<liferay-ui:message key="are-you-sure-you-want-to-merge-x-into-x" />';

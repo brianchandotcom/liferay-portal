@@ -72,17 +72,6 @@ renderResponse.setTitle(headerTitle);
 							</c:otherwise>
 						</c:choose>
 
-						<c:if test="<%= !workflowTask.isAssignedToSingleUser() %>">
-							<portlet:actionURL name="assignWorkflowTask" var="assignToMeURL">
-								<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-								<portlet:param name="assigneeUserId" value="<%= String.valueOf(user.getUserId()) %>" />
-							</portlet:actionURL>
-
-							<aui:a cssClass="icon-signin" href="<%= assignToMeURL %>" id='<%= randomId + "taskAssignToMeLink" %>' label="assign-to-me" />
-						</c:if>
-
 						&nbsp;
 
 						<c:if test="<%= workflowTaskDisplayContext.hasOtherAssignees(workflowTask) %>">
@@ -106,21 +95,6 @@ renderResponse.setTitle(headerTitle);
 
 					<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value="<%= workflowTaskDisplayContext.getDueDateString(workflowTask) %>" />
 
-					<c:if test="<%= !workflowTask.isCompleted() %>">
-						<portlet:actionURL name="updateWorkflowTask" var="updateDueDateURL">
-							<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon
-							iconCssClass="icon-time"
-							id='<%= randomId + "taskDueDateLink" %>'
-							label="<%= true %>"
-							message="change"
-							url="javascript:;"
-						/>
-					</c:if>
 				</aui:col>
 			</aui:row>
 
@@ -229,7 +203,5 @@ renderResponse.setTitle(headerTitle);
 <aui:script use="liferay-workflow-tasks">
 	var onTaskClickFn = A.rbind('onTaskClick', Liferay.WorkflowTasks, '');
 
-	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskAssignToMeLink', onTaskClickFn);
 	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskAssignLink', onTaskClickFn);
-	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskDueDateLink', onTaskClickFn);
 </aui:script>

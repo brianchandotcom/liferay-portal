@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
 		"mvc.command.name=importLayouts"
 	},
-	service = MVCActionCommand.class
+	service = {ImportLayoutsMVCActionCommand.class, MVCActionCommand.class}
 )
 public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 

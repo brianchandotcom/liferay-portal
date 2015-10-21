@@ -92,8 +92,16 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 				Date completionDate = backgroundTask.getCompletionDate();
 				%>
 
+				<liferay-portlet:renderURL var="redirectURL">
+					<portlet:param name="mvcRenderCommandName" value="exportImport" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
+					<portlet:param name="tabs2" value="import" />
+					<portlet:param name="tabs3" value="current-and-previous" />
+					<portlet:param name="portletResource" value="<%= portletResource %>" />
+				</liferay-portlet:renderURL>
+
 				<liferay-portlet:actionURL name="deleteBackgroundTask" portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="deleteBackgroundTaskURL">
-					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+					<portlet:param name="redirect" value="<%= redirectURL %>" />
 					<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 				</liferay-portlet:actionURL>
 

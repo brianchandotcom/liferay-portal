@@ -93,18 +93,16 @@ if (sapEntry != null) {
 
 		<%
 		for (int i = 0; i < allowedServiceSignaturesArray.length; i++) {
-			String entry = allowedServiceSignaturesArray[i];
-
-			String[] split = StringUtil.split(entry, CharPool.POUND);
-
-			String serviceClass = StringPool.BLANK;
+			String serviceClassName = StringPool.BLANK;
 			String methodName = StringPool.BLANK;
 
-			if (split.length > 0) {
-				serviceClass = GetterUtil.getString(split[0], StringPool.BLANK);
+			String[] allowedServiceSignatureArray = StringUtil.split(allowedServiceSignaturesArray[i], CharPool.POUND);
 
-				if (split.length > 1) {
-					methodName = GetterUtil.getString(split[1], StringPool.BLANK);
+			if (allowedServiceSignatureArray.length > 0) {
+				serviceClassName = GetterUtil.getString(allowedServiceSignatureArray[0], StringPool.BLANK);
+
+				if (allowedServiceSignatureArray.length > 1) {
+					methodName = GetterUtil.getString(allowedServiceSignatureArray[1], StringPool.BLANK);
 				}
 			}
 		%>
@@ -112,7 +110,7 @@ if (sapEntry != null) {
 			<div class="lfr-form-row">
 				<div class="row-fields">
 					<aui:col md="6">
-						<aui:input cssClass="service-class" data-service-class="<%= serviceClass %>" id='<%= "serviceClass" + i %>' name="serviceClass" type="text" value="<%= serviceClass %>" />
+						<aui:input cssClass="service-class" data-service-class="<%= serviceClassName %>" id='<%= "serviceClass" + i %>' name="serviceClass" type="text" value="<%= serviceClassName %>" />
 					</aui:col>
 					<aui:col md="6">
 						<aui:input cssClass="method-name" id='<%= "methodName" + i %>' name="methodName" type="text" value="<%= methodName %>" />

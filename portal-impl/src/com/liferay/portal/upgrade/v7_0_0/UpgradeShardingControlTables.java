@@ -96,7 +96,7 @@ public class UpgradeShardingControlTables extends UpgradeProcess {
 				VirtualHostTable.TABLE_SQL_CREATE);
 		}
 		catch (Exception e) {
-			_log.error("Unexpected errors while moving the control tables", e);
+			_log.error("Unexpected errors while copying the control tables", e);
 		}
 		finally {
 			DataAccess.cleanUp(sourceConnection);

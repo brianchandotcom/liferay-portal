@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.portlet.bundle.resourcebundletracker.TestPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
@@ -78,15 +79,21 @@ public class ResourceBundleTrackerTest {
 
 		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
-		Assert.assertEquals("esto", resourceBundle.getString("this"));
-		Assert.assertEquals("es", resourceBundle.getString("is"));
-		Assert.assertEquals("un", resourceBundle.getString("a"));
-		Assert.assertEquals("prueba", resourceBundle.getString("test"));
 		Assert.assertEquals(
-			"paquete de recursos", resourceBundle.getString("resourcebundle"));
+			"esto", ResourceBundleUtil.getString(resourceBundle, "this"));
+		Assert.assertEquals(
+			"es", ResourceBundleUtil.getString(resourceBundle, "is"));
+		Assert.assertEquals(
+			"un", ResourceBundleUtil.getString(resourceBundle, "a"));
+		Assert.assertEquals(
+			"prueba", ResourceBundleUtil.getString(resourceBundle, "test"));
+		Assert.assertEquals(
+			"paquete de recursos",
+			ResourceBundleUtil.getString(resourceBundle, "resourcebundle"));
 		Assert.assertEquals(
 			"clave de extensión del paquete de recursos",
-			resourceBundle.getString("resourcebundle-extension-key"));
+			ResourceBundleUtil.getString(
+				resourceBundle, "resourcebundle-extension-key"));
 	}
 
 	private static GenericPortlet _genericPortlet;

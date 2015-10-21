@@ -1232,12 +1232,11 @@ public class LocalizationImpl implements Localization {
 
 		if (resourceBundle.containsKey(key)) {
 			try {
-				value = resourceBundle.getString(key);
+				value = ResourceBundleUtil.getString(resourceBundle, key);
 
 				value = new String(
 					value.getBytes(StringPool.ISO_8859_1), StringPool.UTF8);
 			}
-
 			catch (Exception e) {
 			}
 		}

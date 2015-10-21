@@ -260,7 +260,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			inputStream = _dlFileEntryLocalService.getFileAsStream(
 				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
-			importData(actionRequest, fileEntry.getTitle(), inputStream);
+			importData(actionRequest, inputStream);
 
 			_importLayoutsMVCActionCommand.deleteTempFileEntry(
 				groupId, folderName);
@@ -271,8 +271,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void importData(
-			ActionRequest actionRequest, String fileName,
-			InputStream inputStream)
+			ActionRequest actionRequest, InputStream inputStream)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

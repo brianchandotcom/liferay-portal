@@ -297,6 +297,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 			if (!empty) {
 				sb.setIndex(sb.index() - 1);
+
 				sortedServiceSignatures.add(sb.toString());
 			}
 		}

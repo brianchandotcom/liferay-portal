@@ -52,6 +52,14 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 			doDestroy();
 		}
 		else {
+			Thread thread = Thread.currentThread();
+
+			ClassLoader classLoader = thread.getContextClassLoader();
+
+			Class<?> clazz = this.getClass();
+
+			thread.setContextClassLoader(clazz.getClassLoader());
+
 			DestroyThread destroyThread = new DestroyThread();
 
 			destroyThread.start();
@@ -73,6 +81,8 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 					throw new RuntimeException(e);
 				}
 			}
+
+			thread.setContextClassLoader(classLoader);
 		}
 	}
 

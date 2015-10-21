@@ -180,9 +180,11 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 			});
 
+		@SuppressWarnings("unchecked")
 		final ActionableDynamicQuery.PerformActionMethod<Role>
 			performActionMethod =
-				actionableDynamicQuery.getPerformActionMethod();
+				(ActionableDynamicQuery.PerformActionMethod<Role>)
+					actionableDynamicQuery.getPerformActionMethod();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<Role>() {

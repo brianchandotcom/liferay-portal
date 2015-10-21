@@ -78,7 +78,7 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
-	public PerformActionMethod getPerformActionMethod() {
+	public PerformActionMethod<?> getPerformActionMethod() {
 		return _performActionMethod;
 	}
 
@@ -187,7 +187,7 @@ public abstract class BaseActionableDynamicQuery
 
 	@Override
 	public void setPerformActionMethod(
-		PerformActionMethod performActionMethod) {
+		PerformActionMethod<?> performActionMethod) {
 
 		_performActionMethod = performActionMethod;
 	}
@@ -389,6 +389,7 @@ public abstract class BaseActionableDynamicQuery
 		throws PortalException {
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void performAction(Object object) throws PortalException {
 		if (_performActionMethod != null) {
 			_performActionMethod.performAction(object);

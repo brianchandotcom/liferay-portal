@@ -2622,21 +2622,11 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#TOGGLE" />
-			</then>
-		</if>
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
 
-		<var name="key_portletName" value=" Content " />
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="Content" />
-
-		<var name="key_portletName" value="Web Content" />
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="Web Content" />
-
-		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="WCEditWebContent#MENU_PERMISSIONS" value1="Permissions" />
 		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />

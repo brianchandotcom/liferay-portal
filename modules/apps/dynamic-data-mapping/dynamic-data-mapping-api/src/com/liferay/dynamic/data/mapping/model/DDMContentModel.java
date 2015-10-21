@@ -22,6 +22,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -47,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel,
-	LocalizedModel {
+	LocalizedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -74,6 +75,7 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel,
 	 * @return the uuid of this d d m content
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -81,6 +83,7 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel,
 	 *
 	 * @param uuid the uuid of this d d m content
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**

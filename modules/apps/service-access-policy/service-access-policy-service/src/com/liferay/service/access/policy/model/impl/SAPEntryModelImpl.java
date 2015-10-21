@@ -32,9 +32,11 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import com.liferay.service.access.policy.model.SAPEntry;
 import com.liferay.service.access.policy.model.SAPEntryModel;
@@ -625,6 +627,12 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				SAPEntry.class.getName()));
 	}
 
 	public long getColumnBitmask() {

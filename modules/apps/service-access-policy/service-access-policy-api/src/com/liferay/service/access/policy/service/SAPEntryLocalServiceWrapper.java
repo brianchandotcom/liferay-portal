@@ -259,6 +259,12 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return _sapEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

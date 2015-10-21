@@ -58,7 +58,6 @@
 		<column name="typeId" type="long" />
 		<column name="mailing" type="boolean" />
 		<column name="primary" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -326,7 +325,6 @@
 		<column name="address" type="String" />
 		<column name="typeId" type="long" />
 		<column name="primary" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -805,7 +803,6 @@
 		<column name="description" type="String" localized="true" />
 		<column name="settings" type="String" />
 		<column name="active" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -1078,7 +1075,6 @@
 		<column name="description" type="String" localized="true" />
 		<column name="settings" type="String" />
 		<column name="active" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -1219,7 +1215,6 @@
 		<column name="statusId" type="long" />
 		<column name="comments" type="String" />
 		<column name="logoId" type="long" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->
 
@@ -1382,7 +1377,6 @@
 		<column name="requireUnlock" type="boolean" />
 		<column name="resetFailureCount" type="long" />
 		<column name="resetTicketMaxAge" type="long" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -1496,7 +1490,6 @@
 		<column name="extension" type="String" />
 		<column name="typeId" type="long" />
 		<column name="primary" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -2134,7 +2127,6 @@
 		<column name="description" type="String" localized="true" />
 		<column name="type" type="int" />
 		<column name="subtype" type="String" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->
 
@@ -2489,7 +2481,6 @@
 		<column name="lockoutDate" type="Date" />
 		<column name="agreedToTermsOfUse" type="boolean" />
 		<column name="emailAddressVerified" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 
 		<!-- Relationships -->

@@ -112,13 +112,13 @@ public interface ${entity.name}Model extends
 	<#if entity.isStagedAuditedModel() && !entity.isStagedGroupedModel()>
 		, StagedAuditedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "lastPublishDate", "modifiedDate", "stagedModelType", "userId", "userName", "userUuid", "uuid"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "stagedModelType", "userId", "userName", "userUuid", "uuid"]>
 	</#if>
 
 	<#if !entity.isStagedAuditedModel() && !entity.isStagedGroupedModel() && entity.isStagedModel()>
 		, StagedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "lastPublishDate", "modifiedDate", "stagedModelType", "uuid"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "stagedModelType", "uuid"]>
 	</#if>
 
 	<#if entity.isTrashEnabled()>

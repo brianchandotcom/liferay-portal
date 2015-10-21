@@ -48,7 +48,6 @@ public class PhoneSoap implements Serializable {
 		soapModel.setExtension(model.getExtension());
 		soapModel.setTypeId(model.getTypeId());
 		soapModel.setPrimary(model.getPrimary());
-		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -217,14 +216,6 @@ public class PhoneSoap implements Serializable {
 		_primary = primary;
 	}
 
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _phoneId;
@@ -239,5 +230,4 @@ public class PhoneSoap implements Serializable {
 	private String _extension;
 	private long _typeId;
 	private boolean _primary;
-	private Date _lastPublishDate;
 }

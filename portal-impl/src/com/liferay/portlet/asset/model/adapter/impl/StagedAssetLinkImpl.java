@@ -88,11 +88,6 @@ public class StagedAssetLinkImpl extends AssetLinkImpl
 	}
 
 	@Override
-	public Date getLastPublishDate() {
-		return null;
-	}
-
-	@Override
 	public Date getModifiedDate() {
 		return _assetLink.getCreateDate();
 	}
@@ -115,11 +110,6 @@ public class StagedAssetLinkImpl extends AssetLinkImpl
 
 	public void setAssetLink(AssetLink assetLink) {
 		_assetLink = assetLink;
-	}
-
-	@Override
-	public void setLastPublishDate(Date date) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

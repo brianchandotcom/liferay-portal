@@ -23,9 +23,11 @@ StagedModel stagedModel = (StagedModel)request.getAttribute("liferay-staging:sta
 Date lastPublishDate = null;
 Date modifiedDate = null;
 
-if (stagedModel != null) {
-	lastPublishDate = stagedModel.getLastPublishDate();
-	modifiedDate = stagedModel.getModifiedDate();
+if ((stagedModel != null) && (stagedModel instanceof StagedGroupedModel)) {
+	StagedGroupedModel stagedGroupedModel = (StagedGroupedModel)stagedModel;
+
+	lastPublishDate = stagedGroupedModel.getLastPublishDate();
+	modifiedDate = stagedGroupedModel.getModifiedDate();
 }
 
 boolean published = false;

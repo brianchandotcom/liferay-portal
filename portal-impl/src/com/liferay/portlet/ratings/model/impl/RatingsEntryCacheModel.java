@@ -66,7 +66,7 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,8 +88,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		sb.append(classPK);
 		sb.append(", score=");
 		sb.append(score);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -135,13 +133,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		ratingsEntryImpl.setClassPK(classPK);
 		ratingsEntryImpl.setScore(score);
 
-		if (lastPublishDate == Long.MIN_VALUE) {
-			ratingsEntryImpl.setLastPublishDate(null);
-		}
-		else {
-			ratingsEntryImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
 		ratingsEntryImpl.resetOriginalValues();
 
 		return ratingsEntryImpl;
@@ -159,7 +150,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		score = objectInput.readDouble();
-		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -188,7 +178,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 		objectOutput.writeDouble(score);
-		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -201,5 +190,4 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	public long classNameId;
 	public long classPK;
 	public double score;
-	public long lastPublishDate;
 }

@@ -38,8 +38,7 @@ create table Address (
 	countryId LONG,
 	typeId LONG,
 	mailing BOOLEAN,
-	primary_ BOOLEAN,
-	lastPublishDate DATE null
+	primary_ BOOLEAN
 );
 
 create table AnnouncementsDelivery (
@@ -556,8 +555,7 @@ create table EmailAddress (
 	classPK LONG,
 	address VARCHAR(75) null,
 	typeId LONG,
-	primary_ BOOLEAN,
-	lastPublishDate DATE null
+	primary_ BOOLEAN
 );
 
 create table ExpandoColumn (
@@ -749,8 +747,7 @@ create table LayoutPrototype (
 	name STRING null,
 	description STRING null,
 	settings_ STRING null,
-	active_ BOOLEAN,
-	lastPublishDate DATE null
+	active_ BOOLEAN
 );
 
 create table LayoutRevision (
@@ -843,8 +840,7 @@ create table LayoutSetPrototype (
 	name STRING null,
 	description STRING null,
 	settings_ STRING null,
-	active_ BOOLEAN,
-	lastPublishDate DATE null
+	active_ BOOLEAN
 );
 
 create table ListType (
@@ -1041,8 +1037,7 @@ create table Organization_ (
 	countryId LONG,
 	statusId LONG,
 	comments STRING null,
-	logoId LONG,
-	lastPublishDate DATE null
+	logoId LONG
 );
 
 create table OrgGroupRole (
@@ -1109,8 +1104,7 @@ create table PasswordPolicy (
 	lockoutDuration LONG,
 	requireUnlock BOOLEAN,
 	resetFailureCount LONG,
-	resetTicketMaxAge LONG,
-	lastPublishDate DATE null
+	resetTicketMaxAge LONG
 );
 
 create table PasswordPolicyRel (
@@ -1143,8 +1137,7 @@ create table Phone (
 	number_ VARCHAR(75) null,
 	extension VARCHAR(75) null,
 	typeId LONG,
-	primary_ BOOLEAN,
-	lastPublishDate DATE null
+	primary_ BOOLEAN
 );
 
 create table PluginSetting (
@@ -1208,8 +1201,7 @@ create table RatingsEntry (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	score DOUBLE,
-	lastPublishDate DATE null
+	score DOUBLE
 );
 
 create table RatingsStats (
@@ -1344,8 +1336,7 @@ create table Role_ (
 	title STRING null,
 	description STRING null,
 	type_ INTEGER,
-	subtype VARCHAR(75) null,
-	lastPublishDate DATE null
+	subtype VARCHAR(75) null
 );
 
 create table SCFrameworkVersi_SCProductVers (
@@ -1679,7 +1670,6 @@ create table User_ (
 	lockoutDate DATE null,
 	agreedToTermsOfUse BOOLEAN,
 	emailAddressVerified BOOLEAN,
-	lastPublishDate DATE null,
 	status INTEGER
 );
 

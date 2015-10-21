@@ -158,7 +158,7 @@
 	</command>
 
 	<command name="viewNoSearchResultsCP">
-		<execute function="AssertTextEquals" locator1="CPRelatedassetsSelect#INFO_MESSAGE" value1="There are no results." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewPG">

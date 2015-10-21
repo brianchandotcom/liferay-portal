@@ -270,7 +270,7 @@
 
 		<execute function="Click" locator1="ControlMenu#EDIT_COG" />
 
-		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
+		<execute function="Click" locator1="SitePages#TOOLBAR_PERMISSIONS" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 	</command>

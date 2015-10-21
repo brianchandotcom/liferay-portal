@@ -94,16 +94,16 @@ public class SAPPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
-		String contextName = ParamUtil.get(
-			resourceRequest, "context", StringPool.BLANK);
-		String serviceClass = ParamUtil.get(
-			resourceRequest, "serviceClass", StringPool.BLANK);
+		String contextName = ParamUtil.getString(
+			resourceRequest, "context");
+		String serviceClassName = ParamUtil.getString(
+			resourceRequest, "serviceClassName");
 
 		Map<String, Set<JSONWebServiceActionMapping>> serviceMappings =
 			getServiceJSONWSActionMappings(contextName);
 
 		Set<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
-			serviceMappings.get(serviceClass);
+			serviceMappings.get(serviceClassName);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -141,7 +141,7 @@ public class SAPPortlet extends MVCPortlet {
 
 				Map<String, String> serviceDescription = new HashMap<>();
 
-				serviceDescription.put("serviceClass", serviceMapping.getKey());
+				serviceDescription.put("serviceClassName", serviceMapping.getKey());
 
 				Set<JSONWebServiceActionMapping> actionMappings =
 					serviceMapping.getValue();

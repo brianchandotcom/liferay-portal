@@ -17,6 +17,7 @@ package com.liferay.portal.portlet.container.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -37,6 +38,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Field;
 
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +82,9 @@ public class ActionRequestPortletContainerTest
 		try {
 			field.set(null, Boolean.FALSE.booleanValue());
 
-			setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+			setUpPortlet(
+				testPortlet, new HashMapDictionary<String, Object>(),
+				TEST_PORTLET_ID);
 
 			HttpServletRequest httpServletRequest =
 				PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -115,7 +119,9 @@ public class ActionRequestPortletContainerTest
 
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 
-			setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+			setUpPortlet(
+				testPortlet, new HashMapDictionary<String, Object>(),
+				TEST_PORTLET_ID);
 
 			HttpServletRequest httpServletRequest =
 				PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -150,7 +156,9 @@ public class ActionRequestPortletContainerTest
 
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 
-			setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+			setUpPortlet(
+				testPortlet, new HashMapDictionary<String, Object>(),
+				TEST_PORTLET_ID);
 
 			HttpServletRequest httpServletRequest =
 				PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -175,6 +183,8 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testInitParam() throws Exception {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
 		properties.put(
 			"javax.portlet.init-param.check-auth-token",
 			Boolean.FALSE.toString());
@@ -198,7 +208,9 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testNoPortalAuthenticationTokens() throws Exception {
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+		setUpPortlet(
+			testPortlet, new HashMapDictionary<String, Object>(),
+			TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -264,7 +276,9 @@ public class ActionRequestPortletContainerTest
 
 		};
 
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+		setUpPortlet(
+			testPortlet, new HashMapDictionary<String, Object>(),
+			TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -308,7 +322,9 @@ public class ActionRequestPortletContainerTest
 		try {
 			field.set(null, "test");
 
-			setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+			setUpPortlet(
+				testPortlet, new HashMapDictionary<String, Object>(),
+				TEST_PORTLET_ID);
 
 			HttpServletRequest httpServletRequest =
 				PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -333,6 +349,8 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testStrutsAction() throws Exception {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
 		properties.put(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, "/test/portlet/1");
 		properties.put("com.liferay.portlet.struts-path", "test/portlet");
 
@@ -383,7 +401,9 @@ public class ActionRequestPortletContainerTest
 
 		};
 
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+		setUpPortlet(
+			testPortlet, new HashMapDictionary<String, Object>(),
+			TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);

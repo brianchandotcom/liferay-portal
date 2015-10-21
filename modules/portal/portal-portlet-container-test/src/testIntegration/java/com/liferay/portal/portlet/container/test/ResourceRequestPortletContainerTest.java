@@ -31,6 +31,7 @@ import com.liferay.portlet.SecurityPortletContainerWrapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +116,8 @@ public class ResourceRequestPortletContainerTest
 		throws Exception {
 
 		final String testTargetPortletId = "testTargetPortletId";
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			"com.liferay.portlet.add-default-resource", Boolean.TRUE);
@@ -201,7 +204,9 @@ public class ResourceRequestPortletContainerTest
 
 	@Test
 	public void testIsAccessGrantedByPortletOnPage() throws Exception {
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+		setUpPortlet(
+			testPortlet, new HashMapDictionary<String, Object>(),
+			TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -239,7 +244,9 @@ public class ResourceRequestPortletContainerTest
 
 		};
 
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+		setUpPortlet(
+			testPortlet, new HashMapDictionary<String, Object>(),
+			TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -251,7 +258,8 @@ public class ResourceRequestPortletContainerTest
 		String testRuntimePortletId = "testRuntimePortletId";
 
 		setUpPortlet(
-			new TestPortlet(map), properties, testRuntimePortletId, false);
+			new TestPortlet(map), new HashMapDictionary<String, Object>(),
+			testRuntimePortletId, false);
 
 		portletURL.setParameter("testRuntimePortletId", testRuntimePortletId);
 

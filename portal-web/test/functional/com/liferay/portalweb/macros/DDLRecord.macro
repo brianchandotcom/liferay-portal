@@ -171,14 +171,10 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertClick" locator1="DDLEditRecord#FIELD_LABEL" value1="${fieldName}" />
-		<execute function="SikuliClick" locator1="DDLEditRecord#GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
-		<execute function="SikuliClick" locator1="DDLEditRecord#GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
+
 		<execute function="Pause" locator1="2000" />
-		<execute function="SikuliAssertElementPresent" locator1="CPDynamicdatalistsListAddrecord#GEOLOCATION_MAP_DIAMOND_BAR_PNG" />
-		<execute function="SikuliAssertElementPresent" locator1="CPDynamicdatalistsListAddrecord#GEOLOCATION_MAP_DIRECTIONAL_ARROWS_PNG" />
-		<execute function="SikuliAssertElementPresent" locator1="CPDynamicdatalistsListAddrecord#GEOLOCATION_MAP_LOCATION_PIN_PNG" />
-		<execute function="SikuliAssertElementPresent" locator1="CPDynamicdatalistsListAddrecord#GEOLOCATION_MAP_MAP_SATELLITE_TOGGLE_PNG" />
-		<execute function="SikuliAssertElementPresent" locator1="CPDynamicdatalistsListAddrecord#GEOLOCATION_MAP_RECENTER_BUTTON_PNG" />
+
+		<execute function="AssertElementPresent" locator1="DDLEditRecord#GEOLOCATION_GOOGLE_MAP" />
 	</command>
 
 	<command name="populateFieldHTML">

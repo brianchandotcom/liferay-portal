@@ -7,7 +7,7 @@
 >
 	<container default="true" qualifier="felix">
 		<configuration>
-			<property name="frameworkProperties">test/integration/framework.properties</property>
+			<property name="frameworkProperties">src/testIntegration/resources/framework.properties</property>
 		</configuration>
 	</container>
 </arquillian>

@@ -53,7 +53,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("test/integration/bnd.bnd")
+@BndFile("src/testIntegration/resources/bnd.bnd")
 @RunWith(Arquillian.class)
 public class ObjectServiceTrackerMapTest {
 

@@ -38,19 +38,19 @@ public class VerifyDB2 extends VerifyProcess {
 			return;
 		}
 
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("select tbname, name, coltype, length from ");
+		sb.append("sysibm.syscolumns where tbcreator = (select distinct ");
+		sb.append("current schema from sysibm.sysschemata) AND coltype = ");
+		sb.append("'VARCHAR' and length = 500");
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("select tbname, name, coltype, length from ");
-			sb.append("sysibm.syscolumns where tbcreator = (select distinct ");
-			sb.append("current schema from sysibm.sysschemata) AND coltype = ");
-			sb.append("'VARCHAR' and length = 500");
 
 			ps = con.prepareStatement(sb.toString());
 

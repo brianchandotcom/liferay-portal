@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
@@ -49,11 +50,12 @@ public class VerifyCalendar extends VerifyProcess {
 	protected void updateEvent(Connection con, long eventId, String recurrence)
 		throws Exception {
 
+		String sql = "update CalEvent set recurrence = ? where eventId = ?";
+
 		PreparedStatement ps = null;
 
 		try {
-			ps = con.prepareStatement(
-				"update CalEvent set recurrence = ? where eventId = ?");
+			ps = con.prepareStatement(sql);
 
 			ps.setString(1, recurrence);
 			ps.setLong(2, eventId);
@@ -107,14 +109,17 @@ public class VerifyCalendar extends VerifyProcess {
 
 		jsonSerializer.registerDefaultSerializers();
 
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select eventId, recurrence from CalEvent where ");
+		sb.append("(CAST_TEXT(recurrence) != '') and recurrence not like ");
+		sb.append("'%serializable%'");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement(
-				"select eventId, recurrence from CalEvent where (CAST_TEXT(" +
-					"recurrence) != '') and recurrence not like " +
-						"'%serializable%'");
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 

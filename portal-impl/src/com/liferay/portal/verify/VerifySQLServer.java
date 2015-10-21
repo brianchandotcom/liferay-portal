@@ -36,30 +36,28 @@ import java.util.List;
 public class VerifySQLServer extends VerifyProcess {
 
 	protected void convertColumnsToUnicode() {
+		StringBundler sb = new StringBundler(12);
+
+		sb.append("select sysobjects.name as table_name, syscolumns.name ");
+		sb.append("AS column_name, systypes.name as data_type, ");
+		sb.append("syscolumns.length, syscolumns.isnullable as ");
+		sb.append("is_nullable FROM sysobjects inner join syscolumns on ");
+		sb.append("sysobjects.id = syscolumns.id inner join systypes on ");
+		sb.append("syscolumns.xtype = systypes.xtype where ");
+		sb.append("(sysobjects.xtype = 'U') and (sysobjects.category != ");
+		sb.append("2) and ");
+		sb.append(_FILTER_NONUNICODE_DATA_TYPES);
+		sb.append(" and ");
+		sb.append(_FILTER_EXCLUDED_TABLES);
+		sb.append(" order by sysobjects.name, syscolumns.colid");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			dropNonunicodeTableIndexes(con);
 
-			StringBundler sb = new StringBundler(12);
-
-			sb.append("select sysobjects.name as table_name, syscolumns.name ");
-			sb.append("AS column_name, systypes.name as data_type, ");
-			sb.append("syscolumns.length, syscolumns.isnullable as ");
-			sb.append("is_nullable FROM sysobjects inner join syscolumns on ");
-			sb.append("sysobjects.id = syscolumns.id inner join systypes on ");
-			sb.append("syscolumns.xtype = systypes.xtype where ");
-			sb.append("(sysobjects.xtype = 'U') and (sysobjects.category != ");
-			sb.append("2) and ");
-			sb.append(_FILTER_NONUNICODE_DATA_TYPES);
-			sb.append(" and ");
-			sb.append(_FILTER_EXCLUDED_TABLES);
-			sb.append(" order by sysobjects.name, syscolumns.colid");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -178,31 +176,29 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	protected void dropNonunicodeTableIndexes(Connection con) {
+		StringBundler sb = new StringBundler(15);
+
+		sb.append("select distinct sysobjects.name as table_name, ");
+		sb.append("sysindexes.name as index_name FROM sysobjects inner ");
+		sb.append("join sysindexes on sysobjects.id = sysindexes.id ");
+		sb.append("inner join syscolumns on sysobjects.id = ");
+		sb.append("syscolumns.id inner join sysindexkeys on ");
+		sb.append("((sysobjects.id = sysindexkeys.id) and ");
+		sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
+		sb.append("(sysindexes.indid = sysindexkeys.indid)) inner join ");
+		sb.append("systypes on syscolumns.xtype = systypes.xtype where ");
+		sb.append("(sysobjects.type = 'U') and (sysobjects.category != ");
+		sb.append("2) and ");
+		sb.append(_FILTER_NONUNICODE_DATA_TYPES);
+		sb.append(" and ");
+		sb.append(_FILTER_EXCLUDED_TABLES);
+		sb.append(" order by sysobjects.name, sysindexes.name");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			StringBundler sb = new StringBundler(15);
-
-			sb.append("select distinct sysobjects.name as table_name, ");
-			sb.append("sysindexes.name as index_name FROM sysobjects inner ");
-			sb.append("join sysindexes on sysobjects.id = sysindexes.id ");
-			sb.append("inner join syscolumns on sysobjects.id = ");
-			sb.append("syscolumns.id inner join sysindexkeys on ");
-			sb.append("((sysobjects.id = sysindexkeys.id) and ");
-			sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
-			sb.append("(sysindexes.indid = sysindexkeys.indid)) inner join ");
-			sb.append("systypes on syscolumns.xtype = systypes.xtype where ");
-			sb.append("(sysobjects.type = 'U') and (sysobjects.category != ");
-			sb.append("2) and ");
-			sb.append(_FILTER_NONUNICODE_DATA_TYPES);
-			sb.append(" and ");
-			sb.append(_FILTER_EXCLUDED_TABLES);
-			sb.append(" order by sysobjects.name, sysindexes.name");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -252,26 +248,24 @@ public class VerifySQLServer extends VerifyProcess {
 
 		List<String> columnNames = new ArrayList<>();
 
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("select distinct syscolumns.name as column_name from ");
+		sb.append("sysobjects inner join syscolumns on sysobjects.id = ");
+		sb.append("syscolumns.id inner join sysindexes on ");
+		sb.append("sysobjects.id = sysindexes.id inner join sysindexkeys ");
+		sb.append("on ((sysobjects.id = sysindexkeys.id) and ");
+		sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
+		sb.append("(sysindexes.indid = sysindexkeys.indid)) where ");
+		sb.append("sysindexes.name = '");
+		sb.append(indexName);
+		sb.append("'");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append("select distinct syscolumns.name as column_name from ");
-			sb.append("sysobjects inner join syscolumns on sysobjects.id = ");
-			sb.append("syscolumns.id inner join sysindexes on ");
-			sb.append("sysobjects.id = sysindexes.id inner join sysindexkeys ");
-			sb.append("on ((sysobjects.id = sysindexkeys.id) and ");
-			sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
-			sb.append("(sysindexes.indid = sysindexkeys.indid)) where ");
-			sb.append("sysindexes.name = '");
-			sb.append(indexName);
-			sb.append("'");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 

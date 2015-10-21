@@ -104,13 +104,19 @@ public class VerifyAuditedModel extends VerifyProcess {
 			Connection con, String tableName, String pkColumnName, long primKey)
 		throws Exception {
 
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("select companyId, userId, createDate, modifiedDate from ");
+		sb.append(tableName);
+		sb.append(" where ");
+		sb.append(pkColumnName);
+		sb.append(" = ?");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement(
-				"select companyId, userId, createDate, modifiedDate from " +
-					tableName + " where " + pkColumnName + " = ?");
+			ps = con.prepareStatement(sb.toString());
 
 			ps.setLong(1, primKey);
 
@@ -142,13 +148,15 @@ public class VerifyAuditedModel extends VerifyProcess {
 	protected Object[] getDefaultUserArray(Connection con, long companyId)
 		throws Exception {
 
+		String sql =
+			"select userId, firstName, middleName, lastName from User_ where " +
+				"companyId = ? and defaultUser = ?";
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement(
-				"select userId, firstName, middleName, lastName from User_" +
-					" where companyId = ? and defaultUser = ?");
+			ps = con.prepareStatement(sql);
 
 			ps.setLong(1, companyId);
 			ps.setBoolean(2, true);
@@ -183,13 +191,15 @@ public class VerifyAuditedModel extends VerifyProcess {
 	}
 
 	protected String getUserName(Connection con, long userId) throws Exception {
+		String sql =
+			"select firstName, middleName, lastName from User_ where " +
+				"userId = ?";
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement(
-				"select firstName, middleName, lastName from User_ where " +
-					"userId = ?");
+			ps = con.prepareStatement(sql);
 
 			ps.setLong(1, userId);
 
@@ -219,38 +229,45 @@ public class VerifyAuditedModel extends VerifyProcess {
 			long primKey, Object[] auditedModelArray, boolean updateDates)
 		throws Exception {
 
+		long companyId = (Long)auditedModelArray[0];
+
+		if (auditedModelArray[2] == null) {
+			auditedModelArray = getDefaultUserArray(con, companyId);
+
+			if (auditedModelArray == null) {
+				return;
+			}
+		}
+
+		long userId = (Long)auditedModelArray[1];
+		String userName = (String)auditedModelArray[2];
+		Timestamp createDate = (Timestamp)auditedModelArray[3];
+		Timestamp modifiedDate = (Timestamp)auditedModelArray[4];
+
+		StringBundler sb = null;
+
+		if (updateDates) {
+			sb = new StringBundler(7);
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set companyId = ?, userId = ?, userName = ?");
+
+		if (updateDates) {
+			sb.append(", createDate = ?, modifiedDate = ?");
+		}
+
+		sb.append(" where ");
+		sb.append(primaryKeyColumnName);
+		sb.append(" = ?");
+
 		PreparedStatement ps = null;
 
 		try {
-			long companyId = (Long)auditedModelArray[0];
-
-			if (auditedModelArray[2] == null) {
-				auditedModelArray = getDefaultUserArray(con, companyId);
-
-				if (auditedModelArray == null) {
-					return;
-				}
-			}
-
-			long userId = (Long)auditedModelArray[1];
-			String userName = (String)auditedModelArray[2];
-			Timestamp createDate = (Timestamp)auditedModelArray[3];
-			Timestamp modifiedDate = (Timestamp)auditedModelArray[4];
-
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("update ");
-			sb.append(tableName);
-			sb.append(" set companyId = ?, userId = ?, userName = ?");
-
-			if (updateDates) {
-				sb.append(", createDate = ?, modifiedDate = ?");
-			}
-
-			sb.append(" where ");
-			sb.append(primaryKeyColumnName);
-			sb.append(" = ?");
-
 			ps = con.prepareStatement(sb.toString());
 
 			ps.setLong(1, companyId);
@@ -282,27 +299,27 @@ public class VerifyAuditedModel extends VerifyProcess {
 			VerifiableAuditedModel verifiableAuditedModel)
 		throws Exception {
 
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("select ");
+		sb.append(verifiableAuditedModel.getPrimaryKeyColumnName());
+		sb.append(", companyId");
+
+		if (verifiableAuditedModel.getJoinByTableName() != null) {
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(verifiableAuditedModel.getJoinByTableName());
+		}
+
+		sb.append(" from ");
+		sb.append(verifiableAuditedModel.getTableName());
+		sb.append(" where userName is null order by companyId");
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("select ");
-			sb.append(verifiableAuditedModel.getPrimaryKeyColumnName());
-			sb.append(", companyId");
-
-			if (verifiableAuditedModel.getJoinByTableName() != null) {
-				sb.append(StringPool.COMMA_AND_SPACE);
-				sb.append(verifiableAuditedModel.getJoinByTableName());
-			}
-
-			sb.append(" from ");
-			sb.append(verifiableAuditedModel.getTableName());
-			sb.append(" where userName is null order by companyId");
 
 			ps = con.prepareStatement(sb.toString());
 

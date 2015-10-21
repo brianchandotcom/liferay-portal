@@ -86,13 +86,15 @@ public class VerifyGroup extends VerifyProcess {
 	protected void updateName(Connection con, long groupId, String name)
 		throws Exception {
 
+		String sql = "update Group_ set name = ? where groupId = ?";
+
 		PreparedStatement ps = null;
 
 		try {
-			ps = con.prepareStatement(
-				"update Group_ set name = ? where groupId= " + groupId);
+			ps = con.prepareStatement(sql);
 
 			ps.setString(1, name);
+			ps.setLong(2, groupId);
 
 			ps.executeUpdate();
 		}
@@ -160,20 +162,20 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void verifyOrganizationNames() throws Exception {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("select groupId, name from Group_ where name like '%");
+		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+		sb.append("%' and name not like '%");
+		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+		sb.append("'");
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("select groupId, name from Group_ where name like '%");
-			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("%' and name not like '%");
-			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("'");
 
 			ps = con.prepareStatement(sb.toString());
 

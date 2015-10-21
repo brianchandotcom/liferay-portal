@@ -31,20 +31,20 @@ public class VerifyRatings extends VerifyProcess {
 	}
 
 	protected void normalizeRatingStats() throws Exception {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("update RatingsStats set ");
+		sb.append(_SQL_UPDATE_AVERAGE_SCORE);
+		sb.append(", ");
+		sb.append(_SQL_UPDATE_TOTAL_ENTRIES);
+		sb.append(", ");
+		sb.append(_SQL_UPDATE_TOTAL_SCORE);
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("update RatingsStats set ");
-			sb.append(_SQL_UPDATE_AVERAGE_SCORE);
-			sb.append(", ");
-			sb.append(_SQL_UPDATE_TOTAL_ENTRIES);
-			sb.append(", ");
-			sb.append(_SQL_UPDATE_TOTAL_SCORE);
 
 			ps = con.prepareStatement(sb.toString());
 

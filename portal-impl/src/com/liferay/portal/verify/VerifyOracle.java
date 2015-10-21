@@ -37,6 +37,12 @@ public class VerifyOracle extends VerifyProcess {
 	protected void alterVarchar2Columns() throws Exception {
 		int buildNumber = getBuildNumber();
 
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select table_name, column_name, data_length from ");
+		sb.append("user_tab_columns where data_type = 'VARCHAR2' and ");
+		sb.append("char_used = 'B'");
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -44,10 +50,7 @@ public class VerifyOracle extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select table_name, column_name, data_length from " +
-					"user_tab_columns where data_type = 'VARCHAR2' and " +
-						"char_used = 'B'");
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -86,16 +89,16 @@ public class VerifyOracle extends VerifyProcess {
 				catch (SQLException sqle) {
 					if (sqle.getErrorCode() == 1441) {
 						if (_log.isWarnEnabled()) {
-							StringBundler sb = new StringBundler(6);
+							StringBundler warn = new StringBundler(6);
 
-							sb.append("Unable to alter length of column ");
-							sb.append(columnName);
-							sb.append(" for table ");
-							sb.append(tableName);
-							sb.append(" because it contains values that are ");
-							sb.append("larger than the new column length");
+							warn.append("Unable to alter length of column ");
+							warn.append(columnName);
+							warn.append(" for table ");
+							warn.append(tableName);
+							warn.append(" because it contains values that are");
+							warn.append(" larger than the new column length");
 
-							_log.warn(sb.toString());
+							_log.warn(warn.toString());
 						}
 					}
 					else {

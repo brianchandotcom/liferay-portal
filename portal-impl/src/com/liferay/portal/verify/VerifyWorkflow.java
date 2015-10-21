@@ -30,6 +30,8 @@ import java.sql.ResultSet;
 public class VerifyWorkflow extends VerifyProcess {
 
 	protected void deleteOrphanedWorkflowDefinitionLinks() throws Exception {
+		String sql = "select distinct classNameId from WorkflowDefinitionLink";
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -37,8 +39,7 @@ public class VerifyWorkflow extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select distinct classNameId from WorkflowDefinitionLink");
+			ps = con.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 

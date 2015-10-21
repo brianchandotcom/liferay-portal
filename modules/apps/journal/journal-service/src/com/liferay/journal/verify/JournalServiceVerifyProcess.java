@@ -166,16 +166,18 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			Connection con, long groupId, String portletId)
 		throws Exception {
 
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("select preferences from PortletPreferences inner join ");
+		sb.append("Layout on PortletPreferences.plid = Layout.plid where ");
+		sb.append("groupId = ?");
+		sb.append(" and portletId = ?");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select preferences from PortletPreferences inner join " +
-					"Layout on PortletPreferences.plid = Layout.plid where " +
-						"groupId = ? and portletId = ?");
+			ps = con.prepareStatement(sb.toString());
 
 			ps.setLong(1, groupId);
 			ps.setString(2, portletId);
@@ -358,10 +360,12 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 		PreparedStatement ps = null;
 
+		String sql =
+			"update JournalArticle set expirationDate = ? where groupId = ? " +
+				"and articleId = ? and status = ?";
+
 		try {
-			ps = con.prepareStatement(
-				"update JournalArticle set expirationDate = ? where " +
-					"groupId = ? and articleId = ? and status = ?");
+			ps = con.prepareStatement(sql);
 
 			ps.setTimestamp(1, expirationDate);
 			ps.setLong(2, groupId);
@@ -496,11 +500,13 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		normalizedURLTitle = _journalArticleLocalService.getUniqueUrlTitle(
 			groupId, articleId, normalizedURLTitle);
 
+		String sql =
+			"update JournalArticle set urlTitle = ? where urlTitle = ?";
+
 		PreparedStatement ps = null;
 
 		try {
-			ps = con.prepareStatement(
-				"update JournalArticle set urlTitle = ? where urlTitle = ?");
+			ps = con.prepareStatement(sql);
 
 			ps.setString(1, normalizedURLTitle);
 			ps.setString(2, urlTitle);
@@ -598,14 +604,17 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	}
 
 	protected void verifyArticleContents(Connection con) throws Exception {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select id_ from JournalArticle where (content like ");
+		sb.append("'%document_library%' or content like '%link_to_layout%')");
+		sb.append(" and DDMStructureKey != ''");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement(
-				"select id_ from JournalArticle where (content like " +
-					"'%document_library%' or content like '%link_to_layout%')" +
-						" and DDMStructureKey != ''");
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -651,28 +660,28 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			return;
 		}
 
+		StringBundler sb = new StringBundler(15);
+
+		sb.append("select JournalArticle.* from JournalArticle left ");
+		sb.append("join JournalArticle tempJournalArticle on ");
+		sb.append("(JournalArticle.groupId = tempJournalArticle.groupId) ");
+		sb.append("and (JournalArticle.articleId = ");
+		sb.append("tempJournalArticle.articleId) and ");
+		sb.append("(JournalArticle.version < tempJournalArticle.version) ");
+		sb.append("and (JournalArticle.status = ");
+		sb.append("tempJournalArticle.status) where ");
+		sb.append("(JournalArticle.classNameId = ");
+		sb.append(JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+		sb.append(") and (tempJournalArticle.version is null) and ");
+		sb.append("(JournalArticle.expirationDate is not null) and ");
+		sb.append("(JournalArticle.status = ");
+		sb.append(WorkflowConstants.STATUS_APPROVED);
+		sb.append(")");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			StringBundler sb = new StringBundler(15);
-
-			sb.append("select JournalArticle.* from JournalArticle left ");
-			sb.append("join JournalArticle tempJournalArticle on ");
-			sb.append("(JournalArticle.groupId = tempJournalArticle.groupId) ");
-			sb.append("and (JournalArticle.articleId = ");
-			sb.append("tempJournalArticle.articleId) and ");
-			sb.append("(JournalArticle.version < tempJournalArticle.version) ");
-			sb.append("and (JournalArticle.status = ");
-			sb.append("tempJournalArticle.status) where ");
-			sb.append("(JournalArticle.classNameId = ");
-			sb.append(JournalArticleConstants.CLASSNAME_ID_DEFAULT);
-			sb.append(") and (tempJournalArticle.version is null) and ");
-			sb.append("(JournalArticle.expirationDate is not null) and ");
-			sb.append("(JournalArticle.status = ");
-			sb.append(WorkflowConstants.STATUS_APPROVED);
-			sb.append(")");
-
 			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
@@ -757,14 +766,17 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	}
 
 	protected void verifyContentSearch(Connection con) throws Exception {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select groupId, portletId from JournalContentSearch group ");
+		sb.append("by groupId, portletId having count(groupId) > 1 and ");
+		sb.append("count(portletId) > 1");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement(
-				"select groupId, portletId from JournalContentSearch group " +
-					"by groupId, portletId having count(groupId) > 1 and " +
-						"count(portletId) > 1");
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -885,13 +897,14 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	}
 
 	protected void verifyURLTitle(Connection con) throws Exception {
+		String sql =
+			"select distinct groupId, articleId, urlTitle from JournalArticle";
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement(
-				"select distinct groupId, articleId, urlTitle from " +
-					"JournalArticle");
+			ps = con.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 

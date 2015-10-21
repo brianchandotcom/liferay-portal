@@ -33,21 +33,21 @@ import java.sql.ResultSet;
 public class VerifyAsset extends VerifyProcess {
 
 	protected void deleteOrphanedAssetEntries(Connection con) throws Exception {
+		long classNameId = PortalUtil.getClassNameId(
+			DLFileEntryConstants.getClassName());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("select classPK, entryId from AssetEntry where ");
+		sb.append("classNameId = ");
+		sb.append(classNameId);
+		sb.append(" and classPK not in (select fileVersionId from ");
+		sb.append("DLFileVersion)");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			long classNameId = PortalUtil.getClassNameId(
-				DLFileEntryConstants.getClassName());
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("select classPK, entryId from AssetEntry where ");
-			sb.append("classNameId = ");
-			sb.append(classNameId);
-			sb.append(" and classPK not in (select fileVersionId from ");
-			sb.append("DLFileVersion)");
-
 			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
@@ -78,13 +78,15 @@ public class VerifyAsset extends VerifyProcess {
 	}
 
 	protected void rebuildTree(Connection con) throws Exception {
+		String sql =
+			"select distinct groupId from AssetCategory where " +
+				"(leftCategoryId is null) or (rightCategoryId is null)";
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement(
-				"select distinct groupId from AssetCategory where " +
-					"(leftCategoryId is null) or (rightCategoryId is null)");
+			ps = con.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 

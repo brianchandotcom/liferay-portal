@@ -94,6 +94,14 @@ public class VerifyUUID extends VerifyProcess {
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("select ");
+		sb.append(verifiableUUIDModel.getPrimaryKeyColumnName());
+		sb.append(" from ");
+		sb.append(verifiableUUIDModel.getTableName());
+		sb.append(" where uuid_ is null or uuid_ = ''");
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -101,10 +109,7 @@ public class VerifyUUID extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select " + verifiableUUIDModel.getPrimaryKeyColumnName() +
-					" from " + verifiableUUIDModel.getTableName() +
-						" where uuid_ is null or uuid_ = ''");
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 

@@ -1064,8 +1064,6 @@
 	</command>
 
 	<command name="AddListRecordWithGeolocationField" priority="4">
-		<property name="test.assert.javascript.errors" value="false" />
-
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Geolocation" />

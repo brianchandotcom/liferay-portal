@@ -37,7 +37,7 @@ import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 import com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -89,7 +89,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		boolean sendEmail = false;
 		ServiceContext serviceContext = new ServiceContext();
 
-		return UserLocalServiceUtil.addUser(
+		return _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
@@ -139,7 +139,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
 
-			user = UserLocalServiceUtil.fetchUserByEmailAddress(
+			user = _userLocalService.fetchUserByEmailAddress(
 				companyId, emailAddress);
 
 			if (user != null) {
@@ -174,7 +174,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		}
 
 		if (user == null) {
-			user = UserLocalServiceUtil.fetchUserByScreenName(
+			user = _userLocalService.fetchUserByScreenName(
 				companyId, screenName);
 		}
 
@@ -253,11 +253,17 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		_screenNameGenerator = screenNameGenerator;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenSSOAutoLogin.class);
 
 	private volatile ConfigurationFactory _configurationFactory;
 	private OpenSSO _openSSO;
 	private ScreenNameGenerator _screenNameGenerator;
+	private UserLocalService _userLocalService;
 
 }

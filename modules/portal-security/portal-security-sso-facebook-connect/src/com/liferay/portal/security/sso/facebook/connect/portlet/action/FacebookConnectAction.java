@@ -34,7 +34,7 @@ import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -162,20 +162,19 @@ public class FacebookConnectAction extends BaseStrutsAction {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		User user = UserLocalServiceUtil.addUser(
+		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
-		user = UserLocalServiceUtil.updateLastLogin(
+		user = _userLocalService.updateLastLogin(
 			user.getUserId(), user.getLoginIP());
 
-		user = UserLocalServiceUtil.updatePasswordReset(
-			user.getUserId(), false);
+		user = _userLocalService.updatePasswordReset(user.getUserId(), false);
 
-		user = UserLocalServiceUtil.updateEmailAddressVerified(
+		user = _userLocalService.updateEmailAddressVerified(
 			user.getUserId(), true);
 
 		session.setAttribute(WebKeys.FACEBOOK_USER_EMAIL_ADDRESS, emailAddress);
@@ -251,7 +250,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			session.setAttribute(
 				FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN, token);
 
-			user = UserLocalServiceUtil.fetchUserByFacebookId(
+			user = _userLocalService.fetchUserByFacebookId(
 				companyId, facebookId);
 
 			if ((user != null) &&
@@ -266,7 +265,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		String emailAddress = jsonObject.getString("email");
 
 		if ((user == null) && Validator.isNotNull(emailAddress)) {
-			user = UserLocalServiceUtil.fetchUserByEmailAddress(
+			user = _userLocalService.fetchUserByEmailAddress(
 				companyId, emailAddress);
 
 			if ((user != null) &&
@@ -296,6 +295,11 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		}
 
 		return user;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	protected String strutsExecute(
@@ -376,13 +380,13 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		if (!StringUtil.equalsIgnoreCase(
 				emailAddress, user.getEmailAddress())) {
 
-			UserLocalServiceUtil.updateEmailAddress(
+			_userLocalService.updateEmailAddress(
 				user.getUserId(), StringPool.BLANK, emailAddress, emailAddress);
 		}
 
-		UserLocalServiceUtil.updateEmailAddressVerified(user.getUserId(), true);
+		_userLocalService.updateEmailAddressVerified(user.getUserId(), true);
 
-		return UserLocalServiceUtil.updateUser(
+		return _userLocalService.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, false, user.getReminderQueryQuestion(),
 			user.getReminderQueryAnswer(), user.getScreenName(), emailAddress,
@@ -400,5 +404,6 @@ public class FacebookConnectAction extends BaseStrutsAction {
 
 	private FacebookConnect _facebookConnect;
 	private final Map<String, String> _forwards = new HashMap<>();
+	private UserLocalService _userLocalService;
 
 }

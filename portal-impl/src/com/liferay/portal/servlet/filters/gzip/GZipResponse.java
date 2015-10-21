@@ -172,7 +172,7 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 			return;
 		}
 
-		_response.setHeader(name, value);
+		super.setHeader(name, value);
 	}
 
 	private ServletOutputStream _createGZipServletOutputStream(

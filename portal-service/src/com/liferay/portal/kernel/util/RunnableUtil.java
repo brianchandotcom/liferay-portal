@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -28,15 +31,15 @@ public class RunnableUtil {
 	public static void runWithSwappedSystemOut(
 		Runnable runnable, OutputStream outputStream) {
 
-		PrintStream printStream = null;
+		SwappedOutputStream swappedOutputStream = null;
 
 		synchronized (RunnableUtil.class) {
-			printStream = System.out;
+			swappedOutputStream = new SwappedOutputStream(
+				outputStream, System.out, Thread.currentThread());
 
-			System.setOut(
-				new PrintStream(
-					new SwappedOutputStream(
-						outputStream, printStream, Thread.currentThread())));
+			_swappedPrintStreams.push(swappedOutputStream);
+
+			System.setOut(new PrintStream(swappedOutputStream));
 		}
 
 		try {
@@ -44,10 +47,35 @@ public class RunnableUtil {
 		}
 		finally {
 			synchronized (RunnableUtil.class) {
-				System.setOut(printStream);
+				swappedOutputStream._enabled = false;
+
+				if (_swappedPrintStreams.peek() == swappedOutputStream) {
+					_swappedPrintStreams.pop();
+
+					System.setOut(swappedOutputStream._fallbackOutputStream);
+
+					Iterator<SwappedOutputStream> iterator =
+						_swappedPrintStreams.iterator();
+
+					while (iterator.hasNext()) {
+						swappedOutputStream = iterator.next();
+
+						if (swappedOutputStream._enabled) {
+							break;
+						}
+
+						iterator.remove();
+
+						System.setOut(
+							swappedOutputStream._fallbackOutputStream);
+					}
+				}
 			}
 		}
 	}
+
+	private static final LinkedList<SwappedOutputStream> _swappedPrintStreams =
+		new LinkedList<>();
 
 	private static class SwappedOutputStream extends UnsyncFilterOutputStream {
 
@@ -57,7 +85,7 @@ public class RunnableUtil {
 
 			Thread thread = Thread.currentThread();
 
-			if (thread == _thread) {
+			if ((thread == _thread) && _enabled) {
 				super.write(bytes, offset, length);
 			}
 			else {
@@ -69,7 +97,7 @@ public class RunnableUtil {
 		public void write(int b) throws IOException {
 			Thread thread = Thread.currentThread();
 
-			if (thread == _thread) {
+			if ((thread == _thread) && _enabled) {
 				super.write(b);
 			}
 			else {
@@ -78,7 +106,7 @@ public class RunnableUtil {
 		}
 
 		private SwappedOutputStream(
-			OutputStream outputStream, OutputStream fallbackOutputStream,
+			OutputStream outputStream, PrintStream fallbackOutputStream,
 			Thread thread) {
 
 			super(outputStream);
@@ -87,7 +115,8 @@ public class RunnableUtil {
 			_thread = thread;
 		}
 
-		private final OutputStream _fallbackOutputStream;
+		private volatile boolean _enabled = true;
+		private final PrintStream _fallbackOutputStream;
 		private final Thread _thread;
 
 	}

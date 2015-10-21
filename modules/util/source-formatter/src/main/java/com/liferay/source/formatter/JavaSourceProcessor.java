@@ -937,13 +937,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-58529
 
-		if (portalSource && newContent.contains("ResourceBundle.getBundle(") &&
-			!fileName.endsWith("ResourceBundleUtil.java")) {
+		if (portalSource && !fileName.endsWith("ResourceBundleUtil.java")) {
+			if (newContent.contains("ResourceBundle.getBundle(")) {
+				processErrorMessage(
+					fileName,
+					"Use ResourceBundleUtil.getBundle instead of " +
+						"ResourceBundle.getBundle: " + fileName);
+			}
 
-			processErrorMessage(
-				fileName,
-				"Use ResourceBundleUtil.getBundle instead of " +
-					"ResourceBundle.getBundle: " + fileName);
+			if (newContent.contains("resourceBundle.getString(")) {
+				processErrorMessage(
+					fileName,
+					"Use ResourceBundleUtil.getString instead of " +
+						"resourceBundle.getString: " + fileName);
+			}
 		}
 
 		newContent = getCombinedLinesContent(

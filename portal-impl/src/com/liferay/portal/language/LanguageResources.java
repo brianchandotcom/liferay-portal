@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -370,7 +371,8 @@ public class LanguageResources {
 			while (keys.hasMoreElements()) {
 				String key = keys.nextElement();
 
-				String value = resourceBundle.getString(key);
+				String value = ResourceBundleUtil.getString(
+					resourceBundle, key);
 
 				languageMap.put(key, value);
 			}

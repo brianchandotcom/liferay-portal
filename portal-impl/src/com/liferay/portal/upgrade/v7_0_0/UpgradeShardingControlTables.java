@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.v7_0_0.util.ClassNameTable;
 import com.liferay.portal.upgrade.v7_0_0.util.ClusterGroupTable;
 import com.liferay.portal.upgrade.v7_0_0.util.CounterTable;
@@ -28,6 +29,7 @@ import com.liferay.portal.upgrade.v7_0_0.util.RegionTable;
 import com.liferay.portal.upgrade.v7_0_0.util.ReleaseTable;
 import com.liferay.portal.upgrade.v7_0_0.util.ResourceActionTable;
 import com.liferay.portal.upgrade.v7_0_0.util.VirtualHostTable;
+import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,8 +94,18 @@ public class UpgradeShardingControlTables extends UpgradeProcess {
 	protected void copyControlTablesToShards(List<String> shardNames)
 		throws Exception {
 
+		String defaultShardName = PropsUtil.get("shard.default.name");
+
+		if (Validator.isNull(defaultShardName)) {
+			throw new RuntimeException(
+				"The property 'shard.default.name' cannot be empty. Please " +
+					"review your portal-ext properties file.");
+		}
+
 		for (String shardName : shardNames) {
-			copyControlTablesToShard(shardName);
+			if (!shardName.equals(defaultShardName)) {
+				copyControlTablesToShard(shardName);
+			}
 		}
 	}
 

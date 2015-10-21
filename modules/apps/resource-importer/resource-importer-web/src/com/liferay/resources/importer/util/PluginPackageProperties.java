@@ -91,6 +91,6 @@ public class PluginPackageProperties {
 			_properties.getProperty("resources-importer-update-mode-enabled"));
 	}
 
-	private Properties _properties = new Properties();
+	private final Properties _properties = new Properties();
 
 }

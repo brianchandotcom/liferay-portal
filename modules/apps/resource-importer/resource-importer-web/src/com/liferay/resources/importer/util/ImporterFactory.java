@@ -172,6 +172,6 @@ public class ImporterFactory {
 		return new ResourceImporter();
 	}
 
-	private static ImporterFactory _instance = new ImporterFactory();
+	private static final ImporterFactory _instance = new ImporterFactory();
 
 }

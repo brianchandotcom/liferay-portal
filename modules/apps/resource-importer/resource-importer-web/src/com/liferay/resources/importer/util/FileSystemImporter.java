@@ -1794,15 +1794,16 @@ public class FileSystemImporter extends BaseImporter {
 
 	private static final String _LAYOUT_PROTOTYPE_DIR_NAME = "/templates/page";
 
-	private static Log _log = LogFactoryUtil.getLog(FileSystemImporter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FileSystemImporter.class);
 
-	private Map<String, JSONObject> _assetJSONObjectMap = new HashMap<>();
-	private Set<String> _ddmStructures = new HashSet<>();
+	private final Map<String, JSONObject> _assetJSONObjectMap = new HashMap<>();
+	private final Set<String> _ddmStructures = new HashSet<>();
 	private String _defaultLayoutTemplateId;
-	private Map<String, FileEntry> _fileEntries = new HashMap<>();
-	private Pattern _fileEntryPattern = Pattern.compile(
+	private final Map<String, FileEntry> _fileEntries = new HashMap<>();
+	private final Pattern _fileEntryPattern = Pattern.compile(
 		"\\[\\$FILE=([^\\$]+)\\$\\]");
-	private Map<String, Set<Long>> _primaryKeys = new HashMap<>();
+	private final Map<String, Set<Long>> _primaryKeys = new HashMap<>();
 	private File _resourcesDir;
 
 }

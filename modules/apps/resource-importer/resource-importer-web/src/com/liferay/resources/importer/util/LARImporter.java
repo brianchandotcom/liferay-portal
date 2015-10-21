@@ -133,7 +133,7 @@ public class LARImporter extends BaseImporter {
 		return parameters;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LARImporter.class);
+	private static final Log _log = LogFactoryUtil.getLog(LARImporter.class);
 
 	private InputStream _privateLARInputStream;
 	private InputStream _publicLARInputStream;

@@ -88,18 +88,11 @@ public class VerifyGroup extends VerifyProcess {
 
 		String sql = "update Group_ set name = ? where groupId = ?";
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = con.prepareStatement(sql);
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, name);
 			ps.setLong(2, groupId);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -170,16 +163,9 @@ public class VerifyGroup extends VerifyProcess {
 		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
 		sb.append("'");
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -204,9 +190,6 @@ public class VerifyGroup extends VerifyProcess {
 
 				updateName(con, groupId, newName);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

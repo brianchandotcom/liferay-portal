@@ -44,13 +44,8 @@ public class VerifyAsset extends VerifyProcess {
 		sb.append(" and classPK not in (select fileVersionId from ");
 		sb.append("DLFileVersion)");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long classPK = rs.getLong("classPK");
@@ -63,9 +58,6 @@ public class VerifyAsset extends VerifyProcess {
 					AssetEntryLocalServiceUtil.deleteAssetEntry(entryId);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -82,22 +74,14 @@ public class VerifyAsset extends VerifyProcess {
 			"select distinct groupId from AssetCategory where " +
 				"(leftCategoryId is null) or (rightCategoryId is null)";
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
 
 				AssetCategoryLocalServiceUtil.rebuildTree(groupId, true);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

@@ -51,15 +51,13 @@ public class VerifySQLServer extends VerifyProcess {
 		sb.append(_FILTER_EXCLUDED_TABLES);
 		sb.append(" order by sysobjects.name, syscolumns.colid");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		String sql = sb.toString();
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
+
 			dropNonunicodeTableIndexes(con);
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				String tableName = rs.getString("table_name");
@@ -88,9 +86,6 @@ public class VerifySQLServer extends VerifyProcess {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -194,13 +189,8 @@ public class VerifySQLServer extends VerifyProcess {
 		sb.append(_FILTER_EXCLUDED_TABLES);
 		sb.append(" order by sysobjects.name, sysindexes.name");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String tableName = rs.getString("table_name");
@@ -238,9 +228,6 @@ public class VerifySQLServer extends VerifyProcess {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
-		}
 	}
 
 	protected List<String> getPrimaryKeyColumnNames(
@@ -261,13 +248,8 @@ public class VerifySQLServer extends VerifyProcess {
 		sb.append(indexName);
 		sb.append("'");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String columnName = rs.getString("column_name");
@@ -277,9 +259,6 @@ public class VerifySQLServer extends VerifyProcess {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 
 		return columnNames;

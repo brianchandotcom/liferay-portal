@@ -52,18 +52,11 @@ public class VerifyCalendar extends VerifyProcess {
 
 		String sql = "update CalEvent set recurrence = ? where eventId = ?";
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = con.prepareStatement(sql);
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, recurrence);
 			ps.setLong(2, eventId);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -115,13 +108,8 @@ public class VerifyCalendar extends VerifyProcess {
 		sb.append("(CAST_TEXT(recurrence) != '') and recurrence not like ");
 		sb.append("'%serializable%'");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long eventId = rs.getLong("eventId");
@@ -138,9 +126,6 @@ public class VerifyCalendar extends VerifyProcess {
 
 				updateEvent(con, eventId, newRecurrence);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

@@ -32,16 +32,9 @@ public class VerifyWorkflow extends VerifyProcess {
 	protected void deleteOrphanedWorkflowDefinitionLinks() throws Exception {
 		String sql = "select distinct classNameId from WorkflowDefinitionLink";
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long classNameId = rs.getLong("classNameId");
@@ -69,9 +62,6 @@ public class VerifyWorkflow extends VerifyProcess {
 					}
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

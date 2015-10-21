@@ -109,28 +109,20 @@ public class VerifyGroupedModel extends VerifyProcess {
 		sb.append(primaryKeColumnName);
 		sb.append(" = ?");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
+		try (PreparedStatement ps = con.prepareStatement(sb.toString())) {
 			ps.setLong(1, primKey);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("groupId");
+				}
 
-			if (rs.next()) {
-				return rs.getLong("groupId");
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to find " + tableName + " " + primKey);
+				}
+
+				return 0;
 			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to find " + tableName + " " + primKey);
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -148,16 +140,9 @@ public class VerifyGroupedModel extends VerifyProcess {
 		sb.append(verifiableGroupedModel.getTableName());
 		sb.append(" where groupId is null");
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long primKey = rs.getLong(
@@ -187,9 +172,6 @@ public class VerifyGroupedModel extends VerifyProcess {
 
 				runSQL(con, sb.toString());
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

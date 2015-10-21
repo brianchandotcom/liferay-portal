@@ -153,25 +153,16 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		String sql =
 			"select buildNumber from Release_ where servletContextName = ?";
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sql);
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setString(1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
 
-			rs.next();
-
-			return rs.getInt(1);
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
+				return rs.getInt(1);
+			}
 		}
 	}
 

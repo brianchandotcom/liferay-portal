@@ -191,46 +191,34 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		selectSql.append(" where companyId = ");
 		selectSql.append(role.getCompanyId());
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			int total = 0;
 
-		int total = 0;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			try {
-				ps = con.prepareStatement(countSql.toString());
-
-				rs = ps.executeQuery();
+			try (PreparedStatement ps = con.prepareStatement(
+					countSql.toString());
+				ResultSet rs = ps.executeQuery()) {
 
 				if (rs.next()) {
 					total = rs.getInt(1);
 				}
 			}
-			finally {
-				DataAccess.cleanUp(null, ps, rs);
+
+			try (PreparedStatement ps = con.prepareStatement(
+					selectSql.toString());
+				ResultSet rs = ps.executeQuery()) {
+
+				for (int i = 0; rs.next(); i++) {
+					long primKey = rs.getLong(
+						verifiableResourcedModel.getPrimaryKeyColumnName());
+					long userId = rs.getLong(
+						verifiableResourcedModel.getUserIdColumnName());
+
+					verifyResourcedModel(
+						role.getCompanyId(),
+						verifiableResourcedModel.getModelName(), primKey, role,
+						userId, i, total);
+				}
 			}
-
-			ps = con.prepareStatement(selectSql.toString());
-
-			rs = ps.executeQuery();
-
-			for (int i = 0; rs.next(); i++) {
-				long primKey = rs.getLong(
-					verifiableResourcedModel.getPrimaryKeyColumnName());
-				long userId = rs.getLong(
-					verifiableResourcedModel.getUserIdColumnName());
-
-				verifyResourcedModel(
-					role.getCompanyId(),
-					verifiableResourcedModel.getModelName(), primKey, role,
-					userId, i, total);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

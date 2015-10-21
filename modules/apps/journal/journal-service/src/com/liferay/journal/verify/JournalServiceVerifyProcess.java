@@ -173,44 +173,37 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		sb.append("groupId = ?");
 		sb.append(" and portletId = ?");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
+		try (PreparedStatement ps = con.prepareStatement(sb.toString())) {
 			ps.setLong(1, groupId);
 			ps.setString(2, portletId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					String xml = rs.getString("preferences");
 
-			while (rs.next()) {
-				String xml = rs.getString("preferences");
+					PortletPreferences portletPreferences =
+						PortletPreferencesFactoryUtil.fromDefaultXML(xml);
 
-				PortletPreferences portletPreferences =
-					PortletPreferencesFactoryUtil.fromDefaultXML(xml);
+					String articleId = portletPreferences.getValue(
+						"articleId", null);
 
-				String articleId = portletPreferences.getValue(
-					"articleId", null);
+					List<JournalContentSearch> contentSearches =
+						_journalContentSearchLocalService.
+							getArticleContentSearches(groupId, articleId);
 
-				List<JournalContentSearch> contentSearches =
-					_journalContentSearchLocalService.getArticleContentSearches(
-						groupId, articleId);
+					if (contentSearches.isEmpty()) {
+						continue;
+					}
 
-				if (contentSearches.isEmpty()) {
-					continue;
+					JournalContentSearch contentSearch = contentSearches.get(0);
+
+					_journalContentSearchLocalService.updateContentSearch(
+						contentSearch.getGroupId(),
+						contentSearch.isPrivateLayout(),
+						contentSearch.getLayoutId(),
+						contentSearch.getPortletId(), articleId, true);
 				}
-
-				JournalContentSearch contentSearch = contentSearches.get(0);
-
-				_journalContentSearchLocalService.updateContentSearch(
-					contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
-					contentSearch.getLayoutId(), contentSearch.getPortletId(),
-					articleId, true);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -358,24 +351,17 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			Timestamp expirationDate, int status)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
 		String sql =
 			"update JournalArticle set expirationDate = ? where groupId = ? " +
 				"and articleId = ? and status = ?";
 
-		try {
-			ps = con.prepareStatement(sql);
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setTimestamp(1, expirationDate);
 			ps.setLong(2, groupId);
 			ps.setLong(3, articleId);
 			ps.setInt(4, status);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -503,18 +489,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		String sql =
 			"update JournalArticle set urlTitle = ? where urlTitle = ?";
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = con.prepareStatement(sql);
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, normalizedURLTitle);
 			ps.setString(2, urlTitle);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -610,13 +589,8 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		sb.append("'%document_library%' or content like '%link_to_layout%')");
 		sb.append(" and DDMStructureKey != ''");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long id = rs.getLong("id_");
@@ -645,9 +619,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 						e);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -678,13 +649,8 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		sb.append(WorkflowConstants.STATUS_APPROVED);
 		sb.append(")");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -695,9 +661,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				updateExpirationDate(
 					con, groupId, articleId, expirationDate, status);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -772,13 +735,8 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		sb.append("by groupId, portletId having count(groupId) > 1 and ");
 		sb.append("count(portletId) > 1");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -786,9 +744,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 				updateContentSearch(con, groupId, portletId);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -900,13 +855,8 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		String sql =
 			"select distinct groupId, articleId, urlTitle from JournalArticle";
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -916,9 +866,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 				updateURLTitle(con, groupId, articleId, urlTitle);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

@@ -112,36 +112,28 @@ public class VerifyAuditedModel extends VerifyProcess {
 		sb.append(pkColumnName);
 		sb.append(" = ?");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
+		try (PreparedStatement ps = con.prepareStatement(sb.toString())) {
 			ps.setLong(1, primKey);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					long companyId = rs.getLong("companyId");
+					long userId = rs.getLong("userId");
+					Timestamp createDate = rs.getTimestamp("createDate");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 
-			if (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+					return new Object[] {
+						companyId, userId, getUserName(con, userId), createDate,
+						modifiedDate
+					};
+				}
 
-				return new Object[] {
-					companyId, userId, getUserName(con, userId), createDate,
-					modifiedDate
-				};
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to find " + tableName + " " + primKey);
+				}
+
+				return null;
 			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to find " + tableName + " " + primKey);
-			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -152,41 +144,33 @@ public class VerifyAuditedModel extends VerifyProcess {
 			"select userId, firstName, middleName, lastName from User_ where " +
 				"companyId = ? and defaultUser = ?";
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sql);
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setLong(1, companyId);
 			ps.setBoolean(2, true);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					long userId = rs.getLong("userId");
+					String firstName = rs.getString("firstName");
+					String middleName = rs.getString("middleName");
+					String lastName = rs.getString("lastName");
 
-			if (rs.next()) {
-				long userId = rs.getLong("userId");
-				String firstName = rs.getString("firstName");
-				String middleName = rs.getString("middleName");
-				String lastName = rs.getString("lastName");
+					FullNameGenerator fullNameGenerator =
+						FullNameGeneratorFactory.getInstance();
 
-				FullNameGenerator fullNameGenerator =
-					FullNameGeneratorFactory.getInstance();
+					String userName = fullNameGenerator.getFullName(
+						firstName, middleName, lastName);
 
-				String userName = fullNameGenerator.getFullName(
-					firstName, middleName, lastName);
+					Timestamp createDate = new Timestamp(
+						System.currentTimeMillis());
 
-				Timestamp createDate = new Timestamp(
-					System.currentTimeMillis());
+					return new Object[] {
+						companyId, userId, userName, createDate, createDate
+					};
+				}
 
-				return new Object[] {
-					companyId, userId, userName, createDate, createDate
-				};
+				return null;
 			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -195,32 +179,24 @@ public class VerifyAuditedModel extends VerifyProcess {
 			"select firstName, middleName, lastName from User_ where " +
 				"userId = ?";
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(sql);
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setLong(1, userId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					String firstName = rs.getString("firstName");
+					String middleName = rs.getString("middleName");
+					String lastName = rs.getString("lastName");
 
-			if (rs.next()) {
-				String firstName = rs.getString("firstName");
-				String middleName = rs.getString("middleName");
-				String lastName = rs.getString("lastName");
+					FullNameGenerator fullNameGenerator =
+						FullNameGeneratorFactory.getInstance();
 
-				FullNameGenerator fullNameGenerator =
-					FullNameGeneratorFactory.getInstance();
+					return fullNameGenerator.getFullName(
+						firstName, middleName, lastName);
+				}
 
-				return fullNameGenerator.getFullName(
-					firstName, middleName, lastName);
+				return StringPool.BLANK;
 			}
-
-			return StringPool.BLANK;
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -265,11 +241,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 		sb.append(primaryKeyColumnName);
 		sb.append(" = ?");
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = con.prepareStatement(sb.toString());
-
+		try (PreparedStatement ps = con.prepareStatement(sb.toString())) {
 			ps.setLong(1, companyId);
 			ps.setLong(2, userId);
 			ps.setString(3, userName);
@@ -289,9 +261,6 @@ public class VerifyAuditedModel extends VerifyProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to verify model " + tableName, e);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -314,16 +283,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 		sb.append(verifiableAuditedModel.getTableName());
 		sb.append(" where userName is null order by companyId");
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			Object[] auditedModelArray = null;
 
@@ -358,9 +320,6 @@ public class VerifyAuditedModel extends VerifyProcess {
 					verifiableAuditedModel.getPrimaryKeyColumnName(), primKey,
 					auditedModelArray, verifiableAuditedModel.isUpdateDates());
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

@@ -43,16 +43,9 @@ public class VerifyOracle extends VerifyProcess {
 		sb.append("user_tab_columns where data_type = 'VARCHAR2' and ");
 		sb.append("char_used = 'B'");
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String tableName = rs.getString(1);
@@ -106,9 +99,6 @@ public class VerifyOracle extends VerifyProcess {
 					}
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

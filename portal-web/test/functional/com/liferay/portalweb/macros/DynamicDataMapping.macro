@@ -104,7 +104,7 @@
 	</command>
 
 	<command name="deleteField">
-		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -510,7 +510,7 @@
 	</command>
 
 	<command name="viewCanAddField">
-		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<var name="key_field" value="${field}" />
 

@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
@@ -54,15 +53,18 @@ public abstract class BaseWikiEngine implements WikiEngine {
 
 	@Override
 	public String getFormatLabel(Locale locale) {
-		try {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content/Language", locale, getClass());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content/Language", locale, getClass());
 
-			return ResourceBundleUtil.getString(resourceBundle, getFormat());
-		}
-		catch (MissingResourceException mre) {
-			return getFormat();
-		}
+		String format = getFormat();
+
+		String formatLabel = ResourceBundleUtil.getString(
+			resourceBundle, format);
+
+		if (formatLabel != null) {
+			return formatLabel;
+
+		return format;
 	}
 
 	@Override

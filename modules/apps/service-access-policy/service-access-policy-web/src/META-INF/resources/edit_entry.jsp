@@ -86,7 +86,7 @@ if (sapEntry != null) {
 	<aui:input cssClass="hide" helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />
 
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="getMethodsURL">
-		<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="getMethods" />
+		<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="getMethodNames" />
 	</liferay-portlet:resourceURL>
 
 	<div id="<portlet:namespace />allowedServiceSignaturesFriendlyContentBox">
@@ -110,7 +110,7 @@ if (sapEntry != null) {
 			<div class="lfr-form-row">
 				<div class="row-fields">
 					<aui:col md="6">
-						<aui:input cssClass="service-class" data-service-class="<%= serviceClassName %>" id='<%= "serviceClass" + i %>' name="serviceClass" type="text" value="<%= serviceClassName %>" />
+						<aui:input cssClass="service-class" data-service-class="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' name="serviceClassName" type="text" value="<%= serviceClassName %>" />
 					</aui:col>
 					<aui:col md="6">
 						<aui:input cssClass="method-name" id='<%= "methodName" + i %>' name="methodName" type="text" value="<%= methodName %>" />
@@ -139,32 +139,32 @@ if (sapEntry != null) {
 
 		var serviceMethods = {};
 
-		var getServiceContext = function(serviceClass) {
+		var getServiceContext = function(serviceClassName) {
 			var service = A.Array.find(
 				services,
 				function(item, index) {
-					return item.serviceClass === serviceClass;
+					return item.serviceClassName === serviceClassName;
 				}
 			);
 
-			return service && service.context || 'portal';
+			return service && service.contextName || 'portal';
 		};
 
-		var getServiceMethods = function(context, serviceClass, callback) {
-			if (context && serviceClass && callback) {
-				var namespace = context.replace(REGEX_DOT, '_') + '.' + serviceClass.replace(REGEX_DOT, '_');
+		var getServiceMethods = function(contextName, serviceClassName, callback) {
+			if (contextName && serviceClassName && callback) {
+				var namespace = contextName.replace(REGEX_DOT, '_') + '.' + serviceClassName.replace(REGEX_DOT, '_');
 
 				var methodObj = A.namespace.call(serviceMethods, namespace);
 
 				var methods = methodObj.methods;
 
 				if (!methods) {
-					if (context == 'portal') {
-						context = '';
+					if (contextName == 'portal') {
+						contextName = '';
 					}
 
-					getMethodsURL.setParameter('context', context);
-					getMethodsURL.setParameter('serviceClass', serviceClass);
+					getMethodsURL.setParameter('contextName', contextName);
+					getMethodsURL.setParameter('serviceClassName', serviceClassName);
 
 					A.io.request(
 						getMethodsURL.toString(),
@@ -200,14 +200,14 @@ if (sapEntry != null) {
 						select: function(event) {
 							var result = event.result.raw;
 
-							serviceInput.attr('data-service-class', result.serviceClass);
-							serviceInput.attr('data-context', result.context);
+							serviceInput.attr('data-service-class', result.serviceClassName);
+							serviceInput.attr('data-context-name', result.contextName);
 
 							methodInput.attr('disabled', false);
 						}
 					},
 					resultFilters: 'phraseMatch',
-					resultTextLocator: 'serviceClass',
+					resultTextLocator: 'serviceClassName',
 					source: services
 				}
 			).render();
@@ -218,16 +218,16 @@ if (sapEntry != null) {
 					resultFilters: 'phraseMatch',
 					resultTextLocator: 'methodName',
 					source: function(query, callback) {
-						var context = serviceInput.attr('data-context');
-						var serviceClass = serviceInput.attr('data-service-class');
+						var contextName = serviceInput.attr('data-context-name');
+						var serviceClassName = serviceInput.attr('data-service-class');
 
-						if (!context) {
-							context = getServiceContext(serviceClass);
+						if (!contextName) {
+							contextName = getServiceContext(serviceClassName);
 
-							serviceInput.attr('data-context', context);
+							serviceInput.attr('data-context-name', contextName);
 						}
 
-						getServiceMethods(context, serviceClass, callback);
+						getServiceMethods(contextName, serviceClassName, callback);
 					}
 				}
 			).render();
@@ -239,9 +239,9 @@ if (sapEntry != null) {
 			A.all('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox .lfr-form-row:not(.hide)').each(
 				function(item, index) {
 					var methodName = item.one('.method-name').val();
-					var serviceClass = item.one('.service-class').val();
+					var serviceClassName = item.one('.service-class').val();
 
-					updatedInput += serviceClass;
+					updatedInput += serviceClassName;
 
 					if (methodName) {
 						updatedInput += '#' + methodName;
@@ -275,11 +275,11 @@ if (sapEntry != null) {
 
 						item = item.split('#');
 
-						var serviceClass = item[0];
+						var serviceClassName = item[0];
 
-						serviceInput.val(serviceClass);
+						serviceInput.val(serviceClassName);
 
-						serviceInput.attr('data-service-class', serviceClass);
+						serviceInput.attr('data-service-class', serviceClassName);
 
 						var method = item[1];
 
@@ -310,7 +310,7 @@ if (sapEntry != null) {
 
 						serviceInput.attr(
 							{
-								'data-context': '',
+								'data-context-name': '',
 								'data-service-class': ''
 							}
 						);

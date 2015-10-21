@@ -90,17 +90,17 @@ public class SAPPortlet extends MVCPortlet {
 		_sapEntryService.deleteSAPEntry(sapEntryId);
 	}
 
-	public void getMethods(
+	public void getMethodNames(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
 		String contextName = ParamUtil.getString(
-			resourceRequest, "context");
+			resourceRequest, "contextName");
 		String serviceClassName = ParamUtil.getString(
 			resourceRequest, "serviceClassName");
 
 		Map<String, Set<JSONWebServiceActionMapping>> serviceMappings =
-			getServiceJSONWSActionMappings(contextName);
+			getServiceJSONWebServiceActionMapping(contextName);
 
 		Set<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
 			serviceMappings.get(serviceClassName);
@@ -134,14 +134,15 @@ public class SAPPortlet extends MVCPortlet {
 
 		for (String contextName : contextNames) {
 			Map<String, Set<JSONWebServiceActionMapping>> serviceMappings =
-				getServiceJSONWSActionMappings(contextName);
+				getServiceJSONWebServiceActionMapping(contextName);
 
 			for (Map.Entry<String, Set<JSONWebServiceActionMapping>>
 				serviceMapping : serviceMappings.entrySet()) {
 
 				Map<String, String> serviceDescription = new HashMap<>();
 
-				serviceDescription.put("serviceClassName", serviceMapping.getKey());
+				serviceDescription.put(
+					"serviceClassName", serviceMapping.getKey());
 
 				Set<JSONWebServiceActionMapping> actionMappings =
 					serviceMapping.getValue();
@@ -150,7 +151,7 @@ public class SAPPortlet extends MVCPortlet {
 					actionMappings.iterator().next();
 
 				serviceDescription.put(
-					"context", firstActionMapping.getContextName());
+					"contextName", firstActionMapping.getContextName());
 
 				remoteServices.add(serviceDescription);
 			}
@@ -206,7 +207,7 @@ public class SAPPortlet extends MVCPortlet {
 	}
 
 	protected Map<String, Set<JSONWebServiceActionMapping>>
-		getServiceJSONWSActionMappings(String contextName) {
+		getServiceJSONWebServiceActionMapping(String contextName) {
 
 		Map<String, Set<JSONWebServiceActionMapping>> serviceActionMappings =
 			new LinkedHashMap<>();

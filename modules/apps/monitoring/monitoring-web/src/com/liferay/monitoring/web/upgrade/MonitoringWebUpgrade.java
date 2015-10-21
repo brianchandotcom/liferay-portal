@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.upgrade;
+package com.liferay.monitoring.web.upgrade;
 
+import com.liferay.monitoring.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.roles.admin.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,12 +25,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(immediate = true)
-public class RolesAdminWebUpgrade implements UpgradeStepRegistrator {
+public class MonitoringWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.roles.admin.web", "0.0.1", "1.0.0",
+			"com.liferay.monitoring.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
 	}
 

@@ -31,7 +31,6 @@ import com.liferay.portal.service.UserGroupService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
-import com.liferay.user.groups.admin.web.upgrade.UserGroupsAdminWebUpgrade;
 
 import java.io.IOException;
 
@@ -195,11 +194,6 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupsAdminWebUpgrade(
-		UserGroupsAdminWebUpgrade UserGroupsAdminWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

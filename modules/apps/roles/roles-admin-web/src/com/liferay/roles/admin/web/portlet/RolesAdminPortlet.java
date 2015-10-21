@@ -58,7 +58,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.roles.admin.web.constants.RolesAdminPortletKeys;
-import com.liferay.roles.admin.web.upgrade.RolesAdminWebUpgrade;
 
 import java.io.IOException;
 
@@ -511,11 +510,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setRoleLocalService(RoleLocalService roleLocalService) {
 		_roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRolesAdminWebUpgrade(
-		RolesAdminWebUpgrade rolesAdminWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

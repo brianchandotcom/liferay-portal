@@ -15,7 +15,6 @@
 package com.liferay.password.policies.admin.web.portlet;
 
 import com.liferay.password.policies.admin.web.constants.PasswordPoliciesAdminPortletKeys;
-import com.liferay.password.policies.admin.web.upgrade.PasswordPoliciesAdminWebUpgrade;
 import com.liferay.portal.DuplicatePasswordPolicyException;
 import com.liferay.portal.NoSuchPasswordPolicyException;
 import com.liferay.portal.PasswordPolicyNameException;
@@ -239,11 +238,6 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 		OrganizationService organizationService) {
 
 		_organizationService = organizationService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPasswordPoliciesAdminWebUpgrade(
-		PasswordPoliciesAdminWebUpgrade passwordPoliciesAdminWebUpgrade) {
 	}
 
 	@Reference(unbind = "-")

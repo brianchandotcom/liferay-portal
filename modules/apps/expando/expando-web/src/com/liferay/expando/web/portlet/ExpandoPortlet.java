@@ -15,7 +15,6 @@
 package com.liferay.expando.web.portlet;
 
 import com.liferay.expando.web.constants.ExpandoPortletKeys;
-import com.liferay.expando.web.upgrade.ExpandoWebUpgrade;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -346,10 +345,6 @@ public class ExpandoPortlet extends MVCPortlet {
 		ExpandoColumnService expandoColumnService) {
 
 		_expandoColumnService = expandoColumnService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoWebUpgrade(ExpandoWebUpgrade expandoWebUpgrade) {
 	}
 
 	protected void updateProperties(

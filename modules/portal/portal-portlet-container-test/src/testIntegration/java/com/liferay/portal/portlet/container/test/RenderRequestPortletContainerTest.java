@@ -17,6 +17,7 @@ package com.liferay.portal.portlet.container.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -145,7 +145,7 @@ public class RenderRequestPortletContainerTest
 
 		};
 
-		properties = new Hashtable<>();
+		properties = new HashMapDictionary<>();
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 

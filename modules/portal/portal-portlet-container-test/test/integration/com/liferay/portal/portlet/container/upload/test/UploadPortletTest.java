@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,7 +44,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -188,7 +188,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		throws Exception {
 
 		Dictionary<String, Object> mvcActionCommandProperties =
-			new Hashtable<>();
+			new HashMapDictionary<>();
 
 		mvcActionCommandProperties.put(
 			"javax.portlet.name", TestUploadPortlet.TEST_UPLOAD_PORTLET);
@@ -210,7 +210,8 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 	}
 
 	protected void registerMVCPortlet(Portlet portlet) throws Exception {
-		Dictionary<String, Object> portletProperties = new Hashtable<>();
+		Dictionary<String, Object> portletProperties =
+			new HashMapDictionary<>();
 
 		portletProperties.put(
 			"com.liferay.portlet.private-request-attributes",

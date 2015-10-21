@@ -17,6 +17,7 @@ package com.liferay.portal.portlet.container.test;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -26,7 +27,6 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -116,7 +116,7 @@ public class BasePortletContainerTestCase {
 
 	protected Layout layout;
 	protected Map<String, String> map = new ConcurrentHashMap<>();
-	protected Dictionary<String, Object> properties = new Hashtable<>();
+	protected Dictionary<String, Object> properties = new HashMapDictionary<>();
 	protected ServiceRegistration<?> serviceRegistration;
 	protected List<ServiceRegistration<?>> serviceRegistrations =
 		new CopyOnWriteArrayList<>();

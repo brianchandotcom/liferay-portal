@@ -34,9 +34,6 @@
 	</tear-down>
 
 	<command name="EditTeamPermissions" priority="4">
-		<var name="siteName" value="Site Name" />
-		<var name="teamName" value="Site Team Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -164,9 +161,9 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<var name="key_siteName" value="${siteName}" />
+		<var name="key_siteName" value="Site Name" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="Site Name" />
 
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS" value1="Users" />
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS_SITE_TEAMS" value1="Site Teams" />
@@ -191,9 +188,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<var name="key_teamName" value="${teamName}" />
+		<var name="key_teamName" value="Site Team Name" />
 
-		<execute function="AssertTextEquals" locator1="Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="${teamName}" />
+		<execute function="AssertTextEquals" locator1="Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="Site Team Name" />
 
 		<execute macro="User#logoutPG" />
 
@@ -212,14 +209,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<var name="key_teamName" value="${teamName}" />
+		<var name="key_teamName" value="Site Team Name" />
 
-		<execute function="AssertTextEquals" locator1="Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="${teamName}" />
+		<execute function="AssertTextEquals" locator1="Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="Site Team Name" />
 
 		<execute macro="PermissionsInline#gotoSiteTeamsCP">
 			<var name="portletName" value="Site Teams" />
 			<var name="siteScopeName" value="Site Name" />
-			<var name="teamName" value="${teamName}" />
+			<var name="teamName" value="Site Team Name" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -268,16 +265,16 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<var name="key_siteName" value="${siteName}" />
+		<var name="key_siteName" value="Site Name" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="Site Name" />
 
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS" value1="Users" />
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS_SITE_TEAMS" value1="Site Teams" />
 
 		<execute macro="Team#editCP">
 			<var name="teamDescriptionEdit" value="Site Team Description Edit" />
-			<var name="teamName" value="${teamName}" />
+			<var name="teamName" value="Site Team Name" />
 			<var name="teamNameEdit" value="Site Team Name Edit" />
 		</execute>
 
@@ -507,8 +504,6 @@
 	</command>
 
 	<command name="RolesOrganizationSearch" priority="4">
-		<var name="searchAssetTitle" value="Test Document" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -689,9 +684,9 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+		<var name="key_searchAssetTitle" value="Test Document" />
 
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="Test Document" />
 
 		<execute macro="DMDocument#viewPGViaSearch">
 			<var name="dmDocumentDescription" value="This is a test document." />
@@ -747,9 +742,9 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+		<var name="key_searchAssetTitle" value="Test Document" />
 
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="Test Document" />
 
 		<execute macro="DMDocument#viewPGViaSearch">
 			<var name="dmDocumentDescription" value="This is a test document." />
@@ -766,14 +761,6 @@
 	</command>
 
 	<command name="RolesPermissionsDynamicDataLists" priority="4">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
-		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
-		<var name="ddlListDescription" value="Liferay Employee Profiles" />
-		<var name="ddlListName" value="Employees" />
-		<var name="pageName" value="Dynamic Data Lists Page" />
-		<var name="portletName" value="Dynamic Data Lists Display" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -909,25 +896,25 @@
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListDescription" value="Liferay Employee Profiles" />
+			<var name="ddlListName" value="Employees" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+			<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -1015,7 +1002,7 @@
 		<execute macro="DDLDataDefinition#saveViaDDLDisplayPG" />
 
 		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
@@ -1025,7 +1012,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldBoolean">
@@ -1098,12 +1085,12 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Page" />
 		</execute>
 
-		<var name="key_ddlDataDefinitionName" value="Add ${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="Add Employee Profile Data Definition" />
 		
-		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add Employee Profile Data Definition" />
 		<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
 		<execute macro="User#logoutPG" />
@@ -1114,10 +1101,10 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Page" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<execute function="AssertElementNotPresent" locator1="DDL#TOOLBAR_ADD" value1="Add Employee Profile Data Definition" />
 		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
 		<execute macro="User#logoutPG" />
@@ -1129,8 +1116,6 @@
 	</command>
 
 	<command name="RolesSiteSearch" priority="4">
-		<var name="searchAssetTitle" value="Test Document" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -1276,9 +1261,9 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+		<var name="key_searchAssetTitle" value="Test Document" />
 
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="Test Document" />
 
 		<execute macro="DMDocument#viewPGViaSearch">
 			<var name="dmDocumentDescription" value="This is a test document." />
@@ -1330,9 +1315,9 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+		<var name="key_searchAssetTitle" value="Test Document" />
 
-		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="Test Document" />
 
 		<execute macro="DMDocument#viewPGViaSearch">
 			<var name="dmDocumentDescription" value="This is a test document." />
@@ -1349,9 +1334,6 @@
 	</command>
 
 	<command name="RolesSitesPermissionsInheritance" priority="4">
-		<var name="portlet1Name" value="Message Boards" />
-		<var name="portlet2Name" value="Asset Publisher" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -1841,13 +1823,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="key_portletName" value="${portlet1Name}" />
+		<var name="key_portletName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
 
-		<var name="key_portletName" value="${portlet2Name}" />
+		<var name="key_portletName" value="Asset Publisher" />
 
-		<execute function="AssertElementNotPresent" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
+		<execute function="AssertElementNotPresent" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Asset Publisher" />
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="This is a thread by usersn1" />
@@ -1867,13 +1849,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="key_portletName" value="${portlet1Name}" />
+		<var name="key_portletName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
 
-		<var name="key_portletName" value="${portlet2Name}" />
+		<var name="key_portletName" value="Asset Publisher" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Asset Publisher" />
 
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#PERMISSIONS_BUTTON" />
@@ -1888,9 +1870,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="key_portletName" value="${portlet1Name}" />
+		<var name="key_portletName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#ADD_CATEGORY_BUTTON" value1="Add Category" />
 		<execute function="AssertTextEquals" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
@@ -1909,13 +1891,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="key_portletName" value="${portlet1Name}" />
+		<var name="key_portletName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
 
-		<var name="key_portletName" value="${portlet2Name}" />
+		<var name="key_portletName" value="Asset Publisher" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Asset Publisher" />
 
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
 
@@ -2132,8 +2114,6 @@
 	</command>
 
 	<command name="TeamPermissionsSite" priority="4">
-		<var name="pageName" value="USA Ice Hockey Team Blog" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -2323,9 +2303,9 @@
 			<var name="userEmailAddress" value="userea2@liferay.com" />
 		</execute>
 
-		<var name="key_pageName" value="${pageName}" />
+		<var name="key_pageName" value="USA Ice Hockey Team Blog" />
 
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE" value1="${pageName}" />
+		<execute function="AssertTextNotPresent" locator1="Home#PAGE" value1="USA Ice Hockey Team Blog" />
 
 		<execute macro="User#logoutPG" />
 
@@ -2336,20 +2316,12 @@
 	</command>
 
 	<command name="ViewAutomaticAssignedRoles" priority="4">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-		<var name="permissionDefinition1Value" value="Access in Control Panel" />
-		<var name="permissionDefinition2Key" value="SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-		<var name="permissionDefinition2Value" value="Access in Site Administration" />
-		<var name="permissionDefinition3Value" value="Go to Control Panel" />
-		<var name="permissionDefinition4Value" value="Go to Site Administration" />
-		<var name="roleName" value="Roles Regrole Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -2357,13 +2329,13 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+			<var name="roleName" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
+			<var name="permissionDefinitionValue" value="Go to Control Panel" />
 			<var name="permissionNavigationValue" value="Portal" />
 		</execute>
 
@@ -2372,30 +2344,26 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="${permissionDefinition4Value}" />
+			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="permissionNavigationValue" value="Site Memberships > Site" />
 		</execute>
 	</command>
 
 	<command name="ViewDocumentsAndMediaAddRepositoryPermissionSiteMemberRole" priority="4">
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX" />
-		<var name="permissionDefinitionValue" value="Add Repository" />
-		<var name="roleName" value="Site Member" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Repository" />
+			<var name="roleName" value="Site Member" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="action.ADD_REPOSITORY" />
@@ -2405,9 +2373,9 @@
 		</execute>
 
 		<execute macro="Role#removePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Repository" />
+			<var name="roleName" value="Site Member" />
 		</execute>
 	</command>
 

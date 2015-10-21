@@ -6,25 +6,11 @@ configurations {
 	frontendThemes
 }
 
-dependencies {
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-
-	frontendThemes project(":frontend:frontend-theme:frontend-theme-styled")
-	frontendThemes project(":frontend:frontend-theme:frontend-theme-unstyled")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
-File themeDestinationDir = file("src/META-INF/resources/classic")
-
 task buildTheme(type: CompileThemeTask)
 task buildThumbnails(type: BuildThumbnailsTask)
 task copyFavicon(type: Copy)
+
+File themeDestinationDir = file("src/META-INF/resources/classic")
 
 buildCSS {
 	dependsOn buildTheme
@@ -56,4 +42,18 @@ copyFavicon {
 
 	from "../frontend-theme-unstyled/src/META-INF/resources/_unstyled/images/favicon.ico"
 	into "src/META-INF/resources"
+}
+
+dependencies {
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	frontendThemes project(":frontend:frontend-theme:frontend-theme-styled")
+	frontendThemes project(":frontend:frontend-theme:frontend-theme-unstyled")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }

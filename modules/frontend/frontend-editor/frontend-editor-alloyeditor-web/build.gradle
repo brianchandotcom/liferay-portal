@@ -1,29 +1,13 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-dependencies {
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
-	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
-	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-}
+task buildAlloyEditor(type: Copy)
 
-ext {
-	alloyEditorVersion = "0.4.0-alpha.1"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
+String alloyEditorVersion = "0.4.0-alpha.1"
 
 File editorsDestinationDir = file("tmp/META-INF/resources")
 File editorsSrcDir = file("src/META-INF/resources")
 File thirdPartyDir = file("../../../../portal-web/third-party")
-
-task buildAlloyEditor(type: Copy)
 
 buildAlloyEditor {
 	File alloyEditorDestinationDir = new File(editorsDestinationDir, "alloyeditor")
@@ -65,4 +49,18 @@ buildAlloyEditor {
 
 classes {
 	dependsOn buildAlloyEditor
+}
+
+dependencies {
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
+	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }

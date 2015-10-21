@@ -2,24 +2,13 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 
-dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-}
-
-ext {
-	bourbonVersion = "3.2.3"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
-File commonCssDestinationDir = file("tmp/META-INF/resources")
-
 task buildBourbon(type: Copy)
 task buildCssCommon(type: Copy)
 task publishNodeModule(type: PublishNodeModuleTask)
+
+String bourbonVersion = "3.2.3"
+
+File commonCssDestinationDir = file("tmp/META-INF/resources")
 
 buildBourbon {
 	File bourbonDestinationDir = new File(commonCssDestinationDir, "bourbon")
@@ -52,6 +41,15 @@ buildCssCommon {
 
 classes {
 	dependsOn buildCssCommon
+}
+
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }
 
 publishNodeModule {

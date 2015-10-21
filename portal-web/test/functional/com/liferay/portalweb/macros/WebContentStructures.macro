@@ -327,7 +327,7 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPWebcontentStructuresEditstructure#DESCRIPTION_FIELD" value1="${structureDescription}" />
+				<execute function="AssertTextEquals" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
 			</then>
 		</if>
 

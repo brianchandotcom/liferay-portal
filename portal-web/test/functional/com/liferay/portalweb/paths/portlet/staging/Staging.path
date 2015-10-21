@@ -192,7 +192,7 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON</td>
-	<td>//a[contains(@id,'submitLink')]/span[contains(.,'Mark as Ready for Publication')]</td>
+	<td>//a[contains(@id,'submitLink') and contains(.,'Mark as Ready for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

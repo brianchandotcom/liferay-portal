@@ -84,7 +84,7 @@ public class PortletContainerTestUtil {
 			int size, String namespace, Class<?> clazz, String dependency)
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>(size);
+		Map<String, FileItem[]> fileParameters = new HashMap<>();
 
 		for (int i = 0; i < size; i++) {
 			String fileParameter = "fileParameter" + i;
@@ -173,7 +173,7 @@ public class PortletContainerTestUtil {
 	}
 
 	public static Map<String, List<String>> getRegularParameters(int size) {
-		Map<String, List<String>> regularParameters = new HashMap<>(size);
+		Map<String, List<String>> regularParameters = new HashMap<>();
 
 		for (int i = 0; i < size; i++) {
 			List<String> items = new ArrayList<>();

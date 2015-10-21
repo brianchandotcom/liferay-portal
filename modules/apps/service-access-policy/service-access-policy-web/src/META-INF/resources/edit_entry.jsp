@@ -23,18 +23,18 @@ long sapEntryId = ParamUtil.getLong(request, "sapEntryId");
 
 SAPEntry sapEntry = null;
 
-String allowedServiceSignatures = StringPool.BLANK;
-
 if (sapEntryId > 0) {
 	sapEntry = SAPEntryServiceUtil.getSAPEntry(sapEntryId);
-
-	allowedServiceSignatures = sapEntry.getAllowedServiceSignatures();
 }
 
-String[] allowedServiceSignaturesArray = StringUtil.splitLines(allowedServiceSignatures);
+String[] allowedServiceSignaturesArray = {};
+
+if (sapEntry != null) {
+	allowedServiceSignaturesArray = StringUtil.splitLines(sapEntry.getAllowedServiceSignatures());
+}
 
 if (allowedServiceSignaturesArray.length == 0) {
-	allowedServiceSignaturesArray = new String[] { StringPool.BLANK };
+	allowedServiceSignaturesArray = new String[] {StringPool.BLANK};
 }
 
 boolean systemSAPEntry = false;

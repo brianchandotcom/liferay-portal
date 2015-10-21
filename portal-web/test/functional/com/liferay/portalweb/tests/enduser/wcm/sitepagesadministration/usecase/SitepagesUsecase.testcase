@@ -278,7 +278,7 @@
 
 		<execute macro="Page#saveAddPage" />
 
-		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
+		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet&amp;p_p_state=maximized" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 

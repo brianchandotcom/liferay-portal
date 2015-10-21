@@ -11,7 +11,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -38,7 +37,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -123,7 +121,7 @@
 			<finder-column name="userId" />
 		</finder>
 	</entity>
-	<entity name="ClassName" local-service="true" remote-service="true">
+	<entity name="ClassName" local-service="true" remote-service="true" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -139,7 +137,7 @@
 			<finder-column name="value" />
 		</finder>
 	</entity>
-	<entity name="ClusterGroup" local-service="true" remote-service="false">
+	<entity name="ClusterGroup" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -211,7 +209,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -268,7 +265,7 @@
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="Website" />
 	</entity>
-	<entity name="Country" local-service="false" remote-service="true">
+	<entity name="Country" local-service="false" remote-service="true" partitionable="false" >
 
 		<!-- PK fields -->
 
@@ -313,7 +310,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -372,7 +368,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="creatorUserId" type="long" />
 
 		<!-- Other fields -->
@@ -440,11 +435,6 @@
 			<finder-column name="type" />
 			<finder-column name="active" />
 		</finder>
-		<finder name="G_C_P" return-type="Collection" db-index="false">
-			<finder-column name="groupId" comparator="&gt;" />
-			<finder-column name="companyId" />
-			<finder-column name="parentGroupId" />
-		</finder>
 		<finder name="C_C_C" return-type="Group" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
@@ -464,6 +454,11 @@
 			<finder-column name="companyId" />
 			<finder-column name="liveGroupId" />
 			<finder-column name="groupKey" />
+		</finder>
+		<finder name="G_C_P" return-type="Collection" db-index="false">
+			<finder-column name="groupId" comparator="&gt;" />
+			<finder-column name="companyId" />
+			<finder-column name="parentGroupId" />
 		</finder>
 		<finder name="C_C_L_GK" return-type="Group" unique="true">
 			<finder-column name="companyId" />
@@ -566,7 +561,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -607,11 +601,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
 		</finder>
 		<finder name="IconImageId" return-type="Layout">
 			<finder-column name="iconImageId" />
@@ -686,7 +680,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 
@@ -736,7 +729,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -752,11 +744,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
 		</finder>
 		<finder name="Plid" return-type="Collection">
 			<finder-column name="plid" />
@@ -793,7 +785,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -837,7 +828,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -948,7 +938,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -1000,7 +989,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -1066,7 +1054,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -1104,7 +1091,7 @@
 
 		<reference package-path="com.liferay.portal" entity="PluginSetting" />
 	</entity>
-	<entity name="ListType" local-service="true" remote-service="true">
+	<entity name="ListType" local-service="true" remote-service="true" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -1147,7 +1134,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
 
@@ -1201,7 +1187,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -1347,7 +1332,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -1482,7 +1466,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -1540,10 +1523,6 @@
 
 		<column name="pluginSettingId" type="long" primary="true" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="pluginId" type="String" />
@@ -1575,7 +1554,7 @@
 
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 	</entity>
-	<entity name="PortalPreferences" local-service="true" remote-service="false">
+	<entity name="PortalPreferences" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -1599,10 +1578,6 @@
 		<!-- PK fields -->
 
 		<column name="id" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1641,7 +1616,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -1733,7 +1707,7 @@
 		<reference package-path="com.liferay.portal" entity="Portlet" />
 		<reference package-path="com.liferay.portal" entity="PortletItem" />
 	</entity>
-	<entity name="Region" local-service="false" remote-service="true">
+	<entity name="Region" local-service="false" remote-service="true" partitionable="false" >
 
 		<!-- PK fields -->
 
@@ -1773,7 +1747,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Country" />
 	</entity>
-	<entity name="Release" local-service="true" remote-service="false">
+	<entity name="Release" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -1812,7 +1786,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -1869,7 +1842,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -1904,7 +1876,7 @@
 		<reference package-path="com.liferay.portal" entity="ResourcePermission" />
 		<reference package-path="com.liferay.portal" entity="Role" />
 	</entity>
-	<entity name="ResourceAction" local-service="true" remote-service="false">
+	<entity name="ResourceAction" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -1942,10 +1914,6 @@
 		<!-- PK fields -->
 
 		<column name="resourceBlockId" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -2013,10 +1981,6 @@
 
 		<column name="resourcePermissionId" type="long" primary="true" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
@@ -2079,10 +2043,6 @@
 
 		<column name="resourceTypePermissionId" type="long" primary="true" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="groupId" type="long" />
@@ -2119,7 +2079,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -2239,7 +2198,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -2295,7 +2253,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -2352,7 +2309,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -2408,7 +2364,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="createDate" type="Date" />
 
 		<!-- Other fields -->
@@ -2449,7 +2404,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -2607,7 +2561,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -2764,7 +2717,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -2800,7 +2752,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -2882,7 +2833,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="modifiedDate" type="Date" />
 
@@ -2927,7 +2877,7 @@
 			<finder-column name="userTrackerId" />
 		</finder>
 	</entity>
-	<entity name="VirtualHost" local-service="true" remote-service="false">
+	<entity name="VirtualHost" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -2966,7 +2916,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -2995,7 +2944,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -3058,7 +3006,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -3083,15 +3030,15 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="G_C_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="companyId" />
-			<finder-column name="classNameId" />
-		</finder>
 		<finder name="C_W_W" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="workflowDefinitionName" />
 			<finder-column name="workflowDefinitionVersion" />
+		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
 		</finder>
 		<finder name="G_C_C_C_T" return-type="WorkflowDefinitionLink">
 			<finder-column name="groupId" />
@@ -3119,7 +3066,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />

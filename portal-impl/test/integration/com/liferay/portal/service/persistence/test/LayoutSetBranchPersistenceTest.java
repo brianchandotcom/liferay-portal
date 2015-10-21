@@ -118,11 +118,11 @@ public class LayoutSetBranchPersistenceTest {
 
 		LayoutSetBranch newLayoutSetBranch = _persistence.create(pk);
 
+		newLayoutSetBranch.setCompanyId(RandomTestUtil.nextLong());
+
 		newLayoutSetBranch.setMvccVersion(RandomTestUtil.nextLong());
 
 		newLayoutSetBranch.setGroupId(RandomTestUtil.nextLong());
-
-		newLayoutSetBranch.setCompanyId(RandomTestUtil.nextLong());
 
 		newLayoutSetBranch.setUserId(RandomTestUtil.nextLong());
 
@@ -162,14 +162,14 @@ public class LayoutSetBranchPersistenceTest {
 
 		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
 
+		Assert.assertEquals(existingLayoutSetBranch.getCompanyId(),
+			newLayoutSetBranch.getCompanyId());
 		Assert.assertEquals(existingLayoutSetBranch.getMvccVersion(),
 			newLayoutSetBranch.getMvccVersion());
 		Assert.assertEquals(existingLayoutSetBranch.getLayoutSetBranchId(),
 			newLayoutSetBranch.getLayoutSetBranchId());
 		Assert.assertEquals(existingLayoutSetBranch.getGroupId(),
 			newLayoutSetBranch.getGroupId());
-		Assert.assertEquals(existingLayoutSetBranch.getCompanyId(),
-			newLayoutSetBranch.getCompanyId());
 		Assert.assertEquals(existingLayoutSetBranch.getUserId(),
 			newLayoutSetBranch.getUserId());
 		Assert.assertEquals(existingLayoutSetBranch.getUserName(),
@@ -274,8 +274,8 @@ public class LayoutSetBranchPersistenceTest {
 
 	protected OrderByComparator<LayoutSetBranch> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutSetBranch",
-			"mvccVersion", true, "layoutSetBranchId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
+			"companyId", true, "mvccVersion", true, "layoutSetBranchId", true,
+			"groupId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "privateLayout", true, "name", true,
 			"description", true, "master", true, "logoId", true, "themeId",
 			true, "colorSchemeId", true, "wapThemeId", true,
@@ -502,11 +502,11 @@ public class LayoutSetBranchPersistenceTest {
 
 		LayoutSetBranch layoutSetBranch = _persistence.create(pk);
 
+		layoutSetBranch.setCompanyId(RandomTestUtil.nextLong());
+
 		layoutSetBranch.setMvccVersion(RandomTestUtil.nextLong());
 
 		layoutSetBranch.setGroupId(RandomTestUtil.nextLong());
-
-		layoutSetBranch.setCompanyId(RandomTestUtil.nextLong());
 
 		layoutSetBranch.setUserId(RandomTestUtil.nextLong());
 

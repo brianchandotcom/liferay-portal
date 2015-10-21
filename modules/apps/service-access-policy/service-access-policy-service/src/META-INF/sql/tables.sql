@@ -1,7 +1,7 @@
 create table SAPEntry (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	sapEntryId LONG not null primary key,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

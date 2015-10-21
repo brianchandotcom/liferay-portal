@@ -35,6 +35,7 @@ public class UserGroupGroupRoleSoap implements Serializable {
 	public static UserGroupGroupRoleSoap toSoapModel(UserGroupGroupRole model) {
 		UserGroupGroupRoleSoap soapModel = new UserGroupGroupRoleSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUserGroupId(model.getUserGroupId());
 		soapModel.setGroupId(model.getGroupId());
@@ -96,6 +97,14 @@ public class UserGroupGroupRoleSoap implements Serializable {
 		setRoleId(pk.roleId);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -128,6 +137,7 @@ public class UserGroupGroupRoleSoap implements Serializable {
 		_roleId = roleId;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _userGroupId;
 	private long _groupId;

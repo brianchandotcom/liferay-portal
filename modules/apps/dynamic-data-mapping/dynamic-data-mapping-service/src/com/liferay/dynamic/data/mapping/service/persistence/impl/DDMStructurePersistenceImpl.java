@@ -4368,6 +4368,547 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _FINDER_COLUMN_STRUCTUREKEY_STRUCTUREKEY_1 = "ddmStructure.structureKey IS NULL";
 	private static final String _FINDER_COLUMN_STRUCTUREKEY_STRUCTUREKEY_2 = "ddmStructure.structureKey = ?";
 	private static final String _FINDER_COLUMN_STRUCTUREKEY_STRUCTUREKEY_3 = "(ddmStructure.structureKey IS NULL OR ddmStructure.structureKey = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			DDMStructureModelImpl.COMPANYID_COLUMN_BITMASK |
+			DDMStructureModelImpl.CLASSNAMEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the matching d d m structures
+	 */
+	@Override
+	public List<DDMStructure> findByC_C(long companyId, long classNameId) {
+		return findByC_C(companyId, classNameId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of d d m structures
+	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @return the range of matching d d m structures
+	 */
+	@Override
+	public List<DDMStructure> findByC_C(long companyId, long classNameId,
+		int start, int end) {
+		return findByC_C(companyId, classNameId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of d d m structures
+	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching d d m structures
+	 */
+	@Override
+	public List<DDMStructure> findByC_C(long companyId, long classNameId,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		return findByC_C(companyId, classNameId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of d d m structures
+	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching d d m structures
+	 */
+	@Override
+	public List<DDMStructure> findByC_C(long companyId, long classNameId,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C;
+			finderArgs = new Object[] { companyId, classNameId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
+			finderArgs = new Object[] {
+					companyId, classNameId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DDMStructure> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DDMStructure>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((companyId != ddmStructure.getCompanyId()) ||
+							(classNameId != ddmStructure.getClassNameId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_DDMSTRUCTURE_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DDMStructureModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				if (!pagination) {
+					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d d m structure
+	 * @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a matching d d m structure could not be found
+	 */
+	@Override
+	public DDMStructure findByC_C_First(long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
+		DDMStructure ddmStructure = fetchByC_C_First(companyId, classNameId,
+				orderByComparator);
+
+		if (ddmStructure != null) {
+			return ddmStructure;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStructureException(msg.toString());
+	}
+
+	/**
+	 * Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 */
+	@Override
+	public DDMStructure fetchByC_C_First(long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator) {
+		List<DDMStructure> list = findByC_C(companyId, classNameId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d d m structure
+	 * @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a matching d d m structure could not be found
+	 */
+	@Override
+	public DDMStructure findByC_C_Last(long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
+		DDMStructure ddmStructure = fetchByC_C_Last(companyId, classNameId,
+				orderByComparator);
+
+		if (ddmStructure != null) {
+			return ddmStructure;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStructureException(msg.toString());
+	}
+
+	/**
+	 * Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 */
+	@Override
+	public DDMStructure fetchByC_C_Last(long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator) {
+		int count = countByC_C(companyId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DDMStructure> list = findByC_C(companyId, classNameId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the d d m structures before and after the current d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param structureId the primary key of the current d d m structure
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next d d m structure
+	 * @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a d d m structure with the primary key could not be found
+	 */
+	@Override
+	public DDMStructure[] findByC_C_PrevAndNext(long structureId,
+		long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
+		DDMStructure ddmStructure = findByPrimaryKey(structureId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDMStructure[] array = new DDMStructureImpl[3];
+
+			array[0] = getByC_C_PrevAndNext(session, ddmStructure, companyId,
+					classNameId, orderByComparator, true);
+
+			array[1] = ddmStructure;
+
+			array[2] = getByC_C_PrevAndNext(session, ddmStructure, companyId,
+					classNameId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDMStructure getByC_C_PrevAndNext(Session session,
+		DDMStructure ddmStructure, long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DDMSTRUCTURE_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DDMStructureModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(classNameId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ddmStructure);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DDMStructure> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the d d m structures where companyId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 */
+	@Override
+	public void removeByC_C(long companyId, long classNameId) {
+		for (DDMStructure ddmStructure : findByC_C(companyId, classNameId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(ddmStructure);
+		}
+	}
+
+	/**
+	 * Returns the number of d d m structures where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching d d m structures
+	 */
+	@Override
+	public int countByC_C(long companyId, long classNameId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
+
+		Object[] finderArgs = new Object[] { companyId, classNameId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_DDMSTRUCTURE_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 = "ddmStructure.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "ddmStructure.classNameId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
@@ -6715,547 +7256,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "ddmStructure.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_GROUPID_7 = "ddmStructure.groupId IN (";
 	private static final String _FINDER_COLUMN_G_C_CLASSNAMEID_2 = "ddmStructure.classNameId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			DDMStructureModelImpl.COMPANYID_COLUMN_BITMASK |
-			DDMStructureModelImpl.CLASSNAMEID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() });
-
-	/**
-	 * Returns all the d d m structures where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @return the matching d d m structures
-	 */
-	@Override
-	public List<DDMStructure> findByC_C(long companyId, long classNameId) {
-		return findByC_C(companyId, classNameId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
-	 */
-	@Override
-	public List<DDMStructure> findByC_C(long companyId, long classNameId,
-		int start, int end) {
-		return findByC_C(companyId, classNameId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
-	 */
-	@Override
-	public List<DDMStructure> findByC_C(long companyId, long classNameId,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
-		return findByC_C(companyId, classNameId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
-	 */
-	@Override
-	public List<DDMStructure> findByC_C(long companyId, long classNameId,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C;
-			finderArgs = new Object[] { companyId, classNameId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
-			finderArgs = new Object[] {
-					companyId, classNameId,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<DDMStructure> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<DDMStructure>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMStructure ddmStructure : list) {
-					if ((companyId != ddmStructure.getCompanyId()) ||
-							(classNameId != ddmStructure.getClassNameId())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_DDMSTRUCTURE_WHERE);
-
-			query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(DDMStructureModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(classNameId);
-
-				if (!pagination) {
-					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a matching d d m structure could not be found
-	 */
-	@Override
-	public DDMStructure findByC_C_First(long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-		DDMStructure ddmStructure = fetchByC_C_First(companyId, classNameId,
-				orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", classNameId=");
-		msg.append(classNameId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchStructureException(msg.toString());
-	}
-
-	/**
-	 * Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByC_C_First(long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator) {
-		List<DDMStructure> list = findByC_C(companyId, classNameId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a matching d d m structure could not be found
-	 */
-	@Override
-	public DDMStructure findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-		DDMStructure ddmStructure = fetchByC_C_Last(companyId, classNameId,
-				orderByComparator);
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", classNameId=");
-		msg.append(classNameId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchStructureException(msg.toString());
-	}
-
-	/**
-	 * Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
-	 */
-	@Override
-	public DDMStructure fetchByC_C_Last(long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator) {
-		int count = countByC_C(companyId, classNameId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMStructure> list = findByC_C(companyId, classNameId, count - 1,
-				count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param structureId the primary key of the current d d m structure
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws com.liferay.dynamic.data.mapping.NoSuchStructureException if a d d m structure with the primary key could not be found
-	 */
-	@Override
-	public DDMStructure[] findByC_C_PrevAndNext(long structureId,
-		long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator)
-		throws NoSuchStructureException {
-		DDMStructure ddmStructure = findByPrimaryKey(structureId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMStructure[] array = new DDMStructureImpl[3];
-
-			array[0] = getByC_C_PrevAndNext(session, ddmStructure, companyId,
-					classNameId, orderByComparator, true);
-
-			array[1] = ddmStructure;
-
-			array[2] = getByC_C_PrevAndNext(session, ddmStructure, companyId,
-					classNameId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected DDMStructure getByC_C_PrevAndNext(Session session,
-		DDMStructure ddmStructure, long companyId, long classNameId,
-		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_DDMSTRUCTURE_WHERE);
-
-		query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
-
-		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(DDMStructureModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(companyId);
-
-		qPos.add(classNameId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmStructure);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<DDMStructure> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the d d m structures where companyId = &#63; and classNameId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 */
-	@Override
-	public void removeByC_C(long companyId, long classNameId) {
-		for (DDMStructure ddmStructure : findByC_C(companyId, classNameId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(ddmStructure);
-		}
-	}
-
-	/**
-	 * Returns the number of d d m structures where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @return the number of matching d d m structures
-	 */
-	@Override
-	public int countByC_C(long companyId, long classNameId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
-
-		Object[] finderArgs = new Object[] { companyId, classNameId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_DDMSTRUCTURE_WHERE);
-
-			query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(classNameId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 = "ddmStructure.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "ddmStructure.classNameId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_S = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_S",
@@ -8902,6 +8902,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		ddmStructure.setUuid(uuid);
 
+		ddmStructure.setCompanyId(0);
+
 		return ddmStructure;
 	}
 
@@ -9163,6 +9165,27 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 
 			if ((ddmStructureModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ddmStructureModelImpl.getOriginalCompanyId(),
+						ddmStructureModelImpl.getOriginalClassNameId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
+
+				args = new Object[] {
+						ddmStructureModelImpl.getCompanyId(),
+						ddmStructureModelImpl.getClassNameId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
+			}
+
+			if ((ddmStructureModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						ddmStructureModelImpl.getOriginalGroupId(),
@@ -9201,27 +9224,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
-					args);
-			}
-
-			if ((ddmStructureModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						ddmStructureModelImpl.getOriginalCompanyId(),
-						ddmStructureModelImpl.getOriginalClassNameId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
-					args);
-
-				args = new Object[] {
-						ddmStructureModelImpl.getCompanyId(),
-						ddmStructureModelImpl.getClassNameId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 			}
 
@@ -9271,10 +9273,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		ddmStructureImpl.setNew(ddmStructure.isNew());
 		ddmStructureImpl.setPrimaryKey(ddmStructure.getPrimaryKey());
 
+		ddmStructureImpl.setCompanyId(ddmStructure.getCompanyId());
 		ddmStructureImpl.setUuid(ddmStructure.getUuid());
 		ddmStructureImpl.setStructureId(ddmStructure.getStructureId());
 		ddmStructureImpl.setGroupId(ddmStructure.getGroupId());
-		ddmStructureImpl.setCompanyId(ddmStructure.getCompanyId());
 		ddmStructureImpl.setUserId(ddmStructure.getUserId());
 		ddmStructureImpl.setUserName(ddmStructure.getUserName());
 		ddmStructureImpl.setVersionUserId(ddmStructure.getVersionUserId());

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry>,
-	StagedAuditedModel {
+	PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +65,22 @@ public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry
 	 * @param primaryKey the primary key of this ratings entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this ratings entry.
+	 *
+	 * @return the company ID of this ratings entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this ratings entry.
+	 *
+	 * @param companyId the company ID of this ratings entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this ratings entry.
@@ -95,22 +112,6 @@ public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry
 	 * @param entryId the entry ID of this ratings entry
 	 */
 	public void setEntryId(long entryId);
-
-	/**
-	 * Returns the company ID of this ratings entry.
-	 *
-	 * @return the company ID of this ratings entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this ratings entry.
-	 *
-	 * @param companyId the company ID of this ratings entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this ratings entry.

@@ -124,9 +124,9 @@ public class DDMTemplateVersionPersistenceTest {
 
 		DDMTemplateVersion newDDMTemplateVersion = _persistence.create(pk);
 
-		newDDMTemplateVersion.setGroupId(RandomTestUtil.nextLong());
-
 		newDDMTemplateVersion.setCompanyId(RandomTestUtil.nextLong());
+
+		newDDMTemplateVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDMTemplateVersion.setUserId(RandomTestUtil.nextLong());
 
@@ -162,12 +162,12 @@ public class DDMTemplateVersionPersistenceTest {
 
 		DDMTemplateVersion existingDDMTemplateVersion = _persistence.findByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
 
+		Assert.assertEquals(existingDDMTemplateVersion.getCompanyId(),
+			newDDMTemplateVersion.getCompanyId());
 		Assert.assertEquals(existingDDMTemplateVersion.getTemplateVersionId(),
 			newDDMTemplateVersion.getTemplateVersionId());
 		Assert.assertEquals(existingDDMTemplateVersion.getGroupId(),
 			newDDMTemplateVersion.getGroupId());
-		Assert.assertEquals(existingDDMTemplateVersion.getCompanyId(),
-			newDDMTemplateVersion.getCompanyId());
 		Assert.assertEquals(existingDDMTemplateVersion.getUserId(),
 			newDDMTemplateVersion.getUserId());
 		Assert.assertEquals(existingDDMTemplateVersion.getUserName(),
@@ -250,7 +250,7 @@ public class DDMTemplateVersionPersistenceTest {
 
 	protected OrderByComparator<DDMTemplateVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMTemplateVersion",
-			"templateVersionId", true, "groupId", true, "companyId", true,
+			"companyId", true, "templateVersionId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"classNameId", true, "classPK", true, "templateId", true,
 			"version", true, "language", true, "status", true,
@@ -475,9 +475,9 @@ public class DDMTemplateVersionPersistenceTest {
 
 		DDMTemplateVersion ddmTemplateVersion = _persistence.create(pk);
 
-		ddmTemplateVersion.setGroupId(RandomTestUtil.nextLong());
-
 		ddmTemplateVersion.setCompanyId(RandomTestUtil.nextLong());
+
+		ddmTemplateVersion.setGroupId(RandomTestUtil.nextLong());
 
 		ddmTemplateVersion.setUserId(RandomTestUtil.nextLong());
 

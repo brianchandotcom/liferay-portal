@@ -118,11 +118,11 @@ public class RolePersistenceTest {
 
 		Role newRole = _persistence.create(pk);
 
+		newRole.setCompanyId(RandomTestUtil.nextLong());
+
 		newRole.setMvccVersion(RandomTestUtil.nextLong());
 
 		newRole.setUuid(RandomTestUtil.randomString());
-
-		newRole.setCompanyId(RandomTestUtil.nextLong());
 
 		newRole.setUserId(RandomTestUtil.nextLong());
 
@@ -152,11 +152,11 @@ public class RolePersistenceTest {
 
 		Role existingRole = _persistence.findByPrimaryKey(newRole.getPrimaryKey());
 
+		Assert.assertEquals(existingRole.getCompanyId(), newRole.getCompanyId());
 		Assert.assertEquals(existingRole.getMvccVersion(),
 			newRole.getMvccVersion());
 		Assert.assertEquals(existingRole.getUuid(), newRole.getUuid());
 		Assert.assertEquals(existingRole.getRoleId(), newRole.getRoleId());
-		Assert.assertEquals(existingRole.getCompanyId(), newRole.getCompanyId());
 		Assert.assertEquals(existingRole.getUserId(), newRole.getUserId());
 		Assert.assertEquals(existingRole.getUserName(), newRole.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(existingRole.getCreateDate()),
@@ -291,9 +291,9 @@ public class RolePersistenceTest {
 	}
 
 	protected OrderByComparator<Role> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Role_", "mvccVersion",
-			true, "uuid", true, "roleId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
+		return OrderByComparatorFactoryUtil.create("Role_", "companyId", true,
+			"mvccVersion", true, "uuid", true, "roleId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "name", true, "title", true,
 			"description", true, "type", true, "subtype", true,
 			"lastPublishDate", true);
@@ -518,11 +518,11 @@ public class RolePersistenceTest {
 
 		Role role = _persistence.create(pk);
 
+		role.setCompanyId(RandomTestUtil.nextLong());
+
 		role.setMvccVersion(RandomTestUtil.nextLong());
 
 		role.setUuid(RandomTestUtil.randomString());
-
-		role.setCompanyId(RandomTestUtil.nextLong());
 
 		role.setUserId(RandomTestUtil.nextLong());
 

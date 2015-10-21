@@ -79,12 +79,12 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", resourceBlockId=");
 		sb.append(resourceBlockId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", name=");
@@ -102,9 +102,9 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	public ResourceBlock toEntityModel() {
 		ResourceBlockImpl resourceBlockImpl = new ResourceBlockImpl();
 
+		resourceBlockImpl.setCompanyId(companyId);
 		resourceBlockImpl.setMvccVersion(mvccVersion);
 		resourceBlockImpl.setResourceBlockId(resourceBlockId);
-		resourceBlockImpl.setCompanyId(companyId);
 		resourceBlockImpl.setGroupId(groupId);
 
 		if (name == null) {
@@ -130,9 +130,9 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		resourceBlockId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		name = objectInput.readUTF();
 		permissionsHash = objectInput.readUTF();
@@ -142,9 +142,9 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(resourceBlockId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 
 		if (name == null) {
@@ -164,9 +164,9 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		objectOutput.writeLong(referenceCount);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long resourceBlockId;
-	public long companyId;
 	public long groupId;
 	public String name;
 	public String permissionsHash;

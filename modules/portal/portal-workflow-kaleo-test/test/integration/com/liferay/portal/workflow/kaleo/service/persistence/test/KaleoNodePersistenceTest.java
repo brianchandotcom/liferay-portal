@@ -120,9 +120,9 @@ public class KaleoNodePersistenceTest {
 
 		KaleoNode newKaleoNode = _persistence.create(pk);
 
-		newKaleoNode.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoNode.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoNode.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoNode.setUserId(RandomTestUtil.nextLong());
 
@@ -150,12 +150,12 @@ public class KaleoNodePersistenceTest {
 
 		KaleoNode existingKaleoNode = _persistence.findByPrimaryKey(newKaleoNode.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoNode.getCompanyId(),
+			newKaleoNode.getCompanyId());
 		Assert.assertEquals(existingKaleoNode.getKaleoNodeId(),
 			newKaleoNode.getKaleoNodeId());
 		Assert.assertEquals(existingKaleoNode.getGroupId(),
 			newKaleoNode.getGroupId());
-		Assert.assertEquals(existingKaleoNode.getCompanyId(),
-			newKaleoNode.getCompanyId());
 		Assert.assertEquals(existingKaleoNode.getUserId(),
 			newKaleoNode.getUserId());
 		Assert.assertEquals(existingKaleoNode.getUserName(),
@@ -225,8 +225,8 @@ public class KaleoNodePersistenceTest {
 	}
 
 	protected OrderByComparator<KaleoNode> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("KaleoNode", "kaleoNodeId",
-			true, "groupId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("KaleoNode", "companyId",
+			true, "kaleoNodeId", true, "groupId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"kaleoDefinitionId", true, "name", true, "metadata", true,
 			"description", true, "type", true, "initial", true, "terminal", true);
@@ -429,9 +429,9 @@ public class KaleoNodePersistenceTest {
 
 		KaleoNode kaleoNode = _persistence.create(pk);
 
-		kaleoNode.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoNode.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoNode.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoNode.setUserId(RandomTestUtil.nextLong());
 

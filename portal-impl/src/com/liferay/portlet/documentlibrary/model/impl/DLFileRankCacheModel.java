@@ -67,12 +67,12 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{fileRankId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", fileRankId=");
 		sb.append(fileRankId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -90,9 +90,9 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	public DLFileRank toEntityModel() {
 		DLFileRankImpl dlFileRankImpl = new DLFileRankImpl();
 
+		dlFileRankImpl.setCompanyId(companyId);
 		dlFileRankImpl.setFileRankId(fileRankId);
 		dlFileRankImpl.setGroupId(groupId);
-		dlFileRankImpl.setCompanyId(companyId);
 		dlFileRankImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -112,9 +112,9 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		fileRankId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		fileEntryId = objectInput.readLong();
@@ -124,18 +124,18 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(fileRankId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(fileEntryId);
 		objectOutput.writeBoolean(active);
 	}
 
+	public long companyId;
 	public long fileRankId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public long fileEntryId;

@@ -118,9 +118,9 @@ public class SocialActivitySettingPersistenceTest {
 
 		SocialActivitySetting newSocialActivitySetting = _persistence.create(pk);
 
-		newSocialActivitySetting.setGroupId(RandomTestUtil.nextLong());
-
 		newSocialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
+
+		newSocialActivitySetting.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivitySetting.setClassNameId(RandomTestUtil.nextLong());
 
@@ -135,12 +135,12 @@ public class SocialActivitySettingPersistenceTest {
 
 		SocialActivitySetting existingSocialActivitySetting = _persistence.findByPrimaryKey(newSocialActivitySetting.getPrimaryKey());
 
+		Assert.assertEquals(existingSocialActivitySetting.getCompanyId(),
+			newSocialActivitySetting.getCompanyId());
 		Assert.assertEquals(existingSocialActivitySetting.getActivitySettingId(),
 			newSocialActivitySetting.getActivitySettingId());
 		Assert.assertEquals(existingSocialActivitySetting.getGroupId(),
 			newSocialActivitySetting.getGroupId());
-		Assert.assertEquals(existingSocialActivitySetting.getCompanyId(),
-			newSocialActivitySetting.getCompanyId());
 		Assert.assertEquals(existingSocialActivitySetting.getClassNameId(),
 			newSocialActivitySetting.getClassNameId());
 		Assert.assertEquals(existingSocialActivitySetting.getActivityType(),
@@ -218,7 +218,7 @@ public class SocialActivitySettingPersistenceTest {
 
 	protected OrderByComparator<SocialActivitySetting> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivitySetting",
-			"activitySettingId", true, "groupId", true, "companyId", true,
+			"companyId", true, "activitySettingId", true, "groupId", true,
 			"classNameId", true, "activityType", true, "name", true, "value",
 			true);
 	}
@@ -454,9 +454,9 @@ public class SocialActivitySettingPersistenceTest {
 
 		SocialActivitySetting socialActivitySetting = _persistence.create(pk);
 
-		socialActivitySetting.setGroupId(RandomTestUtil.nextLong());
-
 		socialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
+
+		socialActivitySetting.setGroupId(RandomTestUtil.nextLong());
 
 		socialActivitySetting.setClassNameId(RandomTestUtil.nextLong());
 

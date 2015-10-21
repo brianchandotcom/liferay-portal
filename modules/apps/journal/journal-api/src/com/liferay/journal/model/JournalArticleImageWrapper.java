@@ -52,6 +52,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("articleImageId", getArticleImageId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("articleId", getArticleId());
@@ -66,6 +67,12 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long articleImageId = (Long)attributes.get("articleImageId");
 
 		if (articleImageId != null) {
@@ -144,6 +151,16 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	@Override
 	public long getArticleImageId() {
 		return _journalArticleImage.getArticleImageId();
+	}
+
+	/**
+	* Returns the company ID of this journal article image.
+	*
+	* @return the company ID of this journal article image
+	*/
+	@Override
+	public long getCompanyId() {
+		return _journalArticleImage.getCompanyId();
 	}
 
 	/**
@@ -284,6 +301,16 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_journalArticleImage.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this journal article image.
+	*
+	* @param companyId the company ID of this journal article image
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_journalArticleImage.setCompanyId(companyId);
 	}
 
 	/**

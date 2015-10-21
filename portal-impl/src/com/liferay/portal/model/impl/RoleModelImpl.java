@@ -76,10 +76,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	 */
 	public static final String TABLE_NAME = "Role_";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "roleId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -96,10 +96,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -114,7 +114,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Role_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,roleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Role_ (companyId LONG,mvccVersion LONG default 0,uuid_ VARCHAR(75) null,roleId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Role_";
 	public static final String ORDER_BY_JPQL = " ORDER BY role.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Role_.name ASC";
@@ -151,10 +151,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 		Role model = new RoleImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setRoleId(soapModel.getRoleId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -249,10 +249,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("roleId", getRoleId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -274,6 +274,12 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -290,12 +296,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 		if (roleId != null) {
 			setRoleId(roleId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -371,6 +371,29 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -415,29 +438,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	@Override
 	public void setRoleId(long roleId) {
 		_roleId = roleId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -984,10 +984,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public Object clone() {
 		RoleImpl roleImpl = new RoleImpl();
 
+		roleImpl.setCompanyId(getCompanyId());
 		roleImpl.setMvccVersion(getMvccVersion());
 		roleImpl.setUuid(getUuid());
 		roleImpl.setRoleId(getRoleId());
-		roleImpl.setCompanyId(getCompanyId());
 		roleImpl.setUserId(getUserId());
 		roleImpl.setUserName(getUserName());
 		roleImpl.setCreateDate(getCreateDate());
@@ -1060,11 +1060,11 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public void resetOriginalValues() {
 		RoleModelImpl roleModelImpl = this;
 
-		roleModelImpl._originalUuid = roleModelImpl._uuid;
-
 		roleModelImpl._originalCompanyId = roleModelImpl._companyId;
 
 		roleModelImpl._setOriginalCompanyId = false;
+
+		roleModelImpl._originalUuid = roleModelImpl._uuid;
 
 		roleModelImpl._setModifiedDate = false;
 
@@ -1091,6 +1091,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public CacheModel<Role> toCacheModel() {
 		RoleCacheModel roleCacheModel = new RoleCacheModel();
 
+		roleCacheModel.companyId = getCompanyId();
+
 		roleCacheModel.mvccVersion = getMvccVersion();
 
 		roleCacheModel.uuid = getUuid();
@@ -1102,8 +1104,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 
 		roleCacheModel.roleId = getRoleId();
-
-		roleCacheModel.companyId = getCompanyId();
 
 		roleCacheModel.userId = getUserId();
 
@@ -1187,14 +1187,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", roleId=");
 		sb.append(getRoleId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1233,6 +1233,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
@@ -1243,10 +1247,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		sb.append(
 			"<column><column-name>roleId</column-name><column-value><![CDATA[");
 		sb.append(getRoleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1306,13 +1306,13 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			Role.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _roleId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

@@ -79,9 +79,9 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	 */
 	public static final String TABLE_NAME = "DDMTemplateVersion";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "templateVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -101,9 +101,9 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("templateVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -121,7 +121,7 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplateVersion (templateVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name TEXT null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplateVersion (companyId LONG,templateVersionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name TEXT null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplateVersion.templateVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplateVersion.templateVersionId ASC";
@@ -155,9 +155,9 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 
 		DDMTemplateVersion model = new DDMTemplateVersionImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setTemplateVersionId(soapModel.getTemplateVersionId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -238,9 +238,9 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("templateVersionId", getTemplateVersionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -265,6 +265,12 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long templateVersionId = (Long)attributes.get("templateVersionId");
 
 		if (templateVersionId != null) {
@@ -275,12 +281,6 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -374,6 +374,17 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getTemplateVersionId() {
@@ -394,17 +405,6 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -1065,9 +1065,9 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	public Object clone() {
 		DDMTemplateVersionImpl ddmTemplateVersionImpl = new DDMTemplateVersionImpl();
 
+		ddmTemplateVersionImpl.setCompanyId(getCompanyId());
 		ddmTemplateVersionImpl.setTemplateVersionId(getTemplateVersionId());
 		ddmTemplateVersionImpl.setGroupId(getGroupId());
-		ddmTemplateVersionImpl.setCompanyId(getCompanyId());
 		ddmTemplateVersionImpl.setUserId(getUserId());
 		ddmTemplateVersionImpl.setUserName(getUserName());
 		ddmTemplateVersionImpl.setCreateDate(getCreateDate());
@@ -1162,11 +1162,11 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	public CacheModel<DDMTemplateVersion> toCacheModel() {
 		DDMTemplateVersionCacheModel ddmTemplateVersionCacheModel = new DDMTemplateVersionCacheModel();
 
+		ddmTemplateVersionCacheModel.companyId = getCompanyId();
+
 		ddmTemplateVersionCacheModel.templateVersionId = getTemplateVersionId();
 
 		ddmTemplateVersionCacheModel.groupId = getGroupId();
-
-		ddmTemplateVersionCacheModel.companyId = getCompanyId();
 
 		ddmTemplateVersionCacheModel.userId = getUserId();
 
@@ -1261,12 +1261,12 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{templateVersionId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", templateVersionId=");
 		sb.append(getTemplateVersionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1311,16 +1311,16 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>templateVersionId</column-name><column-value><![CDATA[");
 		sb.append(getTemplateVersionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1392,9 +1392,9 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DDMTemplateVersion.class
 		};
+	private long _companyId;
 	private long _templateVersionId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

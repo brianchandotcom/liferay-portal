@@ -125,9 +125,9 @@ public class ShoppingOrderPersistenceTest {
 
 		ShoppingOrder newShoppingOrder = _persistence.create(pk);
 
-		newShoppingOrder.setGroupId(RandomTestUtil.nextLong());
-
 		newShoppingOrder.setCompanyId(RandomTestUtil.nextLong());
+
+		newShoppingOrder.setGroupId(RandomTestUtil.nextLong());
 
 		newShoppingOrder.setUserId(RandomTestUtil.nextLong());
 
@@ -229,12 +229,12 @@ public class ShoppingOrderPersistenceTest {
 
 		ShoppingOrder existingShoppingOrder = _persistence.findByPrimaryKey(newShoppingOrder.getPrimaryKey());
 
+		Assert.assertEquals(existingShoppingOrder.getCompanyId(),
+			newShoppingOrder.getCompanyId());
 		Assert.assertEquals(existingShoppingOrder.getOrderId(),
 			newShoppingOrder.getOrderId());
 		Assert.assertEquals(existingShoppingOrder.getGroupId(),
 			newShoppingOrder.getGroupId());
-		Assert.assertEquals(existingShoppingOrder.getCompanyId(),
-			newShoppingOrder.getCompanyId());
 		Assert.assertEquals(existingShoppingOrder.getUserId(),
 			newShoppingOrder.getUserId());
 		Assert.assertEquals(existingShoppingOrder.getUserName(),
@@ -399,9 +399,9 @@ public class ShoppingOrderPersistenceTest {
 	}
 
 	protected OrderByComparator<ShoppingOrder> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ShoppingOrder", "orderId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
+		return OrderByComparatorFactoryUtil.create("ShoppingOrder",
+			"companyId", true, "orderId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"number", true, "tax", true, "shipping", true, "altShipping", true,
 			"requiresShipping", true, "insure", true, "insurance", true,
 			"couponCodes", true, "couponDiscount", true, "billingFirstName",
@@ -634,9 +634,9 @@ public class ShoppingOrderPersistenceTest {
 
 		ShoppingOrder shoppingOrder = _persistence.create(pk);
 
-		shoppingOrder.setGroupId(RandomTestUtil.nextLong());
-
 		shoppingOrder.setCompanyId(RandomTestUtil.nextLong());
+
+		shoppingOrder.setGroupId(RandomTestUtil.nextLong());
 
 		shoppingOrder.setUserId(RandomTestUtil.nextLong());
 

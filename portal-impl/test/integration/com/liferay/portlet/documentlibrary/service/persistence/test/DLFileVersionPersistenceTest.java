@@ -119,11 +119,11 @@ public class DLFileVersionPersistenceTest {
 
 		DLFileVersion newDLFileVersion = _persistence.create(pk);
 
+		newDLFileVersion.setCompanyId(RandomTestUtil.nextLong());
+
 		newDLFileVersion.setUuid(RandomTestUtil.randomString());
 
 		newDLFileVersion.setGroupId(RandomTestUtil.nextLong());
-
-		newDLFileVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		newDLFileVersion.setUserId(RandomTestUtil.nextLong());
 
@@ -177,14 +177,14 @@ public class DLFileVersionPersistenceTest {
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
+		Assert.assertEquals(existingDLFileVersion.getCompanyId(),
+			newDLFileVersion.getCompanyId());
 		Assert.assertEquals(existingDLFileVersion.getUuid(),
 			newDLFileVersion.getUuid());
 		Assert.assertEquals(existingDLFileVersion.getFileVersionId(),
 			newDLFileVersion.getFileVersionId());
 		Assert.assertEquals(existingDLFileVersion.getGroupId(),
 			newDLFileVersion.getGroupId());
-		Assert.assertEquals(existingDLFileVersion.getCompanyId(),
-			newDLFileVersion.getCompanyId());
 		Assert.assertEquals(existingDLFileVersion.getUserId(),
 			newDLFileVersion.getUserId());
 		Assert.assertEquals(existingDLFileVersion.getUserName(),
@@ -355,9 +355,9 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	protected OrderByComparator<DLFileVersion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DLFileVersion", "uuid",
-			true, "fileVersionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+		return OrderByComparatorFactoryUtil.create("DLFileVersion",
+			"companyId", true, "uuid", true, "fileVersionId", true, "groupId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "repositoryId", true, "folderId", true,
 			"fileEntryId", true, "treePath", true, "fileName", true,
 			"extension", true, "mimeType", true, "title", true, "description",
@@ -589,11 +589,11 @@ public class DLFileVersionPersistenceTest {
 
 		DLFileVersion dlFileVersion = _persistence.create(pk);
 
+		dlFileVersion.setCompanyId(RandomTestUtil.nextLong());
+
 		dlFileVersion.setUuid(RandomTestUtil.randomString());
 
 		dlFileVersion.setGroupId(RandomTestUtil.nextLong());
-
-		dlFileVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		dlFileVersion.setUserId(RandomTestUtil.nextLong());
 

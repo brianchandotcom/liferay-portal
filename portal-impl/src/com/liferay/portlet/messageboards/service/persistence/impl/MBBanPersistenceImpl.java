@@ -3361,6 +3361,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		mbBan.setUuid(uuid);
 
+		mbBan.setCompanyId(0);
+
 		return mbBan;
 	}
 
@@ -3614,10 +3616,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		mbBanImpl.setNew(mbBan.isNew());
 		mbBanImpl.setPrimaryKey(mbBan.getPrimaryKey());
 
+		mbBanImpl.setCompanyId(mbBan.getCompanyId());
 		mbBanImpl.setUuid(mbBan.getUuid());
 		mbBanImpl.setBanId(mbBan.getBanId());
 		mbBanImpl.setGroupId(mbBan.getGroupId());
-		mbBanImpl.setCompanyId(mbBan.getCompanyId());
 		mbBanImpl.setUserId(mbBan.getUserId());
 		mbBanImpl.setUserName(mbBan.getUserName());
 		mbBanImpl.setCreateDate(mbBan.getCreateDate());

@@ -116,11 +116,11 @@ public class ExportImportConfigurationPersistenceTest {
 
 		ExportImportConfiguration newExportImportConfiguration = _persistence.create(pk);
 
+		newExportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
+
 		newExportImportConfiguration.setMvccVersion(RandomTestUtil.nextLong());
 
 		newExportImportConfiguration.setGroupId(RandomTestUtil.nextLong());
-
-		newExportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
 
 		newExportImportConfiguration.setUserId(RandomTestUtil.nextLong());
 
@@ -151,14 +151,14 @@ public class ExportImportConfigurationPersistenceTest {
 
 		ExportImportConfiguration existingExportImportConfiguration = _persistence.findByPrimaryKey(newExportImportConfiguration.getPrimaryKey());
 
+		Assert.assertEquals(existingExportImportConfiguration.getCompanyId(),
+			newExportImportConfiguration.getCompanyId());
 		Assert.assertEquals(existingExportImportConfiguration.getMvccVersion(),
 			newExportImportConfiguration.getMvccVersion());
 		Assert.assertEquals(existingExportImportConfiguration.getExportImportConfigurationId(),
 			newExportImportConfiguration.getExportImportConfigurationId());
 		Assert.assertEquals(existingExportImportConfiguration.getGroupId(),
 			newExportImportConfiguration.getGroupId());
-		Assert.assertEquals(existingExportImportConfiguration.getCompanyId(),
-			newExportImportConfiguration.getCompanyId());
 		Assert.assertEquals(existingExportImportConfiguration.getUserId(),
 			newExportImportConfiguration.getUserId());
 		Assert.assertEquals(existingExportImportConfiguration.getUserName(),
@@ -190,17 +190,17 @@ public class ExportImportConfigurationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -252,10 +252,10 @@ public class ExportImportConfigurationPersistenceTest {
 
 	protected OrderByComparator<ExportImportConfiguration> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExportImportConfiguration",
-			"mvccVersion", true, "exportImportConfigurationId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "name", true,
-			"description", true, "type", true, "status", true,
+			"companyId", true, "mvccVersion", true,
+			"exportImportConfigurationId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"name", true, "description", true, "type", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
@@ -470,11 +470,11 @@ public class ExportImportConfigurationPersistenceTest {
 
 		ExportImportConfiguration exportImportConfiguration = _persistence.create(pk);
 
+		exportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
+
 		exportImportConfiguration.setMvccVersion(RandomTestUtil.nextLong());
 
 		exportImportConfiguration.setGroupId(RandomTestUtil.nextLong());
-
-		exportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
 
 		exportImportConfiguration.setUserId(RandomTestUtil.nextLong());
 

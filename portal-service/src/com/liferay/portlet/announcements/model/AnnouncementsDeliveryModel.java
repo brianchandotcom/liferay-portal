@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDelivery> {
+public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDelivery>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,6 +63,22 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the company ID of this announcements delivery.
+	 *
+	 * @return the company ID of this announcements delivery
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this announcements delivery.
+	 *
+	 * @param companyId the company ID of this announcements delivery
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the delivery ID of this announcements delivery.
 	 *
 	 * @return the delivery ID of this announcements delivery
@@ -73,20 +91,6 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 	 * @param deliveryId the delivery ID of this announcements delivery
 	 */
 	public void setDeliveryId(long deliveryId);
-
-	/**
-	 * Returns the company ID of this announcements delivery.
-	 *
-	 * @return the company ID of this announcements delivery
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this announcements delivery.
-	 *
-	 * @param companyId the company ID of this announcements delivery
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this announcements delivery.

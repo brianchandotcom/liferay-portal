@@ -3538,6 +3538,8 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		kaleoLog.setNew(true);
 		kaleoLog.setPrimaryKey(kaleoLogId);
 
+		kaleoLog.setCompanyId(0);
+
 		return kaleoLog;
 	}
 
@@ -3825,9 +3827,9 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		kaleoLogImpl.setNew(kaleoLog.isNew());
 		kaleoLogImpl.setPrimaryKey(kaleoLog.getPrimaryKey());
 
+		kaleoLogImpl.setCompanyId(kaleoLog.getCompanyId());
 		kaleoLogImpl.setKaleoLogId(kaleoLog.getKaleoLogId());
 		kaleoLogImpl.setGroupId(kaleoLog.getGroupId());
-		kaleoLogImpl.setCompanyId(kaleoLog.getCompanyId());
 		kaleoLogImpl.setUserId(kaleoLog.getUserId());
 		kaleoLogImpl.setUserName(kaleoLog.getUserName());
 		kaleoLogImpl.setCreateDate(kaleoLog.getCreateDate());

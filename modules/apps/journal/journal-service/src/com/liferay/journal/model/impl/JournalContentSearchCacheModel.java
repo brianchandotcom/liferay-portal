@@ -66,12 +66,12 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{contentSearchId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", contentSearchId=");
 		sb.append(contentSearchId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", privateLayout=");
 		sb.append(privateLayout);
 		sb.append(", layoutId=");
@@ -89,9 +89,9 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 	public JournalContentSearch toEntityModel() {
 		JournalContentSearchImpl journalContentSearchImpl = new JournalContentSearchImpl();
 
+		journalContentSearchImpl.setCompanyId(companyId);
 		journalContentSearchImpl.setContentSearchId(contentSearchId);
 		journalContentSearchImpl.setGroupId(groupId);
-		journalContentSearchImpl.setCompanyId(companyId);
 		journalContentSearchImpl.setPrivateLayout(privateLayout);
 		journalContentSearchImpl.setLayoutId(layoutId);
 
@@ -116,9 +116,9 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		contentSearchId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		privateLayout = objectInput.readBoolean();
 		layoutId = objectInput.readLong();
 		portletId = objectInput.readUTF();
@@ -128,9 +128,9 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(contentSearchId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeBoolean(privateLayout);
 		objectOutput.writeLong(layoutId);
 
@@ -149,9 +149,9 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		}
 	}
 
+	public long companyId;
 	public long contentSearchId;
 	public long groupId;
-	public long companyId;
 	public boolean privateLayout;
 	public long layoutId;
 	public String portletId;

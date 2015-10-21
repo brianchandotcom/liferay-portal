@@ -1471,6 +1471,507 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "wikiNode.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(wikiNode.uuid IS NULL OR wikiNode.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "wikiNode.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
+			WikiNodeModelImpl.FINDER_CACHE_ENABLED, WikiNodeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
+			WikiNodeModelImpl.FINDER_CACHE_ENABLED, WikiNodeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] { Long.class.getName() },
+			WikiNodeModelImpl.COMPANYID_COLUMN_BITMASK |
+			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
+			WikiNodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the wiki nodes where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching wiki nodes
+	 */
+	@Override
+	public List<WikiNode> findByCompanyId(long companyId) {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes
+	 */
+	@Override
+	public List<WikiNode> findByCompanyId(long companyId, int start, int end) {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki nodes
+	 */
+	@Override
+	public List<WikiNode> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<WikiNode> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching wiki nodes
+	 */
+	@Override
+	public List<WikiNode> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<WikiNode> orderByComparator, boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<WikiNode> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<WikiNode>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (WikiNode wikiNode : list) {
+					if ((companyId != wikiNode.getCompanyId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_WIKINODE_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<WikiNode>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<WikiNode>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first wiki node in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki node
+	 * @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
+	 */
+	@Override
+	public WikiNode findByCompanyId_First(long companyId,
+		OrderByComparator<WikiNode> orderByComparator)
+		throws NoSuchNodeException {
+		WikiNode wikiNode = fetchByCompanyId_First(companyId, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first wiki node in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 */
+	@Override
+	public WikiNode fetchByCompanyId_First(long companyId,
+		OrderByComparator<WikiNode> orderByComparator) {
+		List<WikiNode> list = findByCompanyId(companyId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last wiki node in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki node
+	 * @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
+	 */
+	@Override
+	public WikiNode findByCompanyId_Last(long companyId,
+		OrderByComparator<WikiNode> orderByComparator)
+		throws NoSuchNodeException {
+		WikiNode wikiNode = fetchByCompanyId_Last(companyId, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki node in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 */
+	@Override
+	public WikiNode fetchByCompanyId_Last(long companyId,
+		OrderByComparator<WikiNode> orderByComparator) {
+		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<WikiNode> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63;.
+	 *
+	 * @param nodeId the primary key of the current wiki node
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next wiki node
+	 * @throws com.liferay.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
+	 */
+	@Override
+	public WikiNode[] findByCompanyId_PrevAndNext(long nodeId, long companyId,
+		OrderByComparator<WikiNode> orderByComparator)
+		throws NoSuchNodeException {
+		WikiNode wikiNode = findByPrimaryKey(nodeId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			WikiNode[] array = new WikiNodeImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, wikiNode, companyId,
+					orderByComparator, true);
+
+			array[1] = wikiNode;
+
+			array[2] = getByCompanyId_PrevAndNext(session, wikiNode, companyId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected WikiNode getByCompanyId_PrevAndNext(Session session,
+		WikiNode wikiNode, long companyId,
+		OrderByComparator<WikiNode> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_WIKINODE_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<WikiNode> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the wiki nodes where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	@Override
+	public void removeByCompanyId(long companyId) {
+		for (WikiNode wikiNode : findByCompanyId(companyId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(wikiNode);
+		}
+	}
+
+	/**
+	 * Returns the number of wiki nodes where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching wiki nodes
+	 */
+	@Override
+	public int countByCompanyId(long companyId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_WIKINODE_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "wikiNode.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 			WikiNodeModelImpl.FINDER_CACHE_ENABLED, WikiNodeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
@@ -2325,84 +2826,88 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "wikiNode.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 			WikiNodeModelImpl.FINDER_CACHE_ENABLED, WikiNodeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
-				Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 			WikiNodeModelImpl.FINDER_CACHE_ENABLED, WikiNodeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() },
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+			new String[] { Long.class.getName(), Integer.class.getName() },
 			WikiNodeModelImpl.COMPANYID_COLUMN_BITMASK |
+			WikiNodeModelImpl.STATUS_COLUMN_BITMASK |
 			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_S = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 			WikiNodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] { Long.class.getName(), Integer.class.getName() });
 
 	/**
-	 * Returns all the wiki nodes where companyId = &#63;.
+	 * Returns all the wiki nodes where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @return the matching wiki nodes
 	 */
 	@Override
-	public List<WikiNode> findByCompanyId(long companyId) {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+	public List<WikiNode> findByC_S(long companyId, int status) {
+		return findByC_S(companyId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the wiki nodes where companyId = &#63;.
+	 * Returns a range of all the wiki nodes where companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @return the range of matching wiki nodes
 	 */
 	@Override
-	public List<WikiNode> findByCompanyId(long companyId, int start, int end) {
-		return findByCompanyId(companyId, start, end, null);
+	public List<WikiNode> findByC_S(long companyId, int status, int start,
+		int end) {
+		return findByC_S(companyId, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	 * Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching wiki nodes
 	 */
 	@Override
-	public List<WikiNode> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator<WikiNode> orderByComparator) {
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	public List<WikiNode> findByC_S(long companyId, int status, int start,
+		int end, OrderByComparator<WikiNode> orderByComparator) {
+		return findByC_S(companyId, status, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	 * Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2410,8 +2915,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 * @return the ordered range of matching wiki nodes
 	 */
 	@Override
-	public List<WikiNode> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator<WikiNode> orderByComparator, boolean retrieveFromCache) {
+	public List<WikiNode> findByC_S(long companyId, int status, int start,
+		int end, OrderByComparator<WikiNode> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2419,12 +2925,16 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S;
+			finderArgs = new Object[] { companyId, status };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S;
+			finderArgs = new Object[] {
+					companyId, status,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<WikiNode> list = null;
@@ -2435,7 +2945,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiNode wikiNode : list) {
-					if ((companyId != wikiNode.getCompanyId())) {
+					if ((companyId != wikiNode.getCompanyId()) ||
+							(status != wikiNode.getStatus())) {
 						list = null;
 
 						break;
@@ -2448,16 +2959,18 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_WIKINODE_WHERE);
 
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2480,6 +2993,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(companyId);
+
+				qPos.add(status);
 
 				if (!pagination) {
 					list = (List<WikiNode>)QueryUtil.list(q, getDialect(),
@@ -2512,29 +3027,34 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	/**
-	 * Returns the first wiki node in the ordered set where companyId = &#63;.
+	 * Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki node
 	 * @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
 	 */
 	@Override
-	public WikiNode findByCompanyId_First(long companyId,
+	public WikiNode findByC_S_First(long companyId, int status,
 		OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException {
-		WikiNode wikiNode = fetchByCompanyId_First(companyId, orderByComparator);
+		WikiNode wikiNode = fetchByC_S_First(companyId, status,
+				orderByComparator);
 
 		if (wikiNode != null) {
 			return wikiNode;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("companyId=");
 		msg.append(companyId);
+
+		msg.append(", status=");
+		msg.append(status);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -2542,71 +3062,17 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	/**
-	 * Returns the first wiki node in the ordered set where companyId = &#63;.
+	 * Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	@Override
-	public WikiNode fetchByCompanyId_First(long companyId,
+	public WikiNode fetchByC_S_First(long companyId, int status,
 		OrderByComparator<WikiNode> orderByComparator) {
-		List<WikiNode> list = findByCompanyId(companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByCompanyId_Last(long companyId,
-		OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-		WikiNode wikiNode = fetchByCompanyId_Last(companyId, orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchNodeException(msg.toString());
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByCompanyId_Last(long companyId,
-		OrderByComparator<WikiNode> orderByComparator) {
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WikiNode> list = findByCompanyId(companyId, count - 1, count,
+		List<WikiNode> list = findByC_S(companyId, status, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2617,17 +3083,79 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63;.
+	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki node
+	 * @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
+	 */
+	@Override
+	public WikiNode findByC_S_Last(long companyId, int status,
+		OrderByComparator<WikiNode> orderByComparator)
+		throws NoSuchNodeException {
+		WikiNode wikiNode = fetchByC_S_Last(companyId, status, orderByComparator);
+
+		if (wikiNode != null) {
+			return wikiNode;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchNodeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 */
+	@Override
+	public WikiNode fetchByC_S_Last(long companyId, int status,
+		OrderByComparator<WikiNode> orderByComparator) {
+		int count = countByC_S(companyId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<WikiNode> list = findByC_S(companyId, status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63; and status = &#63;.
 	 *
 	 * @param nodeId the primary key of the current wiki node
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next wiki node
 	 * @throws com.liferay.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
 	 */
 	@Override
-	public WikiNode[] findByCompanyId_PrevAndNext(long nodeId, long companyId,
-		OrderByComparator<WikiNode> orderByComparator)
+	public WikiNode[] findByC_S_PrevAndNext(long nodeId, long companyId,
+		int status, OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException {
 		WikiNode wikiNode = findByPrimaryKey(nodeId);
 
@@ -2638,13 +3166,13 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 			WikiNode[] array = new WikiNodeImpl[3];
 
-			array[0] = getByCompanyId_PrevAndNext(session, wikiNode, companyId,
-					orderByComparator, true);
+			array[0] = getByC_S_PrevAndNext(session, wikiNode, companyId,
+					status, orderByComparator, true);
 
 			array[1] = wikiNode;
 
-			array[2] = getByCompanyId_PrevAndNext(session, wikiNode, companyId,
-					orderByComparator, false);
+			array[2] = getByC_S_PrevAndNext(session, wikiNode, companyId,
+					status, orderByComparator, false);
 
 			return array;
 		}
@@ -2656,8 +3184,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		}
 	}
 
-	protected WikiNode getByCompanyId_PrevAndNext(Session session,
-		WikiNode wikiNode, long companyId,
+	protected WikiNode getByC_S_PrevAndNext(Session session, WikiNode wikiNode,
+		long companyId, int status,
 		OrderByComparator<WikiNode> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -2671,7 +3199,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		query.append(_SQL_SELECT_WIKINODE_WHERE);
 
-		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+		query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2743,6 +3273,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		qPos.add(companyId);
 
+		qPos.add(status);
+
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
 
@@ -2762,38 +3294,42 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	/**
-	 * Removes all the wiki nodes where companyId = &#63; from the database.
+	 * Removes all the wiki nodes where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 */
 	@Override
-	public void removeByCompanyId(long companyId) {
-		for (WikiNode wikiNode : findByCompanyId(companyId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByC_S(long companyId, int status) {
+		for (WikiNode wikiNode : findByC_S(companyId, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(wikiNode);
 		}
 	}
 
 	/**
-	 * Returns the number of wiki nodes where companyId = &#63;.
+	 * Returns the number of wiki nodes where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @return the number of matching wiki nodes
 	 */
 	@Override
-	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+	public int countByC_S(long companyId, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S;
 
-		Object[] finderArgs = new Object[] { companyId };
+		Object[] finderArgs = new Object[] { companyId, status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_WIKINODE_WHERE);
 
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 			String sql = query.toString();
 
@@ -2807,6 +3343,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(companyId);
+
+				qPos.add(status);
 
 				count = (Long)q.uniqueResult();
 
@@ -2825,7 +3363,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "wikiNode.companyId = ?";
+	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "wikiNode.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "wikiNode.status = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 			WikiNodeModelImpl.FINDER_CACHE_ENABLED, WikiNodeImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
@@ -3990,545 +4529,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 	private static final String _FINDER_COLUMN_G_S_GROUPID_2 = "wikiNode.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_S_STATUS_2 = "wikiNode.status = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-			WikiNodeModelImpl.FINDER_CACHE_ENABLED, WikiNodeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-			WikiNodeModelImpl.FINDER_CACHE_ENABLED, WikiNodeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			WikiNodeModelImpl.COMPANYID_COLUMN_BITMASK |
-			WikiNodeModelImpl.STATUS_COLUMN_BITMASK |
-			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_S = new FinderPath(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-			WikiNodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] { Long.class.getName(), Integer.class.getName() });
-
-	/**
-	 * Returns all the wiki nodes where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the matching wiki nodes
-	 */
-	@Override
-	public List<WikiNode> findByC_S(long companyId, int status) {
-		return findByC_S(companyId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the wiki nodes where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes
-	 */
-	@Override
-	public List<WikiNode> findByC_S(long companyId, int status, int start,
-		int end) {
-		return findByC_S(companyId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching wiki nodes
-	 */
-	@Override
-	public List<WikiNode> findByC_S(long companyId, int status, int start,
-		int end, OrderByComparator<WikiNode> orderByComparator) {
-		return findByC_S(companyId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WikiNodeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching wiki nodes
-	 */
-	@Override
-	public List<WikiNode> findByC_S(long companyId, int status, int start,
-		int end, OrderByComparator<WikiNode> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S;
-			finderArgs = new Object[] { companyId, status };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S;
-			finderArgs = new Object[] {
-					companyId, status,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<WikiNode> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<WikiNode>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (WikiNode wikiNode : list) {
-					if ((companyId != wikiNode.getCompanyId()) ||
-							(status != wikiNode.getStatus())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_WIKINODE_WHERE);
-
-			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(status);
-
-				if (!pagination) {
-					list = (List<WikiNode>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WikiNode>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching wiki node
-	 * @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByC_S_First(long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-		WikiNode wikiNode = fetchByC_S_First(companyId, status,
-				orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchNodeException(msg.toString());
-	}
-
-	/**
-	 * Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByC_S_First(long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator) {
-		List<WikiNode> list = findByC_S(companyId, status, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node
-	 * @throws com.liferay.wiki.NoSuchNodeException if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode findByC_S_Last(long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-		WikiNode wikiNode = fetchByC_S_Last(companyId, status, orderByComparator);
-
-		if (wikiNode != null) {
-			return wikiNode;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchNodeException(msg.toString());
-	}
-
-	/**
-	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	@Override
-	public WikiNode fetchByC_S_Last(long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator) {
-		int count = countByC_S(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<WikiNode> list = findByC_S(companyId, status, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws com.liferay.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	@Override
-	public WikiNode[] findByC_S_PrevAndNext(long nodeId, long companyId,
-		int status, OrderByComparator<WikiNode> orderByComparator)
-		throws NoSuchNodeException {
-		WikiNode wikiNode = findByPrimaryKey(nodeId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WikiNode[] array = new WikiNodeImpl[3];
-
-			array[0] = getByC_S_PrevAndNext(session, wikiNode, companyId,
-					status, orderByComparator, true);
-
-			array[1] = wikiNode;
-
-			array[2] = getByC_S_PrevAndNext(session, wikiNode, companyId,
-					status, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected WikiNode getByC_S_PrevAndNext(Session session, WikiNode wikiNode,
-		long companyId, int status,
-		OrderByComparator<WikiNode> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_WIKINODE_WHERE);
-
-		query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-		query.append(_FINDER_COLUMN_C_S_STATUS_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(companyId);
-
-		qPos.add(status);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<WikiNode> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the wiki nodes where companyId = &#63; and status = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 */
-	@Override
-	public void removeByC_S(long companyId, int status) {
-		for (WikiNode wikiNode : findByC_S(companyId, status,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(wikiNode);
-		}
-	}
-
-	/**
-	 * Returns the number of wiki nodes where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the number of matching wiki nodes
-	 */
-	@Override
-	public int countByC_S(long companyId, int status) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S;
-
-		Object[] finderArgs = new Object[] { companyId, status };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_WIKINODE_WHERE);
-
-			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_S_STATUS_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(status);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "wikiNode.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "wikiNode.status = ?";
 
 	public WikiNodePersistenceImpl() {
 		setModelClass(WikiNode.class);
@@ -4723,6 +4723,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		wikiNode.setUuid(uuid);
 
+		wikiNode.setCompanyId(0);
+
 		return wikiNode;
 	}
 
@@ -4910,23 +4912,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			}
 
 			if ((wikiNodeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						wikiNodeModelImpl.getOriginalGroupId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
-					args);
-
-				args = new Object[] { wikiNodeModelImpl.getGroupId() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
-					args);
-			}
-
-			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						wikiNodeModelImpl.getOriginalCompanyId()
@@ -4944,23 +4929,19 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			}
 
 			if ((wikiNodeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						wikiNodeModelImpl.getOriginalGroupId(),
-						wikiNodeModelImpl.getOriginalStatus()
+						wikiNodeModelImpl.getOriginalGroupId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						wikiNodeModelImpl.getGroupId(),
-						wikiNodeModelImpl.getStatus()
-					};
+				args = new Object[] { wikiNodeModelImpl.getGroupId() };
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -4982,6 +4963,27 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
+					args);
+			}
+
+			if ((wikiNodeModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						wikiNodeModelImpl.getOriginalGroupId(),
+						wikiNodeModelImpl.getOriginalStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+					args);
+
+				args = new Object[] {
+						wikiNodeModelImpl.getGroupId(),
+						wikiNodeModelImpl.getStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
 			}
 		}
@@ -5007,10 +5009,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		wikiNodeImpl.setNew(wikiNode.isNew());
 		wikiNodeImpl.setPrimaryKey(wikiNode.getPrimaryKey());
 
+		wikiNodeImpl.setCompanyId(wikiNode.getCompanyId());
 		wikiNodeImpl.setUuid(wikiNode.getUuid());
 		wikiNodeImpl.setNodeId(wikiNode.getNodeId());
 		wikiNodeImpl.setGroupId(wikiNode.getGroupId());
-		wikiNodeImpl.setCompanyId(wikiNode.getCompanyId());
 		wikiNodeImpl.setUserId(wikiNode.getUserId());
 		wikiNodeImpl.setUserName(wikiNode.getUserName());
 		wikiNodeImpl.setCreateDate(wikiNode.getCreateDate());

@@ -34,8 +34,8 @@ public class SCProductVersionSoap implements Serializable {
 	public static SCProductVersionSoap toSoapModel(SCProductVersion model) {
 		SCProductVersionSoap soapModel = new SCProductVersionSoap();
 
-		soapModel.setProductVersionId(model.getProductVersionId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setProductVersionId(model.getProductVersionId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -100,20 +100,20 @@ public class SCProductVersionSoap implements Serializable {
 		setProductVersionId(pk);
 	}
 
-	public long getProductVersionId() {
-		return _productVersionId;
-	}
-
-	public void setProductVersionId(long productVersionId) {
-		_productVersionId = productVersionId;
-	}
-
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public long getProductVersionId() {
+		return _productVersionId;
+	}
+
+	public void setProductVersionId(long productVersionId) {
+		_productVersionId = productVersionId;
 	}
 
 	public long getUserId() {
@@ -200,8 +200,8 @@ public class SCProductVersionSoap implements Serializable {
 		_repoStoreArtifact = repoStoreArtifact;
 	}
 
-	private long _productVersionId;
 	private long _companyId;
+	private long _productVersionId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

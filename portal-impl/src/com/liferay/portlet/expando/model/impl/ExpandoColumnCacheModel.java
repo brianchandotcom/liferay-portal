@@ -66,10 +66,10 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{columnId=");
-		sb.append(columnId);
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(companyId);
+		sb.append(", columnId=");
+		sb.append(columnId);
 		sb.append(", tableId=");
 		sb.append(tableId);
 		sb.append(", name=");
@@ -89,8 +89,8 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 	public ExpandoColumn toEntityModel() {
 		ExpandoColumnImpl expandoColumnImpl = new ExpandoColumnImpl();
 
-		expandoColumnImpl.setColumnId(columnId);
 		expandoColumnImpl.setCompanyId(companyId);
+		expandoColumnImpl.setColumnId(columnId);
 		expandoColumnImpl.setTableId(tableId);
 
 		if (name == null) {
@@ -123,8 +123,8 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		columnId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		columnId = objectInput.readLong();
 		tableId = objectInput.readLong();
 		name = objectInput.readUTF();
 		type = objectInput.readInt();
@@ -135,8 +135,8 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(columnId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(columnId);
 		objectOutput.writeLong(tableId);
 
 		if (name == null) {
@@ -163,8 +163,8 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 		}
 	}
 
-	public long columnId;
 	public long companyId;
+	public long columnId;
 	public long tableId;
 	public String name;
 	public int type;

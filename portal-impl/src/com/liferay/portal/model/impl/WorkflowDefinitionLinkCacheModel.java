@@ -81,14 +81,14 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", workflowDefinitionLinkId=");
 		sb.append(workflowDefinitionLinkId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -116,10 +116,10 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 	public WorkflowDefinitionLink toEntityModel() {
 		WorkflowDefinitionLinkImpl workflowDefinitionLinkImpl = new WorkflowDefinitionLinkImpl();
 
+		workflowDefinitionLinkImpl.setCompanyId(companyId);
 		workflowDefinitionLinkImpl.setMvccVersion(mvccVersion);
 		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(workflowDefinitionLinkId);
 		workflowDefinitionLinkImpl.setGroupId(groupId);
-		workflowDefinitionLinkImpl.setCompanyId(companyId);
 		workflowDefinitionLinkImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -163,10 +163,10 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		workflowDefinitionLinkId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -181,10 +181,10 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(workflowDefinitionLinkId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -210,10 +210,10 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 		objectOutput.writeInt(workflowDefinitionVersion);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long workflowDefinitionLinkId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -2321,6 +2321,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequest.setNew(true);
 		membershipRequest.setPrimaryKey(membershipRequestId);
 
+		membershipRequest.setCompanyId(0);
+
 		return membershipRequest;
 	}
 
@@ -2544,10 +2546,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequestImpl.setNew(membershipRequest.isNew());
 		membershipRequestImpl.setPrimaryKey(membershipRequest.getPrimaryKey());
 
+		membershipRequestImpl.setCompanyId(membershipRequest.getCompanyId());
 		membershipRequestImpl.setMvccVersion(membershipRequest.getMvccVersion());
 		membershipRequestImpl.setMembershipRequestId(membershipRequest.getMembershipRequestId());
 		membershipRequestImpl.setGroupId(membershipRequest.getGroupId());
-		membershipRequestImpl.setCompanyId(membershipRequest.getCompanyId());
 		membershipRequestImpl.setUserId(membershipRequest.getUserId());
 		membershipRequestImpl.setCreateDate(membershipRequest.getCreateDate());
 		membershipRequestImpl.setComments(membershipRequest.getComments());

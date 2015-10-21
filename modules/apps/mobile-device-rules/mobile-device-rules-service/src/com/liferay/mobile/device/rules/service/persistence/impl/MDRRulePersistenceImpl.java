@@ -2120,6 +2120,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 		mdrRule.setUuid(uuid);
 
+		mdrRule.setCompanyId(0);
+
 		return mdrRule;
 	}
 
@@ -2344,10 +2346,10 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		mdrRuleImpl.setNew(mdrRule.isNew());
 		mdrRuleImpl.setPrimaryKey(mdrRule.getPrimaryKey());
 
+		mdrRuleImpl.setCompanyId(mdrRule.getCompanyId());
 		mdrRuleImpl.setUuid(mdrRule.getUuid());
 		mdrRuleImpl.setRuleId(mdrRule.getRuleId());
 		mdrRuleImpl.setGroupId(mdrRule.getGroupId());
-		mdrRuleImpl.setCompanyId(mdrRule.getCompanyId());
 		mdrRuleImpl.setUserId(mdrRule.getUserId());
 		mdrRuleImpl.setUserName(mdrRule.getUserName());
 		mdrRuleImpl.setCreateDate(mdrRule.getCreateDate());

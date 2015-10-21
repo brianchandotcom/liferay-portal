@@ -51,6 +51,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userGroupId", getUserGroupId());
 		attributes.put("groupId", getGroupId());
@@ -61,6 +62,12 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -95,6 +102,16 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	public int compareTo(
 		com.liferay.portal.model.UserGroupGroupRole userGroupGroupRole) {
 		return _userGroupGroupRole.compareTo(userGroupGroupRole);
+	}
+
+	/**
+	* Returns the company ID of this user group group role.
+	*
+	* @return the company ID of this user group group role
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userGroupGroupRole.getCompanyId();
 	}
 
 	@Override
@@ -203,6 +220,16 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_userGroupGroupRole.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this user group group role.
+	*
+	* @param companyId the company ID of this user group group role
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_userGroupGroupRole.setCompanyId(companyId);
 	}
 
 	@Override

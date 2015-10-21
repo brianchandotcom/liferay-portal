@@ -116,11 +116,11 @@ public class PhonePersistenceTest {
 
 		Phone newPhone = _persistence.create(pk);
 
+		newPhone.setCompanyId(RandomTestUtil.nextLong());
+
 		newPhone.setMvccVersion(RandomTestUtil.nextLong());
 
 		newPhone.setUuid(RandomTestUtil.randomString());
-
-		newPhone.setCompanyId(RandomTestUtil.nextLong());
 
 		newPhone.setUserId(RandomTestUtil.nextLong());
 
@@ -148,12 +148,12 @@ public class PhonePersistenceTest {
 
 		Phone existingPhone = _persistence.findByPrimaryKey(newPhone.getPrimaryKey());
 
+		Assert.assertEquals(existingPhone.getCompanyId(),
+			newPhone.getCompanyId());
 		Assert.assertEquals(existingPhone.getMvccVersion(),
 			newPhone.getMvccVersion());
 		Assert.assertEquals(existingPhone.getUuid(), newPhone.getUuid());
 		Assert.assertEquals(existingPhone.getPhoneId(), newPhone.getPhoneId());
-		Assert.assertEquals(existingPhone.getCompanyId(),
-			newPhone.getCompanyId());
 		Assert.assertEquals(existingPhone.getUserId(), newPhone.getUserId());
 		Assert.assertEquals(existingPhone.getUserName(), newPhone.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -255,9 +255,9 @@ public class PhonePersistenceTest {
 	}
 
 	protected OrderByComparator<Phone> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Phone", "mvccVersion",
-			true, "uuid", true, "phoneId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
+		return OrderByComparatorFactoryUtil.create("Phone", "companyId", true,
+			"mvccVersion", true, "uuid", true, "phoneId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "number", true, "extension",
 			true, "typeId", true, "primary", true, "lastPublishDate", true);
 	}
@@ -455,11 +455,11 @@ public class PhonePersistenceTest {
 
 		Phone phone = _persistence.create(pk);
 
+		phone.setCompanyId(RandomTestUtil.nextLong());
+
 		phone.setMvccVersion(RandomTestUtil.nextLong());
 
 		phone.setUuid(RandomTestUtil.randomString());
-
-		phone.setCompanyId(RandomTestUtil.nextLong());
 
 		phone.setUserId(RandomTestUtil.nextLong());
 

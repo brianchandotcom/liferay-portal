@@ -52,9 +52,9 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("kaleoTaskId", getKaleoTaskId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -69,6 +69,12 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long kaleoTaskId = (Long)attributes.get("kaleoTaskId");
 
 		if (kaleoTaskId != null) {
@@ -79,12 +85,6 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

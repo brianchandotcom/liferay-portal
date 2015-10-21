@@ -1949,6 +1949,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		scLicense.setNew(true);
 		scLicense.setPrimaryKey(licenseId);
 
+		scLicense.setCompanyId(0);
+
 		return scLicense;
 	}
 
@@ -2132,6 +2134,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		scLicenseImpl.setNew(scLicense.isNew());
 		scLicenseImpl.setPrimaryKey(scLicense.getPrimaryKey());
 
+		scLicenseImpl.setCompanyId(scLicense.getCompanyId());
 		scLicenseImpl.setLicenseId(scLicense.getLicenseId());
 		scLicenseImpl.setName(scLicense.getName());
 		scLicenseImpl.setUrl(scLicense.getUrl());

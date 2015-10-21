@@ -77,9 +77,11 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", portletPreferencesId=");
 		sb.append(portletPreferencesId);
@@ -102,6 +104,7 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 	public PortletPreferences toEntityModel() {
 		PortletPreferencesImpl portletPreferencesImpl = new PortletPreferencesImpl();
 
+		portletPreferencesImpl.setCompanyId(companyId);
 		portletPreferencesImpl.setMvccVersion(mvccVersion);
 		portletPreferencesImpl.setPortletPreferencesId(portletPreferencesId);
 		portletPreferencesImpl.setOwnerId(ownerId);
@@ -129,6 +132,7 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		portletPreferencesId = objectInput.readLong();
 		ownerId = objectInput.readLong();
@@ -141,6 +145,7 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(portletPreferencesId);
 		objectOutput.writeLong(ownerId);
@@ -162,6 +167,7 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 		}
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long portletPreferencesId;
 	public long ownerId;

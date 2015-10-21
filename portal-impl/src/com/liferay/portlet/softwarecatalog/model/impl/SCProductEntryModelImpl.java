@@ -70,9 +70,9 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	 */
 	public static final String TABLE_NAME = "SCProductEntry";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "productEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -90,9 +90,9 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("productEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -108,7 +108,7 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		TABLE_COLUMNS_MAP.put("repoArtifactId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SCProductEntry (productEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ VARCHAR(75) null,tags VARCHAR(255) null,shortDescription STRING null,longDescription STRING null,pageURL STRING null,author VARCHAR(75) null,repoGroupId VARCHAR(75) null,repoArtifactId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table SCProductEntry (companyId LONG,productEntryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ VARCHAR(75) null,tags VARCHAR(255) null,shortDescription STRING null,longDescription STRING null,pageURL STRING null,author VARCHAR(75) null,repoGroupId VARCHAR(75) null,repoArtifactId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SCProductEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY scProductEntry.modifiedDate DESC, scProductEntry.name DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SCProductEntry.modifiedDate DESC, SCProductEntry.name DESC";
@@ -145,9 +145,9 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 		SCProductEntry model = new SCProductEntryImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setProductEntryId(soapModel.getProductEntryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -238,9 +238,9 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("productEntryId", getProductEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -263,6 +263,12 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long productEntryId = (Long)attributes.get("productEntryId");
 
 		if (productEntryId != null) {
@@ -273,12 +279,6 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -360,6 +360,29 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public long getProductEntryId() {
@@ -392,29 +415,6 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -699,9 +699,9 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	public Object clone() {
 		SCProductEntryImpl scProductEntryImpl = new SCProductEntryImpl();
 
+		scProductEntryImpl.setCompanyId(getCompanyId());
 		scProductEntryImpl.setProductEntryId(getProductEntryId());
 		scProductEntryImpl.setGroupId(getGroupId());
-		scProductEntryImpl.setCompanyId(getCompanyId());
 		scProductEntryImpl.setUserId(getUserId());
 		scProductEntryImpl.setUserName(getUserName());
 		scProductEntryImpl.setCreateDate(getCreateDate());
@@ -786,13 +786,13 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	public void resetOriginalValues() {
 		SCProductEntryModelImpl scProductEntryModelImpl = this;
 
-		scProductEntryModelImpl._originalGroupId = scProductEntryModelImpl._groupId;
-
-		scProductEntryModelImpl._setOriginalGroupId = false;
-
 		scProductEntryModelImpl._originalCompanyId = scProductEntryModelImpl._companyId;
 
 		scProductEntryModelImpl._setOriginalCompanyId = false;
+
+		scProductEntryModelImpl._originalGroupId = scProductEntryModelImpl._groupId;
+
+		scProductEntryModelImpl._setOriginalGroupId = false;
 
 		scProductEntryModelImpl._originalUserId = scProductEntryModelImpl._userId;
 
@@ -811,11 +811,11 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	public CacheModel<SCProductEntry> toCacheModel() {
 		SCProductEntryCacheModel scProductEntryCacheModel = new SCProductEntryCacheModel();
 
+		scProductEntryCacheModel.companyId = getCompanyId();
+
 		scProductEntryCacheModel.productEntryId = getProductEntryId();
 
 		scProductEntryCacheModel.groupId = getGroupId();
-
-		scProductEntryCacheModel.companyId = getCompanyId();
 
 		scProductEntryCacheModel.userId = getUserId();
 
@@ -924,12 +924,12 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{productEntryId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", productEntryId=");
 		sb.append(getProductEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -970,16 +970,16 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>productEntryId</column-name><column-value><![CDATA[");
 		sb.append(getProductEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1043,13 +1043,13 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SCProductEntry.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _productEntryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

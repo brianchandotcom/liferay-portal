@@ -32,6 +32,7 @@ public class BrowserTrackerSoap implements Serializable {
 	public static BrowserTrackerSoap toSoapModel(BrowserTracker model) {
 		BrowserTrackerSoap soapModel = new BrowserTrackerSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setBrowserTrackerId(model.getBrowserTrackerId());
 		soapModel.setUserId(model.getUserId());
@@ -88,6 +89,14 @@ public class BrowserTrackerSoap implements Serializable {
 		setBrowserTrackerId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -120,6 +129,7 @@ public class BrowserTrackerSoap implements Serializable {
 		_browserKey = browserKey;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _browserTrackerId;
 	private long _userId;

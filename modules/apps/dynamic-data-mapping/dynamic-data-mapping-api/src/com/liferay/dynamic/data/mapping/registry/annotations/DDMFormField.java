@@ -38,9 +38,13 @@ public @interface DDMFormField {
 
 	public String[] optionValues() default {};
 
+	public String predefinedValue() default StringPool.BLANK;
+
 	public String[] properties() default {};
 
 	public boolean required() default false;
+
+	public String tip() default StringPool.BLANK;
 
 	public String type() default StringPool.BLANK;
 

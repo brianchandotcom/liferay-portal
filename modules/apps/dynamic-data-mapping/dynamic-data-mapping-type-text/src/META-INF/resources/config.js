@@ -7,6 +7,16 @@
 				'field-text': {
 					base: PATH_DDM_TYPE_TEXT + '/',
 					modules: {
+						'liferay-ddm-form-field-text': {
+							condition: {
+								trigger: 'liferay-ddm-form-renderer'
+							},
+							path: 'text_field.js',
+							requires: [
+								'aui-tooltip',
+								'liferay-ddm-form-renderer-field'
+							]
+						},
 						'liferay-ddm-form-field-text-template': {
 							condition: {
 								trigger: 'liferay-ddm-form-renderer'

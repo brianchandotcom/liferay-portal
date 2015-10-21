@@ -17,14 +17,10 @@ package com.liferay.dynamic.data.mapping.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Map;
@@ -73,18 +69,6 @@ public class DDMFormFactoryTest {
 		Assert.assertNotNull(indexTypeDDMFormField);
 		Assert.assertEquals("string", indexTypeDDMFormField.getDataType());
 		Assert.assertEquals("select", indexTypeDDMFormField.getType());
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			indexTypeDDMFormField.getDDMFormFieldOptions();
-
-		LocalizedValue ddmFormFieldOptionLabels =
-			ddmFormFieldOptions.getOptionLabels(StringPool.BLANK);
-
-		Assert.assertEquals(
-			"No indexable",
-			ddmFormFieldOptionLabels.getString(LocaleUtil.SPAIN));
-		Assert.assertEquals(
-			"Not Indexable", ddmFormFieldOptionLabels.getString(LocaleUtil.US));
 
 		DDMFormField labelDDMFormField = ddmFormFieldsMap.get("label");
 
@@ -160,11 +144,6 @@ public class DDMFormFactoryTest {
 		Assert.assertEquals("text", nameDDMFormField.getType());
 		Assert.assertEquals(true, nameDDMFormField.isRequired());
 		Assert.assertEquals(false, nameDDMFormField.isLocalizable());
-
-		LocalizedValue nameLabel = nameDDMFormField.getLabel();
-
-		Assert.assertEquals("Nome", nameLabel.getString(LocaleUtil.BRAZIL));
-		Assert.assertEquals("Name", nameLabel.getString(LocaleUtil.US));
 
 		DDMFormField typeDDMFormField = ddmFormFieldsMap.get("type");
 

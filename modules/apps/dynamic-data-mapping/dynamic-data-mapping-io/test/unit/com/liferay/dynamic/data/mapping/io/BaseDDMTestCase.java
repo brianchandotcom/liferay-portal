@@ -183,6 +183,12 @@ public class BaseDDMTestCase extends PowerMockito {
 		);
 
 		when(
+			LocaleUtil.getDefault()
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		when(
 			LocaleUtil.toLanguageId(LocaleUtil.US)
 		).thenReturn(
 			"en_US"

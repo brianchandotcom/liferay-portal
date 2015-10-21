@@ -12,26 +12,36 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.radio;
+package com.liferay.dynamic.data.mapping.type.text;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 
 /**
- * @author Marcellus Tavares
- */
+ * @author Lino Alves
+*/
 @DDMForm
-public interface RadioDDMFormFieldTypeSettings
+public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(label = "%inline", properties = {"showAsSwitcher=true"})
-	public boolean inline();
+	@DDMFormField(
+		label = "%my-text-field-type-is",
+		optionLabels = {"%single-line", "%multi-line"},
+		optionValues = {"singleline", "multiline"},
+		properties = {
+			"inline=true", "setting.category=basic", "setting.weight=2"
+		},
+		type = "radio"
+	)
+	public String displayStyle();
 
 	@DDMFormField(
-		dataType = "ddm-options", label = "%options", type = "options"
+		dataType = "string", label = "%placeholder",
+		properties = {"setting.category=advanced", "setting.weight=2"},
+		type = "text"
 	)
-	public DDMFormFieldOptions options();
+	public LocalizedValue placeholder();
 
 }

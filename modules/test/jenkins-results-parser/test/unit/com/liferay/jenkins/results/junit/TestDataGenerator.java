@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.apache.tools.ant.Project;
 
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -40,14 +41,16 @@ import org.dom4j.tree.DefaultElement;
 public class TestDataGenerator {
 
 	public static void main(String[] args) {
-		FailureMessageGeneratorTest test = new FailureMessageGeneratorTest();
+		FailureMessageGeneratorTest failureMessageGeneratorTest =
+			new FailureMessageGeneratorTest();
 
-		TestDataGenerator generator = new TestDataGenerator(test);
+		TestDataGenerator testDataGenerator = new TestDataGenerator(
+			failureMessageGeneratorTest);
 
 		try {
 			URL url = new URL(args[0]);
 
-			generator.createTestData(url);
+			testDataGenerator.createTestData(url);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -56,33 +59,43 @@ public class TestDataGenerator {
 		}
 	}
 
-	public TestDataGenerator(FailureMessageGeneratorTest test) {
-		_test = test;
+	public TestDataGenerator(
+		FailureMessageGeneratorTest failureMessageGeneratorTest) {
+
+		_failureMessageGeneratorTest = failureMessageGeneratorTest;
 	}
 
 	public void createTestData(URL jenkinsReport) throws Exception {
-		SAXReader reader = new SAXReader();
-		Document doc = reader.read(jenkinsReport);
+		SAXReader saxReader = new SAXReader();
 
-		String testDefinitionName = getTestDefinitionName(doc);
-		List<Node> testNodeList = getTestNodeList(doc);
+		Document document = saxReader.read(jenkinsReport);
 
-		Project project = _test.getProject();
+		String testDefinitionName = getTestDefinitionName(document);
+		List<Node> testNodeList = getTestNodeList(document);
+
+		Project project = _failureMessageGeneratorTest.getProject();
 
 		int i = 1;
 
 		for (Node node : testNodeList) {
-			DefaultElement elem = (DefaultElement)node;
-			Element parent = elem.getParent();
+			Element element = (DefaultElement)node;
 
-			if (parent.getText().endsWith("FAILURE")) {
-				String url = elem.attribute("href").getValue();
+			Element parentElement = element.getParent();
+
+			String parentElementText = parentElement.getText();
+
+			if (parentElementText.endsWith("FAILURE")) {
+				Attribute hrefAttribute = element.attribute("href");
+
+				String url = hrefAttribute.getValue();
 
 				try {
 					String testGroupRootPath = downloadTestData(
 						testDefinitionName, url);
-					_test.createExpectedResultsFile(
+
+					_failureMessageGeneratorTest.createExpectedResultsFile(
 						project, new File(testGroupRootPath));
+
 					i++;
 				}
 				catch (FileNotFoundException e) {
@@ -93,7 +106,7 @@ public class TestDataGenerator {
 			}
 			else {
 				System.out.println(
-					"Skipping non-failure test: " + parent.getText());
+					"Skipping non-failure test: " + parentElementText);
 			}
 		}
 
@@ -102,25 +115,23 @@ public class TestDataGenerator {
 			" test groups were created.");
 	}
 
-	protected static String getTestDefinitionName(Document doc) {
-		Node userNameNode = doc.selectSingleNode("//body/h1/strong");
-		Node prNumberNode = doc.selectSingleNode("//body/h1/a[1]");
+	protected static String getTestDefinitionName(Document document) {
+		Node prNumberNode = document.selectSingleNode("//body/h1/a[1]");
+		Node userNameNode = document.selectSingleNode("//body/h1/strong");
 
-		String userName = userNameNode.getText();
-		String prNumber = prNumberNode.getText();
-
-		return userName + "-" + prNumber;
+		return userNameNode.getText() + "-" + prNumberNode.getText();
 	}
 
 	protected String downloadTestData(String testName, String url)
 		throws Exception {
 
-		String urlString = URLDecoder.decode(url, "UTF8");
 		System.out.println("downloading test data: " + testName);
 
-		int jobIdx = urlString.indexOf("/job/") + 5;
+		String urlString = URLDecoder.decode(url, "UTF8");
 
-		String testGroupName = urlString.substring(jobIdx);
+		int x = urlString.indexOf("/job/") + 5;
+
+		String testGroupName = urlString.substring(x);
 
 		testGroupName = testGroupName.replace("/", "-");
 
@@ -130,6 +141,7 @@ public class TestDataGenerator {
 		}
 
 		String testRootPath = _testDataRoot.getPath() + "/" + testName;
+
 		String testGroupRootPath = testRootPath + "/" + testGroupName;
 
 		String testGroupLogTextPath = testGroupRootPath + "/logText";
@@ -186,11 +198,12 @@ public class TestDataGenerator {
 		return testGroupRootPath;
 	}
 
-	protected List<Node> getTestNodeList(Document doc) {
+	protected List<Node> getTestNodeList(Document document) {
 		@SuppressWarnings("unchecked")
-		List<Node> nodeList = doc.selectNodes("//li/h3/a[1]");
+		List<Node> nodeList = document.selectNodes("//li/h3/a[1]");
+
 		@SuppressWarnings("unchecked")
-		List<Node> nodeList2 = doc.selectNodes("//li/a[1]");
+		List<Node> nodeList2 = document.selectNodes("//li/a[1]");
 
 		nodeList.addAll(nodeList2);
 
@@ -199,6 +212,6 @@ public class TestDataGenerator {
 
 	private static final File _testDataRoot = new File("test-data");
 
-	private final FailureMessageGeneratorTest _test;
+	private final FailureMessageGeneratorTest _failureMessageGeneratorTest;
 
 }

@@ -7,10 +7,11 @@ buildCSS {
 }
 
 dependencies {
-	compile group: "dom4j", name: "dom4j", version: "1.6.1"	
-	compile group: "org.json", name: "json", version: "20090211"
+	compile group: "dom4j", name: "dom4j", version: "1.6.1"
 	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
+	compile group: "org.json", name: "json", version: "20090211"
+
 	runtime group: "jaxen", name: "jaxen", version: "1.1.6"
 }
 
@@ -38,7 +39,7 @@ gradle.taskGraph.whenReady { taskGraph ->
 
 			classpath = sourceSets.main.runtimeClasspath + files("${projectDir}/test-classes/unit")
 
-			args "${reportURL}"	
+			args "${reportURL}"
 		}
 	} else {
 		println "Aborting, you must provide a Jenkins report URL"

@@ -87,10 +87,8 @@ public class FailureMessageGenerator {
 			if (buildURL.contains("plugins") ||
 				jobVariant.contains("plugins")) {
 
-				sb.append(
-					"<p>To include a plugin fix for this pull request, please" +
-					" edit your ");
-				sb.append("<a href=\\\"https://github.com/");
+				sb.append("<p>To include a plugin fix for this pull request, ");
+				sb.append("please edit your <a href=\\\"https://github.com/");
 				sb.append(
 					project.getProperty("github.pull.request.head.username"));
 				sb.append("/");
@@ -98,13 +96,12 @@ public class FailureMessageGenerator {
 				sb.append("/blob/");
 				sb.append(
 					project.getProperty("github.pull.request.head.branch"));
-				sb.append(
-					"/git-commit-plugins\\\">git-commit-plugins</a>. Click ");
-				sb.append(
-					"<a href=\\\"https://in.liferay.com/web/global.engineeri" +
-					"ng/blog/-/blogs/new-tests-for-the-pull-request-tester-" +
-					"\\\">here</a>");
-				sb.append(" for more details.</p>");
+				sb.append("/git-commit-plugins\\\">git-commit-plugins</a>. ");
+
+				sb.append("Click <a href=\\\"https://in.liferay.com/web/");
+				sb.append("global.engineering/blog/-/blogs/new-tests-for-the-");
+				sb.append("pull-request-tester-\\\">here</a> for more details");
+				sb.append(".</p>");
 			}
 		}
 

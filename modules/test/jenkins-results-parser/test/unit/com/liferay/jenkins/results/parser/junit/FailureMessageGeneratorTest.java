@@ -21,6 +21,9 @@ import com.liferay.jenkins.results.parser.JenkinsUtility;
 
 import java.io.File;
 
+import java.net.URI;
+import java.net.URL;
+
 import org.apache.tools.ant.Project;
 
 import org.junit.Test;
@@ -34,18 +37,25 @@ public class FailureMessageGeneratorTest {
 		_project = initProject();
 	}
 
-	public void createExpectedResultsFile(Project project, File testRoot)
+	public void createExpectedResultsFile(Project project, File testRootFile)
 		throws Exception {
 
+		URI uri = testRootFile.toURI();
+
+		URL url = uri.toURL();
+
 		String result = FailureMessageGenerator.getFailureMessage(
-			project, testRoot.toURI().toURL().toExternalForm());
+			project, url.toExternalForm());
 
-		new File(testRoot.getPath() + "/expected-results").mkdir();
+		File expectedResultsDir = new File(
+			testRootFile.getPath() + "/expected-results");
 
-		File file = new File(
-			testRoot.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
+		expectedResultsDir.mkdir();
 
-		JenkinsUtility.writeFile(file, result);
+		File expectedResultsFile = new File(
+			testRootFile.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
+
+		JenkinsUtility.writeFile(expectedResultsFile, result);
 	}
 
 	public Project getProject() {
@@ -56,11 +66,11 @@ public class FailureMessageGeneratorTest {
 	public void testAll() throws Exception {
 		Project project = initProject();
 
-		File root = new File("test-data");
+		File rootFile = new File("test-data");
 
-		File[] fileArray = root.listFiles();
+		File[] files = rootFile.listFiles();
 
-		for (File file : fileArray) {
+		for (File file : files) {
 			if (file.isDirectory()) {
 				System.out.println("\nTesting group: " + file.getName());
 
@@ -70,28 +80,29 @@ public class FailureMessageGeneratorTest {
 	}
 
 	public boolean validateCase(
-			Project project, String groupName, File testRoot)
+			Project project, String groupName, File testRootFile)
 		throws Exception {
 
-		String name = testRoot.getName();
-
-		System.out.print("Testing case: " + name);
+		System.out.print("Testing case: " + testRootFile.getName());
 
 		File expectedResultsFile = new File(
-			testRoot.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
+			testRootFile.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
 
 		String expectedResults = JenkinsUtility.fileToString(
 			expectedResultsFile);
 
-		String url = testRoot.toURI().toURL().toExternalForm();
-		String results = FailureMessageGenerator.getFailureMessage(
-			project, url);
+		URI uri = testRootFile.toURI();
 
-		boolean passed = results.equals(expectedResults);
+		URL url = uri.toURL();
+
+		String actualResults = FailureMessageGenerator.getFailureMessage(
+			project, url.toExternalForm());
+
+		boolean passed = actualResults.equals(expectedResults);
 
 		if (!passed) {
 			System.out.println(" FAILED");
-			System.out.println("results: \n" + results);
+			System.out.println("actual results: \n" + actualResults);
 			System.out.println("expected results: \n" + expectedResults);
 		}
 		else {
@@ -101,16 +112,16 @@ public class FailureMessageGeneratorTest {
 		return passed;
 	}
 
-	public boolean validateGroup(Project project, File groupRoot)
+	public boolean validateGroup(Project project, File groupRootDir)
 		throws Exception {
 
-		String name = groupRoot.getName();
+		String groupName = groupRootDir.getName();
 
-		File[] fileArray = groupRoot.listFiles();
+		File[] files = groupRootDir.listFiles();
 
-		for (File file : fileArray) {
+		for (File file : files) {
 			if (file.isDirectory()) {
-				if (!validateCase(project, name, file)) {
+				if (!validateCase(project, groupName, file)) {
 					return false;
 				}
 			}

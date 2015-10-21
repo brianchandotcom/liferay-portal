@@ -7,7 +7,7 @@
 
 	var INPUT_EL = document.createElement('input');
 
-	var PATH_EDITORS = LiferayAUI.getEditorCKEditorPath();
+	var PATH_EDITOR_CKEDITOR = LiferayAUI.getEditorCKEditorPath();
 
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
@@ -40,14 +40,14 @@
 		filter: Liferay.AUI.getFilter(),
 		groups: {
 			editor: {
-				base: PATH_EDITORS + '/editors/',
+				base: PATH_EDITOR_CKEDITOR,
 				combine: COMBINE,
 				modules: {
 					'inline-editor-ckeditor': {
 						path: 'ckeditor/main.js'
 					}
 				},
-				root: PATH_EDITORS + '/editors/'
+				root: PATH_EDITOR_CKEDITOR
 			},
 
 			liferay: {

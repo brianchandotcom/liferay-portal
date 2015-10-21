@@ -27,7 +27,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
-import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLContentLocalService;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 
@@ -46,6 +46,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -96,13 +97,13 @@ public class DBStore extends BaseStore {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		DLContentLocalServiceUtil.deleteContentsByDirectory(
+		_dlContentLocalService.deleteContentsByDirectory(
 			companyId, repositoryId, dirName);
 	}
 
 	@Override
 	public void deleteFile(long companyId, long repositoryId, String fileName) {
-		DLContentLocalServiceUtil.deleteContents(
+		_dlContentLocalService.deleteContents(
 			companyId, repositoryId, fileName);
 	}
 
@@ -112,7 +113,7 @@ public class DBStore extends BaseStore {
 		String versionLabel) {
 
 		try {
-			DLContentLocalServiceUtil.deleteContent(
+			_dlContentLocalService.deleteContent(
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (PortalException pe) {
@@ -130,7 +131,7 @@ public class DBStore extends BaseStore {
 		DLContent dlContent = null;
 
 		try {
-			dlContent = DLContentLocalServiceUtil.getContent(
+			dlContent = _dlContentLocalService.getContent(
 				companyId, repositoryId, fileName);
 		}
 		catch (NoSuchContentException nsce) {
@@ -188,7 +189,7 @@ public class DBStore extends BaseStore {
 		DLContent dlContent = null;
 
 		try {
-			dlContent = DLContentLocalServiceUtil.getContent(
+			dlContent = _dlContentLocalService.getContent(
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (NoSuchContentException nsce) {
@@ -240,7 +241,7 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
-		List<DLContent> dlContents = DLContentLocalServiceUtil.getContents(
+		List<DLContent> dlContents = _dlContentLocalService.getContents(
 			companyId, repositoryId);
 
 		String[] fileNames = new String[dlContents.size()];
@@ -259,7 +260,7 @@ public class DBStore extends BaseStore {
 		long companyId, long repositoryId, String dirName) {
 
 		List<DLContent> dlContents =
-			DLContentLocalServiceUtil.getContentsByDirectory(
+			_dlContentLocalService.getContentsByDirectory(
 				companyId, repositoryId, dirName);
 
 		String[] fileNames = new String[dlContents.size()];
@@ -280,7 +281,7 @@ public class DBStore extends BaseStore {
 		DLContent dlContent = null;
 
 		try {
-			dlContent = DLContentLocalServiceUtil.getContent(
+			dlContent = _dlContentLocalService.getContent(
 				companyId, repositoryId, fileName);
 		}
 		catch (NoSuchContentException nsce) {
@@ -303,7 +304,7 @@ public class DBStore extends BaseStore {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		return DLContentLocalServiceUtil.hasContent(
+		return _dlContentLocalService.hasContent(
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
@@ -322,7 +323,7 @@ public class DBStore extends BaseStore {
 				companyId, newRepositoryId, fileName);
 		}
 
-		DLContentLocalServiceUtil.updateDLContent(
+		_dlContentLocalService.updateDLContent(
 			companyId, repositoryId, newRepositoryId, fileName, fileName);
 	}
 
@@ -341,7 +342,7 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, newFileName);
 		}
 
-		DLContentLocalServiceUtil.updateDLContent(
+		_dlContentLocalService.updateDLContent(
 			companyId, repositoryId, repositoryId, fileName, newFileName);
 	}
 
@@ -356,7 +357,7 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 
-		DLContentLocalServiceUtil.addContent(
+		_dlContentLocalService.addContent(
 			companyId, repositoryId, fileName, versionLabel, bytes);
 	}
 
@@ -380,7 +381,7 @@ public class DBStore extends BaseStore {
 			throw new SystemException(fnfe);
 		}
 
-		DLContentLocalServiceUtil.addContent(
+		_dlContentLocalService.addContent(
 			companyId, repositoryId, fileName, versionLabel, inputStream,
 			file.length());
 	}
@@ -391,7 +392,7 @@ public class DBStore extends BaseStore {
 			String versionLabel, InputStream inputStream)
 		throws DuplicateFileException {
 
-		if (DLContentLocalServiceUtil.hasContent(
+		if (_dlContentLocalService.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
 			throw new DuplicateFileException(
@@ -429,7 +430,7 @@ public class DBStore extends BaseStore {
 		}
 
 		if (length >= 0) {
-			DLContentLocalServiceUtil.addContent(
+			_dlContentLocalService.addContent(
 				companyId, repositoryId, fileName, versionLabel, inputStream,
 				length);
 		}
@@ -449,11 +450,20 @@ public class DBStore extends BaseStore {
 				throw new SystemException(ioe);
 			}
 
-			DLContentLocalServiceUtil.addContent(
+			_dlContentLocalService.addContent(
 				companyId, repositoryId, fileName, versionLabel, bytes);
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLContentLocalService(
+		DLContentLocalService dlContentLocalService) {
+
+		_dlContentLocalService = dlContentLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(DBStore.class);
+
+	private DLContentLocalService _dlContentLocalService;
 
 }

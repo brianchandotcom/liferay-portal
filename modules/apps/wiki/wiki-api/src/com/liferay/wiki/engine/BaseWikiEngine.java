@@ -58,7 +58,7 @@ public abstract class BaseWikiEngine implements WikiEngine {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content/Language", locale, getClass());
 
-			return resourceBundle.getString(getFormat());
+			return ResourceBundleUtil.getString(resourceBundle, getFormat());
 		}
 		catch (MissingResourceException mre) {
 			return getFormat();

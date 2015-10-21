@@ -4314,8 +4314,8 @@ public class PortalImpl implements Portal {
 		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
 		try {
-			String portletLongTitle = resourceBundle.getString(
-				JavaConstants.JAVAX_PORTLET_LONG_TITLE);
+			String portletLongTitle = ResourceBundleUtil.getString(
+				resourceBundle, JavaConstants.JAVAX_PORTLET_LONG_TITLE);
 
 			if (portletLongTitle.startsWith(
 					JavaConstants.JAVAX_PORTLET_LONG_TITLE)) {

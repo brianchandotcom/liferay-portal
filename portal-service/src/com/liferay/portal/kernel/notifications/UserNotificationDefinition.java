@@ -58,7 +58,7 @@ public class UserNotificationDefinition {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass());
 
-			return resourceBundle.getString(_description);
+			return ResourceBundleUtil.getString(resourceBundle, _description);
 		}
 		catch (MissingResourceException mre) {
 			return _description;

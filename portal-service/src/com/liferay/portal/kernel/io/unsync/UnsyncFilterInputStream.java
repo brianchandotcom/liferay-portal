@@ -57,7 +57,7 @@ public class UnsyncFilterInputStream extends InputStream {
 
 	@Override
 	public int read(byte[] bytes) throws IOException {
-		return inputStream.read(bytes);
+		return read(bytes, 0, bytes.length);
 	}
 
 	@Override

@@ -244,14 +244,15 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			throw new DuplicateSAPEntryNameException();
 		}
 
+		allowedServiceSignatures = normalizeServiceSignatures(
+			allowedServiceSignatures);
+
 		if (sapEntry.isSystem()) {
 			defaultSAPEntry = sapEntry.getDefaultSAPEntry();
 			name = sapEntry.getName();
 		}
 
 		name = StringUtil.trim(name);
-		allowedServiceSignatures = normalizeServiceSignatures(
-			allowedServiceSignatures);
 
 		validate(name, titleMap);
 

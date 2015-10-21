@@ -385,6 +385,9 @@ public class PoshiRunnerExecutor {
 
 				CommandLoggerHandler.failCommand(_functionExecuteElement);
 
+				_functionExecuteElement = null;
+				_functionWarningMessage = null;
+
 				throw t;
 			}
 		}

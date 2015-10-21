@@ -38,7 +38,7 @@ public abstract class BaseViewMVCRenderCommand implements MVCRenderCommand {
 			ActionUtil.getCategory(renderRequest);
 		}
 		catch (BannedUserException | NoSuchCategoryException |
-				PrincipalException e) {
+			   PrincipalException e) {
 
 			SessionErrors.add(renderRequest, e.getClass());
 

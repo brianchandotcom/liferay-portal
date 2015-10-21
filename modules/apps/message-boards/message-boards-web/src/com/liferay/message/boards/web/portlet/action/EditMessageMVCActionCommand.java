@@ -163,7 +163,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (NoSuchMessageException | PrincipalException |
-				RequiredMessageException e) {
+			   RequiredMessageException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 
@@ -171,12 +171,12 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/message_boards/error.jsp");
 		}
 		catch (AntivirusScannerException | CaptchaConfigurationException |
-				CaptchaMaxChallengesException | CaptchaTextException |
-				DuplicateFileEntryException | FileExtensionException |
-				FileNameException | FileSizeException |
-				LiferayFileItemException | LockedThreadException |
-				MessageBodyException | MessageSubjectException |
-				SanitizerException e) {
+			   CaptchaMaxChallengesException | CaptchaTextException |
+			   DuplicateFileEntryException | FileExtensionException |
+			   FileNameException | FileSizeException |
+			   LiferayFileItemException | LockedThreadException |
+			   MessageBodyException | MessageSubjectException |
+			   SanitizerException e) {
 
 			UploadException uploadException =
 				(UploadException)actionRequest.getAttribute(

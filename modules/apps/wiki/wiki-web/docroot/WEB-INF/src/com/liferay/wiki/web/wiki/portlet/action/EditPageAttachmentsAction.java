@@ -165,7 +165,7 @@ public class EditPageAttachmentsAction extends PortletAction {
 			}
 		}
 		catch (NoSuchNodeException | NoSuchPageException |
-				PrincipalException e) {
+			   PrincipalException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 
@@ -189,7 +189,7 @@ public class EditPageAttachmentsAction extends PortletAction {
 			ActionUtil.getPage(renderRequest);
 		}
 		catch (NoSuchNodeException | NoSuchPageException |
-				PrincipalException e) {
+			   PrincipalException e) {
 
 			SessionErrors.add(renderRequest, e.getClass());
 

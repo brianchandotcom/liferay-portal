@@ -183,7 +183,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/document_library/error.jsp");
 		}
 		catch (DuplicateFileException | DuplicateFolderNameException |
-			FolderNameException | RequiredFileEntryTypeException e) {
+			   FolderNameException | RequiredFileEntryTypeException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 		}

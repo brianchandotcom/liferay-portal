@@ -212,7 +212,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			return itemSelectorCriterion;
 		}
 		catch (InvocationTargetException | InstantiationException |
-			IllegalAccessException | NoSuchMethodException e) {
+			   IllegalAccessException | NoSuchMethodException e) {
 
 			throw new SystemException(
 				"Unable to unmarshall item selector criterion", e);

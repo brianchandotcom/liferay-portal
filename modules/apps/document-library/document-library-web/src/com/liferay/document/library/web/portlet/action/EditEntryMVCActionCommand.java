@@ -230,36 +230,36 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (DuplicateLockException | NoSuchFileEntryException |
-				NoSuchFolderException | PrincipalException e) {
+			   NoSuchFolderException | PrincipalException e) {
 
-				if (e instanceof DuplicateLockException) {
-					DuplicateLockException dle = (DuplicateLockException)e;
+			if (e instanceof DuplicateLockException) {
+				DuplicateLockException dle = (DuplicateLockException)e;
 
-					SessionErrors.add(
-						actionRequest, dle.getClass(), dle.getLock());
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
+				SessionErrors.add(
+					actionRequest, dle.getClass(), dle.getLock());
+			}
+			else {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
 		}
 		catch (DuplicateFileEntryException | DuplicateFolderNameException |
-			SourceFileNameException e) {
+			   SourceFileNameException e) {
 
-				if (e instanceof DuplicateFileEntryException) {
-					HttpServletResponse response =
-						PortalUtil.getHttpServletResponse(actionResponse);
+			if (e instanceof DuplicateFileEntryException) {
+				HttpServletResponse response =
+					PortalUtil.getHttpServletResponse(actionResponse);
 
-					response.setStatus(
-						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
-				}
+				response.setStatus(
+					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
+			}
 
-				SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, e.getClass());
 		}
 		catch (AssetCategoryException | AssetTagException |
-				InvalidFolderException e) {
+			   InvalidFolderException e) {
 
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}

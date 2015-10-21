@@ -149,7 +149,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			_setDesiredItemSelectorReturnTypes(itemSelectorCriterion, map);
 		}
 		catch (IllegalAccessException | InvocationTargetException |
-			NoSuchMethodException e) {
+			   NoSuchMethodException e) {
 
 			throw new SystemException(e);
 		}
@@ -247,7 +247,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			}
 		}
 		catch (IllegalAccessException | InvocationTargetException |
-			NoSuchMethodException e) {
+			   NoSuchMethodException e) {
 
 			throw new SystemException(e);
 		}

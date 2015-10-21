@@ -98,7 +98,7 @@ public class ActionRequestPortletContainerTest
 
 			Assert.assertEquals(
 				"200", PortletContainerTestUtil.getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("processAction"));
+			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
 			field.set(null, value);
@@ -135,7 +135,7 @@ public class ActionRequestPortletContainerTest
 
 			Assert.assertEquals(
 				"200", PortletContainerTestUtil.getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("processAction"));
+			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
 			field.set(null, value);
@@ -172,7 +172,7 @@ public class ActionRequestPortletContainerTest
 
 			Assert.assertEquals(
 				"200", PortletContainerTestUtil.getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("processAction"));
+			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
 			field.set(null, value);
@@ -203,7 +203,7 @@ public class ActionRequestPortletContainerTest
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("processAction"));
+		Assert.assertTrue(testPortlet.isActionCalled());
 	}
 
 	@Test
@@ -244,13 +244,13 @@ public class ActionRequestPortletContainerTest
 
 			Assert.assertEquals(
 				"200", PortletContainerTestUtil.getString(responseMap, "code"));
-			Assert.assertFalse(map.containsKey("processAction"));
+			Assert.assertFalse(testPortlet.isActionCalled());
 		}
 	}
 
 	@Test
 	public void testPortalAuthenticationToken() throws Exception {
-		testPortlet = new TestPortlet(map) {
+		testPortlet = new TestPortlet() {
 
 			@Override
 			public void serveResource(
@@ -287,7 +287,7 @@ public class ActionRequestPortletContainerTest
 			PortletContainerTestUtil.getPortalAuthentication(
 				httpServletRequest, layout, TEST_PORTLET_ID);
 
-		map.clear();
+		testPortlet.reset();
 
 		// Make an action request using the portal authentication token
 
@@ -309,7 +309,7 @@ public class ActionRequestPortletContainerTest
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("processAction"));
+		Assert.assertTrue(testPortlet.isActionCalled());
 	}
 
 	@Test
@@ -340,7 +340,7 @@ public class ActionRequestPortletContainerTest
 
 			Assert.assertEquals(
 				"200", PortletContainerTestUtil.getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("processAction"));
+			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
 			field.set(null, value);
@@ -370,12 +370,12 @@ public class ActionRequestPortletContainerTest
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("processAction"));
+		Assert.assertTrue(testPortlet.isActionCalled());
 	}
 
 	@Test
 	public void testXCSRFToken() throws Exception {
-		testPortlet = new TestPortlet(map) {
+		testPortlet = new TestPortlet() {
 
 			@Override
 			public void serveResource(
@@ -412,7 +412,7 @@ public class ActionRequestPortletContainerTest
 			PortletContainerTestUtil.getPortalAuthentication(
 				httpServletRequest, layout, TEST_PORTLET_ID);
 
-		map.clear();
+		testPortlet.reset();
 
 		// Make an action request using the portal authentication token
 
@@ -437,7 +437,7 @@ public class ActionRequestPortletContainerTest
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("processAction"));
+		Assert.assertTrue(testPortlet.isActionCalled());
 	}
 
 }

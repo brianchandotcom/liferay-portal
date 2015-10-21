@@ -60,7 +60,7 @@ public class LayoutRequestPortletContainerTest
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("render"));
+		Assert.assertTrue(testPortlet.isRenderCalled());
 	}
 
 }

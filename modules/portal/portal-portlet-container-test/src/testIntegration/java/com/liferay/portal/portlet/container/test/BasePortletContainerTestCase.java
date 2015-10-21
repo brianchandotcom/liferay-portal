@@ -27,8 +27,6 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.Portlet;
@@ -58,7 +56,7 @@ public class BasePortletContainerTestCase {
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-		testPortlet = new TestPortlet(map);
+		testPortlet = new TestPortlet();
 	}
 
 	@After
@@ -113,7 +111,6 @@ public class BasePortletContainerTestCase {
 	protected Group group;
 
 	protected Layout layout;
-	protected Map<String, String> map = new ConcurrentHashMap<>();
 	protected List<ServiceRegistration<?>> serviceRegistrations =
 		new CopyOnWriteArrayList<>();
 	protected TestPortlet testPortlet;

@@ -1,0 +1,564 @@
+Started by upstream project "test-portal-acceptance-pullrequest-batch(master)" build number 3975
+originally caused by:
+ Started by remote host 10.0.14.236
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1491/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=1,label_exp=!master/integration-sybase/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-10
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-19-181 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+[liferay-jenkins-ee] $ /bin/bash /tmp/hudson7786596840398541674.sh
+Update the workspace repository for build steps.
+No rebase in progress?
+Switched to branch 'master-temp-083669758'
+Switched to branch 'master'
+Deleted branch master-temp-083669758 (was 5460556).
+Deleted branch master-temp-906679708 (was 5460556).
+HEAD is now at 5372d7b LRQA-18095 Add in the missing attribute within the test file
+Rebase the workspace repository if needed for build steps.
+From github.com:michaelhashimoto/liferay-jenkins-ee
+ * [new branch]      master-qa-temp -> master-temp-340964639
+Switched to branch 'master-temp-340964639'
+Already on 'master-temp-340964639'
+Current branch master-temp-340964639 is up to date.
+Removing rebase.log
+HEAD is now at db64cf5 LRQA-Fix..
+Exit shell.
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson8124161855020632337.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-batch.sh start-current-job'
+Execute: test-portal-acceptance-pullrequest-batch.sh start-current-job
++ commands/build-test-portal-acceptance-pullrequest-batch.sh start-current-job
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-batch.xml start-current-job
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-batch.xml
+
+start-current-job:
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
++ echo 'Exit shell.'
+Exit shell.
+[EnvInject] - Injecting environment variables from a build step.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1491/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=1,label_exp=!master/integration-sybase/start.properties'
+[EnvInject] - Variables injected successfully.
+[description-setter] Description set: <strong>michaelhashimoto</strong> - <a href="https://github.com/michaelhashimoto/liferay-portal/pull/858">PR#858</a> - <a href="https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1491/jenkins-report.html">Jenkins Report</a>
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson519668555385739402.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-batch.sh'
+Execute: test-portal-acceptance-pullrequest-batch.sh
++ commands/build-test-portal-acceptance-pullrequest-batch.sh
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-batch.xml 
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-batch.xml
+
+run-current-job:
+
+prepare-plugins-repository:
+     [copy] Copying 1 file to /opt/dev/projects/github/liferay-portal
+
+reset-plugins-repository:
+     [exec] HEAD is now at 0c1d3a8 LPS-59031 Remove properties since we can now do this through the UI
+     [exec] fatal: Couldn't find remote ref master-temp-20151014165358202
+     [exec] fatal: Couldn't find remote ref master-temp-20151014165358202
+     [exec] Switched to a new branch 'temp-20151014165629093'
+     [exec] Switched to a new branch 'temp-20151014165629093'
+     [exec] From github.com:liferay/liferay-plugins
+     [exec]    0c1d3a8..2f424e1  master     -> master
+     [exec] From github.com:liferay/liferay-plugins
+     [exec]    0c1d3a8..2f424e1  master     -> master
+     [exec] Deleted branch temp-20151014165629093 (was 0c1d3a8).
+     [exec] Switched to branch 'master'
+     [exec] Switched to branch 'master'
+     [exec] commit 0c1d3a8c46b16270b26d5608249b34c9e2f853db
+     [exec] Author: Preston-Crary <preston.crary@liferay.com>
+     [exec] Date:   Fri Oct 2 14:05:30 2015 -0700
+     [exec] 
+     [exec]     LPS-59031 Remove properties since we can now do this through the UI
+
+set-plugins-build-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-plugins/build.cloud-10-0-19-181.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] liferay.home=/opt/dev/projects/github/liferay-portal/bundles
+
+prepare-portal-repository:
+
+reset-portal-repository:
+     [exec] HEAD is now at 34c7b98 LRQA-TEST Break compilation
+     [exec] From github.com:brianchandotcom/liferay-portal
+     [exec]  * branch            master-temp-20151014165358202 -> FETCH_HEAD
+     [exec] From github.com:brianchandotcom/liferay-portal
+     [exec]  * branch            master-temp-20151014165358202 -> FETCH_HEAD
+     [exec] Switched to a new branch 'temp-20151014165632640'
+     [exec] Switched to a new branch 'temp-20151014165632640'
+     [exec] From github.com:liferay/liferay-portal
+     [exec]  + 34c7b98...028f6c0 master     -> master  (forced update)
+     [exec] From github.com:liferay/liferay-portal
+     [exec]  + 34c7b98...028f6c0 master     -> master  (forced update)
+     [exec] Deleted branch temp-20151014165632640 (was 34c7b98).
+     [exec] Switched to branch 'master'
+     [exec] Switched to branch 'master'
+     [exec] commit 6c401eed4d2b55ce8555da44fa07613f52732e2e
+     [exec] Author: Michael Hashimoto <michael.hashimoto@liferay.com>
+     [exec] Date:   Wed Oct 14 15:41:52 2015 -0700
+     [exec] 
+     [exec]     LRQA-TEST Break compilation
+
+set-portal-app-server-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/app.server.cloud-10-0-19-181.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] app.server.parent.dir=/opt/dev/projects/github/liferay-portal/bundles
+     [echo] app.server.type=tomcat
+
+set-portal-build-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/build.cloud-10-0-19-181.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] jsp.precompile=on
+     [echo] liferay.home=/opt/dev/projects/github/liferay-portal/bundles
+     [echo] shell.executable=/bin/bash
+
+set-portal-impl-portal-test-ext-properties:
+Trying to override old definition of task antlib:ise.antelope.tasks:antcallback
+Trying to override old definition of task antlib:ise.antelope.tasks:antfetch
+Trying to override old definition of task antlib:ise.antelope.tasks:assert
+Trying to override old definition of task antlib:ise.antelope.tasks:bool
+Trying to override old definition of task antlib:ise.antelope.tasks:break
+Trying to override old definition of task antlib:ise.antelope.tasks:call
+Trying to override old definition of task antlib:ise.antelope.tasks:case
+Trying to override old definition of task antlib:ise.antelope.tasks:catch
+Trying to override old definition of task antlib:ise.antelope.tasks:default
+Trying to override old definition of task antlib:ise.antelope.tasks:else
+Trying to override old definition of task antlib:ise.antelope.tasks:fileutil
+Trying to override old definition of task antlib:ise.antelope.tasks:finally
+Trying to override old definition of task antlib:ise.antelope.tasks:find
+Trying to override old definition of task antlib:ise.antelope.tasks:foreach
+Trying to override old definition of task antlib:ise.antelope.tasks:grep
+Trying to override old definition of task antlib:ise.antelope.tasks:hostname
+Trying to override old definition of task antlib:ise.antelope.tasks:if
+Trying to override old definition of task antlib:ise.antelope.tasks:limit
+Trying to override old definition of task antlib:ise.antelope.tasks:math
+Trying to override old definition of task antlib:ise.antelope.tasks:new
+Trying to override old definition of task antlib:ise.antelope.tasks:pw
+Trying to override old definition of task antlib:ise.antelope.tasks:post
+Trying to override old definition of task antlib:ise.antelope.tasks:readlog
+Trying to override old definition of task antlib:ise.antelope.tasks:repeat
+Trying to override old definition of task antlib:ise.antelope.tasks:split
+Trying to override old definition of task antlib:ise.antelope.tasks:stopwatch
+Trying to override old definition of task antlib:ise.antelope.tasks:suite
+Trying to override old definition of task antlib:ise.antelope.tasks:stringutil
+Trying to override old definition of task antlib:ise.antelope.tasks:switch
+Trying to override old definition of task antlib:ise.antelope.tasks:testcase
+Trying to override old definition of task antlib:ise.antelope.tasks:try
+Trying to override old definition of task antlib:ise.antelope.tasks:uid
+Trying to override old definition of task antlib:ise.antelope.tasks:unset
+Trying to override old definition of task antlib:ise.antelope.tasks:until
+Trying to override old definition of task antlib:ise.antelope.tasks:var
+Trying to override old definition of task antlib:ise.antelope.tasks:xmlprop
+Trying to override old definition of datatype antlib:ise.antelope.tasks:prop
+Trying to override old definition of datatype antlib:ise.antelope.tasks:contains
+Trying to override old definition of datatype antlib:ise.antelope.tasks:datedifference
+Trying to override old definition of datatype antlib:ise.antelope.tasks:timedifference
+Trying to override old definition of datatype antlib:ise.antelope.tasks:datebefore
+Trying to override old definition of datatype antlib:ise.antelope.tasks:timebefore
+Trying to override old definition of datatype antlib:ise.antelope.tasks:islessthan
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isgreaterthan
+Trying to override old definition of datatype antlib:ise.antelope.tasks:mathequals
+Trying to override old definition of datatype antlib:ise.antelope.tasks:endswith
+Trying to override old definition of datatype antlib:ise.antelope.tasks:startswith
+Trying to override old definition of datatype antlib:ise.antelope.tasks:and
+Trying to override old definition of datatype antlib:ise.antelope.tasks:or
+Trying to override old definition of datatype antlib:ise.antelope.tasks:not
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lowercase
+Trying to override old definition of datatype antlib:ise.antelope.tasks:uppercase
+Trying to override old definition of datatype antlib:ise.antelope.tasks:trim
+Trying to override old definition of datatype antlib:ise.antelope.tasks:substring
+Trying to override old definition of datatype antlib:ise.antelope.tasks:replace
+Trying to override old definition of datatype antlib:ise.antelope.tasks:indexof
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lastindexof
+Trying to override old definition of datatype antlib:ise.antelope.tasks:length
+Trying to override old definition of datatype antlib:ise.antelope.tasks:messagebox
+Trying to override old definition of datatype antlib:ise.antelope.tasks:sort
+Trying to override old definition of datatype antlib:ise.antelope.tasks:canread
+Trying to override old definition of datatype antlib:ise.antelope.tasks:canwrite
+Trying to override old definition of datatype antlib:ise.antelope.tasks:filecount
+Trying to override old definition of datatype antlib:ise.antelope.tasks:filelength
+Trying to override old definition of datatype antlib:ise.antelope.tasks:linecount
+Trying to override old definition of datatype antlib:ise.antelope.tasks:listfiles
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isdirectory
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isfile
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lastmodified
+Trying to override old definition of task propertycopy
+Trying to override old definition of task shellscript
+Trying to override old definition of task pathtofileset
+Trying to override old definition of task runtarget
+Trying to override old definition of task remoteant
+Trying to override old definition of task propertyregex
+Trying to override old definition of task assert
+Trying to override old definition of task math
+Trying to override old definition of task trycatch
+Trying to override old definition of task antserver
+Trying to override old definition of task antcallback
+Trying to override old definition of task compilewithwalls
+Trying to override old definition of task outofdate
+Trying to override old definition of task osfamily
+Trying to override old definition of task stopwatch
+Trying to override old definition of task throw
+Trying to override old definition of task antclipse
+Trying to override old definition of task urlencode
+Trying to override old definition of task timestampselector
+Trying to override old definition of task foreach
+Trying to override old definition of task if
+Trying to override old definition of task propertyselector
+Trying to override old definition of task sortlist
+Trying to override old definition of task antfetch
+Trying to override old definition of task post
+Trying to override old definition of task forget
+Trying to override old definition of task limit
+Trying to override old definition of task switch
+Trying to override old definition of task relentless
+Trying to override old definition of task var
+Trying to override old definition of task inifile
+Trying to override old definition of task verifydesign
+Trying to override old definition of task for
+Trying to override old definition of datatype httpState
+Trying to override old definition of datatype httpClient
+Trying to override old definition of task getCookie
+Trying to override old definition of task addCookie
+Trying to override old definition of task clearCookies
+Trying to override old definition of task addCredentials
+Trying to override old definition of task clearCredentials
+Trying to override old definition of task purgeExpiredCookies
+Trying to override old definition of task postMethod
+Trying to override old definition of task getMethod
+Trying to override old definition of task headMethod
+Trying to override old definition of task importurl
+Trying to override old definition of task beanshell
+
+set-portal-impl-portal-test-ext-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/portal-impl/test/portal-test-ext.properties
+     [echo] ##
+     [echo] 
+     [echo] liferay.home=/opt/dev/projects/github/liferay-portal/bundles
+     [echo] 
+     [echo] jdbc.default.driverClassName=com.mysql.jdbc.Driver
+     [echo] jdbc.default.url=jdbc:mysql://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+     [echo] jdbc.default.username=root
+     [echo] jdbc.default.password=
+     [echo] 
+     [echo] jdbc.default.maximumPoolSize=20
+     [echo] jdbc.default.minimumIdle=0
+     [echo] 
+     [echo] jdbc.counter.maximumPoolSize=5
+     [echo] jdbc.counter.minimumIdle=0
+     [echo] 
+     [echo] counter.jdbc.prefix=jdbc.counter.
+     [echo] module.framework.base.dir=/opt/dev/projects/github/liferay-portal/bundles/osgi
+
+set-portal-release-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/release.cloud-10-0-19-181.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] lp.plugins.dir=/opt/dev/projects/github/liferay-plugins
+
+set-portal-sql-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/sql/sql.cloud-10-0-19-181.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] db2.executable=db2
+     [echo] mysql.arg.line=-u root
+     [echo] oracle.admin.password=liferay123
+     [echo] sybase.executable=/opt/sybase/OCS-16_0/bin/isql
+
+set-portal-test-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/test.cloud-10-0-19-181.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] 
+     [echo] 			
+     [echo] 				database.db2.password=I7Oen70215bieRR
+     [echo] database.postgresql.password=liferay123
+     [echo] database.sybase.password=liferay123
+     [echo] test.build.unit=true
+     [echo] test.jdbc.drivers.url=http://files.liferay.com/private/jdbc
+     [echo] 			
+     [echo] 		
+Trying to override old definition of task antlib:ise.antelope.tasks:antcallback
+Trying to override old definition of task antlib:ise.antelope.tasks:antfetch
+Trying to override old definition of task antlib:ise.antelope.tasks:assert
+Trying to override old definition of task antlib:ise.antelope.tasks:bool
+Trying to override old definition of task antlib:ise.antelope.tasks:break
+Trying to override old definition of task antlib:ise.antelope.tasks:call
+Trying to override old definition of task antlib:ise.antelope.tasks:case
+Trying to override old definition of task antlib:ise.antelope.tasks:catch
+Trying to override old definition of task antlib:ise.antelope.tasks:default
+Trying to override old definition of task antlib:ise.antelope.tasks:else
+Trying to override old definition of task antlib:ise.antelope.tasks:fileutil
+Trying to override old definition of task antlib:ise.antelope.tasks:finally
+Trying to override old definition of task antlib:ise.antelope.tasks:find
+Trying to override old definition of task antlib:ise.antelope.tasks:foreach
+Trying to override old definition of task antlib:ise.antelope.tasks:grep
+Trying to override old definition of task antlib:ise.antelope.tasks:hostname
+Trying to override old definition of task antlib:ise.antelope.tasks:if
+Trying to override old definition of task antlib:ise.antelope.tasks:limit
+Trying to override old definition of task antlib:ise.antelope.tasks:math
+Trying to override old definition of task antlib:ise.antelope.tasks:new
+Trying to override old definition of task antlib:ise.antelope.tasks:pw
+Trying to override old definition of task antlib:ise.antelope.tasks:post
+Trying to override old definition of task antlib:ise.antelope.tasks:readlog
+Trying to override old definition of task antlib:ise.antelope.tasks:repeat
+Trying to override old definition of task antlib:ise.antelope.tasks:split
+Trying to override old definition of task antlib:ise.antelope.tasks:stopwatch
+Trying to override old definition of task antlib:ise.antelope.tasks:suite
+Trying to override old definition of task antlib:ise.antelope.tasks:stringutil
+Trying to override old definition of task antlib:ise.antelope.tasks:switch
+Trying to override old definition of task antlib:ise.antelope.tasks:testcase
+Trying to override old definition of task antlib:ise.antelope.tasks:try
+Trying to override old definition of task antlib:ise.antelope.tasks:uid
+Trying to override old definition of task antlib:ise.antelope.tasks:unset
+Trying to override old definition of task antlib:ise.antelope.tasks:until
+Trying to override old definition of task antlib:ise.antelope.tasks:var
+Trying to override old definition of task antlib:ise.antelope.tasks:xmlprop
+Trying to override old definition of datatype antlib:ise.antelope.tasks:prop
+Trying to override old definition of datatype antlib:ise.antelope.tasks:contains
+Trying to override old definition of datatype antlib:ise.antelope.tasks:datedifference
+Trying to override old definition of datatype antlib:ise.antelope.tasks:timedifference
+Trying to override old definition of datatype antlib:ise.antelope.tasks:datebefore
+Trying to override old definition of datatype antlib:ise.antelope.tasks:timebefore
+Trying to override old definition of datatype antlib:ise.antelope.tasks:islessthan
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isgreaterthan
+Trying to override old definition of datatype antlib:ise.antelope.tasks:mathequals
+Trying to override old definition of datatype antlib:ise.antelope.tasks:endswith
+Trying to override old definition of datatype antlib:ise.antelope.tasks:startswith
+Trying to override old definition of datatype antlib:ise.antelope.tasks:and
+Trying to override old definition of datatype antlib:ise.antelope.tasks:or
+Trying to override old definition of datatype antlib:ise.antelope.tasks:not
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lowercase
+Trying to override old definition of datatype antlib:ise.antelope.tasks:uppercase
+Trying to override old definition of datatype antlib:ise.antelope.tasks:trim
+Trying to override old definition of datatype antlib:ise.antelope.tasks:substring
+Trying to override old definition of datatype antlib:ise.antelope.tasks:replace
+Trying to override old definition of datatype antlib:ise.antelope.tasks:indexof
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lastindexof
+Trying to override old definition of datatype antlib:ise.antelope.tasks:length
+Trying to override old definition of datatype antlib:ise.antelope.tasks:messagebox
+Trying to override old definition of datatype antlib:ise.antelope.tasks:sort
+Trying to override old definition of datatype antlib:ise.antelope.tasks:canread
+Trying to override old definition of datatype antlib:ise.antelope.tasks:canwrite
+Trying to override old definition of datatype antlib:ise.antelope.tasks:filecount
+Trying to override old definition of datatype antlib:ise.antelope.tasks:filelength
+Trying to override old definition of datatype antlib:ise.antelope.tasks:linecount
+Trying to override old definition of datatype antlib:ise.antelope.tasks:listfiles
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isdirectory
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isfile
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lastmodified
+Trying to override old definition of task propertycopy
+Trying to override old definition of task shellscript
+Trying to override old definition of task pathtofileset
+Trying to override old definition of task runtarget
+Trying to override old definition of task remoteant
+Trying to override old definition of task propertyregex
+Trying to override old definition of task assert
+Trying to override old definition of task math
+Trying to override old definition of task trycatch
+Trying to override old definition of task antserver
+Trying to override old definition of task antcallback
+Trying to override old definition of task compilewithwalls
+Trying to override old definition of task outofdate
+Trying to override old definition of task osfamily
+Trying to override old definition of task stopwatch
+Trying to override old definition of task throw
+Trying to override old definition of task antclipse
+Trying to override old definition of task urlencode
+Trying to override old definition of task timestampselector
+Trying to override old definition of task foreach
+Trying to override old definition of task if
+Trying to override old definition of task propertyselector
+Trying to override old definition of task sortlist
+Trying to override old definition of task antfetch
+Trying to override old definition of task post
+Trying to override old definition of task forget
+Trying to override old definition of task limit
+Trying to override old definition of task switch
+Trying to override old definition of task relentless
+Trying to override old definition of task var
+Trying to override old definition of task inifile
+Trying to override old definition of task verifydesign
+Trying to override old definition of task for
+Trying to override old definition of datatype httpState
+Trying to override old definition of datatype httpClient
+Trying to override old definition of task getCookie
+Trying to override old definition of task addCookie
+Trying to override old definition of task clearCookies
+Trying to override old definition of task addCredentials
+Trying to override old definition of task clearCredentials
+Trying to override old definition of task purgeExpiredCookies
+Trying to override old definition of task postMethod
+Trying to override old definition of task getMethod
+Trying to override old definition of task headMethod
+Trying to override old definition of task importurl
+Trying to override old definition of task beanshell
+
+integration-sybase:
+
+prepare-test-build:
+     [copy] Copying 1 file to /opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=1,label_exp=!master/builds/3975
+
+compile:
+    [unzip] Expanding: /opt/dev/projects/github/liferay-portal/tools/liferay-plugins-sdk-7.0.0.zip into /opt/dev/projects/github/liferay-portal/tools
+     [copy] Copying 1 file to /opt/dev/projects/github/liferay-portal/tools/sdk
+     [copy] Copying 1 file to /opt/dev/projects/github/liferay-portal/tools/sdk
+     [exec] Downloading file:/opt/dev/projects/github/liferay-portal/gradle/wrapper/../../tools/gradle-2.5.LIFERAY-PATCHED-1-bin.zip
+     [exec] .......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+     [exec] Unzipping /opt/dev/projects/github/liferay-portal/.gradle/wrapper/dists/gradle-2.5.LIFERAY-PATCHED-1-bin/c9ooym6l3m6j9fsiyxaxjee07/gradle-2.5.LIFERAY-PATCHED-1-bin.zip to /opt/dev/projects/github/liferay-portal/.gradle/wrapper/dists/gradle-2.5.LIFERAY-PATCHED-1-bin/c9ooym6l3m6j9fsiyxaxjee07
+     [exec] Set executable permissions for: /opt/dev/projects/github/liferay-portal/.gradle/wrapper/dists/gradle-2.5.LIFERAY-PATCHED-1-bin/c9ooym6l3m6j9fsiyxaxjee07/gradle-2.5/bin/gradle
+     [exec] Forced cache is enabled.
+     [exec] POM relocation to an other version number is not fully supported in Gradle : xml-apis#xml-apis;2.0.2 relocated to xml-apis#xml-apis;1.0.b2.
+     [exec] :setUpPortalTools
+     [exec] Please update your dependency to directly use the correct version 'xml-apis#xml-apis;1.0.b2'.
+     [exec] Resolution will only pick dependencies of the relocated element.  Artifacts and other metadata will be ignored.
+     [exec] 
+     [exec] BUILD SUCCESSFUL
+     [exec] 
+     [exec] Total time: 7.195 secs
+     [exec] Parallel execution with configuration on demand is an incubating feature.
+     [exec] Forced cache is enabled.
+     [exec] :frontend:frontend-common-css:buildBourbon
+     [exec] :core:registry-api:compileJava
+     [exec] :frontend:frontend-common-css:buildCssCommon
+     [exec] /opt/dev/projects/github/liferay-portal/modules/core/registry-api/src/com/liferay/registry/BasicRegistryImpl.java:41: error: package java.util.concurrents does not exist
+     [exec] import java.util.concurrents.TimeUnit;
+     [exec]                             ^
+     [exec] /opt/dev/projects/github/liferay-portal/modules/core/registry-api/src/com/liferay/registry/BasicRegistryImpl.java:885: error: cannot find symbol
+     [exec] 			_countDownLatch.await(timeout, TimeUnit.MILLISECONDS);
+     [exec] 			                               ^
+     [exec]   symbol:   variable TimeUnit
+     [exec]   location: class BasicRegistryImpl.BasicServiceTracker<S,T>
+     [exec]   where S,T are type-variables:
+     [exec]     S extends Object declared in class BasicRegistryImpl.BasicServiceTracker
+     [exec]     T extends Object declared in class BasicRegistryImpl.BasicServiceTracker
+     [exec] :core:registry-api:compileJava FAILED
+     [exec] 
+     [exec] BUILD FAILED
+     [exec] 
+     [exec] Total time: 14.713 secs
+     [exec] Note: Some input files use unchecked or unsafe operations.
+     [exec] Note: Recompile with -Xlint:unchecked for details.
+     [exec] 2 errors
+     [exec] 
+     [exec] FAILURE: Build failed with an exception.
+     [exec] 
+     [exec] * What went wrong:
+     [exec] Execution failed for task ':core:registry-api:compileJava'.
+     [exec] > Compilation failed; see the compiler error output for details.
+     [exec] 
+     [exec] * Try:
+     [exec] Run with --info or --debug option to get more log output.
+     [exec] 
+     [exec] * Exception is:
+     [exec] org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':core:registry-api:compileJava'.
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:69)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:46)
+     [exec] 	at org.gradle.api.internal.tasks.execution.PostExecutionAnalysisTaskExecuter.execute(PostExecutionAnalysisTaskExecuter.java:35)
+     [exec] 	at org.gradle.api.internal.tasks.execution.SkipUpToDateTaskExecuter.execute(SkipUpToDateTaskExecuter.java:64)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ValidatingTaskExecuter.execute(ValidatingTaskExecuter.java:58)
+     [exec] 	at org.gradle.api.internal.tasks.execution.SkipEmptySourceFilesTaskExecuter.execute(SkipEmptySourceFilesTaskExecuter.java:52)
+     [exec] 	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:52)
+     [exec] 	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:53)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteAtMostOnceTaskExecuter.execute(ExecuteAtMostOnceTaskExecuter.java:43)
+     [exec] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:208)
+     [exec] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:186)
+     [exec] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.processTask(AbstractTaskPlanExecutor.java:62)
+     [exec] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.run(AbstractTaskPlanExecutor.java:50)
+     [exec] 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:54)
+     [exec] 	at org.gradle.internal.concurrent.StoppableExecutorImpl$1.run(StoppableExecutorImpl.java:40)
+     [exec] Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Compilation failed; see the compiler error output for details.
+     [exec] 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:47)
+     [exec] 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:33)
+     [exec] 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.delegateAndHandleErrors(NormalizingJavaCompiler.java:101)
+     [exec] 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.execute(NormalizingJavaCompiler.java:50)
+     [exec] 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.execute(NormalizingJavaCompiler.java:36)
+     [exec] 	at org.gradle.api.internal.tasks.compile.CleaningJavaCompilerSupport.execute(CleaningJavaCompilerSupport.java:34)
+     [exec] 	at org.gradle.api.internal.tasks.compile.CleaningJavaCompilerSupport.execute(CleaningJavaCompilerSupport.java:25)
+     [exec] 	at org.gradle.api.tasks.compile.JavaCompile.performCompilation(JavaCompile.java:157)
+     [exec] 	at org.gradle.api.tasks.compile.JavaCompile.compile(JavaCompile.java:137)
+     [exec] 	at org.gradle.api.tasks.compile.JavaCompile.compile(JavaCompile.java:91)
+     [exec] 	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:75)
+     [exec] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$IncrementalTaskAction.doExecute(AnnotationProcessingTaskFactory.java:243)
+     [exec] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.execute(AnnotationProcessingTaskFactory.java:219)
+     [exec] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$IncrementalTaskAction.execute(AnnotationProcessingTaskFactory.java:230)
+     [exec] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.execute(AnnotationProcessingTaskFactory.java:208)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeAction(ExecuteActionsTaskExecuter.java:80)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:61)
+     [exec] 	... 14 more
+     [exec] 
+
+BUILD FAILED
+/opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-batch.xml:154: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-portal/build-test-batch.xml:1027: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-portal/build-test-batch.xml:866: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-portal/build-test-batch.xml:882: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-portal/build-test-batch.xml:709: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-portal/build-test.xml:5716: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-portal/build.xml:209: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-portal/build-common.xml:876: exec returned: 1
+
+Total time: 41 seconds
+Build step 'Execute shell' marked build as failure
+Recording test results
+Liferay patched class hudson.tasks.junit.JUnitResultArchiver
+[PostBuildScript] - Execution post build scripts.
+[liferay-jenkins-ee] $ /bin/bash /tmp/hudson6291277906882966647.sh
+Update the workspace repository for post-build steps.
+No rebase in progress?
+Switched to branch 'master-temp-883517733'
+Switched to branch 'master'
+Deleted branch master-temp-340964639 (was db64cf5).
+Deleted branch master-temp-883517733 (was db64cf5).
+Removing test-results/
+HEAD is now at 5372d7b LRQA-18095 Add in the missing attribute within the test file
+Rebase the workspace repository if needed for post-build steps.
+From github.com:michaelhashimoto/liferay-jenkins-ee
+ * [new branch]      master-qa-temp -> master-temp-157895597
+Switched to branch 'master-temp-157895597'
+Already on 'master-temp-157895597'
+Current branch master-temp-157895597 is up to date.
+Removing rebase.log
+HEAD is now at db64cf5 LRQA-Fix..
+Exit shell.
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson7846158116017793999.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-batch.sh stop-current-job'
+Execute: test-portal-acceptance-pullrequest-batch.sh stop-current-job
++ commands/build-test-portal-acceptance-pullrequest-batch.sh stop-current-job
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-batch.xml stop-current-job
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-batch.xml
+
+stop-current-job:
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
++ echo 'Exit shell.'
+Exit shell.
+[EnvInject] - Injecting environment variables from a build step.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1491/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=1,label_exp=!master/integration-sybase/stop.properties'
+[EnvInject] - Variables injected successfully.
+[description-setter] Description set: <strong>michaelhashimoto</strong> - <a href="https://github.com/michaelhashimoto/liferay-portal/pull/858">PR#858</a> - <a href="https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1491/jenkins-report.html">Jenkins Report</a>
+Finished: FAILURE

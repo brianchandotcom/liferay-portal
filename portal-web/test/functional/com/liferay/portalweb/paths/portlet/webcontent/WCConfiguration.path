@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WORKFLOW_STRUCTURES</td>
-	<td>//select[contains(@id,'JournalPortlet')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

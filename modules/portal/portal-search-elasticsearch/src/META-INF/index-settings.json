@@ -10,7 +10,7 @@
 				"asset_tag_name": {
 					"tokenizer": "whitespace",
 					"filter": [
-						"lowercase", "stop", "trim", "word_delimited"
+						"lowercase", "stop", "trim", "word_delimiter"
 					]
 				}
 			}

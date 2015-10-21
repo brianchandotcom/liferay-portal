@@ -58,6 +58,17 @@ public class DateUtil {
 		return false;
 	}
 
+	public static String formatDate(
+			String fromPattern, String dateString, Locale locale)
+		throws ParseException {
+
+		Date dateValue = parseDate(fromPattern, dateString, locale);
+
+		Format dateFormat = FastDateFormatFactoryUtil.getDate(locale);
+
+		return dateFormat.format(dateValue);
+	}
+
 	public static String getCurrentDate(String pattern, Locale locale) {
 		return getDate(new Date(), pattern, locale);
 	}
@@ -236,8 +247,22 @@ public class DateUtil {
 	public static Date parseDate(String dateString, Locale locale)
 		throws ParseException {
 
-		DateFormat dateFormat = DateFormat.getDateInstance(
-			DateFormat.SHORT, locale);
+		return parseDate(null, dateString, locale);
+	}
+
+	public static Date parseDate(
+			String pattern, String dateString, Locale locale)
+		throws ParseException {
+
+		DateFormat dateFormat = null;
+
+		if (Validator.isNull(pattern)) {
+			dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+		}
+		else {
+			dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				pattern, locale);
+		}
 
 		return dateFormat.parse(dateString);
 	}

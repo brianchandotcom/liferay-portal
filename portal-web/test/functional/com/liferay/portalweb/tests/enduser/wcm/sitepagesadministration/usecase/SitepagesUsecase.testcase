@@ -1203,7 +1203,7 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="pageTypeDescription" value="Google" />
+			<var name="pageTypeDescription" value="Link to another website." />
 			<var name="pageTypeURL" value="https://www.google.com/" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageName" value="Link to URL Page" />
@@ -1220,7 +1220,7 @@
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
 
 		<execute macro="SitePage#addCP">
-			<var name="pageTypeDescription" value="Is California on Fire?" />
+			<var name="pageTypeDescription" value="Show content from another website." />
 			<var name="pageTypeURL" value="http://iscaliforniaonfire.com/" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageName" value="Embedded Page" />

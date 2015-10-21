@@ -116,8 +116,6 @@ AUI.add(
 				);
 			},
 
-			syncVisibility: Lang.emptyFn,
-
 			validate: Lang.emptyFn,
 
 			validateSettings: function(callback) {

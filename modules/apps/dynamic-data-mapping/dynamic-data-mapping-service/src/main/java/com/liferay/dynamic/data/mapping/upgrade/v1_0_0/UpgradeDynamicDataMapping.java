@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -78,7 +80,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import java.text.DateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -267,7 +272,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		upgradeTemplatesAndAddTemplateVersions();
 		upgradeXMLStorageAdapter();
 
-		upgradeFileUploadReferences();
+		upgradeFieldTypeReferences();
 
 		upgradeStructurePermissions();
 		upgradeTemplatePermissions();
@@ -363,7 +368,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
 	}
 
-	protected void transformFileUploadDDMFormFields(
+	protected void transformFieldTypeDDMFormFields(
 			long groupId, long companyId, long userId, String userName,
 			Timestamp createDate, long entryId, String entryVersion,
 			DDMFormValues ddmFormValues)
@@ -376,6 +381,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			new FileUploadDDMFormFieldValueTransformer(
 				groupId, companyId, userId, userName, createDate, entryId,
 				entryVersion));
+		
+		ddmFormValuesTransformer.addTransformer(
+				new DateDDMFormFieldValueTransformer());
 
 		ddmFormValuesTransformer.transform();
 	}
@@ -467,7 +475,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"storageType = 'xml'");
 	}
 
-	protected void upgradeDDLFileUploadReferences() throws Exception {
+	protected void upgradeDDLFieldTypeReferences() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -507,7 +515,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					DDMFormValuesJSONDeserializerUtil.deserialize(
 						ddmForm, data_);
 
-				transformFileUploadDDMFormFields(
+				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
 					entryVersion, ddmFormValues);
 
@@ -519,7 +527,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeDLFileUploadReferences() throws Exception {
+	protected void upgradeDLFieldTypeReferences() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -562,7 +570,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					DDMFormValuesJSONDeserializerUtil.deserialize(
 						ddmForm, data_);
 
-				transformFileUploadDDMFormFields(
+				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
 					entryVersion, ddmFormValues);
 
@@ -574,9 +582,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeFileUploadReferences() throws Exception {
-		upgradeDDLFileUploadReferences();
-		upgradeDLFileUploadReferences();
+	protected void upgradeFieldTypeReferences() throws Exception {
+		upgradeDDLFieldTypeReferences();
+		upgradeDLFieldTypeReferences();
 	}
 
 	protected void upgradeStructureDefinition(
@@ -932,6 +940,40 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private final Map<Long, Long> _structureClassNameIds = new HashMap<>();
 	private final Map<Long, Long> _templateResourceClassNameIds =
 		new HashMap<>();
+
+	private class DateDDMFormFieldValueTransformer
+		implements DDMFormFieldValueTransformer {
+
+		@Override
+		public String getFieldType() {
+			return DDMImpl.TYPE_DDM_DATE;
+		}
+
+		@Override
+		public void transform(DDMFormFieldValue ddmFormFieldValue)
+			throws PortalException {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			for (Locale locale : value.getAvailableLocales()) {
+				String valueString = value.getString(locale);
+
+				if (Validator.isNull(valueString) ||
+					!Validator.isNumber(valueString)) {
+
+					continue;
+				}
+
+				Date dateValue = new Date(GetterUtil.getLong(valueString));
+
+				value.addString(locale, _dateFormat.format(dateValue));
+			}
+		}
+
+		private final DateFormat _dateFormat =
+			DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
+
+	}
 
 	private class DDMFormValuesXSDDeserializer {
 

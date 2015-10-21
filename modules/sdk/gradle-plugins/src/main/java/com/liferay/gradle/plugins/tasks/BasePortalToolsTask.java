@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.InputStream;
@@ -142,7 +143,7 @@ public abstract class BasePortalToolsTask extends JavaExec {
 
 	protected void doExec(List<String> args) {
 		super.setArgs(args);
-		super.setClasspath(getClasspath());
+		super.setClasspath(FileUtil.shrinkClasspath(project, getClasspath()));
 
 		super.exec();
 	}

@@ -205,6 +205,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					addArticleURL.setParameter("redirect", redirectURL.toString());
 					addArticleURL.setParameter("showHeader", Boolean.FALSE.toString());
 					addArticleURL.setParameter("portletResource", portletDisplay.getId());
+					addArticleURL.setParameter("referringPlid", String.valueOf(plid));
 					addArticleURL.setParameter("groupId", String.valueOf(scopeGroupId));
 
 					addArticleURL.setWindowState(LiferayWindowState.POP_UP);

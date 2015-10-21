@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -271,7 +272,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		String[] serviceSignaturesArray = serviceSignatures.split(
 			StringPool.NEW_LINE);
 
-		TreeSet<String> sortedServiceSignatures = new TreeSet<>();
+		Set<String> sortedServiceSignatures = new TreeSet<>();
 
 		for (String serviceSignature : serviceSignaturesArray) {
 			String[] serviceSignatureArray = serviceSignature.split(

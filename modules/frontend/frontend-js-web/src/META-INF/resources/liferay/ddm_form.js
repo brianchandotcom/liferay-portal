@@ -158,8 +158,7 @@ AUI.add(
 				var instance = this;
 
 				var config = {
-					data: {
-					},
+					data: {},
 					on: {
 						success: function(event, id, xhr) {
 							if (callback) {
@@ -169,7 +168,9 @@ AUI.add(
 					}
 				};
 
-				config.data[Liferay.Util.getPortletNamespace(Liferay.PortletKeys.DYNAMIC_DATA_MAPPING) + 'definition'] = JSON.stringify(instance.get('definition'));
+				var key = Liferay.Util.getPortletNamespace(Liferay.PortletKeys.DYNAMIC_DATA_MAPPING) + 'definition';
+
+				config.data[key] = JSON.stringify(instance.get('definition'));
 
 				A.io.request(instance._getTemplateResourceURL(), config);
 			},

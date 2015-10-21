@@ -239,6 +239,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_URL</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Site URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SMS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'SMS')]</td>
 	<td></td>

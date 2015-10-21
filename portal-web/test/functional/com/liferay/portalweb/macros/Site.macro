@@ -222,13 +222,13 @@
 	</command>
 
 	<command name="addVirtualHostsURLCP">
-		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
+		<execute function="AssertClick" locator1="NavListItem#SITE_URL" value1="Site URL" />
 
 		<if>
 			<isset var="publicVirtualHosts" />
 			<then>
 				<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL" value1="Public Pages" />
-				<execute function="Type" locator1="SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD" value1="${publicPageVirtualHostURL}" />
+				<execute function="Type" locator1="TextInput#PUBLIC_VIRTUAL_HOST_URL" value1="${publicPageVirtualHostURL}" />
 			</then>
 		</if>
 
@@ -236,7 +236,7 @@
 			<isset var="privateVirtualHosts" />
 			<then>
 				<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL" value1="Private Pages" />
-				<execute function="Type" locator1="SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_FIELD" value1="${privatePageVirtualHostURL}" />
+				<execute function="Type" locator1="TextInput#PRIVATE_VIRTUAL_HOST_URL" value1="${privatePageVirtualHostURL}" />
 			</then>
 		</if>
 
@@ -516,12 +516,12 @@
 	</command>
 
 	<command name="editFriendlyURLCP">
-		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
+		<execute function="AssertClick" locator1="NavListItem#SITE_URL" value1="Site URL" />
 		<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Type#mouseOverFocusType" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLEdit}" />
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<if>
@@ -529,7 +529,7 @@
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The friendly URL has too many slashes." />
-				<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLEdit}" />
+				<execute function="AssertTextEquals" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

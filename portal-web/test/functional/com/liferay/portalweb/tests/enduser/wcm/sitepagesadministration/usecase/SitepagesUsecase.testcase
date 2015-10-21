@@ -110,17 +110,16 @@
 	</command>
 
 	<command name="ChangingPageTypeLayoutToLinkToAPageOfThisSiteHidesChildPages" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -136,8 +135,8 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
@@ -160,9 +159,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_TO_PAGE" />
@@ -1185,17 +1183,16 @@
 	</command>
 
 	<command name="WebContentAdministrationSitesPageTypes" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Page Type Test Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Page Type Test Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">

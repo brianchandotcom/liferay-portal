@@ -76,10 +76,17 @@ public class DDMFormFactory {
 
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
-		Map<String, String> properties = ddmFormFactoryHelper.getProperties();
+		Map<String, Object> properties = ddmFormFactoryHelper.getProperties();
 
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			ddmFormField.setProperty(entry.getKey(), entry.getValue());
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+
+			if (ddmFormFactoryHelper.isLocalizableValue((String)value)) {
+				value = ddmFormFactoryHelper.getPropertyValue(value);
+			}
+
+			ddmFormField.setProperty(key, value);
 		}
 
 		ddmFormField.setDataType(

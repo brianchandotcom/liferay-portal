@@ -26,9 +26,7 @@
 
 		<execute macro="Bookmark#tearDownCP" />
 
-		<execute macro="DMDocument#tearDownCP">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="DMDocument#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>

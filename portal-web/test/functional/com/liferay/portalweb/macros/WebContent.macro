@@ -694,16 +694,6 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="${webContentTitle} is not approved." />
 	</command>
 
-	<command name="configureWebContentWorkflow">
-		<execute function="Click" locator1="Icon#INFO" />
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-		<execute function="Select" locator1="WCConfiguration#WORKFLOW_STRUCTURES" value1="${workflowDefinition}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
 	<command name="copyCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

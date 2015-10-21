@@ -243,33 +243,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void importData(ActionRequest actionRequest, String folderName)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(
-			groupId, themeDisplay.getUserId(), folderName);
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = _dlFileEntryLocalService.getFileAsStream(
-				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
-
-			importData(actionRequest, inputStream);
-
-			_importLayoutsMVCActionCommand.deleteTempFileEntry(
-				groupId, folderName);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
-	}
-
 	protected void importData(
 			ActionRequest actionRequest, InputStream inputStream)
 		throws Exception {
@@ -298,6 +271,33 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 		_exportImportService.importPortletInfoInBackground(
 			exportImportConfiguration, inputStream);
+	}
+
+	protected void importData(ActionRequest actionRequest, String folderName)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(
+			groupId, themeDisplay.getUserId(), folderName);
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = _dlFileEntryLocalService.getFileAsStream(
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+
+			importData(actionRequest, inputStream);
+
+			_importLayoutsMVCActionCommand.deleteTempFileEntry(
+				groupId, folderName);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 	@Reference

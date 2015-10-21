@@ -394,7 +394,7 @@ public class LDAPAuth implements Authenticator {
 		LDAPAuthConfiguration ldapAuthConfiguration =
 			_ldapAuthConfigurationProvider.getConfiguration(companyId);
 
-		if (ldapAuthConfiguration.enabled()) {
+		if (!ldapAuthConfiguration.enabled()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Authenticator is not enabled");
 			}

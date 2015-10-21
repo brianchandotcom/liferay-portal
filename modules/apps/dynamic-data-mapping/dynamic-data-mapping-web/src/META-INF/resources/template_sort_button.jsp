@@ -17,8 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/view_template.jsp");
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
+String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");
 
 long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 
@@ -28,6 +30,7 @@ if (resourceClassNameId == 0) {
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+long templateId = ParamUtil.getLong(request, "templateId");
 %>
 
 <li>
@@ -39,12 +42,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 <li class="<%= orderByType.equals("asc") ? "active" : StringPool.BLANK %>">
 	<portlet:renderURL var="orderByColAscURL">
-		<portlet:param name="mvcPath" value="/view_template.jsp" />
+		<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+		<portlet:param name="eventName" value="<%= eventName %>" />
 		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
 		<portlet:param name="orderByType" value="asc" />
+		<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
 	</portlet:renderURL>
 
 	<a class="btn hidden-xs" href="<%= orderByColAscURL %>"><span class="icon-caret-up icon-monospaced"></span></a>
@@ -52,12 +57,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 <li class="<%= orderByType.equals("desc") ? "active" : StringPool.BLANK %>">
 	<portlet:renderURL var="orderByColDescURL">
-		<portlet:param name="mvcPath" value="/view_template.jsp" />
+		<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+		<portlet:param name="eventName" value="<%= eventName %>" />
 		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
 		<portlet:param name="orderByType" value="desc" />
+		<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
 	</portlet:renderURL>
 
 	<a class="btn hidden-xs" href="<%= orderByColDescURL %>"><span class="icon-caret-down icon-monospaced"></span></a>
@@ -65,11 +72,13 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 <aui:script>
 	<portlet:renderURL var="orderByTypeURL">
-		<portlet:param name="mvcPath" value="/view_template.jsp" />
+		<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+		<portlet:param name="eventName" value="<%= eventName %>" />
 		<portlet:param name="orderByType" value="<%= orderByType %>" />
+		<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
 	</portlet:renderURL>
 
 	var orderByCol = $('#<portlet:namespace />orderByCol');

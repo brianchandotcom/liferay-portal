@@ -16,23 +16,31 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
+%>
+
+<liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>" />
+
 <liferay-frontend:management-bar
 	checkBoxContainerId="entriesContainer"
-	includeCheckBox="<%= !user.isDefaultUser() %>"
+	includeCheckBox="<%= includeCheckBox && !user.isDefaultUser() %>"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-util:include page="/template_sort_button.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-filters>
 
-	<liferay-frontend:management-bar-action-buttons>
+	<c:if test="<%= includeCheckBox %>">
+		<liferay-frontend:management-bar-action-buttons>
 
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteTemplates();";
-		%>
+			<%
+			String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteTemplates();";
+			%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" />
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" />
 
-	</liferay-frontend:management-bar-action-buttons>
+		</liferay-frontend:management-bar-action-buttons>
+	</c:if>
 
 </liferay-frontend:management-bar>
 

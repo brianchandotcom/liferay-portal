@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
+import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -36,7 +37,7 @@ public final class SummaryLoggerHandler {
 
 	public static void failSummary(Element element, String message) {
 		if (_isCurrentMajorStep(element)) {
-			_causeBodyLoggerElement.setText(message);
+			_causeBodyLoggerElement.setText(HtmlUtil.escape(message));
 
 			_failStepLoggerElement(_majorStepLoggerElement);
 
@@ -47,7 +48,7 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (_isCurrentMinorStep(element)) {
-			_causeBodyLoggerElement.setText(message);
+			_causeBodyLoggerElement.setText(HtmlUtil.escape(message));
 
 			_failStepLoggerElement(_minorStepLoggerElement);
 
@@ -515,7 +516,7 @@ public final class SummaryLoggerHandler {
 		if (summary != null) {
 			summary = PoshiRunnerVariablesUtil.replaceCommandVars(summary);
 
-			return _replaceCommandVars(summary, element);
+			return HtmlUtil.escape(_replaceCommandVars(summary, element));
 		}
 
 		return null;

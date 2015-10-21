@@ -75,12 +75,6 @@ public class BasePortletContainerTestCase {
 		serviceRegistrations.clear();
 	}
 
-	protected BundleContext getBundleContext() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		return bundle.getBundleContext();
-	}
-
 	protected void setUpPortlet(
 			Portlet portlet, Dictionary<String, Object> properties,
 			String portletName)
@@ -96,9 +90,11 @@ public class BasePortletContainerTestCase {
 
 		Assert.assertNotNull(properties);
 
-		BundleContext bundleContext = getBundleContext();
-
 		properties.put("javax.portlet.name", portletName);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		serviceRegistration = bundleContext.registerService(
 			new String[] {Object.class.getName(), Portlet.class.getName()},

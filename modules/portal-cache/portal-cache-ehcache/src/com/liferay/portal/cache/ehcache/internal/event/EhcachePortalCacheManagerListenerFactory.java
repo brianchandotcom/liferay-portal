@@ -14,11 +14,11 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
+import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.ehcache.EhcacheConstants;
 import com.liferay.portal.cache.ehcache.event.EhcachePortalCacheManagerListenerAdapter;
 import com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
-import com.liferay.portal.kernel.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

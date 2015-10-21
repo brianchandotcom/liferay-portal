@@ -193,6 +193,9 @@ public class PropsValues {
 	public static final String[] TEST_INCLUDE_DIR_NAMES = StringUtil.split(
 		PropsUtil.get("test.include.dir.names"));
 
+	public static final boolean TEST_PORTAL_INSTANCE = GetterUtil.getBoolean(
+		PropsUtil.get("test.portal.instance"));
+
 	public static final String TEST_POSHI_WARNINGS_FILE_NAME = PropsUtil.get(
 		"test.poshi.warnings.file.name");
 

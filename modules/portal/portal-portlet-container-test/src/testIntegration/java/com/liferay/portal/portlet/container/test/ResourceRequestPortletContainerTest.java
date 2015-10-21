@@ -123,8 +123,9 @@ public class ResourceRequestPortletContainerTest
 			"com.liferay.portlet.add-default-resource", Boolean.TRUE);
 		properties.put("com.liferay.portlet.system", Boolean.TRUE);
 
-		setUpPortlet(
-			new TestPortlet(map), properties, testTargetPortletId, false);
+		TestPortlet testTargetPortlet = new TestPortlet();
+
+		setUpPortlet(testTargetPortlet, properties, testTargetPortletId, false);
 
 		testPortlet = new TestPortlet() {
 
@@ -175,7 +176,7 @@ public class ResourceRequestPortletContainerTest
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
-		map.clear();
+		testTargetPortlet.reset();
 
 		// Make a resource request to the target portlet using the portlet
 		// authentication token
@@ -199,7 +200,7 @@ public class ResourceRequestPortletContainerTest
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("serveResource"));
+		Assert.assertTrue(testTargetPortlet.isResourceCalled());
 	}
 
 	@Test
@@ -220,7 +221,7 @@ public class ResourceRequestPortletContainerTest
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("serveResource"));
+		Assert.assertTrue(testPortlet.isResourceCalled());
 	}
 
 	@Test
@@ -257,8 +258,10 @@ public class ResourceRequestPortletContainerTest
 
 		String testRuntimePortletId = "testRuntimePortletId";
 
+		TestPortlet testRuntimePortlet = new TestPortlet();
+
 		setUpPortlet(
-			new TestPortlet(map), new HashMapDictionary<String, Object>(),
+			testRuntimePortlet, new HashMapDictionary<String, Object>(),
 			testRuntimePortletId, false);
 
 		portletURL.setParameter("testRuntimePortletId", testRuntimePortletId);
@@ -268,7 +271,7 @@ public class ResourceRequestPortletContainerTest
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("render"));
+		Assert.assertTrue(testRuntimePortlet.isRenderCalled());
 	}
 
 }

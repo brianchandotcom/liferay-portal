@@ -259,7 +259,7 @@ public class PortletContainerTestUtil {
 			}
 		}
 
-			responseMap.put("body", Arrays.asList(read(inputStream)));
+		responseMap.put("body", Arrays.asList(read(inputStream)));
 
 		return responseMap;
 	}

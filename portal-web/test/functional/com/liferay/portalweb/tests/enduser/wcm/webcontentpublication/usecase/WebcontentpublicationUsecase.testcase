@@ -70,16 +70,17 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<for list="Home,Documents and Media,News" param="sitePageName">
+			<execute macro="ProductMenu#gotoControlPanelSites">
+				<var name="portlet" value="Sites" />
+			</execute>
 
-		<execute macro="Organization#addPrivatePageToSiteViaSiteTemplateCP">
-			<var name="organizationSite" value="Intranet Site" />
-			<var name="orgName" value="Organization Name" />
-		</execute>
+			<execute macro="SitePage#addCP">
+				<var name="siteName" value="Organization Name" />
+				<var name="sitePageName" value="${sitePageName}" />
+				<var name="sitePagePrivacy" value="Private" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

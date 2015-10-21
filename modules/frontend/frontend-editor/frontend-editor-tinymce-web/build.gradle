@@ -19,7 +19,7 @@ buildTinyMCE {
 
 	duplicatesStrategy = "exclude"
 
-	from new File(editorsSrcDir, "tiny_mce_diffs")
+	from new File(editorsSrcDir, "_diffs")
 
 	from(zipTree(tinyMCEZipFile)) {
 		eachFile new StripPathSegmentsAction(3)

@@ -31,7 +31,7 @@ buildCKEditor {
 		include "ckeditor/**"
 	}
 
-	from new File(editorsSrcDir, "ckeditor_diffs")
+	from new File(editorsSrcDir, "_diffs")
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
 
@@ -41,7 +41,7 @@ buildCKEditor {
 }
 
 buildCKEditorBBCode {
-	File bbCodeDir = new File(editorsSrcDir, "ckeditor_diffs/plugins/bbcode")
+	File bbCodeDir = new File(editorsSrcDir, "_diffs/plugins/bbcode")
 
 	destinationFile = new File(bbCodeDir, "bbcode_parser.js")
 

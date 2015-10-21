@@ -266,7 +266,7 @@
 			getAvailableLangPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, "available_languages.jsp", jsLastModified) %>';
 			},
-			getCKEditorPath: function() {
+			getEditorCKEditorPath: function() {
 				return '<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>';
 			},
 			getCombine: function() {

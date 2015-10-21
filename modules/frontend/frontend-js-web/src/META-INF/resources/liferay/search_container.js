@@ -341,7 +341,7 @@ AUI.add(
 
 						instance._parentContainer.show();
 
-						if (instance._emptyResultsMessage != null) {
+						if (instance._emptyResultsMessage) {
 							instance._emptyResultsMessage.hide();
 						}
 					},
@@ -354,7 +354,7 @@ AUI.add(
 						if (instance._ids.length == 0) {
 							action = 'hide';
 
-							if (instance._emptyResultsMessage != null) {
+							if (instance._emptyResultsMessage) {
 								instance._emptyResultsMessage.show();
 							}
 						}

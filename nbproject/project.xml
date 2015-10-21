@@ -18,9 +18,9 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\core\registry-api\src</label>
+					<label>modules\core\registry-api\src\main\java</label>
 					<type>java</type>
-					<location>modules/core/registry-api/src</location>
+					<location>modules/core/registry-api/src/main/java</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>

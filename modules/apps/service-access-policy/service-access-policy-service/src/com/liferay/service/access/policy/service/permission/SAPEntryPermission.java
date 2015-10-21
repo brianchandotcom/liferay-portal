@@ -19,9 +19,10 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.service.access.policy.model.SAPEntry;
-import com.liferay.service.access.policy.service.SAPEntryLocalServiceUtil;
+import com.liferay.service.access.policy.service.SAPEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -61,7 +62,7 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		SAPEntry sapEntry = SAPEntryLocalServiceUtil.getSAPEntry(classPK);
+		SAPEntry sapEntry = _sapEntryLocalService.getSAPEntry(classPK);
 
 		return contains(permissionChecker, sapEntry, actionId);
 	}
@@ -82,5 +83,14 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 
 		check(permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setSAPEntryLocalService(
+		SAPEntryLocalService sapEntryLocalService) {
+
+		_sapEntryLocalService = sapEntryLocalService;
+	}
+
+	private static SAPEntryLocalService _sapEntryLocalService;
 
 }

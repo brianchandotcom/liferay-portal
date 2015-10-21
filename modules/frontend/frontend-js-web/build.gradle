@@ -77,15 +77,14 @@ buildJQueryPluginsForm {
 }
 
 buildLexicon {
-	File lexiconAssetsDestinationDir = new File(jsDestinationDir, "lexicon-assets")
 	File lexiconDestinationDir = new File(jsDestinationDir, "lexicon")
 	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
 
 	doFirst {
-		delete lexiconAssetsDestinationDir, lexiconDestinationDir
+		delete lexiconDestinationDir
 	}
 
-	eachFile new ReplaceLeadingPathAction("js": lexiconDestinationDir.name, "": lexiconAssetsDestinationDir.name)
+	eachFile new ReplaceLeadingPathAction("js": lexiconDestinationDir.name)
 	from zipTree(lexiconZipFile)
 	includeEmptyDirs = false
 	into jsDestinationDir

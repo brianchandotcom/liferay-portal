@@ -235,8 +235,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (e instanceof DuplicateLockException) {
 				DuplicateLockException dle = (DuplicateLockException)e;
 
-				SessionErrors.add(
-					actionRequest, dle.getClass(), dle.getLock());
+				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
 			}
 			else {
 				SessionErrors.add(actionRequest, e.getClass());

@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>SITE_TEMPLATE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[4]/div/a</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[4]/div/a/span</td>
 	<td></td>
 </tr>
 <tr>

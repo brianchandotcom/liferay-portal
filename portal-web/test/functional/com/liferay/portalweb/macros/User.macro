@@ -232,7 +232,7 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_TAB" value1="Personal site" />
+		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_TAB" value1="Personal Site" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_LABEL" value1="Personal site" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_PRIVATE_PAGES_LABEL" value1="Private Pages" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_PRIVATE_PAGES" value1="${siteTemplateName}" />

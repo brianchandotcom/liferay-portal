@@ -344,7 +344,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesDynamicTemplates" priority="4">
+	<command name="SitesDynamicTemplates" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -794,7 +794,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesTemplateResourceInheritance" priority="4">
+	<command name="SitesTemplateResourceInheritance" priority="3">
 		<property name="portlet.plugins.includes" value="tasks-portlet" />
 
 		<execute macro="Page#gotoCP">

@@ -35,10 +35,10 @@ public class ExportImportConfigurationSoap implements Serializable {
 		ExportImportConfiguration model) {
 		ExportImportConfigurationSoap soapModel = new ExportImportConfigurationSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setExportImportConfigurationId(model.getExportImportConfigurationId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -106,6 +106,14 @@ public class ExportImportConfigurationSoap implements Serializable {
 		setExportImportConfigurationId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -128,14 +136,6 @@ public class ExportImportConfigurationSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -234,10 +234,10 @@ public class ExportImportConfigurationSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _exportImportConfigurationId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

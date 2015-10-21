@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface MicroblogsEntryModel extends AuditedModel,
-	BaseModel<MicroblogsEntry> {
+	BaseModel<MicroblogsEntry>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,20 +66,6 @@ public interface MicroblogsEntryModel extends AuditedModel,
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the microblogs entry ID of this microblogs entry.
-	 *
-	 * @return the microblogs entry ID of this microblogs entry
-	 */
-	public long getMicroblogsEntryId();
-
-	/**
-	 * Sets the microblogs entry ID of this microblogs entry.
-	 *
-	 * @param microblogsEntryId the microblogs entry ID of this microblogs entry
-	 */
-	public void setMicroblogsEntryId(long microblogsEntryId);
-
-	/**
 	 * Returns the company ID of this microblogs entry.
 	 *
 	 * @return the company ID of this microblogs entry
@@ -93,6 +80,20 @@ public interface MicroblogsEntryModel extends AuditedModel,
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the microblogs entry ID of this microblogs entry.
+	 *
+	 * @return the microblogs entry ID of this microblogs entry
+	 */
+	public long getMicroblogsEntryId();
+
+	/**
+	 * Sets the microblogs entry ID of this microblogs entry.
+	 *
+	 * @param microblogsEntryId the microblogs entry ID of this microblogs entry
+	 */
+	public void setMicroblogsEntryId(long microblogsEntryId);
 
 	/**
 	 * Returns the user ID of this microblogs entry.

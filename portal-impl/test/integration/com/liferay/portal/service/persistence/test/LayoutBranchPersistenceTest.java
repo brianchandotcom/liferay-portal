@@ -117,11 +117,11 @@ public class LayoutBranchPersistenceTest {
 
 		LayoutBranch newLayoutBranch = _persistence.create(pk);
 
+		newLayoutBranch.setCompanyId(RandomTestUtil.nextLong());
+
 		newLayoutBranch.setMvccVersion(RandomTestUtil.nextLong());
 
 		newLayoutBranch.setGroupId(RandomTestUtil.nextLong());
-
-		newLayoutBranch.setCompanyId(RandomTestUtil.nextLong());
 
 		newLayoutBranch.setUserId(RandomTestUtil.nextLong());
 
@@ -141,14 +141,14 @@ public class LayoutBranchPersistenceTest {
 
 		LayoutBranch existingLayoutBranch = _persistence.findByPrimaryKey(newLayoutBranch.getPrimaryKey());
 
+		Assert.assertEquals(existingLayoutBranch.getCompanyId(),
+			newLayoutBranch.getCompanyId());
 		Assert.assertEquals(existingLayoutBranch.getMvccVersion(),
 			newLayoutBranch.getMvccVersion());
 		Assert.assertEquals(existingLayoutBranch.getLayoutBranchId(),
 			newLayoutBranch.getLayoutBranchId());
 		Assert.assertEquals(existingLayoutBranch.getGroupId(),
 			newLayoutBranch.getGroupId());
-		Assert.assertEquals(existingLayoutBranch.getCompanyId(),
-			newLayoutBranch.getCompanyId());
 		Assert.assertEquals(existingLayoutBranch.getUserId(),
 			newLayoutBranch.getUserId());
 		Assert.assertEquals(existingLayoutBranch.getUserName(),
@@ -221,11 +221,10 @@ public class LayoutBranchPersistenceTest {
 	}
 
 	protected OrderByComparator<LayoutBranch> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("LayoutBranch",
-			"mvccVersion", true, "layoutBranchId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true,
-			"layoutSetBranchId", true, "plid", true, "name", true,
-			"description", true, "master", true);
+		return OrderByComparatorFactoryUtil.create("LayoutBranch", "companyId",
+			true, "mvccVersion", true, "layoutBranchId", true, "groupId", true,
+			"userId", true, "userName", true, "layoutSetBranchId", true,
+			"plid", true, "name", true, "description", true, "master", true);
 	}
 
 	@Test
@@ -447,11 +446,11 @@ public class LayoutBranchPersistenceTest {
 
 		LayoutBranch layoutBranch = _persistence.create(pk);
 
+		layoutBranch.setCompanyId(RandomTestUtil.nextLong());
+
 		layoutBranch.setMvccVersion(RandomTestUtil.nextLong());
 
 		layoutBranch.setGroupId(RandomTestUtil.nextLong());
-
-		layoutBranch.setCompanyId(RandomTestUtil.nextLong());
 
 		layoutBranch.setUserId(RandomTestUtil.nextLong());
 

@@ -32,6 +32,7 @@ public class DDMStructureLinkSoap implements Serializable {
 	public static DDMStructureLinkSoap toSoapModel(DDMStructureLink model) {
 		DDMStructureLinkSoap soapModel = new DDMStructureLinkSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setStructureLinkId(model.getStructureLinkId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
@@ -90,6 +91,14 @@ public class DDMStructureLinkSoap implements Serializable {
 		setStructureLinkId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getStructureLinkId() {
 		return _structureLinkId;
 	}
@@ -122,6 +131,7 @@ public class DDMStructureLinkSoap implements Serializable {
 		_structureId = structureId;
 	}
 
+	private long _companyId;
 	private long _structureLinkId;
 	private long _classNameId;
 	private long _classPK;

@@ -117,6 +117,8 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		DLFileEntryMetadata newDLFileEntryMetadata = _persistence.create(pk);
 
+		newDLFileEntryMetadata.setCompanyId(RandomTestUtil.nextLong());
+
 		newDLFileEntryMetadata.setUuid(RandomTestUtil.randomString());
 
 		newDLFileEntryMetadata.setDDMStorageId(RandomTestUtil.nextLong());
@@ -131,6 +133,8 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.findByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
 
+		Assert.assertEquals(existingDLFileEntryMetadata.getCompanyId(),
+			newDLFileEntryMetadata.getCompanyId());
 		Assert.assertEquals(existingDLFileEntryMetadata.getUuid(),
 			newDLFileEntryMetadata.getUuid());
 		Assert.assertEquals(existingDLFileEntryMetadata.getFileEntryMetadataId(),
@@ -152,6 +156,15 @@ public class DLFileEntryMetadataPersistenceTest {
 		_persistence.countByUuid(StringPool.NULL);
 
 		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -200,8 +213,9 @@ public class DLFileEntryMetadataPersistenceTest {
 
 	protected OrderByComparator<DLFileEntryMetadata> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileEntryMetadata",
-			"uuid", true, "fileEntryMetadataId", true, "DDMStorageId", true,
-			"DDMStructureId", true, "fileEntryId", true, "fileVersionId", true);
+			"companyId", true, "uuid", true, "fileEntryMetadataId", true,
+			"DDMStorageId", true, "DDMStructureId", true, "fileEntryId", true,
+			"fileVersionId", true);
 	}
 
 	@Test
@@ -422,6 +436,8 @@ public class DLFileEntryMetadataPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DLFileEntryMetadata dlFileEntryMetadata = _persistence.create(pk);
+
+		dlFileEntryMetadata.setCompanyId(RandomTestUtil.nextLong());
 
 		dlFileEntryMetadata.setUuid(RandomTestUtil.randomString());
 

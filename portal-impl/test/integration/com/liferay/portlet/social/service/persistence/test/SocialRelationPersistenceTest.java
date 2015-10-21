@@ -117,9 +117,9 @@ public class SocialRelationPersistenceTest {
 
 		SocialRelation newSocialRelation = _persistence.create(pk);
 
-		newSocialRelation.setUuid(RandomTestUtil.randomString());
-
 		newSocialRelation.setCompanyId(RandomTestUtil.nextLong());
+
+		newSocialRelation.setUuid(RandomTestUtil.randomString());
 
 		newSocialRelation.setCreateDate(RandomTestUtil.nextLong());
 
@@ -133,12 +133,12 @@ public class SocialRelationPersistenceTest {
 
 		SocialRelation existingSocialRelation = _persistence.findByPrimaryKey(newSocialRelation.getPrimaryKey());
 
+		Assert.assertEquals(existingSocialRelation.getCompanyId(),
+			newSocialRelation.getCompanyId());
 		Assert.assertEquals(existingSocialRelation.getUuid(),
 			newSocialRelation.getUuid());
 		Assert.assertEquals(existingSocialRelation.getRelationId(),
 			newSocialRelation.getRelationId());
-		Assert.assertEquals(existingSocialRelation.getCompanyId(),
-			newSocialRelation.getCompanyId());
 		Assert.assertEquals(existingSocialRelation.getCreateDate(),
 			newSocialRelation.getCreateDate());
 		Assert.assertEquals(existingSocialRelation.getUserId1(),
@@ -258,9 +258,9 @@ public class SocialRelationPersistenceTest {
 	}
 
 	protected OrderByComparator<SocialRelation> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SocialRelation", "uuid",
-			true, "relationId", true, "companyId", true, "createDate", true,
-			"userId1", true, "userId2", true, "type", true);
+		return OrderByComparatorFactoryUtil.create("SocialRelation",
+			"companyId", true, "uuid", true, "relationId", true, "createDate",
+			true, "userId1", true, "userId2", true, "type", true);
 	}
 
 	@Test
@@ -479,9 +479,9 @@ public class SocialRelationPersistenceTest {
 
 		SocialRelation socialRelation = _persistence.create(pk);
 
-		socialRelation.setUuid(RandomTestUtil.randomString());
-
 		socialRelation.setCompanyId(RandomTestUtil.nextLong());
+
+		socialRelation.setUuid(RandomTestUtil.randomString());
 
 		socialRelation.setCreateDate(RandomTestUtil.nextLong());
 

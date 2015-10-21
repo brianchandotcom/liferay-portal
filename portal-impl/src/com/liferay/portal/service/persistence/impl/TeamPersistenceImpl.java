@@ -2755,6 +2755,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 		team.setUuid(uuid);
 
+		team.setCompanyId(0);
+
 		return team;
 	}
 
@@ -2981,10 +2983,10 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		teamImpl.setNew(team.isNew());
 		teamImpl.setPrimaryKey(team.getPrimaryKey());
 
+		teamImpl.setCompanyId(team.getCompanyId());
 		teamImpl.setMvccVersion(team.getMvccVersion());
 		teamImpl.setUuid(team.getUuid());
 		teamImpl.setTeamId(team.getTeamId());
-		teamImpl.setCompanyId(team.getCompanyId());
 		teamImpl.setUserId(team.getUserId());
 		teamImpl.setUserName(team.getUserName());
 		teamImpl.setCreateDate(team.getCreateDate());

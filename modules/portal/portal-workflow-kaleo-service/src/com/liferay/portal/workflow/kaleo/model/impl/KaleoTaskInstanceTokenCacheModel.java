@@ -67,12 +67,12 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 	public String toString() {
 		StringBundler sb = new StringBundler(39);
 
-		sb.append("{kaleoTaskInstanceTokenId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoTaskInstanceTokenId=");
 		sb.append(kaleoTaskInstanceTokenId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -114,9 +114,9 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 	public KaleoTaskInstanceToken toEntityModel() {
 		KaleoTaskInstanceTokenImpl kaleoTaskInstanceTokenImpl = new KaleoTaskInstanceTokenImpl();
 
+		kaleoTaskInstanceTokenImpl.setCompanyId(companyId);
 		kaleoTaskInstanceTokenImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
 		kaleoTaskInstanceTokenImpl.setGroupId(groupId);
-		kaleoTaskInstanceTokenImpl.setCompanyId(companyId);
 		kaleoTaskInstanceTokenImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -192,9 +192,9 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoTaskInstanceTokenId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -216,9 +216,9 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoTaskInstanceTokenId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -263,9 +263,9 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		}
 	}
 
+	public long companyId;
 	public long kaleoTaskInstanceTokenId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

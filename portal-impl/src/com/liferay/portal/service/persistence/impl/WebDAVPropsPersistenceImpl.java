@@ -460,6 +460,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		webDAVProps.setNew(true);
 		webDAVProps.setPrimaryKey(webDavPropsId);
 
+		webDAVProps.setCompanyId(0);
+
 		return webDAVProps;
 	}
 
@@ -627,9 +629,9 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		webDAVPropsImpl.setNew(webDAVProps.isNew());
 		webDAVPropsImpl.setPrimaryKey(webDAVProps.getPrimaryKey());
 
+		webDAVPropsImpl.setCompanyId(webDAVProps.getCompanyId());
 		webDAVPropsImpl.setMvccVersion(webDAVProps.getMvccVersion());
 		webDAVPropsImpl.setWebDavPropsId(webDAVProps.getWebDavPropsId());
-		webDAVPropsImpl.setCompanyId(webDAVProps.getCompanyId());
 		webDAVPropsImpl.setCreateDate(webDAVProps.getCreateDate());
 		webDAVPropsImpl.setModifiedDate(webDAVProps.getModifiedDate());
 		webDAVPropsImpl.setClassNameId(webDAVProps.getClassNameId());

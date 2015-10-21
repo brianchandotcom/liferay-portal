@@ -119,11 +119,11 @@ public class AssetVocabularyPersistenceTest {
 
 		AssetVocabulary newAssetVocabulary = _persistence.create(pk);
 
+		newAssetVocabulary.setCompanyId(RandomTestUtil.nextLong());
+
 		newAssetVocabulary.setUuid(RandomTestUtil.randomString());
 
 		newAssetVocabulary.setGroupId(RandomTestUtil.nextLong());
-
-		newAssetVocabulary.setCompanyId(RandomTestUtil.nextLong());
 
 		newAssetVocabulary.setUserId(RandomTestUtil.nextLong());
 
@@ -147,14 +147,14 @@ public class AssetVocabularyPersistenceTest {
 
 		AssetVocabulary existingAssetVocabulary = _persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey());
 
+		Assert.assertEquals(existingAssetVocabulary.getCompanyId(),
+			newAssetVocabulary.getCompanyId());
 		Assert.assertEquals(existingAssetVocabulary.getUuid(),
 			newAssetVocabulary.getUuid());
 		Assert.assertEquals(existingAssetVocabulary.getVocabularyId(),
 			newAssetVocabulary.getVocabularyId());
 		Assert.assertEquals(existingAssetVocabulary.getGroupId(),
 			newAssetVocabulary.getGroupId());
-		Assert.assertEquals(existingAssetVocabulary.getCompanyId(),
-			newAssetVocabulary.getCompanyId());
 		Assert.assertEquals(existingAssetVocabulary.getUserId(),
 			newAssetVocabulary.getUserId());
 		Assert.assertEquals(existingAssetVocabulary.getUserName(),
@@ -206,6 +206,13 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -215,13 +222,6 @@ public class AssetVocabularyPersistenceTest {
 	@Test
 	public void testCountByGroupIdArrayable() throws Exception {
 		_persistence.countByGroupId(new long[] { RandomTestUtil.nextLong(), 0L });
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -271,9 +271,9 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	protected OrderByComparator<AssetVocabulary> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("AssetVocabulary", "uuid",
-			true, "vocabularyId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+		return OrderByComparatorFactoryUtil.create("AssetVocabulary",
+			"companyId", true, "uuid", true, "vocabularyId", true, "groupId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "title", true, "description",
 			true, "settings", true, "lastPublishDate", true);
 	}
@@ -500,11 +500,11 @@ public class AssetVocabularyPersistenceTest {
 
 		AssetVocabulary assetVocabulary = _persistence.create(pk);
 
+		assetVocabulary.setCompanyId(RandomTestUtil.nextLong());
+
 		assetVocabulary.setUuid(RandomTestUtil.randomString());
 
 		assetVocabulary.setGroupId(RandomTestUtil.nextLong());
-
-		assetVocabulary.setCompanyId(RandomTestUtil.nextLong());
 
 		assetVocabulary.setUserId(RandomTestUtil.nextLong());
 

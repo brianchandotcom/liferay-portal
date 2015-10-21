@@ -34,10 +34,10 @@ public class UserSoap implements Serializable {
 	public static UserSoap toSoapModel(User model) {
 		UserSoap soapModel = new UserSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setUserId(model.getUserId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDefaultUser(model.getDefaultUser());
@@ -128,6 +128,14 @@ public class UserSoap implements Serializable {
 		setUserId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -150,14 +158,6 @@ public class UserSoap implements Serializable {
 
 	public void setUserId(long userId) {
 		_userId = userId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public Date getCreateDate() {
@@ -488,10 +488,10 @@ public class UserSoap implements Serializable {
 		_status = status;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private String _uuid;
 	private long _userId;
-	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _defaultUser;

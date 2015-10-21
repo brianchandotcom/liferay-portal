@@ -1324,6 +1324,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		userIdMapper.setNew(true);
 		userIdMapper.setPrimaryKey(userIdMapperId);
 
+		userIdMapper.setCompanyId(0);
+
 		return userIdMapper;
 	}
 
@@ -1488,6 +1490,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		userIdMapperImpl.setNew(userIdMapper.isNew());
 		userIdMapperImpl.setPrimaryKey(userIdMapper.getPrimaryKey());
 
+		userIdMapperImpl.setCompanyId(userIdMapper.getCompanyId());
 		userIdMapperImpl.setMvccVersion(userIdMapper.getMvccVersion());
 		userIdMapperImpl.setUserIdMapperId(userIdMapper.getUserIdMapperId());
 		userIdMapperImpl.setUserId(userIdMapper.getUserId());

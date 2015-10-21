@@ -124,9 +124,9 @@ public class SAPEntryPersistenceTest {
 
 		SAPEntry newSAPEntry = _persistence.create(pk);
 
-		newSAPEntry.setUuid(RandomTestUtil.randomString());
-
 		newSAPEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		newSAPEntry.setUuid(RandomTestUtil.randomString());
 
 		newSAPEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -150,11 +150,11 @@ public class SAPEntryPersistenceTest {
 
 		SAPEntry existingSAPEntry = _persistence.findByPrimaryKey(newSAPEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingSAPEntry.getCompanyId(),
+			newSAPEntry.getCompanyId());
 		Assert.assertEquals(existingSAPEntry.getUuid(), newSAPEntry.getUuid());
 		Assert.assertEquals(existingSAPEntry.getSapEntryId(),
 			newSAPEntry.getSapEntryId());
-		Assert.assertEquals(existingSAPEntry.getCompanyId(),
-			newSAPEntry.getCompanyId());
 		Assert.assertEquals(existingSAPEntry.getUserId(),
 			newSAPEntry.getUserId());
 		Assert.assertEquals(existingSAPEntry.getUserName(),
@@ -240,8 +240,8 @@ public class SAPEntryPersistenceTest {
 	}
 
 	protected OrderByComparator<SAPEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SAPEntry", "uuid", true,
-			"sapEntryId", true, "companyId", true, "userId", true, "userName",
+		return OrderByComparatorFactoryUtil.create("SAPEntry", "companyId",
+			true, "uuid", true, "sapEntryId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,
 			"allowedServiceSignatures", true, "defaultSAPEntry", true,
 			"enabled", true, "name", true, "title", true);
@@ -460,9 +460,9 @@ public class SAPEntryPersistenceTest {
 
 		SAPEntry sapEntry = _persistence.create(pk);
 
-		sapEntry.setUuid(RandomTestUtil.randomString());
-
 		sapEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		sapEntry.setUuid(RandomTestUtil.randomString());
 
 		sapEntry.setUserId(RandomTestUtil.nextLong());
 

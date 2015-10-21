@@ -2582,6 +2582,8 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 
 		app.setUuid(uuid);
 
+		app.setCompanyId(0);
+
 		return app;
 	}
 
@@ -2817,9 +2819,9 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		appImpl.setNew(app.isNew());
 		appImpl.setPrimaryKey(app.getPrimaryKey());
 
+		appImpl.setCompanyId(app.getCompanyId());
 		appImpl.setUuid(app.getUuid());
 		appImpl.setAppId(app.getAppId());
-		appImpl.setCompanyId(app.getCompanyId());
 		appImpl.setUserId(app.getUserId());
 		appImpl.setUserName(app.getUserName());
 		appImpl.setCreateDate(app.getCreateDate());

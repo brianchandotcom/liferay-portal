@@ -81,14 +81,14 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", layoutPrototypeId=");
 		sb.append(layoutPrototypeId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -116,6 +116,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 	public LayoutPrototype toEntityModel() {
 		LayoutPrototypeImpl layoutPrototypeImpl = new LayoutPrototypeImpl();
 
+		layoutPrototypeImpl.setCompanyId(companyId);
 		layoutPrototypeImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -126,7 +127,6 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		}
 
 		layoutPrototypeImpl.setLayoutPrototypeId(layoutPrototypeId);
-		layoutPrototypeImpl.setCompanyId(companyId);
 		layoutPrototypeImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -187,10 +187,10 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		layoutPrototypeId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -205,6 +205,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -215,7 +216,6 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		}
 
 		objectOutput.writeLong(layoutPrototypeId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -253,10 +253,10 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long layoutPrototypeId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

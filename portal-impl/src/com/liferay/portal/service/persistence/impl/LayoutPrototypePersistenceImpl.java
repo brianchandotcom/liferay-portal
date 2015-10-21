@@ -3938,6 +3938,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		layoutPrototype.setUuid(uuid);
 
+		layoutPrototype.setCompanyId(0);
+
 		return layoutPrototype;
 	}
 
@@ -4187,10 +4189,10 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		layoutPrototypeImpl.setNew(layoutPrototype.isNew());
 		layoutPrototypeImpl.setPrimaryKey(layoutPrototype.getPrimaryKey());
 
+		layoutPrototypeImpl.setCompanyId(layoutPrototype.getCompanyId());
 		layoutPrototypeImpl.setMvccVersion(layoutPrototype.getMvccVersion());
 		layoutPrototypeImpl.setUuid(layoutPrototype.getUuid());
 		layoutPrototypeImpl.setLayoutPrototypeId(layoutPrototype.getLayoutPrototypeId());
-		layoutPrototypeImpl.setCompanyId(layoutPrototype.getCompanyId());
 		layoutPrototypeImpl.setUserId(layoutPrototype.getUserId());
 		layoutPrototypeImpl.setUserName(layoutPrototype.getUserName());
 		layoutPrototypeImpl.setCreateDate(layoutPrototype.getCreateDate());

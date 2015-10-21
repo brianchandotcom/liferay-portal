@@ -33,10 +33,10 @@ public class MBThreadFlagSoap implements Serializable {
 	public static MBThreadFlagSoap toSoapModel(MBThreadFlag model) {
 		MBThreadFlagSoap soapModel = new MBThreadFlagSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setThreadFlagId(model.getThreadFlagId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -95,6 +95,14 @@ public class MBThreadFlagSoap implements Serializable {
 		setThreadFlagId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -117,14 +125,6 @@ public class MBThreadFlagSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -175,10 +175,10 @@ public class MBThreadFlagSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _threadFlagId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

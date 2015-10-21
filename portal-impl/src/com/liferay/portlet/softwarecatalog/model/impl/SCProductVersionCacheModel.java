@@ -68,10 +68,10 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{productVersionId=");
-		sb.append(productVersionId);
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(companyId);
+		sb.append(", productVersionId=");
+		sb.append(productVersionId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -101,8 +101,8 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 	public SCProductVersion toEntityModel() {
 		SCProductVersionImpl scProductVersionImpl = new SCProductVersionImpl();
 
-		scProductVersionImpl.setProductVersionId(productVersionId);
 		scProductVersionImpl.setCompanyId(companyId);
+		scProductVersionImpl.setProductVersionId(productVersionId);
 		scProductVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -165,8 +165,8 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		productVersionId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		productVersionId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -182,8 +182,8 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(productVersionId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(productVersionId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -228,8 +228,8 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 		objectOutput.writeBoolean(repoStoreArtifact);
 	}
 
-	public long productVersionId;
 	public long companyId;
+	public long productVersionId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -81,10 +81,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	 */
 	public static final String TABLE_NAME = "BookmarksEntry";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "entryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -106,10 +106,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -129,7 +129,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table BookmarksEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,url STRING null,description STRING null,visits INTEGER,priority INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table BookmarksEntry (companyId LONG,uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,url STRING null,description STRING null,visits INTEGER,priority INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table BookmarksEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY bookmarksEntry.folderId ASC, bookmarksEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BookmarksEntry.folderId ASC, BookmarksEntry.name ASC";
@@ -167,10 +167,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 		BookmarksEntry model = new BookmarksEntryImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -252,10 +252,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("entryId", getEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -282,6 +282,12 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -298,12 +304,6 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -409,6 +409,29 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -465,29 +488,6 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1047,10 +1047,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public Object clone() {
 		BookmarksEntryImpl bookmarksEntryImpl = new BookmarksEntryImpl();
 
+		bookmarksEntryImpl.setCompanyId(getCompanyId());
 		bookmarksEntryImpl.setUuid(getUuid());
 		bookmarksEntryImpl.setEntryId(getEntryId());
 		bookmarksEntryImpl.setGroupId(getGroupId());
-		bookmarksEntryImpl.setCompanyId(getCompanyId());
 		bookmarksEntryImpl.setUserId(getUserId());
 		bookmarksEntryImpl.setUserName(getUserName());
 		bookmarksEntryImpl.setCreateDate(getCreateDate());
@@ -1142,15 +1142,15 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public void resetOriginalValues() {
 		BookmarksEntryModelImpl bookmarksEntryModelImpl = this;
 
+		bookmarksEntryModelImpl._originalCompanyId = bookmarksEntryModelImpl._companyId;
+
+		bookmarksEntryModelImpl._setOriginalCompanyId = false;
+
 		bookmarksEntryModelImpl._originalUuid = bookmarksEntryModelImpl._uuid;
 
 		bookmarksEntryModelImpl._originalGroupId = bookmarksEntryModelImpl._groupId;
 
 		bookmarksEntryModelImpl._setOriginalGroupId = false;
-
-		bookmarksEntryModelImpl._originalCompanyId = bookmarksEntryModelImpl._companyId;
-
-		bookmarksEntryModelImpl._setOriginalCompanyId = false;
 
 		bookmarksEntryModelImpl._originalUserId = bookmarksEntryModelImpl._userId;
 
@@ -1177,6 +1177,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public CacheModel<BookmarksEntry> toCacheModel() {
 		BookmarksEntryCacheModel bookmarksEntryCacheModel = new BookmarksEntryCacheModel();
 
+		bookmarksEntryCacheModel.companyId = getCompanyId();
+
 		bookmarksEntryCacheModel.uuid = getUuid();
 
 		String uuid = bookmarksEntryCacheModel.uuid;
@@ -1188,8 +1190,6 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		bookmarksEntryCacheModel.entryId = getEntryId();
 
 		bookmarksEntryCacheModel.groupId = getGroupId();
-
-		bookmarksEntryCacheModel.companyId = getCompanyId();
 
 		bookmarksEntryCacheModel.userId = getUserId();
 
@@ -1296,14 +1296,14 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public String toString() {
 		StringBundler sb = new StringBundler(43);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", entryId=");
 		sb.append(getEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1352,6 +1352,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1362,10 +1366,6 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1445,15 +1445,15 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			BookmarksEntry.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

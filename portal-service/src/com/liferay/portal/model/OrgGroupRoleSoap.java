@@ -34,6 +34,7 @@ public class OrgGroupRoleSoap implements Serializable {
 	public static OrgGroupRoleSoap toSoapModel(OrgGroupRole model) {
 		OrgGroupRoleSoap soapModel = new OrgGroupRoleSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setOrganizationId(model.getOrganizationId());
 		soapModel.setGroupId(model.getGroupId());
@@ -92,6 +93,14 @@ public class OrgGroupRoleSoap implements Serializable {
 		setRoleId(pk.roleId);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -124,6 +133,7 @@ public class OrgGroupRoleSoap implements Serializable {
 		_roleId = roleId;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _organizationId;
 	private long _groupId;

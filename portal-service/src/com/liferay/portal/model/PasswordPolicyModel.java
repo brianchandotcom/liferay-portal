@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>, MVCCModel,
-	StagedAuditedModel {
+	PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>, MVCCMode
 	 * @param primaryKey the primary key of this password policy
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this password policy.
+	 *
+	 * @return the company ID of this password policy
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this password policy.
+	 *
+	 * @param companyId the company ID of this password policy
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this password policy.
@@ -107,22 +123,6 @@ public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>, MVCCMode
 	 * @param passwordPolicyId the password policy ID of this password policy
 	 */
 	public void setPasswordPolicyId(long passwordPolicyId);
-
-	/**
-	 * Returns the company ID of this password policy.
-	 *
-	 * @return the company ID of this password policy
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this password policy.
-	 *
-	 * @param companyId the company ID of this password policy
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this password policy.

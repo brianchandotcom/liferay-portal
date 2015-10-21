@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel {
+public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,6 +58,22 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel 
 	 * @param primaryKey the primary key of this resource block
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this resource block.
+	 *
+	 * @return the company ID of this resource block
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this resource block.
+	 *
+	 * @param companyId the company ID of this resource block
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this resource block.
@@ -87,20 +104,6 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel 
 	 * @param resourceBlockId the resource block ID of this resource block
 	 */
 	public void setResourceBlockId(long resourceBlockId);
-
-	/**
-	 * Returns the company ID of this resource block.
-	 *
-	 * @return the company ID of this resource block
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this resource block.
-	 *
-	 * @param companyId the company ID of this resource block
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the group ID of this resource block.

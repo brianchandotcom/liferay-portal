@@ -69,9 +69,9 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	 */
 	public static final String TABLE_NAME = "Marketplace_App";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "appId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -86,9 +86,9 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("appId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -101,7 +101,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (companyId LONG,uuid_ VARCHAR(75) null,appId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_App";
 	public static final String ORDER_BY_JPQL = " ORDER BY app.appId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Marketplace_App.appId ASC";
@@ -136,9 +136,9 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		App model = new AppImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setAppId(soapModel.getAppId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -213,9 +213,9 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("appId", getAppId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -235,6 +235,12 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -245,12 +251,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		if (appId != null) {
 			setAppId(appId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -314,6 +314,29 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -347,29 +370,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	@Override
 	public void setAppId(long appId) {
 		_appId = appId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -587,9 +587,9 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public Object clone() {
 		AppImpl appImpl = new AppImpl();
 
+		appImpl.setCompanyId(getCompanyId());
 		appImpl.setUuid(getUuid());
 		appImpl.setAppId(getAppId());
-		appImpl.setCompanyId(getCompanyId());
 		appImpl.setUserId(getUserId());
 		appImpl.setUserName(getUserName());
 		appImpl.setCreateDate(getCreateDate());
@@ -662,11 +662,11 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public void resetOriginalValues() {
 		AppModelImpl appModelImpl = this;
 
-		appModelImpl._originalUuid = appModelImpl._uuid;
-
 		appModelImpl._originalCompanyId = appModelImpl._companyId;
 
 		appModelImpl._setOriginalCompanyId = false;
+
+		appModelImpl._originalUuid = appModelImpl._uuid;
 
 		appModelImpl._setModifiedDate = false;
 
@@ -683,6 +683,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public CacheModel<App> toCacheModel() {
 		AppCacheModel appCacheModel = new AppCacheModel();
 
+		appCacheModel.companyId = getCompanyId();
+
 		appCacheModel.uuid = getUuid();
 
 		String uuid = appCacheModel.uuid;
@@ -692,8 +694,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		}
 
 		appCacheModel.appId = getAppId();
-
-		appCacheModel.companyId = getCompanyId();
 
 		appCacheModel.userId = getUserId();
 
@@ -772,12 +772,12 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", appId=");
 		sb.append(getAppId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -812,16 +812,16 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>appId</column-name><column-value><![CDATA[");
 		sb.append(getAppId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -873,12 +873,12 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			App.class
 		};
-	private String _uuid;
-	private String _originalUuid;
-	private long _appId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private String _uuid;
+	private String _originalUuid;
+	private long _appId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

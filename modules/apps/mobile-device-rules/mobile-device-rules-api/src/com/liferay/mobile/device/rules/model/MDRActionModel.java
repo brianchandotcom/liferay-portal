@@ -22,6 +22,7 @@ import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
-	LocalizedModel, StagedGroupedModel {
+	LocalizedModel, PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -68,6 +69,22 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param primaryKey the primary key of this m d r action
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this m d r action.
+	 *
+	 * @return the company ID of this m d r action
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this m d r action.
+	 *
+	 * @param companyId the company ID of this m d r action
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this m d r action.
@@ -115,22 +132,6 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this m d r action.
-	 *
-	 * @return the company ID of this m d r action
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this m d r action.
-	 *
-	 * @param companyId the company ID of this m d r action
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this m d r action.

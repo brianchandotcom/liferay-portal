@@ -68,12 +68,12 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
-		sb.append("{entryId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,9 +99,9 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	public TrashEntry toEntityModel() {
 		TrashEntryImpl trashEntryImpl = new TrashEntryImpl();
 
+		trashEntryImpl.setCompanyId(companyId);
 		trashEntryImpl.setEntryId(entryId);
 		trashEntryImpl.setGroupId(groupId);
-		trashEntryImpl.setCompanyId(companyId);
 		trashEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -138,9 +138,9 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		entryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -154,9 +154,9 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -181,9 +181,9 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		objectOutput.writeInt(status);
 	}
 
+	public long companyId;
 	public long entryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

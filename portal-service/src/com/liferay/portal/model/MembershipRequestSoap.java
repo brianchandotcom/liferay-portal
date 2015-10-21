@@ -34,10 +34,10 @@ public class MembershipRequestSoap implements Serializable {
 	public static MembershipRequestSoap toSoapModel(MembershipRequest model) {
 		MembershipRequestSoap soapModel = new MembershipRequestSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setMembershipRequestId(model.getMembershipRequestId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setComments(model.getComments());
@@ -100,6 +100,14 @@ public class MembershipRequestSoap implements Serializable {
 		setMembershipRequestId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -122,14 +130,6 @@ public class MembershipRequestSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -188,10 +188,10 @@ public class MembershipRequestSoap implements Serializable {
 		_statusId = statusId;
 	}
 
+	private long _companyId;
 	private long _mvccVersion;
 	private long _membershipRequestId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private Date _createDate;
 	private String _comments;

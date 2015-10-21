@@ -21,6 +21,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.MVCCModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -45,7 +46,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
-	GroupedModel, MVCCModel {
+	GroupedModel, MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,6 +66,22 @@ public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
 	 * @param primaryKey the primary key of this background task
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this background task.
+	 *
+	 * @return the company ID of this background task
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this background task.
+	 *
+	 * @param companyId the company ID of this background task
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this background task.
@@ -111,22 +128,6 @@ public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this background task.
-	 *
-	 * @return the company ID of this background task
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this background task.
-	 *
-	 * @param companyId the company ID of this background task
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this background task.

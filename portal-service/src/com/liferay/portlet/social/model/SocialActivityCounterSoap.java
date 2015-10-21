@@ -33,9 +33,9 @@ public class SocialActivityCounterSoap implements Serializable {
 		SocialActivityCounter model) {
 		SocialActivityCounterSoap soapModel = new SocialActivityCounterSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setActivityCounterId(model.getActivityCounterId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
@@ -101,6 +101,14 @@ public class SocialActivityCounterSoap implements Serializable {
 		setActivityCounterId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getActivityCounterId() {
 		return _activityCounterId;
 	}
@@ -115,14 +123,6 @@ public class SocialActivityCounterSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getClassNameId() {
@@ -209,9 +209,9 @@ public class SocialActivityCounterSoap implements Serializable {
 		_active = active;
 	}
 
+	private long _companyId;
 	private long _activityCounterId;
 	private long _groupId;
-	private long _companyId;
 	private long _classNameId;
 	private long _classPK;
 	private String _name;

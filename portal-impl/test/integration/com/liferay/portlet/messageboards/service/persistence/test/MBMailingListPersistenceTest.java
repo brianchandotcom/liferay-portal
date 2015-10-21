@@ -119,11 +119,11 @@ public class MBMailingListPersistenceTest {
 
 		MBMailingList newMBMailingList = _persistence.create(pk);
 
+		newMBMailingList.setCompanyId(RandomTestUtil.nextLong());
+
 		newMBMailingList.setUuid(RandomTestUtil.randomString());
 
 		newMBMailingList.setGroupId(RandomTestUtil.nextLong());
-
-		newMBMailingList.setCompanyId(RandomTestUtil.nextLong());
 
 		newMBMailingList.setUserId(RandomTestUtil.nextLong());
 
@@ -173,14 +173,14 @@ public class MBMailingListPersistenceTest {
 
 		MBMailingList existingMBMailingList = _persistence.findByPrimaryKey(newMBMailingList.getPrimaryKey());
 
+		Assert.assertEquals(existingMBMailingList.getCompanyId(),
+			newMBMailingList.getCompanyId());
 		Assert.assertEquals(existingMBMailingList.getUuid(),
 			newMBMailingList.getUuid());
 		Assert.assertEquals(existingMBMailingList.getMailingListId(),
 			newMBMailingList.getMailingListId());
 		Assert.assertEquals(existingMBMailingList.getGroupId(),
 			newMBMailingList.getGroupId());
-		Assert.assertEquals(existingMBMailingList.getCompanyId(),
-			newMBMailingList.getCompanyId());
 		Assert.assertEquals(existingMBMailingList.getUserId(),
 			newMBMailingList.getUserId());
 		Assert.assertEquals(existingMBMailingList.getUserName(),
@@ -294,9 +294,9 @@ public class MBMailingListPersistenceTest {
 	}
 
 	protected OrderByComparator<MBMailingList> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MBMailingList", "uuid",
-			true, "mailingListId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+		return OrderByComparatorFactoryUtil.create("MBMailingList",
+			"companyId", true, "uuid", true, "mailingListId", true, "groupId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "categoryId", true, "emailAddress", true,
 			"inProtocol", true, "inServerName", true, "inServerPort", true,
 			"inUseSSL", true, "inUserName", true, "inPassword", true,
@@ -528,11 +528,11 @@ public class MBMailingListPersistenceTest {
 
 		MBMailingList mbMailingList = _persistence.create(pk);
 
+		mbMailingList.setCompanyId(RandomTestUtil.nextLong());
+
 		mbMailingList.setUuid(RandomTestUtil.randomString());
 
 		mbMailingList.setGroupId(RandomTestUtil.nextLong());
-
-		mbMailingList.setCompanyId(RandomTestUtil.nextLong());
 
 		mbMailingList.setUserId(RandomTestUtil.nextLong());
 

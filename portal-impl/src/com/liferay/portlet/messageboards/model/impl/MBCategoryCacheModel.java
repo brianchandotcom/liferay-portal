@@ -68,14 +68,14 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 	public String toString() {
 		StringBundler sb = new StringBundler(41);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", categoryId=");
 		sb.append(categoryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -117,6 +117,8 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 	public MBCategory toEntityModel() {
 		MBCategoryImpl mbCategoryImpl = new MBCategoryImpl();
 
+		mbCategoryImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			mbCategoryImpl.setUuid(StringPool.BLANK);
 		}
@@ -126,7 +128,6 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 
 		mbCategoryImpl.setCategoryId(categoryId);
 		mbCategoryImpl.setGroupId(groupId);
-		mbCategoryImpl.setCompanyId(companyId);
 		mbCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -214,10 +215,10 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		categoryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -239,6 +240,8 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -248,7 +251,6 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 
 		objectOutput.writeLong(categoryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -300,10 +302,10 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long categoryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

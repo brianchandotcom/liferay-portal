@@ -4073,6 +4073,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 		emailAddress.setUuid(uuid);
 
+		emailAddress.setCompanyId(0);
+
 		return emailAddress;
 	}
 
@@ -4386,10 +4388,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		emailAddressImpl.setNew(emailAddress.isNew());
 		emailAddressImpl.setPrimaryKey(emailAddress.getPrimaryKey());
 
+		emailAddressImpl.setCompanyId(emailAddress.getCompanyId());
 		emailAddressImpl.setMvccVersion(emailAddress.getMvccVersion());
 		emailAddressImpl.setUuid(emailAddress.getUuid());
 		emailAddressImpl.setEmailAddressId(emailAddress.getEmailAddressId());
-		emailAddressImpl.setCompanyId(emailAddress.getCompanyId());
 		emailAddressImpl.setUserId(emailAddress.getUserId());
 		emailAddressImpl.setUserName(emailAddress.getUserName());
 		emailAddressImpl.setCreateDate(emailAddress.getCreateDate());

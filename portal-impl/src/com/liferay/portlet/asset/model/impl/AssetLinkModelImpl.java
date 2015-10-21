@@ -64,8 +64,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	 */
 	public static final String TABLE_NAME = "AssetLink";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "linkId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "linkId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -77,8 +77,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -88,7 +88,7 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		TABLE_COLUMNS_MAP.put("weight", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetLink (linkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetLink (companyId LONG,linkId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetLink.weight ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetLink.weight ASC";
@@ -148,8 +148,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("linkId", getLinkId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("linkId", getLinkId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -166,16 +166,16 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long linkId = (Long)attributes.get("linkId");
-
-		if (linkId != null) {
-			setLinkId(linkId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long linkId = (Long)attributes.get("linkId");
+
+		if (linkId != null) {
+			setLinkId(linkId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -222,16 +222,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	}
 
 	@Override
-	public long getLinkId() {
-		return _linkId;
-	}
-
-	@Override
-	public void setLinkId(long linkId) {
-		_linkId = linkId;
-	}
-
-	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -239,6 +229,16 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	@Override
+	public long getLinkId() {
+		return _linkId;
+	}
+
+	@Override
+	public void setLinkId(long linkId) {
+		_linkId = linkId;
 	}
 
 	@Override
@@ -401,8 +401,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public Object clone() {
 		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
 
-		assetLinkImpl.setLinkId(getLinkId());
 		assetLinkImpl.setCompanyId(getCompanyId());
+		assetLinkImpl.setLinkId(getLinkId());
 		assetLinkImpl.setUserId(getUserId());
 		assetLinkImpl.setUserName(getUserName());
 		assetLinkImpl.setCreateDate(getCreateDate());
@@ -497,9 +497,9 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public CacheModel<AssetLink> toCacheModel() {
 		AssetLinkCacheModel assetLinkCacheModel = new AssetLinkCacheModel();
 
-		assetLinkCacheModel.linkId = getLinkId();
-
 		assetLinkCacheModel.companyId = getCompanyId();
+
+		assetLinkCacheModel.linkId = getLinkId();
 
 		assetLinkCacheModel.userId = getUserId();
 
@@ -535,10 +535,10 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{linkId=");
-		sb.append(getLinkId());
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(getCompanyId());
+		sb.append(", linkId=");
+		sb.append(getLinkId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -567,12 +567,12 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>linkId</column-name><column-value><![CDATA[");
-		sb.append(getLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>linkId</column-name><column-value><![CDATA[");
+		sb.append(getLinkId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -612,8 +612,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetLink.class
 		};
-	private long _linkId;
 	private long _companyId;
+	private long _linkId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

@@ -1139,9 +1139,7 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldDataFormatted}" />
-			<var name="field" value="${field}" />
+		<execute macro="DDLRecord#viewGeolocationRecord">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 	</command>

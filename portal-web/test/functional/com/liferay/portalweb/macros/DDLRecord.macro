@@ -538,20 +538,6 @@
 		</if>
 
 		<if>
-			<equals arg1="${field}" arg2="Geolocation" />
-			<then>
-				<var method="selenium#getText('//div[@id=\'_167_ocerSearchContainer\']//tr/td[1]/a')" name="coordinates" />
-
-				<echo message="Location rounded coordinates: ${coordinates}" />
-
-				<var group="1" input="${coordinates}" name="latitude" pattern="Latitude: ([0.0-9.9]*), Longitude: ([-0.0-9.9]*)" />
-				<var group="2" input="${coordinates}" name="longitude" pattern="Latitude: ([0.0-9.9]*), Longitude: ([-0.0-9.9]*)" />
-
-				<var name="ddlRecordFieldData" value="Latitude: ${latitude}, Longitude: ${longitude}" />
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${field}" arg2="HTML" />
 			<then>
 				<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
@@ -614,6 +600,12 @@
 		<execute function="AssertClick" locator1="PGDynamicdatalists#RECORD_MENULIST_VIEW" value1="View" />
 
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+	</command>
+
+	<command name="viewGeolocationRecord">
+		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="Latitude:" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="Longitude:" />
 	</command>
 
 	<command name="viewRepeatableNestedFieldsVisualGrouping">

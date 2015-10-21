@@ -79,10 +79,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	 */
 	public static final String TABLE_NAME = "MDRAction";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "actionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -99,10 +99,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("actionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -117,7 +117,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MDRAction (uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MDRAction (companyId LONG,uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MDRAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY mdrAction.actionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MDRAction.actionId ASC";
@@ -152,10 +152,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 		MDRAction model = new MDRActionImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setActionId(soapModel.getActionId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -232,10 +232,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("actionId", getActionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -257,6 +257,12 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -273,12 +279,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -354,6 +354,29 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public String getUuid() {
@@ -410,29 +433,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -935,10 +935,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public Object clone() {
 		MDRActionImpl mdrActionImpl = new MDRActionImpl();
 
+		mdrActionImpl.setCompanyId(getCompanyId());
 		mdrActionImpl.setUuid(getUuid());
 		mdrActionImpl.setActionId(getActionId());
 		mdrActionImpl.setGroupId(getGroupId());
-		mdrActionImpl.setCompanyId(getCompanyId());
 		mdrActionImpl.setUserId(getUserId());
 		mdrActionImpl.setUserName(getUserName());
 		mdrActionImpl.setCreateDate(getCreateDate());
@@ -1013,15 +1013,15 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public void resetOriginalValues() {
 		MDRActionModelImpl mdrActionModelImpl = this;
 
+		mdrActionModelImpl._originalCompanyId = mdrActionModelImpl._companyId;
+
+		mdrActionModelImpl._setOriginalCompanyId = false;
+
 		mdrActionModelImpl._originalUuid = mdrActionModelImpl._uuid;
 
 		mdrActionModelImpl._originalGroupId = mdrActionModelImpl._groupId;
 
 		mdrActionModelImpl._setOriginalGroupId = false;
-
-		mdrActionModelImpl._originalCompanyId = mdrActionModelImpl._companyId;
-
-		mdrActionModelImpl._setOriginalCompanyId = false;
 
 		mdrActionModelImpl._setModifiedDate = false;
 
@@ -1036,6 +1036,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public CacheModel<MDRAction> toCacheModel() {
 		MDRActionCacheModel mdrActionCacheModel = new MDRActionCacheModel();
 
+		mdrActionCacheModel.companyId = getCompanyId();
+
 		mdrActionCacheModel.uuid = getUuid();
 
 		String uuid = mdrActionCacheModel.uuid;
@@ -1047,8 +1049,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		mdrActionCacheModel.actionId = getActionId();
 
 		mdrActionCacheModel.groupId = getGroupId();
-
-		mdrActionCacheModel.companyId = getCompanyId();
 
 		mdrActionCacheModel.userId = getUserId();
 
@@ -1132,14 +1132,14 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", actionId=");
 		sb.append(getActionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1178,6 +1178,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -1188,10 +1192,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1251,15 +1251,15 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			MDRAction.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _actionId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

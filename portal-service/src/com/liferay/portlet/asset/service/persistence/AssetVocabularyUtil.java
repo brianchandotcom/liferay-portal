@@ -504,6 +504,168 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
+	* Returns all the asset vocabularies where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching asset vocabularies
+	*/
+	public static List<AssetVocabulary> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the asset vocabularies where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of asset vocabularies
+	* @param end the upper bound of the range of asset vocabularies (not inclusive)
+	* @return the range of matching asset vocabularies
+	*/
+	public static List<AssetVocabulary> findByCompanyId(long companyId,
+		int start, int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the asset vocabularies where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of asset vocabularies
+	* @param end the upper bound of the range of asset vocabularies (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset vocabularies
+	*/
+	public static List<AssetVocabulary> findByCompanyId(long companyId,
+		int start, int end, OrderByComparator<AssetVocabulary> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the asset vocabularies where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of asset vocabularies
+	* @param end the upper bound of the range of asset vocabularies (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching asset vocabularies
+	*/
+	public static List<AssetVocabulary> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first asset vocabulary in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset vocabulary
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
+	*/
+	public static AssetVocabulary findByCompanyId_First(long companyId,
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first asset vocabulary in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
+	*/
+	public static AssetVocabulary fetchByCompanyId_First(long companyId,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset vocabulary in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset vocabulary
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
+	*/
+	public static AssetVocabulary findByCompanyId_Last(long companyId,
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset vocabulary in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
+	*/
+	public static AssetVocabulary fetchByCompanyId_Last(long companyId,
+		OrderByComparator<AssetVocabulary> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where companyId = &#63;.
+	*
+	* @param vocabularyId the primary key of the current asset vocabulary
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next asset vocabulary
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	*/
+	public static AssetVocabulary[] findByCompanyId_PrevAndNext(
+		long vocabularyId, long companyId,
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(vocabularyId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the asset vocabularies where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of asset vocabularies where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching asset vocabularies
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
 	* Returns all the asset vocabularies where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -871,168 +1033,6 @@ public class AssetVocabularyUtil {
 	*/
 	public static int filterCountByGroupId(long[] groupIds) {
 		return getPersistence().filterCountByGroupId(groupIds);
-	}
-
-	/**
-	* Returns all the asset vocabularies where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching asset vocabularies
-	*/
-	public static List<AssetVocabulary> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the asset vocabularies where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of asset vocabularies
-	* @param end the upper bound of the range of asset vocabularies (not inclusive)
-	* @return the range of matching asset vocabularies
-	*/
-	public static List<AssetVocabulary> findByCompanyId(long companyId,
-		int start, int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the asset vocabularies where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of asset vocabularies
-	* @param end the upper bound of the range of asset vocabularies (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching asset vocabularies
-	*/
-	public static List<AssetVocabulary> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator<AssetVocabulary> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the asset vocabularies where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of asset vocabularies
-	* @param end the upper bound of the range of asset vocabularies (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching asset vocabularies
-	*/
-	public static List<AssetVocabulary> findByCompanyId(long companyId,
-		int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	* Returns the first asset vocabulary in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching asset vocabulary
-	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	*/
-	public static AssetVocabulary findByCompanyId_First(long companyId,
-		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first asset vocabulary in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	*/
-	public static AssetVocabulary fetchByCompanyId_First(long companyId,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last asset vocabulary in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching asset vocabulary
-	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
-	*/
-	public static AssetVocabulary findByCompanyId_Last(long companyId,
-		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last asset vocabulary in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	*/
-	public static AssetVocabulary fetchByCompanyId_Last(long companyId,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where companyId = &#63;.
-	*
-	* @param vocabularyId the primary key of the current asset vocabulary
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next asset vocabulary
-	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	*/
-	public static AssetVocabulary[] findByCompanyId_PrevAndNext(
-		long vocabularyId, long companyId,
-		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(vocabularyId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the asset vocabularies where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of asset vocabularies where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching asset vocabularies
-	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

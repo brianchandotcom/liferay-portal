@@ -1,8 +1,8 @@
 create table PollsChoice (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	choiceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -14,10 +14,10 @@ create table PollsChoice (
 );
 
 create table PollsQuestion (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	questionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -30,10 +30,10 @@ create table PollsQuestion (
 );
 
 create table PollsVote (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	voteId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

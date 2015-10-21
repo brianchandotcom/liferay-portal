@@ -123,6 +123,8 @@ public class JournalArticleResourcePersistenceTest {
 
 		JournalArticleResource newJournalArticleResource = _persistence.create(pk);
 
+		newJournalArticleResource.setCompanyId(RandomTestUtil.nextLong());
+
 		newJournalArticleResource.setUuid(RandomTestUtil.randomString());
 
 		newJournalArticleResource.setGroupId(RandomTestUtil.nextLong());
@@ -134,6 +136,8 @@ public class JournalArticleResourcePersistenceTest {
 
 		JournalArticleResource existingJournalArticleResource = _persistence.findByPrimaryKey(newJournalArticleResource.getPrimaryKey());
 
+		Assert.assertEquals(existingJournalArticleResource.getCompanyId(),
+			newJournalArticleResource.getCompanyId());
 		Assert.assertEquals(existingJournalArticleResource.getUuid(),
 			newJournalArticleResource.getUuid());
 		Assert.assertEquals(existingJournalArticleResource.getResourcePrimKey(),
@@ -160,6 +164,15 @@ public class JournalArticleResourcePersistenceTest {
 		_persistence.countByUUID_G(StringPool.NULL, 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -203,8 +216,8 @@ public class JournalArticleResourcePersistenceTest {
 
 	protected OrderByComparator<JournalArticleResource> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalArticleResource",
-			"uuid", true, "resourcePrimKey", true, "groupId", true,
-			"articleId", true);
+			"companyId", true, "uuid", true, "resourcePrimKey", true,
+			"groupId", true, "articleId", true);
 	}
 
 	@Test
@@ -440,6 +453,8 @@ public class JournalArticleResourcePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		JournalArticleResource journalArticleResource = _persistence.create(pk);
+
+		journalArticleResource.setCompanyId(RandomTestUtil.nextLong());
 
 		journalArticleResource.setUuid(RandomTestUtil.randomString());
 

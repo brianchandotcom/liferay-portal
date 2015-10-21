@@ -1478,6 +1478,512 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "mbCategory.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(mbCategory.uuid IS NULL OR mbCategory.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "mbCategory.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] { Long.class.getName() },
+			MBCategoryModelImpl.COMPANYID_COLUMN_BITMASK |
+			MBCategoryModelImpl.PARENTCATEGORYID_COLUMN_BITMASK |
+			MBCategoryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			MBCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the message boards categories where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching message boards categories
+	 */
+	@Override
+	public List<MBCategory> findByCompanyId(long companyId) {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the message boards categories where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @return the range of matching message boards categories
+	 */
+	@Override
+	public List<MBCategory> findByCompanyId(long companyId, int start, int end) {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards categories where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards categories
+	 */
+	@Override
+	public List<MBCategory> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards categories where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards categories
+	 */
+	@Override
+	public List<MBCategory> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<MBCategory> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<MBCategory>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (MBCategory mbCategory : list) {
+					if ((companyId != mbCategory.getCompanyId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_MBCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(MBCategoryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<MBCategory>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<MBCategory>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first message boards category in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards category
+	 * @throws NoSuchCategoryException if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory findByCompanyId_First(long companyId,
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
+		MBCategory mbCategory = fetchByCompanyId_First(companyId,
+				orderByComparator);
+
+		if (mbCategory != null) {
+			return mbCategory;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCategoryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first message boards category in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory fetchByCompanyId_First(long companyId,
+		OrderByComparator<MBCategory> orderByComparator) {
+		List<MBCategory> list = findByCompanyId(companyId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last message boards category in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards category
+	 * @throws NoSuchCategoryException if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory findByCompanyId_Last(long companyId,
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
+		MBCategory mbCategory = fetchByCompanyId_Last(companyId,
+				orderByComparator);
+
+		if (mbCategory != null) {
+			return mbCategory;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCategoryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last message boards category in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory fetchByCompanyId_Last(long companyId,
+		OrderByComparator<MBCategory> orderByComparator) {
+		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<MBCategory> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63;.
+	 *
+	 * @param categoryId the primary key of the current message boards category
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message boards category
+	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
+	 */
+	@Override
+	public MBCategory[] findByCompanyId_PrevAndNext(long categoryId,
+		long companyId, OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
+		MBCategory mbCategory = findByPrimaryKey(categoryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBCategory[] array = new MBCategoryImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, mbCategory,
+					companyId, orderByComparator, true);
+
+			array[1] = mbCategory;
+
+			array[2] = getByCompanyId_PrevAndNext(session, mbCategory,
+					companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBCategory getByCompanyId_PrevAndNext(Session session,
+		MBCategory mbCategory, long companyId,
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MBCATEGORY_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(MBCategoryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(mbCategory);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBCategory> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the message boards categories where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	@Override
+	public void removeByCompanyId(long companyId) {
+		for (MBCategory mbCategory : findByCompanyId(companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(mbCategory);
+		}
+	}
+
+	/**
+	 * Returns the number of message boards categories where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching message boards categories
+	 */
+	@Override
+	public int countByCompanyId(long companyId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_MBCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "mbCategory.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
@@ -2335,85 +2841,89 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "mbCategory.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
-				Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() },
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+			new String[] { Long.class.getName(), Integer.class.getName() },
 			MBCategoryModelImpl.COMPANYID_COLUMN_BITMASK |
+			MBCategoryModelImpl.STATUS_COLUMN_BITMASK |
 			MBCategoryModelImpl.PARENTCATEGORYID_COLUMN_BITMASK |
 			MBCategoryModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_S = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] { Long.class.getName(), Integer.class.getName() });
 
 	/**
-	 * Returns all the message boards categories where companyId = &#63;.
+	 * Returns all the message boards categories where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @return the matching message boards categories
 	 */
 	@Override
-	public List<MBCategory> findByCompanyId(long companyId) {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+	public List<MBCategory> findByC_S(long companyId, int status) {
+		return findByC_S(companyId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the message boards categories where companyId = &#63;.
+	 * Returns a range of all the message boards categories where companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @return the range of matching message boards categories
 	 */
 	@Override
-	public List<MBCategory> findByCompanyId(long companyId, int start, int end) {
-		return findByCompanyId(companyId, start, end, null);
+	public List<MBCategory> findByC_S(long companyId, int status, int start,
+		int end) {
+		return findByC_S(companyId, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the message boards categories where companyId = &#63;.
+	 * Returns an ordered range of all the message boards categories where companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
-	public List<MBCategory> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	public List<MBCategory> findByC_S(long companyId, int status, int start,
+		int end, OrderByComparator<MBCategory> orderByComparator) {
+		return findByC_S(companyId, status, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the message boards categories where companyId = &#63;.
+	 * Returns an ordered range of all the message boards categories where companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2421,8 +2931,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
-	public List<MBCategory> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
+	public List<MBCategory> findByC_S(long companyId, int status, int start,
+		int end, OrderByComparator<MBCategory> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2431,12 +2941,16 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S;
+			finderArgs = new Object[] { companyId, status };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S;
+			finderArgs = new Object[] {
+					companyId, status,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<MBCategory> list = null;
@@ -2447,7 +2961,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBCategory mbCategory : list) {
-					if ((companyId != mbCategory.getCompanyId())) {
+					if ((companyId != mbCategory.getCompanyId()) ||
+							(status != mbCategory.getStatus())) {
 						list = null;
 
 						break;
@@ -2460,16 +2975,18 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_MBCATEGORY_WHERE);
 
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2492,6 +3009,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(companyId);
+
+				qPos.add(status);
 
 				if (!pagination) {
 					list = (List<MBCategory>)QueryUtil.list(q, getDialect(),
@@ -2524,30 +3043,34 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	/**
-	 * Returns the first message boards category in the ordered set where companyId = &#63;.
+	 * Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message boards category
 	 * @throws NoSuchCategoryException if a matching message boards category could not be found
 	 */
 	@Override
-	public MBCategory findByCompanyId_First(long companyId,
+	public MBCategory findByC_S_First(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
-		MBCategory mbCategory = fetchByCompanyId_First(companyId,
+		MBCategory mbCategory = fetchByC_S_First(companyId, status,
 				orderByComparator);
 
 		if (mbCategory != null) {
 			return mbCategory;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("companyId=");
 		msg.append(companyId);
+
+		msg.append(", status=");
+		msg.append(status);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -2555,16 +3078,17 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	/**
-	 * Returns the first message boards category in the ordered set where companyId = &#63;.
+	 * Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
 	@Override
-	public MBCategory fetchByCompanyId_First(long companyId,
+	public MBCategory fetchByC_S_First(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator) {
-		List<MBCategory> list = findByCompanyId(companyId, 0, 1,
+		List<MBCategory> list = findByC_S(companyId, status, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2575,30 +3099,34 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63;.
+	 * Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching message boards category
 	 * @throws NoSuchCategoryException if a matching message boards category could not be found
 	 */
 	@Override
-	public MBCategory findByCompanyId_Last(long companyId,
+	public MBCategory findByC_S_Last(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
-		MBCategory mbCategory = fetchByCompanyId_Last(companyId,
+		MBCategory mbCategory = fetchByC_S_Last(companyId, status,
 				orderByComparator);
 
 		if (mbCategory != null) {
 			return mbCategory;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("companyId=");
 		msg.append(companyId);
+
+		msg.append(", status=");
+		msg.append(status);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -2606,22 +3134,23 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63;.
+	 * Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
 	@Override
-	public MBCategory fetchByCompanyId_Last(long companyId,
+	public MBCategory fetchByC_S_Last(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator) {
-		int count = countByCompanyId(companyId);
+		int count = countByC_S(companyId, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<MBCategory> list = findByCompanyId(companyId, count - 1, count,
+		List<MBCategory> list = findByC_S(companyId, status, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2632,17 +3161,18 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63;.
+	 * Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63; and status = &#63;.
 	 *
 	 * @param categoryId the primary key of the current message boards category
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next message boards category
 	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
 	 */
 	@Override
-	public MBCategory[] findByCompanyId_PrevAndNext(long categoryId,
-		long companyId, OrderByComparator<MBCategory> orderByComparator)
+	public MBCategory[] findByC_S_PrevAndNext(long categoryId, long companyId,
+		int status, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
@@ -2653,13 +3183,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			MBCategory[] array = new MBCategoryImpl[3];
 
-			array[0] = getByCompanyId_PrevAndNext(session, mbCategory,
-					companyId, orderByComparator, true);
+			array[0] = getByC_S_PrevAndNext(session, mbCategory, companyId,
+					status, orderByComparator, true);
 
 			array[1] = mbCategory;
 
-			array[2] = getByCompanyId_PrevAndNext(session, mbCategory,
-					companyId, orderByComparator, false);
+			array[2] = getByC_S_PrevAndNext(session, mbCategory, companyId,
+					status, orderByComparator, false);
 
 			return array;
 		}
@@ -2671,8 +3201,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		}
 	}
 
-	protected MBCategory getByCompanyId_PrevAndNext(Session session,
-		MBCategory mbCategory, long companyId,
+	protected MBCategory getByC_S_PrevAndNext(Session session,
+		MBCategory mbCategory, long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -2686,7 +3216,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		query.append(_SQL_SELECT_MBCATEGORY_WHERE);
 
-		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+		query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2758,6 +3290,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		qPos.add(companyId);
 
+		qPos.add(status);
+
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(mbCategory);
 
@@ -2777,38 +3311,42 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	/**
-	 * Removes all the message boards categories where companyId = &#63; from the database.
+	 * Removes all the message boards categories where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 */
 	@Override
-	public void removeByCompanyId(long companyId) {
-		for (MBCategory mbCategory : findByCompanyId(companyId,
+	public void removeByC_S(long companyId, int status) {
+		for (MBCategory mbCategory : findByC_S(companyId, status,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(mbCategory);
 		}
 	}
 
 	/**
-	 * Returns the number of message boards categories where companyId = &#63;.
+	 * Returns the number of message boards categories where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
+	 * @param status the status
 	 * @return the number of matching message boards categories
 	 */
 	@Override
-	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+	public int countByC_S(long companyId, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S;
 
-		Object[] finderArgs = new Object[] { companyId };
+		Object[] finderArgs = new Object[] { companyId, status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_MBCATEGORY_WHERE);
 
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 			String sql = query.toString();
 
@@ -2822,6 +3360,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(companyId);
+
+				qPos.add(status);
 
 				count = (Long)q.uniqueResult();
 
@@ -2840,7 +3380,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "mbCategory.companyId = ?";
+	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "mbCategory.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "mbCategory.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
@@ -5181,547 +5722,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	private static final String _FINDER_COLUMN_G_S_GROUPID_2 = "mbCategory.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_S_STATUS_2 = "mbCategory.status = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			MBCategoryModelImpl.COMPANYID_COLUMN_BITMASK |
-			MBCategoryModelImpl.STATUS_COLUMN_BITMASK |
-			MBCategoryModelImpl.PARENTCATEGORYID_COLUMN_BITMASK |
-			MBCategoryModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_S = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-			MBCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] { Long.class.getName(), Integer.class.getName() });
-
-	/**
-	 * Returns all the message boards categories where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByC_S(long companyId, int status) {
-		return findByC_S(companyId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards categories where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @return the range of matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByC_S(long companyId, int status, int start,
-		int end) {
-		return findByC_S(companyId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByC_S(long companyId, int status, int start,
-		int end, OrderByComparator<MBCategory> orderByComparator) {
-		return findByC_S(companyId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByC_S(long companyId, int status, int start,
-		int end, OrderByComparator<MBCategory> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S;
-			finderArgs = new Object[] { companyId, status };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S;
-			finderArgs = new Object[] {
-					companyId, status,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<MBCategory> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<MBCategory>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((companyId != mbCategory.getCompanyId()) ||
-							(status != mbCategory.getStatus())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(status);
-
-				if (!pagination) {
-					list = (List<MBCategory>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<MBCategory>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByC_S_First(long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-		MBCategory mbCategory = fetchByC_S_First(companyId, status,
-				orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCategoryException(msg.toString());
-	}
-
-	/**
-	 * Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByC_S_First(long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-		List<MBCategory> list = findByC_S(companyId, status, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category
-	 * @throws NoSuchCategoryException if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory findByC_S_Last(long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-		MBCategory mbCategory = fetchByC_S_Last(companyId, status,
-				orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCategoryException(msg.toString());
-	}
-
-	/**
-	 * Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchByC_S_Last(long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator) {
-		int count = countByC_S(companyId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<MBCategory> list = findByC_S(companyId, status, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	@Override
-	public MBCategory[] findByC_S_PrevAndNext(long categoryId, long companyId,
-		int status, OrderByComparator<MBCategory> orderByComparator)
-		throws NoSuchCategoryException {
-		MBCategory mbCategory = findByPrimaryKey(categoryId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBCategory[] array = new MBCategoryImpl[3];
-
-			array[0] = getByC_S_PrevAndNext(session, mbCategory, companyId,
-					status, orderByComparator, true);
-
-			array[1] = mbCategory;
-
-			array[2] = getByC_S_PrevAndNext(session, mbCategory, companyId,
-					status, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected MBCategory getByC_S_PrevAndNext(Session session,
-		MBCategory mbCategory, long companyId, int status,
-		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-		query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-		query.append(_FINDER_COLUMN_C_S_STATUS_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(companyId);
-
-		qPos.add(status);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(mbCategory);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<MBCategory> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the message boards categories where companyId = &#63; and status = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 */
-	@Override
-	public void removeByC_S(long companyId, int status) {
-		for (MBCategory mbCategory : findByC_S(companyId, status,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(mbCategory);
-		}
-	}
-
-	/**
-	 * Returns the number of message boards categories where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the number of matching message boards categories
-	 */
-	@Override
-	public int countByC_S(long companyId, int status) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S;
-
-		Object[] finderArgs = new Object[] { companyId, status };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_S_STATUS_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(status);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "mbCategory.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "mbCategory.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_NOTC_G_P = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByNotC_G_P",
@@ -9947,6 +9947,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		mbCategory.setUuid(uuid);
 
+		mbCategory.setCompanyId(0);
+
 		return mbCategory;
 	}
 
@@ -10137,6 +10139,23 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			}
 
 			if ((mbCategoryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						mbCategoryModelImpl.getOriginalCompanyId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] { mbCategoryModelImpl.getCompanyId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+			}
+
+			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						mbCategoryModelImpl.getOriginalGroupId()
@@ -10154,19 +10173,23 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			}
 
 			if ((mbCategoryModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbCategoryModelImpl.getOriginalCompanyId()
+						mbCategoryModelImpl.getOriginalCompanyId(),
+						mbCategoryModelImpl.getOriginalStatus()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
 					args);
 
-				args = new Object[] { mbCategoryModelImpl.getCompanyId() };
+				args = new Object[] {
+						mbCategoryModelImpl.getCompanyId(),
+						mbCategoryModelImpl.getStatus()
+					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
 					args);
 			}
 
@@ -10209,27 +10232,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
-					args);
-			}
-
-			if ((mbCategoryModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						mbCategoryModelImpl.getOriginalCompanyId(),
-						mbCategoryModelImpl.getOriginalStatus()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
-					args);
-
-				args = new Object[] {
-						mbCategoryModelImpl.getCompanyId(),
-						mbCategoryModelImpl.getStatus()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
 					args);
 			}
 
@@ -10278,10 +10280,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		mbCategoryImpl.setNew(mbCategory.isNew());
 		mbCategoryImpl.setPrimaryKey(mbCategory.getPrimaryKey());
 
+		mbCategoryImpl.setCompanyId(mbCategory.getCompanyId());
 		mbCategoryImpl.setUuid(mbCategory.getUuid());
 		mbCategoryImpl.setCategoryId(mbCategory.getCategoryId());
 		mbCategoryImpl.setGroupId(mbCategory.getGroupId());
-		mbCategoryImpl.setCompanyId(mbCategory.getCompanyId());
 		mbCategoryImpl.setUserId(mbCategory.getUserId());
 		mbCategoryImpl.setUserName(mbCategory.getUserName());
 		mbCategoryImpl.setCreateDate(mbCategory.getCreateDate());

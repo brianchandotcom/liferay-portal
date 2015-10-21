@@ -124,11 +124,11 @@ public class CalendarPersistenceTest {
 
 		Calendar newCalendar = _persistence.create(pk);
 
+		newCalendar.setCompanyId(RandomTestUtil.nextLong());
+
 		newCalendar.setUuid(RandomTestUtil.randomString());
 
 		newCalendar.setGroupId(RandomTestUtil.nextLong());
-
-		newCalendar.setCompanyId(RandomTestUtil.nextLong());
 
 		newCalendar.setUserId(RandomTestUtil.nextLong());
 
@@ -162,13 +162,13 @@ public class CalendarPersistenceTest {
 
 		Calendar existingCalendar = _persistence.findByPrimaryKey(newCalendar.getPrimaryKey());
 
+		Assert.assertEquals(existingCalendar.getCompanyId(),
+			newCalendar.getCompanyId());
 		Assert.assertEquals(existingCalendar.getUuid(), newCalendar.getUuid());
 		Assert.assertEquals(existingCalendar.getCalendarId(),
 			newCalendar.getCalendarId());
 		Assert.assertEquals(existingCalendar.getGroupId(),
 			newCalendar.getGroupId());
-		Assert.assertEquals(existingCalendar.getCompanyId(),
-			newCalendar.getCompanyId());
 		Assert.assertEquals(existingCalendar.getUserId(),
 			newCalendar.getUserId());
 		Assert.assertEquals(existingCalendar.getUserName(),
@@ -273,8 +273,8 @@ public class CalendarPersistenceTest {
 	}
 
 	protected OrderByComparator<Calendar> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Calendar", "uuid", true,
-			"calendarId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("Calendar", "companyId",
+			true, "uuid", true, "calendarId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"resourceBlockId", true, "calendarResourceId", true, "name", true,
 			"description", true, "timeZoneId", true, "color", true,
@@ -495,11 +495,11 @@ public class CalendarPersistenceTest {
 
 		Calendar calendar = _persistence.create(pk);
 
+		calendar.setCompanyId(RandomTestUtil.nextLong());
+
 		calendar.setUuid(RandomTestUtil.randomString());
 
 		calendar.setGroupId(RandomTestUtil.nextLong());
-
-		calendar.setCompanyId(RandomTestUtil.nextLong());
 
 		calendar.setUserId(RandomTestUtil.nextLong());
 

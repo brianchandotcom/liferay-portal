@@ -1,8 +1,8 @@
 create table DDLRecord (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	recordId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	versionUserId LONG,
@@ -17,10 +17,10 @@ create table DDLRecord (
 );
 
 create table DDLRecordSet (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	recordSetId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -35,9 +35,9 @@ create table DDLRecordSet (
 );
 
 create table DDLRecordVersion (
+	companyId LONG,
 	recordVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

@@ -52,6 +52,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
@@ -63,6 +64,12 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -103,6 +110,16 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	public int compareTo(
 		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
 		return _wikiPageResource.compareTo(wikiPageResource);
+	}
+
+	/**
+	* Returns the company ID of this wiki page resource.
+	*
+	* @return the company ID of this wiki page resource
+	*/
+	@Override
+	public long getCompanyId() {
+		return _wikiPageResource.getCompanyId();
 	}
 
 	@Override
@@ -203,6 +220,16 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_wikiPageResource.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this wiki page resource.
+	*
+	* @param companyId the company ID of this wiki page resource
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_wikiPageResource.setCompanyId(companyId);
 	}
 
 	@Override

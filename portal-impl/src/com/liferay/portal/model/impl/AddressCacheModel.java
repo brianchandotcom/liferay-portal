@@ -81,14 +81,14 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(41);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", addressId=");
 		sb.append(addressId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -130,6 +130,7 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 	public Address toEntityModel() {
 		AddressImpl addressImpl = new AddressImpl();
 
+		addressImpl.setCompanyId(companyId);
 		addressImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -140,7 +141,6 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		}
 
 		addressImpl.setAddressId(addressId);
-		addressImpl.setCompanyId(companyId);
 		addressImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -215,10 +215,10 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		addressId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -240,6 +240,7 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -250,7 +251,6 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		}
 
 		objectOutput.writeLong(addressId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -307,10 +307,10 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		objectOutput.writeBoolean(primary);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long addressId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

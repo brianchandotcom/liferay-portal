@@ -3105,6 +3105,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		assetLink.setNew(true);
 		assetLink.setPrimaryKey(linkId);
 
+		assetLink.setCompanyId(0);
+
 		return assetLink;
 	}
 
@@ -3346,8 +3348,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		assetLinkImpl.setNew(assetLink.isNew());
 		assetLinkImpl.setPrimaryKey(assetLink.getPrimaryKey());
 
-		assetLinkImpl.setLinkId(assetLink.getLinkId());
 		assetLinkImpl.setCompanyId(assetLink.getCompanyId());
+		assetLinkImpl.setLinkId(assetLink.getLinkId());
 		assetLinkImpl.setUserId(assetLink.getUserId());
 		assetLinkImpl.setUserName(assetLink.getUserName());
 		assetLinkImpl.setCreateDate(assetLink.getCreateDate());

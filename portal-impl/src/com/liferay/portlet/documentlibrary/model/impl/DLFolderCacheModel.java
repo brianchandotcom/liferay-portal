@@ -67,14 +67,14 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(47);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", folderId=");
 		sb.append(folderId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -122,6 +122,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 	public DLFolder toEntityModel() {
 		DLFolderImpl dlFolderImpl = new DLFolderImpl();
 
+		dlFolderImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			dlFolderImpl.setUuid(StringPool.BLANK);
 		}
@@ -131,7 +133,6 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 
 		dlFolderImpl.setFolderId(folderId);
 		dlFolderImpl.setGroupId(groupId);
-		dlFolderImpl.setCompanyId(companyId);
 		dlFolderImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -222,10 +223,10 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		folderId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -250,6 +251,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -259,7 +262,6 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 
 		objectOutput.writeLong(folderId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -314,10 +316,10 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long folderId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

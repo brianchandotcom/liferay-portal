@@ -123,9 +123,9 @@ public class KaleoTransitionPersistenceTest {
 
 		KaleoTransition newKaleoTransition = _persistence.create(pk);
 
-		newKaleoTransition.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoTransition.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoTransition.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTransition.setUserId(RandomTestUtil.nextLong());
 
@@ -157,12 +157,12 @@ public class KaleoTransitionPersistenceTest {
 
 		KaleoTransition existingKaleoTransition = _persistence.findByPrimaryKey(newKaleoTransition.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoTransition.getCompanyId(),
+			newKaleoTransition.getCompanyId());
 		Assert.assertEquals(existingKaleoTransition.getKaleoTransitionId(),
 			newKaleoTransition.getKaleoTransitionId());
 		Assert.assertEquals(existingKaleoTransition.getGroupId(),
 			newKaleoTransition.getGroupId());
-		Assert.assertEquals(existingKaleoTransition.getCompanyId(),
-			newKaleoTransition.getCompanyId());
 		Assert.assertEquals(existingKaleoTransition.getUserId(),
 			newKaleoTransition.getUserId());
 		Assert.assertEquals(existingKaleoTransition.getUserName(),
@@ -255,7 +255,7 @@ public class KaleoTransitionPersistenceTest {
 
 	protected OrderByComparator<KaleoTransition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTransition",
-			"kaleoTransitionId", true, "groupId", true, "companyId", true,
+			"companyId", true, "kaleoTransitionId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoDefinitionId", true, "kaleoNodeId",
 			true, "name", true, "description", true, "sourceKaleoNodeId", true,
@@ -488,9 +488,9 @@ public class KaleoTransitionPersistenceTest {
 
 		KaleoTransition kaleoTransition = _persistence.create(pk);
 
-		kaleoTransition.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoTransition.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoTransition.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoTransition.setUserId(RandomTestUtil.nextLong());
 

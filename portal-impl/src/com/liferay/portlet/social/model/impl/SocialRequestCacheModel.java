@@ -66,14 +66,14 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", requestId=");
 		sb.append(requestId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -101,6 +101,8 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 	public SocialRequest toEntityModel() {
 		SocialRequestImpl socialRequestImpl = new SocialRequestImpl();
 
+		socialRequestImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			socialRequestImpl.setUuid(StringPool.BLANK);
 		}
@@ -110,7 +112,6 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 
 		socialRequestImpl.setRequestId(requestId);
 		socialRequestImpl.setGroupId(groupId);
-		socialRequestImpl.setCompanyId(companyId);
 		socialRequestImpl.setUserId(userId);
 		socialRequestImpl.setCreateDate(createDate);
 		socialRequestImpl.setModifiedDate(modifiedDate);
@@ -135,10 +136,10 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		requestId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
@@ -153,6 +154,8 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -162,7 +165,6 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 
 		objectOutput.writeLong(requestId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
@@ -181,10 +183,10 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 		objectOutput.writeInt(status);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long requestId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public long modifiedDate;

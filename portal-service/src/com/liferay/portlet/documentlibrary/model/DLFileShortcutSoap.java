@@ -34,10 +34,10 @@ public class DLFileShortcutSoap implements Serializable {
 	public static DLFileShortcutSoap toSoapModel(DLFileShortcut model) {
 		DLFileShortcutSoap soapModel = new DLFileShortcutSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFileShortcutId(model.getFileShortcutId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -104,6 +104,14 @@ public class DLFileShortcutSoap implements Serializable {
 		setFileShortcutId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -126,14 +134,6 @@ public class DLFileShortcutSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -252,10 +252,10 @@ public class DLFileShortcutSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _fileShortcutId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

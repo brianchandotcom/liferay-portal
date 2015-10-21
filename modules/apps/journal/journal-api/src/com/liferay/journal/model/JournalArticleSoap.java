@@ -34,11 +34,11 @@ public class JournalArticleSoap implements Serializable {
 	public static JournalArticleSoap toSoapModel(JournalArticle model) {
 		JournalArticleSoap soapModel = new JournalArticleSoap();
 
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setId(model.getId());
 		soapModel.setResourcePrimKey(model.getResourcePrimKey());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -120,6 +120,14 @@ public class JournalArticleSoap implements Serializable {
 		setId(pk);
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -150,14 +158,6 @@ public class JournalArticleSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -400,11 +400,11 @@ public class JournalArticleSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _companyId;
 	private String _uuid;
 	private long _id;
 	private long _resourcePrimKey;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

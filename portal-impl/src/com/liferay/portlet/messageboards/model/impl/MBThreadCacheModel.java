@@ -67,14 +67,14 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(45);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", threadId=");
 		sb.append(threadId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -120,6 +120,8 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 	public MBThread toEntityModel() {
 		MBThreadImpl mbThreadImpl = new MBThreadImpl();
 
+		mbThreadImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			mbThreadImpl.setUuid(StringPool.BLANK);
 		}
@@ -129,7 +131,6 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 
 		mbThreadImpl.setThreadId(threadId);
 		mbThreadImpl.setGroupId(groupId);
-		mbThreadImpl.setCompanyId(companyId);
 		mbThreadImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -201,10 +202,10 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		threadId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -228,6 +229,8 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -237,7 +240,6 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 
 		objectOutput.writeLong(threadId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -272,10 +274,10 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long threadId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

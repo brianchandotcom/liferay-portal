@@ -64,9 +64,11 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{licenseId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", licenseId=");
 		sb.append(licenseId);
 		sb.append(", name=");
 		sb.append(name);
@@ -87,6 +89,7 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 	public SCLicense toEntityModel() {
 		SCLicenseImpl scLicenseImpl = new SCLicenseImpl();
 
+		scLicenseImpl.setCompanyId(companyId);
 		scLicenseImpl.setLicenseId(licenseId);
 
 		if (name == null) {
@@ -114,6 +117,7 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		licenseId = objectInput.readLong();
 		name = objectInput.readUTF();
 		url = objectInput.readUTF();
@@ -125,6 +129,7 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(licenseId);
 
 		if (name == null) {
@@ -146,6 +151,7 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 		objectOutput.writeBoolean(recommended);
 	}
 
+	public long companyId;
 	public long licenseId;
 	public String name;
 	public String url;

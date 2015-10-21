@@ -116,11 +116,11 @@ public class WebsitePersistenceTest {
 
 		Website newWebsite = _persistence.create(pk);
 
+		newWebsite.setCompanyId(RandomTestUtil.nextLong());
+
 		newWebsite.setMvccVersion(RandomTestUtil.nextLong());
 
 		newWebsite.setUuid(RandomTestUtil.randomString());
-
-		newWebsite.setCompanyId(RandomTestUtil.nextLong());
 
 		newWebsite.setUserId(RandomTestUtil.nextLong());
 
@@ -146,13 +146,13 @@ public class WebsitePersistenceTest {
 
 		Website existingWebsite = _persistence.findByPrimaryKey(newWebsite.getPrimaryKey());
 
+		Assert.assertEquals(existingWebsite.getCompanyId(),
+			newWebsite.getCompanyId());
 		Assert.assertEquals(existingWebsite.getMvccVersion(),
 			newWebsite.getMvccVersion());
 		Assert.assertEquals(existingWebsite.getUuid(), newWebsite.getUuid());
 		Assert.assertEquals(existingWebsite.getWebsiteId(),
 			newWebsite.getWebsiteId());
-		Assert.assertEquals(existingWebsite.getCompanyId(),
-			newWebsite.getCompanyId());
 		Assert.assertEquals(existingWebsite.getUserId(), newWebsite.getUserId());
 		Assert.assertEquals(existingWebsite.getUserName(),
 			newWebsite.getUserName());
@@ -255,11 +255,11 @@ public class WebsitePersistenceTest {
 	}
 
 	protected OrderByComparator<Website> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Website", "mvccVersion",
-			true, "uuid", true, "websiteId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "url", true, "typeId", true,
-			"primary", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("Website", "companyId",
+			true, "mvccVersion", true, "uuid", true, "websiteId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true, "url",
+			true, "typeId", true, "primary", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -457,11 +457,11 @@ public class WebsitePersistenceTest {
 
 		Website website = _persistence.create(pk);
 
+		website.setCompanyId(RandomTestUtil.nextLong());
+
 		website.setMvccVersion(RandomTestUtil.nextLong());
 
 		website.setUuid(RandomTestUtil.randomString());
-
-		website.setCompanyId(RandomTestUtil.nextLong());
 
 		website.setUserId(RandomTestUtil.nextLong());
 

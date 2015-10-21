@@ -119,11 +119,11 @@ public class MBThreadFlagPersistenceTest {
 
 		MBThreadFlag newMBThreadFlag = _persistence.create(pk);
 
+		newMBThreadFlag.setCompanyId(RandomTestUtil.nextLong());
+
 		newMBThreadFlag.setUuid(RandomTestUtil.randomString());
 
 		newMBThreadFlag.setGroupId(RandomTestUtil.nextLong());
-
-		newMBThreadFlag.setCompanyId(RandomTestUtil.nextLong());
 
 		newMBThreadFlag.setUserId(RandomTestUtil.nextLong());
 
@@ -141,14 +141,14 @@ public class MBThreadFlagPersistenceTest {
 
 		MBThreadFlag existingMBThreadFlag = _persistence.findByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
+		Assert.assertEquals(existingMBThreadFlag.getCompanyId(),
+			newMBThreadFlag.getCompanyId());
 		Assert.assertEquals(existingMBThreadFlag.getUuid(),
 			newMBThreadFlag.getUuid());
 		Assert.assertEquals(existingMBThreadFlag.getThreadFlagId(),
 			newMBThreadFlag.getThreadFlagId());
 		Assert.assertEquals(existingMBThreadFlag.getGroupId(),
 			newMBThreadFlag.getGroupId());
-		Assert.assertEquals(existingMBThreadFlag.getCompanyId(),
-			newMBThreadFlag.getCompanyId());
 		Assert.assertEquals(existingMBThreadFlag.getUserId(),
 			newMBThreadFlag.getUserId());
 		Assert.assertEquals(existingMBThreadFlag.getUserName(),
@@ -238,8 +238,8 @@ public class MBThreadFlagPersistenceTest {
 	}
 
 	protected OrderByComparator<MBThreadFlag> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("MBThreadFlag", "uuid",
-			true, "threadFlagId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("MBThreadFlag", "companyId",
+			true, "uuid", true, "threadFlagId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "threadId", true, "lastPublishDate", true);
 	}
@@ -466,11 +466,11 @@ public class MBThreadFlagPersistenceTest {
 
 		MBThreadFlag mbThreadFlag = _persistence.create(pk);
 
+		mbThreadFlag.setCompanyId(RandomTestUtil.nextLong());
+
 		mbThreadFlag.setUuid(RandomTestUtil.randomString());
 
 		mbThreadFlag.setGroupId(RandomTestUtil.nextLong());
-
-		mbThreadFlag.setCompanyId(RandomTestUtil.nextLong());
 
 		mbThreadFlag.setUserId(RandomTestUtil.nextLong());
 

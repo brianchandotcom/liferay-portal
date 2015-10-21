@@ -1500,6 +1500,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		trashVersion.setNew(true);
 		trashVersion.setPrimaryKey(versionId);
 
+		trashVersion.setCompanyId(0);
+
 		return trashVersion;
 	}
 
@@ -1684,6 +1686,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		trashVersionImpl.setNew(trashVersion.isNew());
 		trashVersionImpl.setPrimaryKey(trashVersion.getPrimaryKey());
 
+		trashVersionImpl.setCompanyId(trashVersion.getCompanyId());
 		trashVersionImpl.setVersionId(trashVersion.getVersionId());
 		trashVersionImpl.setEntryId(trashVersion.getEntryId());
 		trashVersionImpl.setClassNameId(trashVersion.getClassNameId());

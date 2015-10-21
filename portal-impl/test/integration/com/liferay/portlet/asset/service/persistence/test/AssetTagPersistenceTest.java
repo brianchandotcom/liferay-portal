@@ -119,11 +119,11 @@ public class AssetTagPersistenceTest {
 
 		AssetTag newAssetTag = _persistence.create(pk);
 
+		newAssetTag.setCompanyId(RandomTestUtil.nextLong());
+
 		newAssetTag.setUuid(RandomTestUtil.randomString());
 
 		newAssetTag.setGroupId(RandomTestUtil.nextLong());
-
-		newAssetTag.setCompanyId(RandomTestUtil.nextLong());
 
 		newAssetTag.setUserId(RandomTestUtil.nextLong());
 
@@ -143,12 +143,12 @@ public class AssetTagPersistenceTest {
 
 		AssetTag existingAssetTag = _persistence.findByPrimaryKey(newAssetTag.getPrimaryKey());
 
+		Assert.assertEquals(existingAssetTag.getCompanyId(),
+			newAssetTag.getCompanyId());
 		Assert.assertEquals(existingAssetTag.getUuid(), newAssetTag.getUuid());
 		Assert.assertEquals(existingAssetTag.getTagId(), newAssetTag.getTagId());
 		Assert.assertEquals(existingAssetTag.getGroupId(),
 			newAssetTag.getGroupId());
-		Assert.assertEquals(existingAssetTag.getCompanyId(),
-			newAssetTag.getCompanyId());
 		Assert.assertEquals(existingAssetTag.getUserId(),
 			newAssetTag.getUserId());
 		Assert.assertEquals(existingAssetTag.getUserName(),
@@ -259,8 +259,8 @@ public class AssetTagPersistenceTest {
 	}
 
 	protected OrderByComparator<AssetTag> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("AssetTag", "uuid", true,
-			"tagId", true, "groupId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("AssetTag", "companyId",
+			true, "uuid", true, "tagId", true, "groupId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true, "name",
 			true, "assetCount", true, "lastPublishDate", true);
 	}
@@ -485,11 +485,11 @@ public class AssetTagPersistenceTest {
 
 		AssetTag assetTag = _persistence.create(pk);
 
+		assetTag.setCompanyId(RandomTestUtil.nextLong());
+
 		assetTag.setUuid(RandomTestUtil.randomString());
 
 		assetTag.setGroupId(RandomTestUtil.nextLong());
-
-		assetTag.setCompanyId(RandomTestUtil.nextLong());
 
 		assetTag.setUserId(RandomTestUtil.nextLong());
 

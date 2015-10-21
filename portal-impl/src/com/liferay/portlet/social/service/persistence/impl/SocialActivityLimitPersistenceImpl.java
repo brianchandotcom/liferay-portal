@@ -2187,6 +2187,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		socialActivityLimit.setNew(true);
 		socialActivityLimit.setPrimaryKey(activityLimitId);
 
+		socialActivityLimit.setCompanyId(0);
+
 		return socialActivityLimit;
 	}
 
@@ -2392,9 +2394,9 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		socialActivityLimitImpl.setNew(socialActivityLimit.isNew());
 		socialActivityLimitImpl.setPrimaryKey(socialActivityLimit.getPrimaryKey());
 
+		socialActivityLimitImpl.setCompanyId(socialActivityLimit.getCompanyId());
 		socialActivityLimitImpl.setActivityLimitId(socialActivityLimit.getActivityLimitId());
 		socialActivityLimitImpl.setGroupId(socialActivityLimit.getGroupId());
-		socialActivityLimitImpl.setCompanyId(socialActivityLimit.getCompanyId());
 		socialActivityLimitImpl.setUserId(socialActivityLimit.getUserId());
 		socialActivityLimitImpl.setClassNameId(socialActivityLimit.getClassNameId());
 		socialActivityLimitImpl.setClassPK(socialActivityLimit.getClassPK());

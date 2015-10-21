@@ -66,12 +66,12 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(61);
 
-		sb.append("{kaleoLogId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoLogId=");
 		sb.append(kaleoLogId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -135,9 +135,9 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 	public KaleoLog toEntityModel() {
 		KaleoLogImpl kaleoLogImpl = new KaleoLogImpl();
 
+		kaleoLogImpl.setCompanyId(companyId);
 		kaleoLogImpl.setKaleoLogId(kaleoLogId);
 		kaleoLogImpl.setGroupId(groupId);
-		kaleoLogImpl.setCompanyId(companyId);
 		kaleoLogImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -269,9 +269,9 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoLogId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -304,9 +304,9 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoLogId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -409,9 +409,9 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 		}
 	}
 
+	public long companyId;
 	public long kaleoLogId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

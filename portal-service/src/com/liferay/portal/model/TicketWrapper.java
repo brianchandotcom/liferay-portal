@@ -51,9 +51,9 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ticketId", getTicketId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -67,6 +67,12 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -77,12 +83,6 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 
 		if (ticketId != null) {
 			setTicketId(ticketId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");

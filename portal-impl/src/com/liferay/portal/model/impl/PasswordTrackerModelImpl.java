@@ -64,6 +64,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	 */
 	public static final String TABLE_NAME = "PasswordTracker";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "passwordTrackerId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -73,6 +74,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("passwordTrackerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -80,7 +82,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		TABLE_COLUMNS_MAP.put("password_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PasswordTracker (mvccVersion LONG default 0,passwordTrackerId LONG not null primary key,userId LONG,createDate DATE null,password_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordTracker (companyId LONG,mvccVersion LONG default 0,passwordTrackerId LONG not null primary key,userId LONG,createDate DATE null,password_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordTracker.userId DESC, passwordTracker.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordTracker.userId DESC, PasswordTracker.createDate DESC";
@@ -138,6 +140,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("passwordTrackerId", getPasswordTrackerId());
 		attributes.put("userId", getUserId());
@@ -152,6 +155,12 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -181,6 +190,16 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		if (password != null) {
 			setPassword(password);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -274,7 +293,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			PasswordTracker.class.getName(), getPrimaryKey());
 	}
 
@@ -299,6 +318,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	public Object clone() {
 		PasswordTrackerImpl passwordTrackerImpl = new PasswordTrackerImpl();
 
+		passwordTrackerImpl.setCompanyId(getCompanyId());
 		passwordTrackerImpl.setMvccVersion(getMvccVersion());
 		passwordTrackerImpl.setPasswordTrackerId(getPasswordTrackerId());
 		passwordTrackerImpl.setUserId(getUserId());
@@ -394,6 +414,8 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	public CacheModel<PasswordTracker> toCacheModel() {
 		PasswordTrackerCacheModel passwordTrackerCacheModel = new PasswordTrackerCacheModel();
 
+		passwordTrackerCacheModel.companyId = getCompanyId();
+
 		passwordTrackerCacheModel.mvccVersion = getMvccVersion();
 
 		passwordTrackerCacheModel.passwordTrackerId = getPasswordTrackerId();
@@ -422,9 +444,11 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", passwordTrackerId=");
 		sb.append(getPasswordTrackerId());
@@ -441,12 +465,16 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PasswordTracker");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
@@ -477,6 +505,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			PasswordTracker.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _passwordTrackerId;
 	private long _userId;

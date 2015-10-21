@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -52,7 +53,8 @@ import java.util.Map;
  */
 @ProviderType
 public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
-	LocalizedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
+	LocalizedModel, PartitionableModel, StagedGroupedModel, TrashedModel,
+	WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -72,6 +74,22 @@ public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
 	 * @param primaryKey the primary key of this calendar booking
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this calendar booking.
+	 *
+	 * @return the company ID of this calendar booking
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this calendar booking.
+	 *
+	 * @param companyId the company ID of this calendar booking
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this calendar booking.
@@ -119,22 +137,6 @@ public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this calendar booking.
-	 *
-	 * @return the company ID of this calendar booking
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this calendar booking.
-	 *
-	 * @param companyId the company ID of this calendar booking
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this calendar booking.

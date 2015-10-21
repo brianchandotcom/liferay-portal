@@ -67,14 +67,14 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", ruleId=");
 		sb.append(ruleId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -104,6 +104,8 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 	public MDRRule toEntityModel() {
 		MDRRuleImpl mdrRuleImpl = new MDRRuleImpl();
 
+		mdrRuleImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			mdrRuleImpl.setUuid(StringPool.BLANK);
 		}
@@ -113,7 +115,6 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 
 		mdrRuleImpl.setRuleId(ruleId);
 		mdrRuleImpl.setGroupId(groupId);
-		mdrRuleImpl.setCompanyId(companyId);
 		mdrRuleImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -181,10 +182,10 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		ruleId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -200,6 +201,8 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -209,7 +212,6 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 
 		objectOutput.writeLong(ruleId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -254,10 +256,10 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long ruleId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

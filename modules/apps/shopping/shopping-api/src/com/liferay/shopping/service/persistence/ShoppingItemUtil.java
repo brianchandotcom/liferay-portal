@@ -281,6 +281,66 @@ public class ShoppingItemUtil {
 	}
 
 	/**
+	* Returns the shopping item where companyId = &#63; and sku = &#63; or throws a {@link com.liferay.shopping.NoSuchItemException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the matching shopping item
+	* @throws com.liferay.shopping.NoSuchItemException if a matching shopping item could not be found
+	*/
+	public static ShoppingItem findByC_S(long companyId, java.lang.String sku)
+		throws com.liferay.shopping.exception.NoSuchItemException {
+		return getPersistence().findByC_S(companyId, sku);
+	}
+
+	/**
+	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
+	*/
+	public static ShoppingItem fetchByC_S(long companyId, java.lang.String sku) {
+		return getPersistence().fetchByC_S(companyId, sku);
+	}
+
+	/**
+	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
+	*/
+	public static ShoppingItem fetchByC_S(long companyId, java.lang.String sku,
+		boolean retrieveFromCache) {
+		return getPersistence().fetchByC_S(companyId, sku, retrieveFromCache);
+	}
+
+	/**
+	* Removes the shopping item where companyId = &#63; and sku = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the shopping item that was removed
+	*/
+	public static ShoppingItem removeByC_S(long companyId, java.lang.String sku)
+		throws com.liferay.shopping.exception.NoSuchItemException {
+		return getPersistence().removeByC_S(companyId, sku);
+	}
+
+	/**
+	* Returns the number of shopping items where companyId = &#63; and sku = &#63;.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the number of matching shopping items
+	*/
+	public static int countByC_S(long companyId, java.lang.String sku) {
+		return getPersistence().countByC_S(companyId, sku);
+	}
+
+	/**
 	* Returns all the shopping items where groupId = &#63; and categoryId = &#63;.
 	*
 	* @param groupId the group ID
@@ -532,66 +592,6 @@ public class ShoppingItemUtil {
 	*/
 	public static int filterCountByG_C(long groupId, long categoryId) {
 		return getPersistence().filterCountByG_C(groupId, categoryId);
-	}
-
-	/**
-	* Returns the shopping item where companyId = &#63; and sku = &#63; or throws a {@link com.liferay.shopping.NoSuchItemException} if it could not be found.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the matching shopping item
-	* @throws com.liferay.shopping.NoSuchItemException if a matching shopping item could not be found
-	*/
-	public static ShoppingItem findByC_S(long companyId, java.lang.String sku)
-		throws com.liferay.shopping.exception.NoSuchItemException {
-		return getPersistence().findByC_S(companyId, sku);
-	}
-
-	/**
-	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	*/
-	public static ShoppingItem fetchByC_S(long companyId, java.lang.String sku) {
-		return getPersistence().fetchByC_S(companyId, sku);
-	}
-
-	/**
-	* Returns the shopping item where companyId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	*/
-	public static ShoppingItem fetchByC_S(long companyId, java.lang.String sku,
-		boolean retrieveFromCache) {
-		return getPersistence().fetchByC_S(companyId, sku, retrieveFromCache);
-	}
-
-	/**
-	* Removes the shopping item where companyId = &#63; and sku = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the shopping item that was removed
-	*/
-	public static ShoppingItem removeByC_S(long companyId, java.lang.String sku)
-		throws com.liferay.shopping.exception.NoSuchItemException {
-		return getPersistence().removeByC_S(companyId, sku);
-	}
-
-	/**
-	* Returns the number of shopping items where companyId = &#63; and sku = &#63;.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the number of matching shopping items
-	*/
-	public static int countByC_S(long companyId, java.lang.String sku) {
-		return getPersistence().countByC_S(companyId, sku);
 	}
 
 	/**

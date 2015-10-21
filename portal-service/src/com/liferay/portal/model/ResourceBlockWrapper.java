@@ -51,9 +51,9 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourceBlockId", getResourceBlockId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("permissionsHash", getPermissionsHash());
@@ -64,6 +64,12 @@ public class ResourceBlockWrapper implements ResourceBlock,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -74,12 +80,6 @@ public class ResourceBlockWrapper implements ResourceBlock,
 
 		if (resourceBlockId != null) {
 			setResourceBlockId(resourceBlockId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");

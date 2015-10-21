@@ -67,12 +67,12 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
 
-		sb.append("{kaleoInstanceTokenId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", kaleoInstanceTokenId=");
 		sb.append(kaleoInstanceTokenId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -108,9 +108,9 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 	public KaleoInstanceToken toEntityModel() {
 		KaleoInstanceTokenImpl kaleoInstanceTokenImpl = new KaleoInstanceTokenImpl();
 
+		kaleoInstanceTokenImpl.setCompanyId(companyId);
 		kaleoInstanceTokenImpl.setKaleoInstanceTokenId(kaleoInstanceTokenId);
 		kaleoInstanceTokenImpl.setGroupId(groupId);
-		kaleoInstanceTokenImpl.setCompanyId(companyId);
 		kaleoInstanceTokenImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -170,9 +170,9 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		kaleoInstanceTokenId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -191,9 +191,9 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(kaleoInstanceTokenId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -229,9 +229,9 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		objectOutput.writeLong(completionDate);
 	}
 
+	public long companyId;
 	public long kaleoInstanceTokenId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

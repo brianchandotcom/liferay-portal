@@ -412,6 +412,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			${entity.varName}.setUuid(uuid);
 		</#if>
 
+		<#if entity.isPartitionableModel()>
+			${entity.varName}.setCompanyId(0);
+		</#if>
+
 		return ${entity.varName};
 	}
 

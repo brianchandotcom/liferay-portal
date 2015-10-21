@@ -1065,6 +1065,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		serviceComponent.setNew(true);
 		serviceComponent.setPrimaryKey(serviceComponentId);
 
+		serviceComponent.setCompanyId(0);
+
 		return serviceComponent;
 	}
 
@@ -1234,6 +1236,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		serviceComponentImpl.setNew(serviceComponent.isNew());
 		serviceComponentImpl.setPrimaryKey(serviceComponent.getPrimaryKey());
 
+		serviceComponentImpl.setCompanyId(serviceComponent.getCompanyId());
 		serviceComponentImpl.setMvccVersion(serviceComponent.getMvccVersion());
 		serviceComponentImpl.setServiceComponentId(serviceComponent.getServiceComponentId());
 		serviceComponentImpl.setBuildNamespace(serviceComponent.getBuildNamespace());

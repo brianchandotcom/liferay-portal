@@ -68,14 +68,14 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 	public String toString() {
 		StringBundler sb = new StringBundler(47);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", id=");
 		sb.append(id);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -123,6 +123,8 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 	public JournalFeed toEntityModel() {
 		JournalFeedImpl journalFeedImpl = new JournalFeedImpl();
 
+		journalFeedImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			journalFeedImpl.setUuid(StringPool.BLANK);
 		}
@@ -132,7 +134,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 		journalFeedImpl.setId(id);
 		journalFeedImpl.setGroupId(groupId);
-		journalFeedImpl.setCompanyId(companyId);
 		journalFeedImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -258,10 +259,10 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		id = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -286,6 +287,8 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -295,7 +298,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 		objectOutput.writeLong(id);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -398,10 +400,10 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long id;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

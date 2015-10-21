@@ -51,9 +51,9 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourcePermissionId", getResourcePermissionId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("name", getName());
 		attributes.put("scope", getScope());
 		attributes.put("primKey", getPrimKey());
@@ -68,6 +68,12 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -78,12 +84,6 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 
 		if (resourcePermissionId != null) {
 			setResourcePermissionId(resourcePermissionId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		String name = (String)attributes.get("name");

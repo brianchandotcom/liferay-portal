@@ -15,6 +15,9 @@
 package com.liferay.resources.importer.util;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -22,6 +25,8 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -333,21 +338,30 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		try {
+			String definition = StringUtil.read(inputStream);
+
+			DDMXMLUtil.validateXML(definition);
+
+			DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+				definition);
+
+			DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
+				ddmForm);
+
 			if (!updateModeEnabled || (ddmStructure == null)) {
 				ddmStructure = DDMStructureLocalServiceUtil.addStructure(
 					userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					PortalUtil.getClassNameId(DDLRecordSet.class),
-					getKey(fileName), getMap(name), null,
-					StringUtil.read(inputStream), StorageType.JSON.toString(),
+					getKey(fileName), getMap(name), null, ddmForm,
+					ddmFormLayout, StorageType.JSON.toString(),
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 			else {
 				ddmStructure = DDMStructureLocalServiceUtil.updateStructure(
-					ddmStructure.getStructureId(),
+					userId, ddmStructure.getStructureId(),
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-					getMap(name), null, StringUtil.read(inputStream),
-					serviceContext);
+					getMap(name), null, ddmForm, ddmFormLayout, serviceContext);
 			}
 		}
 		catch (Exception e) {
@@ -432,6 +446,12 @@ public class FileSystemImporter extends BaseImporter {
 			xsd = JournalConverterUtil.getDDMXSD(xsd);
 		}
 
+		DDMXMLUtil.validateXML(xsd);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
+
+		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+
 		setServiceContext(fileName);
 
 		try {
@@ -439,7 +459,8 @@ public class FileSystemImporter extends BaseImporter {
 				ddmStructure = DDMStructureLocalServiceUtil.addStructure(
 					userId, groupId, parentDDMStructureKey,
 					PortalUtil.getClassNameId(JournalArticle.class),
-					getKey(fileName), getMap(name), null, xsd,
+					getKey(fileName), getMap(name), null, ddmForm,
+					ddmFormLayout,
 					JournalServiceConfigurationValues.
 						JOURNAL_ARTICLE_STORAGE_TYPE,
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
@@ -459,8 +480,8 @@ public class FileSystemImporter extends BaseImporter {
 				}
 
 				ddmStructure = DDMStructureLocalServiceUtil.updateStructure(
-					ddmStructure.getStructureId(), parentDDMStructureId,
-					getMap(name), null, xsd, serviceContext);
+					userId, ddmStructure.getStructureId(), parentDDMStructureId,
+					getMap(name), null, ddmForm, ddmFormLayout, serviceContext);
 			}
 		}
 		catch (PortalException e) {
@@ -1418,18 +1439,6 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		return map;
-	}
-
-	protected Map<Locale, String> getMap(Locale locale, String value) {
-		Map<Locale, String> map = new HashMap<>();
-
-		map.put(locale, value);
-
-		return map;
-	}
-
-	protected Map<Locale, String> getMap(String value) {
-		return getMap(LocaleUtil.getDefault(), value);
 	}
 
 	protected String getName(String name) {

@@ -16,15 +16,25 @@ package com.liferay.resources.importer.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,17 +47,42 @@ public class LARImporter extends BaseImporter {
 
 	@Override
 	public void importResources() throws Exception {
-		if (_privateLARInputStream != null) {
-			LayoutLocalServiceUtil.importLayouts(
-				userId, groupId, true, getParameterMap(),
-				_privateLARInputStream);
+		if ((_privateLARInputStream == null) &&
+			(_publicLARInputStream == null)) {
+
+			return;
 		}
 
-		if (_publicLARInputStream != null) {
-			LayoutLocalServiceUtil.importLayouts(
-				userId, groupId, false, getParameterMap(),
-				_publicLARInputStream);
+		boolean privateLayout = false;
+
+		InputStream inputStream = _publicLARInputStream;
+
+		if (_privateLARInputStream != null) {
+			privateLayout = true;
+
+			inputStream = _privateLARInputStream;
 		}
+
+		long[] layoutIds = ExportImportHelperUtil.getAllLayoutIds(
+			groupId, privateLayout);
+
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					userId, groupId, privateLayout, layoutIds,
+					getParameterMap(), user.getLocale(), user.getTimeZone());
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					userId, groupId, StringPool.BLANK, StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					settingsMap, new ServiceContext());
+
+		ExportImportLocalServiceUtil.importLayouts(
+			exportImportConfiguration, inputStream);
 	}
 
 	public void setLARFile(File file) {

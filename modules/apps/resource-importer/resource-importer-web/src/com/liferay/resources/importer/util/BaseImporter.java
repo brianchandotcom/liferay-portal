@@ -121,8 +121,9 @@ public abstract class BaseImporter implements Importer {
 						userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 						StringPool.BLANK,
 						GroupConstants.DEFAULT_PARENT_GROUP_ID,
-						GroupConstants.DEFAULT_LIVE_GROUP_ID, targetValue,
-						StringPool.BLANK, GroupConstants.TYPE_SITE_OPEN, true,
+						GroupConstants.DEFAULT_LIVE_GROUP_ID,
+						getMap(targetValue), null,
+						GroupConstants.TYPE_SITE_OPEN, true,
 						GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
 						true, true, new ServiceContext());
 				}
@@ -270,6 +271,18 @@ public abstract class BaseImporter implements Importer {
 		}
 
 		return null;
+	}
+
+	protected Map<Locale, String> getMap(Locale locale, String value) {
+		Map<Locale, String> map = new HashMap<>();
+
+		map.put(locale, value);
+
+		return map;
+	}
+
+	protected Map<Locale, String> getMap(String value) {
+		return getMap(LocaleUtil.getDefault(), value);
 	}
 
 	protected boolean appendVersion;

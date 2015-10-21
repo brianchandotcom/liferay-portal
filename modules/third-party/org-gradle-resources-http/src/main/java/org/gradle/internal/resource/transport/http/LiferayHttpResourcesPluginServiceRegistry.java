@@ -29,6 +29,11 @@ public class LiferayHttpResourcesPluginServiceRegistry
 	}
 
 	@Override
+	public void registerBuildSessionServices(
+		ServiceRegistration serviceRegistration) {
+	}
+
+	@Override
 	public void registerGlobalServices(
 		ServiceRegistration serviceRegistration) {
 

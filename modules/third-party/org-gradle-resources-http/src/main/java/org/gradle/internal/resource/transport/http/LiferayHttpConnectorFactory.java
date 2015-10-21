@@ -14,7 +14,6 @@
 
 package org.gradle.internal.resource.transport.http;
 
-import org.gradle.internal.resource.PasswordCredentials;
 import org.gradle.internal.resource.connector.ResourceConnectorSpecification;
 import org.gradle.internal.resource.transfer.DefaultExternalResourceConnector;
 import org.gradle.internal.resource.transfer.ExternalResourceConnector;
@@ -30,8 +29,7 @@ public class LiferayHttpConnectorFactory extends HttpConnectorFactory {
 
 		HttpClientHelper httpClientHelper = new HttpClientHelper(
 			new DefaultHttpSettings(
-				resourceConnectorSpecification.getCredentials(
-					PasswordCredentials.class)));
+				resourceConnectorSpecification.getAuthentications()));
 
 		HttpResourceAccessor httpResourceAccessor =
 			new LiferayHttpResourceAccessor(httpClientHelper);

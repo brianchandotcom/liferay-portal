@@ -3,6 +3,76 @@ AUI.add(
 	function(A) {
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
+		var VALIDATIONS = {
+			number: [
+				{
+					label: Liferay.Language.get('is-greater-than-or-equal-to'),
+					name: 'gteq',
+					parameterMessage: Liferay.Language.get('this-number'),
+					regex: /^(\w+)\>\=(\d+)$/,
+					template: '{name}>={parameter}'
+				},
+				{
+					label: Liferay.Language.get('is-greater-than'),
+					name: 'gt',
+					parameterMessage: Liferay.Language.get('this-number'),
+					regex: /^(\w+)\>(\d+)$/,
+					template: '{name}>{parameter}'
+				},
+				{
+					label: Liferay.Language.get('is-equal-to'),
+					name: 'eq',
+					parameterMessage: Liferay.Language.get('this-number'),
+					regex: /^(\w+)\=\=(\d+)$/,
+					template: '{name}=={parameter}'
+				},
+				{
+					label: Liferay.Language.get('is-less-than-or-equal-to'),
+					name: 'lteq',
+					parameterMessage: Liferay.Language.get('this-number'),
+					regex: /^(\w+)\<\=(\d+)$/,
+					template: '{name}<={parameter}'
+				},
+				{
+					label: Liferay.Language.get('is-less-than'),
+					name: 'lt',
+					parameterMessage: Liferay.Language.get('this-number'),
+					regex: /^(\w+)\<(\d+)$/,
+					template: '{name}<{parameter}'
+				}
+			],
+			text: [
+				{
+					label: Liferay.Language.get('contains'),
+					name: 'contains',
+					parameterMessage: Liferay.Language.get('this-text'),
+					regex: /^(\w+)\.contains\("(\w+)"\)$/,
+					template: '{name}.contains("{parameter}")'
+				},
+				{
+					label: Liferay.Language.get('does-not-contain'),
+					name: 'notContains',
+					parameterMessage: Liferay.Language.get('this-text'),
+					regex: /^\!(\w+)\.contains\("(\w+)"\)$/,
+					template: '!{name}.contains("{parameter}")'
+				},
+				{
+					label: Liferay.Language.get('url'),
+					name: 'url',
+					parameterMessage: '',
+					regex: /^isURL\((\w+)\)$/,
+					template: 'isURL({name})'
+				},
+				{
+					label: Liferay.Language.get('email'),
+					name: 'email',
+					parameterMessage: '',
+					regex: /^isEmailAddress\((\w+)\)$/,
+					template: 'isEmailAddress({name})'
+				}
+			]
+		};
+
 		var Util = {
 			generateInstanceId: function(length) {
 				var instance = this;
@@ -16,6 +86,37 @@ AUI.add(
 				}
 
 				return text;
+			},
+
+			getDataTypeFromValidation: function(dataType, validation) {
+				var instance = this;
+
+				var expression = validation.expression;
+
+				var validationTypes = instance.getValidations();
+
+				for (var type in validationTypes) {
+					var validations = validationTypes[type];
+
+					for (var i = 0; i < validations.length; i++) {
+						var regex = validations[i].regex;
+
+						if (regex.test(expression)) {
+							dataType = type;
+
+							break;
+						}
+					}
+				}
+
+				if (dataType === 'number') {
+					dataType = 'integer';
+				}
+				else if (dataType === 'text') {
+					dataType = 'string';
+				}
+
+				return dataType;
 			},
 
 			getFieldByKey: function(haystack, needle, searchKey) {
@@ -48,6 +149,10 @@ AUI.add(
 				var name = qualifiedName.split('$$')[1];
 
 				return name.split('$')[1];
+			},
+
+			getValidations: function() {
+				return VALIDATIONS;
 			},
 
 			searchFieldsByKey: function(haystack, needle, searchKey) {

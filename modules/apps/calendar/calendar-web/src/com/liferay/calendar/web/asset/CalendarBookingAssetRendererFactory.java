@@ -19,7 +19,7 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,7 +70,7 @@ public class CalendarBookingAssetRendererFactory
 		throws PortalException {
 
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.getCalendarBooking(classPK);
+			_calendarBookingLocalService.getCalendarBooking(classPK);
 
 		CalendarBookingAssetRenderer calendarBookingAssetRenderer =
 			new CalendarBookingAssetRenderer(calendarBooking);
@@ -159,7 +159,7 @@ public class CalendarBookingAssetRendererFactory
 		throws Exception {
 
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.getCalendarBooking(classPK);
+			_calendarBookingLocalService.getCalendarBooking(classPK);
 
 		if (actionId.equals(ActionKeys.DELETE) ||
 			actionId.equals(ActionKeys.UPDATE)) {
@@ -184,6 +184,14 @@ public class CalendarBookingAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/common/date.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
+	}
+
+	private CalendarBookingLocalService _calendarBookingLocalService;
 	private ServletContext _servletContext;
 
 }

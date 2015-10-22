@@ -16,7 +16,7 @@ package com.liferay.calendar.trash;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pier Paolo Ramon
@@ -33,7 +34,7 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		CalendarBookingLocalServiceUtil.deleteCalendarBooking(classPK);
+		_calendarBookingLocalService.deleteCalendarBooking(classPK);
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 	@Override
 	public boolean isInTrash(long classPK) throws PortalException {
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.getCalendarBooking(classPK);
+			_calendarBookingLocalService.getCalendarBooking(classPK);
 
 		return calendarBooking.isInTrash();
 	}
@@ -52,7 +53,7 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.getCalendarBooking(classPK);
+			_calendarBookingLocalService.getCalendarBooking(classPK);
 
 		if (calendarBooking.isMasterBooking()) {
 			return true;
@@ -65,7 +66,7 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		CalendarBookingLocalServiceUtil.restoreCalendarBookingFromTrash(
+		_calendarBookingLocalService.restoreCalendarBookingFromTrash(
 			userId, classPK);
 	}
 
@@ -75,11 +76,20 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 		throws PortalException {
 
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.getCalendarBooking(classPK);
+			_calendarBookingLocalService.getCalendarBooking(classPK);
 
 		return CalendarPermission.contains(
 			permissionChecker, calendarBooking.getCalendar(),
 			CalendarActionKeys.MANAGE_BOOKINGS);
 	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
+	}
+
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -68,8 +68,7 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 		long recordSetId = ParamUtil.getLong(resourceRequest, "recordSetId");
 
-		DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(
-			recordSetId);
+		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
 		String fileExtension = ParamUtil.getString(
 			resourceRequest, "fileExtension");
@@ -99,6 +98,14 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 		_ddlExporterFactory = ddlExporterFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
 	private DDLExporterFactory _ddlExporterFactory;
+	private DDLRecordSetService _ddlRecordSetService;
 
 }

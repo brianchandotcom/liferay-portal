@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,7 +65,7 @@ public class DDLRecordAssetRendererFactory
 	public AssetRenderer<DDLRecord> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(classPK);
+		DDLRecord record = _ddlRecordLocalService.getRecord(classPK);
 
 		DDLRecordVersion recordVersion = null;
 
@@ -162,6 +162,14 @@ public class DDLRecordAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	private DDLRecordLocalService _ddlRecordLocalService;
 	private ServletContext _servletContext;
 
 }

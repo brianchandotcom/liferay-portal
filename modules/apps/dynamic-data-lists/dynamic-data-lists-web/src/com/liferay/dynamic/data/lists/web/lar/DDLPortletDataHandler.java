@@ -20,14 +20,14 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -107,10 +107,10 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		DDLRecordSetLocalServiceUtil.deleteRecordSets(
+		_ddlRecordSetLocalService.deleteRecordSets(
 			portletDataContext.getScopeGroupId());
 
-		DDMStructureLocalServiceUtil.deleteStructures(
+		_ddmStructureLocalService.deleteStructures(
 			portletDataContext.getScopeGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class));
 
@@ -146,7 +146,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
 			ActionableDynamicQuery recordSetActionableDynamicQuery =
-				DDLRecordSetLocalServiceUtil.getExportActionableDynamicQuery(
+				_ddlRecordSetLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			recordSetActionableDynamicQuery.performActions();
@@ -240,7 +240,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		ddmStructureActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery recordSetActionableDynamicQuery =
-			DDLRecordSetLocalServiceUtil.getExportActionableDynamicQuery(
+			_ddlRecordSetLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		recordSetActionableDynamicQuery.performCount();
@@ -256,7 +256,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		final List<DDMTemplate> ddmTemplates) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			DDMStructureLocalServiceUtil.getExportActionableDynamicQuery(
+			_ddmStructureLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -304,7 +304,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			DDLRecordLocalServiceUtil.getExportActionableDynamicQuery(
+			_ddlRecordLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -359,9 +359,34 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

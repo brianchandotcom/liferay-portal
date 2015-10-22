@@ -15,7 +15,7 @@
 package com.liferay.calendar.workflow;
 
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -63,7 +64,7 @@ public class CalendarBookingWorkflowHandler
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return CalendarBookingLocalServiceUtil.updateStatus(
+		return _calendarBookingLocalService.updateStatus(
 			userId, classPK, status, serviceContext);
 	}
 
@@ -71,5 +72,14 @@ public class CalendarBookingWorkflowHandler
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/trees/page.png";
 	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
+	}
+
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

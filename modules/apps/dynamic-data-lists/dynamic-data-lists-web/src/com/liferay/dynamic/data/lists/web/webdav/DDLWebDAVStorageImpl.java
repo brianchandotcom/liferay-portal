@@ -18,8 +18,8 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDavUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juan Fernández
@@ -124,7 +125,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<>();
 
 		List<DDMStructure> ddmStructures =
-			DDMStructureLocalServiceUtil.getStructures(
+			_ddmStructureLocalService.getStructures(
 				webDAVRequest.getGroupId(),
 				PortalUtil.getClassNameId(DDLRecordSet.class));
 
@@ -144,7 +145,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<>();
 
 		List<DDMTemplate> ddmTemplates =
-			DDMTemplateLocalServiceUtil.getTemplatesByStructureClassNameId(
+			_ddmTemplateLocalService.getTemplatesByStructureClassNameId(
 				webDAVRequest.getGroupId(),
 				PortalUtil.getClassNameId(DDLRecordSet.class),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
@@ -159,5 +160,22 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		return resources;
 	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

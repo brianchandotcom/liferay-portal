@@ -29,8 +29,8 @@ import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameExceptio
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,6 +53,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -182,6 +183,13 @@ public class DDMPortlet extends MVCPortlet {
 		super.render(request, response);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
 	protected void setDDMStructureRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
 
@@ -195,12 +203,19 @@ public class DDMPortlet extends MVCPortlet {
 				DDMStructure.class);
 
 			if ((structureClassNameId == classNameId) && (classPK > 0)) {
-				structure = DDMStructureServiceUtil.getStructure(classPK);
+				structure = _ddmStructureLocalService.getStructure(classPK);
 			}
 
 			renderRequest.setAttribute(
 				DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, structure);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
 	protected void setDDMTemplateRequestAttribute(RenderRequest renderRequest)
@@ -209,7 +224,7 @@ public class DDMPortlet extends MVCPortlet {
 		long templateId = ParamUtil.getLong(renderRequest, "templateId");
 
 		if (templateId > 0) {
-			DDMTemplate template = DDMTemplateLocalServiceUtil.getDDMTemplate(
+			DDMTemplate template = _ddmTemplateLocalService.getDDMTemplate(
 				templateId);
 
 			renderRequest.setAttribute(
@@ -218,5 +233,8 @@ public class DDMPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);
+
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

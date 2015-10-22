@@ -18,7 +18,7 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -35,12 +35,13 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -60,7 +61,7 @@ public class CalendarBookingStagedModelDataHandler
 	public void deleteStagedModel(CalendarBooking calendarBooking)
 		throws PortalException {
 
-		CalendarBookingLocalServiceUtil.deleteCalendarBooking(calendarBooking);
+		_calendarBookingLocalService.deleteCalendarBooking(calendarBooking);
 	}
 
 	@Override
@@ -80,7 +81,7 @@ public class CalendarBookingStagedModelDataHandler
 	public CalendarBooking fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return CalendarBookingLocalServiceUtil.
+		return _calendarBookingLocalService.
 			fetchCalendarBookingByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -88,7 +89,7 @@ public class CalendarBookingStagedModelDataHandler
 	public List<CalendarBooking> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return CalendarBookingLocalServiceUtil.
+		return _calendarBookingLocalService.
 			getCalendarBookingsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<CalendarBooking>());
@@ -202,7 +203,7 @@ public class CalendarBookingStagedModelDataHandler
 				serviceContext.setUuid(calendarBooking.getUuid());
 
 				importedCalendarBooking =
-					CalendarBookingLocalServiceUtil.addCalendarBooking(
+					_calendarBookingLocalService.addCalendarBooking(
 						userId, calendarId, new long[0],
 						parentCalendarBookingId, calendarBooking.getTitleMap(),
 						calendarBooking.getDescriptionMap(),
@@ -219,7 +220,7 @@ public class CalendarBookingStagedModelDataHandler
 			}
 			else {
 				importedCalendarBooking =
-					CalendarBookingLocalServiceUtil.updateCalendarBooking(
+					_calendarBookingLocalService.updateCalendarBooking(
 						userId, existingCalendarBooking.getCalendarBookingId(),
 						calendarId, calendarBooking.getTitleMap(),
 						calendarBooking.getDescriptionMap(),
@@ -237,7 +238,7 @@ public class CalendarBookingStagedModelDataHandler
 		}
 		else {
 			importedCalendarBooking =
-				CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_calendarBookingLocalService.addCalendarBooking(
 					userId, calendarId, new long[0], parentCalendarBookingId,
 					calendarBooking.getTitleMap(),
 					calendarBooking.getDescriptionMap(),
@@ -259,7 +260,7 @@ public class CalendarBookingStagedModelDataHandler
 				calendarBooking, MBMessage.class);
 
 		if (ListUtil.isNotEmpty(mbMessageElements)) {
-			MBMessageLocalServiceUtil.addDiscussionMessage(
+			_mbMessageLocalService.addDiscussionMessage(
 				userId, importedCalendarBooking.getUserName(),
 				importedCalendarBooking.getGroupId(),
 				CalendarBooking.class.getName(),
@@ -295,11 +296,28 @@ public class CalendarBookingStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
 	private static final int[] _EXPORTABLE_STATUSES = {
 		CalendarBookingWorkflowConstants.STATUS_APPROVED,
 		CalendarBookingWorkflowConstants.STATUS_DENIED,
 		CalendarBookingWorkflowConstants.STATUS_MAYBE,
 		CalendarBookingWorkflowConstants.STATUS_PENDING
 	};
+
+	private CalendarBookingLocalService _calendarBookingLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

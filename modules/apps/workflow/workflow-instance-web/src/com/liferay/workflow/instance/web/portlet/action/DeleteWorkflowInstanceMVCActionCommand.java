@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -44,6 +44,7 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -73,7 +74,7 @@ public class DeleteWorkflowInstanceMVCActionCommand
 		long classPK = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		WorkflowInstanceLinkLocalServiceUtil.deleteWorkflowInstanceLink(
+		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
 	}
 
@@ -131,6 +132,13 @@ public class DeleteWorkflowInstanceMVCActionCommand
 			themeDisplay.getCompanyId(), workflowInstanceId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setWorkflowInstanceLinkLocalService(
+		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
+
+		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
+	}
+
 	protected void updateEntryStatus(Map<String, Serializable> workflowContext)
 		throws Exception {
 
@@ -157,5 +165,7 @@ public class DeleteWorkflowInstanceMVCActionCommand
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(validUserId));
 	}
+
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

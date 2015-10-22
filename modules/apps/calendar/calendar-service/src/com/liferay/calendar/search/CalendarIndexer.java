@@ -16,7 +16,7 @@ package com.liferay.calendar.search;
 
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarLocalServiceUtil;
+import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,6 +42,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -142,7 +143,7 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Calendar calendar = CalendarLocalServiceUtil.getCalendar(classPK);
+		Calendar calendar = _calendarLocalService.getCalendar(classPK);
 
 		doReindex(calendar);
 	}
@@ -156,7 +157,7 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 	protected void reindexCalendars(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
-			CalendarLocalServiceUtil.getActionableDynamicQuery();
+			_calendarLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -186,7 +187,16 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setCalendarLocalService(
+		CalendarLocalService calendarLocalService) {
+
+		_calendarLocalService = calendarLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarIndexer.class);
+
+	private CalendarLocalService _calendarLocalService;
 
 }

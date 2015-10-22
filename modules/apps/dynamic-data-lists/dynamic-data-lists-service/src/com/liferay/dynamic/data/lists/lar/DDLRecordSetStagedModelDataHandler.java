@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.lists.lar;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,7 +49,7 @@ public class DDLRecordSetStagedModelDataHandler
 	public void deleteStagedModel(DDLRecordSet recordSet)
 		throws PortalException {
 
-		DDLRecordSetLocalServiceUtil.deleteRecordSet(recordSet);
+		_ddlRecordSetLocalService.deleteRecordSet(recordSet);
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class DDLRecordSetStagedModelDataHandler
 	public DDLRecordSet fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(
+		return _ddlRecordSetLocalService.fetchDDLRecordSetByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -76,7 +77,7 @@ public class DDLRecordSetStagedModelDataHandler
 	public List<DDLRecordSet> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return DDLRecordSetLocalServiceUtil.getDDLRecordSetsByUuidAndCompanyId(
+		return _ddlRecordSetLocalService.getDDLRecordSetsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<DDLRecordSet>());
 	}
@@ -160,7 +161,7 @@ public class DDLRecordSetStagedModelDataHandler
 			if (existingRecordSet == null) {
 				serviceContext.setUuid(recordSet.getUuid());
 
-				importedRecordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
+				importedRecordSet = _ddlRecordSetLocalService.addRecordSet(
 					userId, portletDataContext.getScopeGroupId(),
 					ddmStructureId, recordSet.getRecordSetKey(),
 					recordSet.getNameMap(), recordSet.getDescriptionMap(),
@@ -168,15 +169,14 @@ public class DDLRecordSetStagedModelDataHandler
 					serviceContext);
 			}
 			else {
-				importedRecordSet =
-					DDLRecordSetLocalServiceUtil.updateRecordSet(
-						existingRecordSet.getRecordSetId(), ddmStructureId,
-						recordSet.getNameMap(), recordSet.getDescriptionMap(),
-						recordSet.getMinDisplayRows(), serviceContext);
+				importedRecordSet = _ddlRecordSetLocalService.updateRecordSet(
+					existingRecordSet.getRecordSetId(), ddmStructureId,
+					recordSet.getNameMap(), recordSet.getDescriptionMap(),
+					recordSet.getMinDisplayRows(), serviceContext);
 			}
 		}
 		else {
-			importedRecordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
+			importedRecordSet = _ddlRecordSetLocalService.addRecordSet(
 				userId, portletDataContext.getScopeGroupId(), ddmStructureId,
 				recordSet.getRecordSetKey(), recordSet.getNameMap(),
 				recordSet.getDescriptionMap(), recordSet.getMinDisplayRows(),
@@ -185,5 +185,14 @@ public class DDLRecordSetStagedModelDataHandler
 
 		portletDataContext.importClassedModel(recordSet, importedRecordSet);
 	}
+
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 }

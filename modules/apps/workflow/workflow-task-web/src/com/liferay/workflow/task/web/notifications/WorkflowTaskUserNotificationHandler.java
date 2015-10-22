@@ -25,10 +25,11 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.service.UserNotificationEventLocalService;
 import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
@@ -62,7 +63,7 @@ public class WorkflowTaskUserNotificationHandler
 			serviceContext.getCompanyId(), workflowTaskId);
 
 		if (workflowTask == null) {
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
 			return null;
@@ -94,5 +95,15 @@ public class WorkflowTaskUserNotificationHandler
 		return workflowHandler.getURLEditWorkflowTask(
 			workflowTaskId, serviceContext);
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
+
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

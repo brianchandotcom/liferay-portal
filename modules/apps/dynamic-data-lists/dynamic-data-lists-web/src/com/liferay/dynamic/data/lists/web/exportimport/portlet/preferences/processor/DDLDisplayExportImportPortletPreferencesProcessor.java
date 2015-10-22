@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.lists.web.exportimport.portlet.preferences.proc
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
@@ -95,7 +95,7 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.fetchRecordSet(
+		DDLRecordSet recordSet = _ddlRecordSetLocalService.fetchRecordSet(
 			recordSetId);
 
 		if (recordSet == null) {
@@ -165,6 +165,13 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setReferencedStagedModelImporterCapability(
 		ReferencedStagedModelImporterCapability
 			referencedStagedModelImporterCapability) {
@@ -176,6 +183,7 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLDisplayExportImportPortletPreferencesProcessor.class);
 
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
 

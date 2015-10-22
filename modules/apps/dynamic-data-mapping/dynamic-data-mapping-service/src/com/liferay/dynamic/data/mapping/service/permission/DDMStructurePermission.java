@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.service.permission;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,7 +58,7 @@ public class DDMStructurePermission {
 			String structureKey, String actionId)
 		throws PortalException {
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure structure = _ddmStructureLocalService.getStructure(
 			groupId, classNameId, structureKey, true);
 
 		check(permissionChecker, structure, actionId);
@@ -69,7 +69,7 @@ public class DDMStructurePermission {
 			String actionId)
 		throws PortalException {
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure structure = _ddmStructureLocalService.getStructure(
 			structureId);
 
 		check(permissionChecker, structure, actionId);
@@ -140,7 +140,7 @@ public class DDMStructurePermission {
 			String structureKey, String actionId)
 		throws PortalException {
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure structure = _ddmStructureLocalService.getStructure(
 			groupId, classNameId, structureKey, true);
 
 		return contains(permissionChecker, structure, actionId);
@@ -159,7 +159,7 @@ public class DDMStructurePermission {
 			String portletId, String actionId)
 		throws PortalException {
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure structure = _ddmStructureLocalService.getStructure(
 			structureId);
 
 		return contains(permissionChecker, structure, portletId, actionId);
@@ -235,6 +235,14 @@ public class DDMStructurePermission {
 		_ddmPermissionSupportTracker = ddmPermissionSupportTracker;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
 	private static DDMPermissionSupportTracker _ddmPermissionSupportTracker;
+	private static DDMStructureLocalService _ddmStructureLocalService;
 
 }

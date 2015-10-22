@@ -19,13 +19,13 @@ import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngineUtil;
-import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -59,6 +59,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -122,10 +123,9 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		if (Validator.isNotNull(ddmStructureFieldName) &&
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
-			QueryFilter queryFilter =
-				DDMIndexerUtil.createFieldValueQueryFilter(
-					ddmStructureFieldName, ddmStructureFieldValue,
-					searchContext.getLocale());
+			QueryFilter queryFilter = _ddmIndexer.createFieldValueQueryFilter(
+				ddmStructureFieldName, ddmStructureFieldValue,
+				searchContext.getLocale());
 
 			contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
 		}
@@ -167,10 +167,10 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 			recordVersion.getDDMStorageId());
 
-		DDMIndexerUtil.addAttributes(document, ddmStructure, ddmFormValues);
+		_ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 
 		return document;
 	}
@@ -221,7 +221,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(classPK);
+		DDLRecord record = _ddlRecordLocalService.getRecord(classPK);
 
 		doReindex(record);
 	}
@@ -239,7 +239,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			DDLRecordVersion recordVersion, Locale locale)
 		throws Exception {
 
-		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 			recordVersion.getDDMStorageId());
 
 		if (ddmFormValues == null) {
@@ -248,13 +248,13 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 		DDLRecordSet recordSet = recordVersion.getRecordSet();
 
-		return DDMIndexerUtil.extractAttributes(
+		return _ddmIndexer.extractIndexableAttributes(
 			recordSet.getDDMStructure(), ddmFormValues, locale);
 	}
 
 	protected String getTitle(long recordSetId, Locale locale) {
 		try {
-			DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
+			DDLRecordSet recordSet = _ddlRecordSetLocalService.getRecordSet(
 				recordSetId);
 
 			DDMStructure ddmStructure = recordSet.getDDMStructure();
@@ -276,7 +276,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 	protected void reindexRecords(long companyId, int scope) throws Exception {
 		Long[] minAndMaxRecordIds =
-			DDLRecordLocalServiceUtil.getMinAndMaxCompanyRecordIds(
+			_ddlRecordLocalService.getMinAndMaxCompanyRecordIds(
 				companyId, WorkflowConstants.STATUS_APPROVED, scope);
 
 		if ((minAndMaxRecordIds[0] == null) ||
@@ -304,7 +304,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		throws Exception {
 
 		List<DDLRecord> records =
-			DDLRecordLocalServiceUtil.getMinAndMaxCompanyRecords(
+			_ddlRecordLocalService.getMinAndMaxCompanyRecords(
 				companyId, WorkflowConstants.STATUS_APPROVED, scope,
 				startRecordId, endRecordId);
 
@@ -330,7 +330,36 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			getSearchEngineId(), companyId, documents, isCommitImmediately());
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMIndexer(DDMIndexer ddmIndexer) {
+		_ddmIndexer = ddmIndexer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordIndexer.class);
+
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDMIndexer _ddmIndexer;
+	private StorageEngine _storageEngine;
 
 }

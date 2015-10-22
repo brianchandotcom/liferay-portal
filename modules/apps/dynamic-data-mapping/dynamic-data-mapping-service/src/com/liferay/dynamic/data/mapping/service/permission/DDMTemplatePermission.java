@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.service.permission;
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,8 +75,7 @@ public class DDMTemplatePermission {
 			String portletId, String actionId)
 		throws PortalException {
 
-		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
-			templateId);
+		DDMTemplate template = _ddmTemplateLocalService.getTemplate(templateId);
 
 		if (!contains(
 				permissionChecker, groupId, template, portletId, actionId)) {
@@ -93,8 +92,7 @@ public class DDMTemplatePermission {
 			String actionId)
 		throws PortalException {
 
-		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
-			templateId);
+		DDMTemplate template = _ddmTemplateLocalService.getTemplate(templateId);
 
 		if (!contains(permissionChecker, template, actionId)) {
 			throw new PrincipalException.MustHavePermission(
@@ -186,8 +184,7 @@ public class DDMTemplatePermission {
 			String portletId, String actionId)
 		throws PortalException {
 
-		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
-			templateId);
+		DDMTemplate template = _ddmTemplateLocalService.getTemplate(templateId);
 
 		return contains(
 			permissionChecker, groupId, template, portletId, actionId);
@@ -198,8 +195,7 @@ public class DDMTemplatePermission {
 			String actionId)
 		throws PortalException {
 
-		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
-			templateId);
+		DDMTemplate template = _ddmTemplateLocalService.getTemplate(templateId);
 
 		return contains(permissionChecker, template, actionId);
 	}
@@ -292,6 +288,14 @@ public class DDMTemplatePermission {
 		_ddmPermissionSupportTracker = ddmPermissionSupportTracker;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
 	private static DDMPermissionSupportTracker _ddmPermissionSupportTracker;
+	private static DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

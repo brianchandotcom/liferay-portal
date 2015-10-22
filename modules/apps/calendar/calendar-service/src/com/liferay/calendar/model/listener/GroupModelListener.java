@@ -16,7 +16,6 @@ package com.liferay.calendar.model.listener;
 
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalService;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
@@ -65,7 +64,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			long classNameId = PortalUtil.getClassNameId(Group.class);
 
 			CalendarResource calendarResource =
-				CalendarResourceLocalServiceUtil.fetchCalendarResource(
+				_calendarResourceLocalService.fetchCalendarResource(
 					classNameId, group.getGroupId());
 
 			if (calendarResource == null) {
@@ -74,7 +73,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 			calendarResource.setNameMap(group.getNameMap());
 
-			CalendarResourceLocalServiceUtil.updateCalendarResource(
+			_calendarResourceLocalService.updateCalendarResource(
 				calendarResource);
 		}
 		catch (Exception e) {

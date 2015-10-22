@@ -18,8 +18,8 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.exception.DuplicateCalendarResourceException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
+import com.liferay.calendar.service.CalendarLocalService;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -45,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -64,8 +65,7 @@ public class CalendarResourceStagedModelDataHandler
 	public void deleteStagedModel(CalendarResource calendarResource)
 		throws PortalException {
 
-		CalendarResourceLocalServiceUtil.deleteCalendarResource(
-			calendarResource);
+		_calendarResourceLocalService.deleteCalendarResource(calendarResource);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class CalendarResourceStagedModelDataHandler
 	public CalendarResource fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return CalendarResourceLocalServiceUtil.
+		return _calendarResourceLocalService.
 			fetchCalendarResourceByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -93,7 +93,7 @@ public class CalendarResourceStagedModelDataHandler
 	public List<CalendarResource> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return CalendarResourceLocalServiceUtil.
+		return _calendarResourceLocalService.
 			getCalendarResourcesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<CalendarResource>());
@@ -141,7 +141,7 @@ public class CalendarResourceStagedModelDataHandler
 		if (calendarResource.getClassNameId() ==
 				PortalUtil.getClassNameId(User.class)) {
 
-			User user = UserLocalServiceUtil.getUser(
+			User user = _userLocalService.getUser(
 				calendarResource.getClassPK());
 
 			portletDataContext.addReferenceElement(
@@ -181,7 +181,7 @@ public class CalendarResourceStagedModelDataHandler
 
 			if (existingCalendarResource == null) {
 				existingCalendarResource =
-					CalendarResourceLocalServiceUtil.fetchCalendarResource(
+					_calendarResourceLocalService.fetchCalendarResource(
 						calendarResource.getClassNameId(), classPK);
 			}
 
@@ -189,7 +189,7 @@ public class CalendarResourceStagedModelDataHandler
 				serviceContext.setUuid(calendarResource.getUuid());
 
 				importedCalendarResource =
-					CalendarResourceLocalServiceUtil.addCalendarResource(
+					_calendarResourceLocalService.addCalendarResource(
 						userId, portletDataContext.getScopeGroupId(),
 						calendarResource.getClassNameId(), classPK,
 						calendarResource.getClassUuid(),
@@ -201,7 +201,7 @@ public class CalendarResourceStagedModelDataHandler
 			}
 			else {
 				importedCalendarResource =
-					CalendarResourceLocalServiceUtil.updateCalendarResource(
+					_calendarResourceLocalService.updateCalendarResource(
 						existingCalendarResource.getCalendarResourceId(),
 						calendarResource.getNameMap(),
 						calendarResource.getDescriptionMap(),
@@ -211,7 +211,7 @@ public class CalendarResourceStagedModelDataHandler
 		else {
 			try {
 				importedCalendarResource =
-					CalendarResourceLocalServiceUtil.addCalendarResource(
+					_calendarResourceLocalService.addCalendarResource(
 						userId, portletDataContext.getScopeGroupId(),
 						calendarResource.getClassNameId(), classPK,
 						calendarResource.getClassUuid(),
@@ -227,7 +227,7 @@ public class CalendarResourceStagedModelDataHandler
 				// always generated beforehand, so we only want to add it once
 
 				importedCalendarResource =
-					CalendarResourceLocalServiceUtil.fetchCalendarResource(
+					_calendarResourceLocalService.fetchCalendarResource(
 						calendarResource.getClassNameId(), classPK);
 			}
 		}
@@ -244,7 +244,7 @@ public class CalendarResourceStagedModelDataHandler
 			CalendarResource calendarResource)
 		throws Exception {
 
-		Group sourceGroup = GroupLocalServiceUtil.fetchGroup(
+		Group sourceGroup = _groupLocalService.fetchGroup(
 			portletDataContext.getSourceGroupId());
 
 		String calendarResourceName = calendarResource.getName(
@@ -258,7 +258,7 @@ public class CalendarResourceStagedModelDataHandler
 
 		Map<Locale, String> calendarResourceNameMap = new HashMap<>();
 
-		Group scopeGroup = GroupLocalServiceUtil.getGroup(
+		Group scopeGroup = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
 
 		calendarResourceNameMap.put(
@@ -296,7 +296,7 @@ public class CalendarResourceStagedModelDataHandler
 
 		for (int i = 1;; i++) {
 			CalendarResource existingCalendarResource =
-				CalendarResourceLocalServiceUtil.fetchCalendarResource(
+				_calendarResourceLocalService.fetchCalendarResource(
 					portletDataContext.getScopeGroupId(), code);
 
 			if (existingCalendarResource == null) {
@@ -307,6 +307,30 @@ public class CalendarResourceStagedModelDataHandler
 		}
 
 		return code;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarLocalService(
+		CalendarLocalService calendarLocalService) {
+
+		_calendarLocalService = calendarLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarResourceLocalService(
+		CalendarResourceLocalService calendarResourceLocalService) {
+
+		_calendarResourceLocalService = calendarResourceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	protected void updateCalendars(
@@ -326,16 +350,21 @@ public class CalendarResourceStagedModelDataHandler
 			long calendarId = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
-			Calendar calendar = CalendarLocalServiceUtil.fetchCalendar(
+			Calendar calendar = _calendarLocalService.fetchCalendar(
 				MapUtil.getLong(calendarIds, calendarId));
 
 			if (calendar != null) {
 				calendar.setCalendarResourceId(
 					importedCalendarResource.getCalendarResourceId());
 
-				CalendarLocalServiceUtil.updateCalendar(calendar);
+				_calendarLocalService.updateCalendar(calendar);
 			}
 		}
 	}
+
+	private CalendarLocalService _calendarLocalService;
+	private CalendarResourceLocalService _calendarResourceLocalService;
+	private GroupLocalService _groupLocalService;
+	private UserLocalService _userLocalService;
 
 }

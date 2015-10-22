@@ -16,7 +16,7 @@ package com.liferay.calendar.web.social;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.social.CalendarActivityKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,6 +34,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -120,14 +121,23 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 		throws Exception {
 
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.getCalendarBooking(
+			_calendarBookingLocalService.getCalendarBooking(
 				activity.getClassPK());
 
 		return CalendarPermission.contains(
 			permissionChecker, calendarBooking.getCalendarId(), actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES =
 		{CalendarBooking.class.getName()};
+
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

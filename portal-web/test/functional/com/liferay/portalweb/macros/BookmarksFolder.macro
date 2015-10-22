@@ -8,7 +8,7 @@
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPBookmarks#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<var name="key_folderName" value="${folderName}" />
 
@@ -118,11 +118,11 @@
 
 		<var name="key_folderName" value="${folderName}" />
 
-		<execute function="Type" locator1="CPBookmarksEditfolder#NAME_FIELD" value1="${folderName}" />
-		<execute function="Type" locator1="CPBookmarksEditfolder#DESCRIPTION_FIELD" value1="${folderDescription}" />
-		<execute function="AssertClick" locator1="CPBookmarksEditfolder#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPBookmarks#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
 	</command>
@@ -158,11 +158,11 @@
 
 		<var name="key_folderName" value="${editSubfolderName}" />
 
-		<execute function="Type" locator1="CPBookmarksEditfolder#NAME_FIELD" value1="${editSubfolderName}" />
-		<execute function="Type" locator1="CPBookmarksEditfolder#DESCRIPTION_FIELD" value1="${editSubfolderDescription}" />
-		<execute function="AssertClick" locator1="CPBookmarksEditfolder#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${editSubfolderName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${editSubfolderDescription}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPBookmarks#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${editSubfolderName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${editSubfolderDescription}" />
 	</command>
@@ -267,7 +267,11 @@
 			<condition function="IsElementPresent" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN_GENERIC" />
 			<then>
 				<execute function="Click" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN_GENERIC" />
+
 				<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+				<var name="key_assetType" value="${assetType}" />
+
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>

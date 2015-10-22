@@ -38,23 +38,16 @@ public class VerifyDB2 extends VerifyProcess {
 			return;
 		}
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(4);
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		sb.append("select tbname, name, coltype, length from ");
+		sb.append("sysibm.syscolumns where tbcreator = (select distinct ");
+		sb.append("current schema from sysibm.sysschemata) AND coltype = ");
+		sb.append("'VARCHAR' and length = 500");
 
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("select tbname, name, coltype, length from ");
-			sb.append("sysibm.syscolumns where tbcreator = (select distinct ");
-			sb.append("current schema from sysibm.sysschemata) AND coltype = ");
-			sb.append("'VARCHAR' and length = 500");
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String tableName = rs.getString(1);
@@ -66,12 +59,10 @@ public class VerifyDB2 extends VerifyProcess {
 				String columnName = rs.getString(2);
 
 				runSQL(
+					con,
 					"alter table " + tableName + " alter column " + columnName +
 						" set data type varchar(600)");
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

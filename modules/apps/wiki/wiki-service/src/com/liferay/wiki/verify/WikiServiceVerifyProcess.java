@@ -136,8 +136,8 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyResourcedModels() throws Exception {
-		_verifyResourcePermissions.verify(new WikiNodeVerifiableModel());
-		_verifyResourcePermissions.verify(new WikiPageVerifiableModel());
+		_verifyResourcePermissions.verify(
+			new WikiNodeVerifiableModel(), new WikiPageVerifiableModel());
 	}
 
 	protected void verifyUUIDModels() throws Exception {

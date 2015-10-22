@@ -32,28 +32,20 @@ import java.sql.ResultSet;
  */
 public class VerifyAsset extends VerifyProcess {
 
-	protected void deleteOrphanedAssetEntries() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	protected void deleteOrphanedAssetEntries(Connection con) throws Exception {
+		long classNameId = PortalUtil.getClassNameId(
+			DLFileEntryConstants.getClassName());
 
-		try {
-			long classNameId = PortalUtil.getClassNameId(
-				DLFileEntryConstants.getClassName());
+		StringBundler sb = new StringBundler(5);
 
-			con = DataAccess.getUpgradeOptimizedConnection();
+		sb.append("select classPK, entryId from AssetEntry where ");
+		sb.append("classNameId = ");
+		sb.append(classNameId);
+		sb.append(" and classPK not in (select fileVersionId from ");
+		sb.append("DLFileVersion)");
 
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("select classPK, entryId from AssetEntry where ");
-			sb.append("classNameId = ");
-			sb.append(classNameId);
-			sb.append(" and classPK not in (select fileVersionId from ");
-			sb.append("DLFileVersion)");
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long classPK = rs.getLong("classPK");
@@ -67,39 +59,29 @@ public class VerifyAsset extends VerifyProcess {
 				}
 			}
 		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
 	}
 
 	@Override
 	protected void doVerify() throws Exception {
-		deleteOrphanedAssetEntries();
-		rebuildTree();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			deleteOrphanedAssetEntries(con);
+			rebuildTree(con);
+		}
 	}
 
-	protected void rebuildTree() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	protected void rebuildTree(Connection con) throws Exception {
+		String sql =
+			"select distinct groupId from AssetCategory where " +
+				"(leftCategoryId is null) or (rightCategoryId is null)";
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select distinct groupId from AssetCategory where " +
-					"(leftCategoryId is null) or (rightCategoryId is null)");
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
 
 				AssetCategoryLocalServiceUtil.rebuildTree(groupId, true);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

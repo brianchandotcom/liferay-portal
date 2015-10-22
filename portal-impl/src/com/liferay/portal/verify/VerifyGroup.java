@@ -83,22 +83,16 @@ public class VerifyGroup extends VerifyProcess {
 			RobotsUtil.getDefaultRobots(virtualHostname));
 	}
 
-	protected void updateName(long groupId, String name) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
+	protected void updateName(Connection con, long groupId, String name)
+		throws Exception {
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		String sql = "update Group_ set name = ? where groupId = ?";
 
-			ps = con.prepareStatement(
-				"update Group_ set name = ? where groupId= " + groupId);
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, name);
+			ps.setLong(2, groupId);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
 		}
 	}
 
@@ -161,24 +155,17 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void verifyOrganizationNames() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(5);
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		sb.append("select groupId, name from Group_ where name like '%");
+		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+		sb.append("%' and name not like '%");
+		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+		sb.append("'");
 
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("select groupId, name from Group_ where name like '%");
-			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("%' and name not like '%");
-			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("'");
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -201,11 +188,8 @@ public class VerifyGroup extends VerifyProcess {
 					name.substring(pos + 1) +
 						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
 
-				updateName(groupId, newName);
+				updateName(con, groupId, newName);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

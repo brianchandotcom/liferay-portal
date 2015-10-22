@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.dao.db;
 
 import java.io.IOException;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -27,6 +28,15 @@ import javax.naming.NamingException;
 public abstract class BaseDBProcess implements DBProcess {
 
 	public BaseDBProcess() {
+	}
+
+	@Override
+	public void runSQL(Connection connection, String template)
+		throws IOException, SQLException {
+
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQL(connection, template);
 	}
 
 	@Override

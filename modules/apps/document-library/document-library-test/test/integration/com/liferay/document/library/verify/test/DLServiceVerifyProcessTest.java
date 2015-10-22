@@ -99,7 +99,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		setUpPermissionThreadLocal();
 		setUpPrincipalThreadLocal();
 
@@ -107,7 +110,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	}
 
 	@After
-	public void tearDown() {
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		PrincipalThreadLocal.setName(_originalName);

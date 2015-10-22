@@ -1024,7 +1024,7 @@
 		<if>
 			<isset var="viewChildPageDropdown" />
 			<then>
-				<execute function="Click" locator1="Home#${viewChildPageDropdown}" />
+				<execute function="ClickNoError" locator1="Home#${viewChildPageDropdown}" />
 
 				<if>
 					<isset var="javaScriptPage" />

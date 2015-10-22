@@ -124,7 +124,7 @@
 
 	<command name="addJavaScript">
 		<execute function="AssertClick" locator1="SitePages#JAVASCRIPT_NAVIGATION" value1="JavaScript" />
-		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that will be executed at the bottom of every page." />
+		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of every page." />
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -151,12 +151,12 @@
 
 	<command name="addSitePageTypeEmbeddedCP">
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD" value1="${pageTypeURL}" />
-		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="Show content from another website." />
 	</command>
 
 	<command name="addSitePageTypeLinkToURLCP">
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_URL_FIELD" value1="${pageTypeURL}" />
-		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="Link to another website." />
 	</command>
 
 	<command name="addSitePageTypePanelCP">

@@ -350,13 +350,18 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			return;
 		}
 
+		final Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
+
+		final List<String> deletedFilePathNames =
+			watcher.getDeletedFilePathNames();
+
 		if (sourceSyncFile.isFile()) {
+			deletedFilePathNames.add(sourceSyncFile.getFilePathName());
+
 			FileUtil.deleteFile(sourceFilePath);
 
 			return;
 		}
-
-		final Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
 
 		Files.walkFileTree(
 			sourceFilePath,
@@ -366,6 +371,12 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				public FileVisitResult postVisitDirectory(
 						Path filePath, IOException ioe)
 					throws IOException {
+
+					if (ioe != null) {
+						return super.postVisitDirectory(filePath, ioe);
+					}
+
+					deletedFilePathNames.add(filePath.toString());
 
 					FileUtil.deleteFile(filePath);
 
@@ -387,6 +398,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				public FileVisitResult visitFile(
 						Path filePath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
+
+					deletedFilePathNames.add(filePath.toString());
 
 					FileUtil.deleteFile(filePath);
 

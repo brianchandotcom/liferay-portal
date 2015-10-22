@@ -16,6 +16,8 @@ package com.liferay.sync.engine.service;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
+import com.liferay.sync.engine.filesystem.Watcher;
+import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
@@ -26,9 +28,12 @@ import com.liferay.sync.engine.util.FileUtil;
 
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.sql.SQLException;
 
@@ -38,8 +43,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.io.FileUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -322,7 +325,45 @@ public class SyncSiteService {
 			return;
 		}
 
-		FileUtils.deleteDirectory(filePath.toFile());
+		final Watcher watcher = WatcherRegistry.getWatcher(
+			syncSite.getSyncAccountId());
+
+		final List<String> deletedFilePathNames =
+			watcher.getDeletedFilePathNames();
+
+		Files.walkFileTree(
+			filePath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path filePath, IOException ioe)
+					throws IOException {
+
+					if (ioe != null) {
+						return super.postVisitDirectory(filePath, ioe);
+					}
+
+					deletedFilePathNames.add(filePath.toString());
+
+					FileUtil.deleteFile(filePath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					deletedFilePathNames.add(filePath.toString());
+
+					FileUtil.deleteFile(filePath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

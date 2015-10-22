@@ -53,6 +53,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -89,7 +90,9 @@ public class DDLFormViewRecordsDisplayContext {
 	public String getColumnName(int index, DDMFormValues ddmFormValues) {
 		DDMFormField ddmFormField = _ddmFormFields.get(index);
 
-		return ddmFormField.getName();
+		LocalizedValue label = ddmFormField.getLabel();
+
+		return label.getString(_liferayPortletRequest.getLocale());
 	}
 
 	public String getColumnValue(int index, DDMFormValues ddmFormValues) {
@@ -102,8 +105,15 @@ public class DDLFormViewRecordsDisplayContext {
 			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldValueRenderer(
 				ddmFormField.getType());
 
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			ddmFormField.getName());
+
+		if (ddmFormFieldValues == null) {
+			ddmFormFieldValues = Collections.emptyList();
+		}
+
 		List<String> renderedDDMFormFielValues = ListUtil.toList(
-			ddmFormFieldValuesMap.get(ddmFormField.getName()),
+			ddmFormFieldValues,
 			new Function<DDMFormFieldValue, String>() {
 
 				@Override

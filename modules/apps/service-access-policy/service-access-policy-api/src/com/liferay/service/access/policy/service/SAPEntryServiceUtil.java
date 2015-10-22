@@ -65,6 +65,12 @@ public class SAPEntryServiceUtil {
 		return getService().deleteSAPEntry(sapEntryId);
 	}
 
+	public static com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchSAPEntry(companyId, name);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

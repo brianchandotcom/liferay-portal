@@ -174,6 +174,10 @@ public interface SAPEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
+		long companyId, java.lang.String name) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
 		long sapEntryId);
 
 	/**
@@ -212,10 +216,6 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getDefaultSAPEntries(
 		long companyId, boolean defaultSAPEntry);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

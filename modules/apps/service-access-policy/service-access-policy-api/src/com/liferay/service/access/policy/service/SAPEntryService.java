@@ -64,6 +64,10 @@ public interface SAPEntryService extends BaseService {
 	public com.liferay.service.access.policy.model.SAPEntry deleteSAPEntry(
 		long sapEntryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
+		long companyId, java.lang.String name) throws PortalException;
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

@@ -155,11 +155,43 @@ public class SAPEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
+		HttpPrincipal httpPrincipal, long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
+					"fetchSAPEntry", _fetchSAPEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.service.access.policy.model.SAPEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.service.access.policy.model.SAPEntry> getCompanySAPEntries(
 		HttpPrincipal httpPrincipal, long companyId, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
-					"getCompanySAPEntries", _getCompanySAPEntriesParameterTypes3);
+					"getCompanySAPEntries", _getCompanySAPEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, start, end);
@@ -187,7 +219,7 @@ public class SAPEntryServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.policy.model.SAPEntry> obc) {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
-					"getCompanySAPEntries", _getCompanySAPEntriesParameterTypes4);
+					"getCompanySAPEntries", _getCompanySAPEntriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, start, end, obc);
@@ -215,7 +247,7 @@ public class SAPEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
 					"getCompanySAPEntriesCount",
-					_getCompanySAPEntriesCountParameterTypes5);
+					_getCompanySAPEntriesCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
 
@@ -242,7 +274,7 @@ public class SAPEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
-					"getSAPEntry", _getSAPEntryParameterTypes6);
+					"getSAPEntry", _getSAPEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					sapEntryId);
@@ -274,7 +306,7 @@ public class SAPEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
-					"getSAPEntry", _getSAPEntryParameterTypes7);
+					"getSAPEntry", _getSAPEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, name);
@@ -310,7 +342,7 @@ public class SAPEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
-					"updateSAPEntry", _updateSAPEntryParameterTypes8);
+					"updateSAPEntry", _updateSAPEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					sapEntryId, allowedServiceSignatures, defaultSAPEntry,
@@ -350,23 +382,26 @@ public class SAPEntryServiceHttp {
 	private static final Class<?>[] _deleteSAPEntryParameterTypes2 = new Class[] {
 			com.liferay.service.access.policy.model.SAPEntry.class
 		};
-	private static final Class<?>[] _getCompanySAPEntriesParameterTypes3 = new Class[] {
-			long.class, int.class, int.class
+	private static final Class<?>[] _fetchSAPEntryParameterTypes3 = new Class[] {
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getCompanySAPEntriesParameterTypes4 = new Class[] {
+			long.class, int.class, int.class
+		};
+	private static final Class<?>[] _getCompanySAPEntriesParameterTypes5 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCompanySAPEntriesCountParameterTypes5 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getSAPEntryParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getCompanySAPEntriesCountParameterTypes6 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getSAPEntryParameterTypes7 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getSAPEntryParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateSAPEntryParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateSAPEntryParameterTypes9 = new Class[] {
 			long.class, java.lang.String.class, boolean.class, boolean.class,
 			java.lang.String.class, java.util.Map.class,
 			com.liferay.portal.service.ServiceContext.class

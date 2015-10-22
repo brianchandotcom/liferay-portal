@@ -122,6 +122,21 @@ public class SAPEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.service.access.policy.model.SAPEntrySoap fetchSAPEntry(
+		long companyId, java.lang.String name) throws RemoteException {
+		try {
+			com.liferay.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.fetchSAPEntry(companyId,
+					name);
+
+			return com.liferay.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.service.access.policy.model.SAPEntrySoap[] getCompanySAPEntries(
 		long companyId, int start, int end) throws RemoteException {
 		try {

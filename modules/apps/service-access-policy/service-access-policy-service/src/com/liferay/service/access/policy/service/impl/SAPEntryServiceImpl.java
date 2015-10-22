@@ -70,6 +70,20 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 	}
 
 	@Override
+	public SAPEntry fetchSAPEntry(long companyId, String name)
+		throws PortalException {
+
+		SAPEntry sapEntry = sapEntryPersistence.fetchByC_N(companyId, name);
+
+		if (sapEntry != null) {
+			SAPEntryPermission.check(
+				getPermissionChecker(), sapEntry, ActionKeys.VIEW);
+		}
+
+		return sapEntry;
+	}
+
+	@Override
 	public List<SAPEntry> getCompanySAPEntries(
 		long companyId, int start, int end) {
 

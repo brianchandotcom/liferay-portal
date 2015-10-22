@@ -57,6 +57,13 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 		return _sapEntryService.deleteSAPEntry(sapEntryId);
 	}
 
+	@Override
+	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sapEntryService.fetchSAPEntry(companyId, name);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

@@ -18,10 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
-import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -46,8 +46,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
-	StagedAuditedModel {
+public interface SAPEntryModel extends AuditedModel, BaseModel<SAPEntry>,
+	LocalizedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -74,7 +74,6 @@ public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
 	 * @return the uuid of this s a p entry
 	 */
 	@AutoEscape
-	@Override
 	public String getUuid();
 
 	/**
@@ -82,7 +81,6 @@ public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
 	 *
 	 * @param uuid the uuid of this s a p entry
 	 */
-	@Override
 	public void setUuid(String uuid);
 
 	/**

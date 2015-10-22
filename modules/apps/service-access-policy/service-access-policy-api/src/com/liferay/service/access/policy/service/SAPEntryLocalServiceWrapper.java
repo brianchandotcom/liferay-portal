@@ -199,6 +199,13 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 
 	@Override
 	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sapEntryLocalService.fetchSAPEntry(companyId, name);
+	}
+
+	@Override
+	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
 		long sapEntryId) {
 		return _sapEntryLocalService.fetchSAPEntry(sapEntryId);
 	}
@@ -256,12 +263,6 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 		long companyId, boolean defaultSAPEntry) {
 		return _sapEntryLocalService.getDefaultSAPEntries(companyId,
 			defaultSAPEntry);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
-		return _sapEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override

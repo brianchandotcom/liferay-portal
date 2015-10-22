@@ -195,6 +195,12 @@ public class SAPEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchSAPEntry(companyId, name);
+	}
+
+	public static com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
 		long sapEntryId) {
 		return getService().fetchSAPEntry(sapEntryId);
 	}
@@ -242,11 +248,6 @@ public class SAPEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.service.access.policy.model.SAPEntry> getDefaultSAPEntries(
 		long companyId, boolean defaultSAPEntry) {
 		return getService().getDefaultSAPEntries(companyId, defaultSAPEntry);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(

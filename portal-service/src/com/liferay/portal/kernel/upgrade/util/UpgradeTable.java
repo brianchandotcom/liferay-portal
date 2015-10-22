@@ -32,6 +32,10 @@ public interface UpgradeTable {
 			boolean last)
 		throws Exception;
 
+	public void copyTable(
+			Connection sourceConnection, Connection targetConnection)
+		throws Exception;
+
 	public String getCreateSQL() throws Exception;
 
 	public String getDeleteSQL() throws Exception;
@@ -62,10 +66,5 @@ public interface UpgradeTable {
 	public void setIndexesSQL(String[] indexesSQL) throws Exception;
 
 	public void updateTable() throws Exception;
-
-	public void updateTable(
-			Connection sourceConnection, Connection targetConnection,
-			boolean deleteFromSource)
-		throws Exception;
 
 }

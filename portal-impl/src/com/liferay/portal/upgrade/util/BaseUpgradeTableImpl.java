@@ -84,7 +84,7 @@ public abstract class BaseUpgradeTableImpl extends Table {
 		}
 	}
 
-	public void updateTable(
+	protected void updateTable(
 			Connection sourceConnection, Connection targetConnection,
 			boolean deleteFromSource)
 		throws Exception {

@@ -168,7 +168,7 @@ public class UpgradeShardingControlTables extends UpgradeProcess {
 
 		upgradeTable.setCreateSQL(createTable);
 
-		upgradeTable.updateTable(sourceConnection, targetConnection, false);
+		upgradeTable.copyTable(sourceConnection, targetConnection);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

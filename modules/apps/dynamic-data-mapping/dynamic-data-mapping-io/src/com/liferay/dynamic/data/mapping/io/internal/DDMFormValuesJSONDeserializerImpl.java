@@ -222,6 +222,14 @@ public class DDMFormValuesJSONDeserializerImpl
 		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
 		ddmFormValues.setDefaultLocale(defaultLocale);
+
+		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
+
+		if ((availableLocales != null) &&
+			!availableLocales.contains(defaultLocale)) {
+
+			availableLocales.add(defaultLocale);
+		}
 	}
 
 	protected void setNestedDDMFormFieldValues(

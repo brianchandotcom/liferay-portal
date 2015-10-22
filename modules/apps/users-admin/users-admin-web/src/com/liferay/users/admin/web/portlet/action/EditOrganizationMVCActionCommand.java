@@ -26,6 +26,7 @@ import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.OrganizationNameException;
 import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.PhoneNumberException;
+import com.liferay.portal.PhoneNumberExtensionException;
 import com.liferay.portal.RequiredOrganizationException;
 import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -144,6 +145,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof OrganizationNameException ||
 					 e instanceof OrganizationParentException ||
 					 e instanceof PhoneNumberException ||
+					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof RequiredOrganizationException ||
 					 e instanceof WebsiteURLException) {
 

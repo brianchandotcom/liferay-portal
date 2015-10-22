@@ -187,7 +187,7 @@ public class SourceFormatterHelper {
 			for (PathMatcher pathMatcher : includeFilePathMatchers) {
 				if (pathMatcher.matches(filePath)) {
 					fileName = StringUtil.replace(
-						fileName, StringPool.SLASH,	StringPool.BACK_SLASH);
+						fileName, StringPool.SLASH, StringPool.BACK_SLASH);
 
 					fileNames.add(fileName);
 

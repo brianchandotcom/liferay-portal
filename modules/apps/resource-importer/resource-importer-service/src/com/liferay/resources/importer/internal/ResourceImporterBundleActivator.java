@@ -16,6 +16,7 @@ package com.liferay.resources.importer.internal;
 
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.resources.importer.messaging.DestinationNames;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -31,7 +32,7 @@ public class ResourceImporterBundleActivator implements BundleActivator {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				"liferay/resources_importer");
+				DestinationNames.RESOURCE_IMPORTER);
 
 		_destinationServiceRegistration = bundleContext.registerService(
 			DestinationConfiguration.class, destinationConfiguration,

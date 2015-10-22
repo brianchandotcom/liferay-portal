@@ -81,7 +81,7 @@ public abstract class BaseUpgradeTableImpl extends Table {
 		Connection connection = DataAccess.getUpgradeOptimizedConnection();
 
 		try {
-			updateTable(connection, connection);
+			updateTable(connection, connection, true);
 		}
 		finally {
 			DataAccess.cleanUp(connection);
@@ -89,7 +89,8 @@ public abstract class BaseUpgradeTableImpl extends Table {
 	}
 
 	public void updateTable(
-			Connection sourceConnection, Connection targetConnection)
+			Connection sourceConnection, Connection targetConnection,
+			boolean deleteFromSource)
 		throws Exception {
 
 		_calledUpdateTable = true;
@@ -101,7 +102,7 @@ public abstract class BaseUpgradeTableImpl extends Table {
 		try {
 			DB db = DBFactoryUtil.getDB();
 
-			if (Validator.isNotNull(tempFileName)) {
+			if (Validator.isNotNull(tempFileName) && deleteFromSource) {
 				String deleteSQL = getDeleteSQL();
 
 				db.runSQL(sourceConnection, deleteSQL);
@@ -110,7 +111,9 @@ public abstract class BaseUpgradeTableImpl extends Table {
 			String createSQL = getCreateSQL();
 
 			if (Validator.isNotNull(createSQL)) {
-				db.runSQL(sourceConnection, "drop table " + getTableName());
+				if (deleteFromSource) {
+					db.runSQL(sourceConnection, "drop table " + getTableName());
+				}
 
 				db.runSQL(targetConnection, createSQL);
 			}

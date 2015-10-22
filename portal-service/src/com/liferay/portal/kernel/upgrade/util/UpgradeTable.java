@@ -64,7 +64,8 @@ public interface UpgradeTable {
 	public void updateTable() throws Exception;
 
 	public void updateTable(
-			Connection sourceConnection, Connection targetConnection)
+			Connection sourceConnection, Connection targetConnection,
+			boolean deleteFromSource)
 		throws Exception;
 
 }

@@ -3677,7 +3677,7 @@
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewTimes">
+		<execute macro="CalendarEvent#viewTimes24Hour">
 			<var name="endDateTime" value="23:00" />
 			<var name="startDateTime" value="21:00" />
 		</execute>

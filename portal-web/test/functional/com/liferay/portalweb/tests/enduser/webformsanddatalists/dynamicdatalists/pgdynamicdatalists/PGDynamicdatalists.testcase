@@ -609,11 +609,10 @@
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 
-		<execute macro="DDLRecord#viewFirstRecordViaDDLDisplayTemplate">
+		<execute macro="DDLRecord#viewFirstRecordSearchResult">
 			<var name="ddlListName" value="DDL List Name" />
 			<var name="ddlRecordFieldData" value="Record Text" />
 			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -633,11 +632,10 @@
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 
-		<execute macro="DDLRecord#viewSecondRecordViaDDLDisplayTemplate">
+		<execute macro="DDLRecord#viewSecondRecordSearchResult">
 			<var name="ddlListName" value="DDL List Name" />
 			<var name="ddlRecordFieldData" value="123" />
 			<var name="field" value="Number" />
-			<var name="fieldFieldLabel" value="Number" />
 		</execute>
 	</command>
 
@@ -756,10 +754,10 @@
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 
-		<execute macro="DDLRecord#viewViaDDLDisplayPG">
+		<execute macro="DDLRecord#viewFirstRecordSearchResult">
 			<var name="ddlListName" value="DDL List Name" />
 			<var name="ddlRecordFieldData" value="Record Text" />
-			<var name="fieldFieldLabel" value="Text" />
+			<var name="field" value="Text" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

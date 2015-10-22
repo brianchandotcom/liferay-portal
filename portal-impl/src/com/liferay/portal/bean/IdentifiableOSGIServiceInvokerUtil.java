@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.util.IdentifiableOSGIServiceUtil;
 
-import org.aopalliance.intercept.MethodInvocation;
+import java.lang.reflect.Method;
 
 /**
  * @author Shuyang Zhou
@@ -29,16 +29,15 @@ import org.aopalliance.intercept.MethodInvocation;
 public class IdentifiableOSGIServiceInvokerUtil {
 
 	public static MethodHandler createMethodHandler(
-		MethodInvocation methodInvocation) {
+		Object targetObject, Method method, Object[] args) {
 
-		MethodHandler methodHandler = new MethodHandler(
-			methodInvocation.getMethod(), methodInvocation.getArguments());
+		MethodHandler methodHandler = new MethodHandler(method, args);
 
 		String threadContextServletContextName = ClassLoaderPool.getContextName(
 			ClassLoaderUtil.getContextClassLoader());
 
 		IdentifiableOSGIService identifiableOSGIService =
-			(IdentifiableOSGIService)methodInvocation.getThis();
+			(IdentifiableOSGIService)targetObject;
 
 		return new MethodHandler(
 			_invokeMethodKey, methodHandler, threadContextServletContextName,

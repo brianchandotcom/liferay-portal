@@ -50,7 +50,9 @@ public class SPIClusterableAdvice
 			spi.getRegistrationReference(),
 			new MethodHandlerProcessCallable<Serializable>(
 				ClusterableInvokerUtil.createMethodHandler(
-					clusterable.acceptor(), methodInvocation)));
+					clusterable.acceptor(), methodInvocation.getThis(),
+					methodInvocation.getMethod(),
+					methodInvocation.getArguments())));
 	}
 
 	@Override
@@ -71,7 +73,9 @@ public class SPIClusterableAdvice
 			spi.getRegistrationReference(),
 			new MethodHandlerProcessCallable<Serializable>(
 				ClusterableInvokerUtil.createMethodHandler(
-					clusterable.acceptor(), methodInvocation)));
+					clusterable.acceptor(), methodInvocation.getThis(),
+					methodInvocation.getMethod(),
+					methodInvocation.getArguments())));
 
 		Object result = futureResult.get();
 

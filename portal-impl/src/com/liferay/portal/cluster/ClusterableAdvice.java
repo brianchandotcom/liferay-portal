@@ -52,7 +52,8 @@ public class ClusterableAdvice
 
 		MethodHandler methodHandler =
 			ClusterableInvokerUtil.createMethodHandler(
-				clusterable.acceptor(), methodInvocation);
+				clusterable.acceptor(), methodInvocation.getThis(),
+				methodInvocation.getMethod(), methodInvocation.getArguments());
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
@@ -100,7 +101,8 @@ public class ClusterableAdvice
 
 		MethodHandler methodHandler =
 			ClusterableInvokerUtil.createMethodHandler(
-				clusterable.acceptor(), methodInvocation);
+				clusterable.acceptor(), methodInvocation.getThis(),
+				methodInvocation.getMethod(), methodInvocation.getArguments());
 
 		Future<Object> futureResult = ClusterMasterExecutorUtil.executeOnMaster(
 			methodHandler);

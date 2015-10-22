@@ -55,7 +55,7 @@ public abstract class ValueAccessor
 		DDMForm ddmForm = getDDMForm(ddmFormFieldValue);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(false);
+			ddmForm.getDDMFormFieldsMap(true);
 
 		return ddmFormFieldsMap.get(ddmFormFieldValue.getName());
 	}

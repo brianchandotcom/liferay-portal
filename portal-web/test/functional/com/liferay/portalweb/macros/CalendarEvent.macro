@@ -1163,6 +1163,14 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="endOnDate" />
+			<then>
+				<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_ON_RADIO" />
+				<execute function="Type#clickAtSendKeys" locator1="CalendarEditEvent#REPEAT_ENDS_ON_DATE_FIELD" value1="${endOnDate}" />
+			</then>
+		</if>
+
 		<execute function="Pause" value1="1000" />
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
 		<execute function="Pause" value1="1000" />
@@ -1210,6 +1218,16 @@
 					<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
 
 					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="${frequency}, ${numberOfOccurrences} Times" />
+				</then>
+			</elseif>
+			<elseif>
+				<isset var="endOnDate" />
+				<then>
+					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${frequency}, Until ${endOnDateSummary}" />
+
+					<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
+
+					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="${frequency}, Until ${endOnDateSummary}" />
 				</then>
 			</elseif>
 		</if>

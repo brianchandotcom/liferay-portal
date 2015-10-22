@@ -25,6 +25,38 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-radio',
 
 				prototype: {
+					getContextValue: function() {
+						var instance = this;
+
+						var value = instance.get('value');
+
+						if (Lang.isObject(value)) {
+							value = value[instance.get('locale')];
+						}
+
+						var predefinedValue = instance.get('predefinedValue');
+
+						if (!value && predefinedValue) {
+							if (Lang.isObject(predefinedValue)) {
+								value = predefinedValue[instance.get('locale')];
+							}
+							else {
+								value = predefinedValue;
+							}
+						}
+
+						if (!Lang.isArray(value)) {
+							try {
+								value = JSON.parse(value);
+							}
+							catch (e) {
+								value = [value];
+							}
+						}
+
+						return value[0];
+					},
+
 					getInputNode: function() {
 						var instance = this;
 
@@ -46,11 +78,7 @@ AUI.add(
 					getOptions: function() {
 						var instance = this;
 
-						var value = instance.get('value');
-
-						if (Lang.isObject(value)) {
-							value = value[instance.get('locale')];
-						}
+						var value = instance.getContextValue();
 
 						return A.map(
 							instance.get('options'),
@@ -76,6 +104,24 @@ AUI.add(
 						);
 					},
 
+					setValue: function(value) {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var radiosNodeList = container.all(instance.getInputSelector());
+
+						radiosNodeList.attr('checked', false);
+
+						var radiosToCheck = radiosNodeList.filter(
+							function(node) {
+								return node.val() === value;
+							}
+						);
+
+						radiosToCheck.attr('checked', true);
+					},
+
 					_renderErrorMessage: function() {
 						var instance = this;
 
@@ -84,6 +130,18 @@ AUI.add(
 						RadioField.superclass._renderErrorMessage.apply(instance, arguments);
 
 						container.all('.validation-message').appendTo(container);
+					},
+
+					_showFeedback: function() {
+						var instance = this;
+
+						RadioField.superclass._showFeedback.apply(instance, arguments);
+
+						var container = instance.get('container');
+
+						var feedBack = container.one('.form-control-feedback');
+
+						feedBack.appendTo(container);
 					}
 				}
 			}

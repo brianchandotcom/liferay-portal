@@ -1009,6 +1009,28 @@
 		</execute>
 	</command>
 
+	<command name="AddCalendarEventRepeatingWithEndDateBeforeStartDate">
+		<description message="This is a use case for LPS-56337." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Repeating Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#setRepeating">
+			<var name="endOnDate" value="10/01/2015" />
+			<var name="endOnDateSummary" value="October 1, 2015" />
+			<var name="frequency" value="Daily" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewRepeatingEventErrorMessage" />
+	</command>
+
 	<command name="AddCalendarEventRepeatingWithRemindersEnabled" priority="3">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />

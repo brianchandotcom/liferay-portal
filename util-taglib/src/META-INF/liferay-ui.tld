@@ -2336,6 +2336,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to mark the input as required</description>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>A variable name to refer to the year of the component</description>
 			<name>yearParam</name>
 			<required>false</required>

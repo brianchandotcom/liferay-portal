@@ -34,6 +34,7 @@ String monthParam = GetterUtil.getString((String)request.getAttribute("liferay-u
 int monthValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:monthValue"));
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:name"));
 boolean nullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:nullable"));
+boolean required = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:required"));
 String yearParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:yearParam"));
 int yearValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:yearValue"));
 
@@ -76,7 +77,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			<input class="form-control" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="date" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" title="" type="text" value="<%= nullable ? StringPool.BLANK : format.format(calendar.getTime()) %>" wrappedField="<%= true %>">
+			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" required="<%= required %>" title="" type="text" value="<%= nullable ? StringPool.BLANK : format.format(calendar.getTime()) %>" wrappedField="<%= true %>">
 				<aui:validator errorMessage="please-enter-a-valid-date" name="custom">
 					function(val) {
 						return AUI().use('aui-datatype-date-parse').Parsers.date('<%= mask %>', val);

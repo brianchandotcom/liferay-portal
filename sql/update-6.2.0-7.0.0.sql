@@ -14,7 +14,11 @@ alter table BlogsEntry add coverImageFileEntryId LONG;
 alter table BlogsEntry add coverImageURL STRING null;
 alter table BlogsEntry add smallImageFileEntryId LONG;
 
+alter table Contact_ drop column aimSn;
+alter table Contact_ drop column icqSn;
 alter table Contact_ drop column msnSn;
+alter table Contact_ drop column mySpaceSn;
+alter table Contact_ drop column ymSn;
 
 drop index IX_C803899D on DDMStructureLink;
 

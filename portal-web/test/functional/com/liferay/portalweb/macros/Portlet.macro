@@ -361,7 +361,7 @@
 			<then>
 				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
-				<execute function="AssertElementPresent" locator1="xpath=(//section[header/h1[contains(.,'${portletName}')]])[${i}]" />
+				<execute function="AssertElementPresent" locator1="xpath=(//h2[contains(.,'${portletName}')])[${i}]" />
 			</then>
 		</while>
 	</command>

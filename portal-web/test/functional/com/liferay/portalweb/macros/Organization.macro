@@ -178,26 +178,6 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
 	</command>
 
-	<command name="addPrivatePageToSiteViaSiteTemplateCP">
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="SitesEditSite#PAGES_PRIVATE_PAGES_LABEL" value1="Private Pages" />
-		<execute function="Select" locator1="SitesEditSite#PAGES_PRIVATE_PAGES_SITE_TEMPLATE_SELECT" value1="${organizationSite}" />
-
-		<if>
-			<equals arg1="${checkEnablePropagationCheckbox}" arg2="true" />
-			<then>
-				<execute function="AssertChecked" locator1="Checkbox#ENABLE_PROPAGATION" />
-			</then>
-			<else>
-				<execute function="Uncheck" locator1="Checkbox#ENABLE_PROPAGATION" />
-			</else>
-		</if>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
 	<command name="addReminderQueriesCP">
 		<execute macro="Organization#gotoActionsCmd">
 			<var name="orgName" value="${orgName}" />

@@ -28,6 +28,7 @@ import com.liferay.portal.expression.Expression;
 import com.liferay.portal.expression.ExpressionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -150,7 +151,7 @@ public class DDMFormEvaluatorHelper {
 
 			ddmFormFieldEvaluationResult.setValid(false);
 		}
-		else {
+		else if (!isDDMFormFieldValueEmpty(ddmFormFieldValue)) {
 			DDMFormFieldValidation ddmFormFieldValidation =
 				ddmFormField.getDDMFormFieldValidation();
 
@@ -274,11 +275,11 @@ public class DDMFormEvaluatorHelper {
 
 		if (variableType.equals("boolean")) {
 			expression.setBooleanVariableValue(
-				variableName, Boolean.valueOf(variableValue));
+				variableName, GetterUtil.getBoolean(variableValue));
 		}
 		else if (variableType.equals("integer")) {
 			expression.setIntegerVariableValue(
-				variableName, Integer.valueOf(variableValue));
+				variableName, GetterUtil.getInteger(variableValue));
 		}
 		else if (variableType.equals("string")) {
 			expression.setStringVariableValue(variableName, variableValue);

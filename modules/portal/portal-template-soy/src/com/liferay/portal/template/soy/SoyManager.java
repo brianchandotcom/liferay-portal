@@ -18,10 +18,11 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.BaseTemplateManager;
+import com.liferay.portal.template.BaseMultiTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"language.type=" + TemplateConstants.LANG_TYPE_SOY},
 	service = TemplateManager.class
 )
-public class SoyManager extends BaseTemplateManager {
+public class SoyManager extends BaseMultiTemplateManager {
 
 	@Override
 	public void destroy() {
@@ -68,12 +69,12 @@ public class SoyManager extends BaseTemplateManager {
 
 	@Override
 	protected Template doGetTemplate(
-		TemplateResource templateResource,
+		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities, boolean privileged) {
 
 		Template template = new SoyTemplate(
-			templateResource, errorTemplateResource, helperUtilities,
+			templateResources, errorTemplateResource, helperUtilities,
 			templateContextHelper, privileged);
 
 		if (restricted) {

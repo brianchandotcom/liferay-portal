@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.AbstractTemplate;
+import com.liferay.portal.template.AbstractSingleResourceTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
 
@@ -39,7 +39,7 @@ import java.util.Map;
  * @author Mika Koivisto
  * @author Tina Tian
  */
-public class FreeMarkerTemplate extends AbstractTemplate {
+public class FreeMarkerTemplate extends AbstractSingleResourceTemplate {
 
 	public FreeMarkerTemplate(
 		TemplateResource templateResource,

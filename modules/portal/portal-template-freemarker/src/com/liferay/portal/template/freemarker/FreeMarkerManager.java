@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.template.BaseTemplateManager;
+import com.liferay.portal.template.BaseSingleTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
@@ -97,7 +97,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"language.type=" + TemplateConstants.LANG_TYPE_FTL},
 	service = TemplateManager.class
 )
-public class FreeMarkerManager extends BaseTemplateManager {
+public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 	@Override
 	public void addStaticClassSupport(

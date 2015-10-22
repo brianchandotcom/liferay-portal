@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -49,6 +50,17 @@ public class TemplateManagerUtil {
 
 	public static Set<String> getSupportedLanguageTypes(String propertyKey) {
 		return _instance._getSupportedLanguageTypes(propertyKey);
+	}
+
+	public static Template getTemplate(
+			String templateManagerName,
+			List<TemplateResource> templateResources,
+			TemplateResource errorTemplateResource, boolean restricted)
+		throws TemplateException {
+
+		return _instance._getTemplates(
+			templateManagerName, templateResources, errorTemplateResource,
+			restricted);
 	}
 
 	public static Template getTemplate(
@@ -82,6 +94,15 @@ public class TemplateManagerUtil {
 
 	public static Map<String, TemplateManager> getTemplateManagers() {
 		return _instance._getTemplateManagers();
+	}
+
+	public static Template getTemplates(
+			String templateManagerName,
+			List<TemplateResource> templateResources, boolean restricted)
+		throws TemplateException {
+
+		return _instance._getTemplates(
+			templateManagerName, templateResources, restricted);
 	}
 
 	public static boolean hasTemplateManager(String templateManagerName) {
@@ -218,6 +239,30 @@ public class TemplateManagerUtil {
 		}
 
 		return Collections.unmodifiableMap(map);
+	}
+
+	private Template _getTemplates(
+			String templateManagerName,
+			List<TemplateResource> templateResources, boolean restricted)
+		throws TemplateException {
+
+		TemplateManager templateManager = _getTemplateManagerChecked(
+			templateManagerName);
+
+		return templateManager.getTemplates(templateResources, restricted);
+	}
+
+	private Template _getTemplates(
+			String templateManagerName,
+			List<TemplateResource> templateResources,
+			TemplateResource errorTemplateResource, boolean restricted)
+		throws TemplateException {
+
+		TemplateManager templateManager = _getTemplateManagerChecked(
+			templateManagerName);
+
+		return templateManager.getTemplates(
+			templateResources, errorTemplateResource, restricted);
 	}
 
 	private boolean _hasTemplateManager(String templateManagerName) {

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.template;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -63,6 +64,13 @@ public interface TemplateManager {
 
 	public Template getTemplate(
 		TemplateResource templateResource,
+		TemplateResource errorTemplateResource, boolean restricted);
+
+	public Template getTemplates(
+		List<TemplateResource> templateResources, boolean restricted);
+
+	public Template getTemplates(
+		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, boolean restricted);
 
 	public void init() throws TemplateException;

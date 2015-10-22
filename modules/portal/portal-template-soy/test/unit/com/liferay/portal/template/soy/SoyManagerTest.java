@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,6 +40,52 @@ public class SoyManagerTest {
 	@After
 	public void tearDown() {
 		_soyManagerTestHelper.tearDown();
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testProcessMultiTemplateEmptyList() throws Exception {
+		List<String> emptyList = Collections.emptyList();
+		Template template = _soyManagerTestHelper.getTemplates(emptyList);
+
+		template.processTemplate(new UnsyncStringWriter());
+	}
+
+	@Test
+	public void testProcessMultiTemplateSimple() throws Exception {
+		Template template = _soyManagerTestHelper.getTemplates(
+			Arrays.asList("multi.soy", "simple.soy"));
+
+		template.put("namespace", "soy.multiTest.simple");
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		Assert.assertEquals("Hello.", unsyncStringWriter.toString());
+	}
+
+	@Test
+	public void testProcessMultiTemplateWithContext() throws Exception {
+		Template template = _soyManagerTestHelper.getTemplates(
+			Arrays.asList("multi-context.soy", "context.soy"));
+
+		template.put("name", "Bruno Basto");
+		template.put("namespace", "soy.multiTest.withContext");
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		Assert.assertEquals(
+			"Hello. My name is Bruno Basto.", unsyncStringWriter.toString());
+	}
+
+	@Test(expected = TemplateException.class)
+	public void testProcessMultiTemplateWithoutNamespace() throws Exception {
+		Template template = _soyManagerTestHelper.getTemplates(
+			Collections.singletonList("simple.soy"));
+
+		template.processTemplate(new UnsyncStringWriter());
 	}
 
 	@Test

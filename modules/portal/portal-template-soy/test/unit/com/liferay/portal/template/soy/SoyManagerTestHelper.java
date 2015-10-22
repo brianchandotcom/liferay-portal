@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Marcellus Tavares
  * @author Bruno Basto
@@ -30,6 +33,16 @@ public class SoyManagerTestHelper {
 		TemplateResource templateResource = getTemplateResource(fileName);
 
 		return _soyManager.getTemplate(templateResource, false);
+	}
+
+	public Template getTemplates(List<String> fileNames) {
+		List<TemplateResource> templateResources = new ArrayList<>();
+
+		for (String fileName : fileNames) {
+			templateResources.add(getTemplateResource(fileName));
+		}
+
+		return _soyManager.getTemplates(templateResources, false);
 	}
 
 	public void setUp() throws Exception {

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.AbstractTemplate;
+import com.liferay.portal.template.AbstractSingleResourceTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
 
@@ -38,7 +38,7 @@ import org.apache.velocity.exception.ParseErrorException;
 /**
  * @author Tina Tian
  */
-public class VelocityTemplate extends AbstractTemplate {
+public class VelocityTemplate extends AbstractSingleResourceTemplate {
 
 	public VelocityTemplate(
 		TemplateResource templateResource,

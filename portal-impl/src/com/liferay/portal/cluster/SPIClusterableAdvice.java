@@ -15,6 +15,7 @@
 package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;

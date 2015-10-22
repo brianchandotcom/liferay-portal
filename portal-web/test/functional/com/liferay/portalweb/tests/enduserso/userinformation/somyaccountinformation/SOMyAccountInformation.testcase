@@ -161,37 +161,25 @@
 	</command>
 
 	<command name="EditInstantMessenger" priority="4">
-		<var name="userInstantMessengerAIM" value="socialofficesn" />
-		<var name="userInstantMessengerAIMEdit" value="socialofficesnedit" />
-		<var name="userInstantMessengerICQ" value="socialofficesn" />
-		<var name="userInstantMessengerICQEdit" value="socialofficesnedit" />
 		<var name="userInstantMessengerJabber" value="socialofficesn" />
 		<var name="userInstantMessengerJabberEdit" value="socialofficesnedit" />
 		<var name="userInstantMessengerSkype" value="socialofficesn" />
 		<var name="userInstantMessengerSkypeEdit" value="socialofficesnedit" />
-		<var name="userInstantMessengerYM" value="socialofficesn" />
-		<var name="userInstantMessengerYMEdit" value="socialofficesnedit" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
 		<execute macro="User#addInstantMessengerViaMyAccount">
-			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
-			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
-			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewInstantMessenger">
-			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
-			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
-			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -199,21 +187,15 @@
 		</execute>
 
 		<execute macro="User#addInstantMessengerViaMyAccount">
-			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIMEdit}" />
-			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQEdit}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabberEdit}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkypeEdit}" />
-			<var name="userInstantMessengerYM" value="${userInstantMessengerYMEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewInstantMessenger">
-			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIMEdit}" />
-			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQEdit}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabberEdit}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkypeEdit}" />
-			<var name="userInstantMessengerYM" value="${userInstantMessengerYMEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -221,11 +203,8 @@
 		</execute>
 
 		<execute macro="User#addInstantMessengerViaMyAccount">
-			<var name="userInstantMessengerAIM" value="" />
-			<var name="userInstantMessengerICQ" value="" />
 			<var name="userInstantMessengerJabber" value="" />
 			<var name="userInstantMessengerSkype" value="" />
-			<var name="userInstantMessengerYM" value="" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />

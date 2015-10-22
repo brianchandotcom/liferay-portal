@@ -39,7 +39,7 @@ deploy {
 }
 
 downloadSchemas {
-	File schemasDir = file("src/javax/servlet/jsp/resources")
+	File schemasDir = file("src/main/resources/javax/servlet/jsp/resources")
 
 	doLast {
 		for (fileName in ["jsp_2_0.xsd", "jsp_2_1.xsd", "jsp_2_2.xsd", "jspxml.dtd", "web-jsptaglibrary_1_1.dtd", "web-jsptaglibrary_1_2.dtd", "web-jsptaglibrary_2_0.xsd", "web-jsptaglibrary_2_1.xsd"]) {

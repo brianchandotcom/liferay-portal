@@ -30,7 +30,7 @@ compileJava {
 }
 
 downloadDependencyVisitor {
-	File dependencyVisitorDir = file("src/org/objectweb/asm/depend")
+	File dependencyVisitorDir = file("src/main/java/org/objectweb/asm/depend")
 
 	if (OSDetector.windows) {
 		executable "cmd.exe"
@@ -50,7 +50,7 @@ downloadDependencyVisitor {
 	}
 
 	doLast {
-		ant.patch(dir: "src", patchfile: "patches/LPS-47293.patch", strip: 1)
+		ant.patch(dir: "src/main/java", patchfile: "patches/LPS-47293.patch", strip: 1)
 	}
 
 	onlyIf {
@@ -59,5 +59,5 @@ downloadDependencyVisitor {
 		!dependencyVisitorFile.exists()
 	}
 
-	workingDir = file("src")
+	workingDir = file("src/main/java")
 }

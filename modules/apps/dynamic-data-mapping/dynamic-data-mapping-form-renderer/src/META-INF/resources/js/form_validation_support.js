@@ -91,7 +91,6 @@ AUI.add(
 					function(field) {
 						if (pageNode.contains(field.get('container'))) {
 							field.processValidation(result);
-							field.showValidationStatus();
 
 							if (field.hasErrors()) {
 								fieldToFocus = field;
@@ -141,8 +140,6 @@ AUI.add(
 
 							if (result && Lang.isObject(result)) {
 								instance.processValidation(result);
-
-								instance.showValidationStatus();
 
 								hasErrors = instance.hasErrors();
 							}

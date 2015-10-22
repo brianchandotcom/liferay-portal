@@ -27,8 +27,8 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.naming.NamingException;
 
@@ -83,7 +83,8 @@ public abstract class BaseVerifyProcessTestCase {
 
 	protected abstract VerifyProcess getVerifyProcess();
 
-	private final List<Connection> _connections = new CopyOnWriteArrayList<>();
+	private final Queue<Connection> _connections =
+		new ConcurrentLinkedQueue<>();
 	private DataAccess.PACL _pacl;
 
 	private class DataSourceInvocationHandler implements InvocationHandler {

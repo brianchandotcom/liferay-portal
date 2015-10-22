@@ -84,10 +84,6 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.cache">
-		<priority value="WARN" />
-	</category>
-
 	<category name="com.liferay.portal.captcha.CaptchaImpl">
 		<priority value="INFO" />
 	</category>

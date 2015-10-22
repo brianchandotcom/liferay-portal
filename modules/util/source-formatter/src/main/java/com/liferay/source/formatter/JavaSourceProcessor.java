@@ -935,24 +935,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkPrincipalException(newContent);
 
-		// LPS-58529
-
-		if (portalSource && !fileName.endsWith("ResourceBundleUtil.java")) {
-			if (newContent.contains("ResourceBundle.getBundle(")) {
-				processErrorMessage(
-					fileName,
-					"Use ResourceBundleUtil.getBundle instead of " +
-						"ResourceBundle.getBundle: " + fileName);
-			}
-
-			if (newContent.contains("resourceBundle.getString(")) {
-				processErrorMessage(
-					fileName,
-					"Use ResourceBundleUtil.getString instead of " +
-						"resourceBundle.getString: " + fileName);
-			}
-		}
-
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(
@@ -1578,6 +1560,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				checkStringBundler(trimmedLine, fileName, lineCount);
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
+
+				// LPS-58529
+
+				checkResourceUtil(line, fileName, lineCount);
 
 				if (trimmedLine.startsWith("* @deprecated") &&
 					_addMissingDeprecationReleaseVersion) {

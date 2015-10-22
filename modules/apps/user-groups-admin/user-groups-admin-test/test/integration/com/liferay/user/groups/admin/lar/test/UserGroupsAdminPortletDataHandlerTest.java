@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.lar.test;
+package com.liferay.user.groups.admin.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
 
 import org.junit.ClassRule;
@@ -35,11 +34,10 @@ public class UserGroupsAdminPortletDataHandlerTest
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Override
-	protected void addStagedModels() throws Exception {
+	protected void addStagedModels() {
 	}
 
 	@Override

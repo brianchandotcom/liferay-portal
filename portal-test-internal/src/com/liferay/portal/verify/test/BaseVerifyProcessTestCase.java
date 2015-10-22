@@ -17,14 +17,15 @@ package com.liferay.portal.verify.test;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -46,11 +47,10 @@ public abstract class BaseVerifyProcessTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		Field field = ReflectionTestUtil.getField(DataAccess.class, "_pacl");
+		_pacl = ReflectionTestUtil.getFieldValue(DataAccess.class, "_pacl");
 
-		_pacl = (DataAccess.PACL)field.get(null);
-
-		field.set(null, new PACLWrapper(_pacl));
+		ReflectionTestUtil.setFieldValue(
+			DataAccess.class, "_pacl", new PACLWrapper(_pacl));
 	}
 
 	@After
@@ -59,9 +59,7 @@ public abstract class BaseVerifyProcessTestCase {
 			throw new NullPointerException();
 		}
 
-		Field field = ReflectionTestUtil.getField(DataAccess.class, "_pacl");
-
-		field.set(null, _pacl);
+		ReflectionTestUtil.setFieldValue(DataAccess.class, "_pacl", _pacl);
 	}
 
 	@Test
@@ -71,13 +69,13 @@ public abstract class BaseVerifyProcessTestCase {
 		assertAllConnectionsClosed();
 	}
 
-	protected void assertAllConnectionsClosed() throws Exception {
+	protected void assertAllConnectionsClosed() throws SQLException {
 		for (Connection con : _connections) {
 			Assert.assertTrue("A connection was not closed", con.isClosed());
 		}
 	}
 
-	protected void doVerify() throws Exception {
+	protected void doVerify() throws VerifyException {
 		VerifyProcess verifyProcess = getVerifyProcess();
 
 		verifyProcess.verify();

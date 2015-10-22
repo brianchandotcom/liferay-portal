@@ -612,6 +612,18 @@
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
 	</command>
 
+	<command name="viewFirstRecordSearchResult">
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
+
+		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${field} ${ddlRecordFieldData}" />
+	</command>
+
+	<command name="viewSecondRecordSearchResult">
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
+
+		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${field} ${ddlRecordFieldData}" />
+	</command>
+
 	<command name="viewSecondFieldCP">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />

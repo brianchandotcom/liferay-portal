@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.cache.mvcc;
+package com.liferay.portal.cache.internal.mvcc;
 
-import com.liferay.portal.kernel.cache.LowLevelCache;
+import com.liferay.portal.cache.PortalCacheWrapper;
+import com.liferay.portal.cache.internal.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.model.MVCCModel;
 
 import java.io.Serializable;

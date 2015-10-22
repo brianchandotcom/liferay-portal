@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache.internal;
 
+import com.liferay.portal.cache.PortalCacheWrapper;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
 
 import java.io.Serializable;

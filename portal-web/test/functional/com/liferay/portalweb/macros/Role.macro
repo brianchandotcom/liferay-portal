@@ -417,6 +417,13 @@
 					</then>
 				</elseif>
 				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_USERS_SITE_TEAMS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_TEAMS" />
+						<var name="permissionNavigationValue" value="Site Teams" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_PAGES_SITE_PAGES" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />

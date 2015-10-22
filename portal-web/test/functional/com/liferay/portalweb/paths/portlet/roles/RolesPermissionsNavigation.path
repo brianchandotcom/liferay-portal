@@ -130,6 +130,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_USERS_SITE_TEAMS</td>
+	<td>//div[contains(.,'Users') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Site Teams')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

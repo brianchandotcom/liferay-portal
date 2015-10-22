@@ -444,6 +444,8 @@ if (portlet.getConfigurationActionInstance() != null) {
 
 	String settingsScope = (String)request.getAttribute(WebKeys.SETTINGS_SCOPE);
 
+	settingsScope = ParamUtil.get(request, "settingsScope", settingsScope);
+
 	if (Validator.isNotNull(settingsScope)) {
 		urlConfiguration.setParameter("settingsScope", settingsScope);
 	}

@@ -173,7 +173,7 @@ public class PortletURLUtil {
 	public static String getRefreshURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay) {
 
-		StringBundler sb = new StringBundler(32);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/portal/render_portlet?p_l_id=");
@@ -264,6 +264,16 @@ public class PortletURLUtil {
 
 		if (!ppid.equals(portletId)) {
 			return sb.toString();
+		}
+
+		String settingsScope = (String)request.getAttribute(
+			WebKeys.SETTINGS_SCOPE);
+
+		settingsScope = ParamUtil.get(request, "settingsScope", settingsScope);
+
+		if (Validator.isNotNull(settingsScope)) {
+			sb.append("&settingsScope=");
+			sb.append(settingsScope);
 		}
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);

@@ -517,6 +517,7 @@
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.mp4" />
+			<var name="dmDocumentTitle" value="Document_1.mp4" />
 		</execute>
 
 		<execute function="Pause" locator1="180000" />

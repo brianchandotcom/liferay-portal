@@ -14,10 +14,10 @@
 
 package com.liferay.portal.cache.test;
 
-import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
+import com.liferay.portal.cache.AbstractPortalCacheManager;
+import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
+import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
-import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 
 import java.io.Serializable;
 

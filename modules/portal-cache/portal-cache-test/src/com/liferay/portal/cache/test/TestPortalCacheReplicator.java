@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.test;
 
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
+import com.liferay.portal.cache.PortalCacheReplicator;
 
 import java.io.Serializable;
 

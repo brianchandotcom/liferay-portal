@@ -4,6 +4,8 @@ AUI.add(
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
+		var TPL_BUTTON_SPINNER = '<span> <span class="icon-spinner"></span></span>';
+
 		var DDLPortlet = A.Component.create(
 			{
 				ATTRS: {
@@ -103,6 +105,12 @@ AUI.add(
 						var name = window[instance.ns('nameEditor')].getHTML();
 
 						instance.one('#name').val(name);
+
+						var submitButton = instance.one('#submit');
+
+						submitButton.html(Liferay.Language.get('saving'));
+
+						submitButton.append(TPL_BUTTON_SPINNER);
 					},
 
 					_valueFormBuilder: function() {

@@ -79,10 +79,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	 */
 	public static final String TABLE_NAME = "PollsChoice";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "choiceId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -95,10 +95,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("choiceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -109,7 +109,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PollsChoice (uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table PollsChoice (companyId LONG,uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsChoice";
 	public static final String ORDER_BY_JPQL = " ORDER BY pollsChoice.questionId ASC, pollsChoice.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PollsChoice.questionId ASC, PollsChoice.name ASC";
@@ -144,10 +144,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 		PollsChoice model = new PollsChoiceImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUuid(soapModel.getUuid());
 		model.setChoiceId(soapModel.getChoiceId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -220,10 +220,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("choiceId", getChoiceId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -241,6 +241,12 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -257,12 +263,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -312,6 +312,29 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -370,29 +393,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -728,10 +728,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public Object clone() {
 		PollsChoiceImpl pollsChoiceImpl = new PollsChoiceImpl();
 
+		pollsChoiceImpl.setCompanyId(getCompanyId());
 		pollsChoiceImpl.setUuid(getUuid());
 		pollsChoiceImpl.setChoiceId(getChoiceId());
 		pollsChoiceImpl.setGroupId(getGroupId());
-		pollsChoiceImpl.setCompanyId(getCompanyId());
 		pollsChoiceImpl.setUserId(getUserId());
 		pollsChoiceImpl.setUserName(getUserName());
 		pollsChoiceImpl.setCreateDate(getCreateDate());
@@ -814,15 +814,15 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public void resetOriginalValues() {
 		PollsChoiceModelImpl pollsChoiceModelImpl = this;
 
+		pollsChoiceModelImpl._originalCompanyId = pollsChoiceModelImpl._companyId;
+
+		pollsChoiceModelImpl._setOriginalCompanyId = false;
+
 		pollsChoiceModelImpl._originalUuid = pollsChoiceModelImpl._uuid;
 
 		pollsChoiceModelImpl._originalGroupId = pollsChoiceModelImpl._groupId;
 
 		pollsChoiceModelImpl._setOriginalGroupId = false;
-
-		pollsChoiceModelImpl._originalCompanyId = pollsChoiceModelImpl._companyId;
-
-		pollsChoiceModelImpl._setOriginalCompanyId = false;
 
 		pollsChoiceModelImpl._setModifiedDate = false;
 
@@ -839,6 +839,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public CacheModel<PollsChoice> toCacheModel() {
 		PollsChoiceCacheModel pollsChoiceCacheModel = new PollsChoiceCacheModel();
 
+		pollsChoiceCacheModel.companyId = getCompanyId();
+
 		pollsChoiceCacheModel.uuid = getUuid();
 
 		String uuid = pollsChoiceCacheModel.uuid;
@@ -850,8 +852,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		pollsChoiceCacheModel.choiceId = getChoiceId();
 
 		pollsChoiceCacheModel.groupId = getGroupId();
-
-		pollsChoiceCacheModel.companyId = getCompanyId();
 
 		pollsChoiceCacheModel.userId = getUserId();
 
@@ -915,14 +915,14 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", choiceId=");
 		sb.append(getChoiceId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -953,6 +953,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
@@ -963,10 +967,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1010,15 +1010,15 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			PollsChoice.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _choiceId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

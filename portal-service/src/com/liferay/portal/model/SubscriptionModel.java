@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription>,
-	GroupedModel, MVCCModel {
+	GroupedModel, MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription
 	 * @param primaryKey the primary key of this subscription
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this subscription.
+	 *
+	 * @return the company ID of this subscription
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this subscription.
+	 *
+	 * @param companyId the company ID of this subscription
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this subscription.
@@ -106,22 +122,6 @@ public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this subscription.
-	 *
-	 * @return the company ID of this subscription
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this subscription.
-	 *
-	 * @param companyId the company ID of this subscription
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this subscription.

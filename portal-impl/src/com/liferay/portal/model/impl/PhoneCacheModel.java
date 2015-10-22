@@ -81,14 +81,14 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", phoneId=");
 		sb.append(phoneId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -118,6 +118,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 	public Phone toEntityModel() {
 		PhoneImpl phoneImpl = new PhoneImpl();
 
+		phoneImpl.setCompanyId(companyId);
 		phoneImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -128,7 +129,6 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		}
 
 		phoneImpl.setPhoneId(phoneId);
-		phoneImpl.setCompanyId(companyId);
 		phoneImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -179,10 +179,10 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		phoneId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -198,6 +198,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -208,7 +209,6 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		}
 
 		objectOutput.writeLong(phoneId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -241,10 +241,10 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		objectOutput.writeBoolean(primary);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long phoneId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

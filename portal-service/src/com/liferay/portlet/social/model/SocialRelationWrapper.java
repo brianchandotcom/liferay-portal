@@ -52,9 +52,9 @@ public class SocialRelationWrapper implements SocialRelation,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("uuid", getUuid());
 		attributes.put("relationId", getRelationId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("userId1", getUserId1());
 		attributes.put("userId2", getUserId2());
@@ -65,6 +65,12 @@ public class SocialRelationWrapper implements SocialRelation,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -75,12 +81,6 @@ public class SocialRelationWrapper implements SocialRelation,
 
 		if (relationId != null) {
 			setRelationId(relationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long createDate = (Long)attributes.get("createDate");

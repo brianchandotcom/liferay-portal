@@ -68,14 +68,14 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	public String toString() {
 		StringBundler sb = new StringBundler(57);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fileVersionId=");
 		sb.append(fileVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -133,6 +133,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	public DLFileVersion toEntityModel() {
 		DLFileVersionImpl dlFileVersionImpl = new DLFileVersionImpl();
 
+		dlFileVersionImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			dlFileVersionImpl.setUuid(StringPool.BLANK);
 		}
@@ -142,7 +144,6 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 
 		dlFileVersionImpl.setFileVersionId(fileVersionId);
 		dlFileVersionImpl.setGroupId(groupId);
-		dlFileVersionImpl.setCompanyId(companyId);
 		dlFileVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -275,10 +276,10 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		fileVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -308,6 +309,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -317,7 +320,6 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 
 		objectOutput.writeLong(fileVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -421,10 +423,10 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long fileVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

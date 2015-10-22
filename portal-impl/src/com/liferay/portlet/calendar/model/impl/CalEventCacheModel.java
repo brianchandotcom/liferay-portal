@@ -69,14 +69,14 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(47);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", eventId=");
 		sb.append(eventId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -124,6 +124,8 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 	public CalEvent toEntityModel() {
 		CalEventImpl calEventImpl = new CalEventImpl();
 
+		calEventImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			calEventImpl.setUuid(StringPool.BLANK);
 		}
@@ -133,7 +135,6 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 
 		calEventImpl.setEventId(eventId);
 		calEventImpl.setGroupId(groupId);
-		calEventImpl.setCompanyId(companyId);
 		calEventImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -224,10 +225,10 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		eventId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -252,6 +253,8 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -261,7 +264,6 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 
 		objectOutput.writeLong(eventId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -323,10 +325,10 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 		objectOutput.writeInt(secondReminder);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long eventId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

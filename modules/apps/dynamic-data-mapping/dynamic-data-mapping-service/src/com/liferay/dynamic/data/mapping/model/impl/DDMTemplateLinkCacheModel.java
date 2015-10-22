@@ -63,9 +63,11 @@ public class DDMTemplateLinkCacheModel implements CacheModel<DDMTemplateLink>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("{templateLinkId=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", templateLinkId=");
 		sb.append(templateLinkId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
@@ -82,6 +84,7 @@ public class DDMTemplateLinkCacheModel implements CacheModel<DDMTemplateLink>,
 	public DDMTemplateLink toEntityModel() {
 		DDMTemplateLinkImpl ddmTemplateLinkImpl = new DDMTemplateLinkImpl();
 
+		ddmTemplateLinkImpl.setCompanyId(companyId);
 		ddmTemplateLinkImpl.setTemplateLinkId(templateLinkId);
 		ddmTemplateLinkImpl.setClassNameId(classNameId);
 		ddmTemplateLinkImpl.setClassPK(classPK);
@@ -94,6 +97,7 @@ public class DDMTemplateLinkCacheModel implements CacheModel<DDMTemplateLink>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		templateLinkId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
@@ -103,12 +107,14 @@ public class DDMTemplateLinkCacheModel implements CacheModel<DDMTemplateLink>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(templateLinkId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(templateId);
 	}
 
+	public long companyId;
 	public long templateLinkId;
 	public long classNameId;
 	public long classPK;

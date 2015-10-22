@@ -1,6 +1,6 @@
 create table MicroblogsEntry (
-	microblogsEntryId LONG not null primary key,
 	companyId LONG,
+	microblogsEntryId LONG not null primary key,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

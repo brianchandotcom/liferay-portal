@@ -121,9 +121,9 @@ public class KaleoNotificationPersistenceTest {
 
 		KaleoNotification newKaleoNotification = _persistence.create(pk);
 
-		newKaleoNotification.setGroupId(RandomTestUtil.nextLong());
-
 		newKaleoNotification.setCompanyId(RandomTestUtil.nextLong());
+
+		newKaleoNotification.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoNotification.setUserId(RandomTestUtil.nextLong());
 
@@ -157,12 +157,12 @@ public class KaleoNotificationPersistenceTest {
 
 		KaleoNotification existingKaleoNotification = _persistence.findByPrimaryKey(newKaleoNotification.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoNotification.getCompanyId(),
+			newKaleoNotification.getCompanyId());
 		Assert.assertEquals(existingKaleoNotification.getKaleoNotificationId(),
 			newKaleoNotification.getKaleoNotificationId());
 		Assert.assertEquals(existingKaleoNotification.getGroupId(),
 			newKaleoNotification.getGroupId());
-		Assert.assertEquals(existingKaleoNotification.getCompanyId(),
-			newKaleoNotification.getCompanyId());
 		Assert.assertEquals(existingKaleoNotification.getUserId(),
 			newKaleoNotification.getUserId());
 		Assert.assertEquals(existingKaleoNotification.getUserName(),
@@ -252,7 +252,7 @@ public class KaleoNotificationPersistenceTest {
 
 	protected OrderByComparator<KaleoNotification> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoNotification",
-			"kaleoNotificationId", true, "groupId", true, "companyId", true,
+			"companyId", true, "kaleoNotificationId", true, "groupId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
 			"kaleoDefinitionId", true, "kaleoNodeName", true, "name", true,
@@ -460,9 +460,9 @@ public class KaleoNotificationPersistenceTest {
 
 		KaleoNotification kaleoNotification = _persistence.create(pk);
 
-		kaleoNotification.setGroupId(RandomTestUtil.nextLong());
-
 		kaleoNotification.setCompanyId(RandomTestUtil.nextLong());
+
+		kaleoNotification.setGroupId(RandomTestUtil.nextLong());
 
 		kaleoNotification.setUserId(RandomTestUtil.nextLong());
 

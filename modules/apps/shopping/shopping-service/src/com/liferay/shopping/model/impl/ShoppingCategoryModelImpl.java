@@ -70,9 +70,9 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	 */
 	public static final String TABLE_NAME = "ShoppingCategory";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "categoryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -84,9 +84,9 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("categoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -96,7 +96,7 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ShoppingCategory (categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table ShoppingCategory (companyId LONG,categoryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingCategory";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingCategory.parentCategoryId ASC, shoppingCategory.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ShoppingCategory.parentCategoryId ASC, ShoppingCategory.name ASC";
@@ -129,9 +129,9 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 		ShoppingCategory model = new ShoppingCategoryImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setCategoryId(soapModel.getCategoryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -204,9 +204,9 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -223,6 +223,12 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long categoryId = (Long)attributes.get("categoryId");
 
 		if (categoryId != null) {
@@ -233,12 +239,6 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -284,6 +284,17 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getCategoryId() {
@@ -316,17 +327,6 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -496,9 +496,9 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	public Object clone() {
 		ShoppingCategoryImpl shoppingCategoryImpl = new ShoppingCategoryImpl();
 
+		shoppingCategoryImpl.setCompanyId(getCompanyId());
 		shoppingCategoryImpl.setCategoryId(getCategoryId());
 		shoppingCategoryImpl.setGroupId(getGroupId());
-		shoppingCategoryImpl.setCompanyId(getCompanyId());
 		shoppingCategoryImpl.setUserId(getUserId());
 		shoppingCategoryImpl.setUserName(getUserName());
 		shoppingCategoryImpl.setCreateDate(getCreateDate());
@@ -599,11 +599,11 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	public CacheModel<ShoppingCategory> toCacheModel() {
 		ShoppingCategoryCacheModel shoppingCategoryCacheModel = new ShoppingCategoryCacheModel();
 
+		shoppingCategoryCacheModel.companyId = getCompanyId();
+
 		shoppingCategoryCacheModel.categoryId = getCategoryId();
 
 		shoppingCategoryCacheModel.groupId = getGroupId();
-
-		shoppingCategoryCacheModel.companyId = getCompanyId();
 
 		shoppingCategoryCacheModel.userId = getUserId();
 
@@ -658,12 +658,12 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{categoryId=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", categoryId=");
 		sb.append(getCategoryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -692,16 +692,16 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
 		sb.append(getCategoryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -741,11 +741,11 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ShoppingCategory.class
 		};
+	private long _companyId;
 	private long _categoryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

@@ -1,8 +1,8 @@
 create table Lock_ (
+	companyId LONG,
 	mvccVersion LONG default 0,
 	uuid_ VARCHAR(75) null,
 	lockId LONG not null primary key,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

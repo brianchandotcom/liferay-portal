@@ -2,8 +2,8 @@
 
 <model-hints>
 	<model name="com.liferay.microblogs.model.MicroblogsEntry">
-		<field name="microblogsEntryId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="microblogsEntryId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />

@@ -119,11 +119,11 @@ public class BlogsEntryPersistenceTest {
 
 		BlogsEntry newBlogsEntry = _persistence.create(pk);
 
+		newBlogsEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		newBlogsEntry.setUuid(RandomTestUtil.randomString());
 
 		newBlogsEntry.setGroupId(RandomTestUtil.nextLong());
-
-		newBlogsEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newBlogsEntry.setUserId(RandomTestUtil.nextLong());
 
@@ -179,14 +179,14 @@ public class BlogsEntryPersistenceTest {
 
 		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingBlogsEntry.getCompanyId(),
+			newBlogsEntry.getCompanyId());
 		Assert.assertEquals(existingBlogsEntry.getUuid(),
 			newBlogsEntry.getUuid());
 		Assert.assertEquals(existingBlogsEntry.getEntryId(),
 			newBlogsEntry.getEntryId());
 		Assert.assertEquals(existingBlogsEntry.getGroupId(),
 			newBlogsEntry.getGroupId());
-		Assert.assertEquals(existingBlogsEntry.getCompanyId(),
-			newBlogsEntry.getCompanyId());
 		Assert.assertEquals(existingBlogsEntry.getUserId(),
 			newBlogsEntry.getUserId());
 		Assert.assertEquals(existingBlogsEntry.getUserName(),
@@ -272,6 +272,13 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -279,10 +286,35 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByC_U() throws Exception {
+		_persistence.countByC_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countByCompanyId(0L);
+		_persistence.countByC_U(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_LtD() throws Exception {
+		_persistence.countByC_LtD(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate());
+
+		_persistence.countByC_LtD(0L, RandomTestUtil.nextDate());
+	}
+
+	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_S(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_NotS() throws Exception {
+		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
@@ -319,43 +351,43 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_U() throws Exception {
-		_persistence.countByC_U(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByC_U(0L, 0L);
-	}
-
-	@Test
-	public void testCountByC_LtD() throws Exception {
-		_persistence.countByC_LtD(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextDate());
-
-		_persistence.countByC_LtD(0L, RandomTestUtil.nextDate());
-	}
-
-	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_S(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_NotS() throws Exception {
-		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_NotS(0L, 0);
-	}
-
-	@Test
 	public void testCountByLtD_S() throws Exception {
 		_persistence.countByLtD_S(RandomTestUtil.nextDate(),
 			RandomTestUtil.nextInt());
 
 		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByC_U_S() throws Exception {
+		_persistence.countByC_U_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_U_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByC_U_NotS() throws Exception {
+		_persistence.countByC_U_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_U_NotS(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByC_LtD_S() throws Exception {
+		_persistence.countByC_LtD_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_LtD_S(0L, RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByC_LtD_NotS() throws Exception {
+		_persistence.countByC_LtD_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_LtD_NotS(0L, RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -396,38 +428,6 @@ public class BlogsEntryPersistenceTest {
 			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_LtD_NotS(0L, RandomTestUtil.nextDate(), 0);
-	}
-
-	@Test
-	public void testCountByC_U_S() throws Exception {
-		_persistence.countByC_U_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByC_U_S(0L, 0L, 0);
-	}
-
-	@Test
-	public void testCountByC_U_NotS() throws Exception {
-		_persistence.countByC_U_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByC_U_NotS(0L, 0L, 0);
-	}
-
-	@Test
-	public void testCountByC_LtD_S() throws Exception {
-		_persistence.countByC_LtD_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
-
-		_persistence.countByC_LtD_S(0L, RandomTestUtil.nextDate(), 0);
-	}
-
-	@Test
-	public void testCountByC_LtD_NotS() throws Exception {
-		_persistence.countByC_LtD_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
-
-		_persistence.countByC_LtD_NotS(0L, RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -477,8 +477,8 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	protected OrderByComparator<BlogsEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("BlogsEntry", "uuid", true,
-			"entryId", true, "groupId", true, "companyId", true, "userId",
+		return OrderByComparatorFactoryUtil.create("BlogsEntry", "companyId",
+			true, "uuid", true, "entryId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"title", true, "subtitle", true, "urlTitle", true, "description",
 			true, "displayDate", true, "allowPingbacks", true,
@@ -709,11 +709,11 @@ public class BlogsEntryPersistenceTest {
 
 		BlogsEntry blogsEntry = _persistence.create(pk);
 
+		blogsEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		blogsEntry.setUuid(RandomTestUtil.randomString());
 
 		blogsEntry.setGroupId(RandomTestUtil.nextLong());
-
-		blogsEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		blogsEntry.setUserId(RandomTestUtil.nextLong());
 

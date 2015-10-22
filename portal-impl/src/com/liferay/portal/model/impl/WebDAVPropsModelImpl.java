@@ -62,9 +62,9 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	 */
 	public static final String TABLE_NAME = "WebDAVProps";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "webDavPropsId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
@@ -74,9 +74,9 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("webDavPropsId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -84,7 +84,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		TABLE_COLUMNS_MAP.put("props", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WebDAVProps (mvccVersion LONG default 0,webDavPropsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,props TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table WebDAVProps (companyId LONG,mvccVersion LONG default 0,webDavPropsId LONG not null primary key,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,props TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table WebDAVProps";
 	public static final String ORDER_BY_JPQL = " ORDER BY webDAVProps.webDavPropsId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WebDAVProps.webDavPropsId ASC";
@@ -143,9 +143,9 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("webDavPropsId", getWebDavPropsId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
@@ -160,6 +160,12 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -170,12 +176,6 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 		if (webDavPropsId != null) {
 			setWebDavPropsId(webDavPropsId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -210,6 +210,16 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
 	}
@@ -227,16 +237,6 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	@Override
 	public void setWebDavPropsId(long webDavPropsId) {
 		_webDavPropsId = webDavPropsId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -375,9 +375,9 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	public Object clone() {
 		WebDAVPropsImpl webDAVPropsImpl = new WebDAVPropsImpl();
 
+		webDAVPropsImpl.setCompanyId(getCompanyId());
 		webDAVPropsImpl.setMvccVersion(getMvccVersion());
 		webDAVPropsImpl.setWebDavPropsId(getWebDavPropsId());
-		webDAVPropsImpl.setCompanyId(getCompanyId());
 		webDAVPropsImpl.setCreateDate(getCreateDate());
 		webDAVPropsImpl.setModifiedDate(getModifiedDate());
 		webDAVPropsImpl.setClassNameId(getClassNameId());
@@ -462,11 +462,11 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	public CacheModel<WebDAVProps> toCacheModel() {
 		WebDAVPropsCacheModel webDAVPropsCacheModel = new WebDAVPropsCacheModel();
 
+		webDAVPropsCacheModel.companyId = getCompanyId();
+
 		webDAVPropsCacheModel.mvccVersion = getMvccVersion();
 
 		webDAVPropsCacheModel.webDavPropsId = getWebDavPropsId();
-
-		webDAVPropsCacheModel.companyId = getCompanyId();
 
 		Date createDate = getCreateDate();
 
@@ -505,12 +505,12 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	public String toString() {
 		StringBundler sb = new StringBundler(17);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", webDavPropsId=");
 		sb.append(getWebDavPropsId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -535,16 +535,16 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>webDavPropsId</column-name><column-value><![CDATA[");
 		sb.append(getWebDavPropsId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -576,9 +576,9 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			WebDAVProps.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _webDavPropsId;
-	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

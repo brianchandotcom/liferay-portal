@@ -125,9 +125,9 @@ public class ShoppingCouponPersistenceTest {
 
 		ShoppingCoupon newShoppingCoupon = _persistence.create(pk);
 
-		newShoppingCoupon.setGroupId(RandomTestUtil.nextLong());
-
 		newShoppingCoupon.setCompanyId(RandomTestUtil.nextLong());
+
+		newShoppingCoupon.setGroupId(RandomTestUtil.nextLong());
 
 		newShoppingCoupon.setUserId(RandomTestUtil.nextLong());
 
@@ -163,12 +163,12 @@ public class ShoppingCouponPersistenceTest {
 
 		ShoppingCoupon existingShoppingCoupon = _persistence.findByPrimaryKey(newShoppingCoupon.getPrimaryKey());
 
+		Assert.assertEquals(existingShoppingCoupon.getCompanyId(),
+			newShoppingCoupon.getCompanyId());
 		Assert.assertEquals(existingShoppingCoupon.getCouponId(),
 			newShoppingCoupon.getCouponId());
 		Assert.assertEquals(existingShoppingCoupon.getGroupId(),
 			newShoppingCoupon.getGroupId());
-		Assert.assertEquals(existingShoppingCoupon.getCompanyId(),
-			newShoppingCoupon.getCompanyId());
 		Assert.assertEquals(existingShoppingCoupon.getUserId(),
 			newShoppingCoupon.getUserId());
 		Assert.assertEquals(existingShoppingCoupon.getUserName(),
@@ -245,7 +245,7 @@ public class ShoppingCouponPersistenceTest {
 
 	protected OrderByComparator<ShoppingCoupon> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingCoupon",
-			"couponId", true, "groupId", true, "companyId", true, "userId",
+			"companyId", true, "couponId", true, "groupId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"code", true, "name", true, "description", true, "startDate", true,
 			"endDate", true, "active", true, "limitCategories", true,
@@ -463,9 +463,9 @@ public class ShoppingCouponPersistenceTest {
 
 		ShoppingCoupon shoppingCoupon = _persistence.create(pk);
 
-		shoppingCoupon.setGroupId(RandomTestUtil.nextLong());
-
 		shoppingCoupon.setCompanyId(RandomTestUtil.nextLong());
+
+		shoppingCoupon.setGroupId(RandomTestUtil.nextLong());
 
 		shoppingCoupon.setUserId(RandomTestUtil.nextLong());
 

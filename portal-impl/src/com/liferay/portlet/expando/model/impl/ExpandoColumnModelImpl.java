@@ -62,8 +62,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	 */
 	public static final String TABLE_NAME = "ExpandoColumn";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "columnId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "columnId", Types.BIGINT },
 			{ "tableId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "type_", Types.INTEGER },
@@ -73,8 +73,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("columnId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("columnId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
@@ -82,7 +82,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExpandoColumn (columnId LONG not null primary key,companyId LONG,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table ExpandoColumn (companyId LONG,columnId LONG not null primary key,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table ExpandoColumn";
 	public static final String ORDER_BY_JPQL = " ORDER BY expandoColumn.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ExpandoColumn.name ASC";
@@ -114,8 +114,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 		ExpandoColumn model = new ExpandoColumnImpl();
 
-		model.setColumnId(soapModel.getColumnId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setColumnId(soapModel.getColumnId());
 		model.setTableId(soapModel.getTableId());
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
@@ -185,8 +185,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("columnId", getColumnId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("columnId", getColumnId());
 		attributes.put("tableId", getTableId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
@@ -201,16 +201,16 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long columnId = (Long)attributes.get("columnId");
-
-		if (columnId != null) {
-			setColumnId(columnId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long columnId = (Long)attributes.get("columnId");
+
+		if (columnId != null) {
+			setColumnId(columnId);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");
@@ -244,6 +244,17 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	@JSON
 	@Override
 	public long getColumnId() {
@@ -253,17 +264,6 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	@Override
 	public void setColumnId(long columnId) {
 		_columnId = columnId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -376,8 +376,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public Object clone() {
 		ExpandoColumnImpl expandoColumnImpl = new ExpandoColumnImpl();
 
-		expandoColumnImpl.setColumnId(getColumnId());
 		expandoColumnImpl.setCompanyId(getCompanyId());
+		expandoColumnImpl.setColumnId(getColumnId());
 		expandoColumnImpl.setTableId(getTableId());
 		expandoColumnImpl.setName(getName());
 		expandoColumnImpl.setType(getType());
@@ -456,9 +456,9 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public CacheModel<ExpandoColumn> toCacheModel() {
 		ExpandoColumnCacheModel expandoColumnCacheModel = new ExpandoColumnCacheModel();
 
-		expandoColumnCacheModel.columnId = getColumnId();
-
 		expandoColumnCacheModel.companyId = getCompanyId();
+
+		expandoColumnCacheModel.columnId = getColumnId();
 
 		expandoColumnCacheModel.tableId = getTableId();
 
@@ -495,10 +495,10 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{columnId=");
-		sb.append(getColumnId());
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(getCompanyId());
+		sb.append(", columnId=");
+		sb.append(getColumnId());
 		sb.append(", tableId=");
 		sb.append(getTableId());
 		sb.append(", name=");
@@ -523,12 +523,12 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>columnId</column-name><column-value><![CDATA[");
-		sb.append(getColumnId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>columnId</column-name><column-value><![CDATA[");
+		sb.append(getColumnId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>tableId</column-name><column-value><![CDATA[");
@@ -560,8 +560,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ExpandoColumn.class
 		};
-	private long _columnId;
 	private long _companyId;
+	private long _columnId;
 	private long _tableId;
 	private long _originalTableId;
 	private boolean _setOriginalTableId;

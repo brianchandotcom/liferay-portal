@@ -58,6 +58,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	 */
 	public static final String TABLE_NAME = "ResourceBlockPermission";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "resourceBlockPermissionId", Types.BIGINT },
 			{ "resourceBlockId", Types.BIGINT },
@@ -67,6 +68,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourceBlockPermissionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourceBlockId", Types.BIGINT);
@@ -74,7 +76,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		TABLE_COLUMNS_MAP.put("actionIds", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (mvccVersion LONG default 0,resourceBlockPermissionId LONG not null primary key,resourceBlockId LONG,roleId LONG,actionIds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (companyId LONG,mvccVersion LONG default 0,resourceBlockPermissionId LONG not null primary key,resourceBlockId LONG,roleId LONG,actionIds LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlockPermission";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourceBlockPermission.resourceBlockPermissionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ResourceBlockPermission.resourceBlockPermissionId ASC";
@@ -133,6 +135,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourceBlockPermissionId",
 			getResourceBlockPermissionId());
@@ -148,6 +151,12 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -178,6 +187,16 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		if (actionIds != null) {
 			setActionIds(actionIds);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -260,7 +279,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ResourceBlockPermission.class.getName(), getPrimaryKey());
 	}
 
@@ -285,6 +304,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	public Object clone() {
 		ResourceBlockPermissionImpl resourceBlockPermissionImpl = new ResourceBlockPermissionImpl();
 
+		resourceBlockPermissionImpl.setCompanyId(getCompanyId());
 		resourceBlockPermissionImpl.setMvccVersion(getMvccVersion());
 		resourceBlockPermissionImpl.setResourceBlockPermissionId(getResourceBlockPermissionId());
 		resourceBlockPermissionImpl.setResourceBlockId(getResourceBlockId());
@@ -367,6 +387,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	public CacheModel<ResourceBlockPermission> toCacheModel() {
 		ResourceBlockPermissionCacheModel resourceBlockPermissionCacheModel = new ResourceBlockPermissionCacheModel();
 
+		resourceBlockPermissionCacheModel.companyId = getCompanyId();
+
 		resourceBlockPermissionCacheModel.mvccVersion = getMvccVersion();
 
 		resourceBlockPermissionCacheModel.resourceBlockPermissionId = getResourceBlockPermissionId();
@@ -382,9 +404,11 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", resourceBlockPermissionId=");
 		sb.append(getResourceBlockPermissionId());
@@ -401,12 +425,16 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ResourceBlockPermission");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
@@ -437,6 +465,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ResourceBlockPermission.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _resourceBlockPermissionId;
 	private long _resourceBlockId;

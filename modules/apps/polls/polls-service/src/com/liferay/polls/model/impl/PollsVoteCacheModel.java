@@ -68,14 +68,14 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote>,
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", voteId=");
 		sb.append(voteId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -101,6 +101,8 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote>,
 	public PollsVote toEntityModel() {
 		PollsVoteImpl pollsVoteImpl = new PollsVoteImpl();
 
+		pollsVoteImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			pollsVoteImpl.setUuid(StringPool.BLANK);
 		}
@@ -110,7 +112,6 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote>,
 
 		pollsVoteImpl.setVoteId(voteId);
 		pollsVoteImpl.setGroupId(groupId);
-		pollsVoteImpl.setCompanyId(companyId);
 		pollsVoteImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -158,10 +159,10 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		voteId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -175,6 +176,8 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -184,7 +187,6 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote>,
 
 		objectOutput.writeLong(voteId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -202,10 +204,10 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote>,
 		objectOutput.writeLong(voteDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long voteId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

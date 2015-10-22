@@ -3316,6 +3316,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		layoutSetBranch.setNew(true);
 		layoutSetBranch.setPrimaryKey(layoutSetBranchId);
 
+		layoutSetBranch.setCompanyId(0);
+
 		return layoutSetBranch;
 	}
 
@@ -3547,10 +3549,10 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		layoutSetBranchImpl.setNew(layoutSetBranch.isNew());
 		layoutSetBranchImpl.setPrimaryKey(layoutSetBranch.getPrimaryKey());
 
+		layoutSetBranchImpl.setCompanyId(layoutSetBranch.getCompanyId());
 		layoutSetBranchImpl.setMvccVersion(layoutSetBranch.getMvccVersion());
 		layoutSetBranchImpl.setLayoutSetBranchId(layoutSetBranch.getLayoutSetBranchId());
 		layoutSetBranchImpl.setGroupId(layoutSetBranch.getGroupId());
-		layoutSetBranchImpl.setCompanyId(layoutSetBranch.getCompanyId());
 		layoutSetBranchImpl.setUserId(layoutSetBranch.getUserId());
 		layoutSetBranchImpl.setUserName(layoutSetBranch.getUserName());
 		layoutSetBranchImpl.setCreateDate(layoutSetBranch.getCreateDate());

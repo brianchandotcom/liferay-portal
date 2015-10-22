@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,22 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
 	 * @param primaryKey the primary key of this system event
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this system event.
+	 *
+	 * @return the company ID of this system event
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this system event.
+	 *
+	 * @param companyId the company ID of this system event
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the mvcc version of this system event.
@@ -104,20 +120,6 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
 	 * @param groupId the group ID of this system event
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this system event.
-	 *
-	 * @return the company ID of this system event
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this system event.
-	 *
-	 * @param companyId the company ID of this system event
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this system event.

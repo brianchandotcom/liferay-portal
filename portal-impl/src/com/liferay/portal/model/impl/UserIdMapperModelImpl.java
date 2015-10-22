@@ -62,6 +62,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	 */
 	public static final String TABLE_NAME = "UserIdMapper";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "userIdMapperId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -72,6 +73,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userIdMapperId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -80,7 +82,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		TABLE_COLUMNS_MAP.put("externalUserId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserIdMapper (mvccVersion LONG default 0,userIdMapperId LONG not null primary key,userId LONG,type_ VARCHAR(75) null,description VARCHAR(75) null,externalUserId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table UserIdMapper (companyId LONG,mvccVersion LONG default 0,userIdMapperId LONG not null primary key,userId LONG,type_ VARCHAR(75) null,description VARCHAR(75) null,externalUserId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table UserIdMapper";
 	public static final String ORDER_BY_JPQL = " ORDER BY userIdMapper.userIdMapperId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserIdMapper.userIdMapperId ASC";
@@ -140,6 +142,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userIdMapperId", getUserIdMapperId());
 		attributes.put("userId", getUserId());
@@ -155,6 +158,12 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -190,6 +199,16 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		if (externalUserId != null) {
 			setExternalUserId(externalUserId);
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -321,7 +340,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			UserIdMapper.class.getName(), getPrimaryKey());
 	}
 
@@ -346,6 +365,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	public Object clone() {
 		UserIdMapperImpl userIdMapperImpl = new UserIdMapperImpl();
 
+		userIdMapperImpl.setCompanyId(getCompanyId());
 		userIdMapperImpl.setMvccVersion(getMvccVersion());
 		userIdMapperImpl.setUserIdMapperId(getUserIdMapperId());
 		userIdMapperImpl.setUserId(getUserId());
@@ -429,6 +449,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	public CacheModel<UserIdMapper> toCacheModel() {
 		UserIdMapperCacheModel userIdMapperCacheModel = new UserIdMapperCacheModel();
 
+		userIdMapperCacheModel.companyId = getCompanyId();
+
 		userIdMapperCacheModel.mvccVersion = getMvccVersion();
 
 		userIdMapperCacheModel.userIdMapperId = getUserIdMapperId();
@@ -464,9 +486,11 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", userIdMapperId=");
 		sb.append(getUserIdMapperId());
@@ -485,12 +509,16 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserIdMapper");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
@@ -525,6 +553,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			UserIdMapper.class
 		};
+	private long _companyId;
 	private long _mvccVersion;
 	private long _userIdMapperId;
 	private long _userId;

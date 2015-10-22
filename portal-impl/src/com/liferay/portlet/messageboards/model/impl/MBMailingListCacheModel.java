@@ -68,14 +68,14 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 	public String toString() {
 		StringBundler sb = new StringBundler(53);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", mailingListId=");
 		sb.append(mailingListId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -129,6 +129,8 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 	public MBMailingList toEntityModel() {
 		MBMailingListImpl mbMailingListImpl = new MBMailingListImpl();
 
+		mbMailingListImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			mbMailingListImpl.setUuid(StringPool.BLANK);
 		}
@@ -138,7 +140,6 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 		mbMailingListImpl.setMailingListId(mailingListId);
 		mbMailingListImpl.setGroupId(groupId);
-		mbMailingListImpl.setCompanyId(companyId);
 		mbMailingListImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -247,10 +248,10 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		mailingListId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -278,6 +279,8 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -287,7 +290,6 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 		objectOutput.writeLong(mailingListId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -378,10 +380,10 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		objectOutput.writeBoolean(active);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long mailingListId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -79,12 +79,12 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", userNotificationDeliveryId=");
 		sb.append(userNotificationDeliveryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", portletId=");
@@ -106,9 +106,9 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 	public UserNotificationDelivery toEntityModel() {
 		UserNotificationDeliveryImpl userNotificationDeliveryImpl = new UserNotificationDeliveryImpl();
 
+		userNotificationDeliveryImpl.setCompanyId(companyId);
 		userNotificationDeliveryImpl.setMvccVersion(mvccVersion);
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(userNotificationDeliveryId);
-		userNotificationDeliveryImpl.setCompanyId(companyId);
 		userNotificationDeliveryImpl.setUserId(userId);
 
 		if (portletId == null) {
@@ -130,9 +130,9 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		userNotificationDeliveryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		portletId = objectInput.readUTF();
 		classNameId = objectInput.readLong();
@@ -144,9 +144,9 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(userNotificationDeliveryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (portletId == null) {
@@ -162,9 +162,9 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		objectOutput.writeBoolean(deliver);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public long userNotificationDeliveryId;
-	public long companyId;
 	public long userId;
 	public String portletId;
 	public long classNameId;

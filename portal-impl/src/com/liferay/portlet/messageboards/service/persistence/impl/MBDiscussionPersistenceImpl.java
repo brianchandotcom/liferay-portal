@@ -2638,6 +2638,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 		mbDiscussion.setUuid(uuid);
 
+		mbDiscussion.setCompanyId(0);
+
 		return mbDiscussion;
 	}
 
@@ -2868,10 +2870,10 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		mbDiscussionImpl.setNew(mbDiscussion.isNew());
 		mbDiscussionImpl.setPrimaryKey(mbDiscussion.getPrimaryKey());
 
+		mbDiscussionImpl.setCompanyId(mbDiscussion.getCompanyId());
 		mbDiscussionImpl.setUuid(mbDiscussion.getUuid());
 		mbDiscussionImpl.setDiscussionId(mbDiscussion.getDiscussionId());
 		mbDiscussionImpl.setGroupId(mbDiscussion.getGroupId());
-		mbDiscussionImpl.setCompanyId(mbDiscussion.getCompanyId());
 		mbDiscussionImpl.setUserId(mbDiscussion.getUserId());
 		mbDiscussionImpl.setUserName(mbDiscussion.getUserName());
 		mbDiscussionImpl.setCreateDate(mbDiscussion.getCreateDate());

@@ -71,10 +71,10 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	 */
 	public static final String TABLE_NAME = "Phone";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "phoneId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -89,10 +89,10 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("phoneId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -105,7 +105,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Phone (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,phoneId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,number_ VARCHAR(75) null,extension VARCHAR(75) null,typeId LONG,primary_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Phone (companyId LONG,mvccVersion LONG default 0,uuid_ VARCHAR(75) null,phoneId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,number_ VARCHAR(75) null,extension VARCHAR(75) null,typeId LONG,primary_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Phone";
 	public static final String ORDER_BY_JPQL = " ORDER BY phone.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Phone.createDate ASC";
@@ -142,10 +142,10 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 		Phone model = new PhoneImpl();
 
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setPhoneId(soapModel.getPhoneId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -220,10 +220,10 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("companyId", getCompanyId());
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("phoneId", getPhoneId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -243,6 +243,12 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long mvccVersion = (Long)attributes.get("mvccVersion");
 
 		if (mvccVersion != null) {
@@ -259,12 +265,6 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 		if (phoneId != null) {
 			setPhoneId(phoneId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -328,6 +328,29 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		}
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -372,29 +395,6 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	@Override
 	public void setPhoneId(long phoneId) {
 		_phoneId = phoneId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -656,10 +656,10 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public Object clone() {
 		PhoneImpl phoneImpl = new PhoneImpl();
 
+		phoneImpl.setCompanyId(getCompanyId());
 		phoneImpl.setMvccVersion(getMvccVersion());
 		phoneImpl.setUuid(getUuid());
 		phoneImpl.setPhoneId(getPhoneId());
-		phoneImpl.setCompanyId(getCompanyId());
 		phoneImpl.setUserId(getUserId());
 		phoneImpl.setUserName(getUserName());
 		phoneImpl.setCreateDate(getCreateDate());
@@ -730,11 +730,11 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public void resetOriginalValues() {
 		PhoneModelImpl phoneModelImpl = this;
 
-		phoneModelImpl._originalUuid = phoneModelImpl._uuid;
-
 		phoneModelImpl._originalCompanyId = phoneModelImpl._companyId;
 
 		phoneModelImpl._setOriginalCompanyId = false;
+
+		phoneModelImpl._originalUuid = phoneModelImpl._uuid;
 
 		phoneModelImpl._originalUserId = phoneModelImpl._userId;
 
@@ -761,6 +761,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public CacheModel<Phone> toCacheModel() {
 		PhoneCacheModel phoneCacheModel = new PhoneCacheModel();
 
+		phoneCacheModel.companyId = getCompanyId();
+
 		phoneCacheModel.mvccVersion = getMvccVersion();
 
 		phoneCacheModel.uuid = getUuid();
@@ -772,8 +774,6 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		}
 
 		phoneCacheModel.phoneId = getPhoneId();
-
-		phoneCacheModel.companyId = getCompanyId();
 
 		phoneCacheModel.userId = getUserId();
 
@@ -834,14 +834,14 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(getCompanyId());
+		sb.append(", mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", phoneId=");
 		sb.append(getPhoneId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -876,6 +876,10 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
@@ -886,10 +890,6 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		sb.append(
 			"<column><column-name>phoneId</column-name><column-value><![CDATA[");
 		sb.append(getPhoneId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -941,13 +941,13 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			Phone.class
 		};
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _phoneId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

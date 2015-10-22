@@ -125,11 +125,11 @@ public class JournalFeedPersistenceTest {
 
 		JournalFeed newJournalFeed = _persistence.create(pk);
 
+		newJournalFeed.setCompanyId(RandomTestUtil.nextLong());
+
 		newJournalFeed.setUuid(RandomTestUtil.randomString());
 
 		newJournalFeed.setGroupId(RandomTestUtil.nextLong());
-
-		newJournalFeed.setCompanyId(RandomTestUtil.nextLong());
 
 		newJournalFeed.setUserId(RandomTestUtil.nextLong());
 
@@ -173,13 +173,13 @@ public class JournalFeedPersistenceTest {
 
 		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
 
+		Assert.assertEquals(existingJournalFeed.getCompanyId(),
+			newJournalFeed.getCompanyId());
 		Assert.assertEquals(existingJournalFeed.getUuid(),
 			newJournalFeed.getUuid());
 		Assert.assertEquals(existingJournalFeed.getId(), newJournalFeed.getId());
 		Assert.assertEquals(existingJournalFeed.getGroupId(),
 			newJournalFeed.getGroupId());
-		Assert.assertEquals(existingJournalFeed.getCompanyId(),
-			newJournalFeed.getCompanyId());
 		Assert.assertEquals(existingJournalFeed.getUserId(),
 			newJournalFeed.getUserId());
 		Assert.assertEquals(existingJournalFeed.getUserName(),
@@ -295,8 +295,8 @@ public class JournalFeedPersistenceTest {
 	}
 
 	protected OrderByComparator<JournalFeed> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("JournalFeed", "uuid", true,
-			"id", true, "groupId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("JournalFeed", "companyId",
+			true, "uuid", true, "id", true, "groupId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"feedId", true, "name", true, "description", true,
 			"DDMStructureKey", true, "DDMTemplateKey", true,
@@ -524,11 +524,11 @@ public class JournalFeedPersistenceTest {
 
 		JournalFeed journalFeed = _persistence.create(pk);
 
+		journalFeed.setCompanyId(RandomTestUtil.nextLong());
+
 		journalFeed.setUuid(RandomTestUtil.randomString());
 
 		journalFeed.setGroupId(RandomTestUtil.nextLong());
-
-		journalFeed.setCompanyId(RandomTestUtil.nextLong());
 
 		journalFeed.setUserId(RandomTestUtil.nextLong());
 

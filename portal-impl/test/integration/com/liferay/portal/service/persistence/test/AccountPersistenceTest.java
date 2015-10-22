@@ -115,9 +115,9 @@ public class AccountPersistenceTest {
 
 		Account newAccount = _persistence.create(pk);
 
-		newAccount.setMvccVersion(RandomTestUtil.nextLong());
-
 		newAccount.setCompanyId(RandomTestUtil.nextLong());
+
+		newAccount.setMvccVersion(RandomTestUtil.nextLong());
 
 		newAccount.setUserId(RandomTestUtil.nextLong());
 
@@ -151,12 +151,12 @@ public class AccountPersistenceTest {
 
 		Account existingAccount = _persistence.findByPrimaryKey(newAccount.getPrimaryKey());
 
+		Assert.assertEquals(existingAccount.getCompanyId(),
+			newAccount.getCompanyId());
 		Assert.assertEquals(existingAccount.getMvccVersion(),
 			newAccount.getMvccVersion());
 		Assert.assertEquals(existingAccount.getAccountId(),
 			newAccount.getAccountId());
-		Assert.assertEquals(existingAccount.getCompanyId(),
-			newAccount.getCompanyId());
 		Assert.assertEquals(existingAccount.getUserId(), newAccount.getUserId());
 		Assert.assertEquals(existingAccount.getUserName(),
 			newAccount.getUserName());
@@ -208,8 +208,8 @@ public class AccountPersistenceTest {
 	}
 
 	protected OrderByComparator<Account> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Account_", "mvccVersion",
-			true, "accountId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("Account_", "companyId",
+			true, "mvccVersion", true, "accountId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"parentAccountId", true, "name", true, "legalName", true,
 			"legalId", true, "legalType", true, "sicCode", true,
@@ -411,9 +411,9 @@ public class AccountPersistenceTest {
 
 		Account account = _persistence.create(pk);
 
-		account.setMvccVersion(RandomTestUtil.nextLong());
-
 		account.setCompanyId(RandomTestUtil.nextLong());
+
+		account.setMvccVersion(RandomTestUtil.nextLong());
 
 		account.setUserId(RandomTestUtil.nextLong());
 

@@ -113,165 +113,6 @@ public class ExportImportConfigurationUtil {
 	}
 
 	/**
-	* Returns all the export import configurations where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the matching export import configurations
-	*/
-	public static List<ExportImportConfiguration> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	* Returns a range of all the export import configurations where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of export import configurations
-	* @param end the upper bound of the range of export import configurations (not inclusive)
-	* @return the range of matching export import configurations
-	*/
-	public static List<ExportImportConfiguration> findByGroupId(long groupId,
-		int start, int end) {
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the export import configurations where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of export import configurations
-	* @param end the upper bound of the range of export import configurations (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching export import configurations
-	*/
-	public static List<ExportImportConfiguration> findByGroupId(long groupId,
-		int start, int end,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-		return getPersistence()
-				   .findByGroupId(groupId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the export import configurations where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of export import configurations
-	* @param end the upper bound of the range of export import configurations (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching export import configurations
-	*/
-	public static List<ExportImportConfiguration> findByGroupId(long groupId,
-		int start, int end,
-		OrderByComparator<ExportImportConfiguration> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByGroupId(groupId, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	* Returns the first export import configuration in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	*/
-	public static ExportImportConfiguration findByGroupId_First(long groupId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
-		return getPersistence().findByGroupId_First(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the first export import configuration in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	*/
-	public static ExportImportConfiguration fetchByGroupId_First(long groupId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the last export import configuration in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching export import configuration
-	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
-	*/
-	public static ExportImportConfiguration findByGroupId_Last(long groupId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the last export import configuration in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
-	*/
-	public static ExportImportConfiguration fetchByGroupId_Last(long groupId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63;.
-	*
-	* @param exportImportConfigurationId the primary key of the current export import configuration
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next export import configuration
-	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
-	*/
-	public static ExportImportConfiguration[] findByGroupId_PrevAndNext(
-		long exportImportConfigurationId, long groupId,
-		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
-		return getPersistence()
-				   .findByGroupId_PrevAndNext(exportImportConfigurationId,
-			groupId, orderByComparator);
-	}
-
-	/**
-	* Removes all the export import configurations where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	*/
-	public static void removeByGroupId(long groupId) {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of export import configurations where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching export import configurations
-	*/
-	public static int countByGroupId(long groupId) {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
 	* Returns all the export import configurations where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -437,6 +278,165 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	* Returns all the export import configurations where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching export import configurations
+	*/
+	public static List<ExportImportConfiguration> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	* Returns a range of all the export import configurations where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of export import configurations
+	* @param end the upper bound of the range of export import configurations (not inclusive)
+	* @return the range of matching export import configurations
+	*/
+	public static List<ExportImportConfiguration> findByGroupId(long groupId,
+		int start, int end) {
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the export import configurations where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of export import configurations
+	* @param end the upper bound of the range of export import configurations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching export import configurations
+	*/
+	public static List<ExportImportConfiguration> findByGroupId(long groupId,
+		int start, int end,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the export import configurations where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of export import configurations
+	* @param end the upper bound of the range of export import configurations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching export import configurations
+	*/
+	public static List<ExportImportConfiguration> findByGroupId(long groupId,
+		int start, int end,
+		OrderByComparator<ExportImportConfiguration> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first export import configuration in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching export import configuration
+	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	*/
+	public static ExportImportConfiguration findByGroupId_First(long groupId,
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
+		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		return getPersistence().findByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the first export import configuration in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
+	*/
+	public static ExportImportConfiguration fetchByGroupId_First(long groupId,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
+		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last export import configuration in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching export import configuration
+	* @throws NoSuchConfigurationException if a matching export import configuration could not be found
+	*/
+	public static ExportImportConfiguration findByGroupId_Last(long groupId,
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
+		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last export import configuration in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching export import configuration, or <code>null</code> if a matching export import configuration could not be found
+	*/
+	public static ExportImportConfiguration fetchByGroupId_Last(long groupId,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63;.
+	*
+	* @param exportImportConfigurationId the primary key of the current export import configuration
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next export import configuration
+	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
+	*/
+	public static ExportImportConfiguration[] findByGroupId_PrevAndNext(
+		long exportImportConfigurationId, long groupId,
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
+		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		return getPersistence()
+				   .findByGroupId_PrevAndNext(exportImportConfigurationId,
+			groupId, orderByComparator);
+	}
+
+	/**
+	* Removes all the export import configurations where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	*/
+	public static void removeByGroupId(long groupId) {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of export import configurations where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching export import configurations
+	*/
+	public static int countByGroupId(long groupId) {
+		return getPersistence().countByGroupId(groupId);
 	}
 
 	/**

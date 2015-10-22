@@ -2497,6 +2497,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		pollsQuestion.setUuid(uuid);
 
+		pollsQuestion.setCompanyId(0);
+
 		return pollsQuestion;
 	}
 
@@ -2727,10 +2729,10 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		pollsQuestionImpl.setNew(pollsQuestion.isNew());
 		pollsQuestionImpl.setPrimaryKey(pollsQuestion.getPrimaryKey());
 
+		pollsQuestionImpl.setCompanyId(pollsQuestion.getCompanyId());
 		pollsQuestionImpl.setUuid(pollsQuestion.getUuid());
 		pollsQuestionImpl.setQuestionId(pollsQuestion.getQuestionId());
 		pollsQuestionImpl.setGroupId(pollsQuestion.getGroupId());
-		pollsQuestionImpl.setCompanyId(pollsQuestion.getCompanyId());
 		pollsQuestionImpl.setUserId(pollsQuestion.getUserId());
 		pollsQuestionImpl.setUserName(pollsQuestion.getUserName());
 		pollsQuestionImpl.setCreateDate(pollsQuestion.getCreateDate());

@@ -5278,6 +5278,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		microblogsEntry.setNew(true);
 		microblogsEntry.setPrimaryKey(microblogsEntryId);
 
+		microblogsEntry.setCompanyId(0);
+
 		return microblogsEntry;
 	}
 
@@ -5611,8 +5613,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		microblogsEntryImpl.setNew(microblogsEntry.isNew());
 		microblogsEntryImpl.setPrimaryKey(microblogsEntry.getPrimaryKey());
 
-		microblogsEntryImpl.setMicroblogsEntryId(microblogsEntry.getMicroblogsEntryId());
 		microblogsEntryImpl.setCompanyId(microblogsEntry.getCompanyId());
+		microblogsEntryImpl.setMicroblogsEntryId(microblogsEntry.getMicroblogsEntryId());
 		microblogsEntryImpl.setUserId(microblogsEntry.getUserId());
 		microblogsEntryImpl.setUserName(microblogsEntry.getUserName());
 		microblogsEntryImpl.setCreateDate(microblogsEntry.getCreateDate());

@@ -81,14 +81,14 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{mvccVersion=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", organizationId=");
 		sb.append(organizationId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -126,6 +126,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	public Organization toEntityModel() {
 		OrganizationImpl organizationImpl = new OrganizationImpl();
 
+		organizationImpl.setCompanyId(companyId);
 		organizationImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
@@ -136,7 +137,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		}
 
 		organizationImpl.setOrganizationId(organizationId);
-		organizationImpl.setCompanyId(companyId);
 		organizationImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -204,10 +204,10 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		organizationId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -227,6 +227,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -237,7 +238,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		}
 
 		objectOutput.writeLong(organizationId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -287,10 +287,10 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		objectOutput.writeLong(logoId);
 	}
 
+	public long companyId;
 	public long mvccVersion;
 	public String uuid;
 	public long organizationId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

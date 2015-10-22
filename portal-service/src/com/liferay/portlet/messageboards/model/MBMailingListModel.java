@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface MBMailingListModel extends BaseModel<MBMailingList>,
-	GroupedModel, StagedAuditedModel {
+	GroupedModel, PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +65,22 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	 * @param primaryKey the primary key of this message boards mailing list
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the company ID of this message boards mailing list.
+	 *
+	 * @return the company ID of this message boards mailing list
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this message boards mailing list.
+	 *
+	 * @param companyId the company ID of this message boards mailing list
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the uuid of this message boards mailing list.
@@ -111,22 +128,6 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this message boards mailing list.
-	 *
-	 * @return the company ID of this message boards mailing list
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this message boards mailing list.
-	 *
-	 * @param companyId the company ID of this message boards mailing list
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this message boards mailing list.

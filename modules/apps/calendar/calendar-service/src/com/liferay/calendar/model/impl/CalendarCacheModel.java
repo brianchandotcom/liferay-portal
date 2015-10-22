@@ -67,14 +67,14 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
+		sb.append("{companyId=");
+		sb.append(companyId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", calendarId=");
 		sb.append(calendarId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -112,6 +112,8 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 	public Calendar toEntityModel() {
 		CalendarImpl calendarImpl = new CalendarImpl();
 
+		calendarImpl.setCompanyId(companyId);
+
 		if (uuid == null) {
 			calendarImpl.setUuid(StringPool.BLANK);
 		}
@@ -121,7 +123,6 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 
 		calendarImpl.setCalendarId(calendarId);
 		calendarImpl.setGroupId(groupId);
-		calendarImpl.setCompanyId(companyId);
 		calendarImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -188,10 +189,10 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		companyId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		calendarId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -211,6 +212,8 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(companyId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -220,7 +223,6 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 
 		objectOutput.writeLong(calendarId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -263,10 +265,10 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long companyId;
 	public String uuid;
 	public long calendarId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

@@ -150,6 +150,8 @@ public class SourceFormatterHelper {
 
 		recentChangesFileNamesLoop:
 		for (String fileName : recentChangesFileNames) {
+			fileName = baseDir.concat(fileName);
+
 			File file = new File(fileName);
 
 			Path filePath = file.toPath();
@@ -185,8 +187,7 @@ public class SourceFormatterHelper {
 			for (PathMatcher pathMatcher : includeFilePathMatchers) {
 				if (pathMatcher.matches(filePath)) {
 					fileName = StringUtil.replace(
-						baseDir + fileName, StringPool.SLASH,
-						StringPool.BACK_SLASH);
+						fileName, StringPool.SLASH,	StringPool.BACK_SLASH);
 
 					fileNames.add(fileName);
 

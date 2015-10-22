@@ -397,21 +397,6 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	public void setSmsSn(String smsSn);
 
 	/**
-	 * Returns the aim sn of this contact.
-	 *
-	 * @return the aim sn of this contact
-	 */
-	@AutoEscape
-	public String getAimSn();
-
-	/**
-	 * Sets the aim sn of this contact.
-	 *
-	 * @param aimSn the aim sn of this contact
-	 */
-	public void setAimSn(String aimSn);
-
-	/**
 	 * Returns the facebook sn of this contact.
 	 *
 	 * @return the facebook sn of this contact
@@ -427,21 +412,6 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	public void setFacebookSn(String facebookSn);
 
 	/**
-	 * Returns the icq sn of this contact.
-	 *
-	 * @return the icq sn of this contact
-	 */
-	@AutoEscape
-	public String getIcqSn();
-
-	/**
-	 * Sets the icq sn of this contact.
-	 *
-	 * @param icqSn the icq sn of this contact
-	 */
-	public void setIcqSn(String icqSn);
-
-	/**
 	 * Returns the jabber sn of this contact.
 	 *
 	 * @return the jabber sn of this contact
@@ -455,21 +425,6 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	 * @param jabberSn the jabber sn of this contact
 	 */
 	public void setJabberSn(String jabberSn);
-
-	/**
-	 * Returns the my space sn of this contact.
-	 *
-	 * @return the my space sn of this contact
-	 */
-	@AutoEscape
-	public String getMySpaceSn();
-
-	/**
-	 * Sets the my space sn of this contact.
-	 *
-	 * @param mySpaceSn the my space sn of this contact
-	 */
-	public void setMySpaceSn(String mySpaceSn);
 
 	/**
 	 * Returns the skype sn of this contact.
@@ -500,21 +455,6 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	 * @param twitterSn the twitter sn of this contact
 	 */
 	public void setTwitterSn(String twitterSn);
-
-	/**
-	 * Returns the ym sn of this contact.
-	 *
-	 * @return the ym sn of this contact
-	 */
-	@AutoEscape
-	public String getYmSn();
-
-	/**
-	 * Sets the ym sn of this contact.
-	 *
-	 * @param ymSn the ym sn of this contact
-	 */
-	public void setYmSn(String ymSn);
 
 	/**
 	 * Returns the employee status ID of this contact.

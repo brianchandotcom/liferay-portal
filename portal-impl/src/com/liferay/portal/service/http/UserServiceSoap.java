@@ -1671,14 +1671,10 @@ public class UserServiceSoap {
 	* @param birthdayDay the user's new birthday day
 	* @param birthdayYear the user's birthday year
 	* @param smsSn the user's new SMS screen name
-	* @param aimSn the user's new AIM screen name
 	* @param facebookSn the user's new Facebook screen name
-	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
-	* @param ymSn the user's new Yahoo! Messenger screen name
 	* @param jobTitle the user's new job title
 	* @param groupIds the primary keys of the user's groups
 	* @param organizationIds the primary keys of the user's organizations
@@ -1712,11 +1708,9 @@ public class UserServiceSoap {
 		java.lang.String firstName, java.lang.String middleName,
 		java.lang.String lastName, long prefixId, long suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		com.liferay.portal.model.UserGroupRoleSoap[] userGroupRoles,
 		long[] userGroupIds, com.liferay.portal.model.AddressSoap[] addresses,
@@ -1733,9 +1727,9 @@ public class UserServiceSoap {
 					emailAddress, facebookId, openId, portrait, portraitBytes,
 					languageId, timeZoneId, greeting, comments, firstName,
 					middleName, lastName, prefixId, suffixId, male,
-					birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn,
-					facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn,
-					ymSn, jobTitle, groupIds, organizationIds, roleIds,
+					birthdayMonth, birthdayDay, birthdayYear, smsSn,
+					facebookSn, jabberSn, skypeSn, twitterSn, jobTitle,
+					groupIds, organizationIds, roleIds,
 					com.liferay.portal.model.impl.UserGroupRoleModelImpl.toModels(
 						userGroupRoles), userGroupIds,
 					com.liferay.portal.model.impl.AddressModelImpl.toModels(
@@ -1790,14 +1784,10 @@ public class UserServiceSoap {
 	* @param birthdayDay the user's new birthday day
 	* @param birthdayYear the user's birthday year
 	* @param smsSn the user's new SMS screen name
-	* @param aimSn the user's new AIM screen name
 	* @param facebookSn the user's new Facebook screen name
-	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
-	* @param ymSn the user's new Yahoo! Messenger screen name
 	* @param jobTitle the user's new job title
 	* @param groupIds the primary keys of the user's groups
 	* @param organizationIds the primary keys of the user's organizations
@@ -1838,11 +1828,9 @@ public class UserServiceSoap {
 		java.lang.String comments, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		com.liferay.portal.model.UserGroupRoleSoap[] userGroupRoles,
 		long[] userGroupIds, com.liferay.portal.model.AddressSoap[] addresses,
@@ -1859,9 +1847,8 @@ public class UserServiceSoap {
 					emailAddress, facebookId, openId, languageId, timeZoneId,
 					greeting, comments, firstName, middleName, lastName,
 					prefixId, suffixId, male, birthdayMonth, birthdayDay,
-					birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
-					mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
-					organizationIds, roleIds,
+					birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+					twitterSn, jobTitle, groupIds, organizationIds, roleIds,
 					com.liferay.portal.model.impl.UserGroupRoleModelImpl.toModels(
 						userGroupRoles), userGroupIds,
 					com.liferay.portal.model.impl.AddressModelImpl.toModels(
@@ -1916,14 +1903,10 @@ public class UserServiceSoap {
 	* @param birthdayDay the user's new birthday day
 	* @param birthdayYear the user's birthday year
 	* @param smsSn the user's new SMS screen name
-	* @param aimSn the user's new AIM screen name
 	* @param facebookSn the user's new Facebook screen name
-	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
-	* @param ymSn the user's new Yahoo! Messenger screen name
 	* @param jobTitle the user's new job title
 	* @param groupIds the primary keys of the user's groups
 	* @param organizationIds the primary keys of the user's organizations
@@ -1951,11 +1934,9 @@ public class UserServiceSoap {
 		java.lang.String comments, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		com.liferay.portal.model.UserGroupRoleSoap[] userGroupRoles,
 		long[] userGroupIds,
@@ -1968,9 +1949,8 @@ public class UserServiceSoap {
 					emailAddress, facebookId, openId, languageId, timeZoneId,
 					greeting, comments, firstName, middleName, lastName,
 					prefixId, suffixId, male, birthdayMonth, birthdayDay,
-					birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
-					mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
-					organizationIds, roleIds,
+					birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+					twitterSn, jobTitle, groupIds, organizationIds, roleIds,
 					com.liferay.portal.model.impl.UserGroupRoleModelImpl.toModels(
 						userGroupRoles), userGroupIds, serviceContext);
 

@@ -78,7 +78,8 @@ public class AsyncProcessCallable
 		if (methodHandler == null) {
 			methodHandler =
 				IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
-					_methodInvocation);
+					_methodInvocation.getThis(), _methodInvocation.getMethod(),
+					_methodInvocation.getArguments());
 		}
 
 		objectOutput.writeObject(methodHandler);

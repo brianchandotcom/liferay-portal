@@ -34,10 +34,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Method;
+
 import java.util.Locale;
 import java.util.Map;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -46,11 +46,11 @@ public class ClusterableInvokerUtil {
 
 	public static MethodHandler createMethodHandler(
 		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
-		MethodInvocation methodInvocation) {
+		Object targetObject, Method method, Object[] args) {
 
 		MethodHandler methodHandler =
 			IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
-				methodInvocation);
+				targetObject, method, args);
 
 		Map<String, Serializable> context =
 			ClusterableContextThreadLocal.collectThreadLocalContext();

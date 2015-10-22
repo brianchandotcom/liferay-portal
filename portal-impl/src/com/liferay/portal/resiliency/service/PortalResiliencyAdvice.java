@@ -71,7 +71,8 @@ public class PortalResiliencyAdvice
 		ServiceMethodProcessCallable serviceMethodProcessCallable =
 			new ServiceMethodProcessCallable(
 				IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
-					methodInvocation));
+					methodInvocation.getThis(), methodInvocation.getMethod(),
+					methodInvocation.getArguments()));
 
 		Future<Serializable> future = IntrabandRPCUtil.execute(
 			spi.getRegistrationReference(), serviceMethodProcessCallable);

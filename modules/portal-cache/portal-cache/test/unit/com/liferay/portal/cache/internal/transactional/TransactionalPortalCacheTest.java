@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.transactional;
+package com.liferay.portal.cache.internal.transactional;
 
 import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
-import com.liferay.portal.kernel.cache.transactional.TransactionalPortalCacheHelper.PortalCacheMap;
+import com.liferay.portal.kernel.cache.transactional.TransactionalPortalCacheHelper;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -1078,12 +1078,12 @@ public class TransactionalPortalCacheTest {
 	}
 
 	protected int getTransactionStackSize() {
-		ThreadLocal<List<PortalCacheMap>>
+		ThreadLocal<List<?>>
 			portalCacheMapsThreadLocal = ReflectionTestUtil.getFieldValue(
 				TransactionalPortalCacheHelper.class,
 				"_portalCacheMapsThreadLocal");
 
-		List<PortalCacheMap> portalCacheMaps = portalCacheMapsThreadLocal.get();
+		List<?> portalCacheMaps = portalCacheMapsThreadLocal.get();
 
 		return portalCacheMaps.size();
 	}

@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
-import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.InstanceFactory;

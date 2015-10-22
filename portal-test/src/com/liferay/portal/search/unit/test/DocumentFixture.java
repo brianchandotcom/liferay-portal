@@ -59,7 +59,23 @@ public class DocumentFixture {
 		setUpPropsUtil();
 	}
 
-	protected static void setUpFastDateFormatFactoryUtil() {
+	public void tearDown() {
+		tearDownFastDateFormatFactoryUtil();
+		tearDownPropsUtil();
+	}
+
+	protected void mockProperty(String property, String value) {
+		Mockito.when(
+			props.get(property)
+		).thenReturn(
+			value
+		);
+	}
+
+	protected void setUpFastDateFormatFactoryUtil() {
+		_fastDateFormatFactory =
+			FastDateFormatFactoryUtil.getFastDateFormatFactory();
+
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
@@ -76,15 +92,11 @@ public class DocumentFixture {
 			fastDateFormatFactory);
 	}
 
-	protected void mockProperty(String property, String value) {
-		Mockito.when(
-			props.get(property)
-		).thenReturn(
-			value
-		);
-	}
-
 	protected void setUpPropsUtil() {
+		_props = PropsUtil.getProps();
+
+		props = Mockito.mock(Props.class);
+
 		mockProperty(PropsKeys.INDEX_DATE_FORMAT_PATTERN, "yyyyMMddHHmmss");
 		mockProperty(
 			PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED, "true");
@@ -108,6 +120,27 @@ public class DocumentFixture {
 		PropsUtil.setProps(props);
 	}
 
-	protected Props props = Mockito.mock(Props.class);
+	protected void tearDownFastDateFormatFactoryUtil() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			_fastDateFormatFactory);
+
+		_fastDateFormatFactory = null;
+	}
+
+	protected void tearDownPropsUtil() {
+		PropsUtil.setProps(_props);
+
+		_props = null;
+
+		props = null;
+	}
+
+	protected Props props;
+
+	private FastDateFormatFactory _fastDateFormatFactory;
+	private Props _props;
 
 }

@@ -66,6 +66,8 @@ public abstract class BaseIndexingTestCase {
 			createSearchContext(), _entryClassName);
 
 		_indexingFixture.tearDown();
+
+		_documentFixture.tearDown();
 	}
 
 	public interface DocumentCreationHelper {

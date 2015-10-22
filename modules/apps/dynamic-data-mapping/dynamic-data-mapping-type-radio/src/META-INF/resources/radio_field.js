@@ -76,6 +76,42 @@ AUI.add(
 						);
 					},
 
+					getValue: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var radiosNodeList = container.all(instance.getInputSelector());
+
+						var checkedNodeList = radiosNodeList.filter(':checked');
+
+						var value = '';
+
+						if (checkedNodeList.size()) {
+							value = checkedNodeList.item(0).val();
+						}
+
+						return value;
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var radiosNodeList = container.all(instance.getInputSelector());
+
+						radiosNodeList.attr('checked', false);
+
+						var radiosToCheck = radiosNodeList.filter(
+							function(node) {
+								return node.val() === value;
+							}
+						);
+
+						radiosToCheck.attr('checked', true);
+					},
+
 					_renderErrorMessage: function() {
 						var instance = this;
 

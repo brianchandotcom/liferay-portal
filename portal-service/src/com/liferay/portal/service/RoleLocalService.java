@@ -787,7 +787,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if a default user for the company could not be
 	found
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserRole(long userId, long companyId,
 		java.lang.String name, boolean inherited) throws PortalException;

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.ehcache.cluster.internal.distribution;
 
+import com.liferay.portal.cache.PortalCacheReplicator;
+import com.liferay.portal.cache.PortalCacheReplicatorFactory;
 import com.liferay.portal.cache.ehcache.EhcacheConstants;
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
-import com.liferay.portal.kernel.cache.PortalCacheReplicatorFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

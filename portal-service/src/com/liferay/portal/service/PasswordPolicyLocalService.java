@@ -285,7 +285,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long passwordPolicyId) throws PortalException;
 
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicyByUserId(
 		long userId) throws PortalException;

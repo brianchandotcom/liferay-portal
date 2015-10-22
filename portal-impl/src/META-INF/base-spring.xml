@@ -46,7 +46,7 @@
 		<property name="defaultDestinationName" value="liferay/async_service" />
 		<property name="nextMethodInterceptor" ref="threadLocalCacheAdvice" />
 	</bean>
-	<bean id="threadLocalCacheAdvice" class="com.liferay.portal.cache.ThreadLocalCacheAdvice">
+	<bean id="threadLocalCacheAdvice" class="com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice">
 		<property name="nextMethodInterceptor" ref="bufferedIncrementAdvice" />
 	</bean>
 	<bean id="bufferedIncrementAdvice" class="com.liferay.portal.increment.BufferedIncrementAdvice">
@@ -95,7 +95,7 @@
 	<bean class="com.liferay.portal.transaction.TransactionLifecycleManagerInitializer">
 		<property name="transactionLifecycleListeners">
 			<list>
-				<util:constant static-field="com.liferay.portal.kernel.cache.ThreadLocalCacheManager.TRANSACTION_LIFECYCLE_LISTENER" />
+				<util:constant static-field="com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager.TRANSACTION_LIFECYCLE_LISTENER" />
 				<util:constant static-field="com.liferay.portal.spring.hibernate.LastSessionRecorderUtil.TRANSACTION_LIFECYCLE_LISTENER" />
 				<util:constant static-field="com.liferay.portal.kernel.cache.transactional.TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER" />
 				<util:constant static-field="com.liferay.portal.kernel.transaction.TransactionLifecycleNotifier.TRANSACTION_LIFECYCLE_LISTENER" />

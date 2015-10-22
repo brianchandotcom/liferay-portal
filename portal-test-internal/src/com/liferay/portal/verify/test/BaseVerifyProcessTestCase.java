@@ -25,7 +25,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -64,14 +63,14 @@ public abstract class BaseVerifyProcessTestCase {
 
 	@Test
 	public void testVerify() throws Exception {
-		doVerify();
-
-		assertAllConnectionsClosed();
-	}
-
-	protected void assertAllConnectionsClosed() throws SQLException {
-		for (Connection con : _connections) {
-			Assert.assertTrue("A connection was not closed", con.isClosed());
+		try {
+			doVerify();
+		}
+		finally {
+			for (Connection con : _connections) {
+				Assert.assertTrue(
+					"A connection was not closed", con.isClosed());
+			}
 		}
 	}
 

@@ -75,6 +75,8 @@ AUI.add(
 								if (!hasErrors) {
 									var formNode = instance.getFormNode();
 
+									instance.showLoadingFeedback();
+
 									formNode.submit();
 								}
 							}

@@ -92,7 +92,9 @@ AUI.add(
 
 				settingsModal._modal.get('boundingBox').addClass(CSS_FIELD_SETTINGS_MODAL);
 
-				settingsModal._modal.render(A.one('#_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_formBuilder'));
+				var builder = instance.get('builder');
+
+				settingsModal._modal.render(builder.get('boundingBox'));
 			},
 
 			saveSettings: function() {

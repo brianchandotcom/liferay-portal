@@ -26,7 +26,28 @@
 	}
 }
 
+.portlet-forms, .lfr-ddl-field-settings-modal {
+	@include keyframes(spin) {
+		100% {
+			transform: rotate(359deg);
+		}
+	}
+
+	.icon-spinner {
+		@include animation(spin 1000ms infinite linear);
+	}
+
+	.form-builder-field-settings-save .icon-spinner {
+		display: inline-block;
+		margin: -2px 0 0 4px;
+	}
+}
+
 .portal-popup, .portlet-forms-admin {
+	.alert {
+		margin: 0;
+	}
+
 	.ddl-form-basic-info {
 		background-color: #869CAD;
 		min-height: 300px;
@@ -123,7 +144,7 @@
 	border-width: 0;
 	box-shadow: none;
 	margin: 0;
-	
+
 	label {
 		float: none;
 	}
@@ -157,6 +178,18 @@
 			padding: 0 50px;
 
 			.lfr-ddm-form-field-container {
+				position: relative;
+
+				@include keyframes(spin) {
+					100% {
+						transform: rotate(359deg);
+					}
+				}
+
+				.icon-spinner {
+					@include animation(spin 1000ms infinite linear);
+				}
+
 				.lfr-form-row {
 					border-width: 0;
 					padding-bottom: 5px;
@@ -204,19 +237,6 @@
 				text-decoration: none;
 			}
 		}
-
-		@include keyframes(spin) {
-			100% {
-				transform: rotate(359deg);
-			}
-		}
-
-		.form-builder-field-settings-save .icon-spinner {
-			@include animation(spin 1000ms infinite linear);
-
-			display: inline-block;
-			margin: -2px 0 0 4px;
-		}
 	}
 }
 
@@ -227,8 +247,11 @@
 		top: 0;
 	}
 
-	.form-builder-header,
 	.form-builder-header-title {
+		display: none;
+	}
+
+	.form-builder-header {
 		display: none;
 	}
 
@@ -349,8 +372,10 @@
 		}
 	}
 
-	.form-builder-content .layout-builder-layout-container {
-		margin-bottom: 0;
+	.form-builder-content {
+		.layout-builder-layout-container {
+			margin-bottom: 0;
+		}
 	}
 
 	.form-builder-pages-lexicon {

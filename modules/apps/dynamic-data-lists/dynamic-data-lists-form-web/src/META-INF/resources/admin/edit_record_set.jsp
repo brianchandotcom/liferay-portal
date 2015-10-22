@@ -74,7 +74,7 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 
 		<div class="container-fluid-1280">
 			<aui:button-row cssClass="ddl-form-builder-buttons">
-				<aui:button cssClass="btn-lg" label="save" primary="<%= true %>" type="submit" />
+				<aui:button cssClass="btn-lg" id="submit" label="save" primary="<%= true %>" type="submit" />
 
 				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>

@@ -2336,6 +2336,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to mark the input as required</description>
 			<name>required</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

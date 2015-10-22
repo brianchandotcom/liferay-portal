@@ -615,6 +615,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						"LanguageUtil.get(request,");
 				}
 
+				// LPS-58529
+
+				checkResourceUtil(line, fileName, lineCount);
+
 				if (!fileName.endsWith("test.jsp") &&
 					line.contains("System.out.print")) {
 

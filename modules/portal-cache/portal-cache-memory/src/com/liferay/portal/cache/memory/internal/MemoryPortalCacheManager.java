@@ -14,12 +14,12 @@
 
 package com.liferay.portal.cache.memory.internal;
 
-import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
+import com.liferay.portal.cache.AbstractPortalCacheManager;
+import com.liferay.portal.cache.PortalCacheReplicator;
+import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
+import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
-import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
-import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;

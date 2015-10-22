@@ -156,13 +156,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 	public void testUploadZeroBitsFile() throws Exception {
 		registerMVCActionCommand(new TestUploadMVCActionCommand());
 
-		InputStream inputStream = getClass().getResourceAsStream(
-			"/com/liferay/portal/portlet/container/upload/test/dependencies/" +
-				"zero-bits");
-
-		byte[] bytes = FileUtil.getBytes(inputStream);
-
-		Map<String, List<String>> responseMap = testUpload(bytes);
+		Map<String, List<String>> responseMap = testUpload(new byte[0]);
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));

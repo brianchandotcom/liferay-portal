@@ -436,16 +436,6 @@
 </tr>
 <!--INSTANT_MESSENGER-->
 <tr>
-	<td>INSTANT_MESSENGER_AIM_FIELD</td>
-	<td>//input[@id='_2_aimSn']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INSTANT_MESSENGER_ICQ_FIELD</td>
-	<td>//input[@id='_2_icqSn']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INSTANT_MESSENGER_JABBER_FIELD</td>
 	<td>//input[@id='_2_jabberSn']</td>
 	<td></td>
@@ -453,11 +443,6 @@
 <tr>
 	<td>INSTANT_MESSENGER_SKYPE_FIELD</td>
 	<td>//input[@id='_2_skypeSn']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INSTANT_MESSENGER_YM_FIELD</td>
-	<td>//input[@id='_2_ymSn']</td>
 	<td></td>
 </tr>
 <tr>
@@ -469,11 +454,6 @@
 <tr>
 	<td>SOCIAL_NETWORK_FACEBOOK_FIELD</td>
 	<td>//input[@id='_2_facebookSn']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOCIAL_NETWORK_MYSPACE_FIELD</td>
-	<td>//input[@id='_2_mySpaceSn']</td>
 	<td></td>
 </tr>
 <tr>

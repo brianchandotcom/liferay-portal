@@ -956,11 +956,8 @@
 		<execute function="AssertTextEquals" locator1="SOContactscenter#CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
 		<execute function="Click" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
-		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
-		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
-		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>
 
 	<command name="viewUserDetailsIntroduction">

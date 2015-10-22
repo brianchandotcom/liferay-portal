@@ -94,20 +94,6 @@
 		<execute function="SelectFrame" locator1="SOProfile#ADD_CONTENT_IFRAME" />
 
 		<if>
-			<isset var="userInstantMessengerAIM" />
-			<then>
-				<execute function="Type" locator1="SOProfileAddInstantMessenger#AIM_FIELD" value1="${userInstantMessengerAIM}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerICQ" />
-			<then>
-				<execute function="Type" locator1="SOProfileAddInstantMessenger#ICQ_FIELD" value1="${userInstantMessengerICQ}" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="userInstantMessengerJabber" />
 			<then>
 				<execute function="Type" locator1="SOProfileAddInstantMessenger#JABBER_FIELD" value1="${userInstantMessengerJabber}" />
@@ -121,22 +107,12 @@
 			</then>
 		</if>
 
-		<if>
-			<isset var="userInstantMessengerYM" />
-			<then>
-				<execute function="Type" locator1="SOProfileAddInstantMessenger#YM_FIELD" value1="${userInstantMessengerYM}" />
-			</then>
-		</if>
-
 		<execute function="Click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>
 
 	<command name="addIntroduction">
@@ -474,20 +450,6 @@
 		<execute function="SelectFrame" locator1="SOProfile#ADD_CONTENT_IFRAME" />
 
 		<if>
-			<isset var="userInstantMessengerAIM" />
-			<then>
-				<execute function="Type" locator1="SOProfileAddInstantMessenger#AIM_FIELD" value1="${userInstantMessengerAIM}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerICQ" />
-			<then>
-				<execute function="Type" locator1="SOProfileAddInstantMessenger#ICQ_FIELD" value1="${userInstantMessengerICQ}" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="userInstantMessengerJabber" />
 			<then>
 				<execute function="Type" locator1="SOProfileAddInstantMessenger#JABBER_FIELD" value1="${userInstantMessengerJabber}" />
@@ -501,22 +463,12 @@
 			</then>
 		</if>
 
-		<if>
-			<isset var="userInstantMessengerYM" />
-			<then>
-				<execute function="Type" locator1="SOProfileAddInstantMessenger#YM_FIELD" value1="${userInstantMessengerYM}" />
-			</then>
-		</if>
-
 		<execute function="Click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>
 
 	<command name="editInstantMessengerNull">
@@ -526,11 +478,8 @@
 		<execute function="Click" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" />
 		<execute function="SelectFrame" locator1="SOProfile#ADD_CONTENT_IFRAME" />
 
-		<execute function="Type" locator1="SOProfileAddInstantMessenger#AIM_FIELD" value1="" />
-		<execute function="Type" locator1="SOProfileAddInstantMessenger#ICQ_FIELD" value1="" />
 		<execute function="Type" locator1="SOProfileAddInstantMessenger#JABBER_FIELD" value1="" />
 		<execute function="Type" locator1="SOProfileAddInstantMessenger#SKYPE_FIELD" value1="" />
-		<execute function="Type" locator1="SOProfileAddInstantMessenger#YM_FIELD" value1="" />
 		<execute function="Click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -1025,11 +974,8 @@
 
 	<command name="viewInstantMessenger">
 		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>
 
 	<command name="viewIntroduction">

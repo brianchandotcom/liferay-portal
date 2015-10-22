@@ -57,7 +57,7 @@ JournalFolder folder = journalDisplayContext.getFolder();
 		<h5><liferay-ui:message key="created" /></h5>
 
 		<p>
-			<%= folder.getUserName() %>
+			<%= HtmlUtil.escape(folder.getUserName()) %>
 		</p>
 	</c:if>
 </div>

@@ -591,6 +591,11 @@
 		</if>
 	</command>
 
+	<command name="viewFirstRecordSearchResult">
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${field} ${ddlRecordFieldData}" />
+	</command>
+
 	<command name="viewFirstRecordViaDDLDisplayTemplate">
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
@@ -610,18 +615,6 @@
 
 	<command name="viewRepeatableNestedFieldsVisualGrouping">
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
-	</command>
-
-	<command name="viewFirstRecordSearchResult">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${field} ${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewSecondRecordSearchResult">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${field} ${ddlRecordFieldData}" />
 	</command>
 
 	<command name="viewSecondFieldCP">
@@ -644,6 +637,11 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewSecondRecordSearchResult">
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${field} ${ddlRecordFieldData}" />
 	</command>
 
 	<command name="viewSecondRecordViaDDLDisplayTemplate">

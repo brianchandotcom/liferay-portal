@@ -56,7 +56,7 @@ AUI.add(
 							A.merge(
 								config,
 								{
-									dataType: 'string',
+									dataType: field.get('dataType'),
 									type: field.get('type')
 								}
 							)

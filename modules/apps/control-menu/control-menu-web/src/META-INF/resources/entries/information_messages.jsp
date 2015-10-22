@@ -169,7 +169,7 @@ data.put("panelURL", addURL);
 			{
 				content: '<%= HtmlUtil.escapeJS(infoContainer) %>',
 				html: true,
-				placement: 'top'
+				placement: 'bottom'
 			}
 		);
 	</aui:script>

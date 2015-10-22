@@ -101,6 +101,10 @@ public class SyncFile extends StateAwareModel {
 
 	public static final int UI_EVENT_RENAMED_REMOTE = 22;
 
+	public static final int UI_EVENT_RESTORED_LOCAL = 26;
+
+	public static final int UI_EVENT_RESTORED_REMOTE = 27;
+
 	public static final int UI_EVENT_TRASHED_LOCAL = 15;
 
 	public static final int UI_EVENT_TRASHED_REMOTE = 16;

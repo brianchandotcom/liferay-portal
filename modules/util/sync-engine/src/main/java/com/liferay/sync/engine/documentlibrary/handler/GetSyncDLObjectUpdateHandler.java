@@ -240,7 +240,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		}
 	}
 
-	protected void addFile(SyncFile syncFile, String filePathName)
+	protected void addFile(SyncFile syncFile, String filePathName, int uiEvent)
 		throws Exception {
 
 		Path filePath = Paths.get(filePathName);
@@ -253,7 +253,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		syncFile.setFilePathName(filePathName);
 		syncFile.setSyncAccountId(getSyncAccountId());
-		syncFile.setUiEvent(SyncFile.UI_EVENT_ADDED_REMOTE);
+		syncFile.setUiEvent(uiEvent);
 
 		if (syncFile.isFolder()) {
 			Files.createDirectories(filePath);
@@ -540,8 +540,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			String event = targetSyncFile.getEvent();
 
 			if (event.equals(SyncFile.EVENT_ADD) ||
-				event.equals(SyncFile.EVENT_GET) ||
-				event.equals(SyncFile.EVENT_RESTORE)) {
+				event.equals(SyncFile.EVENT_GET)) {
 
 				if (sourceSyncFile != null) {
 					updateFile(sourceSyncFile, targetSyncFile, filePathName);
@@ -551,7 +550,9 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 					return;
 				}
 
-				addFile(targetSyncFile, filePathName);
+				addFile(
+					targetSyncFile, filePathName,
+					SyncFile.UI_EVENT_ADDED_REMOTE);
 			}
 			else if (event.equals(SyncFile.EVENT_DELETE)) {
 				if (sourceSyncFile == null) {
@@ -562,7 +563,9 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			}
 			else if (event.equals(SyncFile.EVENT_MOVE)) {
 				if (sourceSyncFile == null) {
-					addFile(targetSyncFile, filePathName);
+					addFile(
+						targetSyncFile, filePathName,
+						SyncFile.UI_EVENT_ADDED_REMOTE);
 
 					processDependentSyncFiles(targetSyncFile);
 
@@ -570,6 +573,19 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				}
 
 				moveFile(sourceSyncFile, targetSyncFile, filePathName);
+			}
+			else if (event.equals(SyncFile.EVENT_RESTORE)) {
+				if (sourceSyncFile != null) {
+					updateFile(sourceSyncFile, targetSyncFile, filePathName);
+
+					processDependentSyncFiles(sourceSyncFile);
+
+					return;
+				}
+
+				addFile(
+					targetSyncFile, filePathName,
+					SyncFile.UI_EVENT_RESTORED_REMOTE);
 			}
 			else if (event.equals(SyncFile.EVENT_TRASH)) {
 				if (sourceSyncFile == null) {
@@ -580,7 +596,9 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			}
 			else if (event.equals(SyncFile.EVENT_UPDATE)) {
 				if (sourceSyncFile == null) {
-					addFile(targetSyncFile, filePathName);
+					addFile(
+						targetSyncFile, filePathName,
+						SyncFile.UI_EVENT_ADDED_REMOTE);
 
 					processDependentSyncFiles(targetSyncFile);
 

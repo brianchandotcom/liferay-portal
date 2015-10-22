@@ -30,6 +30,7 @@ import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.PhoneNumberException;
+import com.liferay.portal.PhoneNumberExtensionException;
 import com.liferay.portal.RequiredFieldException;
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.TermsOfUseException;
@@ -262,6 +263,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof NoSuchRegionException ||
 				e instanceof OrganizationParentException ||
 				e instanceof PhoneNumberException ||
+				e instanceof PhoneNumberExtensionException ||
 				e instanceof RequiredFieldException ||
 				e instanceof RequiredUserException ||
 				e instanceof TermsOfUseException ||

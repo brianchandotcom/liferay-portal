@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.bean.IdentifiableOSGIServiceInvokerUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,6 +30,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.IdentifiableOSGIServiceInvokerUtil;
 
 import java.io.Serializable;
 

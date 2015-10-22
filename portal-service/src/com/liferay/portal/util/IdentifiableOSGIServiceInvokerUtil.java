@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.bean;
+package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.util.IdentifiableOSGIService;
-import com.liferay.portal.util.IdentifiableOSGIServiceUtil;
 
 import java.lang.reflect.Method;
 

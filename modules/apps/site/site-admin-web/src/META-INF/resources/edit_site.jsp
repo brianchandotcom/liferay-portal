@@ -114,6 +114,8 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 		PortalUtil.addPortletBreadcrumbEntry(request, parentGroup.getDescriptiveName(locale), null);
 	}
 }
+
+boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 %>
 
 <liferay-ui:success key='<%= SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
@@ -137,6 +139,7 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 	request.setAttribute("site.stagingGroupId", Long.valueOf(stagingGroupId));
 	request.setAttribute("site.liveGroupTypeSettings", liveGroupTypeSettings);
 	request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
+	request.setAttribute("site.showPrototypes", String.valueOf(showPrototypes));
 	%>
 
 	<liferay-ui:form-navigator

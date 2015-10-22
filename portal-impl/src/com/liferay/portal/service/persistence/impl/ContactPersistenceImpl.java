@@ -91,7 +91,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(),
-				
+
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
@@ -591,7 +591,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountId",
 			new String[] {
 				Long.class.getName(),
-				
+
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
@@ -1090,7 +1090,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
-				
+
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
@@ -1191,7 +1191,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
 			finderArgs = new Object[] {
 					classNameId, classPK,
-					
+
 					start, end, orderByComparator
 				};
 		}
@@ -1955,14 +1955,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		contactImpl.setMale(contact.isMale());
 		contactImpl.setBirthday(contact.getBirthday());
 		contactImpl.setSmsSn(contact.getSmsSn());
-		contactImpl.setAimSn(contact.getAimSn());
 		contactImpl.setFacebookSn(contact.getFacebookSn());
-		contactImpl.setIcqSn(contact.getIcqSn());
 		contactImpl.setJabberSn(contact.getJabberSn());
-		contactImpl.setMySpaceSn(contact.getMySpaceSn());
 		contactImpl.setSkypeSn(contact.getSkypeSn());
 		contactImpl.setTwitterSn(contact.getTwitterSn());
-		contactImpl.setYmSn(contact.getYmSn());
 		contactImpl.setEmployeeStatusId(contact.getEmployeeStatusId());
 		contactImpl.setEmployeeNumber(contact.getEmployeeNumber());
 		contactImpl.setJobTitle(contact.getJobTitle());

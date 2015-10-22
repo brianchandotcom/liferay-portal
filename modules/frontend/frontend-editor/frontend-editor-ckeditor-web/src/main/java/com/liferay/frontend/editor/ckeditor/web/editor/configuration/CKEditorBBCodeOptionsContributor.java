@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.editor.web.editor.configuration;
+package com.liferay.frontend.editor.ckeditor.web.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;

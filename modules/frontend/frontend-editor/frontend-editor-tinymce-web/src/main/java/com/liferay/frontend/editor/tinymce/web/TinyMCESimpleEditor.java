@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.editor.web;
+package com.liferay.frontend.editor.tinymce.web;
 
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;

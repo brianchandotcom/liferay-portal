@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.asset.publisher.web.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
@@ -34,7 +34,8 @@ import javax.portlet.PortletPreferences;
  * @author Sam Ziemer
  */
 
-public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
+public class UpgradeManuallySelectedPreferences
+	extends BaseUpgradePortletPreferences {
 
 	protected String getJournalArticleResourceUuid(String journalArticleUuid)
 		throws Exception {

@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.upgrade;
 
+import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradeManuallySelectedPreferences;
 import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -31,7 +32,7 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.asset.publisher.web", "0.0.1", "1.0.0",
-			new UpgradePortletId());
+			new UpgradePortletId(), new UpgradeManuallySelectedPreferences());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

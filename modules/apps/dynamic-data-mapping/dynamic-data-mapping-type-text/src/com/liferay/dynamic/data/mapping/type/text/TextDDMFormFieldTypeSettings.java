@@ -27,7 +27,7 @@ public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
-		label = "%my-text-field-type-is",
+		label = "%my-text-field-is",
 		optionLabels = {"%single-line", "%multi-line"},
 		optionValues = {"singleline", "multiline"},
 		properties = {
@@ -38,7 +38,7 @@ public interface TextDDMFormFieldTypeSettings
 	public String displayStyle();
 
 	@DDMFormField(
-		dataType = "string", label = "%placeholder",
+		dataType = "string", label = "%tip-inside-field",
 		properties = {"setting.category=advanced", "setting.weight=2"},
 		type = "text"
 	)

@@ -12,15 +12,14 @@
 /**
  * Prints the DDM form validation field.
  *
+ * @param disableValidationMessage
  * @param enableValidationMessage
  * @param enableValidationValue
  * @param errorMessagePlaceholder
  * @param errorMessageValue
- * @param label
  * @param name
  * @param parameterMessagePlaceholder
  * @param parameterValue
- * @param required
  * @param typesOptions
  * @param validationsOptions
  * @param value
@@ -30,20 +29,12 @@
 	<link href="/o/ddm-type-validation/validation.css" rel="stylesheet"></link>
 
 	<div class="form-group{$visible ? '' : ' hide'} lfr-ddm-form-field-validation" data-fieldname="{$name}">
-		<label class="control-label">
-			{$label}
-
-			{if $required}
-				<b>*</b>
-			{/if}
-		</label>
-
 		<div class="form-group">
 			<label class="control-label" for="{$name}EnableValidation">
 				<input class="enable-validation toggle-switch" {$enableValidationValue ? 'checked="checked"' : ''} id="{$name}EnableValidation" type="checkbox" value="true" />
 
 				<span aria-hidden="true" class="toggle-switch-bar">
-					<span class="toggle-switch-handle" data-label-off="{$enableValidationMessage}" data-label-on="{$enableValidationMessage}"></span>
+					<span class="toggle-switch-handle" data-label-off="{$enableValidationMessage}" data-label-on="{$disableValidationMessage}"></span>
 				</span>
 			</label>
 		</div>

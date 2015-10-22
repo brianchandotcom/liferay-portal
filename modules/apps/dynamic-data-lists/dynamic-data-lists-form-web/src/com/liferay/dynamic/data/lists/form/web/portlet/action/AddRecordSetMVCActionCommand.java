@@ -90,7 +90,7 @@ public class AddRecordSetMVCActionCommand
 			serviceContext);
 	}
 
-	protected void addRecordSet(
+	protected DDLRecordSet addRecordSet(
 			ActionRequest actionRequest, long ddmStructureId)
 		throws Exception {
 
@@ -106,7 +106,7 @@ public class AddRecordSetMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
 
-		_ddlRecordSetService.addRecordSet(
+		return _ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, recordSetKey,
 			getLocalizedMap(themeDisplay.getLocale(), name),
 			getLocalizedMap(themeDisplay.getLocale(), description),

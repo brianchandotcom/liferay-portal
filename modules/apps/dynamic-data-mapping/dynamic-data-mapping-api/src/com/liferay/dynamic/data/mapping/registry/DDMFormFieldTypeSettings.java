@@ -28,7 +28,7 @@ public interface DDMFormFieldTypeSettings {
 
 	@DDMFormField(
 		label = "%name",
-		properties = {"setting.category=basic", "setting.weight=3"},
+		properties = {"setting.category=basic", "setting.weight=2"},
 		required = true
 	)
 	public String name();

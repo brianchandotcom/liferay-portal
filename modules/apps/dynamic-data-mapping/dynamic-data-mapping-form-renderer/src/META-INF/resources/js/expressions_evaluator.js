@@ -74,6 +74,7 @@ AUI.add(
 							instance.get('evaluationURL'),
 							{
 								data: {
+									languageId: form.get('locale'),
 									serializedDDMForm: JSON.stringify(form.get('definition')),
 									serializedDDMFormValues: JSON.stringify(form.toJSON())
 								},

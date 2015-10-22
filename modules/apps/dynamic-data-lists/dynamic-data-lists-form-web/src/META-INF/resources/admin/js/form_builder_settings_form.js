@@ -188,10 +188,10 @@ AUI.add(
 						var modeToggler = instance.modeToggler;
 
 						if (advancedSettingsNode.hasClass('active')) {
-							modeToggler.html(Liferay.Language.get('hide-advanced-options'));
+							modeToggler.html(Liferay.Language.get('hide-options'));
 						}
 						else {
-							modeToggler.html(Liferay.Language.get('show-advanced-options'));
+							modeToggler.html(Liferay.Language.get('show-more-options'));
 						}
 					},
 

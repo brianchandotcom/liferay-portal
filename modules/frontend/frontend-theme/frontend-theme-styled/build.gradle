@@ -12,5 +12,5 @@ liferay {
 }
 
 publishNodeModule {
-	workingDir = "src/META-INF/resources/_styled"
+	workingDir = "src/main/resources/META-INF/resources/_styled"
 }

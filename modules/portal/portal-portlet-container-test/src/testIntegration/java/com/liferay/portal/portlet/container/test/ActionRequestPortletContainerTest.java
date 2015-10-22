@@ -15,13 +15,13 @@
 package com.liferay.portal.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -34,8 +34,6 @@ import com.liferay.util.Encryptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -74,14 +72,10 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testAuthTokenCheckEnabled() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "AUTH_TOKEN_CHECK_ENABLED");
-
-		Object value = field.get(null);
+		Boolean authTokenCheckEnabled = ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "AUTH_TOKEN_CHECK_ENABLED", Boolean.FALSE);
 
 		try {
-			field.set(null, Boolean.FALSE.booleanValue());
-
 			setUpPortlet(
 				testPortlet, new HashMapDictionary<String, Object>(),
 				TEST_PORTLET_ID);
@@ -101,22 +95,20 @@ public class ActionRequestPortletContainerTest
 			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
-			field.set(null, value);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "AUTH_TOKEN_CHECK_ENABLED",
+				authTokenCheckEnabled);
 		}
 	}
 
 	@Test
 	public void testAuthTokenIgnoreOrigins() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "AUTH_TOKEN_IGNORE_ORIGINS");
-
-		Object value = field.get(null);
-
-		try {
-			field.set(
-				null,
+		String[] authTokenIgnoreOrigins =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "AUTH_TOKEN_IGNORE_ORIGINS",
 				new String[] {SecurityPortletContainerWrapper.class.getName()});
 
+		try {
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 
 			setUpPortlet(
@@ -138,7 +130,9 @@ public class ActionRequestPortletContainerTest
 			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
-			field.set(null, value);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "AUTH_TOKEN_IGNORE_ORIGINS",
+				authTokenIgnoreOrigins);
 
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 		}
@@ -146,14 +140,12 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testAuthTokenIgnorePortlets() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "AUTH_TOKEN_IGNORE_PORTLETS");
-
-		Object value = field.get(null);
+		String[] authTokenIgnorePortlets =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "AUTH_TOKEN_IGNORE_PORTLETS",
+				new String[] {TEST_PORTLET_ID});
 
 		try {
-			field.set(null, new String[] {TEST_PORTLET_ID});
-
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 
 			setUpPortlet(
@@ -175,7 +167,9 @@ public class ActionRequestPortletContainerTest
 			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
-			field.set(null, value);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "AUTH_TOKEN_IGNORE_PORTLETS",
+				authTokenIgnorePortlets);
 
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 		}
@@ -314,14 +308,10 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testPortalAuthenticationTokenSecret() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "AUTH_TOKEN_SHARED_SECRET");
-
-		Object value = field.get(null);
+		String authTokenSharedSecret = ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "AUTH_TOKEN_SHARED_SECRET", "test");
 
 		try {
-			field.set(null, "test");
-
 			setUpPortlet(
 				testPortlet, new HashMapDictionary<String, Object>(),
 				TEST_PORTLET_ID);
@@ -343,7 +333,9 @@ public class ActionRequestPortletContainerTest
 			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
-			field.set(null, value);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "AUTH_TOKEN_SHARED_SECRET",
+				authTokenSharedSecret);
 		}
 	}
 

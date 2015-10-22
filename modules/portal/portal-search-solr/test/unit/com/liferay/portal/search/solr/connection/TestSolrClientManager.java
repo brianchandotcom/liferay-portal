@@ -21,7 +21,6 @@ import com.liferay.portal.search.solr.internal.connection.ReplicatedSolrClientFa
 import com.liferay.portal.search.solr.internal.http.BasicAuthPoolingHttpClientFactory;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -47,17 +46,15 @@ public class TestSolrClientManager extends SolrClientManager {
 		SolrConfiguration solrConfiguration = Configurable.createConfigurable(
 			SolrConfiguration.class, configurationProperties);
 
-		Map<String, Object> properties = new HashMap<>();
+		setHttpClientFactory(
+			httpClientFactory,
+			Collections.singletonMap(
+				"type", (Object)solrConfiguration.authenticationMode()));
 
-		properties.put("type", solrConfiguration.authenticationMode());
-
-		setHttpClientFactory(httpClientFactory, properties);
-
-		properties.clear();
-
-		properties.put("type", solrConfiguration.clientType());
-
-		setSolrClientFactory(new ReplicatedSolrClientFactory(), properties);
+		setSolrClientFactory(
+			new ReplicatedSolrClientFactory(),
+			Collections.singletonMap(
+				"type", (Object)solrConfiguration.clientType()));
 
 		ComponentContext componentContext = Mockito.mock(
 			ComponentContext.class);

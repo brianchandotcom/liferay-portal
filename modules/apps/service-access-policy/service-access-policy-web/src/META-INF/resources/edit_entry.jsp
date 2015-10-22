@@ -110,7 +110,7 @@ if (sapEntry != null) {
 			<div class="lfr-form-row">
 				<div class="row-fields">
 					<aui:col md="6">
-						<aui:input cssClass="service-class" data-service-class="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' name="serviceClassName" type="text" value="<%= serviceClassName %>" />
+						<aui:input cssClass="service-class-name" data-service-class-name="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' name="serviceClassName" type="text" value="<%= serviceClassName %>" />
 					</aui:col>
 					<aui:col md="6">
 						<aui:input cssClass="method-name" id='<%= "methodName" + i %>' name="methodName" type="text" value="<%= methodName %>" />
@@ -191,7 +191,7 @@ if (sapEntry != null) {
 
 		var initAutoCompleteRow = function(rowNode) {
 			var methodInput = rowNode.one('.method-name');
-			var serviceInput = rowNode.one('.service-class');
+			var serviceInput = rowNode.one('.service-class-name');
 
 			new A.AutoComplete(
 				{
@@ -200,7 +200,7 @@ if (sapEntry != null) {
 						select: function(event) {
 							var result = event.result.raw;
 
-							serviceInput.attr('data-service-class', result.serviceClassName);
+							serviceInput.attr('data-service-class-name', result.serviceClassName);
 							serviceInput.attr('data-context-name', result.contextName);
 
 							methodInput.attr('disabled', false);
@@ -219,7 +219,7 @@ if (sapEntry != null) {
 					resultTextLocator: 'methodName',
 					source: function(query, callback) {
 						var contextName = serviceInput.attr('data-context-name');
-						var serviceClassName = serviceInput.attr('data-service-class');
+						var serviceClassName = serviceInput.attr('data-service-class-name');
 
 						if (!contextName) {
 							contextName = getServiceContext(serviceClassName);
@@ -239,7 +239,7 @@ if (sapEntry != null) {
 			A.all('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox .lfr-form-row:not(.hide)').each(
 				function(item, index) {
 					var methodName = item.one('.method-name').val();
-					var serviceClassName = item.one('.service-class').val();
+					var serviceClassName = item.one('.service-class-name').val();
 
 					updatedInput += serviceClassName;
 
@@ -271,7 +271,7 @@ if (sapEntry != null) {
 
 					if (item) {
 						var methodInput = row.one('.method-name');
-						var serviceInput = row.one('.service-class');
+						var serviceInput = row.one('.service-class-name');
 
 						item = item.split('#');
 
@@ -279,7 +279,7 @@ if (sapEntry != null) {
 
 						serviceInput.val(serviceClassName);
 
-						serviceInput.attr('data-service-class', serviceClassName);
+						serviceInput.attr('data-service-class-name', serviceClassName);
 
 						var method = item[1];
 
@@ -304,14 +304,14 @@ if (sapEntry != null) {
 						var rowNode = event.row;
 
 						var methodInput = rowNode.one('.method-name');
-						var serviceInput = rowNode.one('.service-class');
+						var serviceInput = rowNode.one('.service-class-name');
 
 						methodInput.attr('disabled', true);
 
 						serviceInput.attr(
 							{
 								'data-context-name': '',
-								'data-service-class': ''
+								'data-service-class-name': ''
 							}
 						);
 
@@ -330,7 +330,7 @@ if (sapEntry != null) {
 
 		A.each(rows, initAutoCompleteRow);
 
-		A.one('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox').delegate('blur', updateAdvancedModeTextarea, '.service-class, .method-name');
+		A.one('#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox').delegate('blur', updateAdvancedModeTextarea, '.service-class-name, .method-name');
 		A.one('#<portlet:namespace />allowedServiceSignatures').on('blur', updateFriendlyModeInputs);
 	</aui:script>
 

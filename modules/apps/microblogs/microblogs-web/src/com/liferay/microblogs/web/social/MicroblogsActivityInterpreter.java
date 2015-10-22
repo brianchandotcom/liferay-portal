@@ -17,7 +17,7 @@ package com.liferay.microblogs.web.social;
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
-import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
+import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -30,6 +30,7 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
@@ -69,7 +70,7 @@ public class MicroblogsActivityInterpreter
 		StringBundler sb = new StringBundler(5);
 
 		MicroblogsEntry microblogsEntry =
-			MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(
+			_microblogsEntryLocalService.getMicroblogsEntry(
 				activity.getClassPK());
 
 		String receiverUserName = getUserName(
@@ -105,14 +106,23 @@ public class MicroblogsActivityInterpreter
 		throws Exception {
 
 		MicroblogsEntry microblogsEntry =
-			MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(
+			_microblogsEntryLocalService.getMicroblogsEntry(
 				activity.getClassPK());
 
 		return MicroblogsEntryPermission.contains(
 			permissionChecker, microblogsEntry, ActionKeys.VIEW);
 	}
 
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryLocalService(
+		MicroblogsEntryLocalService microblogsEntryLocalService) {
+
+		_microblogsEntryLocalService = microblogsEntryLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES =
 		{MicroblogsEntry.class.getName()};
+
+	private MicroblogsEntryLocalService _microblogsEntryLocalService;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.microblogs.web.notifications;
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
-import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
+import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -25,11 +25,12 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
@@ -52,7 +53,7 @@ public class MicroblogsUserNotificationHandler
 		ServiceContext serviceContext) {
 
 		MicroblogsEntry microblogsEntry =
-			MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
+			_microblogsEntryLocalService.fetchMicroblogsEntry(
 				assetRenderer.getClassPK());
 
 		String title = StringPool.BLANK;
@@ -76,7 +77,7 @@ public class MicroblogsUserNotificationHandler
 			long parentMicroblogsEntryUserId =
 				microblogsEntry.fetchParentMicroblogsEntryUserId();
 
-			User user = UserLocalServiceUtil.fetchUser(
+			User user = _userLocalService.fetchUser(
 				parentMicroblogsEntryUserId);
 
 			if (user != null) {
@@ -101,5 +102,20 @@ public class MicroblogsUserNotificationHandler
 
 		return title;
 	}
+
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryLocalService(
+		MicroblogsEntryLocalService microblogsEntryLocalService) {
+
+		_microblogsEntryLocalService = microblogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private UserLocalService _userLocalService;
 
 }

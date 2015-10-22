@@ -16,8 +16,8 @@ package com.liferay.microblogs.web.portlet;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
-import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
-import com.liferay.microblogs.service.MicroblogsEntryServiceUtil;
+import com.liferay.microblogs.service.MicroblogsEntryLocalService;
+import com.liferay.microblogs.service.MicroblogsEntryService;
 import com.liferay.microblogs.util.MicroblogsUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -70,7 +71,7 @@ public class MicroblogsPortlet extends MVCPortlet {
 		long microblogsEntryId = ParamUtil.getLong(
 			actionRequest, "microblogsEntryId");
 
-		MicroblogsEntryServiceUtil.deleteMicroblogsEntry(microblogsEntryId);
+		_microblogsEntryService.deleteMicroblogsEntry(microblogsEntryId);
 	}
 
 	public void updateMicroblogsEntry(
@@ -98,11 +99,11 @@ public class MicroblogsPortlet extends MVCPortlet {
 		serviceContext.setAssetTagNames(assetTagNames);
 
 		if (microblogsEntryId > 0) {
-			MicroblogsEntryServiceUtil.updateMicroblogsEntry(
+			_microblogsEntryService.updateMicroblogsEntry(
 				microblogsEntryId, content, socialRelationType, serviceContext);
 		}
 		else {
-			MicroblogsEntryServiceUtil.addMicroblogsEntry(
+			_microblogsEntryService.addMicroblogsEntry(
 				themeDisplay.getUserId(), content, type,
 				parentMicroblogsEntryId, socialRelationType, serviceContext);
 		}
@@ -116,14 +117,14 @@ public class MicroblogsPortlet extends MVCPortlet {
 			actionRequest, "microblogsEntryId");
 
 		MicroblogsEntry microblogsEntry =
-			MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
+			_microblogsEntryLocalService.fetchMicroblogsEntry(
 				microblogsEntryId);
 
 		if (microblogsEntry == null) {
 			return;
 		}
 
-		AssetEntryLocalServiceUtil.incrementViewCounter(
+		_assetEntryLocalService.incrementViewCounter(
 			0, MicroblogsEntry.class.getName(), microblogsEntryId, 1);
 	}
 
@@ -136,5 +137,30 @@ public class MicroblogsPortlet extends MVCPortlet {
 
 		return assetTagNames.toArray(new String[assetTagNames.size()]);
 	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryLocalService(
+		MicroblogsEntryLocalService microblogsEntryLocalService) {
+
+		_microblogsEntryLocalService = microblogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryService(
+		MicroblogsEntryService microblogsEntryService) {
+
+		_microblogsEntryService = microblogsEntryService;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private MicroblogsEntryService _microblogsEntryService;
 
 }

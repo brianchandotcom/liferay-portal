@@ -16,7 +16,7 @@ package com.liferay.microblogs.web.asset;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
-import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
+import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -57,7 +57,7 @@ public class MicroblogsEntryAssetRendererFactory
 		throws PortalException {
 
 		MicroblogsEntry microblogsEntry =
-			MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(classPK);
+			_microblogsEntryLocalService.getMicroblogsEntry(classPK);
 
 		MicroblogsEntryAssetRenderer microblogsEntryAssetRenderer =
 			new MicroblogsEntryAssetRenderer(microblogsEntry);
@@ -99,6 +99,14 @@ public class MicroblogsEntryAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/microblogs/icon.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryLocalService(
+		MicroblogsEntryLocalService microblogsEntryLocalService) {
+
+		_microblogsEntryLocalService = microblogsEntryLocalService;
+	}
+
+	private MicroblogsEntryLocalService _microblogsEntryLocalService;
 	private ServletContext _servletContext;
 
 }

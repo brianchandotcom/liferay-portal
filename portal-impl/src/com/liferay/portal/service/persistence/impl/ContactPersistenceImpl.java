@@ -91,7 +91,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(),
-
+				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
@@ -591,7 +591,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountId",
 			new String[] {
 				Long.class.getName(),
-
+				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
@@ -1090,7 +1090,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
-
+				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
@@ -1191,7 +1191,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
 			finderArgs = new Object[] {
 					classNameId, classPK,
-
+					
 					start, end, orderByComparator
 				};
 		}

@@ -397,9 +397,9 @@
 	<bean id="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" class="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil">
 		<property name="runtimePage" ref="com.liferay.portal.layoutconfiguration.util.RuntimePage" />
 	</bean>
-	<bean id="com.liferay.portal.license.util.LicenseManager" class="com.liferay.portal.license.util.DefaultLicenseManagerImpl" />
-	<bean id="com.liferay.portal.license.util.LicenseManagerUtil" class="com.liferay.portal.license.util.LicenseManagerUtil">
-		<property name="licenseManager" ref="com.liferay.portal.license.util.LicenseManager" />
+	<bean id="com.liferay.portal.kernel.license.util.LicenseManager" class="com.liferay.portal.license.util.DefaultLicenseManagerImpl" />
+	<bean id="com.liferay.portal.kernel.license.util.LicenseManagerUtil" class="com.liferay.portal.kernel.license.util.LicenseManagerUtil">
+		<property name="licenseManager" ref="com.liferay.portal.kernel.license.util.LicenseManager" />
 	</bean>
 	<bean id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean id="com.liferay.portal.plugin.PluginPackageIndexer" class="com.liferay.portal.plugin.PluginPackageIndexer" />

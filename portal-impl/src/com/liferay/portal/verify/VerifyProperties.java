@@ -1782,8 +1782,8 @@ public class VerifyProperties extends VerifyProcess {
 	};
 
 	private static final String[] _OBSOLETE_PORTAL_KEYS = new String[] {
-		"amazon.access.key.id", "amazon.associate.tag",
-		"amazon.secret.access.key",
+		"aim.login", "aim.login", "amazon.access.key.id",
+		"amazon.associate.tag", "amazon.secret.access.key",
 		"asset.entry.increment.view.counter.enabled",
 		"asset.publisher.asset.entry.query.processors",
 		"asset.publisher.filter.unlistable.entries",
@@ -1838,7 +1838,8 @@ public class VerifyProperties extends VerifyProcess {
 		"hibernate.cache.region.factory_class",
 		"hibernate.cache.use_minimal_puts", "hibernate.cache.use_query_cache",
 		"hibernate.cache.use_second_level_cache",
-		"hibernate.cache.use_structured_entries", "index.filter.search.limit",
+		"hibernate.cache.use_structured_entries", "icq.jar", "icq.login",
+		"icq.password", "index.filter.search.limit",
 		"invitation.email.max.recipients", "invitation.email.message.body",
 		"invitation.email.message.subject", "javax.persistence.validation.mode",
 		"jbi.workflow.url", "json.deserializer.strict.mode",
@@ -1907,7 +1908,8 @@ public class VerifyProperties extends VerifyProcess {
 		"vaadin.theme", "vaadin.widgetset", "webdav.storage.class",
 		"webdav.storage.show.edit.url", "webdav.storage.show.view.url",
 		"webdav.storage.tokens", "wiki.email.page.added.signature",
-		"wiki.email.page.updated.signature", "xss.allow"
+		"wiki.email.page.updated.signature", "xss.allow", "ym.login",
+		"ym.password"
 	};
 
 	private static final String[] _OBSOLETE_SYSTEM_KEYS = new String[] {

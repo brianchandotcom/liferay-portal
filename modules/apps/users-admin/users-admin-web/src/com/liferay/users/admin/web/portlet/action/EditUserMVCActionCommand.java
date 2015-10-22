@@ -172,14 +172,10 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		int birthdayYear = ParamUtil.getInteger(actionRequest, "birthdayYear");
 		String comments = ParamUtil.getString(actionRequest, "comments");
 		String smsSn = ParamUtil.getString(actionRequest, "smsSn");
-		String aimSn = ParamUtil.getString(actionRequest, "aimSn");
 		String facebookSn = ParamUtil.getString(actionRequest, "facebookSn");
-		String icqSn = ParamUtil.getString(actionRequest, "icqSn");
 		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
-		String mySpaceSn = ParamUtil.getString(actionRequest, "mySpaceSn");
 		String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
 		String twitterSn = ParamUtil.getString(actionRequest, "twitterSn");
-		String ymSn = ParamUtil.getString(actionRequest, "ymSn");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 		long[] groupIds = UsersAdminUtil.getGroupIds(actionRequest);
 		long[] organizationIds = UsersAdminUtil.getOrganizationIds(
@@ -221,11 +217,10 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				user.getEmailAddress(), facebookId, openId, true, null,
 				languageId, timeZoneId, greeting, comments, firstName,
 				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-				birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn,
-				jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
-				groupIds, organizationIds, roleIds, userGroupRoles,
-				userGroupIds, addresses, emailAddresses, phones, websites,
-				announcementsDeliveries, serviceContext);
+				birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+				twitterSn, jobTitle, groupIds, organizationIds, roleIds,
+				userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
+				websites, announcementsDeliveries, serviceContext);
 		}
 
 		long publicLayoutSetPrototypeId = ParamUtil.getLong(
@@ -653,19 +648,14 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String comments = BeanParamUtil.getString(
 			user, actionRequest, "comments");
 		String smsSn = BeanParamUtil.getString(contact, actionRequest, "smsSn");
-		String aimSn = BeanParamUtil.getString(contact, actionRequest, "aimSn");
 		String facebookSn = BeanParamUtil.getString(
 			contact, actionRequest, "facebookSn");
-		String icqSn = BeanParamUtil.getString(contact, actionRequest, "icqSn");
 		String jabberSn = BeanParamUtil.getString(
 			contact, actionRequest, "jabberSn");
-		String mySpaceSn = BeanParamUtil.getString(
-			contact, actionRequest, "mySpaceSn");
 		String skypeSn = BeanParamUtil.getString(
 			contact, actionRequest, "skypeSn");
 		String twitterSn = BeanParamUtil.getString(
 			contact, actionRequest, "twitterSn");
-		String ymSn = BeanParamUtil.getString(contact, actionRequest, "ymSn");
 		String jobTitle = BeanParamUtil.getString(
 			user, actionRequest, "jobTitle");
 		long[] groupIds = UsersAdminUtil.getGroupIds(actionRequest);
@@ -704,11 +694,10 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			screenName, emailAddress, facebookId, openId, !deleteLogo,
 			portraitBytes, languageId, timeZoneId, greeting, comments,
 			firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
-			icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
-			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
-			addresses, emailAddresses, phones, websites,
-			announcementsDeliveries, serviceContext);
+			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
+			jabberSn, skypeSn, twitterSn, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
+			phones, websites, announcementsDeliveries, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;

@@ -19,21 +19,15 @@ package com.liferay.portal.ldap;
  */
 public interface ContactConverterKeys {
 
-	public static final String AIM_SN = "aimSn";
-
 	public static final String BIRTHDAY = "birthday";
 
 	public static final String FACEBOOK_SN = "facebookSn";
 
 	public static final String GENDER = "gender";
 
-	public static final String ICQ_SN = "icqSn";
-
 	public static final String JABBER_SN = "jabberSn";
 
 	public static final String JOB_TITLE = "jobTitle";
-
-	public static final String MYSPACE_SN = "mySpaceSn";
 
 	public static final String PREFIX = "prefix";
 
@@ -44,7 +38,5 @@ public interface ContactConverterKeys {
 	public static final String SUFFIX = "suffix";
 
 	public static final String TWITTER_SN = "twitterSn";
-
-	public static final String YM_SN = "ymSn";
 
 }

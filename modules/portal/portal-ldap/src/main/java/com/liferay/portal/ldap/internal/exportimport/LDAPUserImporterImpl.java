@@ -1469,9 +1469,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapUser.getMiddleName(), ldapUser.getLastName(),
 			ldapUser.getPrefixId(), ldapUser.getSuffixId(), ldapUser.isMale(),
 			birthdayMonth, birthdayDay, birthdayYear, ldapUser.getSmsSn(),
-			ldapUser.getAimSn(), ldapUser.getFacebookSn(), ldapUser.getIcqSn(),
-			ldapUser.getJabberSn(), ldapUser.getMySpaceSn(),
-			ldapUser.getSkypeSn(), ldapUser.getTwitterSn(), ldapUser.getYmSn(),
+			ldapUser.getFacebookSn(), ldapUser.getJabberSn(),
+			ldapUser.getSkypeSn(), ldapUser.getTwitterSn(),
 			ldapUser.getJobTitle(), ldapUser.getGroupIds(),
 			ldapUser.getOrganizationIds(), ldapUser.getRoleIds(),
 			ldapUser.getUserGroupRoles(), ldapUser.getUserGroupIds(),
@@ -1489,9 +1488,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {
-		"aimSn", "birthday", "employeeNumber", "facebookSn", "icqSn",
-		"jabberSn", "male", "mySpaceSn", "prefixId", "skypeSn", "smsSn",
-		"suffixId", "twitterSn", "ymSn"
+		"birthday", "employeeNumber", "facebookSn", "jabberSn", "male",
+		"prefixId", "skypeSn", "smsSn", "suffixId", "twitterSn"
 	};
 
 	private static final String _IMPORT_BY_GROUP = "group";

@@ -90,14 +90,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			{ "male", Types.BOOLEAN },
 			{ "birthday", Types.TIMESTAMP },
 			{ "smsSn", Types.VARCHAR },
-			{ "aimSn", Types.VARCHAR },
 			{ "facebookSn", Types.VARCHAR },
-			{ "icqSn", Types.VARCHAR },
 			{ "jabberSn", Types.VARCHAR },
-			{ "mySpaceSn", Types.VARCHAR },
 			{ "skypeSn", Types.VARCHAR },
 			{ "twitterSn", Types.VARCHAR },
-			{ "ymSn", Types.VARCHAR },
 			{ "employeeStatusId", Types.VARCHAR },
 			{ "employeeNumber", Types.VARCHAR },
 			{ "jobTitle", Types.VARCHAR },
@@ -127,14 +123,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		TABLE_COLUMNS_MAP.put("male", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("birthday", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("smsSn", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("aimSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facebookSn", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("icqSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("jabberSn", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("mySpaceSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("skypeSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("twitterSn", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("ymSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("employeeStatusId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("employeeNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("jobTitle", Types.VARCHAR);
@@ -142,7 +134,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		TABLE_COLUMNS_MAP.put("hoursOfOperation", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,aimSn VARCHAR(75) null,facebookSn VARCHAR(75) null,icqSn VARCHAR(75) null,jabberSn VARCHAR(75) null,mySpaceSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,ymSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,facebookSn VARCHAR(75) null,jabberSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 	public static final String ORDER_BY_JPQL = " ORDER BY contact.contactId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Contact_.contactId ASC";
@@ -197,14 +189,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		model.setMale(soapModel.getMale());
 		model.setBirthday(soapModel.getBirthday());
 		model.setSmsSn(soapModel.getSmsSn());
-		model.setAimSn(soapModel.getAimSn());
 		model.setFacebookSn(soapModel.getFacebookSn());
-		model.setIcqSn(soapModel.getIcqSn());
 		model.setJabberSn(soapModel.getJabberSn());
-		model.setMySpaceSn(soapModel.getMySpaceSn());
 		model.setSkypeSn(soapModel.getSkypeSn());
 		model.setTwitterSn(soapModel.getTwitterSn());
-		model.setYmSn(soapModel.getYmSn());
 		model.setEmployeeStatusId(soapModel.getEmployeeStatusId());
 		model.setEmployeeNumber(soapModel.getEmployeeNumber());
 		model.setJobTitle(soapModel.getJobTitle());
@@ -294,14 +282,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		attributes.put("male", getMale());
 		attributes.put("birthday", getBirthday());
 		attributes.put("smsSn", getSmsSn());
-		attributes.put("aimSn", getAimSn());
 		attributes.put("facebookSn", getFacebookSn());
-		attributes.put("icqSn", getIcqSn());
 		attributes.put("jabberSn", getJabberSn());
-		attributes.put("mySpaceSn", getMySpaceSn());
 		attributes.put("skypeSn", getSkypeSn());
 		attributes.put("twitterSn", getTwitterSn());
-		attributes.put("ymSn", getYmSn());
 		attributes.put("employeeStatusId", getEmployeeStatusId());
 		attributes.put("employeeNumber", getEmployeeNumber());
 		attributes.put("jobTitle", getJobTitle());
@@ -436,34 +420,16 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			setSmsSn(smsSn);
 		}
 
-		String aimSn = (String)attributes.get("aimSn");
-
-		if (aimSn != null) {
-			setAimSn(aimSn);
-		}
-
 		String facebookSn = (String)attributes.get("facebookSn");
 
 		if (facebookSn != null) {
 			setFacebookSn(facebookSn);
 		}
 
-		String icqSn = (String)attributes.get("icqSn");
-
-		if (icqSn != null) {
-			setIcqSn(icqSn);
-		}
-
 		String jabberSn = (String)attributes.get("jabberSn");
 
 		if (jabberSn != null) {
 			setJabberSn(jabberSn);
-		}
-
-		String mySpaceSn = (String)attributes.get("mySpaceSn");
-
-		if (mySpaceSn != null) {
-			setMySpaceSn(mySpaceSn);
 		}
 
 		String skypeSn = (String)attributes.get("skypeSn");
@@ -476,12 +442,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 		if (twitterSn != null) {
 			setTwitterSn(twitterSn);
-		}
-
-		String ymSn = (String)attributes.get("ymSn");
-
-		if (ymSn != null) {
-			setYmSn(ymSn);
 		}
 
 		String employeeStatusId = (String)attributes.get("employeeStatusId");
@@ -862,22 +822,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@JSON
 	@Override
-	public String getAimSn() {
-		if (_aimSn == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _aimSn;
-		}
-	}
-
-	@Override
-	public void setAimSn(String aimSn) {
-		_aimSn = aimSn;
-	}
-
-	@JSON
-	@Override
 	public String getFacebookSn() {
 		if (_facebookSn == null) {
 			return StringPool.BLANK;
@@ -894,22 +838,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@JSON
 	@Override
-	public String getIcqSn() {
-		if (_icqSn == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _icqSn;
-		}
-	}
-
-	@Override
-	public void setIcqSn(String icqSn) {
-		_icqSn = icqSn;
-	}
-
-	@JSON
-	@Override
 	public String getJabberSn() {
 		if (_jabberSn == null) {
 			return StringPool.BLANK;
@@ -922,22 +850,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	@Override
 	public void setJabberSn(String jabberSn) {
 		_jabberSn = jabberSn;
-	}
-
-	@JSON
-	@Override
-	public String getMySpaceSn() {
-		if (_mySpaceSn == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _mySpaceSn;
-		}
-	}
-
-	@Override
-	public void setMySpaceSn(String mySpaceSn) {
-		_mySpaceSn = mySpaceSn;
 	}
 
 	@JSON
@@ -970,22 +882,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	@Override
 	public void setTwitterSn(String twitterSn) {
 		_twitterSn = twitterSn;
-	}
-
-	@JSON
-	@Override
-	public String getYmSn() {
-		if (_ymSn == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _ymSn;
-		}
-	}
-
-	@Override
-	public void setYmSn(String ymSn) {
-		_ymSn = ymSn;
 	}
 
 	@JSON
@@ -1119,14 +1015,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		contactImpl.setMale(getMale());
 		contactImpl.setBirthday(getBirthday());
 		contactImpl.setSmsSn(getSmsSn());
-		contactImpl.setAimSn(getAimSn());
 		contactImpl.setFacebookSn(getFacebookSn());
-		contactImpl.setIcqSn(getIcqSn());
 		contactImpl.setJabberSn(getJabberSn());
-		contactImpl.setMySpaceSn(getMySpaceSn());
 		contactImpl.setSkypeSn(getSkypeSn());
 		contactImpl.setTwitterSn(getTwitterSn());
-		contactImpl.setYmSn(getYmSn());
 		contactImpl.setEmployeeStatusId(getEmployeeStatusId());
 		contactImpl.setEmployeeNumber(getEmployeeNumber());
 		contactImpl.setJobTitle(getJobTitle());
@@ -1316,14 +1208,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			contactCacheModel.smsSn = null;
 		}
 
-		contactCacheModel.aimSn = getAimSn();
-
-		String aimSn = contactCacheModel.aimSn;
-
-		if ((aimSn != null) && (aimSn.length() == 0)) {
-			contactCacheModel.aimSn = null;
-		}
-
 		contactCacheModel.facebookSn = getFacebookSn();
 
 		String facebookSn = contactCacheModel.facebookSn;
@@ -1332,28 +1216,12 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			contactCacheModel.facebookSn = null;
 		}
 
-		contactCacheModel.icqSn = getIcqSn();
-
-		String icqSn = contactCacheModel.icqSn;
-
-		if ((icqSn != null) && (icqSn.length() == 0)) {
-			contactCacheModel.icqSn = null;
-		}
-
 		contactCacheModel.jabberSn = getJabberSn();
 
 		String jabberSn = contactCacheModel.jabberSn;
 
 		if ((jabberSn != null) && (jabberSn.length() == 0)) {
 			contactCacheModel.jabberSn = null;
-		}
-
-		contactCacheModel.mySpaceSn = getMySpaceSn();
-
-		String mySpaceSn = contactCacheModel.mySpaceSn;
-
-		if ((mySpaceSn != null) && (mySpaceSn.length() == 0)) {
-			contactCacheModel.mySpaceSn = null;
 		}
 
 		contactCacheModel.skypeSn = getSkypeSn();
@@ -1370,14 +1238,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 		if ((twitterSn != null) && (twitterSn.length() == 0)) {
 			contactCacheModel.twitterSn = null;
-		}
-
-		contactCacheModel.ymSn = getYmSn();
-
-		String ymSn = contactCacheModel.ymSn;
-
-		if ((ymSn != null) && (ymSn.length() == 0)) {
-			contactCacheModel.ymSn = null;
 		}
 
 		contactCacheModel.employeeStatusId = getEmployeeStatusId();
@@ -1467,22 +1327,14 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		sb.append(getBirthday());
 		sb.append(", smsSn=");
 		sb.append(getSmsSn());
-		sb.append(", aimSn=");
-		sb.append(getAimSn());
 		sb.append(", facebookSn=");
 		sb.append(getFacebookSn());
-		sb.append(", icqSn=");
-		sb.append(getIcqSn());
 		sb.append(", jabberSn=");
 		sb.append(getJabberSn());
-		sb.append(", mySpaceSn=");
-		sb.append(getMySpaceSn());
 		sb.append(", skypeSn=");
 		sb.append(getSkypeSn());
 		sb.append(", twitterSn=");
 		sb.append(getTwitterSn());
-		sb.append(", ymSn=");
-		sb.append(getYmSn());
 		sb.append(", employeeStatusId=");
 		sb.append(getEmployeeStatusId());
 		sb.append(", employeeNumber=");
@@ -1587,24 +1439,12 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		sb.append(getSmsSn());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>aimSn</column-name><column-value><![CDATA[");
-		sb.append(getAimSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>facebookSn</column-name><column-value><![CDATA[");
 		sb.append(getFacebookSn());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>icqSn</column-name><column-value><![CDATA[");
-		sb.append(getIcqSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>jabberSn</column-name><column-value><![CDATA[");
 		sb.append(getJabberSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>mySpaceSn</column-name><column-value><![CDATA[");
-		sb.append(getMySpaceSn());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>skypeSn</column-name><column-value><![CDATA[");
@@ -1613,10 +1453,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		sb.append(
 			"<column><column-name>twitterSn</column-name><column-value><![CDATA[");
 		sb.append(getTwitterSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ymSn</column-name><column-value><![CDATA[");
-		sb.append(getYmSn());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>employeeStatusId</column-name><column-value><![CDATA[");
@@ -1677,14 +1513,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private boolean _male;
 	private Date _birthday;
 	private String _smsSn;
-	private String _aimSn;
 	private String _facebookSn;
-	private String _icqSn;
 	private String _jabberSn;
-	private String _mySpaceSn;
 	private String _skypeSn;
 	private String _twitterSn;
-	private String _ymSn;
 	private String _employeeStatusId;
 	private String _employeeNumber;
 	private String _jobTitle;

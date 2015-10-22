@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRIENDLY_URL</td>
+	<td>//input[contains(@id,'friendlyURL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FROM</td>
 	<td>//div[label[contains(.,'From')]]//input[@type='number']</td>
 	<td></td>
@@ -331,6 +336,16 @@
 <tr>
 	<td>POSTAL_CODE</td>
 	<td>//div[label[contains(.,'Postal Code')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIVATE_VIRTUAL_HOST_URL</td>
+	<td>//input[contains(@id,'privateVirtualHost')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_VIRTUAL_HOST_URL</td>
+	<td>//input[contains(@id,'publicVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>

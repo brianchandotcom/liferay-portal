@@ -36,6 +36,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.io.IOException;
@@ -123,14 +124,12 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 		byte[] bytes = FileUtil.getBytes(inputStream);
 
-		Map<String, List<String>> responseMap = testUpload(bytes);
+		Response response = testUpload(bytes);
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 
-		String body = PortletContainerTestUtil.getString(responseMap, "body");
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(body);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			response.getBody());
 
 		Assert.assertTrue(jsonObject.getBoolean("success"));
 
@@ -154,14 +153,12 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 	public void testUploadZeroBitsFile() throws Exception {
 		registerMVCActionCommand(new TestUploadMVCActionCommand());
 
-		Map<String, List<String>> responseMap = testUpload(new byte[0]);
+		Response response = testUpload(new byte[0]);
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 
-		String body = PortletContainerTestUtil.getString(responseMap, "body");
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(body);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			response.getBody());
 
 		Assert.assertTrue(jsonObject.getBoolean("success"));
 
@@ -244,9 +241,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 			portlet, portletProperties, TestUploadPortlet.TEST_UPLOAD_PORTLET);
 	}
 
-	protected Map<String, List<String>> testUpload(byte[] bytes)
-		throws Exception {
-
+	protected Response testUpload(byte[] bytes) throws Exception {
 		registerMVCActionCommand(new TestUploadMVCActionCommand());
 
 		LiferayServletRequest liferayServletRequest =
@@ -260,10 +255,8 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		MockMultipartHttpServletRequest mockServletRequest =
 			(MockMultipartHttpServletRequest)servletRequest;
 
-		PortletContainerTestUtil.PortalAuthentication portalAuthentication =
-			PortletContainerTestUtil.getPortalAuthentication(
-				mockServletRequest, layout,
-				TestUploadPortlet.TEST_UPLOAD_PORTLET);
+		Response response = PortletContainerTestUtil.getPortalAuthentication(
+			mockServletRequest, layout, TestUploadPortlet.TEST_UPLOAD_PORTLET);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			mockServletRequest, TestUploadPortlet.TEST_UPLOAD_PORTLET,
@@ -275,10 +268,9 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 		String url = portletURL.toString();
 
-		url = HttpUtil.setParameter(
-			url, "p_auth", portalAuthentication.getPortalAuthenticationToken());
+		url = HttpUtil.setParameter(url, "p_auth", response.getBody());
 
-		List<String> cookies = portalAuthentication.getCookies();
+		List<String> cookies = response.getCookies();
 
 		mockServletRequest.addParameter(
 			"Cookie", cookies.toArray(new String[cookies.size()]));

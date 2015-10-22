@@ -15,7 +15,6 @@
 package com.liferay.portal.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -29,11 +28,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,20 +143,20 @@ public class PortletContainerTestUtilTest {
 
 		headers.put("Cookie", cookieValues);
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request("http://www.google.com", headers);
+		Response response = PortletContainerTestUtil.request(
+			"http://www.google.com", headers);
 
-		Assert.assertNotNull(responseMap.get("body"));
-		AssertUtils.assertEquals(Arrays.asList("200"), responseMap.get("code"));
+		Assert.assertNotNull(response.getBody());
+		Assert.assertEquals(200, response.getCode());
 	}
 
 	@Test
 	public void testRequestFromValidURLWithoutHeaders() throws Exception {
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request("http://www.google.com");
+		Response response = PortletContainerTestUtil.request(
+			"http://www.google.com");
 
-		Assert.assertNotNull(responseMap.get("body"));
-		AssertUtils.assertEquals(Arrays.asList("200"), responseMap.get("code"));
+		Assert.assertNotNull(response.getBody());
+		Assert.assertEquals(200, response.getCode());
 	}
 
 	@DeleteAfterTestRun

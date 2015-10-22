@@ -27,6 +27,7 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
 import com.liferay.util.Encryptor;
@@ -85,11 +86,10 @@ public class ActionRequestPortletContainerTest
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
-			Map<String, List<String>> responseMap =
-				PortletContainerTestUtil.request(portletURL.toString());
+			Response response = PortletContainerTestUtil.request(
+				portletURL.toString());
 
-			Assert.assertEquals(
-				"200", PortletContainerTestUtil.getString(responseMap, "code"));
+			Assert.assertEquals(200, response.getCode());
 			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
@@ -120,11 +120,10 @@ public class ActionRequestPortletContainerTest
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
-			Map<String, List<String>> responseMap =
-				PortletContainerTestUtil.request(portletURL.toString());
+			Response response = PortletContainerTestUtil.request(
+				portletURL.toString());
 
-			Assert.assertEquals(
-				"200", PortletContainerTestUtil.getString(responseMap, "code"));
+			Assert.assertEquals(200, response.getCode());
 			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
@@ -157,11 +156,10 @@ public class ActionRequestPortletContainerTest
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
-			Map<String, List<String>> responseMap =
-				PortletContainerTestUtil.request(portletURL.toString());
+			Response response = PortletContainerTestUtil.request(
+				portletURL.toString());
 
-			Assert.assertEquals(
-				"200", PortletContainerTestUtil.getString(responseMap, "code"));
+			Assert.assertEquals(200, response.getCode());
 			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
@@ -190,11 +188,10 @@ public class ActionRequestPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(portletURL.toString());
+		Response response = PortletContainerTestUtil.request(
+			portletURL.toString());
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testPortlet.isActionCalled());
 	}
 
@@ -218,8 +215,7 @@ public class ActionRequestPortletContainerTest
 					SecurityPortletContainerWrapper.class.getName(),
 					Level.WARN)) {
 
-			Map<String, List<String>> responseMap =
-				PortletContainerTestUtil.request(url);
+			Response response = PortletContainerTestUtil.request(url);
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -233,9 +229,7 @@ public class ActionRequestPortletContainerTest
 					url.substring(0, url.indexOf('?')) + " and portlet " +
 						TEST_PORTLET_ID,
 				loggingEvent.getMessage());
-
-			Assert.assertEquals(
-				"200", PortletContainerTestUtil.getString(responseMap, "code"));
+			Assert.assertEquals(200, response.getCode());
 			Assert.assertFalse(testPortlet.isActionCalled());
 		}
 	}
@@ -275,9 +269,8 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletContainerTestUtil.PortalAuthentication portalAuthentication =
-			PortletContainerTestUtil.getPortalAuthentication(
-				httpServletRequest, layout, TEST_PORTLET_ID);
+		Response response = PortletContainerTestUtil.getPortalAuthentication(
+			httpServletRequest, layout, TEST_PORTLET_ID);
 
 		testPortlet.reset();
 
@@ -289,18 +282,15 @@ public class ActionRequestPortletContainerTest
 
 		String url = portletURL.toString();
 
-		url = HttpUtil.setParameter(
-			url, "p_auth", portalAuthentication.getPortalAuthenticationToken());
+		url = HttpUtil.setParameter(url, "p_auth", response.getBody());
 
 		Map<String, List<String>> headers = new HashMap<>();
 
-		headers.put("Cookie", portalAuthentication.getCookies());
+		headers.put("Cookie", response.getCookies());
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(url, headers);
+		response = PortletContainerTestUtil.request(url, headers);
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testPortlet.isActionCalled());
 	}
 
@@ -323,11 +313,10 @@ public class ActionRequestPortletContainerTest
 
 			portletURL.setParameter("p_auth_secret", Encryptor.digest("test"));
 
-			Map<String, List<String>> responseMap =
-				PortletContainerTestUtil.request(portletURL.toString());
+			Response response = PortletContainerTestUtil.request(
+				portletURL.toString());
 
-			Assert.assertEquals(
-				"200", PortletContainerTestUtil.getString(responseMap, "code"));
+			Assert.assertEquals(200, response.getCode());
 			Assert.assertTrue(testPortlet.isActionCalled());
 		}
 		finally {
@@ -355,11 +344,10 @@ public class ActionRequestPortletContainerTest
 
 		portletURL.setParameter("struts_action", "/test/portlet/1");
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(portletURL.toString());
+		Response response = PortletContainerTestUtil.request(
+			portletURL.toString());
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testPortlet.isActionCalled());
 	}
 
@@ -398,9 +386,8 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletContainerTestUtil.PortalAuthentication portalAuthentication =
-			PortletContainerTestUtil.getPortalAuthentication(
-				httpServletRequest, layout, TEST_PORTLET_ID);
+		Response response = PortletContainerTestUtil.getPortalAuthentication(
+			httpServletRequest, layout, TEST_PORTLET_ID);
 
 		testPortlet.reset();
 
@@ -416,17 +403,13 @@ public class ActionRequestPortletContainerTest
 
 		Map<String, List<String>> headers = new HashMap<>();
 
-		headers.put("Cookie", portalAuthentication.getCookies());
+		headers.put("Cookie", response.getCookies());
 		headers.put(
-			"X-CSRF-Token",
-			Collections.singletonList(
-				portalAuthentication.getPortalAuthenticationToken()));
+			"X-CSRF-Token", Collections.singletonList(response.getBody()));
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(url, headers);
+		response = PortletContainerTestUtil.request(url, headers);
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testPortlet.isActionCalled());
 	}
 

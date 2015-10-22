@@ -808,6 +808,9 @@
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
+		<attribute default="false" name="release.bundle" />
+		<attribute default="" name="test.portal.bundle.zip.url" />
+		<attribute default="" name="test.build.license.xml.zip.url" />
 		<attribute default="false" name="tomcat.gc.log" />
 		<attribute default="false" name="tsant.gc.log" />
 
@@ -821,10 +824,10 @@
 				<test-action>
 					<database-test-run-test database.type="@{database.type}">
 						<test-action>
-							<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
+							<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
 								<property name="database.type" value="@{database.type}" />
 								<property name="print.java.process.on.fail" value="Bootstrap" />
-								<property name="test.class" value="${axis.variable}" />
+								<property name="test.class" value="${test.class}" />
 							</ant>
 						</test-action>
 					</database-test-run-test>
@@ -833,7 +836,23 @@
 				<test-set-up>
 					<antcall target="compile" />
 
-					<ant antfile="build-dist.xml" target="build-dist-@{app.server.type}" />
+					<if>
+						<equals arg1="@{release.bundle}" arg2="true" />
+						<then>
+							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
+
+							<antcall inheritAll="false" target="prepare-test-bundle">
+								<param name="app.server.type" value="${app.server.type}" />
+								<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
+								<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
+							</antcall>
+
+							<antcall target="deploy-license-xml" />
+						</then>
+						<else>
+							<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
+						</else>
+					</if>
 
 					<antcall target="record-test-generated-properties" />
 
@@ -994,6 +1013,18 @@
 			<property name="testray.axis.name" value="${test.batch.name}#${axis.variable}" />
 		</sequential>
 	</macrodef>
+
+	<target name="functional-release-tomcat-mysql">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test-release
+			app.server.type="tomcat"
+			database.type="mysql"
+			release.bundle="true"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.build.license.xml.zip.url="${test.build.license.xml.zip.url}"
+		/>
+	</target>
 
 	<target name="functional-tomcat-hypersonic">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />

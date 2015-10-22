@@ -43,7 +43,7 @@ AUI.add(
 						var instance = this;
 
 						return A.merge(
-								SelectField.superclass.getTemplateContext.apply(instance, arguments),
+							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								options: instance.getOptions()
 							}

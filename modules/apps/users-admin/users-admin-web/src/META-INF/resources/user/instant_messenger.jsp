@@ -28,18 +28,6 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 
 		<aui:fieldset>
 			<div class="instant-messenger">
-				<aui:input label="aim" name="aimSn" />
-			</div>
-
-			<div class="instant-messenger">
-				<aui:input label="icq" name="icqSn" />
-
-				<c:if test="<%= Validator.isNotNull(selContact.getIcqSn()) %>">
-					<img alt="" src="http://web.icq.com/whitepages/online?icq=<%= HtmlUtil.escapeAttribute(selContact.getIcqSn()) %>&img=5" />
-				</c:if>
-			</div>
-
-			<div class="instant-messenger">
 				<aui:input label="jabber" name="jabberSn" />
 			</div>
 
@@ -48,14 +36,6 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 
 				<c:if test="<%= Validator.isNotNull(selContact.getSkypeSn()) %>">
 					<a href="callto://<%= HtmlUtil.escapeAttribute(selContact.getSkypeSn()) %>"><img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="call-this-user" />" src="http://mystatus.skype.com/smallicon/<%= HtmlUtil.escapeAttribute(selContact.getSkypeSn()) %>" /></a>
-				</c:if>
-			</div>
-
-			<div class="instant-messenger">
-				<aui:input label="yim" name="ymSn" />
-
-				<c:if test="<%= Validator.isNotNull(selContact.getYmSn()) %>">
-					<img alt="" src="http://opi.yahoo.com/online?u=<%= HtmlUtil.escapeAttribute(selContact.getYmSn()) %>&m=g&t=0" />
 				</c:if>
 			</div>
 		</aui:fieldset>

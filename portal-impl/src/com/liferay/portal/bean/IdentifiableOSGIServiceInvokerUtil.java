@@ -26,7 +26,7 @@ import org.aopalliance.intercept.MethodInvocation;
 /**
  * @author Shuyang Zhou
  */
-public class IdentifiableBeanInvokerUtil {
+public class IdentifiableOSGIServiceInvokerUtil {
 
 	public static MethodHandler createMethodHandler(
 		MethodInvocation methodInvocation) {
@@ -77,7 +77,7 @@ public class IdentifiableBeanInvokerUtil {
 	}
 
 	private static final MethodKey _invokeMethodKey = new MethodKey(
-		IdentifiableBeanInvokerUtil.class, "_invoke", MethodHandler.class,
-		String.class, String.class);
+		IdentifiableOSGIServiceInvokerUtil.class, "_invoke",
+		MethodHandler.class, String.class, String.class);
 
 }

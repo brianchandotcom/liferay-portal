@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.bean.IdentifiableBeanInvokerUtil;
+import com.liferay.portal.bean.IdentifiableOSGIServiceInvokerUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,7 +49,8 @@ public class ClusterableInvokerUtil {
 		MethodInvocation methodInvocation) {
 
 		MethodHandler methodHandler =
-			IdentifiableBeanInvokerUtil.createMethodHandler(methodInvocation);
+			IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
+				methodInvocation);
 
 		Map<String, Serializable> context =
 			ClusterableContextThreadLocal.collectThreadLocalContext();

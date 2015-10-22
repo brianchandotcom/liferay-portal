@@ -35,7 +35,7 @@ Import-Package:\
 	com.liferay.taglib.servlet;version='[1.0.0,2.0)',\
 	com.liferay.taglib.theme;version='[7.0.0,8.0)',\
 	com.liferay.taglib.ui;version='[7.0.0,8.0)',\
-	com.liferay.taglib.ui.context;version='[1.0.0,2.0)',\
+	com.liferay.taglib.ui.display.context;version='[1.0.0,2.0)',\
 	com.liferay.taglib.ui.util;version='[1.0.0,2.0)',\
 	com.liferay.taglib.util;version='[7.0.0,8.0)',\
 	org.apache.taglibs.standard;version='[1.2.3,2.0)',\

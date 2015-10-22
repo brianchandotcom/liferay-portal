@@ -27,8 +27,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues" %><%@
 page import="com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys" %><%@
-page import="com.liferay.asset.publisher.web.context.AssetEntryResult" %><%@
-page import="com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext" %><%@
+page import="com.liferay.asset.publisher.web.display.context.AssetEntryResult" %><%@
+page import="com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherHelper" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormFieldType" %><%@

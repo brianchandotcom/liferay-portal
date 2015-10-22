@@ -63,7 +63,7 @@ Export-Package:\
 	com.liferay.portlet.expando.service,\
 	com.liferay.portlet.expando.service.persistence,\
 	com.liferay.portlet.expando.util,\
-	com.liferay.portlet.layoutsadmin.context,\
+	com.liferay.portlet.layoutsadmin.display.context,\
 	com.liferay.portlet.messageboards.model,\
 	com.liferay.portlet.messageboards.service,\
 	com.liferay.portlet.messageboards.service.persistence,\

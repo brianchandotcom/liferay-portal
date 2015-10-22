@@ -16,9 +16,9 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.comment.context.CommentDisplayContextProviderUtil" %><%@
-page import="com.liferay.portal.comment.context.util.DiscussionRequestHelper" %><%@
-page import="com.liferay.portal.comment.context.util.DiscussionTaglibHelper" %><%@
+<%@ page import="com.liferay.portal.comment.display.context.CommentDisplayContextProviderUtil" %><%@
+page import="com.liferay.portal.comment.display.context.util.DiscussionRequestHelper" %><%@
+page import="com.liferay.portal.comment.display.context.util.DiscussionTaglibHelper" %><%@
 page import="com.liferay.portal.kernel.comment.CommentConstants" %><%@
 page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
 page import="com.liferay.portal.kernel.comment.Discussion" %><%@
@@ -26,8 +26,8 @@ page import="com.liferay.portal.kernel.comment.DiscussionComment" %><%@
 page import="com.liferay.portal.kernel.comment.DiscussionCommentIterator" %><%@
 page import="com.liferay.portal.kernel.comment.DiscussionPermission" %><%@
 page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
-page import="com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext" %><%@
-page import="com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext" %><%@
+page import="com.liferay.portal.kernel.comment.display.context.CommentSectionDisplayContext" %><%@
+page import="com.liferay.portal.kernel.comment.display.context.CommentTreeDisplayContext" %><%@
 page import="com.liferay.portal.service.ServiceContextFunction" %>
 
 <portlet:defineObjects />

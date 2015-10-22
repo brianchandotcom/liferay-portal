@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.site.navigation.breadcrumb.web.context.SiteNavigationBreadcrumbDisplayContext" %>
+page import="com.liferay.site.navigation.breadcrumb.web.display.context.SiteNavigationBreadcrumbDisplayContext" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects/>

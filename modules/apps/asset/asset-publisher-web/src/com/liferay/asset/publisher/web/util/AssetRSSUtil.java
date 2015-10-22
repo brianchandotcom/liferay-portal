@@ -14,8 +14,8 @@
 
 package com.liferay.asset.publisher.web.util;
 
-import com.liferay.asset.publisher.web.context.AssetEntryResult;
-import com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext;
+import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
+import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;

@@ -42,7 +42,7 @@ page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
-page import="com.liferay.workflow.task.web.context.WorkflowTaskDisplayContext" %><%@
+page import="com.liferay.workflow.task.web.display.context.WorkflowTaskDisplayContext" %><%@
 page import="com.liferay.workflow.task.web.search.WorkflowTaskDisplayTerms" %><%@
 page import="com.liferay.workflow.task.web.search.WorkflowTaskSearch" %>
 

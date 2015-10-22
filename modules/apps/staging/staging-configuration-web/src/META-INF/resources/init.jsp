@@ -70,7 +70,7 @@ page import="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandler" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingConstants" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
-page import="com.liferay.portlet.layoutsadmin.context.GroupDisplayContextHelper" %>
+page import="com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper" %>
 
 <%@ page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@

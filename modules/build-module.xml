@@ -136,6 +136,10 @@
 		<print-gradle-alternative args="findbugsMain" />
 	</target>
 
+	<target name="run-pmd">
+		<print-gradle-alternative args="pmdMain" />
+	</target>
+
 	<target name="setup-eclipse">
 		<print-gradle-alternative args="eclipse" />
 	</target>

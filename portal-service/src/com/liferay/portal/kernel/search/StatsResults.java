@@ -25,7 +25,7 @@ public class StatsResults implements Serializable {
 		_field = field;
 	}
 
-	public int getCount() {
+	public long getCount() {
 		return _count;
 	}
 
@@ -61,7 +61,7 @@ public class StatsResults implements Serializable {
 		return _sumOfSquares;
 	}
 
-	public void setCount(int count) {
+	public void setCount(long count) {
 		_count = count;
 	}
 
@@ -93,7 +93,7 @@ public class StatsResults implements Serializable {
 		_sumOfSquares = sumOfSquares;
 	}
 
-	private int _count;
+	private long _count;
 	private final String _field;
 	private double _max;
 	private double _mean;

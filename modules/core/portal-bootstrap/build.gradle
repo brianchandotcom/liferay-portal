@@ -2,26 +2,11 @@ import com.liferay.gradle.util.FileUtil
 
 import org.dm.gradle.plugins.bundle.JarBuilder
 
-dependencies {
-	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	compile group: "org.springframework", name: "spring-beans", version: "3.2.10.RELEASE"
-	compile group: "org.springframework", name: "spring-context", version: "3.2.10.RELEASE"
-	compile project(":core:jaxws-osgi-bridge")
-	compile project(":core:osgi-service-tracker-map")
-	compile project(":core:registry-impl")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/core")
-}
+task buildSystemPackagesExtraManifest
+task copySystemPackagesExtraManifest(type: Copy)
 
 File systemPackagesExtraBndFile = file("system.packages.extra.bnd")
 File systemPackagesExtraManifestFile = file("system.packages.extra.mf")
-
-task buildSystemPackagesExtraManifest
-task copySystemPackagesExtraManifest(type: Copy)
 
 buildSystemPackagesExtraManifest {
 	dependsOn classes
@@ -45,14 +30,6 @@ buildSystemPackagesExtraManifest {
 	}
 }
 
-deploy {
-	from("lib") {
-		include "com.liferay.osgi.servicetrackermap.jar"
-		include "org.eclipse.osgi.jar"
-		include "registry-impl.jar"
-	}
-}
-
 copySystemPackagesExtraManifest {
 	if (!FileUtil.isUpToDate(project, systemPackagesExtraBndFile, systemPackagesExtraManifestFile)) {
 		dependsOn buildSystemPackagesExtraManifest
@@ -66,6 +43,29 @@ copySystemPackagesExtraManifest {
 	}
 }
 
+dependencies {
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compile group: "org.springframework", name: "spring-beans", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-context", version: "3.2.10.RELEASE"
+	compile project(":core:jaxws-osgi-bridge")
+	compile project(":core:osgi-service-tracker-map")
+	compile project(":core:registry-impl")
+}
+
+deploy {
+	from("lib") {
+		include "com.liferay.osgi.servicetrackermap.jar"
+		include "org.eclipse.osgi.jar"
+		include "registry-impl.jar"
+	}
+}
+
 jar {
 	dependsOn copySystemPackagesExtraManifest
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/core")
 }

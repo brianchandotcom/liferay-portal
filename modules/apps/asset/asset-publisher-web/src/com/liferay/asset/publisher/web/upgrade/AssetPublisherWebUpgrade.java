@@ -14,10 +14,9 @@
 
 package com.liferay.asset.publisher.web.upgrade;
 
-import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,31 +31,7 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.asset.publisher.web", "0.0.1", "1.0.0",
-			new UpgradePortletId() {
-
-				@Override
-				protected String[][] getRenamePortletIdsArray() {
-					return new String[][] {
-						new String[] {
-							"101", AssetPublisherPortletKeys.ASSET_PUBLISHER
-						},
-						new String[] {
-							"173", AssetPublisherPortletKeys.RECENT_CONTENT
-						},
-						new String[] {
-							"175", AssetPublisherPortletKeys.RELATED_ASSETS
-						},
-						new String[] {
-							"193", AssetPublisherPortletKeys.MOST_VIEWED_ASSETS
-						},
-						new String[] {
-							"194",
-							AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS
-						}
-					};
-				}
-
-			});
+			new UpgradePortletId());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

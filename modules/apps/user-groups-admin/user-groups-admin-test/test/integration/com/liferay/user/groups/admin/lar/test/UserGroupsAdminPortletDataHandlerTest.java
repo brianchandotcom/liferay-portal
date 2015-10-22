@@ -37,7 +37,7 @@ public class UserGroupsAdminPortletDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	protected void addStagedModels() throws Exception {
+	protected void addStagedModels() {
 	}
 
 	@Override

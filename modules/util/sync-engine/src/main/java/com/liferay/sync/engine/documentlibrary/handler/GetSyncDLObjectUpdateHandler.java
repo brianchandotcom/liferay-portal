@@ -266,27 +266,9 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				filePath, String.valueOf(syncFile.getSyncFileId()), false);
 		}
 		else {
-			String checksum = syncFile.getChecksum();
-
-			if (checksum.isEmpty() || (syncFile.getSize() <= 0)) {
-				downloadFile(syncFile, null, 0, false);
-
-				return;
-			}
-
-			SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
-				checksum, SyncFile.STATE_SYNCED);
-
 			SyncFileService.update(syncFile);
 
-			if ((sourceSyncFile != null) &&
-				Files.exists(Paths.get(sourceSyncFile.getFilePathName()))) {
-
-				copyFile(sourceSyncFile, syncFile);
-			}
-			else {
-				downloadFile(syncFile, null, 0, false);
-			}
+			downloadFile(syncFile, null, 0, false);
 		}
 	}
 
@@ -317,13 +299,29 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		downloadedFilePathNames.add(targetSyncFile.getFilePathName());
 
+		boolean exists = Files.exists(
+			Paths.get(targetSyncFile.getFilePathName()));
+
 		Files.move(
 			tempFilePath, Paths.get(targetSyncFile.getFilePathName()),
 			StandardCopyOption.ATOMIC_MOVE,
 			StandardCopyOption.REPLACE_EXISTING);
 
 		targetSyncFile.setState(SyncFile.STATE_SYNCED);
-		targetSyncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_NEW);
+
+		if (GetterUtil.getBoolean(
+				targetSyncFile.getLocalExtraSettingValue("restoreEvent"))) {
+
+			targetSyncFile.unsetLocalExtraSetting("restoreEvent");
+
+			targetSyncFile.setUiEvent(SyncFile.UI_EVENT_RESTORED_REMOTE);
+		}
+		else if (exists) {
+			targetSyncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_UPDATE);
+		}
+		else {
+			targetSyncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_NEW);
+		}
 
 		SyncFileService.update(targetSyncFile);
 	}
@@ -410,8 +408,24 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	}
 
 	protected void downloadFile(
-		SyncFile syncFile, String sourceVersion, long sourceVersionId,
-		boolean patch) {
+			SyncFile syncFile, String sourceVersion, long sourceVersionId,
+			boolean patch)
+		throws Exception {
+
+		String checksum = syncFile.getChecksum();
+
+		if (!checksum.isEmpty() && (syncFile.getSize() > 0)) {
+			SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
+				checksum, SyncFile.STATE_SYNCED);
+
+			if ((sourceSyncFile != null) &&
+				Files.exists(Paths.get(sourceSyncFile.getFilePathName()))) {
+
+				copyFile(sourceSyncFile, syncFile);
+
+				return;
+			}
+		}
 
 		String targetVersion = syncFile.getVersion();
 
@@ -553,8 +567,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			String event = targetSyncFile.getEvent();
 
 			if (event.equals(SyncFile.EVENT_ADD) ||
-				event.equals(SyncFile.EVENT_GET) ||
-				event.equals(SyncFile.EVENT_RESTORE)) {
+				event.equals(SyncFile.EVENT_GET)) {
 
 				if (sourceSyncFile != null) {
 					updateFile(sourceSyncFile, targetSyncFile, filePathName);
@@ -583,6 +596,21 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				}
 
 				moveFile(sourceSyncFile, targetSyncFile, filePathName);
+			}
+			else if (event.equals(SyncFile.EVENT_RESTORE)) {
+				if (sourceSyncFile != null) {
+					updateFile(sourceSyncFile, targetSyncFile, filePathName);
+
+					processDependentSyncFiles(sourceSyncFile);
+
+					return;
+				}
+
+				targetSyncFile.setLocalExtraSetting("restoreEvent", true);
+
+				SyncFileService.update(targetSyncFile);
+
+				addFile(targetSyncFile, filePathName);
 			}
 			else if (event.equals(SyncFile.EVENT_TRASH)) {
 				if (sourceSyncFile == null) {

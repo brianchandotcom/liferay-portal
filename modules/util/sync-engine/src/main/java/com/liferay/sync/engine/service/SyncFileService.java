@@ -114,7 +114,7 @@ public class SyncFileService {
 		syncFile.setFilePathName(filePathName);
 
 		if (MSOfficeFileUtil.isLegacyExcelFile(Paths.get(filePathName))) {
-			syncFile.setLocalExtraSettingsValue(
+			syncFile.setLocalExtraSetting(
 				"lastSavedDate",
 				MSOfficeFileUtil.getLastSavedDate(Paths.get(filePathName)));
 		}
@@ -714,7 +714,7 @@ public class SyncFileService {
 		Path deltaFilePath = null;
 
 		if (MSOfficeFileUtil.isLegacyExcelFile(filePath)) {
-			syncFile.setLocalExtraSettingsValue(
+			syncFile.setLocalExtraSetting(
 				"lastSavedDate", MSOfficeFileUtil.getLastSavedDate(filePath));
 		}
 

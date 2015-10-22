@@ -82,7 +82,7 @@ AUI.add(
 							},
 							rows: instance._visitRows(page.get('rows')),
 							title: {
-								en_US: titles[index] || index + 1
+								en_US: titles[index] || ''
 							}
 						};
 					},

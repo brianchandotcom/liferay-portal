@@ -1216,6 +1216,17 @@ go</echo>
 
 		<retry retrycount="10">
 			<sequential>
+				<if>
+					<not>
+						<available file="/opt/sybase/charsets" />
+					</not>
+					<then>
+						<clean-restart-sybase retry="true" />
+
+						<fail message="Missing /opt/sybase/charsets" />
+					</then>
+				</if>
+
 				<local name="output.content" />
 				<local name="return.code" />
 

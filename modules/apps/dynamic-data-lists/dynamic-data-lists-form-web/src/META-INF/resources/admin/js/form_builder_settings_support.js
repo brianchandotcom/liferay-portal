@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-ddl-form-builder-field-support',
 	function(A) {
+		var Lang = A.Lang;
+
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
@@ -115,6 +117,8 @@ AUI.add(
 					}
 				);
 			},
+
+			validate: Lang.emptyFn,
 
 			validateSettings: function(callback) {
 				var instance = this;

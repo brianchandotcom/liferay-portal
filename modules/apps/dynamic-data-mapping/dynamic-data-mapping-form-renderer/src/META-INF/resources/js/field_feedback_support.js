@@ -110,15 +110,19 @@ AUI.add(
 
 				container.all('.validation-message').remove();
 
-				instance.getInputNode().insert(
-					Lang.sub(
-						TPL_ERROR_MESSAGE,
-						{
-							errorMessage: instance.get('errorMessage')
-						}
-					),
-					'after'
-				);
+				var errorMessage = instance.get('errorMessage');
+
+				if (errorMessage) {
+					instance.getInputNode().insert(
+						Lang.sub(
+							TPL_ERROR_MESSAGE,
+							{
+								errorMessage: errorMessage
+							}
+						),
+						'after'
+					);
+				}
 			},
 
 			_showFeedback: function(icon) {

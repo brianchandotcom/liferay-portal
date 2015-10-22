@@ -25,6 +25,38 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-radio',
 
 				prototype: {
+					getContextValue: function() {
+						var instance = this;
+
+						var value = instance.get('value');
+
+						if (Lang.isObject(value)) {
+							value = value[instance.get('locale')];
+						}
+
+						var predefinedValue = instance.get('predefinedValue');
+
+						if (!value && predefinedValue) {
+							if (Lang.isObject(predefinedValue)) {
+								value = predefinedValue[instance.get('locale')];
+							}
+							else {
+								value = predefinedValue;
+							}
+						}
+
+						if (!Lang.isArray(value)) {
+							try {
+								value = JSON.parse(value);
+							}
+							catch (e) {
+								value = [value];
+							}
+						}
+
+						return value[0];
+					},
+
 					getInputNode: function() {
 						var instance = this;
 
@@ -46,11 +78,7 @@ AUI.add(
 					getOptions: function() {
 						var instance = this;
 
-						var value = instance.get('value');
-
-						if (Lang.isObject(value)) {
-							value = value[instance.get('locale')];
-						}
+						var value = instance.getContextValue();
 
 						return A.map(
 							instance.get('options'),

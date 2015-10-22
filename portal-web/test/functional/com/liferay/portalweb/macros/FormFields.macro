@@ -96,6 +96,7 @@
 
 	<command name="viewTextLabel">
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldLabel" value="${fieldLabel}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}" />
 	</command>

@@ -12,7 +12,7 @@ AUI.add(
 
 		FieldFeedbackSupport.ATTRS = {
 			errorMessage: {
-				value: []
+				value: ''
 			}
 		};
 
@@ -107,8 +107,10 @@ AUI.add(
 
 				var errorMessage = instance.get('errorMessage');
 
-				if (errorMessage) {
-					instance.getInputNode().insert(
+				var inputNode = instance.getInputNode();
+
+				if (errorMessage && inputNode) {
+					inputNode.insert(
 						Lang.sub(
 							TPL_ERROR_MESSAGE,
 							{

@@ -10,17 +10,20 @@
  * @param name
  * @param options
  * @param required
+ * @param showLabel
  * @param visible
  */
 {template .radio}
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		<label class="control-label">
-			{$label}
+		{if $showLabel}
+			<label class="control-label">
+				{$label}
 
-			{if $required}
-				<b>*</b>
-			{/if}
-		</label>
+				{if $required}
+					<b>*</b>
+				{/if}
+			</label>
+		{/if}
 
 		<div class="radio-options">
 			{foreach $option in $options}

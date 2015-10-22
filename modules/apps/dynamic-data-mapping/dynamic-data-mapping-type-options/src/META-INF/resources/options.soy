@@ -6,18 +6,21 @@
  * @param label
  * @param name
  * @param required
+ * @param showLabel
  * @param value
  * @param visible
  */
 {template .options}
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		<label class="control-label">
-			{$label}
+		{if $showLabel}
+			<label class="control-label">
+				{$label}
 
-			{if $required}
-				<b>*</b>
-			{/if}
-		</label>
+				{if $required}
+					<b>*</b>
+				{/if}
+			</label>
+		{/if}
 
 		<input name="{$name}" type="hidden" />
 

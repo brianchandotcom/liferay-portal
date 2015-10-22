@@ -1554,6 +1554,13 @@
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 	</command>
 
+	<command name="viewRepeatingEventErrorMessage">
+		<execute function="Click" locator1="Button#PUBLISH" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The last repeating date should come after the event start date." />
+	</command>
+
 	<command name="viewRepeatWeekStartDay">
 		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY" value1="${weekStartDay}" />
 	</command>

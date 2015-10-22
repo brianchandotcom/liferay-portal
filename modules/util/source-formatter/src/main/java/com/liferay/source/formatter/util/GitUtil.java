@@ -139,7 +139,8 @@ public class GitUtil {
 
 		for (String commitId : commitIds) {
 			UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-				"git diff-tree --no-commit-id --name-only -r " + commitId);
+				"git diff-tree --no-commit-id --name-only -r " +
+					"--diff-filter=AM " + commitId);
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (StringUtil.count(line, StringPool.SLASH) < gitLevel) {

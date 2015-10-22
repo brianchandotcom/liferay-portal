@@ -224,7 +224,9 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<var name="key_kbFolderName" value="${kbFolderName}" />
@@ -233,7 +235,9 @@
 			<isset var="kbFolderName" />
 			<then>
 				<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
+
 				<execute function="AssertClick" locator1="PGKnowledgebasedisplaySelectParentArticleDisplay#FOLDER_TITLE_LINK" value1="${kbFolderName}" />
+
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 		</if>
@@ -241,12 +245,18 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
+
 		<execute function="Click" locator1="PGKnowledgebasedisplaySelectParentArticleDisplay#CHOOSE_BUTTON" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureKBArticlePG">
@@ -888,8 +898,10 @@
 
 	<command name="subscribeCP">
 		<execute function="AssertClick" locator1="KnowledgeBase#LINK_SUBSCRIBE" value1="Subscribe" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextNotEquals" locator1="KnowledgeBase#LINK_UNSUBSCRIBE" />
+
+		<execute function="AssertElementPresent" locator1="KnowledgeBase#LINK_UNSUBSCRIBE" />
 	</command>
 
 	<command name="tearDownCP">
@@ -963,7 +975,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_CONTENT" value1="${kbArticleContent}" />
 
 		<if>
 			<isset var="kbArticleContentRemovedDiff" />
@@ -1415,15 +1427,15 @@
 
 	<command name="viewRelatedAssetCP">
 		<if>
-			<equals arg1="${RelatedAssetType}" arg2="Blogs Entry" />
+			<equals arg1="${relatedAssetType}" arg2="Blogs Entry" />
 			<then>
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
+				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_CONTENT" value1="${relatedAssetContent}" />
 			</then>
 		</if>
 
-		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+		<var name="key_relatedAssetTitle" value="${relatedAssetTitle}" />
 
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_TITLE" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_TITLE" value1="${relatedAssetTitle}" />
 	</command>
 
 	<command name="viewSearchResultsPG">
@@ -1449,6 +1461,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="CKEditor#SOURCE_URL" value1="${kbArticleSourceURL}" />
@@ -1458,7 +1471,8 @@
 		<var name="key_kbArticleSourceURL" value="${kbArticleSourceURL}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="CKEditor#SOURCE_URL" value1="${kbArticleSourceURL}" />

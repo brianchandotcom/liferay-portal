@@ -350,7 +350,7 @@
 <!--SCOPE-->
 <tr>
 	<td>SCOPE_DROPDOWN</td>
-	<td>//div[contains(@class,'scope-selector') and contains(.,'Scope')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(.,'Default Scope')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

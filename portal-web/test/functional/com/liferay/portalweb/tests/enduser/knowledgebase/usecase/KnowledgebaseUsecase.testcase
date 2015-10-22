@@ -364,14 +364,14 @@
 			<var name="pageName" value="Knowledge Base Page" />
 		</execute>
 
-		<execute macro="Search#viewIncrementalSearchPG">
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title" />
+		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="Child" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBArticle">
-			<var name="kbArticleContent" value="Knowledge Base Child Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title" />
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Knowledge Base Child Article Content" />
+			<var name="searchAssetTitle" value="Knowledge Base Child Article Title" />
+			<var name="searchAssetType" value="Knowledge Base Article" />
 		</execute>
 	</command>
 
@@ -420,14 +420,18 @@
 			<var name="kbFolderName" value="KB Folder" />
 		</execute>
 
-		<execute macro="Search#viewIncrementalSearchPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article 2 Title" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="Knowledge" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBArticle">
-			<var name="kbArticleContent" value="Knowledge Base Article 2 Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article 2 Title" />
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Knowledge Base Article 2 Content" />
+			<var name="searchAssetTitle" value="Knowledge Base Article 2 Title" />
+			<var name="searchAssetType" value="Knowledge Base Article" />
 		</execute>
 	</command>
 
@@ -442,6 +446,10 @@
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -475,9 +483,14 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="Search#viewIncrementalSearchPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article's Title" />
-			<var name="searchTerm" value="Knowledge" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Knowledge Base Article's Content" />
+			<var name="searchAssetTitle" value="Knowledge Base Article" />
+			<var name="searchAssetType" value="Knowledge Base Article" />
 		</execute>
 	</command>
 
@@ -775,6 +788,11 @@
 		<execute macro="KBArticle#importCP">
 			<var name="applyNumericalPrefix" value="true" />
 			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBAdminCP">
+			<var name="hasChildArticle" value="true" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#viewSourceURLCP">
@@ -2296,11 +2314,8 @@
 		</execute>
 
 		<execute macro="Page#viewTranslationsPG">
-			<var name="adminTranslation" value="Administraci�n" />
-			<var name="mySitesTranslation" value="Mis Sitios" />
 			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain)." />
 			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
-			<var name="pageName" value="Knowledge Base Display Page" />
 			<var name="sitePageURL" value="http://localhost:8080/es/web/guest/knowledge-base-display-page" />
 		</execute>
 
@@ -2313,7 +2328,7 @@
 			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edited" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edited" />
-			<var name="localizedSuccessMessage" value="Su petici�n ha terminado con �xito." />
+			<var name="localizedSuccessMessage" value="Su petición ha terminado con éxito." />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">

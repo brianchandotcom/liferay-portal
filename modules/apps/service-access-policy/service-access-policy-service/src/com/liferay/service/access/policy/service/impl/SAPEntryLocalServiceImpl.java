@@ -168,9 +168,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 	@Override
 	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException {
-		if (sapEntry.isDefaultSAPEntry() &&
-			!CompanyThreadLocal.isDeleteInProcess()) {
-
+		if (sapEntry.isSystem() && !CompanyThreadLocal.isDeleteInProcess()) {
 			throw new RequiredSAPEntryException();
 		}
 

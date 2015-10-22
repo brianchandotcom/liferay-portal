@@ -17,19 +17,19 @@ package com.liferay.dynamic.data.mapping.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Eduardo Garcia
@@ -58,10 +58,13 @@ public class DDMDisplayRegistryUtil {
 	}
 
 	private DDMDisplayRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(DDMDisplayRegistryUtil.class);
 
-		_serviceTracker = registry.trackServices(
-			DDMDisplay.class, new DDMDisplayServiceTrackerCustomizer());
+		_bundleContext = bundle.getBundleContext();
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, DDMDisplay.class,
+			new DDMDisplayServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -81,10 +84,8 @@ public class DDMDisplayRegistryUtil {
 	}
 
 	private void _register(DDMDisplay ddmDisplay) {
-		Registry registry = RegistryUtil.getRegistry();
-
 		ServiceRegistration<DDMDisplay> serviceRegistration =
-			registry.registerService(DDMDisplay.class, ddmDisplay);
+			_bundleContext.registerService(DDMDisplay.class, ddmDisplay, null);
 
 		_serviceRegistrations.put(ddmDisplay, serviceRegistration);
 	}
@@ -101,10 +102,11 @@ public class DDMDisplayRegistryUtil {
 	private static final DDMDisplayRegistryUtil _instance =
 		new DDMDisplayRegistryUtil();
 
+	private final BundleContext _bundleContext;
 	private final Map<String, DDMDisplay> _ddmDisplays =
 		new ConcurrentHashMap<>();
-	private final ServiceRegistrationMap<DDMDisplay> _serviceRegistrations =
-		new ServiceRegistrationMapImpl<>();
+	private final Map<DDMDisplay, ServiceRegistration<DDMDisplay>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
 	private final ServiceTracker<DDMDisplay, DDMDisplay> _serviceTracker;
 
 	private class DDMDisplayServiceTrackerCustomizer
@@ -114,9 +116,7 @@ public class DDMDisplayRegistryUtil {
 		public DDMDisplay addingService(
 			ServiceReference<DDMDisplay> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			DDMDisplay ddmDisplay = registry.getService(serviceReference);
+			DDMDisplay ddmDisplay = _bundleContext.getService(serviceReference);
 
 			_ddmDisplays.put(ddmDisplay.getPortletId(), ddmDisplay);
 
@@ -134,9 +134,7 @@ public class DDMDisplayRegistryUtil {
 			ServiceReference<DDMDisplay> serviceReference,
 			DDMDisplay ddmDisplay) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			_ddmDisplays.remove(ddmDisplay.getPortletId());
 		}

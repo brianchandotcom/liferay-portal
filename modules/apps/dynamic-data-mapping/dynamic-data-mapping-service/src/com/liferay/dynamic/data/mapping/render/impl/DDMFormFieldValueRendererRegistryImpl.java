@@ -16,17 +16,20 @@ package com.liferay.dynamic.data.mapping.render.impl;
 
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Marcellus Tavares
@@ -35,16 +38,25 @@ public class DDMFormFieldValueRendererRegistryImpl
 	implements DDMFormFieldValueRendererRegistry {
 
 	public DDMFormFieldValueRendererRegistryImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
 		Class<?> clazz = getClass();
 
-		Filter filter = registry.getFilter(
-			"(&(objectClass=" + DDMFormFieldValueRenderer.class.getName() +
-				")(!(objectClass=" + clazz.getName() + ")))");
+		Bundle bundle = FrameworkUtil.getBundle(clazz);
 
-		_serviceTracker = registry.trackServices(
-			filter, new DDMFormFieldValueRendererServiceTrackerCustomizer());
+		_bundleContext = bundle.getBundleContext();
+
+		Filter filter = null;
+
+		try {
+			filter = FrameworkUtil.createFilter(
+				"(&(objectClass=" + DDMFormFieldValueRenderer.class.getName() +
+				")(!(objectClass=" + clazz.getName() + ")))");
+		}
+		catch (InvalidSyntaxException ex) {
+		}
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, filter,
+			new DDMFormFieldValueRendererServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -69,18 +81,18 @@ public class DDMFormFieldValueRendererRegistryImpl
 	public void setDefaultDDMFormFieldValueRenderers(
 		List<DDMFormFieldValueRenderer> ddmFormFieldValueRenderers) {
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		for (DDMFormFieldValueRenderer ddmFormFieldValueRenderer :
 				ddmFormFieldValueRenderers) {
 
-			registry.registerService(
-				DDMFormFieldValueRenderer.class, ddmFormFieldValueRenderer);
+			_bundleContext.registerService(
+				DDMFormFieldValueRenderer.class, ddmFormFieldValueRenderer,
+				null);
 		}
 	}
 
+	private final BundleContext _bundleContext;
 	private final Map<String, List<DDMFormFieldValueRenderer>>
-		_ddmFormFieldValueRenderersMap = new HashMap<>();
+		_ddmFormFieldValueRenderersMap = new ConcurrentHashMap<>();
 	private final
 		ServiceTracker<DDMFormFieldValueRenderer, DDMFormFieldValueRenderer>
 			_serviceTracker;
@@ -94,10 +106,8 @@ public class DDMFormFieldValueRendererRegistryImpl
 		public DDMFormFieldValueRenderer addingService(
 			ServiceReference<DDMFormFieldValueRenderer> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
-				registry.getService(serviceReference);
+				_bundleContext.getService(serviceReference);
 
 			String supportedDDMFormFieldType =
 				ddmFormFieldValueRenderer.getSupportedDDMFormFieldType();
@@ -128,9 +138,7 @@ public class DDMFormFieldValueRendererRegistryImpl
 			ServiceReference<DDMFormFieldValueRenderer> serviceReference,
 			DDMFormFieldValueRenderer ddmFormFieldValueRenderer) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			String supportedDDMFormFieldType =
 				ddmFormFieldValueRenderer.getSupportedDDMFormFieldType();

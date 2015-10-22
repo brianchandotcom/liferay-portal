@@ -16,17 +16,20 @@ package com.liferay.dynamic.data.mapping.storage.impl;
 
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Marcellus Tavares
@@ -34,16 +37,25 @@ import java.util.concurrent.ConcurrentHashMap;
 public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 
 	public StorageAdapterRegistryImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
 		Class<?> clazz = getClass();
 
-		Filter filter = registry.getFilter(
-			"(&(objectClass=" + StorageAdapter.class.getName() +
-				")(!(objectClass=" + clazz.getName() + ")))");
+		Bundle bundle = FrameworkUtil.getBundle(clazz);
 
-		_serviceTracker = registry.trackServices(
-			filter, new StorageAdapterServiceTrackerCustomizer());
+		_bundleContext = bundle.getBundleContext();
+
+		Filter filter = null;
+
+		try {
+			filter = FrameworkUtil.createFilter(
+				"(&(objectClass=" + StorageAdapter.class.getName() +
+				")(!(objectClass=" + clazz.getName() + ")))");
+		}
+		catch (InvalidSyntaxException ex) {
+		}
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, filter,
+			new StorageAdapterServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -68,13 +80,13 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 	}
 
 	public void setStorageAdapters(List<StorageAdapter> storageAdapters) {
-		Registry registry = RegistryUtil.getRegistry();
-
 		for (StorageAdapter storageAdapter : storageAdapters) {
-			registry.registerService(StorageAdapter.class, storageAdapter);
+			_bundleContext.registerService(
+				StorageAdapter.class, storageAdapter, null);
 		}
 	}
 
+	private final BundleContext _bundleContext;
 	private String _defaultStorageType;
 	private final ServiceTracker<StorageAdapter, StorageAdapter>
 		_serviceTracker;
@@ -88,9 +100,7 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 		public StorageAdapter addingService(
 			ServiceReference<StorageAdapter> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			StorageAdapter storageAdapter = registry.getService(
+			StorageAdapter storageAdapter = _bundleContext.getService(
 				serviceReference);
 
 			_storageAdaptersMap.put(
@@ -110,9 +120,7 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 			ServiceReference<StorageAdapter> serviceReference,
 			StorageAdapter storageAdapter) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
 	}

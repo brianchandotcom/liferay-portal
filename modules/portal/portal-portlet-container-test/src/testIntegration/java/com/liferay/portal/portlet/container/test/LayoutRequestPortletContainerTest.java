@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
-
-import java.util.List;
-import java.util.Map;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,12 +50,10 @@ public class LayoutRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(
-				layout.getRegularURL(httpServletRequest));
+		Response response = PortletContainerTestUtil.request(
+			layout.getRegularURL(httpServletRequest));
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testPortlet.isRenderCalled());
 	}
 

@@ -23,6 +23,7 @@ import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
@@ -84,8 +85,7 @@ public class RenderRequestPortletContainerTest
 					SecurityPortletContainerWrapper.class.getName(),
 					Level.WARN)) {
 
-			Map<String, List<String>> responseMap =
-				PortletContainerTestUtil.request(url);
+			Response response = PortletContainerTestUtil.request(url);
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -97,9 +97,7 @@ public class RenderRequestPortletContainerTest
 			Assert.assertEquals(
 				"Invalid portlet ID '\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
-
-			Assert.assertEquals(
-				"200", PortletContainerTestUtil.getString(responseMap, "code"));
+			Assert.assertEquals(200, response.getCode());
 		}
 	}
 
@@ -160,13 +158,8 @@ public class RenderRequestPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(portletURL.toString());
-
-		String portletAuthenticationToken = PortletContainerTestUtil.getString(
-			responseMap, "body");
-
-		List<String> cookies = responseMap.get("Set-Cookie");
+		Response response = PortletContainerTestUtil.request(
+			portletURL.toString());
 
 		testTargetPortlet.reset();
 
@@ -181,17 +174,15 @@ public class RenderRequestPortletContainerTest
 
 		String url = portletURL.toString();
 
-		url = HttpUtil.setParameter(
-			url, "p_p_auth", portletAuthenticationToken);
+		url = HttpUtil.setParameter(url, "p_p_auth", response.getBody());
 
 		Map<String, List<String>> headers = new HashMap<>();
 
-		headers.put("Cookie", cookies);
+		headers.put("Cookie", response.getCookies());
 
-		responseMap = PortletContainerTestUtil.request(url, headers);
+		response = PortletContainerTestUtil.request(url, headers);
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testTargetPortlet.isRenderCalled());
 	}
 
@@ -208,11 +199,10 @@ public class RenderRequestPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(portletURL.toString());
+		Response response = PortletContainerTestUtil.request(
+			portletURL.toString());
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testPortlet.isRenderCalled());
 	}
 
@@ -256,11 +246,10 @@ public class RenderRequestPortletContainerTest
 
 		portletURL.setParameter("testRuntimePortletId", testRuntimePortletId);
 
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(portletURL.toString());
+		Response response = PortletContainerTestUtil.request(
+			portletURL.toString());
 
-		Assert.assertEquals(
-			"200", PortletContainerTestUtil.getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testRuntimePortlet.isRenderCalled());
 	}
 

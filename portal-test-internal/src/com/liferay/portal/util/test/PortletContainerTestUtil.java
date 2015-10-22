@@ -43,7 +43,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,6 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HeaderElement;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.StatusLine;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -152,7 +150,7 @@ public class PortletContainerTestUtil {
 		return new LiferayServletRequest(mockMultipartHttpServletRequest);
 	}
 
-	public static PortalAuthentication getPortalAuthentication(
+	public static Response getPortalAuthentication(
 			HttpServletRequest httpServletRequest, Layout layout,
 			String portletId)
 		throws Exception {
@@ -163,13 +161,7 @@ public class PortletContainerTestUtil {
 			httpServletRequest, portletId, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
-		Map<String, List<String>> responseMap = request(portletURL.toString());
-
-		String portalAuthenticationToken = getString(responseMap, "body");
-
-		List<String> cookies = responseMap.get("Set-Cookie");
-
-		return new PortalAuthentication(portalAuthenticationToken, cookies);
+		return request(portletURL.toString());
 	}
 
 	public static Map<String, List<String>> getRegularParameters(int size) {
@@ -188,13 +180,7 @@ public class PortletContainerTestUtil {
 		return regularParameters;
 	}
 
-	public static String getString(Map<String, List<String>> map, String key) {
-		List<String> values = map.get(key);
-
-		return values.get(0);
-	}
-
-	public static Map<String, List<String>> postMultipart(
+	public static Response postMultipart(
 			String url,
 			MockMultipartHttpServletRequest mockMultipartHttpServletRequest,
 			String fileNameParameter)
@@ -237,40 +223,18 @@ public class PortletContainerTestUtil {
 
 		client.executeMethod(postMethod);
 
-		Map<String, List<String>> responseMap = new HashMap<>();
-
 		StatusLine statusLine = postMethod.getStatusLine();
 
-		String code = String.valueOf(statusLine.getStatusCode());
-
-		responseMap.put("code", Arrays.asList(code));
-
-		InputStream inputStream = postMethod.getResponseBodyAsStream();
-
-		Header[] headers = postMethod.getRequestHeaders();
-
-		for (Header header : headers) {
-			HeaderElement[] elements = header.getElements();
-
-			for (HeaderElement element : elements) {
-				String key = header.getName() + "[" + element.getName() + "]";
-
-				responseMap.put(key, Arrays.asList(element.getValue()));
-			}
-		}
-
-		responseMap.put("body", Arrays.asList(read(inputStream)));
-
-		return responseMap;
+		return new Response(
+			statusLine.getStatusCode(), postMethod.getResponseBodyAsString(),
+			null);
 	}
 
-	public static Map<String, List<String>> request(String url)
-		throws IOException {
-
+	public static Response request(String url) throws IOException {
 		return request(url, null);
 	}
 
-	public static Map<String, List<String>> request(
+	public static Response request(
 			String url, Map<String, List<String>> headers)
 		throws IOException {
 
@@ -309,16 +273,12 @@ public class PortletContainerTestUtil {
 		}
 
 		try {
-			Map<String, List<String>> responseMap = new HashMap<>(
-				httpURLConnection.getHeaderFields());
+			Map<String, List<String>> headerFields =
+				httpURLConnection.getHeaderFields();
 
-			responseMap.put("body", Arrays.asList(read(inputStream)));
-
-			String code = String.valueOf(httpURLConnection.getResponseCode());
-
-			responseMap.put("code", Arrays.asList(code));
-
-			return responseMap;
+			return new Response(
+				httpURLConnection.getResponseCode(), read(inputStream),
+				headerFields.get("Set-Cookie"));
 		}
 		finally {
 			if (inputStream != null) {
@@ -327,25 +287,29 @@ public class PortletContainerTestUtil {
 		}
 	}
 
-	public static class PortalAuthentication {
+	public static class Response {
 
-		public PortalAuthentication(
-			String portalAuthenticationToken, List<String> cookies) {
+		public String getBody() {
+			return _body;
+		}
 
-			_portalAuthenticationToken = portalAuthenticationToken;
-			_cookies = cookies;
+		public int getCode() {
+			return _code;
 		}
 
 		public List<String> getCookies() {
 			return _cookies;
 		}
 
-		public String getPortalAuthenticationToken() {
-			return _portalAuthenticationToken;
+		private Response(int code, String body, List<String> cookies) {
+			_code = code;
+			_body = body;
+			_cookies = cookies;
 		}
 
+		private final String _body;
+		private final int _code;
 		private final List<String> _cookies;
-		private final String _portalAuthenticationToken;
 
 	}
 

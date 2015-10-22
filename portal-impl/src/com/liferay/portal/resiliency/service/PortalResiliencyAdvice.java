@@ -14,7 +14,7 @@
 
 package com.liferay.portal.resiliency.service;
 
-import com.liferay.portal.bean.IdentifiableBeanInvokerUtil;
+import com.liferay.portal.bean.IdentifiableOSGIServiceInvokerUtil;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
@@ -70,7 +70,7 @@ public class PortalResiliencyAdvice
 
 		ServiceMethodProcessCallable serviceMethodProcessCallable =
 			new ServiceMethodProcessCallable(
-				IdentifiableBeanInvokerUtil.createMethodHandler(
+				IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
 					methodInvocation));
 
 		Future<Serializable> future = IntrabandRPCUtil.execute(

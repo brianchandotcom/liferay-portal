@@ -62,7 +62,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 			property="name"
 		/>
 
-		<c:if test="<%= !portletName.equals(myAccountPortletId) && ((selUser != null) || !UserGroupMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), userGroup.getUserGroupId())) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && !UserGroupMembershipPolicyUtil.isMembershipRequired((selUser != null) ? selUser.getUserId() : 0, userGroup.getUserGroupId()) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= userGroup.getUserGroupId() %>" href="javascript:;"><%= removeUserGroupIcon %></a>
 			</liferay-ui:search-container-column-text>

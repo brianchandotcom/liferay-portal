@@ -66,8 +66,7 @@ public class RunnableUtil {
 
 						iterator.remove();
 
-						System.setOut(
-							swappedOutputStream._fallbackPrintStream);
+						System.setOut(swappedOutputStream._fallbackPrintStream);
 					}
 				}
 			}

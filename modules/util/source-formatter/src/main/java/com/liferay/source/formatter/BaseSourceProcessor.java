@@ -460,6 +460,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newContent;
 	}
 
+	protected void checkResourceUtil(
+		String line, String fileName, int lineCount) {
+
+		if (!portalSource || fileName.endsWith("ResourceBundleUtil.java")) {
+			return;
+		}
+
+		if (line.contains("ResourceBundle.getBundle(")) {
+			processErrorMessage(
+				fileName,
+				"Use ResourceBundleUtil.getBundle instead of " +
+					"ResourceBundle.getBundle: " + fileName + " " + lineCount);
+		}
+
+		if (line.contains("resourceBundle.getString(")) {
+			processErrorMessage(
+				fileName,
+				"Use ResourceBundleUtil.getString instead of " +
+					"resourceBundle.getString: " + fileName + " " + lineCount);
+		}
+	}
+
 	protected void checkStringBundler(
 		String line, String fileName, int lineCount) {
 

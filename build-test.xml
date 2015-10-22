@@ -4870,6 +4870,8 @@ module.framework.properties.osgi.console=11312</echo>
 	<target name="prepare-selenium">
 		<delete file="${test.ext.properties.file}" />
 
+		<get-testcase-property property.name="browser.type" />
+
 		<if>
 			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 			<then>

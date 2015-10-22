@@ -2594,14 +2594,6 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="WCEditWebContent#MENU_PERMISSIONS" value1="Permissions" />
-		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		<execute macro="WebContent#viewWCViewableByPermissions" />
 	</command>
 </definition>

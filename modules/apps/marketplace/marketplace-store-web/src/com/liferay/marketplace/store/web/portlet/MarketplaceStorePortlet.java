@@ -77,6 +77,7 @@ import org.scribe.model.Verb;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.description=", "javax.portlet.display-name=Store",
+		"javax.portlet.init-param.add-process-action-success-action=false",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + MarketplaceStorePortletKeys.MARKETPLACE_STORE,

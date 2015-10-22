@@ -16,6 +16,7 @@ package com.liferay.portal.verify.test;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
@@ -34,13 +35,13 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
  * @author Preston Crary
+ * @author Shuyang Zhou
  */
 public abstract class BaseVerifyProcessTestCase {
 
@@ -63,13 +64,32 @@ public abstract class BaseVerifyProcessTestCase {
 
 	@Test
 	public void testVerify() throws Exception {
+		Exception exception = null;
+
 		try {
 			doVerify();
 		}
+		catch (VerifyException ve) {
+			exception = ve;
+		}
 		finally {
-			for (Connection con : _connections) {
-				Assert.assertTrue(
-					"A connection was not closed", con.isClosed());
+			for (ObjectValuePair<Connection, Exception> ovp :
+					_connectionRecords) {
+
+				Connection connection = ovp.getKey();
+
+				if (!connection.isClosed()) {
+					if (exception == null) {
+						exception = ovp.getValue();
+					}
+					else {
+						exception.addSuppressed(ovp.getValue());
+					}
+				}
+			}
+
+			if (exception != null) {
+				throw exception;
 			}
 		}
 	}
@@ -82,8 +102,8 @@ public abstract class BaseVerifyProcessTestCase {
 
 	protected abstract VerifyProcess getVerifyProcess();
 
-	private final Queue<Connection> _connections =
-		new ConcurrentLinkedQueue<>();
+	private final Queue<ObjectValuePair<Connection, Exception>>
+		_connectionRecords = new ConcurrentLinkedQueue<>();
 	private DataAccess.PACL _pacl;
 
 	private class DataSourceInvocationHandler implements InvocationHandler {
@@ -96,7 +116,10 @@ public abstract class BaseVerifyProcessTestCase {
 				Object result = method.invoke(_instance, args);
 
 				if (result instanceof Connection) {
-					_connections.add((Connection)result);
+					_connectionRecords.add(
+						new ObjectValuePair<>(
+							(Connection)result,
+							new Exception("Caught an unclosed exception")));
 				}
 
 				return result;

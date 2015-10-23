@@ -209,7 +209,8 @@ public class ResourceBundleTracker implements Closeable {
 
 			registry.ungetService(serviceReference);
 
-			Object languageId = serviceReference.getProperty("language.id");
+			String languageId = (String)serviceReference.getProperty(
+				"language.id");
 
 			AggregratedResourceBundle aggregratedResourceBundle =
 				_resourceBundles.get(languageId);

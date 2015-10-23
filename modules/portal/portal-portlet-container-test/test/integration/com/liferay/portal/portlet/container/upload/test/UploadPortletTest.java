@@ -176,8 +176,6 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		mvcActionCommandProperties.put(
 			"mvc.command.name", TestUploadPortlet.TEST_MVC_COMMAND_NAME);
 
-		Assert.assertNotNull(mvcActionCommandProperties);
-
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		BundleContext bundleContext = bundle.getBundleContext();

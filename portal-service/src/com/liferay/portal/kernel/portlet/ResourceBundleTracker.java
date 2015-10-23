@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,10 +31,6 @@ import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.io.Closeable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -110,53 +107,12 @@ public class ResourceBundleTracker implements Closeable {
 
 	private final ClassLoader _classLoader;
 	private final Portlet _portlet;
-	private final Map<String, AggregrateResourceBundle> _resourceBundles =
+	private final Map<String, AggregateResourceBundle> _resourceBundles =
 		new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<ResourceBundle>
 		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private final ServiceTracker<ResourceBundle, ResourceBundle>
 		_serviceTracker;
-
-	private class AggregrateResourceBundle extends ResourceBundle {
-
-		@Override
-		public Enumeration<String> getKeys() {
-			return Collections.enumeration(handleKeySet());
-		}
-
-		public List<ResourceBundle> getResourceBundles() {
-			return _resourceBundles;
-		}
-
-		@Override
-		protected Object handleGetObject(String key) {
-			for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
-				ResourceBundle resourceBundle = _resourceBundles.get(i);
-
-				if (resourceBundle.containsKey(key)) {
-					return resourceBundle.getObject(key);
-				}
-			}
-
-			return null;
-		}
-
-		@Override
-		protected Set<String> handleKeySet() {
-			Set<String> keySet = new HashSet<>();
-
-			for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
-				ResourceBundle resourceBundle = _resourceBundles.get(i);
-
-				keySet.addAll(resourceBundle.keySet());
-			}
-
-			return keySet;
-		}
-
-		private final List<ResourceBundle> _resourceBundles = new ArrayList<>();
-
-	}
 
 	private class ResourceBundleServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<ResourceBundle, ResourceBundle> {
@@ -173,17 +129,17 @@ public class ResourceBundleTracker implements Closeable {
 			String languageId = (String)serviceReference.getProperty(
 				"language.id");
 
-			AggregrateResourceBundle aggregrateResourceBundle =
+			AggregateResourceBundle aggregateResourceBundle =
 				_resourceBundles.get(languageId);
 
-			if (aggregrateResourceBundle == null) {
-				aggregrateResourceBundle = new AggregrateResourceBundle();
+			if (aggregateResourceBundle == null) {
+				aggregateResourceBundle = new AggregateResourceBundle();
 
-				_resourceBundles.put(languageId, aggregrateResourceBundle);
+				_resourceBundles.put(languageId, aggregateResourceBundle);
 			}
 
 			List<ResourceBundle> resourceBundles =
-				aggregrateResourceBundle.getResourceBundles();
+				aggregateResourceBundle.getResourceBundles();
 
 			resourceBundles.add(resourceBundle);
 
@@ -212,11 +168,11 @@ public class ResourceBundleTracker implements Closeable {
 			String languageId = (String)serviceReference.getProperty(
 				"language.id");
 
-			AggregrateResourceBundle aggregrateResourceBundle =
+			AggregateResourceBundle aggregateResourceBundle =
 				_resourceBundles.get(languageId);
 
 			List<ResourceBundle> resourceBundles =
-				aggregrateResourceBundle.getResourceBundles();
+				aggregateResourceBundle.getResourceBundles();
 
 			resourceBundles.remove(resourceBundle);
 		}

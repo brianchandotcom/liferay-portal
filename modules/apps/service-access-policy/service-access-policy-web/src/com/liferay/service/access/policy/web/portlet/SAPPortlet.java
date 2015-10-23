@@ -100,7 +100,7 @@ public class SAPPortlet extends MVCPortlet {
 
 		Map<String, Set<JSONWebServiceActionMapping>>
 			jsonWebServiceActionMappingsMap =
-				getServiceJSONWebServiceActionMapping(contextName);
+				getServiceJSONWebServiceActionMappingsMap(contextName);
 
 		String serviceClassName = ParamUtil.getString(
 			resourceRequest, "serviceClassName");
@@ -136,7 +136,7 @@ public class SAPPortlet extends MVCPortlet {
 		for (String contextName : contextNames) {
 			Map<String, Set<JSONWebServiceActionMapping>>
 				jsonWebServiceActionMappings =
-					getServiceJSONWebServiceActionMapping(contextName);
+					getServiceJSONWebServiceActionMappingsMap(contextName);
 
 			for (Map.Entry<String, Set<JSONWebServiceActionMapping>>
 				entry :
@@ -213,7 +213,7 @@ public class SAPPortlet extends MVCPortlet {
 	}
 
 	protected Map<String, Set<JSONWebServiceActionMapping>>
-		getServiceJSONWebServiceActionMapping(String contextName) {
+		getServiceJSONWebServiceActionMappingsMap(String contextName) {
 
 		Map<String, Set<JSONWebServiceActionMapping>>
 			jsonWebServiceActionMappingsMap = new LinkedHashMap<>();
@@ -225,29 +225,30 @@ public class SAPPortlet extends MVCPortlet {
 		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
 				jsonWebServiceActionMappings) {
 
-			Class<?> serviceClass =
-				jsonWebServiceActionMapping.getActionObject().getClass();
+			Object actionObject = jsonWebServiceActionMapping.getActionObject();
+
+			Class<?> serviceClass = actionObject.getClass();
 
 			Class[] serviceInterfaces = serviceClass.getInterfaces();
 
-			for (Class serviceInterface : serviceInterfaces) {
+			for (Class<?> serviceInterface : serviceInterfaces) {
 				Annotation[] declaredAnnotations =
 					serviceInterface.getDeclaredAnnotations();
 
 				for (Annotation declaredAnnotation : declaredAnnotations) {
 					if (declaredAnnotation instanceof AccessControlled) {
-						String serviceName = serviceInterface.getName();
+						String serviceClassName = serviceInterface.getName();
 
 						Set<JSONWebServiceActionMapping>
 							jsonWebServiceMappings =
 								jsonWebServiceActionMappingsMap.get(
-									serviceName);
+									serviceClassName);
 
 						if (jsonWebServiceMappings == null) {
 							jsonWebServiceMappings = new LinkedHashSet<>();
 
 							jsonWebServiceActionMappingsMap.put(
-								serviceName, jsonWebServiceMappings);
+								serviceClassName, jsonWebServiceMappings);
 						}
 
 						jsonWebServiceMappings.add(jsonWebServiceActionMapping);

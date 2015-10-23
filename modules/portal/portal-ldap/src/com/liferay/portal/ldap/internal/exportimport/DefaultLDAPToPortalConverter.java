@@ -172,8 +172,8 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		gender = StringUtil.toLowerCase(gender);
 
-		if (GetterUtil.getBoolean(gender) || gender.equals("m") ||
-			gender.equals("male")) {
+		if (Validator.isNull(gender) || GetterUtil.getBoolean(gender) ||
+			gender.equals("m") || gender.equals("male")) {
 
 			contact.setMale(true);
 		}

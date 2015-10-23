@@ -143,7 +143,7 @@ public class ResourceBundleTracker implements Closeable {
 
 		@Override
 		protected Set<String> handleKeySet() {
-			HashSet<String> keySet = new HashSet<>();
+			Set<String> keySet = new HashSet<>();
 
 			for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
 				ResourceBundle resourceBundle = _resourceBundles.get(i);

@@ -73,7 +73,7 @@
 			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
-		<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
+		<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateMessageCP">
 			<var name="siteChildPageName" value="Site Child Page Name" />
 		</execute>
 	</command>

@@ -1,0 +1,30 @@
+Started by upstream project "test-portal-acceptance-pullrequest-batch(master)" build number 1904
+originally caused by:
+ Started by remote host 10.0.14.218
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - [ERROR] - The given properties file path '${TOP_LEVEL_SHARED_DIR}/${JOB_NAME}/${JOB_VARIANT}/start.properties' doesn't exist.
+[EnvInject] - [ERROR] - SEVERE ERROR occurs: java.io.IOException: remote file operation failed: /opt/java/jenkins at hudson.remoting.Channel@65a5ba69:cloud-10-0-113-3
+Recording test results
+Liferay patched class hudson.tasks.junit.JUnitResultArchiver
+[PostBuildScript] - Execution post build scripts.
+ERROR: Publisher org.jenkinsci.plugins.postbuildscript.PostBuildScript aborted due to exception
+java.lang.NullPointerException: no workspace from node hudson.slaves.DumbSlave@4ed52006 which is computer hudson.slaves.SlaveComputer@42172188 and has channel hudson.remoting.Channel@65a5ba69:cloud-10-0-113-3
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:76)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:66)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.processBuildSteps(PostBuildScript.java:205)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.processScripts(PostBuildScript.java:143)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript._perform(PostBuildScript.java:102)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.perform(PostBuildScript.java:79)
+	at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:756)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:720)
+	at hudson.model.Build$BuildExecution.post2(Build.java:182)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:669)
+	at hudson.model.Run.execute(Run.java:1731)
+	at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+	at hudson.model.ResourceController.execute(ResourceController.java:88)
+	at hudson.model.Executor.run(Executor.java:232)
+Finished: FAILURE

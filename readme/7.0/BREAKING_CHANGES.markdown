@@ -2590,3 +2590,72 @@ Since Microsoft dropped support for Windows Live Messenger, Liferay will no
 longer continue to support it.
 
 ---------------------------------------
+
+### Removed Support for AIM, ICQ, MySpace, and Yahoo Messenger
+- **Date:** 2015-Oct-22
+- **JIRA Ticket:** LPS-59716
+
+#### What changed?
+
+Liferay no longer supports integration with AIM, ICQ, and Yahoo Messenger instant messaging services nor MySpace.  The corresponding `aimSn`, `icqSn`, `mySpaceSn`, and `ymSn` columns have been removed from the Contacts table.
+
+The following classes have been removed:
+- `AIMConnector`
+- `ICQConnector`
+- `YMConnector`
+
+The following constants have been removed:
+- `CalEventConstants.REMIND_BY_AIM`
+- `CalEventConstants.REMIND_BY_ICQ`
+- `CalEventConstants.REMIND_BY_YM`
+- `ContactConverterKeys.AIM_SN`
+- `ContactConverterKeys.ICQ_SN`
+- `ContactConverterKeys.MYSPACE_SN`
+- `ContactConverterKeys.YM_SN`
+- `PropsKeys.AIM_LOGIN`
+- `PropsKeys.AIM_PASSWORD`
+- `PropsKeys.ICQ_JAR`
+- `PropsKeys.ICQ_LOGIN`
+- `PropsKeys.ICQ_PASSWORD`
+- `PropsKeys.YM_LOGIN`
+- `PropsKeys.YM_PASSWORD`
+
+The following methods have been removed:
+- `getAimSn`
+- `getIcqSn`
+- `getMySpaceSn`
+- `getYmSn`
+- `setAimSn`
+- `setIcqSn`
+- `setMySpaceSn`
+- `setYmSn`
+
+The following methods have been changed:
+- `updateUser`
+- `addContact`
+
+The following portal properties have been removed:
+- `aim.login`
+- `aim.password`
+- `icq.jar`
+- `icq.login`
+- `icq.password`
+- `ym.login`
+- `ym.password`
+
+#### Who is affected?
+
+This affects developers who use any of the classes, constants, or methods listed above.
+
+#### How should I update my code?
+
+When updating or adding a user or contact using one of the changed methods
+above, remove the `aimSn`, `icqSn`, `mySpaceSn`, and `ymSn` arguments from the method call. If you are using one of the removed items above, you should remove all references to them from your code and look for alternatives, if necessary. Lastly, remove any references to the `aimSn`, `icqSn`, `mySpaceSn`, and `ymSn` columns in the Contacts table from your SQL queries.
+
+Also, any reference to the removed portal properties above will no longer return a value.
+
+#### Why was this change made?
+
+The services removed in this change are no longer popular enough to merit continued support.
+
+---------------------------------------

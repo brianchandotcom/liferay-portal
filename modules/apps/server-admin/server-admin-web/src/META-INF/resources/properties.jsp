@@ -34,6 +34,8 @@ serverURL.setParameter("tabs3", tabs3);
 />
 
 <div class="form-search">
+	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
+
 	<liferay-ui:input-search placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 </div>
 

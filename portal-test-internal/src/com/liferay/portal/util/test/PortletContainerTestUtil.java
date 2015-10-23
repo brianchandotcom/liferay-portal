@@ -73,14 +73,14 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
 public class PortletContainerTestUtil {
 
 	public static Map<String, FileItem[]> getFileParameters(
-			int size, Class<?> clazz, String dependency)
+			int size, byte[] bytes)
 		throws Exception {
 
-		return getFileParameters(size, null, clazz, dependency);
+		return getFileParameters(size, null, bytes);
 	}
 
 	public static Map<String, FileItem[]> getFileParameters(
-			int size, String namespace, Class<?> clazz, String dependency)
+			int size, String namespace, byte[] bytes)
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters = new HashMap<>();
@@ -92,7 +92,7 @@ public class PortletContainerTestUtil {
 				fileParameter = namespace.concat(fileParameter);
 			}
 
-			fileParameters.put(fileParameter, _getFileItems(clazz, dependency));
+			fileParameters.put(fileParameter, _getFileItems(bytes));
 		}
 
 		return fileParameters;
@@ -311,11 +311,7 @@ public class PortletContainerTestUtil {
 
 	}
 
-	private static FileItem[] _getFileItems(Class<?> clazz, String dependency)
-		throws IOException {
-
-		byte[] bytes = FileUtil.getBytes(clazz.getResourceAsStream(dependency));
-
+	private static FileItem[] _getFileItems(byte[] bytes) throws IOException {
 		LiferayFileItem[] liferayFileItems = new LiferayFileItem[2];
 
 		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(

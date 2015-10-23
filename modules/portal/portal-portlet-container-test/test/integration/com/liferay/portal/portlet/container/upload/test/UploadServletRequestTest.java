@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -170,8 +169,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -241,8 +239,7 @@ public class UploadServletRequestTest {
 		@Test
 		public void shouldNotRemoveMultipartParameters() throws Exception {
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -280,8 +277,7 @@ public class UploadServletRequestTest {
 		@Test
 		public void shouldReturnFirstFileItemContentType() throws Exception {
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -344,8 +340,7 @@ public class UploadServletRequestTest {
 		@Test
 		public void shouldReturnAFile() throws Exception {
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -400,8 +395,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -436,8 +430,7 @@ public class UploadServletRequestTest {
 		@Test
 		public void shouldReturnAStream() throws Exception {
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -492,8 +485,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -531,8 +523,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -584,8 +575,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -620,8 +610,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					10, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(10, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -677,8 +666,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -713,8 +701,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					10, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(10, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -772,8 +759,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -808,8 +794,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					10, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(10, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -867,8 +852,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -903,8 +887,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -957,8 +940,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -1066,8 +1048,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					10, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(10, _bytes);
 
 			Map<String, List<String>> regularParameters =
 				PortletContainerTestUtil.getRegularParameters(10);
@@ -1126,8 +1107,7 @@ public class UploadServletRequestTest {
 		@Test
 		public void shouldMergeRegularAndRequestParameters() throws Exception {
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					10, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(10, _bytes);
 
 			Map<String, List<String>> regularParameters =
 				PortletContainerTestUtil.getRegularParameters(10);
@@ -1201,8 +1181,7 @@ public class UploadServletRequestTest {
 		@Test
 		public void shouldReturnFirstSizeFromFileParameters() throws Exception {
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -1253,8 +1232,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -1338,8 +1316,7 @@ public class UploadServletRequestTest {
 		@Test
 		public void shouldReturnFirstSizeFromFileParameters() throws Exception {
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -1391,8 +1368,7 @@ public class UploadServletRequestTest {
 			throws Exception {
 
 			Map<String, FileItem[]> fileParameters =
-				PortletContainerTestUtil.getFileParameters(
-					1, getClass(), _TXT_DEPENDENCY);
+				PortletContainerTestUtil.getFileParameters(1, _bytes);
 
 			LiferayServletRequest liferayServletRequest =
 				PortletContainerTestUtil.getMultipartRequest(
@@ -1411,18 +1387,10 @@ public class UploadServletRequestTest {
 
 	private static void _setUpScenario() throws Exception {
 		_fileNameParameter = RandomTestUtil.randomString();
-
-		InputStream inputStream =
-			UploadServletRequestTest.class.getResourceAsStream(_TXT_DEPENDENCY);
-
-		_bytes = FileUtil.getBytes(inputStream);
 	}
 
-	private static final String _TXT_DEPENDENCY =
-		"/com/liferay/portal/portlet/container/upload/test/dependencies/" +
-			"file_upload.txt";
-
-	private static byte[] _bytes;
+	private static final byte[] _bytes =
+		"Enterprise. Open Source. For Life.".getBytes();
 	private static String _fileNameParameter;
 
 }

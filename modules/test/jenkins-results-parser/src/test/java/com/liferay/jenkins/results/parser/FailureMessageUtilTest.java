@@ -43,9 +43,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Test data resides in src/test/resources. Jenkins reports are used to derive
- * test groups. Each test group is divided into test cases.
- *
  * @author Peter Yoo
  */
 public class FailureMessageUtilTest {
@@ -66,9 +63,9 @@ public class FailureMessageUtilTest {
 
 	@Test
 	public void testGetFailureMessage() throws Exception {
-		File[] fileArray = _TEST_DATA_ROOT.listFiles();
+		File[] files = _testDependenciesDir.listFiles();
 
-		for (File file : fileArray) {
+		for (File file : files) {
 			if (file.isDirectory()) {
 				assertTrue(validateGroup(_project, file));
 			}
@@ -86,9 +83,9 @@ public class FailureMessageUtilTest {
 				file.delete();
 			}
 			else {
-				File[] fileArray = file.listFiles();
+				File[] files = file.listFiles();
 
-				for (File subFile : fileArray) {
+				for (File subFile : files) {
 					_deleteFile(subFile);
 				}
 
@@ -115,7 +112,7 @@ public class FailureMessageUtilTest {
 		}
 
 		String caseRootPath =
-			_TEST_DATA_ROOT.getPath() + "/" + jenkinsReportName + "/" +
+			_testDependenciesDir.getPath() + "/" + jenkinsReportName + "/" +
 				caseName;
 
 		String caseLogTextPath = caseRootPath + "/logText";
@@ -210,7 +207,7 @@ public class FailureMessageUtilTest {
 			Document document = saxReader.read(jenkinsReportURL);
 
 			groupReportRootFile = new File(
-				_TEST_DATA_ROOT.getPath() + "/" + testGroupName);
+				_testDependenciesDir.getPath() + "/" + testGroupName);
 
 			if (groupReportRootFile.exists()) {
 				return;
@@ -431,9 +428,9 @@ public class FailureMessageUtilTest {
 
 		String name = groupRoot.getName();
 
-		File[] fileArray = groupRoot.listFiles();
+		File[] files = groupRoot.listFiles();
 
-		for (File file : fileArray) {
+		for (File file : files) {
 			if (file.isDirectory()) {
 				if (!validateCase(project, name, file)) {
 					return false;
@@ -447,7 +444,7 @@ public class FailureMessageUtilTest {
 	private static final String _EXPECTED_RESULTS_FILE_PATH =
 		"expected-results/FailureMessageUtilTest.html";
 
-	private static final File _TEST_DATA_ROOT = new File(
+	private static final File _testDependenciesDir = new File(
 		"src/test/resources/com/liferay/results/parser/dependencies/");
 
 	private final Project _project;

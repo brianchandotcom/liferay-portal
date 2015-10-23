@@ -1,5 +1,13 @@
 import com.liferay.gradle.util.FileUtil
 
+task downloadSchemas
+
+String schemasUrl = "http://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk/java/javax/servlet/jsp/resources"
+
+classes {
+	dependsOn downloadSchemas
+}
+
 dependencies {
 	compile group: "com.github.rotty3000", name: "phidias", version: "0.3.2"
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
@@ -13,20 +21,6 @@ dependencies {
 	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
 	provided group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", transitive: false, version: "1.2.1"
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
-}
-
-ext {
-	schemasUrl = "http://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk/java/javax/servlet/jsp/resources"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}
-
-task downloadSchemas
-
-classes {
-	dependsOn downloadSchemas
 }
 
 deploy {
@@ -53,4 +47,8 @@ downloadSchemas {
 	onlyIf {
 		!schemasDir.exists()
 	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
 }

@@ -1,6 +1,14 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.OSDetector
 
+task downloadDependencyVisitor(type: Exec)
+
+String dependencyVisitorUrl = "svn://svn.forge.objectweb.org/svnroot/asm/tags/ASM_5_0_1/examples/dependencies/src/org/objectweb/asm/depend/DependencyVisitor.java"
+
+compileJava {
+	dependsOn downloadDependencyVisitor
+}
+
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
@@ -13,20 +21,6 @@ dependencies {
 	compile group: "org.springframework", name: "spring-web", version: "3.2.10.RELEASE"
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
-}
-
-ext {
-	dependencyVisitorUrl = "svn://svn.forge.objectweb.org/svnroot/asm/tags/ASM_5_0_1/examples/dependencies/src/org/objectweb/asm/depend/DependencyVisitor.java"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}
-
-task downloadDependencyVisitor(type: Exec)
-
-compileJava {
-	dependsOn downloadDependencyVisitor
 }
 
 downloadDependencyVisitor {
@@ -60,4 +54,8 @@ downloadDependencyVisitor {
 	}
 
 	workingDir = file("src/main/java")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
 }

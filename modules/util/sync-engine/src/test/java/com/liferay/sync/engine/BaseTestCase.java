@@ -14,11 +14,18 @@
 
 package com.liferay.sync.engine;
 
+import com.liferay.sync.engine.filesystem.BarbaryWatcher;
+import com.liferay.sync.engine.filesystem.JPathWatcher;
+import com.liferay.sync.engine.filesystem.Watcher;
+import com.liferay.sync.engine.filesystem.listener.SyncSiteWatchEventListener;
+import com.liferay.sync.engine.filesystem.listener.WatchEventListener;
+import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
+import com.liferay.sync.engine.util.OSDetector;
 import com.liferay.sync.engine.util.PropsKeys;
 import com.liferay.sync.engine.util.PropsUtil;
 import com.liferay.sync.engine.util.PropsValues;
@@ -91,6 +98,22 @@ public abstract class BaseTestCase {
 		syncAccount.setState(SyncAccount.STATE_CONNECTED);
 
 		SyncAccountService.update(syncAccount);
+
+		WatchEventListener watchEventListener = new SyncSiteWatchEventListener(
+			syncAccount.getSyncAccountId());
+
+		Watcher watcher = null;
+
+		if (OSDetector.isApple()) {
+			watcher = new BarbaryWatcher(
+				Paths.get(syncAccount.getFilePathName()), watchEventListener);
+		}
+		else {
+			watcher = new JPathWatcher(
+				Paths.get(syncAccount.getFilePathName()), watchEventListener);
+		}
+
+		WatcherRegistry.register(syncAccount.getSyncAccountId(), watcher);
 
 		PowerMockito.stub(
 			PowerMockito.method(SyncEngine.class, "getExecutorService")

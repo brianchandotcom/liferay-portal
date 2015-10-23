@@ -68,8 +68,9 @@ public class SyncSiteModelListenerTest extends BaseTestCase {
 		catch (Exception e) {
 			_logger.error(e.getMessage(), e);
 		}
-
-		super.tearDown();
+		finally {
+			super.tearDown();
+		}
 	}
 
 	@Test

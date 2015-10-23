@@ -105,11 +105,11 @@ public class SAPPortlet extends MVCPortlet {
 		String serviceClassName = ParamUtil.getString(
 			resourceRequest, "serviceClassName");
 
-		Set<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
+		Set<JSONWebServiceActionMapping> jsonWebServiceActionMappingsSet =
 			jsonWebServiceActionMappingsMap.get(serviceClassName);
 
 		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
-				jsonWebServiceActionMappings) {
+				jsonWebServiceActionMappingsSet) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -135,12 +135,11 @@ public class SAPPortlet extends MVCPortlet {
 
 		for (String contextName : contextNames) {
 			Map<String, Set<JSONWebServiceActionMapping>>
-				jsonWebServiceActionMappings =
+				jsonWebServiceActionMappingsSet =
 					getServiceJSONWebServiceActionMappingsMap(contextName);
 
-			for (Map.Entry<String, Set<JSONWebServiceActionMapping>>
-				entry :
-					jsonWebServiceActionMappings.entrySet()) {
+			for (Map.Entry<String, Set<JSONWebServiceActionMapping>> entry :
+					jsonWebServiceActionMappingsSet.entrySet()) {
 
 				Map<String, String> serviceDescription = new HashMap<>();
 
@@ -242,18 +241,20 @@ public class SAPPortlet extends MVCPortlet {
 
 					String serviceClassName = serviceInterface.getName();
 
-					Set<JSONWebServiceActionMapping> jsonWebServiceMappings =
-						jsonWebServiceActionMappingsMap.get(
-							serviceClassName);
+					Set<JSONWebServiceActionMapping>
+						jsonWebServiceActionMappingsSet =
+							jsonWebServiceActionMappingsMap.get(
+								serviceClassName);
 
-					if (jsonWebServiceMappings == null) {
-						jsonWebServiceMappings = new LinkedHashSet<>();
+					if (jsonWebServiceActionMappingsSet == null) {
+						jsonWebServiceActionMappingsSet = new LinkedHashSet<>();
 
 						jsonWebServiceActionMappingsMap.put(
-							serviceClassName, jsonWebServiceMappings);
+							serviceClassName, jsonWebServiceActionMappingsSet);
 					}
 
-					jsonWebServiceMappings.add(jsonWebServiceActionMapping);
+					jsonWebServiceActionMappingsSet.add(
+						jsonWebServiceActionMapping);
 				}
 			}
 		}

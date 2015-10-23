@@ -438,7 +438,8 @@ public class FailureMessageUtilTest {
 
 	private static final String _EXPECTED_RESULTS_FILE_PATH =
 		"expected-results/FailureMessageUtilTest.html";
-	private static final File _TEST_DATA_ROOT = new File("src/test/resources");
+	private static final File _TEST_DATA_ROOT = 
+		new File("src/test/resources/com/liferay/results/parser/dependencies/");
 
 	private Project _project;
 }

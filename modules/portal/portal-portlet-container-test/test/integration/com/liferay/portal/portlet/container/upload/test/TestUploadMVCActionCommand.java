@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.container.upload.test;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadHandler;
@@ -35,7 +36,7 @@ public class TestUploadMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		_uploadHandler.upload(actionRequest, actionResponse);
 

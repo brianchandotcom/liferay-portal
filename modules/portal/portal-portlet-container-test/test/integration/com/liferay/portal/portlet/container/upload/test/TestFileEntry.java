@@ -60,18 +60,13 @@ public class TestFileEntry implements FileEntry {
 
 	@Override
 	public boolean containsPermission(
-			PermissionChecker permissionChecker, String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, String actionId) {
 
 		return true;
 	}
 
 	@Override
-	public void execute(RepositoryModelOperation repositoryModelOperation)
-		throws PortalException {
-
-		// NOOP
-
+	public void execute(RepositoryModelOperation repositoryModelOperation) {
 	}
 
 	@Override
@@ -85,12 +80,12 @@ public class TestFileEntry implements FileEntry {
 	}
 
 	@Override
-	public InputStream getContentStream() throws PortalException {
+	public InputStream getContentStream() {
 		return _inputStream;
 	}
 
 	@Override
-	public InputStream getContentStream(String version) throws PortalException {
+	public InputStream getContentStream(String version) {
 		return _inputStream;
 	}
 
@@ -130,12 +125,12 @@ public class TestFileEntry implements FileEntry {
 	}
 
 	@Override
-	public FileVersion getFileVersion() throws PortalException {
+	public FileVersion getFileVersion() {
 		return null;
 	}
 
 	@Override
-	public FileVersion getFileVersion(String version) throws PortalException {
+	public FileVersion getFileVersion(String version) {
 		return null;
 	}
 
@@ -184,14 +179,12 @@ public class TestFileEntry implements FileEntry {
 	}
 
 	@Override
-	public FileVersion getLatestFileVersion() throws PortalException {
+	public FileVersion getLatestFileVersion() {
 		return null;
 	}
 
 	@Override
-	public FileVersion getLatestFileVersion(boolean trusted)
-		throws PortalException {
-
+	public FileVersion getLatestFileVersion(boolean trusted) {
 		return null;
 	}
 
@@ -371,16 +364,10 @@ public class TestFileEntry implements FileEntry {
 
 	@Override
 	public void setCompanyId(long companyId) {
-
-		// NOOP
-
 	}
 
 	@Override
 	public void setCreateDate(Date date) {
-
-		// NOOP
-
 	}
 
 	@Override
@@ -390,51 +377,30 @@ public class TestFileEntry implements FileEntry {
 
 	@Override
 	public void setLastPublishDate(Date date) {
-
-		// NOOP
-
 	}
 
 	@Override
 	public void setModifiedDate(Date date) {
-
-		// NOOP
-
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-
-		// NOOP
-
 	}
 
 	@Override
 	public void setUserId(long userId) {
-
-		// NOOP
-
 	}
 
 	@Override
 	public void setUserName(String userName) {
-
-		// NOOP
-
 	}
 
 	@Override
 	public void setUserUuid(String userUuid) {
-
-		// NOOP
-
 	}
 
 	@Override
 	public void setUuid(String uuid) {
-
-		// NOOP
-
 	}
 
 	@Override

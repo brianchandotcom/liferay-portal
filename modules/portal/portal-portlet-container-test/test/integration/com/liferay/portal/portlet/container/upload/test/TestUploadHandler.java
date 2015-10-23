@@ -35,10 +35,9 @@ public class TestUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String fileName,
-			String contentType, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
+		long userId, long groupId, long folderId, String fileName,
+		String contentType, InputStream inputStream, long size,
+		ServiceContext serviceContext) {
 
 		TestFileEntry fileEntry = new TestFileEntry(
 			fileName, folderId, groupId, inputStream);
@@ -50,27 +49,18 @@ public class TestUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected void checkPermission(
-			long groupId, long folderId, PermissionChecker permissionChecker)
-		throws PortalException {
-
-		// NOOP
-
+		long groupId, long folderId, PermissionChecker permissionChecker) {
 	}
 
 	@Override
 	protected void doHandleUploadException(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortalException pe, JSONObject jsonObject)
-		throws PortalException {
-
-		// NOOP
-
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		PortalException pe, JSONObject jsonObject) {
 	}
 
 	@Override
 	protected FileEntry fetchFileEntry(
-			long userId, long groupId, long folderId, String fileName)
-		throws PortalException {
+		long userId, long groupId, long folderId, String fileName) {
 
 		TestFileEntry fileEntry = new TestFileEntry(
 			fileName, folderId, groupId, null);
@@ -93,11 +83,8 @@ public class TestUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
-	protected void validateFile(String fileName, String contentType, long size)
-		throws PortalException {
-
-		// NOOP
-
+	protected void validateFile(
+		String fileName, String contentType, long size) {
 	}
 
 }

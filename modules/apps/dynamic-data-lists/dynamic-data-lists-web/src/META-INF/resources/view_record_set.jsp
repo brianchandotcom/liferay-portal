@@ -19,6 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (redirect.isEmpty()) {
+	PortletURL redirectURL = renderResponse.createRenderURL();
+	redirectURL.setParameter("mvcPath", "/view.jsp");
+	redirect = redirectURL.toString();
+}
+
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");

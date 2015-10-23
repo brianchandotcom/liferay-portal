@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 DDLRecordSet recordSet = record.getRecordSet();
@@ -26,6 +24,18 @@ DDLRecordSet recordSet = record.getRecordSet();
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (redirect.isEmpty()) {
+	PortletURL redirectURL = renderResponse.createRenderURL();
+
+	redirectURL.setParameter("mvcPath", "/edit_record.jsp");
+	redirectURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
+	redirectURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
+
+	redirect = redirectURL.toString();
+}
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

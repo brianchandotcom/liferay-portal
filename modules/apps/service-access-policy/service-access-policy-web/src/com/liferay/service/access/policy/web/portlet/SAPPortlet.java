@@ -93,32 +93,33 @@ public class SAPPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 		String contextName = ParamUtil.getString(
 			resourceRequest, "contextName");
-		String serviceClassName = ParamUtil.getString(
-			resourceRequest, "serviceClassName");
 
 		Map<String, Set<JSONWebServiceActionMapping>>
 			jsonWebServiceActionMappingsMap =
 				getServiceJSONWebServiceActionMapping(contextName);
 
+		String serviceClassName = ParamUtil.getString(
+			resourceRequest, "serviceClassName");
+
 		Set<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
 			jsonWebServiceActionMappingsMap.get(serviceClassName);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
 				jsonWebServiceActionMappings) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonArray.put(jsonObject);
-
 			Method method = jsonWebServiceActionMapping.getActionMethod();
 
 			String methodName = method.getName();
 
 			jsonObject.put("methodName", methodName);
+
+			jsonArray.put(jsonObject);
 		}
 
 		PrintWriter writer = resourceResponse.getWriter();
@@ -126,8 +127,8 @@ public class SAPPortlet extends MVCPortlet {
 		writer.write(jsonArray.toString());
 	}
 
-	public Set<Map<String, String>> getRemoteServiceNames() {
-		Set<Map<String, String>> remoteServices = new LinkedHashSet<>();
+	public Set<Map<String, String>> getRemoteServiceClassNames() {
+		Set<Map<String, String>> remoteServiceClassNames = new LinkedHashSet<>();
 
 		Set<String> contextNames =
 			_jsonWebServiceActionsManager.getContextNames();
@@ -138,16 +139,16 @@ public class SAPPortlet extends MVCPortlet {
 					getServiceJSONWebServiceActionMapping(contextName);
 
 			for (Map.Entry<String, Set<JSONWebServiceActionMapping>>
-				jsonWebServiceActionMapping :
+				entry :
 					jsonWebServiceActionMappings.entrySet()) {
 
 				Map<String, String> serviceDescription = new HashMap<>();
 
 				serviceDescription.put(
-					"serviceClassName", jsonWebServiceActionMapping.getKey());
+					"serviceClassName", entry.getKey());
 
 				Set<JSONWebServiceActionMapping> actionMappings =
-					jsonWebServiceActionMapping.getValue();
+					entry.getValue();
 
 				JSONWebServiceActionMapping firstActionMapping =
 					actionMappings.iterator().next();
@@ -155,11 +156,11 @@ public class SAPPortlet extends MVCPortlet {
 				serviceDescription.put(
 					"contextName", firstActionMapping.getContextName());
 
-				remoteServices.add(serviceDescription);
+				remoteServiceClassNames.add(serviceDescription);
 			}
 		}
 
-		return remoteServices;
+		return remoteServiceClassNames;
 	}
 
 	@Override
@@ -170,9 +171,12 @@ public class SAPPortlet extends MVCPortlet {
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 
 		if (mvcPath.equals("/edit_entry.jsp")) {
-			Set<Map<String, String>> remoteServices = getRemoteServiceNames();
+			Set<Map<String, String>> remoteServiceClassNames =
+				getRemoteServiceClassNames();
+
 			renderRequest.setAttribute(
-				SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES, remoteServices);
+				SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES,
+				remoteServiceClassNames);
 		}
 
 		super.render(renderRequest, renderResponse);

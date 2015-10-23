@@ -135,13 +135,13 @@ if (sapEntry != null) {
 
 		var getMethodsURL = Liferay.PortletURL.createURL('<%= getMethodsURL %>');
 
-		var services = <%= JSONFactoryUtil.looseSerialize(request.getAttribute(SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES)) %>;
+		var serviceClassNames = <%= JSONFactoryUtil.looseSerialize(request.getAttribute(SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES)) %>;
 
 		var serviceMethods = {};
 
 		var getServiceContext = function(serviceClassName) {
 			var service = A.Array.find(
-				services,
+				serviceClassNames,
 				function(item, index) {
 					return item.serviceClassName === serviceClassName;
 				}
@@ -208,7 +208,7 @@ if (sapEntry != null) {
 					},
 					resultFilters: 'phraseMatch',
 					resultTextLocator: 'serviceClassName',
-					source: services
+					source: serviceClassNames
 				}
 			).render();
 

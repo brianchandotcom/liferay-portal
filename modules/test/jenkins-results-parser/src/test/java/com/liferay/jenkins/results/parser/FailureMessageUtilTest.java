@@ -22,7 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -79,19 +80,21 @@ public class FailureMessageUtilTest {
 	}
 
 	private static void _deleteFile(File file) {
-		if (file.exists()) {
-			if (file.isFile()) {
-				file.delete();
-			}
-			else {
-				File[] files = file.listFiles();
+		if (!file.exists()) {
+			return;
+		}
 
-				for (File subFile : files) {
-					_deleteFile(subFile);
-				}
+		if (file.isFile()) {
+			file.delete();
+		}
+		else {
+			File[] files = file.listFiles();
 
-				file.delete();
+			for (File childFile : files) {
+				_deleteFile(childFile);
 			}
+
+			file.delete();
 		}
 	}
 
@@ -134,7 +137,7 @@ public class FailureMessageUtilTest {
 
 			File caseJsonFile = new File(caseApiDir.getPath() + "/json");
 
-			_writeFile(caseJsonFile, caseJson);
+			_write(caseJsonFile, caseJson);
 
 			System.out.println(
 				" wrote file: " + caseJsonFile.getPath() + " size; " +
@@ -149,7 +152,7 @@ public class FailureMessageUtilTest {
 			File consoleFile = new File(
 				caseLogTextDir.getPath() + "/progressiveText");
 
-			_writeFile(consoleFile, console);
+			_write(consoleFile, console);
 
 			System.out.println(
 				" wrote file: " + consoleFile.getPath() + " size; " +
@@ -195,30 +198,31 @@ public class FailureMessageUtilTest {
 
 		FailureMessageUtilTest failureMessageUtilTest =
 			new FailureMessageUtilTest();
+
 		SAXReader saxReader = new SAXReader();
 
-		File groupReportRootFile = null;
+		File groupReportRootDir = null;
 
 		try {
 			Document document = saxReader.read(jenkinsReportURL);
 
-			groupReportRootFile = new File(
+			groupReportRootDir = new File(
 				_testDependenciesDir.getPath() + "/" + testGroupName);
 
-			if (groupReportRootFile.exists()) {
+			if (groupReportRootDir.exists()) {
 				return;
 			}
 
-			groupReportRootFile.mkdir();
+			groupReportRootDir.mkdir();
 
 			File jenkinsReportFile = new File(
-				groupReportRootFile.getPath() + "/jenkins-report.html");
+				groupReportRootDir.getPath() + "/jenkins-report.html");
 
-			_writeXMLDocumentFile(jenkinsReportFile, document);
+			_write(jenkinsReportFile, document);
 
-			List<Node> caseList = _getCaseList(document);
+			List<Node> caseList = _selectNodes(document);
 
-			Project project = failureMessageUtilTest.getProject();
+			Project project = failureMessageUtilTest._project;
 
 			int i = 0;
 
@@ -253,8 +257,8 @@ public class FailureMessageUtilTest {
 				"Exception occurred while creating Jenkins Report test data. " +
 					"Aborting." + e.getMessage());
 
-			if ((groupReportRootFile != null) && groupReportRootFile.exists()) {
-				_deleteFile(groupReportRootFile);
+			if ((groupReportRootDir != null) && groupReportRootDir.exists()) {
+				_deleteFile(groupReportRootDir);
 			}
 
 			throw e;
@@ -269,40 +273,12 @@ public class FailureMessageUtilTest {
 		return new URL(uri.toASCIIString());
 	}
 
-	private static String _fileToString(File file) throws IOException {
-		int bufferSize = 1024;
-		FileReader fileReader = null;
-		StringBuilder sb = new StringBuilder();
-
-		try {
-			fileReader = new FileReader(file);
-			char[] readBuffer = new char[bufferSize];
-			while (true) {
-				int charsRead = 0;
-
-				charsRead = fileReader.read(readBuffer);
-
-				if (charsRead > 0) {
-					sb.append(readBuffer, 0, charsRead);
-				}
-
-				if (charsRead < bufferSize) {
-					break;
-				}
-			}
-		}
-		finally {
-			if (fileReader != null) {
-				fileReader.close();
-			}
-		}
-
-		return sb.toString();
+	private static String _read(File file) throws IOException {
+		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
 
-	@SuppressWarnings("unchecked")
-	private static List<Node> _getCaseList(Document doc) {
-		return doc.selectNodes("//ul/li[not (ul)]//a[1]");
+	private static List<Node> _selectNodes(Document document) {
+		return document.selectNodes("//ul/li[not (ul)]//a[1]");
 	}
 
 	private static Project _initProject() {
@@ -330,45 +306,20 @@ public class FailureMessageUtilTest {
 		return string.replace("${" + token + "}", value);
 	}
 
-	private static void _writeFile(File file, String content)
-		throws IOException {
-
-		if (file.exists()) {
-			file.delete();
-		}
-
-		file.createNewFile();
-
-		FileWriter writer = null;
-
-		try {
-			writer = new FileWriter(file);
-			writer.write(content);
-			writer.flush();
-		}
-		finally {
-			writer.close();
-		}
+	private static void _write(File file, String content) throws Exception {
+		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
 
-	private static void _writeXMLDocumentFile(
-		File file,
-		Document document) throws Exception {
-
+	private static void _write(File file, Document document) throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
-
 		XMLWriter xmlWriter = new XMLWriter(
-			byteArrayOutputStream, outputFormat);
+			byteArrayOutputStream, OutputFormat.createPrettyPrint());
 
 		xmlWriter.write(document);
 
-		String documentString = new String(
-			byteArrayOutputStream.toByteArray(), "UTF8");
-
-		_writeFile(file, documentString);
+		_write(file, new String(byteArrayOutputStream.toByteArray(), "UTF8"));
 	}
 
 	private void createExpectedResultsFile(Project project, File testRoot)
@@ -382,16 +333,12 @@ public class FailureMessageUtilTest {
 		File file = new File(
 			testRoot.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
 
-		_writeFile(file, result);
-	}
-
-	private Project getProject() {
-		return _project;
+		_write(file, result);
 	}
 
 	private boolean validateCase(
-		Project project, String groupName,
-		File testRoot) throws Exception {
+			Project project, String groupName, File testRoot)
+		throws Exception {
 
 		String name = testRoot.getName();
 
@@ -400,7 +347,7 @@ public class FailureMessageUtilTest {
 		File expectedResultsFile = new File(
 			testRoot.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
 
-		String expectedResults = _fileToString(expectedResultsFile);
+		String expectedResults = _read(expectedResultsFile);
 
 		String url = testRoot.toURI().toURL().toExternalForm();
 		String results = FailureMessageUtil.getFailureMessage(project, url);
@@ -419,12 +366,12 @@ public class FailureMessageUtilTest {
 		return passed;
 	}
 
-	private boolean validateGroup(Project project, File groupRoot)
+	private boolean validateGroup(Project project, File dir)
 		throws Exception {
 
-		String name = groupRoot.getName();
+		String name = dir.getName();
 
-		File[] files = groupRoot.listFiles();
+		File[] files = dir.listFiles();
 
 		for (File file : files) {
 			if (file.isDirectory()) {

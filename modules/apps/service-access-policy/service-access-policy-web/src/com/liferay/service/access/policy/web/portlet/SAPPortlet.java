@@ -93,6 +93,8 @@ public class SAPPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
+		PrintWriter printWriter = resourceResponse.getWriter();
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		String contextName = ParamUtil.getString(
@@ -122,9 +124,7 @@ public class SAPPortlet extends MVCPortlet {
 			jsonArray.put(jsonObject);
 		}
 
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.write(jsonArray.toString());
+		printWriter.write(jsonArray.toString());
 	}
 
 	public Set<Map<String, String>> getRemoteServiceClassNames() {

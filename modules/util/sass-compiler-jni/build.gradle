@@ -84,7 +84,7 @@ dependencies {
 }
 
 downloadSassSpec {
-	File sassSpecDir = file("src/test/java/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
+	File sassSpecDir = file("src/test/resources/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
 
 	eachFile new StripPathSegmentsAction(3)
 

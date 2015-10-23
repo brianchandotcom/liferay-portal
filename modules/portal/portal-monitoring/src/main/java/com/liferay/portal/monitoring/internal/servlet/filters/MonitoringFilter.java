@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.util.PortalUtil;
@@ -99,11 +100,17 @@ public class MonitoringFilter extends BaseFilter
 			return groupId;
 		}
 
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		if (layout != null) {
+			return layout.getGroupId();
+		}
+
 		long plid = ParamUtil.getLong(request, "p_l_id");
 
 		if ((plid > 0) && (_layoutLocalService != null)) {
 			try {
-				Layout layout = _layoutLocalService.getLayout(plid);
+				layout = _layoutLocalService.getLayout(plid);
 
 				groupId = layout.getGroupId();
 			}
@@ -152,6 +159,7 @@ public class MonitoringFilter extends BaseFilter
 
 			if (dataSample != null) {
 				dataSample.capture(RequestStatus.SUCCESS);
+				dataSample.setGroupId(getGroupId(request));
 			}
 		}
 		catch (Exception e) {

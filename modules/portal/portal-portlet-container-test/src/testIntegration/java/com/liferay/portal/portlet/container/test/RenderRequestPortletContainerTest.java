@@ -31,8 +31,8 @@ import com.liferay.portlet.SecurityPortletContainerWrapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Collections;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -176,11 +176,8 @@ public class RenderRequestPortletContainerTest
 
 		url = HttpUtil.setParameter(url, "p_p_auth", response.getBody());
 
-		Map<String, List<String>> headers = new HashMap<>();
-
-		headers.put("Cookie", response.getCookies());
-
-		response = PortletContainerTestUtil.request(url, headers);
+		response = PortletContainerTestUtil.request(
+			url, Collections.singletonMap("Cookie", response.getCookies()));
 
 		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testTargetPortlet.isRenderCalled());

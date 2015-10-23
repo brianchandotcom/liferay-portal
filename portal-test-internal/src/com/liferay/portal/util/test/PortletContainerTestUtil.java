@@ -43,6 +43,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -231,7 +232,7 @@ public class PortletContainerTestUtil {
 	}
 
 	public static Response request(String url) throws IOException {
-		return request(url, null);
+		return request(url, Collections.<String, List<String>>emptyMap());
 	}
 
 	public static Response request(
@@ -247,18 +248,16 @@ public class PortletContainerTestUtil {
 		httpURLConnection.setConnectTimeout(1500 * 1000);
 		httpURLConnection.setReadTimeout(1500 * 1000);
 
-		if (headers != null) {
-			for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-				String key = entry.getKey();
+		for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
+			String key = entry.getKey();
 
-				for (String value : entry.getValue()) {
-					if (key.equals("Cookie")) {
-						httpURLConnection.addRequestProperty(
-							key, value.split(";", 2)[0]);
-					}
-					else {
-						httpURLConnection.setRequestProperty(key, value);
-					}
+			for (String value : entry.getValue()) {
+				if (key.equals("Cookie")) {
+					httpURLConnection.addRequestProperty(
+						key, value.split(";", 2)[0]);
+				}
+				else {
+					httpURLConnection.setRequestProperty(key, value);
 				}
 			}
 		}

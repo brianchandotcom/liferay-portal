@@ -284,11 +284,8 @@ public class ActionRequestPortletContainerTest
 
 		url = HttpUtil.setParameter(url, "p_auth", response.getBody());
 
-		Map<String, List<String>> headers = new HashMap<>();
-
-		headers.put("Cookie", response.getCookies());
-
-		response = PortletContainerTestUtil.request(url, headers);
+		response = PortletContainerTestUtil.request(
+			url, Collections.singletonMap("Cookie", response.getCookies()));
 
 		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testPortlet.isActionCalled());

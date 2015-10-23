@@ -32,7 +32,7 @@ import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 
 import java.net.UnknownHostException;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,17 +131,9 @@ public class PortletContainerTestUtilTest {
 	public void testRequestFromValidURLWithHeaders() throws Exception {
 		Map<String, List<String>> headers = new HashMap<>();
 
-		List<String> values = new ArrayList<>();
-
-		values.add("value1");
-
-		headers.put("key1", values);
-
-		List<String> cookieValues = new ArrayList<>();
-
-		cookieValues.add("JSSESSIONID=1234567890");
-
-		headers.put("Cookie", cookieValues);
+		headers.put("key1", Collections.singletonList("value1"));
+		headers.put(
+			"Cookie", Collections.singletonList("JSSESSIONID=1234567890"));
 
 		Response response = PortletContainerTestUtil.request(
 			"http://www.google.com", headers);

@@ -79,14 +79,12 @@
 	<portlet>
 		<portlet-name>98</portlet-name>
 		<icon>/html/icons/software_catalog.png</icon>
-		<struts-path>software_catalog</struts-path>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>software_catalog</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/softwarecatalog/software-catalog-friendly-url-routes.xml</friendly-url-routes>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>11.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>

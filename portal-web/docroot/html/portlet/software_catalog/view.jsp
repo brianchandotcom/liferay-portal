@@ -42,7 +42,7 @@ String type = ParamUtil.getString(request, "type");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/software_catalog/view");
+portletURL.setParameter("mvcRenderCommandName", "/software_catalog/view");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
@@ -166,7 +166,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/software_catalog/view_product_entry");
+			rowURL.setParameter("mvcRenderCommandName", "/software_catalog/view_product_entry");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("productEntryId", String.valueOf(productEntryId));
 
@@ -372,7 +372,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/software_catalog/view_product_entry");
+			rowURL.setParameter("mvcRenderCommandName", "/software_catalog/view_product_entry");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("productEntryId", String.valueOf(productEntryId));
 
@@ -449,7 +449,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<c:if test="<%= showAddProductEntryButton %>">
 			<div class="btn-toolbar">
 				<portlet:renderURL var="addProductURL">
-					<portlet:param name="struts_action" value="/software_catalog/edit_product_entry" />
+					<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
@@ -540,7 +540,7 @@ portletURL.setParameter("tabs1", tabs1);
 			<div class="btn-toolbar">
 				<c:if test="<%= showAddFrameworkVersionButton %>">
 					<portlet:renderURL var="addFrameworkURL">
-						<portlet:param name="struts_action" value="/software_catalog/edit_framework_version" />
+						<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_framework_version"  />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
@@ -659,7 +659,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<c:if test="<%= hasAddLicensePermission %>">
 			<div class="btn-toolbar">
 				<portlet:renderURL var="addLicenseURL">
-					<portlet:param name="struts_action" value="/software_catalog/edit_license" />
+					<portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_license" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
@@ -679,7 +679,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 <aui:script>
 	function <portlet:namespace />addProduct() {
-		var url = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
+		var url = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
 
 		if (document.<portlet:namespace />fm.<portlet:namespace />keywords) {
 			url += '&<portlet:namespace />name=' + document.<portlet:namespace />fm.<portlet:namespace />keywords.value;

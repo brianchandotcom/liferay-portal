@@ -14,32 +14,31 @@
 
 package com.liferay.portlet.softwarecatalog.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
- * @author Jorge Ferrer
+ * @author Philip Jones
  */
-public class ViewProductEntryAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.SOFTWARE_CATALOG,
+		"mvc.command.name=/software_catalog/view_product_entry"
+	}
+)
+public class ViewProductEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		try {
 			ActionUtil.getProductEntry(renderRequest);
@@ -53,21 +52,12 @@ public class ViewProductEntryAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchProductEntryException ||
-				e instanceof PrincipalException) {
+			SessionErrors.add(renderRequest, e.getClass());
 
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.software_catalog.error");
-			}
-			else {
-				throw e;
-			}
+			return "/html/portlet/software_catalog/error.jsp";
 		}
 
-		return actionMapping.findForward(
-			"portlet.software_catalog.view_product_entry");
+		return "/html/portlet/software_catalog/view_product_entry.jsp";
 	}
 
 }

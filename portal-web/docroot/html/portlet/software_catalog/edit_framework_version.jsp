@@ -24,7 +24,7 @@ SCFrameworkVersion frameworkVersion = (SCFrameworkVersion)request.getAttribute(W
 long frameworkVersionId = BeanParamUtil.getLong(frameworkVersion, request, "frameworkVersionId");
 %>
 
-<form action="<portlet:actionURL><portlet:param name="struts_action" value="/software_catalog/edit_framework_version" /></portlet:actionURL>" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveFrameworkVersion(); return false;">
+<form action="<portlet:actionURL name="/software_catalog/edit_framework_version" />" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveFrameworkVersion(); return false;">
 <input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="" />
 <input name="<portlet:namespace />redirect" type="hidden" value="<%= HtmlUtil.escapeAttribute(redirect) %>" />
 <input name="<portlet:namespace />frameworkVersionId" type="hidden" value="<%= frameworkVersionId %>" />
@@ -105,7 +105,7 @@ long frameworkVersionId = BeanParamUtil.getLong(frameworkVersion, request, "fram
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/software_catalog/view");
+portletURL.setParameter("mvcRenderCommandName", "/software_catalog/view");
 portletURL.setParameter("tabs1", "framework_versions");
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "framework-versions"), portletURL.toString());

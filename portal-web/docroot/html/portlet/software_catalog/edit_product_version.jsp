@@ -49,12 +49,12 @@ boolean testDirectDownloadURL = ParamUtil.getBoolean(request, "testDirectDownloa
 
 PortletURL editProductEntryURL = renderResponse.createRenderURL();
 
-editProductEntryURL.setParameter("struts_action", "/software_catalog/edit_product_entry");
+editProductEntryURL.setParameter("mvcRenderCommandName", "/software_catalog/edit_product_entry");
 editProductEntryURL.setParameter("redirect", currentURL);
 editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId));
 %>
 
-<form action="<portlet:actionURL><portlet:param name="struts_action" value="/software_catalog/edit_product_version" /><portlet:param name="productEntryId" value="<%= String.valueOf(productEntryId) %>" /></portlet:actionURL>" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveEntry(); return false;">
+<form action="<portlet:actionURL name="/software_catalog/edit_product_version"><portlet:param name="productEntryId" value="<%= String.valueOf(productEntryId) %>" /></portlet:actionURL>" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveEntry(); return false;">
 <input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="" />
 <input name="<portlet:namespace />redirect" type="hidden" value="<%= HtmlUtil.escapeAttribute(redirect) %>" />
 <input name="<portlet:namespace />productVersionId" type="hidden" value="<%= productVersionId %>" />

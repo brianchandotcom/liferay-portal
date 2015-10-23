@@ -608,6 +608,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String packagePath = ToolsUtil.getPackagePath(file);
 
+		if (!content.contains(
+				"package " + packagePath + StringPool.SEMICOLON)) {
+
+			processErrorMessage(
+				fileName, "Incorrect package path: " + fileName);
+		}
+
 		if (packagePath.endsWith(".model")) {
 			if (content.contains("extends " + className + "Model")) {
 				return content;

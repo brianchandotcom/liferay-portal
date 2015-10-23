@@ -152,7 +152,8 @@ public class ToolsUtil {
 		String fileName = StringUtil.replace(
 			file.toString(), StringPool.BACK_SLASH, StringPool.SLASH);
 
-		int x = fileName.lastIndexOf("/com/liferay/");
+		int x = Math.max(
+			fileName.lastIndexOf("/com/"), fileName.lastIndexOf("/org/"));
 		int y = fileName.lastIndexOf(StringPool.SLASH);
 
 		String packagePath = fileName.substring(x + 1, y);

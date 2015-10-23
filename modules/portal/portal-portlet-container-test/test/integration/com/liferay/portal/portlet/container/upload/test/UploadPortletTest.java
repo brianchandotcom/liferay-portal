@@ -111,12 +111,11 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		};
 
 		registerMVCPortlet(_testUploadPortlet);
+		registerMVCActionCommand(new TestUploadMVCActionCommand());
 	}
 
 	@Test
 	public void testUploadFile() throws Exception {
-		registerMVCActionCommand(new TestUploadMVCActionCommand());
-
 		String content = "Enterprise. Open Source. For Life.";
 
 		Response response = testUpload(content.getBytes());
@@ -143,8 +142,6 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 	@Test
 	public void testUploadZeroBitsFile() throws Exception {
-		registerMVCActionCommand(new TestUploadMVCActionCommand());
-
 		Response response = testUpload(new byte[0]);
 
 		Assert.assertEquals(200, response.getCode());

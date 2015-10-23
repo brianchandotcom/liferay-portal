@@ -110,14 +110,14 @@ public class ResourceBundleTracker implements Closeable {
 
 	private final ClassLoader _classLoader;
 	private final Portlet _portlet;
-	private final Map<String, MergingResourceBundle> _resourceBundles =
+	private final Map<String, AggregratedResourceBundle> _resourceBundles =
 		new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<ResourceBundle>
 		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private final ServiceTracker<ResourceBundle, ResourceBundle>
 		_serviceTracker;
 
-	private class MergingResourceBundle extends ResourceBundle {
+	private class AggregratedResourceBundle extends ResourceBundle {
 
 		@Override
 		public Enumeration<String> getKeys() {
@@ -173,17 +173,17 @@ public class ResourceBundleTracker implements Closeable {
 			String languageId = (String)serviceReference.getProperty(
 				"language.id");
 
-			MergingResourceBundle mergingResourceBundle = _resourceBundles.get(
-				languageId);
+			AggregratedResourceBundle aggregratedResourceBundle =
+				_resourceBundles.get(languageId);
 
-			if (mergingResourceBundle == null) {
-				mergingResourceBundle = new MergingResourceBundle();
+			if (aggregratedResourceBundle == null) {
+				aggregratedResourceBundle = new AggregratedResourceBundle();
 
-				_resourceBundles.put(languageId, mergingResourceBundle);
+				_resourceBundles.put(languageId, aggregratedResourceBundle);
 			}
 
 			List<ResourceBundle> resourceBundles =
-				mergingResourceBundle.getResourceBundles();
+				aggregratedResourceBundle.getResourceBundles();
 
 			resourceBundles.add(resourceBundle);
 
@@ -211,11 +211,11 @@ public class ResourceBundleTracker implements Closeable {
 
 			Object languageId = serviceReference.getProperty("language.id");
 
-			MergingResourceBundle mergingResourceBundle = _resourceBundles.get(
-				languageId);
+			AggregratedResourceBundle aggregratedResourceBundle =
+				_resourceBundles.get(languageId);
 
 			List<ResourceBundle> resourceBundles =
-				mergingResourceBundle.getResourceBundles();
+				aggregratedResourceBundle.getResourceBundles();
 
 			resourceBundles.remove(resourceBundle);
 		}

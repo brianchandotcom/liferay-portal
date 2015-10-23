@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -33,17 +34,35 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
+import org.junit.BeforeClass;
 
 /**
  * @author Hugo Huijser
  */
 public class BaseSourceProcessorTestCase {
 
-	@Rule
-	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+	@BeforeClass
+	public static void setUpClass() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+		sb.append(StringPool.SLASH);
+		sb.append(StringUtil.randomString());
+		sb.append(StringPool.SLASH);
+
+		_temporaryRootFolder = new File(sb.toString());
+
+		sb.append(_DIR_NAME);
+
+		_temporaryFolder = new File (sb.toString());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		FileUtils.deleteDirectory(_temporaryRootFolder);
+	}
 
 	protected SourceFormatterArgs getSourceFormatterArgs() {
 		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
@@ -99,7 +118,7 @@ public class BaseSourceProcessorTestCase {
 		String fullFileName =
 			_DIR_NAME + StringPool.SLASH + fileName + "." + originalExtension;
 
-		File newFile = temporaryFolder.newFile(fileName + "." + extension);
+		File newFile = new File(_temporaryFolder, fileName + "." + extension);
 
 		URL url = classLoader.getResource(fullFileName);
 
@@ -180,5 +199,8 @@ public class BaseSourceProcessorTestCase {
 
 	private static final String _DIR_NAME =
 		"com/liferay/source/formatter/dependencies";
+
+	private static File _temporaryFolder;
+	private static File _temporaryRootFolder;
 
 }

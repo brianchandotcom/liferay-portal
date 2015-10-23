@@ -17,6 +17,7 @@ package com.liferay.portlet.expando.util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -86,6 +87,9 @@ public class ExpandoConverterUtil {
 		}
 		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
 			return StringUtil.split(attribute);
+		}
+		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			return (Serializable)LocalizationUtil.getLocalizationMap(attribute);
 		}
 		else {
 			return attribute;

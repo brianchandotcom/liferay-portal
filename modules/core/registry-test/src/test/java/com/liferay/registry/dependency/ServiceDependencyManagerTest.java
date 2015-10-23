@@ -91,7 +91,7 @@ public class ServiceDependencyManagerTest {
 	}
 
 	@Test
-	public void testRegisterClassDependencies() {
+	public void testRegisterClassDependencies() throws InterruptedException {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceDependencyManager serviceDependencyManager =
@@ -120,18 +120,15 @@ public class ServiceDependencyManagerTest {
 		registry.registerService(
 			TrackedTwo.class, new TrackedTwo(new TrackedOne()));
 
-		try {
-			Thread.sleep(100);
-		}
-		catch (InterruptedException ie) {
-			Assert.fail(ie.toString());
-		}
+		Thread.sleep(100);
 
 		Assert.assertTrue(dependenciesSatisfied.get());
 	}
 
 	@Test
-	public void testRegisterFilterAndClassDependencies() {
+	public void testRegisterFilterAndClassDependencies()
+		throws InterruptedException {
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceDependencyManager serviceDependencyManager =
@@ -163,18 +160,13 @@ public class ServiceDependencyManagerTest {
 		registry.registerService(
 			TrackedTwo.class, new TrackedTwo(new TrackedOne()));
 
-		try {
-			Thread.sleep(100);
-		}
-		catch (InterruptedException ie) {
-			Assert.fail(ie.toString());
-		}
+		Thread.sleep(100);
 
 		Assert.assertTrue(dependenciesSatisfied.get());
 	}
 
 	@Test
-	public void testRegisterFilterDependencies() {
+	public void testRegisterFilterDependencies() throws InterruptedException {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceDependencyManager serviceDependencyManager =
@@ -207,12 +199,7 @@ public class ServiceDependencyManagerTest {
 		registry.registerService(
 			TrackedTwo.class, new TrackedTwo(new TrackedOne()));
 
-		try {
-			Thread.sleep(100);
-		}
-		catch (InterruptedException ie) {
-			Assert.fail(ie.toString());
-		}
+		Thread.sleep(100);
 
 		Assert.assertTrue(dependenciesSatisfied.get());
 	}
@@ -284,13 +271,13 @@ public class ServiceDependencyManagerTest {
 
 			Thread.sleep(250);
 
-			if (dependencyWaiter1.isAlive()) {
-				Assert.fail("Dependencies 1 should have been fulfilled");
-			}
+			Assert.assertFalse(
+				"Dependencies 1 should have been fulfilled",
+				dependencyWaiter1.isAlive());
 
-			if (dependencyWaiter2.isAlive()) {
-				Assert.fail("Dependencies 2 should have been fulfilled");
-			}
+			Assert.assertFalse(
+				"Dependencies 2 should have been fulfilled",
+				dependencyWaiter2.isAlive());
 
 			Assert.assertTrue(dependenciesSatisfied.get());
 		}
@@ -347,11 +334,11 @@ public class ServiceDependencyManagerTest {
 		try {
 			Thread.sleep(250);
 
-			if (dependencyWaiter.isAlive()) {
-				Assert.fail("Dependencies should have timed out");
+			if (!dependencyWaiter.isAlive()) {
+				Assert.assertFalse(dependenciesSatisfied.get());
 			}
 
-			Assert.assertFalse(dependenciesSatisfied.get());
+			Assert.fail("Dependencies should have timed out");
 		}
 		catch (InterruptedException ie) {
 		}

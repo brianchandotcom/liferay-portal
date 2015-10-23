@@ -128,7 +128,8 @@ public class SAPPortlet extends MVCPortlet {
 	}
 
 	public Set<Map<String, String>> getRemoteServiceClassNames() {
-		Set<Map<String, String>> remoteServiceClassNames = new LinkedHashSet<>();
+		Set<Map<String, String>> remoteServiceClassNames =
+			new LinkedHashSet<>();
 
 		Set<String> contextNames =
 			_jsonWebServiceActionsManager.getContextNames();

@@ -7,7 +7,7 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources,\
+	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/cas-client-core.jar,\
 	@lib/opensaml.jar
 Web-ContextPath: /portal-security-sso-cas

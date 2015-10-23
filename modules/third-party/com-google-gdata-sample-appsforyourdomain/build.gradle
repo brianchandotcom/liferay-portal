@@ -1,17 +1,9 @@
 import com.liferay.gradle.util.FileUtil
 
-dependencies {
-	compile fileTree(dir: "lib", include: "*.jar")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
+task downloadSrc(type: Copy)
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
-
-task downloadSrc(type: Copy)
 
 clean {
 	delete "lib"
@@ -21,6 +13,10 @@ clean {
 
 compileJava {
 	dependsOn downloadSrc
+}
+
+dependencies {
+	compile fileTree(dir: "lib", include: "*.jar")
 }
 
 downloadSrc {
@@ -67,4 +63,8 @@ downloadSrc {
 	onlyIf {
 		!FileUtil.exists(project, "src/main/java")
 	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }

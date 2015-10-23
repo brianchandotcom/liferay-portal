@@ -1,28 +1,6 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-configurations {
-	jnaerator
-}
-
-dependencies {
-	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.0"
-
-	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.11"
-
-	provided group: "com.nativelibs4java", name: "jnaerator-runtime", transitive: false, version: "0.11"
-	provided group: "com.nativelibs4java", name: "ochafik-util", transitive: false, version: "0.11"
-	provided group: "net.java.dev.jna", name: "jna", transitive: false, version: "4.1.0"
-}
-
-ext {
-	libSassVersion = "3.2.5"
-	sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
-
-	libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
-	sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
-}
-
 task buildLibSass_Darwin(type: BuildLibSassTask)
 task buildLibSass_Linux_x86(type: BuildLibSassTask)
 task buildLibSass_Linux_x86_64(type: BuildLibSassTask)
@@ -30,6 +8,12 @@ task buildLibSass_Win32_x86(type: BuildLibSassTask)
 task buildLibSass_Win32_x86_64(type: BuildLibSassTask)
 task downloadSassSpec(type: Copy)
 task generateJNALibrary
+
+String libSassVersion = "3.2.5"
+String sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
+
+String libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
+String sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
 
 buildLibSass_Darwin {
 	doFirst {
@@ -83,6 +67,20 @@ buildLibSass_Win32_x86_64 {
 
 compileJava {
 	dependsOn generateJNALibrary
+}
+
+configurations {
+	jnaerator
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.0"
+
+	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.11"
+
+	provided group: "com.nativelibs4java", name: "jnaerator-runtime", transitive: false, version: "0.11"
+	provided group: "com.nativelibs4java", name: "ochafik-util", transitive: false, version: "0.11"
+	provided group: "net.java.dev.jna", name: "jna", transitive: false, version: "4.1.0"
 }
 
 downloadSassSpec {

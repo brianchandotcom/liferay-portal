@@ -1,24 +1,22 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.OSDetector
 
+task downloadGems
+
+String compassVersion = "1.0.1"
+
+String compassUrl = "http://rubygems.org/gems/compass-${compassVersion}.gem"
+
+classes {
+	dependsOn downloadGems
+}
+
 configurations {
 	jruby
 }
 
-ext {
-	compassVersion = "1.0.1"
-
-	compassUrl = "http://rubygems.org/gems/compass-${compassVersion}.gem"
-}
-
 dependencies {
 	jruby group: "org.jruby", name: "jruby-complete", version: "1.6.5"
-}
-
-task downloadGems
-
-classes {
-	dependsOn downloadGems
 }
 
 downloadGems {

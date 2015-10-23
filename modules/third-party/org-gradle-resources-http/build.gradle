@@ -1,8 +1,7 @@
 import com.liferay.gradle.util.FileUtil
 
-dependencies {
-	compile gradleApi()
-}
+task deploy(type: Zip, overwrite: true)
+task jar(type: Jar, overwrite: true)
 
 String gradleVersion = version.substring(0, version.lastIndexOf('.'))
 
@@ -10,8 +9,9 @@ if (gradleVersion != gradle.gradleVersion) {
 	throw new GradleException("Unable to use Gradle " + gradle.gradleVersion + ", " + gradleVersion + " is required")
 }
 
-task deploy(type: Zip, overwrite: true)
-task jar(type: Jar, overwrite: true)
+dependencies {
+	compile gradleApi()
+}
 
 deploy {
 	baseName = "gradle"

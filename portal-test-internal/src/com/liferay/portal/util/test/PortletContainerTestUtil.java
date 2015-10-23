@@ -85,6 +85,9 @@ public class PortletContainerTestUtil {
 
 		Map<String, FileItem[]> fileParameters = new HashMap<>();
 
+		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(
+			UploadServletRequestImpl.getTempDir());
+
 		for (int i = 0; i < size; i++) {
 			String fileParameter = "fileParameter" + i;
 
@@ -92,7 +95,22 @@ public class PortletContainerTestUtil {
 				fileParameter = namespace.concat(fileParameter);
 			}
 
-			fileParameters.put(fileParameter, _getFileItems(bytes));
+			LiferayFileItem[] liferayFileItems = new LiferayFileItem[2];
+
+			for (int j = 0; j < liferayFileItems.length; j++) {
+				liferayFileItems[j] = fileItemFactory.createItem(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), true,
+					RandomTestUtil.randomString());
+
+				try (OutputStream outputStream =
+					liferayFileItems[j].getOutputStream()) {
+
+					outputStream.write(bytes);
+				}
+			}
+
+			fileParameters.put(fileParameter, liferayFileItems);
 		}
 
 		return fileParameters;
@@ -309,27 +327,6 @@ public class PortletContainerTestUtil {
 		private final int _code;
 		private final List<String> _cookies;
 
-	}
-
-	private static FileItem[] _getFileItems(byte[] bytes) throws IOException {
-		LiferayFileItem[] liferayFileItems = new LiferayFileItem[2];
-
-		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(
-			UploadServletRequestImpl.getTempDir());
-
-		for (int i = 0; i < liferayFileItems.length; i++) {
-			liferayFileItems[i] = fileItemFactory.createItem(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				true, RandomTestUtil.randomString());
-
-			try (OutputStream outputStream =
-				liferayFileItems[i].getOutputStream()) {
-
-				outputStream.write(bytes);
-			}
-		}
-
-		return liferayFileItems;
 	}
 
 }

@@ -3,6 +3,12 @@ import com.liferay.gradle.util.FileUtil
 
 apply plugin: "com.liferay.patcher"
 
+task patch(type: PatchTask)
+task war(type: Zip, overwrite: true)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
 String jenkinsCoreName = "jenkins-core"
 String jenkinsCoreVersion = "1.565.1"
 
@@ -15,18 +21,6 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
-repositories {
-	maven {
-		url "http://repo.jenkins-ci.org/releases"
-	}
-}
-
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
-
-task patch(type: PatchTask)
-task war(type: Zip, overwrite: true)
-
 patch {
 	ext {
 		autoClean = false
@@ -35,6 +29,12 @@ patch {
 	fileNames "hudson/tasks/junit/JUnitResultArchiver.java"
 	originalLibModuleName = jenkinsCoreName
 	originalLibSrcBaseUrl = "http://repo.jenkins-ci.org/releases/org/jenkins-ci/main"
+}
+
+repositories {
+	maven {
+		url "http://repo.jenkins-ci.org/releases"
+	}
 }
 
 war {

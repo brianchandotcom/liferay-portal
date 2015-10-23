@@ -2,19 +2,15 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
 
-dependencies {
-	compile group: "woodstox", name: "wstx-asl", optional, version: "3.2.4"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
+task deployJar(type: Copy)
+task patch(type: PatchTask)
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
-task deployJar(type: Copy)
-task patch(type: PatchTask)
+dependencies {
+	compile group: "woodstox", name: "wstx-asl", optional, version: "3.2.4"
+}
 
 deploy {
 	finalizedBy deployJar
@@ -31,6 +27,10 @@ deployJar {
 	rename {
 		"wstx.jar"
 	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }
 
 patch {

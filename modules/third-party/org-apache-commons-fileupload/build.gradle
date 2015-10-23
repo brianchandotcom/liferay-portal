@@ -2,6 +2,11 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
 
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
 dependencies {
 	compile group: "commons-fileupload", name: "commons-fileupload", optional, version: "1.2.2"
 	compile group: "commons-io", name: "commons-io", version: "1.3.2"
@@ -13,11 +18,6 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
-
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
-
-task patch(type: PatchTask)
 
 patch {
 	ext {

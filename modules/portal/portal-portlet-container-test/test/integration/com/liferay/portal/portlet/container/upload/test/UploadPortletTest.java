@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -40,7 +40,6 @@ import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 
 import java.util.Dictionary;
@@ -118,13 +117,9 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 	public void testUploadFile() throws Exception {
 		registerMVCActionCommand(new TestUploadMVCActionCommand());
 
-		InputStream inputStream = getClass().getResourceAsStream(
-			"/com/liferay/portal/portlet/container/upload/test/dependencies/" +
-				"file_upload.txt");
+		String content = "Enterprise. Open Source. For Life.";
 
-		byte[] bytes = FileUtil.getBytes(inputStream);
-
-		Response response = testUpload(bytes);
+		Response response = testUpload(content.getBytes());
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -142,11 +137,8 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		TestFileEntry actualTestFileEntry = TestUploadPortlet.get(key);
 
 		Assert.assertNotNull(actualTestFileEntry);
-
-		byte[] actualBytes = FileUtil.getBytes(
-			actualTestFileEntry.getInputStream());
-
-		Assert.assertArrayEquals(bytes, actualBytes);
+		Assert.assertEquals(
+			content, StringUtil.read(actualTestFileEntry.getInputStream()));
 	}
 
 	@Test

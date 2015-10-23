@@ -232,8 +232,6 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 	}
 
 	protected Response testUpload(byte[] bytes) throws Exception {
-		registerMVCActionCommand(new TestUploadMVCActionCommand());
-
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				TestUploadPortlet.TEST_UPLOAD_FILE_NAME_PARAMETER, bytes);

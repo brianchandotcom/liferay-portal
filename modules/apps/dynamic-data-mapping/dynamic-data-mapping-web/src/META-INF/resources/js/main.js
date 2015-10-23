@@ -40,6 +40,9 @@ AUI.add(
 					localizationMap: {
 						validator: isObject,
 						value: {}
+					},
+					name: {
+						validator: A.Lang.isString
 					}
 				},
 

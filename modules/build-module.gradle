@@ -66,7 +66,7 @@ buildService {
 		if (project.name.endsWith("-service")) {
 			String requiredApiDirName = "../${project.name[0 .. -9]}-api/src"
 
-			if (apiDirName != requiredApiDirName) {
+			if (!apiDirName.startsWith(requiredApiDirName)) {
 				throw new GradleException("Please configure the 'buildService' task.")
 			}
 		}

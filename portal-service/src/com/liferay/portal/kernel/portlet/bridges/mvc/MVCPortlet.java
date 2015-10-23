@@ -350,19 +350,19 @@ public class MVCPortlet extends LiferayPortlet {
 					actionName);
 
 			if (!mvcActionCommands.isEmpty()) {
-				boolean validated = true;
+				boolean valid = true;
 
 				for (MVCActionCommand mvcActionCommand : mvcActionCommands) {
 					if (mvcActionCommand instanceof FormMVCActionCommand) {
 						FormMVCActionCommand formMVCActionCommand =
 							(FormMVCActionCommand)mvcActionCommand;
 
-						validated &= formMVCActionCommand.validateForm(
+						valid &= formMVCActionCommand.validateForm(
 							actionRequest, actionResponse);
 					}
 				}
 
-				if (!validated) {
+				if (!valid) {
 					return false;
 				}
 

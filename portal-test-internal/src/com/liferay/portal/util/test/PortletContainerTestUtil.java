@@ -262,27 +262,26 @@ public class PortletContainerTestUtil {
 			}
 		}
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = httpURLConnection.getInputStream();
-		}
-		catch (IOException ioe) {
-			inputStream = httpURLConnection.getErrorStream();
-		}
-
-		try {
+		try (InputStream inputStream = httpURLConnection.getInputStream()) {
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
 
 			return new Response(
-				httpURLConnection.getResponseCode(), read(inputStream),
-				headerFields.get("Set-Cookie"));
+				httpURLConnection.getResponseCode(),
+				StringUtil.read(inputStream), headerFields.get("Set-Cookie"));
+		}
+		catch (IOException ioe) {
+			try (InputStream inputStream = httpURLConnection.getErrorStream()) {
+				if (inputStream != null) {
+					while (inputStream.read() != -1);
+				}
+			}
+
+			return new Response(
+				httpURLConnection.getResponseCode(), null, null);
 		}
 		finally {
-			if (inputStream != null) {
-				inputStream.close();
-			}
+			httpURLConnection.disconnect();
 		}
 	}
 
@@ -310,14 +309,6 @@ public class PortletContainerTestUtil {
 		private final int _code;
 		private final List<String> _cookies;
 
-	}
-
-	protected static String read(InputStream inputStream) throws IOException {
-		if (inputStream == null) {
-			return "";
-		}
-
-		return StringUtil.read(inputStream);
 	}
 
 	private static FileItem[] _getFileItems(Class<?> clazz, String dependency)

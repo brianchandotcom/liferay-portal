@@ -184,6 +184,10 @@ if (layout != null) {
 					</c:when>
 
 					<c:otherwise>
+						<c:if test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
+							<liferay-staging:menu cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
+						</c:if>
+
 						<li class="staging-details">
 							<c:choose>
 								<c:when test="<%= liveLayout == null %>">
@@ -202,10 +206,6 @@ if (layout != null) {
 								</c:otherwise>
 							</c:choose>
 						</li>
-
-						<c:if test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
-							<liferay-staging:menu cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
-						</c:if>
 					</c:otherwise>
 				</c:choose>
 			</c:if>

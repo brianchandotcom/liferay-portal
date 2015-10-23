@@ -48,11 +48,10 @@ public class ExpandoConverterUtil {
 			return GetterUtil.getBooleanValues(StringUtil.split(attribute));
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
-			return GetterUtil.getDate(attribute, _getDateFormat());
+			return _getDateFromString(attribute);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			return GetterUtil.getDateValues(
-				StringUtil.split(attribute), _getDateFormat());
+			return _getDateArrayFromStringArray(StringUtil.split(attribute));
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return GetterUtil.getDouble(attribute);
@@ -106,10 +105,10 @@ public class ExpandoConverterUtil {
 			return GetterUtil.getBooleanValues(attribute);
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
-			return GetterUtil.getDate(attribute[0], _getDateFormat());
+			return _getDateFromString(attribute[0]);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			return GetterUtil.getDateValues(attribute, _getDateFormat());
+			return _getDateArrayFromStringArray(attribute);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return GetterUtil.getDouble(attribute[0]);
@@ -190,8 +189,42 @@ public class ExpandoConverterUtil {
 		}
 	}
 
+	private static Date[] _getDateArrayFromStringArray(
+		String[] dateStringArray) {
+
+		Date[] dateArray = new Date[dateStringArray.length];
+
+		for (int i = 0; i < dateStringArray.length; i++) {
+			dateArray[i] = _getDateFromString(dateStringArray[i]);
+		}
+
+		return dateArray;
+	}
+
 	private static DateFormat _getDateFormat() {
 		return DateUtil.getISO8601Format();
+	}
+
+	private static Date _getDateFromString(String dateString) {
+		if (_isDateStringInMillisecondsFormat(dateString)) {
+			return new Date(GetterUtil.getLong(dateString));
+		}
+		else {
+			return GetterUtil.getDate(dateString, _getDateFormat());
+		}
+	}
+
+	private static boolean _isDateStringInMillisecondsFormat(
+		String dateString) {
+
+		try {
+			Long.parseLong(dateString);
+
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 }

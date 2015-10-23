@@ -27,11 +27,10 @@ import java.nio.file.Paths;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
-
 import java.util.List;
 
 import org.apache.tools.ant.Project;
-
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -39,7 +38,6 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -220,31 +218,40 @@ public class FailureMessageUtilTest {
 
 			_write(jenkinsReportFile, document);
 
-			List<Node> caseList = _selectNodes(document);
+			List<Node> nodes = _selectNodes(document);
 
 			Project project = failureMessageUtilTest._project;
 
 			int i = 0;
 
-			for (Node node : caseList) {
+			for (Node node : nodes) {
 				DefaultElement defaultElement = (DefaultElement)node;
-				Element parent = defaultElement.getParent();
 
-				if (parent.getText().endsWith("FAILURE")) {
-					String url = defaultElement.attribute("href").getValue();
+				Element parentElement = defaultElement.getParent();
+				
+				String text = parentElement.getText();  
 
-					try {
-						String caseRootPath = _downloadTestCaseData(
-							testGroupName, url);
-						failureMessageUtilTest.createExpectedResultsFile(
-							project, new File(caseRootPath));
-						i++;
-					}
-					catch (FileNotFoundException e) {
-						System.err.println(
-							"Data was not found on server for " +
-								url + " skipped.");
-					}
+				if (!text.endsWith("FAILURE")) {
+					continue;
+				}
+
+				Attribute attribute = defaultElement.attribute("href");
+
+				String urlString = attribute.getValue();
+
+				try {
+					String caseRootPath = _downloadTestCaseData(
+						testGroupName, urlString);
+
+					failureMessageUtilTest.createExpectedResultsFile(
+						project, new File(caseRootPath));
+
+					i++;
+				}
+				catch (FileNotFoundException fnfe) {
+					System.err.println(
+						"Data was not found on server for " +
+							urlString + " skipped.");
 				}
 			}
 
@@ -253,10 +260,6 @@ public class FailureMessageUtilTest {
 				" test groups were created.");
 		}
 		catch (Exception e) {
-			System.err.println(
-				"Exception occurred while creating Jenkins Report test data. " +
-					"Aborting." + e.getMessage());
-
 			if ((groupReportRootDir != null) && groupReportRootDir.exists()) {
 				_deleteFile(groupReportRootDir);
 			}
@@ -322,10 +325,10 @@ public class FailureMessageUtilTest {
 		_write(file, new String(byteArrayOutputStream.toByteArray(), "UTF8"));
 	}
 
-	private void createExpectedResultsFile(Project project, File testRoot)
+	protected void createExpectedResultsFile(Project project, File testRoot)
 		throws Exception {
 
-		String result = FailureMessageUtil.getFailureMessage(
+		String failureMessage = FailureMessageUtil.getFailureMessage(
 			project, testRoot.toURI().toURL().toExternalForm());
 
 		new File(testRoot.getPath() + "/expected-results").mkdir();
@@ -333,10 +336,10 @@ public class FailureMessageUtilTest {
 		File file = new File(
 			testRoot.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
 
-		_write(file, result);
+		_write(file, failureMessage);
 	}
 
-	private boolean validateCase(
+	protected boolean validateCase(
 			Project project, String groupName, File testRoot)
 		throws Exception {
 
@@ -366,7 +369,7 @@ public class FailureMessageUtilTest {
 		return passed;
 	}
 
-	private boolean validateGroup(Project project, File dir)
+	protected boolean validateGroup(Project project, File dir)
 		throws Exception {
 
 		String name = dir.getName();

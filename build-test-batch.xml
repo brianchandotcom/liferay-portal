@@ -808,9 +808,9 @@
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
-		<attribute default="false" name="release.bundle" />
+		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.portal.bundle.zip.url" />
-		<attribute default="" name="test.build.license.xml.zip.url" />
+		<attribute default="false" name="test.release.bundle" />
 		<attribute default="false" name="tomcat.gc.log" />
 		<attribute default="false" name="tsant.gc.log" />
 
@@ -837,7 +837,7 @@
 					<antcall target="compile" />
 
 					<if>
-						<equals arg1="@{release.bundle}" arg2="true" />
+						<equals arg1="@{test.release.bundle}" arg2="true" />
 						<then>
 							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
 
@@ -847,7 +847,9 @@
 								<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
 							</antcall>
 
-							<antcall target="deploy-license-xml" />
+							<antcall target="deploy-license-xml">
+								<param name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
+							</antcall>
 						</then>
 						<else>
 							<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
@@ -1017,12 +1019,12 @@
 	<target name="functional-release-tomcat-mysql">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
-		<run-functional-test-release
+		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
-			release.bundle="true"
+			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.build.license.xml.zip.url="${test.build.license.xml.zip.url}"
+			test.release.bundle="true"
 		/>
 	</target>
 

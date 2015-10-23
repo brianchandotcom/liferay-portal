@@ -19,11 +19,11 @@
 <%
 Collection<DynamicInclude> dynamicIncludes = (Collection)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES);
 
-String tabNames = (String)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_TAB_NAMES);
+String tabsNames = (String)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_TABS_NAMES);
 
-tabNames = tabNames.length() > 0 ? StringPool.COMMA + tabNames: tabNames;
+tabsNames = (tabsNames.length() > 0) ? StringPool.COMMA + tabsNames : tabsNames;
 
-tabNames = StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) + tabNames;
+tabsNames = StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) + tabsNames;
 %>
 
 <liferay-ui:error-marker key="errorSection" value="authentication" />
@@ -31,7 +31,7 @@ tabNames = StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) + 
 <h3><liferay-ui:message key="authentication" /></h3>
 
 <liferay-ui:tabs
-	names="<%= tabNames %>"
+	names="<%= tabsNames %>"
 	refresh="<%= false %>"
 >
 

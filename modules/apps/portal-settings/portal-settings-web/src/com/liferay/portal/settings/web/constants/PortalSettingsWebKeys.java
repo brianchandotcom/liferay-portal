@@ -22,7 +22,7 @@ public interface PortalSettingsWebKeys {
 	public static final String AUTHENTICATION_DYNAMIC_INCLUDES =
 		"AUTHENTICATION_DYNAMIC_INCLUDES";
 
-	public static final String AUTHENTICATION_TAB_NAMES =
-		"AUTHENTICATION_TAB_NAMES";
+	public static final String AUTHENTICATION_TABS_NAMES =
+		"AUTHENTICATION_TABS_NAMES";
 
 }

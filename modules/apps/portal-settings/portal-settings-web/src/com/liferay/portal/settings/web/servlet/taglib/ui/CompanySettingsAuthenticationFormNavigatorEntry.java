@@ -67,15 +67,17 @@ public class CompanySettingsAuthenticationFormNavigatorEntry
 
 		request.setAttribute(
 			PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES,
-			_tabs.values());
+			_dynamicIncludes.values());
 
-		String[] tabNamesArray = _tabs.keySet().toArray(
-			new String[_tabs.size()]);
+		Set<String> tabsNamesSet = _dynamicIncludes.keySet();
 
-		String tabNames = StringUtil.merge(tabNamesArray);
+		String[] tabsNamesArray = tabsNamesSet.toArray(
+			new String[tabsNamesSet.size()]);
+
+		String tabsNames = StringUtil.merge(tabsNamesArray);
 
 		request.setAttribute(
-			PortalSettingsWebKeys.AUTHENTICATION_TAB_NAMES, tabNames);
+			PortalSettingsWebKeys.AUTHENTICATION_TABS_NAMES, tabsNames);
 
 		super.include(request, response);
 	}
@@ -91,7 +93,7 @@ public class CompanySettingsAuthenticationFormNavigatorEntry
 
 	@Deactivate
 	protected void deactivated() {
-		_tabs.clear();
+		_dynamicIncludes.clear();
 	}
 
 	@Override
@@ -103,26 +105,27 @@ public class CompanySettingsAuthenticationFormNavigatorEntry
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(portalSettingsAuthenticationTabName=*)"
+		target = "(portal.settings.authentication.tabs.name=*)"
 	)
 	protected void setDynamicInclude(
 		DynamicInclude dynamicInclude, Map<String, Object> properties) {
 
-		String tabName = MapUtil.getString(
-			properties, "portalSettingsAuthenticationTabName");
+		String tabsName = MapUtil.getString(
+			properties, "portal.settings.authentication.tabs.name");
 
-		_tabs.put(tabName, dynamicInclude);
+		_dynamicIncludes.put(tabsName, dynamicInclude);
 	}
 
 	protected void unsetDynamicInclude(
 		DynamicInclude dynamicInclude, Map<String, Object> properties) {
 
-		String tabName = MapUtil.getString(
-			properties, "portalSettingsAuthenticationTabName");
+		String tabsName = MapUtil.getString(
+			properties, "portal.settings.authentication.tabs.name");
 
-		_tabs.remove(tabName);
+		_dynamicIncludes.remove(tabsName);
 	}
 
-	private final Map<String, DynamicInclude> _tabs = new ConcurrentHashMap<>();
+	private final Map<String, DynamicInclude> _dynamicIncludes =
+		new ConcurrentHashMap<>();
 
 }

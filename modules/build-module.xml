@@ -137,7 +137,7 @@
 	</target>
 
 	<target name="run-pmd">
-		<print-gradle-alternative args="pmdMain" />
+		<print-gradle-alternative args="pmdMain pmdTest pmdTestIntegration" />
 	</target>
 
 	<target name="setup-eclipse">

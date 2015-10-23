@@ -81,14 +81,16 @@ public class MVCActionCommandTest {
 	}
 
 	@Test
-	public void testMultipleMVCActionCommands() throws Exception {
+	public void testMultipleMVCActionCommandsWithSingleParameter()
+		throws Exception {
+
 		MockActionRequest mockActionRequest = new MockLiferayPortletRequest();
 
 		mockActionRequest.addParameter(
 			ActionRequest.ACTION_NAME,
 			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME +
 				StringPool.COMMA +
-				TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
+					TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
 
 		_genericPortlet.processAction(
 			mockActionRequest, new MockActionResponse());
@@ -118,7 +120,6 @@ public class MVCActionCommandTest {
 		mockActionRequest.addParameter(
 			ActionRequest.ACTION_NAME,
 			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME);
-
 		mockActionRequest.addParameter(
 			ActionRequest.ACTION_NAME,
 			TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
@@ -171,7 +172,8 @@ public class MVCActionCommandTest {
 
 		@Override
 		public void addParameter(String name, String value) {
-			_httpServletRequest.addParameter(name, value);
+			_mockHttpServletRequest.addParameter(name, value);
+
 			super.addParameter(name, value);
 		}
 
@@ -182,7 +184,7 @@ public class MVCActionCommandTest {
 
 		@Override
 		public HttpServletRequest getHttpServletRequest() {
-			return _httpServletRequest;
+			return _mockHttpServletRequest;
 		}
 
 		@Override
@@ -200,7 +202,7 @@ public class MVCActionCommandTest {
 			return null;
 		}
 
-		private final MockHttpServletRequest _httpServletRequest =
+		private final MockHttpServletRequest _mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 	}

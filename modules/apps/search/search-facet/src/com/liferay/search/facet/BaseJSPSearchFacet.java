@@ -51,7 +51,7 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
-			_log.error("Unable to include JSP", se);
+			_log.error("Unable to include JSP " + getDisplayJspPath(), se);
 
 			throw new IOException(
 				"Unable to include " + getDisplayJspPath(), se);

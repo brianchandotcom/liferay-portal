@@ -58,9 +58,7 @@ public abstract class BaseJSPTrashRenderer extends BaseTrashRenderer {
 			return true;
 		}
 		catch (ServletException se) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to include JSP", se);
-			}
+			_log.error("Unable to include JSP " + jspPath, se);
 
 			throw new IOException("Unable to include " + jspPath, se);
 		}

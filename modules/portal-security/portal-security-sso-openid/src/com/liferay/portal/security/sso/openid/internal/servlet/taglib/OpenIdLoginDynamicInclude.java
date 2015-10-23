@@ -49,7 +49,7 @@ public class OpenIdLoginDynamicInclude extends BaseDynamicInclude {
 			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
-			_log.error("Unable to include JSP", se);
+			_log.error("Unable to include JSP " + _JSP_PATH, se);
 
 			throw new IOException("Unable to include " + _JSP_PATH, se);
 		}

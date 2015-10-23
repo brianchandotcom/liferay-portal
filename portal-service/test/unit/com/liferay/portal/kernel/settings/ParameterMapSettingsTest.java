@@ -59,7 +59,9 @@ public class ParameterMapSettingsTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetValuesWithCustomPrefixWhenFoundInParameterMap() {
+	public void
+		testGetValuesWhenFoundInParameterMapWithCustomParameterNamePrefix() {
+
 		String[] values = {"requestValue1", "requestValue2"};
 
 		_parameterMap.put("custom--key", values);
@@ -93,7 +95,9 @@ public class ParameterMapSettingsTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetValueWithCustomPrefixWhenFoundInParameterMap() {
+	public void
+		testGetValusWhenFoundInParameterMapWithCustomParameterNamePrefix() {
+
 		_parameterMap.put("custom--key", new String[] {"requestValue"});
 
 		_parameterMapSettings.setParameterNamePrefix("custom--");

@@ -36,6 +36,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -136,19 +137,19 @@ public class SAPPortlet extends MVCPortlet {
 
 		for (String contextName : contextNames) {
 			Map<String, Set<JSONWebServiceActionMapping>>
-				jsonWebServiceActionMappingsSet =
+				jsonWebServiceActionMappingsMap =
 					getServiceJSONWebServiceActionMappingsMap(contextName);
 
 			for (Map.Entry<String, Set<JSONWebServiceActionMapping>> entry :
-					jsonWebServiceActionMappingsSet.entrySet()) {
+					jsonWebServiceActionMappingsMap.entrySet()) {
 
 				Map<String, String> remoteServiceClassName = new HashMap<>();
 
 				remoteServiceClassName.put(
 					"serviceClassName", entry.getKey());
 
-				Set<JSONWebServiceActionMapping> jsonWebServiceActionMappingsSet =
-					entry.getValue();
+				Set<JSONWebServiceActionMapping>
+					jsonWebServiceActionMappingsSet = entry.getValue();
 
 				Iterator<JSONWebServiceActionMapping> iterator =
 					jsonWebServiceActionMappingsSet.iterator();

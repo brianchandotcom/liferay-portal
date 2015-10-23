@@ -52,7 +52,7 @@ tabsNames = StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) +
 		<liferay-ui:section>
 
 			<%
-				dynamicInclude.include(request, new JspWriterHttpServletResponse(pageContext), null);
+			dynamicInclude.include(request, new JspWriterHttpServletResponse(pageContext), null);
 			%>
 
 		</liferay-ui:section>

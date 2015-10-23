@@ -180,6 +180,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testPackagePath() throws Exception {
+		test("PackagePath.testjava", "Incorrect package path:");
+	}
+
+	@Test
 	public void testProxyUsage() throws Exception {
 		test("ProxyUsage.testjava", "Proxy:");
 	}

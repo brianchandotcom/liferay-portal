@@ -19,8 +19,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -48,12 +46,15 @@ public class FailureMessageUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_downloadPullRequestDependencies(
-			"generic-fail", "test-portal-acceptance-pullrequest(master)",
-			"test-1-1", "1532");
-		_downloadPullRequestDependencies(
-			"rebase-fail", "test-portal-acceptance-pullrequest(ee-6.2.x)",
-			"test-1-20", "40");
+		_downloadSlaveDependency(
+			"AXIS_VARIABLE=0,label_exp=!master", "129", "generic-fail",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-4-1");
+//		_downloadSlaveDependency(
+//			"AXIS_VARIABLE=2,label_exp=!master", "1904", "generic-fail",
+//			"test-portal-acceptance-pullrequest-batch(master)", "test-1-19");
+		_downloadSlaveDependency(
+			null, "59", "rebase-fail",
+			"test-portal-acceptance-pullrequest(ee-6.2.x)", "test-1-16");
 	}
 
 	public FailureMessageUtilTest() {
@@ -66,7 +67,7 @@ public class FailureMessageUtilTest {
 
 		for (File file : files) {
 			if (file.isDirectory()) {
-				assertTrue(validateGroup(_project, file));
+				assertTrue(validateCase(_project, file));
 			}
 		}
 	}
@@ -96,101 +97,104 @@ public class FailureMessageUtilTest {
 		}
 	}
 
-	private static String _downloadSlaveDependencies(
-			String jenkinsReportName, String caseURLString)
+	private static void _downloadSlaveDependency(
+			String slaveDependencyIdentifier, URL slaveDependencyURL)
 		throws Exception {
 
-		String decodedCaseURLString = URLDecoder.decode(caseURLString, "UTF8");
+		System.out.println(
+			"downloading slave results: " + slaveDependencyIdentifier);
 
-		int index = decodedCaseURLString.indexOf("/job/") + 5;
+		String slaveDependencyRootPath =
+			_testDependenciesDir.getPath() + "/" + slaveDependencyIdentifier;
 
-		String caseName = decodedCaseURLString.substring(index);
+		String slaveLogTextPath = slaveDependencyRootPath + "/logText";
+		String slaveApiPath = slaveDependencyRootPath + "/api";
 
-		System.out.println("downloading test case data: " + caseName);
-
-		caseName = caseName.replace("/", "-");
-
-		if (caseName.endsWith("-")) {
-			caseName = caseName.substring(0, caseName.length() - 1);
+		File slaveLogTextDir = new File(slaveLogTextPath);
+		File slaveApiDir = new File(slaveApiPath);
+		
+		if (slaveLogTextDir.exists()) {
+			return;
 		}
 
-		String caseRootPath =
-			_testDependenciesDir.getPath() + "/" + jenkinsReportName + "/" +
-				caseName;
-
-		String caseLogTextPath = caseRootPath + "/logText";
-		String caseApiPath = caseRootPath + "/api";
-
-		File caseLogTextDir = new File(caseLogTextPath);
-		File caseApiDir = new File(caseApiPath);
-
-		caseLogTextDir.mkdirs();
-		caseApiDir.mkdirs();
+		slaveLogTextDir.mkdirs();
+		slaveApiDir.mkdirs();
 
 		try {
-			String caseJsonURL = caseURLString + "/api/json";
+			String jsonURL = slaveDependencyURL.toString() + "/api/json";
 
-			System.out.println(" downloading json from:" + caseJsonURL);
+			System.out.println(" downloading json from:" + jsonURL);
 
-			String caseJson = JenkinsResultsParserUtil.toString(caseJsonURL);
+			String jsonString = JenkinsResultsParserUtil.toString(jsonURL);
 
-			File caseJsonFile = new File(caseApiDir.getPath() + "/json");
+			File jsonFile = new File(slaveApiDir.getPath() + "/json");
 
-			_write(caseJsonFile, caseJson);
+			_write(jsonFile, jsonString);
 
 			System.out.println(
-				" wrote file: " + caseJsonFile.getPath() + " size; " +
-					caseJsonFile.length());
+				" wrote file: " + jsonFile.getPath() + " size; " +
+					jsonFile.length());
 
-			String consoleURL = caseURLString + "/logText/progressiveText";
+			String consoleURL = slaveDependencyURL.toString() + "/logText/progressiveText";
 
 			System.out.println(" downloading console from:" + consoleURL);
 
 			String console = JenkinsResultsParserUtil.toString(consoleURL);
 
 			File consoleFile = new File(
-				caseLogTextDir.getPath() + "/progressiveText");
+				slaveLogTextDir.getPath() + "/progressiveText");
 
 			_write(consoleFile, console);
 
 			System.out.println(
 				" wrote file: " + consoleFile.getPath() + " size; " +
 					consoleFile.length());
+			
+			FailureMessageUtilTest failureMessageUtilTest =
+				new FailureMessageUtilTest();
+			
+			failureMessageUtilTest.createExpectedResultsFile(
+				failureMessageUtilTest._project, new File(slaveDependencyRootPath));
+			
 		}
 		catch (IOException ioe) {
-			File testGroupRootDir = new File(caseRootPath);
+			_deleteFile(slaveLogTextDir);
 
-			caseLogTextDir.delete();
-
-			caseApiDir.delete();
-
-			testGroupRootDir.delete();
+			_deleteFile(slaveApiDir);
 
 			throw ioe;
 		}
-
-		return caseRootPath;
 	}
 
-	private static void _downloadPullRequestDependencies(
-			String description, String jobName, String hostName,
-			String buildNumber)
+	private static void _downloadSlaveDependency(
+			String axis, String buildNumber, String description, String jobName,
+			String hostName)
 		throws Exception {
-
+		
 		String urlString =
 			"https://${hostName}.liferay.com/userContent/jobs/${jobName}/" +
-				"/builds/${buildNumber}/jenkins-report.html";
+				"/builds/${buildNumber}/";
+
+		String slaveDependencyIdentifier = 
+			description + "_" + jobName + "_" + hostName + "_" + buildNumber; 
+
+		if (axis != null) {
+			urlString = "https://${hostName}.liferay.com/job/${jobName}/" + 
+				"${axis}/${buildNumber}/";
+			slaveDependencyIdentifier += "_" + axis;
+			urlString = _replaceToken(urlString, "axis", axis);
+		}
 
 		urlString = _replaceToken(urlString, "buildNumber", buildNumber);
 		urlString = _replaceToken(urlString, "hostName", hostName);
 		urlString = _replaceToken(urlString, "jobName", jobName);
 
 		URL url = _createURL(urlString);
-		
-		_downloadPullRequestDependencies(
-			description + "_" + hostName + "_" + buildNumber, url);
+
+		_downloadSlaveDependency(slaveDependencyIdentifier, url);
 	}
 
+	/*
 	private static void _downloadPullRequestDependencies(
 			String pullRequestIdentifier, URL jenkinsReportURL)
 		throws Exception {
@@ -241,7 +245,7 @@ public class FailureMessageUtilTest {
 				String urlString = attribute.getValue();
 
 				try {
-					String caseRootPath = _downloadSlaveDependencies(
+					String caseRootPath = _downloadSlaveDependency(
 						pullRequestIdentifier, urlString);
 
 					failureMessageUtilTest.createExpectedResultsFile(
@@ -267,7 +271,7 @@ public class FailureMessageUtilTest {
 
 			throw e;
 		}
-	}
+	}*/
 
 	private static URL _encode(URL url) throws Exception {
 		URI uri = new URI(
@@ -281,9 +285,10 @@ public class FailureMessageUtilTest {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
 
+	/*
 	private static List<Node> _selectNodes(Document document) {
 		return document.selectNodes("//ul/li[not (ul)]//a[1]");
-	}
+	}*/
 
 	private static Project _initProject() {
 		Project project = new Project();
@@ -314,6 +319,7 @@ public class FailureMessageUtilTest {
 		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
 
+	/*
 	private static void _write(File file, Document document) throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -324,7 +330,7 @@ public class FailureMessageUtilTest {
 		xmlWriter.write(document);
 
 		_write(file, new String(byteArrayOutputStream.toByteArray(), "UTF8"));
-	}
+	}*/
 
 	protected void createExpectedResultsFile(Project project, File testRoot)
 		throws Exception {
@@ -341,7 +347,7 @@ public class FailureMessageUtilTest {
 	}
 
 	protected boolean validateCase(
-			Project project, String groupName, File testRoot)
+			Project project, File testRoot)
 		throws Exception {
 
 		String name = testRoot.getName();
@@ -359,7 +365,7 @@ public class FailureMessageUtilTest {
 		boolean passed = results.equals(expectedResults);
 
 		if (!passed) {
-			System.out.println(groupName + ":" + name + ": FAILED");
+			System.out.println("name: " + ":" + name + ": FAILED");
 			System.out.println("results: \n" + results);
 			System.out.println("expected results: \n" + expectedResults);
 		}
@@ -370,6 +376,7 @@ public class FailureMessageUtilTest {
 		return passed;
 	}
 
+	/*
 	protected boolean validateGroup(Project project, File dir)
 		throws Exception {
 
@@ -386,7 +393,7 @@ public class FailureMessageUtilTest {
 		}
 
 		return true;
-	}
+	}*/
 
 	private static final String _EXPECTED_RESULTS_FILE_PATH =
 		"expected-results/FailureMessageUtilTest.html";

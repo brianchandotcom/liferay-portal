@@ -1793,7 +1793,7 @@ ${tomcat-gc-log}
 								"**/*ServiceJsonTest.java",
 								"**/*ServiceSoapTest.java"
 							});
-						directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+						directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java", "**/src/test/**/*Test.java", "**/src/testIntegration/**/*Test.java"});
 
 						directoryScanner.scan();
 

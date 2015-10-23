@@ -186,13 +186,13 @@ public class FailureMessageUtilTest {
 		urlString = _replaceToken(urlString, "jobName", jobName);
 
 		URL url = _createURL(urlString);
-
+		
 		_downloadPullRequestDependencies(
 			description + "_" + hostName + "_" + buildNumber, url);
 	}
 
 	private static void _downloadPullRequestDependencies(
-			String testGroupName, URL jenkinsReportURL)
+			String pullRequestIdentifier, URL jenkinsReportURL)
 		throws Exception {
 
 		FailureMessageUtilTest failureMessageUtilTest =
@@ -206,7 +206,7 @@ public class FailureMessageUtilTest {
 			Document document = saxReader.read(jenkinsReportURL);
 
 			groupReportRootDir = new File(
-				_testDependenciesDir.getPath() + "/" + testGroupName);
+				_testDependenciesDir.getPath() + "/" + pullRequestIdentifier);
 
 			if (groupReportRootDir.exists()) {
 				return;
@@ -242,7 +242,7 @@ public class FailureMessageUtilTest {
 
 				try {
 					String caseRootPath = _downloadSlaveDependencies(
-						testGroupName, urlString);
+						pullRequestIdentifier, urlString);
 
 					failureMessageUtilTest.createExpectedResultsFile(
 						project, new File(caseRootPath));

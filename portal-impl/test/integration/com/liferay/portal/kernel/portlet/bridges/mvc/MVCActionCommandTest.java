@@ -81,16 +81,17 @@ public class MVCActionCommandTest {
 	}
 
 	@Test
-	public void testMultipleMVCActionCommandsWithSingleParameter()
+	public void testMultipleMVCActionCommandsWithMultipleParameters()
 		throws Exception {
 
 		MockActionRequest mockActionRequest = new MockLiferayPortletRequest();
 
 		mockActionRequest.addParameter(
 			ActionRequest.ACTION_NAME,
-			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME +
-				StringPool.COMMA +
-					TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
+			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME);
+		mockActionRequest.addParameter(
+			ActionRequest.ACTION_NAME,
+			TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
 
 		_genericPortlet.processAction(
 			mockActionRequest, new MockActionResponse());
@@ -112,17 +113,16 @@ public class MVCActionCommandTest {
 	}
 
 	@Test
-	public void testMultipleMVCActionCommandsWithMultipleParameters()
+	public void testMultipleMVCActionCommandsWithSingleParameter()
 		throws Exception {
 
 		MockActionRequest mockActionRequest = new MockLiferayPortletRequest();
 
 		mockActionRequest.addParameter(
 			ActionRequest.ACTION_NAME,
-			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME);
-		mockActionRequest.addParameter(
-			ActionRequest.ACTION_NAME,
-			TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
+			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME +
+				StringPool.COMMA +
+					TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
 
 		_genericPortlet.processAction(
 			mockActionRequest, new MockActionResponse());

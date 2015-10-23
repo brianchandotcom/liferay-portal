@@ -47,10 +47,12 @@ public class ParameterMapSettingsTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetValuesWhenFoundInSettings() {
-		String[] values = {"settingsValue1", "settingsValue2"};
+	public void testGetValuesWhenFoundInParameterMapWithParameterNamePrefix() {
+		String[] values = {"requestValue1", "requestValue2"};
 
-		_parentSettings.setValues("key", values);
+		_parameterMap.put("custom--key", values);
+
+		_parameterMapSettings.setParameterNamePrefix("custom--");
 
 		Assert.assertArrayEquals(
 			values,
@@ -59,14 +61,10 @@ public class ParameterMapSettingsTest extends PowerMockito {
 	}
 
 	@Test
-	public void
-		testGetValuesWhenFoundInParameterMapWithCustomParameterNamePrefix() {
+	public void testGetValuesWhenFoundInSettings() {
+		String[] values = {"settingsValue1", "settingsValue2"};
 
-		String[] values = {"requestValue1", "requestValue2"};
-
-		_parameterMap.put("custom--key", values);
-
-		_parameterMapSettings.setParameterNamePrefix("custom--");
+		_parentSettings.setValues("key", values);
 
 		Assert.assertArrayEquals(
 			values,
@@ -86,24 +84,22 @@ public class ParameterMapSettingsTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetValueWhenFoundInSettings() {
-		_parentSettings.setValue("key", "settingsValue");
-
-		Assert.assertEquals(
-			"settingsValue",
-			_parameterMapSettings.getValue("key", "defaultValue"));
-	}
-
-	@Test
-	public void
-		testGetValusWhenFoundInParameterMapWithCustomParameterNamePrefix() {
-
+	public void testGetValueWhenFoundInParameterMapWithParameterNamePrefix() {
 		_parameterMap.put("custom--key", new String[] {"requestValue"});
 
 		_parameterMapSettings.setParameterNamePrefix("custom--");
 
 		Assert.assertEquals(
 			"requestValue",
+			_parameterMapSettings.getValue("key", "defaultValue"));
+	}
+
+	@Test
+	public void testGetValueWhenFoundInSettings() {
+		_parentSettings.setValue("key", "settingsValue");
+
+		Assert.assertEquals(
+			"settingsValue",
 			_parameterMapSettings.getValue("key", "defaultValue"));
 	}
 

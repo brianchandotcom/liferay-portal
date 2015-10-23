@@ -74,6 +74,7 @@ public class FailureMessageUtilTest {
 
 	private static URL _createURL(String urlString) throws Exception {
 		URL url = new URL(urlString);
+
 		return _encode(url);
 	}
 
@@ -174,28 +175,23 @@ public class FailureMessageUtilTest {
 			String buildNumber)
 		throws Exception {
 
-		String jenkinsReportURLTemplate =
+		String urlString =
 			"https://${hostName}.liferay.com/userContent/jobs/${jobName}/" +
 				"/builds/${buildNumber}/jenkins-report.html";
 
-		String jenkinsReportURLString = _replaceToken(
-			jenkinsReportURLTemplate, "buildNumber", buildNumber);
-		jenkinsReportURLString = _replaceToken(
-			jenkinsReportURLString, "hostName", hostName);
-		jenkinsReportURLString = _replaceToken(
-			jenkinsReportURLString, "jobName", jobName);
+		urlString = _replaceToken(urlString, "buildNumber", buildNumber);
+		urlString = _replaceToken(urlString, "hostName", hostName);
+		urlString = _replaceToken(urlString, "jobName", jobName);
 
-		URL jenkinsReportURL = _createURL(jenkinsReportURLString);
+		URL url = _createURL(urlString);
 
-		String jenkinsReportName =
-			description + "_" + hostName + "_" + buildNumber;
-
-		_downloadTestGroupData(jenkinsReportName, jenkinsReportURL);
+		_downloadTestGroupData(
+			description + "_" + hostName + "_" + buildNumber, url);
 	}
 
 	private static void _downloadTestGroupData(
-		String testGroupName,
-		URL jenkinsReportURL) throws Exception {
+			String testGroupName, URL jenkinsReportURL)
+		throws Exception {
 
 		FailureMessageUtilTest failureMessageUtilTest =
 			new FailureMessageUtilTest();
@@ -269,6 +265,7 @@ public class FailureMessageUtilTest {
 		URI uri = new URI(
 			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
 			url.getPath(), url.getQuery(), url.getRef());
+
 		return new URL(uri.toASCIIString());
 	}
 
@@ -324,14 +321,13 @@ public class FailureMessageUtilTest {
 	}
 
 	private static String _replaceToken(
-		String source, String token, String value) {
+		String string, String token, String value) {
 
-		if (source != null) {
-			String realToken = "${" + token + "}";
-			return source.replace(realToken, value);
+		if (string == null) {
+			return string;
 		}
 
-		return null;
+		return string.replace("${" + token + "}", value);
 	}
 
 	private static void _writeFile(File file, String content)

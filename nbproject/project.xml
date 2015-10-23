@@ -400,7 +400,6 @@
 				<classpath mode="compile">lib/portal/httpcore.jar</classpath>
 				<classpath mode="compile">lib/portal/httpmime.jar</classpath>
 				<classpath mode="compile">lib/portal/ical4j.jar</classpath>
-				<classpath mode="compile">lib/portal/icq.jar</classpath>
 				<classpath mode="compile">lib/portal/im4java.jar</classpath>
 				<classpath mode="compile">lib/portal/isoparser.jar</classpath>
 				<classpath mode="compile">lib/portal/jabsorb.jar</classpath>

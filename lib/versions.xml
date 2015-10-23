@@ -1904,19 +1904,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/icq.jar</file-name>
-				<version></version>
-				<project-name>Instant Messenger Lib (ICQ/AIM)</project-name>
-				<project-url>http://sourceforge.net/projects/ooimlib</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-						<copyright-notice>Copyright (c) Fabrice Michellonet 2002</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/im4java.jar</file-name>
 				<version>1.2.0</version>
 				<project-name>im4java</project-name>

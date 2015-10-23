@@ -147,14 +147,18 @@ public class SAPPortlet extends MVCPortlet {
 				remoteServiceClassName.put(
 					"serviceClassName", entry.getKey());
 
-				Set<JSONWebServiceActionMapping> actionMappings =
+				Set<JSONWebServiceActionMapping> jsonWebServiceActionMappingsSet =
 					entry.getValue();
 
-				JSONWebServiceActionMapping firstActionMapping =
-					actionMappings.iterator().next();
+				Iterator<JSONWebServiceActionMapping> iterator =
+					jsonWebServiceActionMappingsSet.iterator();
+
+				JSONWebServiceActionMapping firstJSONWebServiceActionMapping =
+					iterator.next();
 
 				remoteServiceClassName.put(
-					"contextName", firstActionMapping.getContextName());
+					"contextName",
+					firstJSONWebServiceActionMapping.getContextName());
 
 				remoteServiceClassNames.add(remoteServiceClassName);
 			}

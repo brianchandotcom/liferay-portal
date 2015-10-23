@@ -300,6 +300,10 @@ tasks.withType(JavaCompile) {
 	options.warnings = false
 }
 
+tasks.withType(Pmd) {
+	classpath = null
+}
+
 if (gradle.hasProperty("testClassGroupIndex")) {
 	configure([test, testIntegration]) {
 		include gradle.testClasses

@@ -82,7 +82,7 @@ public class DDMFormFieldEvaluationResult {
 	private final String _name;
 	private List<DDMFormFieldEvaluationResult>
 		_nestedDDMFormFieldEvaluationResults = new ArrayList<>();
-	private boolean _valid;
-	private boolean _visible;
+	private boolean _valid = true;
+	private boolean _visible = true;
 
 }

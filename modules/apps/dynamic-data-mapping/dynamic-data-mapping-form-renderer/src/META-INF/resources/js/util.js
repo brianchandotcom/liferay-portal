@@ -3,6 +3,11 @@ AUI.add(
 	function(A) {
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
+		var MAP_DATA_TYPES = {
+			number: 'integer',
+			text: 'string'
+		};
+
 		var VALIDATIONS = {
 			number: [
 				{
@@ -109,12 +114,7 @@ AUI.add(
 					}
 				}
 
-				if (dataType === 'number') {
-					dataType = 'integer';
-				}
-				else if (dataType === 'text') {
-					dataType = 'string';
-				}
+				dataType = MAP_DATA_TYPES[dataType] || dataType;
 
 				return dataType;
 			},

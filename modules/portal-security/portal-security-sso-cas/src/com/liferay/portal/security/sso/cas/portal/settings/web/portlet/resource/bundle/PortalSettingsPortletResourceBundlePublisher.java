@@ -47,12 +47,11 @@ public class PortalSettingsPortletResourceBundlePublisher {
 	protected void activated(BundleContext bundleContext) throws IOException {
 		Bundle bundle = bundleContext.getBundle();
 
-		Enumeration<URL> propertiesFiles = bundle.findEntries(
+		Enumeration<URL> enumeration = bundle.findEntries(
 			"/content", "Language*.properties", false);
 
-		while (propertiesFiles.hasMoreElements()) {
-			registerResourceBundle(
-				bundleContext, propertiesFiles.nextElement());
+		while (enumeration.hasMoreElements()) {
+			registerResourceBundle(bundleContext, enumeration.nextElement());
 		}
 	}
 
@@ -74,36 +73,33 @@ public class PortalSettingsPortletResourceBundlePublisher {
 		activated(bundleContext);
 	}
 
-	protected void registerResourceBundle(
-			BundleContext bundleContext, URL propertiesFile)
+	protected void registerResourceBundle(BundleContext bundleContext, URL url)
 		throws IOException {
 
 		PropertyResourceBundle propertyResourceBundle =
-			new PropertyResourceBundle(propertiesFile.openStream());
+			new PropertyResourceBundle(url.openStream());
 
-		Dictionary<String, Object> serviceProperties = new Hashtable<>();
+		Dictionary<String, Object> properties = new Hashtable<>();
 
 		String languageId = StringPool.BLANK;
 
-		String name = propertiesFile.getFile();
+		String name = url.getFile();
 
 		if (name.contains(StringPool.UNDERLINE)) {
-			int start = name.indexOf(StringPool.UNDERLINE) + 1;
+			int x = name.indexOf(StringPool.UNDERLINE) + 1;
+			int y = name.indexOf(".properties");
 
-			int end = name.indexOf(".properties");
-
-			languageId = name.substring(start, end);
+			languageId = name.substring(x, y);
 		}
 
-		serviceProperties.put(
+		properties.put(
 			"javax.portlet.name", PortalSettingsPortletKeys.PORTAL_SETTINGS);
 
-		serviceProperties.put("language.id", languageId);
+		properties.put("language.id", languageId);
 
 		ServiceRegistration<ResourceBundle> serviceRegistration =
 			bundleContext.registerService(
-				ResourceBundle.class, propertyResourceBundle,
-				serviceProperties);
+				ResourceBundle.class, propertyResourceBundle, properties);
 
 		_serviceRegistrations.add(serviceRegistration);
 	}

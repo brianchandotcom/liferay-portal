@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Map;
 
 /**
@@ -24,7 +26,15 @@ public class ParameterMapSettingsLocator implements SettingsLocator {
 	public ParameterMapSettingsLocator(
 		Map<String, String[]> parameterMap, SettingsLocator settingsLocator) {
 
+		this(parameterMap, null, settingsLocator);
+	}
+
+	public ParameterMapSettingsLocator(
+		Map<String, String[]> parameterMap, String parameterNamePrefix,
+		SettingsLocator settingsLocator) {
+
 		_parameterMap = parameterMap;
+		_parameterNamePrefix = parameterNamePrefix;
 		_settingsLocator = settingsLocator;
 	}
 
@@ -32,7 +42,14 @@ public class ParameterMapSettingsLocator implements SettingsLocator {
 	public Settings getSettings() throws SettingsException {
 		Settings settings = _settingsLocator.getSettings();
 
-		return new ParameterMapSettings(_parameterMap, settings);
+		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+			_parameterMap, settings);
+
+		if (Validator.isNotNull(_parameterNamePrefix)) {
+			parameterMapSettings.setParameterNamePrefix(_parameterNamePrefix);
+		}
+
+		return parameterMapSettings;
 	}
 
 	@Override
@@ -41,6 +58,7 @@ public class ParameterMapSettingsLocator implements SettingsLocator {
 	}
 
 	private final Map<String, String[]> _parameterMap;
+	private final String _parameterNamePrefix;
 	private final SettingsLocator _settingsLocator;
 
 }

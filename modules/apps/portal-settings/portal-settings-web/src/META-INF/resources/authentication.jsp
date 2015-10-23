@@ -16,12 +16,22 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+Collection<DynamicInclude> dynamicIncludes = (Collection)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES);
+
+String tabsNames = (String)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_TABS_NAMES);
+
+tabsNames = (tabsNames.length() > 0) ? StringPool.COMMA + tabsNames : tabsNames;
+
+tabsNames = StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) + tabsNames;
+%>
+
 <liferay-ui:error-marker key="errorSection" value="authentication" />
 
 <h3><liferay-ui:message key="authentication" /></h3>
 
 <liferay-ui:tabs
-	names="<%= StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) %>"
+	names="<%= tabsNames %>"
 	refresh="<%= false %>"
 >
 
@@ -31,6 +41,20 @@
 
 		<liferay-ui:section>
 			<liferay-util:include page='<%= "/authentication/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" />
+		</liferay-ui:section>
+
+	<%
+	}
+
+	for (DynamicInclude dynamicInclude : dynamicIncludes) {
+	%>
+
+		<liferay-ui:section>
+
+			<%
+			dynamicInclude.include(request, new JspWriterHttpServletResponse(pageContext), null);
+			%>
+
 		</liferay-ui:section>
 
 	<%

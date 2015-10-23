@@ -52,9 +52,7 @@ public abstract class BaseJSPPortletConfigurationIconFactory
 			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to include JSP " + getJspPath(), se);
-			}
+			_log.error("Unable to include JSP " + getJspPath(), se);
 
 			return false;
 		}

@@ -35,4 +35,6 @@ public class DDLConstants {
 	public static final String RESERVED_RECORD_SET_NAME =
 		"reserved_record_set_name";
 
+	public static final String SERVICE_NAME = "com.liferay.dynamic.data.lists";
+
 }

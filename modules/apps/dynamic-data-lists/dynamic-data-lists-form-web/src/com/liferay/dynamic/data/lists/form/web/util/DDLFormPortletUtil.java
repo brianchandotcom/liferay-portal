@@ -14,8 +14,9 @@
 
 package com.liferay.dynamic.data.lists.form.web.util;
 
-import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationValues;
+import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormWebRequestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
@@ -71,10 +73,16 @@ public class DDLFormPortletUtil {
 			portletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
+			DDLFormWebRequestHelper ddlFormWebRequestHelper =
+				new DDLFormWebRequestHelper(
+					PortalUtil.getHttpServletRequest(portletRequest));
+
+			DDLFormWebConfiguration ddlFormWebConfiguration =
+				ddlFormWebRequestHelper.getDDLFormWebConfiguration();
+
 			displayStyle = portalPreferences.getValue(
 				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-				"display-style",
-				DDLFormWebConfigurationValues.DEFAULT_DISPLAY_VIEW);
+				"display-style", ddlFormWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(

@@ -142,9 +142,9 @@ public class SAPPortlet extends MVCPortlet {
 			for (Map.Entry<String, Set<JSONWebServiceActionMapping>> entry :
 					jsonWebServiceActionMappingsSet.entrySet()) {
 
-				Map<String, String> serviceDescription = new HashMap<>();
+				Map<String, String> remoteServiceClassName = new HashMap<>();
 
-				serviceDescription.put(
+				remoteServiceClassName.put(
 					"serviceClassName", entry.getKey());
 
 				Set<JSONWebServiceActionMapping> actionMappings =
@@ -153,10 +153,10 @@ public class SAPPortlet extends MVCPortlet {
 				JSONWebServiceActionMapping firstActionMapping =
 					actionMappings.iterator().next();
 
-				serviceDescription.put(
+				remoteServiceClassName.put(
 					"contextName", firstActionMapping.getContextName());
 
-				remoteServiceClassNames.add(serviceDescription);
+				remoteServiceClassNames.add(remoteServiceClassName);
 			}
 		}
 

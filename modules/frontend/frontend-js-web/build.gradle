@@ -103,7 +103,7 @@ buildLfrAMDLoader {
 }
 
 buildSvg4everybody {
-	File svg4everybodyJsFile = file("src/META-INF/resources/misc/svg4everybody.js")
+	File svg4everybodyJsFile = file("src/main/resources/META-INF/resources/misc/svg4everybody.js")
 
 	doLast {
 		FileUtil.get(project, "https://raw.githubusercontent.com/jonathantneal/svg4everybody/v${svg4everybodyVersion}/dist/svg4everybody.js", svg4everybodyJsFile)
@@ -111,8 +111,6 @@ buildSvg4everybody {
 		String text = svg4everybodyJsFile.text
 
 		text = text.replace('"function" == typeof define', 'false && "function" == typeof define')
-
-		text = ";(function(jQuery){" + System.getProperty("line.separator") + text + '})(AUI.$);'
 
 		svg4everybodyJsFile.text = text
 	}

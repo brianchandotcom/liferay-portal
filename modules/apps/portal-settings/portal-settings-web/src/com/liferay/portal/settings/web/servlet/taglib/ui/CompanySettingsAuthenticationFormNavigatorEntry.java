@@ -69,12 +69,7 @@ public class CompanySettingsAuthenticationFormNavigatorEntry
 			PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES,
 			_dynamicIncludes.values());
 
-		Set<String> tabsNamesSet = _dynamicIncludes.keySet();
-
-		String[] tabsNamesArray = tabsNamesSet.toArray(
-			new String[tabsNamesSet.size()]);
-
-		String tabsNames = StringUtil.merge(tabsNamesArray);
+		String tabsNames = StringUtil.merge(_dynamicIncludes.keySet());
 
 		request.setAttribute(
 			PortalSettingsWebKeys.AUTHENTICATION_TABS_NAMES, tabsNames);

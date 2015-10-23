@@ -58,16 +58,19 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		Set<Long> activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
-			syncAccount.getSyncAccountId());
+		try {
+			Set<Long> activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
+				syncAccount.getSyncAccountId());
 
-		activeSyncSiteIds.remove(_syncSite1.getSyncSiteId());
-		activeSyncSiteIds.remove(_syncSite2.getSyncSiteId());
+			activeSyncSiteIds.remove(_syncSite1.getSyncSiteId());
+			activeSyncSiteIds.remove(_syncSite2.getSyncSiteId());
 
-		SyncSiteService.deleteSyncSite(_syncSite1.getSyncSiteId());
-		SyncSiteService.deleteSyncSite(_syncSite2.getSyncSiteId());
-
-		super.tearDown();
+			SyncSiteService.deleteSyncSite(_syncSite1.getSyncSiteId());
+			SyncSiteService.deleteSyncSite(_syncSite2.getSyncSiteId());
+		}
+		finally {
+			super.tearDown();
+		}
 	}
 
 	@Test

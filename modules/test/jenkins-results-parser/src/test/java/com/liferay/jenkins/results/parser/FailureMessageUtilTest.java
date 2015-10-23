@@ -22,12 +22,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
+
 import java.util.List;
 
 import org.apache.tools.ant.Project;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -35,6 +38,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -55,7 +59,7 @@ public class FailureMessageUtilTest {
 			"rebase-fail", "test-portal-acceptance-pullrequest(ee-6.2.x)",
 			"test-1-20", "40");
 	}
-	
+
 	public FailureMessageUtilTest() {
 		_project = _initProject();
 	}
@@ -77,7 +81,6 @@ public class FailureMessageUtilTest {
 	}
 
 	private static void _deleteFile(File file) {
-
 		if (file.exists()) {
 			if (file.isFile()) {
 				file.delete();
@@ -95,7 +98,8 @@ public class FailureMessageUtilTest {
 	}
 
 	private static String _downloadTestCaseData(
-		String jenkinsReportName, String caseURL) throws Exception {
+			String jenkinsReportName, String caseURL)
+		throws Exception {
 
 		String decodedCaseURLString = URLDecoder.decode(caseURL, "UTF8");
 
@@ -107,12 +111,12 @@ public class FailureMessageUtilTest {
 		caseName = caseName.replace("/", "-");
 
 		if (caseName.endsWith("-")) {
-			caseName = caseName.substring(0,
-				caseName.length() - 1);
+			caseName = caseName.substring(0, caseName.length() - 1);
 		}
 
 		String caseRootPath =
-			_TEST_DATA_ROOT.getPath() + "/" + jenkinsReportName + "/" + caseName;
+			_TEST_DATA_ROOT.getPath() + "/" + jenkinsReportName + "/" +
+				caseName;
 
 		String caseLogTextPath = caseRootPath + "/logText";
 		String caseApiPath = caseRootPath + "/api";
@@ -126,7 +130,7 @@ public class FailureMessageUtilTest {
 		try {
 			String caseJsonURL = caseURL + "/api/json";
 
-			System.out.println("	downloading json from:" + caseJsonURL);
+			System.out.println(" downloading json from:" + caseJsonURL);
 
 			String caseJson = JenkinsResultsParserUtil.toString(caseJsonURL);
 
@@ -135,7 +139,7 @@ public class FailureMessageUtilTest {
 			_writeFile(caseJsonFile, caseJson);
 
 			System.out.println(
-				"	wrote file: " + caseJsonFile.getPath() + " size; " +
+				" wrote file: " + caseJsonFile.getPath() + " size; " +
 					caseJsonFile.length());
 
 			String consoleURL = caseURL + "/logText/progressiveText";
@@ -144,13 +148,14 @@ public class FailureMessageUtilTest {
 
 			String console = JenkinsResultsParserUtil.toString(consoleURL);
 
-			File consoleFile = new File(caseLogTextDir.getPath()
-				+ "/progressiveText");
+			File consoleFile = new File(
+				caseLogTextDir.getPath() + "/progressiveText");
 
 			_writeFile(consoleFile, console);
 
-			System.out.println("	wrote file: " + consoleFile.getPath() +
-				" size; " + consoleFile.length());
+			System.out.println(
+				" wrote file: " + consoleFile.getPath() + " size; " +
+					consoleFile.length());
 		}
 		catch (IOException ioe) {
 			File testGroupRootDir = new File(caseRootPath);
@@ -168,32 +173,32 @@ public class FailureMessageUtilTest {
 	}
 
 	private static void _downloadTestDependencies(
-		String description, String jobName, String hostName,
-		String buildNumber)
-			throws Exception {
+			String description, String jobName, String hostName,
+			String buildNumber)
+		throws Exception {
+
 		String jenkinsReportURLTemplate =
 			"https://${hostName}.liferay.com/userContent/jobs/${jobName}/" +
 				"/builds/${buildNumber}/jenkins-report.html";
 
-		String jenkinsReportURLString = _replaceToken(jenkinsReportURLTemplate,
-			"buildNumber", buildNumber);
-		jenkinsReportURLString =
-			_replaceToken(jenkinsReportURLString, "hostName", hostName);
-		jenkinsReportURLString =
-			_replaceToken(jenkinsReportURLString, "jobName", jobName);
+		String jenkinsReportURLString = _replaceToken(
+			jenkinsReportURLTemplate, "buildNumber", buildNumber);
+		jenkinsReportURLString = _replaceToken(
+			jenkinsReportURLString, "hostName", hostName);
+		jenkinsReportURLString = _replaceToken(
+			jenkinsReportURLString, "jobName", jobName);
 
 		URL jenkinsReportURL = _createURL(jenkinsReportURLString);
 
 		String jenkinsReportName =
 			description + "_" + hostName + "_" + buildNumber;
 
-		_downloadTestGroupData(
-			jenkinsReportName, jenkinsReportURL);
-
+		_downloadTestGroupData(jenkinsReportName, jenkinsReportURL);
 	}
 
 	private static void _downloadTestGroupData(
-		String testGroupName, URL jenkinsReportURL) throws Exception {
+		String testGroupName,
+		URL jenkinsReportURL) throws Exception {
 
 		FailureMessageUtilTest failureMessageUtilTest =
 			new FailureMessageUtilTest();
@@ -204,8 +209,8 @@ public class FailureMessageUtilTest {
 		try {
 			Document document = saxReader.read(jenkinsReportURL);
 
-			groupReportRootFile =
-				new File(_TEST_DATA_ROOT.getPath() + "/" + testGroupName);
+			groupReportRootFile = new File(
+				_TEST_DATA_ROOT.getPath() + "/" + testGroupName);
 
 			if (groupReportRootFile.exists()) {
 				return;
@@ -213,9 +218,8 @@ public class FailureMessageUtilTest {
 
 			groupReportRootFile.mkdir();
 
-			File jenkinsReportFile =
-				new File(
-					groupReportRootFile.getPath() + "/jenkins-report.html");
+			File jenkinsReportFile = new File(
+				groupReportRootFile.getPath() + "/jenkins-report.html");
 
 			_writeXMLDocumentFile(jenkinsReportFile, document);
 
@@ -226,7 +230,7 @@ public class FailureMessageUtilTest {
 			int i = 0;
 
 			for (Node node : caseList) {
-				DefaultElement defaultElement = (DefaultElement) node;
+				DefaultElement defaultElement = (DefaultElement)node;
 				Element parent = defaultElement.getParent();
 
 				if (parent.getText().endsWith("FAILURE")) {
@@ -241,33 +245,33 @@ public class FailureMessageUtilTest {
 					}
 					catch (FileNotFoundException e) {
 						System.err.println(
-							"Data was not found on server for "
-								+ url + " skipped.");
+							"Data was not found on server for " +
+								url + " skipped.");
 					}
 				}
 			}
 
-			System.out.println("Test data creation is complete. " + i
-				+ " test groups were created.");
+			System.out.println(
+				"Test data creation is complete. " + i +
+				" test groups were created.");
 		}
 		catch (Exception e) {
 			System.err.println(
 				"Exception occurred while creating Jenkins Report test data. " +
 					"Aborting." + e.getMessage());
-			if (groupReportRootFile != null &&
-				groupReportRootFile.exists()) {
 
+			if ((groupReportRootFile != null) && groupReportRootFile.exists()) {
 				_deleteFile(groupReportRootFile);
 			}
+
 			throw e;
 		}
 	}
 
 	private static URL _encode(URL url) throws Exception {
-		URI uri =
-			new URI(
-				url.getProtocol(), url.getUserInfo(), url.getHost(),
-				url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+		URI uri = new URI(
+			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
+			url.getPath(), url.getQuery(), url.getRef());
 		return new URL(uri.toASCIIString());
 	}
 
@@ -298,6 +302,7 @@ public class FailureMessageUtilTest {
 				fileReader.close();
 			}
 		}
+
 		return sb.toString();
 	}
 
@@ -328,11 +333,13 @@ public class FailureMessageUtilTest {
 			String realToken = "${" + token + "}";
 			return source.replace(realToken, value);
 		}
+
 		return null;
 	}
 
 	private static void _writeFile(File file, String content)
 		throws IOException {
+
 		if (file.exists()) {
 			file.delete();
 		}
@@ -352,20 +359,21 @@ public class FailureMessageUtilTest {
 	}
 
 	private static void _writeXMLDocumentFile(
-		File file, Document document) throws Exception {
+		File file,
+		Document document) throws Exception {
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
 		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
 
-		XMLWriter xmlWriter =
-			new XMLWriter(byteArrayOutputStream, outputFormat);
+		XMLWriter xmlWriter = new XMLWriter(
+			byteArrayOutputStream, outputFormat);
 
 		xmlWriter.write(document);
 
-		String documentString =
-			new String(byteArrayOutputStream.toByteArray(), "UTF8");
+		String documentString = new String(
+			byteArrayOutputStream.toByteArray(), "UTF8");
 
 		_writeFile(file, documentString);
 	}
@@ -373,14 +381,13 @@ public class FailureMessageUtilTest {
 	private void createExpectedResultsFile(Project project, File testRoot)
 		throws Exception {
 
-		String result =
-			FailureMessageUtil.getFailureMessage(
-				project, testRoot.toURI().toURL().toExternalForm());
+		String result = FailureMessageUtil.getFailureMessage(
+			project, testRoot.toURI().toURL().toExternalForm());
 
 		new File(testRoot.getPath() + "/expected-results").mkdir();
 
-		File file =
-			new File(testRoot.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
+		File file = new File(
+			testRoot.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
 
 		_writeFile(file, result);
 	}
@@ -390,14 +397,15 @@ public class FailureMessageUtilTest {
 	}
 
 	private boolean validateCase(
-		Project project, String groupName, File testRoot) throws Exception {
+		Project project, String groupName,
+		File testRoot) throws Exception {
 
 		String name = testRoot.getName();
 
 		System.out.print("Testing case: " + name);
 
-		File expectedResultsFile = new File(testRoot.getPath() + "/"
-			+ _EXPECTED_RESULTS_FILE_PATH);
+		File expectedResultsFile = new File(
+			testRoot.getPath() + "/" + _EXPECTED_RESULTS_FILE_PATH);
 
 		String expectedResults = _fileToString(expectedResultsFile);
 
@@ -438,8 +446,10 @@ public class FailureMessageUtilTest {
 
 	private static final String _EXPECTED_RESULTS_FILE_PATH =
 		"expected-results/FailureMessageUtilTest.html";
-	private static final File _TEST_DATA_ROOT = 
-		new File("src/test/resources/com/liferay/results/parser/dependencies/");
 
-	private Project _project;
+	private static final File _TEST_DATA_ROOT = new File(
+		"src/test/resources/com/liferay/results/parser/dependencies/");
+
+	private final Project _project;
+
 }

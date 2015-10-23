@@ -236,23 +236,24 @@ public class SAPPortlet extends MVCPortlet {
 					serviceInterface.getDeclaredAnnotations();
 
 				for (Annotation declaredAnnotation : declaredAnnotations) {
-					if (declaredAnnotation instanceof AccessControlled) {
-						String serviceClassName = serviceInterface.getName();
-
-						Set<JSONWebServiceActionMapping>
-							jsonWebServiceMappings =
-								jsonWebServiceActionMappingsMap.get(
-									serviceClassName);
-
-						if (jsonWebServiceMappings == null) {
-							jsonWebServiceMappings = new LinkedHashSet<>();
-
-							jsonWebServiceActionMappingsMap.put(
-								serviceClassName, jsonWebServiceMappings);
-						}
-
-						jsonWebServiceMappings.add(jsonWebServiceActionMapping);
+					if (!(declaredAnnotation instanceof AccessControlled)) {
+						continue;
 					}
+
+					String serviceClassName = serviceInterface.getName();
+
+					Set<JSONWebServiceActionMapping> jsonWebServiceMappings =
+						jsonWebServiceActionMappingsMap.get(
+							serviceClassName);
+
+					if (jsonWebServiceMappings == null) {
+						jsonWebServiceMappings = new LinkedHashSet<>();
+
+						jsonWebServiceActionMappingsMap.put(
+							serviceClassName, jsonWebServiceMappings);
+					}
+
+					jsonWebServiceMappings.add(jsonWebServiceActionMapping);
 				}
 			}
 		}

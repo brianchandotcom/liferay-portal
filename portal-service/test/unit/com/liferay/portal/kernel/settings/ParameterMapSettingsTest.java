@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -27,7 +28,8 @@ import org.powermock.api.mockito.PowerMockito;
  */
 public class ParameterMapSettingsTest extends PowerMockito {
 
-	public ParameterMapSettingsTest() {
+	@Before
+	public void setUp() {
 		_parameterMapSettings = new ParameterMapSettings(
 			_parameterMap, _parentSettings);
 	}
@@ -57,6 +59,20 @@ public class ParameterMapSettingsTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetValuesWithCustomPrefixWhenFoundInParameterMap() {
+		String[] values = {"requestValue1", "requestValue2"};
+
+		_parameterMap.put("custom--key", values);
+
+		_parameterMapSettings.setParameterNamePrefix("custom--");
+
+		Assert.assertArrayEquals(
+			values,
+			_parameterMapSettings.getValues(
+				"key", new String[] {"defaultValue"}));
+	}
+
+	@Test
 	public void testGetValueWhenFoundInParameterMap() {
 		_parameterMap.put("preferences--key--", new String[] {"requestValue"});
 
@@ -76,8 +92,19 @@ public class ParameterMapSettingsTest extends PowerMockito {
 			_parameterMapSettings.getValue("key", "defaultValue"));
 	}
 
+	@Test
+	public void testGetValueWithCustomPrefixWhenFoundInParameterMap() {
+		_parameterMap.put("custom--key", new String[] {"requestValue"});
+
+		_parameterMapSettings.setParameterNamePrefix("custom--");
+
+		Assert.assertEquals(
+			"requestValue",
+			_parameterMapSettings.getValue("key", "defaultValue"));
+	}
+
 	private final Map<String, String[]> _parameterMap = new HashMap<>();
-	private final ParameterMapSettings _parameterMapSettings;
+	private ParameterMapSettings _parameterMapSettings;
 	private final MemorySettings _parentSettings = new MemorySettings();
 
 }

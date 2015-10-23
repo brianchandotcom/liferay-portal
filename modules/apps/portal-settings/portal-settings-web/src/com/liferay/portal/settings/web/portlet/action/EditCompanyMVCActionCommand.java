@@ -29,7 +29,7 @@ import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.PhoneNumberExtensionException;
 import com.liferay.portal.WebsiteURLException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
+public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 	@Override
 	public void doProcessAction(
@@ -83,16 +83,10 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				validateCAS(actionRequest);
-				validateLDAP(actionRequest);
-				validateSocialInteractions(actionRequest);
-
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
-				if (SessionErrors.isEmpty(actionRequest)) {
-					updateCompany(actionRequest);
-				}
+				updateCompany(actionRequest);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -138,6 +132,15 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.setRenderParameter("mvcPath", mvcPath);
 		}
+	}
+
+	@Override
+	protected void doValidateForm(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		validateLDAP(actionRequest);
+		validateSocialInteractions(actionRequest);
 	}
 
 	@Reference(unbind = "-")
@@ -196,57 +199,6 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 			emailAddresses, phones, websites, properties);
 
 		PortalUtil.resetCDNHosts();
-	}
-
-	protected void validateCAS(ActionRequest actionRequest) {
-		boolean casEnabled = ParamUtil.getBoolean(
-			actionRequest, "settings--" + PropsKeys.CAS_AUTH_ENABLED + "--");
-
-		if (!casEnabled) {
-			return;
-		}
-
-		String casLoginURL = ParamUtil.getString(
-			actionRequest, "settings--" + PropsKeys.CAS_LOGIN_URL + "--");
-		String casLogoutURL = ParamUtil.getString(
-			actionRequest, "settings--" + PropsKeys.CAS_LOGOUT_URL + "--");
-		String casServerName = ParamUtil.getString(
-			actionRequest, "settings--" + PropsKeys.CAS_SERVER_NAME + "--");
-		String casServerURL = ParamUtil.getString(
-			actionRequest, "settings--" + PropsKeys.CAS_SERVER_URL + "--");
-		String casServiceURL = ParamUtil.getString(
-			actionRequest, "settings--" + PropsKeys.CAS_SERVICE_URL + "--");
-		String casNoSuchUserRedirectURL = ParamUtil.getString(
-			actionRequest,
-			"settings--" + PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL + "--");
-
-		if (!Validator.isUrl(casLoginURL)) {
-			SessionErrors.add(actionRequest, "casLoginURLInvalid");
-		}
-
-		if (!Validator.isUrl(casLogoutURL)) {
-			SessionErrors.add(actionRequest, "casLogoutURLInvalid");
-		}
-
-		if (Validator.isNull(casServerName)) {
-			SessionErrors.add(actionRequest, "casServerNameInvalid");
-		}
-
-		if (!Validator.isUrl(casServerURL)) {
-			SessionErrors.add(actionRequest, "casServerURLInvalid");
-		}
-
-		if (Validator.isNotNull(casServiceURL) &&
-			!Validator.isUrl(casServiceURL)) {
-
-			SessionErrors.add(actionRequest, "casServiceURLInvalid");
-		}
-
-		if (Validator.isNotNull(casNoSuchUserRedirectURL) &&
-			!Validator.isUrl(casNoSuchUserRedirectURL)) {
-
-			SessionErrors.add(actionRequest, "casNoSuchUserURLInvalid");
-		}
 	}
 
 	protected void validateLDAP(ActionRequest actionRequest) {

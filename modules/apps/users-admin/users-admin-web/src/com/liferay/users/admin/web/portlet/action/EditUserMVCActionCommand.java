@@ -27,6 +27,7 @@ import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.PhoneNumberException;
+import com.liferay.portal.PhoneNumberExtensionException;
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserFieldException;
@@ -418,6 +419,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof NoSuchListTypeException ||
 					 e instanceof NoSuchRegionException ||
 					 e instanceof PhoneNumberException ||
+					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof RequiredUserException ||
 					 e instanceof UserEmailAddressException ||
 					 e instanceof UserFieldException ||

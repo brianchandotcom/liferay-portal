@@ -44,6 +44,7 @@ page import="com.liferay.portal.NoSuchUserGroupException" %><%@
 page import="com.liferay.portal.OrganizationNameException" %><%@
 page import="com.liferay.portal.OrganizationParentException" %><%@
 page import="com.liferay.portal.PhoneNumberException" %><%@
+page import="com.liferay.portal.PhoneNumberExtensionException" %><%@
 page import="com.liferay.portal.RequiredOrganizationException" %><%@
 page import="com.liferay.portal.RequiredUserException" %><%@
 page import="com.liferay.portal.UserEmailAddressException" %><%@

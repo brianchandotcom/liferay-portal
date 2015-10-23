@@ -30,6 +30,7 @@ page import="com.liferay.portal.NoSuchListTypeException" %><%@
 page import="com.liferay.portal.NoSuchRegionException" %><%@
 page import="com.liferay.portal.PasswordExpiredException" %><%@
 page import="com.liferay.portal.PhoneNumberException" %><%@
+page import="com.liferay.portal.PhoneNumberExtensionException" %><%@
 page import="com.liferay.portal.RequiredFieldException" %><%@
 page import="com.liferay.portal.RequiredReminderQueryException" %><%@
 page import="com.liferay.portal.SendPasswordException" %><%@

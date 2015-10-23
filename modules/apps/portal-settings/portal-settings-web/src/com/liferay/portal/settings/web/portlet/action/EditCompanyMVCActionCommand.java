@@ -27,6 +27,7 @@ import com.liferay.portal.NoSuchCountryException;
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.PhoneNumberException;
+import com.liferay.portal.PhoneNumberExtensionException;
 import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -117,6 +118,7 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof NoSuchListTypeException ||
 					 e instanceof NoSuchRegionException ||
 					 e instanceof PhoneNumberException ||
+					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof WebsiteURLException) {
 
 				if (e instanceof NoSuchListTypeException) {

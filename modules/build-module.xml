@@ -159,16 +159,26 @@
 		</if>
 
 		<if>
-			<resourcecount count="1">
-				<fileset dir="test/integration" erroronmissingdir="false" includes="**/${test.class}.java" />
-			</resourcecount>
+			<or>
+				<resourcecount count="1">
+					<fileset dir="src/testIntegration/java" erroronmissingdir="false" includes="**/${test.class}.java" />
+				</resourcecount>
+				<resourcecount count="1">
+					<fileset dir="test/integration" erroronmissingdir="false" includes="**/${test.class}.java" />
+				</resourcecount>
+			</or>
 			<then>
 				<var name="test.task" value="testIntegration" />
 			</then>
 			<elseif>
-				<resourcecount count="1">
-					<fileset dir="test/unit" erroronmissingdir="false" includes="**/${test.class}.java" />
-				</resourcecount>
+				<or>
+					<resourcecount count="1">
+						<fileset dir="src/test/java" erroronmissingdir="false" includes="**/${test.class}.java" />
+					</resourcecount>
+					<resourcecount count="1">
+						<fileset dir="test/unit" erroronmissingdir="false" includes="**/${test.class}.java" />
+					</resourcecount>
+				</or>
 				<then>
 					<var name="test.task" value="test" />
 				</then>
@@ -204,14 +214,20 @@
 		/>
 
 		<if>
-			<available file="test/integration/${test.package.dir}" type="dir" />
+			<or>
+				<available file="src/testIntegration/java/${test.package.dir}" type="dir" />
+				<available file="test/integration/${test.package.dir}" type="dir" />
+			</or>
 			<then>
 				<print-gradle-alternative args="testIntegration --tests ${test.package}.*" />
 			</then>
 		</if>
 
 		<if>
-			<available file="test/unit/${test.package.dir}" type="dir" />
+			<or>
+				<available file="src/test/java/${test.package.dir}" type="dir" />
+				<available file="test/unit/${test.package.dir}" type="dir" />
+			</or>
 			<then>
 				<print-gradle-alternative args="test --tests ${test.package}.*" />
 			</then>

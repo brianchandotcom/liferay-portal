@@ -79,7 +79,7 @@ AUI.add(
 
 						instance._renderFields();
 						instance._renderPages();
-						instance._findForLastColsInAllRows();
+						instance._syncRowsLastColumnUI();
 					},
 
 					destructor: function() {
@@ -149,30 +149,12 @@ AUI.add(
 						return fields;
 					},
 
-					_afterLayoutRowsChange: function(event) {
-						var instance = this;
-
-						FormBuilder.superclass._afterLayoutRowsChange.apply(instance, arguments);
-
-						AArray.forEach(event.newVal, function(row){
-							instance._setLastColumn(row);
-						});
-					},
-
 					_afterActivePageNumberChange: function() {
 						var instance = this;
 
 						FormBuilder.superclass._afterActivePageNumberChange.apply(instance, arguments);
 
-						instance._findForLastColsInAllRows();
-					},
-
-					_afterLayoutsChange: function() {
-						var instance = this;
-
-						FormBuilder.superclass._afterLayoutsChange.apply(instance, arguments);
-
-						instance._findForLastColsInAllRows();
+						instance._syncRowsLastColumnUI();
 					},
 
 					_afterLayoutColsChange: function(event) {
@@ -180,17 +162,23 @@ AUI.add(
 
 						FormBuilder.superclass._afterLayoutColsChange.apply(instance, arguments);
 
-						instance._setLastColumn(event.target);
+						instance._syncRowLastColumnUI(event.target);
 					},
 
-					_findForLastColsInAllRows: function() {
+					_afterLayoutRowsChange: function(event) {
 						var instance = this;
 
-						var rows = instance.getActiveLayout().get('rows');
+						FormBuilder.superclass._afterLayoutRowsChange.apply(instance, arguments);
 
-						AArray.forEach(rows, function(row){
-							instance._setLastColumn(row);
-						});
+						event.newVal.forEach(instance._syncRowLastColumnUI);
+					},
+
+					_afterLayoutsChange: function() {
+						var instance = this;
+
+						FormBuilder.superclass._afterLayoutsChange.apply(instance, arguments);
+
+						instance._syncRowsLastColumnUI();
 					},
 
 					_getPageManagerInstance: function(config) {
@@ -307,16 +295,24 @@ AUI.add(
 						);
 					},
 
-					_setLastColumn: function(row) {
+					_syncRowLastColumnUI: function(row) {
 						var lastColumn = row.get('node').one('.last-col');
-
-						var cols = row.get('cols');
 
 						if (lastColumn) {
 							lastColumn.removeClass('last-col');
 						}
 
-						cols[cols.length - 1].get('node').addClass('last-col')
+						var cols = row.get('cols');
+
+						cols[cols.length - 1].get('node').addClass('last-col');
+					},
+
+					_syncRowsLastColumnUI: function() {
+						var instance = this;
+
+						var rows = instance.getActiveLayout().get('rows');
+
+						rows.forEach(instance._syncRowLastColumnUI);
 					},
 
 					_valueDeserializer: function() {

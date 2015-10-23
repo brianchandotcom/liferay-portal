@@ -12,10 +12,6 @@
 }
 
 .portlet-forms {
-	.form-builder-page-header {
-		padding-top: 25px;
-	}
-
 	.ddl-form-name {
 		font-size: 32px;
 		line-height: 32px;
@@ -24,6 +20,10 @@
 	.ddl-form-description {
 		font-size: 14px;
 		line-height: 24px;
+	}
+
+	.form-builder-page-header {
+		padding-top: 25px;
 	}
 
 	.form-builder-page-header-title,
@@ -312,8 +312,8 @@
 	}
 
 	.form-builder-pages-header {
-		margin-top: 0;
 		margin-bottom: 0;
+		margin-top: 0;
 		width: auto;
 
 		input {

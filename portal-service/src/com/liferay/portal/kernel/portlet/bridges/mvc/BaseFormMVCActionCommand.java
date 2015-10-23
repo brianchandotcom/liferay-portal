@@ -23,8 +23,8 @@ import javax.portlet.PortletException;
 /**
  * @author Tomas Polesovsky
  */
-public abstract class BaseFormMVCActionCommand extends BaseMVCActionCommand
-	implements FormMVCActionCommand {
+public abstract class BaseFormMVCActionCommand
+	extends BaseMVCActionCommand implements FormMVCActionCommand {
 
 	@Override
 	public boolean validateForm(

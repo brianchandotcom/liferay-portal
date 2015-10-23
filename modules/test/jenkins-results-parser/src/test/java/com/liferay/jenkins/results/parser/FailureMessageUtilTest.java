@@ -48,10 +48,10 @@ public class FailureMessageUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_downloadTestDependencies(
+		_downloadPullRequestDependencies(
 			"generic-fail", "test-portal-acceptance-pullrequest(master)",
 			"test-1-1", "1532");
-		_downloadTestDependencies(
+		_downloadPullRequestDependencies(
 			"rebase-fail", "test-portal-acceptance-pullrequest(ee-6.2.x)",
 			"test-1-20", "40");
 	}
@@ -96,15 +96,16 @@ public class FailureMessageUtilTest {
 		}
 	}
 
-	private static String _downloadTestCaseData(
-			String jenkinsReportName, String caseURL)
+	private static String _downloadSlaveDependencies(
+			String jenkinsReportName, String caseURLString)
 		throws Exception {
 
-		String decodedCaseURLString = URLDecoder.decode(caseURL, "UTF8");
+		String decodedCaseURLString = URLDecoder.decode(caseURLString, "UTF8");
 
-		int jobIdx = decodedCaseURLString.indexOf("/job/") + 5;
+		int index = decodedCaseURLString.indexOf("/job/") + 5;
 
-		String caseName = decodedCaseURLString.substring(jobIdx);
+		String caseName = decodedCaseURLString.substring(index);
+
 		System.out.println("downloading test case data: " + caseName);
 
 		caseName = caseName.replace("/", "-");
@@ -127,7 +128,7 @@ public class FailureMessageUtilTest {
 		caseApiDir.mkdirs();
 
 		try {
-			String caseJsonURL = caseURL + "/api/json";
+			String caseJsonURL = caseURLString + "/api/json";
 
 			System.out.println(" downloading json from:" + caseJsonURL);
 
@@ -141,7 +142,7 @@ public class FailureMessageUtilTest {
 				" wrote file: " + caseJsonFile.getPath() + " size; " +
 					caseJsonFile.length());
 
-			String consoleURL = caseURL + "/logText/progressiveText";
+			String consoleURL = caseURLString + "/logText/progressiveText";
 
 			System.out.println(" downloading console from:" + consoleURL);
 
@@ -171,7 +172,7 @@ public class FailureMessageUtilTest {
 		return caseRootPath;
 	}
 
-	private static void _downloadTestDependencies(
+	private static void _downloadPullRequestDependencies(
 			String description, String jobName, String hostName,
 			String buildNumber)
 		throws Exception {
@@ -186,11 +187,11 @@ public class FailureMessageUtilTest {
 
 		URL url = _createURL(urlString);
 
-		_downloadTestGroupData(
+		_downloadPullRequestDependencies(
 			description + "_" + hostName + "_" + buildNumber, url);
 	}
 
-	private static void _downloadTestGroupData(
+	private static void _downloadPullRequestDependencies(
 			String testGroupName, URL jenkinsReportURL)
 		throws Exception {
 
@@ -240,7 +241,7 @@ public class FailureMessageUtilTest {
 				String urlString = attribute.getValue();
 
 				try {
-					String caseRootPath = _downloadTestCaseData(
+					String caseRootPath = _downloadSlaveDependencies(
 						testGroupName, urlString);
 
 					failureMessageUtilTest.createExpectedResultsFile(

@@ -33,6 +33,10 @@ import javax.portlet.PortletResponse;
  */
 public class TestUploadHandler extends BaseUploadHandler {
 
+	public TestUploadHandler(TestUploadPortlet testUploadPortlet) {
+		_testUploadPortlet = testUploadPortlet;
+	}
+
 	@Override
 	protected FileEntry addFileEntry(
 		long userId, long groupId, long folderId, String fileName,
@@ -42,7 +46,7 @@ public class TestUploadHandler extends BaseUploadHandler {
 		TestFileEntry fileEntry = new TestFileEntry(
 			fileName, folderId, groupId, inputStream);
 
-		TestUploadPortlet.put(fileEntry);
+		_testUploadPortlet.put(fileEntry);
 
 		return fileEntry;
 	}
@@ -65,7 +69,7 @@ public class TestUploadHandler extends BaseUploadHandler {
 		TestFileEntry fileEntry = new TestFileEntry(
 			fileName, folderId, groupId, null);
 
-		return TestUploadPortlet.get(fileEntry.toString());
+		return _testUploadPortlet.get(fileEntry.toString());
 	}
 
 	@Override
@@ -86,5 +90,7 @@ public class TestUploadHandler extends BaseUploadHandler {
 	protected void validateFile(
 		String fileName, String contentType, long size) {
 	}
+
+	private final TestUploadPortlet _testUploadPortlet;
 
 }

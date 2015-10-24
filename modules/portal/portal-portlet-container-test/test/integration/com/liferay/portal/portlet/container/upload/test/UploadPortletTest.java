@@ -111,7 +111,8 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		};
 
 		registerMVCPortlet(_testUploadPortlet);
-		registerMVCActionCommand(new TestUploadMVCActionCommand());
+		registerMVCActionCommand(
+			new TestUploadMVCActionCommand(_testUploadPortlet));
 	}
 
 	@Test
@@ -133,7 +134,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 		// verify the file was upload to the TestUploadPortlet store
 
-		TestFileEntry actualTestFileEntry = TestUploadPortlet.get(key);
+		TestFileEntry actualTestFileEntry = _testUploadPortlet.get(key);
 
 		Assert.assertNotNull(actualTestFileEntry);
 		Assert.assertEquals(
@@ -157,7 +158,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 			group.getGroupId() + "_0_" +
 				TestUploadPortlet.TEST_UPLOAD_FILE_NAME_PARAMETER;
 
-		TestFileEntry actualTestFileEntry = TestUploadPortlet.get(key);
+		TestFileEntry actualTestFileEntry = _testUploadPortlet.get(key);
 
 		Assert.assertNull(actualTestFileEntry.getInputStream());
 	}

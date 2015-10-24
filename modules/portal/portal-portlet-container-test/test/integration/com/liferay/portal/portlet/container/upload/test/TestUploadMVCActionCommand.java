@@ -33,6 +33,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = MVCActionCommand.class)
 public class TestUploadMVCActionCommand extends BaseMVCActionCommand {
 
+	public TestUploadMVCActionCommand(TestUploadPortlet testUploadPortlet) {
+		_uploadHandler = new TestUploadHandler(testUploadPortlet);
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -43,6 +47,6 @@ public class TestUploadMVCActionCommand extends BaseMVCActionCommand {
 		Assert.assertNull(actionRequest.getAttribute(WebKeys.UPLOAD_EXCEPTION));
 	}
 
-	private final UploadHandler _uploadHandler = new TestUploadHandler();
+	private final UploadHandler _uploadHandler;
 
 }

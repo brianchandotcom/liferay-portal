@@ -21,9 +21,9 @@ import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.model.impl.PollsChoiceImpl;
 import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.model.impl.PollsVoteImpl;
-import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
-import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
-import com.liferay.polls.service.PollsVoteLocalServiceUtil;
+import com.liferay.polls.service.PollsChoiceLocalService;
+import com.liferay.polls.service.PollsQuestionLocalService;
+import com.liferay.polls.service.PollsVoteLocalService;
 import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -93,7 +93,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		PollsQuestionLocalServiceUtil.deleteQuestions(
+		_pollsQuestionLocalService.deleteQuestions(
 			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
@@ -117,13 +117,13 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 				PollsPortletDataHandler.NAMESPACE, "questions")) {
 
 			ActionableDynamicQuery questionActionableDynamicQuery =
-				PollsQuestionLocalServiceUtil.getExportActionableDynamicQuery(
+				_pollsQuestionLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			questionActionableDynamicQuery.performActions();
 
 			ActionableDynamicQuery choiceActionableDynamicQuery =
-				PollsChoiceLocalServiceUtil.getExportActionableDynamicQuery(
+				_pollsChoiceLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			choiceActionableDynamicQuery.performActions();
@@ -132,7 +132,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 					PollsPortletDataHandler.NAMESPACE, "votes")) {
 
 				ActionableDynamicQuery voteActionableDynamicQuery =
-					PollsVoteLocalServiceUtil.getExportActionableDynamicQuery(
+					_pollsVoteLocalService.getExportActionableDynamicQuery(
 						portletDataContext);
 
 				voteActionableDynamicQuery.performActions();
@@ -197,19 +197,19 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery choiceActionableDynamicQuery =
-			PollsChoiceLocalServiceUtil.getExportActionableDynamicQuery(
+			_pollsChoiceLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		choiceActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery questionActionableDynamicQuery =
-			PollsQuestionLocalServiceUtil.getExportActionableDynamicQuery(
+			_pollsQuestionLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		questionActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery voteActionableDynamicQuery =
-			PollsVoteLocalServiceUtil.getExportActionableDynamicQuery(
+			_pollsVoteLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		voteActionableDynamicQuery.performCount();
@@ -219,5 +219,30 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setPollsChoiceLocalService(
+		PollsChoiceLocalService pollsChoiceLocalService) {
+
+		_pollsChoiceLocalService = pollsChoiceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPollsQuestionLocalService(
+		PollsQuestionLocalService pollsQuestionLocalService) {
+
+		_pollsQuestionLocalService = pollsQuestionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPollsVoteLocalService(
+		PollsVoteLocalService pollsVoteLocalService) {
+
+		_pollsVoteLocalService = pollsVoteLocalService;
+	}
+
+	private PollsChoiceLocalService _pollsChoiceLocalService;
+	private PollsQuestionLocalService _pollsQuestionLocalService;
+	private PollsVoteLocalService _pollsVoteLocalService;
 
 }

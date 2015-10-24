@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayInputStream;
 import com.liferay.portal.upload.LiferayServletRequest;
@@ -40,7 +39,6 @@ import java.util.Map;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 
@@ -72,25 +70,6 @@ public class UploadPortletRequestTest {
 		@Before
 		public void setUp() throws Exception {
 			_setUpScenario();
-		}
-
-		@Test
-		public void shouldAddProgressTrackerToSession() throws Exception {
-			LiferayServletRequest liferayServletRequest =
-				PortletContainerTestUtil.getMultipartRequest(
-					_portletNamespace, _bytes);
-
-			HttpServletRequest mockHttpServletRequest =
-				(HttpServletRequest)liferayServletRequest.getRequest();
-
-			new UploadPortletRequestImpl(
-				new UploadServletRequestImpl(mockHttpServletRequest), null,
-				_portletNamespace);
-
-			HttpSession httpSession = mockHttpServletRequest.getSession();
-
-			Assert.assertNotNull(
-				httpSession.getAttribute(ProgressTracker.PERCENT));
 		}
 
 		@Test

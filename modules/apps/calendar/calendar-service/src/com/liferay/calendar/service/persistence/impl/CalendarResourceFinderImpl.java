@@ -285,7 +285,7 @@ public class CalendarResourceFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, false, descriptions);
+				sql, "description", StringPool.LIKE, true, descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);

@@ -62,11 +62,9 @@ public interface ContactLocalService extends BaseLocalService,
 		java.lang.String emailAddress, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle)
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle)
 		throws PortalException;
 
 	/**
@@ -253,10 +251,8 @@ public interface ContactLocalService extends BaseLocalService,
 		java.lang.String emailAddress, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle)
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle)
 		throws PortalException;
 }

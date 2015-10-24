@@ -939,9 +939,8 @@ public class UserServiceTest {
 				contact.getLastName(), contact.getPrefixId(),
 				contact.getSuffixId(), contact.isMale(), birthdayMonth,
 				birthdayDay, birthdayYear, contact.getSmsSn(),
-				contact.getAimSn(), contact.getFacebookSn(), contact.getIcqSn(),
-				contact.getJabberSn(), contact.getMySpaceSn(),
-				contact.getSkypeSn(), contact.getTwitterSn(), contact.getYmSn(),
+				contact.getFacebookSn(), contact.getJabberSn(),
+				contact.getSkypeSn(), contact.getTwitterSn(),
 				contact.getJobTitle(), groupIds, organizationIds, roleIds,
 				userGroupRoles, userGroupIds, serviceContext);
 		}

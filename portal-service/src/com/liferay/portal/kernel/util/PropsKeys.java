@@ -63,10 +63,6 @@ public interface PropsKeys {
 
 	public static final String ADMIN_SYNC_DEFAULT_ASSOCIATIONS = "admin.sync.default.associations";
 
-	public static final String AIM_LOGIN = "aim.login";
-
-	public static final String AIM_PASSWORD = "aim.password";
-
 	public static final String ANNOUNCEMENTS_EMAIL_BODY = "announcements.email.body";
 
 	public static final String ANNOUNCEMENTS_EMAIL_FROM_ADDRESS = "announcements.email.from.address";
@@ -858,12 +854,6 @@ public interface PropsKeys {
 	public static final String HOT_UNDEPLOY_ON_REDEPLOY = "hot.undeploy.on.redeploy";
 
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = "http.header.version.verbosity";
-
-	public static final String ICQ_JAR = "icq.jar";
-
-	public static final String ICQ_LOGIN = "icq.login";
-
-	public static final String ICQ_PASSWORD = "icq.password";
 
 	public static final String IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE = "iframe.password.token.role";
 
@@ -2514,10 +2504,6 @@ public interface PropsKeys {
 	public static final String XUGGLER_JAR_OPTIONS = "xuggler.jar.options";
 
 	public static final String XUGGLER_JAR_URL = "xuggler.jar.url";
-
-	public static final String YM_LOGIN = "ym.login";
-
-	public static final String YM_PASSWORD = "ym.password";
 
 	public static final String YUI_COMPRESSOR_CSS_LINE_BREAK = "yui.compressor.css.line.break";
 

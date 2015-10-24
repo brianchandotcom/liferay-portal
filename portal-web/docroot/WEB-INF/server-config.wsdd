@@ -2794,14 +2794,10 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="birthdayDay" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="birthdayYear" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="smsSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="aimSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="facebookSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="icqSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="jabberSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mySpaceSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="skypeSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="twitterSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ymSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="jobTitle" type="tns:string"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="organizationIds" type="tns:ArrayOf_xsd_long"></parameter>
@@ -2841,14 +2837,10 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="birthdayDay" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="birthdayYear" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="smsSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="aimSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="facebookSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="icqSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="jabberSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mySpaceSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="skypeSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="twitterSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ymSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="jobTitle" type="tns:string"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="organizationIds" type="tns:ArrayOf_xsd_long"></parameter>
@@ -2888,14 +2880,10 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="birthdayDay" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="birthdayYear" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="smsSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="aimSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="facebookSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="icqSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="jabberSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mySpaceSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="skypeSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="twitterSn" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ymSn" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="jobTitle" type="tns:string"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="organizationIds" type="tns:ArrayOf_xsd_long"></parameter>

@@ -48,14 +48,10 @@ public class ContactTable {
 		{"male", Types.BOOLEAN},
 		{"birthday", Types.TIMESTAMP},
 		{"smsSn", Types.VARCHAR},
-		{"aimSn", Types.VARCHAR},
 		{"facebookSn", Types.VARCHAR},
-		{"icqSn", Types.VARCHAR},
 		{"jabberSn", Types.VARCHAR},
-		{"mySpaceSn", Types.VARCHAR},
 		{"skypeSn", Types.VARCHAR},
 		{"twitterSn", Types.VARCHAR},
-		{"ymSn", Types.VARCHAR},
 		{"employeeStatusId", Types.VARCHAR},
 		{"employeeNumber", Types.VARCHAR},
 		{"jobTitle", Types.VARCHAR},
@@ -106,21 +102,13 @@ TABLE_COLUMNS_MAP.put("birthday", Types.TIMESTAMP);
 
 TABLE_COLUMNS_MAP.put("smsSn", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("aimSn", Types.VARCHAR);
-
 TABLE_COLUMNS_MAP.put("facebookSn", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("icqSn", Types.VARCHAR);
-
 TABLE_COLUMNS_MAP.put("jabberSn", Types.VARCHAR);
-
-TABLE_COLUMNS_MAP.put("mySpaceSn", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("skypeSn", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("twitterSn", Types.VARCHAR);
-
-TABLE_COLUMNS_MAP.put("ymSn", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("employeeStatusId", Types.VARCHAR);
 
@@ -133,7 +121,7 @@ TABLE_COLUMNS_MAP.put("jobClass", Types.VARCHAR);
 TABLE_COLUMNS_MAP.put("hoursOfOperation", Types.VARCHAR);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,aimSn VARCHAR(75) null,facebookSn VARCHAR(75) null,icqSn VARCHAR(75) null,jabberSn VARCHAR(75) null,mySpaceSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,ymSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,facebookSn VARCHAR(75) null,jabberSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 

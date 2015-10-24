@@ -1814,11 +1814,9 @@ public class UserServiceHttp {
 		java.lang.String firstName, java.lang.String middleName,
 		java.lang.String lastName, long prefixId, long suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
@@ -1839,9 +1837,70 @@ public class UserServiceHttp {
 					emailAddress, facebookId, openId, portrait, portraitBytes,
 					languageId, timeZoneId, greeting, comments, firstName,
 					middleName, lastName, prefixId, suffixId, male,
-					birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn,
-					facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn,
-					ymSn, jobTitle, groupIds, organizationIds, roleIds,
+					birthdayMonth, birthdayDay, birthdayYear, smsSn,
+					facebookSn, jabberSn, skypeSn, twitterSn, jobTitle,
+					groupIds, organizationIds, roleIds, userGroupRoles,
+					userGroupIds, addresses, emailAddresses, phones, websites,
+					announcementsDelivers, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.User)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portal.model.User updateUser(
+		HttpPrincipal httpPrincipal, long userId, java.lang.String oldPassword,
+		java.lang.String newPassword1, java.lang.String newPassword2,
+		boolean passwordReset, java.lang.String reminderQueryQuestion,
+		java.lang.String reminderQueryAnswer, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, java.lang.String languageId,
+		java.lang.String timeZoneId, java.lang.String greeting,
+		java.lang.String comments, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds,
+		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
+		long[] userGroupIds,
+		java.util.List<com.liferay.portal.model.Address> addresses,
+		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
+		java.util.List<com.liferay.portal.model.Phone> phones,
+		java.util.List<com.liferay.portal.model.Website> websites,
+		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
+					"updateUser", _updateUserParameterTypes55);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					oldPassword, newPassword1, newPassword2, passwordReset,
+					reminderQueryQuestion, reminderQueryAnswer, screenName,
+					emailAddress, facebookId, openId, languageId, timeZoneId,
+					greeting, comments, firstName, middleName, lastName,
+					prefixId, suffixId, male, birthdayMonth, birthdayDay,
+					birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+					twitterSn, jobTitle, groupIds, organizationIds, roleIds,
 					userGroupRoles, userGroupIds, addresses, emailAddresses,
 					phones, websites, announcementsDelivers, serviceContext);
 
@@ -1878,75 +1937,9 @@ public class UserServiceHttp {
 		java.lang.String comments, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
-		long[] organizationIds, long[] roleIds,
-		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
-		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
-					"updateUser", _updateUserParameterTypes55);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					oldPassword, newPassword1, newPassword2, passwordReset,
-					reminderQueryQuestion, reminderQueryAnswer, screenName,
-					emailAddress, facebookId, openId, languageId, timeZoneId,
-					greeting, comments, firstName, middleName, lastName,
-					prefixId, suffixId, male, birthdayMonth, birthdayDay,
-					birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
-					mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
-					organizationIds, roleIds, userGroupRoles, userGroupIds,
-					addresses, emailAddresses, phones, websites,
-					announcementsDelivers, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.portal.model.User)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.portal.model.User updateUser(
-		HttpPrincipal httpPrincipal, long userId, java.lang.String oldPassword,
-		java.lang.String newPassword1, java.lang.String newPassword2,
-		boolean passwordReset, java.lang.String reminderQueryQuestion,
-		java.lang.String reminderQueryAnswer, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, java.lang.String languageId,
-		java.lang.String timeZoneId, java.lang.String greeting,
-		java.lang.String comments, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
-		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
@@ -1962,10 +1955,9 @@ public class UserServiceHttp {
 					emailAddress, facebookId, openId, languageId, timeZoneId,
 					greeting, comments, firstName, middleName, lastName,
 					prefixId, suffixId, male, birthdayMonth, birthdayDay,
-					birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
-					mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
-					organizationIds, roleIds, userGroupRoles, userGroupIds,
-					serviceContext);
+					birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+					twitterSn, jobTitle, groupIds, organizationIds, roleIds,
+					userGroupRoles, userGroupIds, serviceContext);
 
 			Object returnObj = null;
 
@@ -2212,8 +2204,6 @@ public class UserServiceHttp {
 			long.class, boolean.class, int.class, int.class, int.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, long[].class,
 			long[].class, long[].class, java.util.List.class, long[].class,
 			java.util.List.class, java.util.List.class, java.util.List.class,
@@ -2232,8 +2222,6 @@ public class UserServiceHttp {
 			int.class, int.class, int.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, long[].class, long[].class, long[].class,
 			java.util.List.class, long[].class, java.util.List.class,
 			java.util.List.class, java.util.List.class, java.util.List.class,
@@ -2250,8 +2238,6 @@ public class UserServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, long.class, long.class, boolean.class,
 			int.class, int.class, int.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, long[].class, long[].class, long[].class,

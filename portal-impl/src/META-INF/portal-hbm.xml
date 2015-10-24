@@ -242,14 +242,10 @@
 		<property name="male" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="birthday" type="org.hibernate.type.TimestampType" />
 		<property name="smsSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="aimSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="facebookSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="icqSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="jabberSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="mySpaceSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="skypeSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="twitterSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="ymSn" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="employeeStatusId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="employeeNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="jobTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />

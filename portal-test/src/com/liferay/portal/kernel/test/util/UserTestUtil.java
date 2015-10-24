@@ -325,14 +325,10 @@ public class UserTestUtil {
 		int birthdayDay = 1;
 		int birthdayYear = 1970;
 		String smsSn = StringPool.BLANK;
-		String aimSn = StringPool.BLANK;
 		String facebookSn = StringPool.BLANK;
-		String icqSn = StringPool.BLANK;
 		String jabberSn = StringPool.BLANK;
-		String mySpaceSn = StringPool.BLANK;
 		String skypeSn = StringPool.BLANK;
 		String twitterSn = StringPool.BLANK;
-		String ymSn = StringPool.BLANK;
 		String jobTitle = StringPool.BLANK;
 		long[] groupIds = null;
 		long[] organizationIds = null;
@@ -346,9 +342,9 @@ public class UserTestUtil {
 			screenName, emailAddress, facebookId, openId, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
-			twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupRoles, userGroupIds, serviceContext);
+			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupRoles, userGroupIds,
+			serviceContext);
 	}
 
 }

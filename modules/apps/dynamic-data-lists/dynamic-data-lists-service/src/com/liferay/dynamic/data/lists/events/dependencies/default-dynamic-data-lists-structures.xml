@@ -24,16 +24,6 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" indexType="keyword" multiple="false" name="imService" required="false" showLabel="true" type="select">
-				<dynamic-element name="aol" type="option" value="aol">
-					<meta-data locale="[$LOCALE_DEFAULT$]">
-						<entry name="label"><![CDATA[AOL]]></entry>
-					</meta-data>
-				</dynamic-element>
-				<dynamic-element name="yahoo" type="option" value="yahoo">
-					<meta-data locale="[$LOCALE_DEFAULT$]">
-						<entry name="label"><![CDATA[Yahoo]]></entry>
-					</meta-data>
-				</dynamic-element>
 				<dynamic-element name="gtalk" type="option" value="gtalk">
 					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[GTalk]]></entry>

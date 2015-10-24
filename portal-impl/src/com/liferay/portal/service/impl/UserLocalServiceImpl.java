@@ -5143,14 +5143,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  birthdayDay the user's new birthday day
 	 * @param  birthdayYear the user's birthday year
 	 * @param  smsSn the user's new SMS screen name
-	 * @param  aimSn the user's new AIM screen name
 	 * @param  facebookSn the user's new Facebook screen name
-	 * @param  icqSn the user's new ICQ screen name
 	 * @param  jabberSn the user's new Jabber screen name
-	 * @param  mySpaceSn the user's new MySpace screen name
 	 * @param  skypeSn the user's new Skype screen name
 	 * @param  twitterSn the user's new Twitter screen name
-	 * @param  ymSn the user's new Yahoo! Messenger screen name
 	 * @param  jobTitle the user's new job title
 	 * @param  groupIds the primary keys of the user's groups
 	 * @param  organizationIds the primary keys of the user's organizations
@@ -5177,11 +5173,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String comments, String firstName, String middleName,
 			String lastName, long prefixId, long suffixId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
-			String aimSn, String facebookSn, String icqSn, String jabberSn,
-			String mySpaceSn, String skypeSn, String twitterSn, String ymSn,
-			String jobTitle, long[] groupIds, long[] organizationIds,
-			long[] roleIds, List<UserGroupRole> userGroupRoles,
-			long[] userGroupIds, ServiceContext serviceContext)
+			String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle, long[] groupIds,
+			long[] organizationIds, long[] roleIds,
+			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// User
@@ -5194,14 +5190,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 		openId = openId.trim();
 		String oldFullName = user.getFullName();
-		aimSn = StringUtil.toLowerCase(aimSn.trim());
 		facebookSn = StringUtil.toLowerCase(facebookSn.trim());
-		icqSn = StringUtil.toLowerCase(icqSn.trim());
 		jabberSn = StringUtil.toLowerCase(jabberSn.trim());
-		mySpaceSn = StringUtil.toLowerCase(mySpaceSn.trim());
 		skypeSn = StringUtil.toLowerCase(skypeSn.trim());
 		twitterSn = StringUtil.toLowerCase(twitterSn.trim());
-		ymSn = StringUtil.toLowerCase(ymSn.trim());
 
 		EmailAddressGenerator emailAddressGenerator =
 			EmailAddressGeneratorFactory.getInstance();
@@ -5335,14 +5327,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setSmsSn(smsSn);
-		contact.setAimSn(aimSn);
 		contact.setFacebookSn(facebookSn);
-		contact.setIcqSn(icqSn);
 		contact.setJabberSn(jabberSn);
-		contact.setMySpaceSn(mySpaceSn);
 		contact.setSkypeSn(skypeSn);
 		contact.setTwitterSn(twitterSn);
-		contact.setYmSn(ymSn);
 		contact.setJobTitle(jobTitle);
 
 		contactPersistence.update(contact, serviceContext);
@@ -5468,14 +5456,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param      birthdayDay the user's new birthday day
 	 * @param      birthdayYear the user's birthday year
 	 * @param      smsSn the user's new SMS screen name
-	 * @param      aimSn the user's new AIM screen name
 	 * @param      facebookSn the user's new Facebook screen name
-	 * @param      icqSn the user's new ICQ screen name
 	 * @param      jabberSn the user's new Jabber screen name
-	 * @param      mySpaceSn the user's new MySpace screen name
 	 * @param      skypeSn the user's new Skype screen name
 	 * @param      twitterSn the user's new Twitter screen name
-	 * @param      ymSn the user's new Yahoo! Messenger screen name
 	 * @param      jobTitle the user's new job title
 	 * @param      groupIds the primary keys of the user's groups
 	 * @param      organizationIds the primary keys of the user's organizations
@@ -5508,9 +5492,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String greeting, String comments, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String aimSn, String facebookSn, String icqSn,
-			String jabberSn, String mySpaceSn, String skypeSn, String twitterSn,
-			String ymSn, String jobTitle, long[] groupIds,
+			String smsSn, String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			ServiceContext serviceContext)
@@ -5522,9 +5505,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
-			twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupRoles, userGroupIds, serviceContext);
+			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupRoles, userGroupIds,
+			serviceContext);
 	}
 
 	/**

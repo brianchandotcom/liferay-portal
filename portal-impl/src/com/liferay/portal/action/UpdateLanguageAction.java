@@ -79,10 +79,8 @@ public class UpdateLanguageAction extends Action {
 					user.getEmailAddress(), user.getFacebookId(),
 					user.getOpenId(), languageId, user.getTimeZoneId(),
 					user.getGreeting(), user.getComments(), contact.getSmsSn(),
-					contact.getAimSn(), contact.getFacebookSn(),
-					contact.getIcqSn(), contact.getJabberSn(),
-					contact.getMySpaceSn(), contact.getSkypeSn(),
-					contact.getTwitterSn(), contact.getYmSn());
+					contact.getFacebookSn(), contact.getJabberSn(),
+					contact.getSkypeSn(), contact.getTwitterSn());
 			}
 
 			session.setAttribute(Globals.LOCALE_KEY, locale);

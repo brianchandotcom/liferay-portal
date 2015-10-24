@@ -15,13 +15,15 @@
 {template .checkbox}
 	<div class="form-group form-inline{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		{if $showAsSwitcher}
-			<label class="control-label" for="{$name}">
-				<input class="toggle-switch" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
+			<div class="checkbox">
+				<label class="control-label" for="{$name}">
+					<input class="toggle-switch" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
 
-				<span aria-hidden="true" class="toggle-switch-bar">
-					<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}"></span>
-				</span>
-			</label>
+					<span aria-hidden="true" class="toggle-switch-bar">
+						<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}"></span>
+					</span>
+				</label>
+			</div>
 		{else}
 			<div class="checkbox checkbox-default">
 				{if $showLabel}

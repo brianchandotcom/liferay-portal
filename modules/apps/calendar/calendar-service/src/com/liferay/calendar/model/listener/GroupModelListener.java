@@ -32,7 +32,30 @@ import org.osgi.service.component.annotations.Reference;
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
-	public void onAfterRemove(Group group) throws ModelListenerException {
+	public void onAfterUpdate(Group group) throws ModelListenerException {
+		try {
+			long classNameId = PortalUtil.getClassNameId(Group.class);
+
+			CalendarResource calendarResource =
+				_calendarResourceLocalService.fetchCalendarResource(
+					classNameId, group.getGroupId());
+
+			if (calendarResource == null) {
+				return;
+			}
+
+			calendarResource.setNameMap(group.getNameMap());
+
+			_calendarResourceLocalService.updateCalendarResource(
+				calendarResource);
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
+	}
+
+	@Override
+	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
 
 			// Global calendar resource
@@ -52,29 +75,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 			_calendarResourceLocalService.deleteCalendarResources(
 				group.getGroupId());
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
-	}
-
-	@Override
-	public void onAfterUpdate(Group group) throws ModelListenerException {
-		try {
-			long classNameId = PortalUtil.getClassNameId(Group.class);
-
-			CalendarResource calendarResource =
-				_calendarResourceLocalService.fetchCalendarResource(
-					classNameId, group.getGroupId());
-
-			if (calendarResource == null) {
-				return;
-			}
-
-			calendarResource.setNameMap(group.getNameMap());
-
-			_calendarResourceLocalService.updateCalendarResource(
-				calendarResource);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

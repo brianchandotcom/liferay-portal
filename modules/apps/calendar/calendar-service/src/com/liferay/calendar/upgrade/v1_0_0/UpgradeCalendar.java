@@ -33,6 +33,51 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (!tableHasColumn("CalendarBooking", "vEventUid")) {
+			runSQL(
+				"alter table Calendar add timeZoneId STRING null after " +
+					"description");
+		}
+
+		updateCalendarTimeZoneIds();
+	}
+
+	protected void updateCalendarTimeZoneId(
+			Connection connection, long calendarId, String timeZoneId)
+		throws Exception {
+
+		PreparedStatement ps = connection.prepareStatement(
+			"update Calendar set timeZoneId = ? where calendarId = ?");
+
+		ps.setString(1, timeZoneId);
+		ps.setLong(2, calendarId);
+
+		ps.execute();
+	}
+
+	protected void updateCalendarTimeZoneId(long calendarId, String timeZoneId)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update Calendar set timeZoneId = ? where calendarId = ?");
+
+			ps.setString(1, timeZoneId);
+			ps.setLong(2, calendarId);
+
+			ps.execute();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void updateCalendarTimeZoneIds() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -74,28 +119,6 @@ public class UpgradeCalendar extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void updateCalendarTimeZoneId(long calendarId, String timeZoneId)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update Calendar set timeZoneId = ? where calendarId = ?");
-
-			ps.setString(1, timeZoneId);
-			ps.setLong(2, calendarId);
-
-			ps.execute();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
 		}
 	}
 

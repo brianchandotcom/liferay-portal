@@ -16,8 +16,8 @@ package com.liferay.portal.portlet.container.upload.test;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
 
@@ -41,15 +41,15 @@ public class TestUploadPortlet extends MVCPortlet {
 
 	public static final String TEST_UPLOAD_STRUTS_PATH = "upload_test";
 
-	public static TestFileEntry get(String key) {
+	public TestFileEntry get(String key) {
 		return _testFileEntriesMap.get(key);
 	}
 
-	public static void put(TestFileEntry testFileEntry) {
+	public void put(TestFileEntry testFileEntry) {
 		_testFileEntriesMap.put(testFileEntry.toString(), testFileEntry);
 	}
 
-	private static final Map<String, TestFileEntry> _testFileEntriesMap =
-		new HashMap<>();
+	private final Map<String, TestFileEntry> _testFileEntriesMap =
+		new ConcurrentHashMap<>();
 
 }

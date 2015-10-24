@@ -1,4 +1,13 @@
+import org.apache.tools.ant.filters.FixCrLfFilter
+
 apply plugin: "antlr"
+
+String parserDirName = "com/liferay/dynamic/data/mapping/form/values/query/internal/parser"
+
+cleanGenerateGrammarSource {
+	delete "src/main/java/" + parserDirName
+	delete "src/main/resources/" + parserDirName
+}
 
 compileJava {
 	dependsOn.remove "generateGrammarSource"
@@ -12,19 +21,32 @@ dependencies {
 }
 
 generateGrammarSource {
-	File internalDir = file("src/com/liferay/dynamic/data/mapping/form/values/query/internal")
-	File parserDir = new File(internalDir, "parser")
+	dependsOn cleanGenerateGrammarSource
 
 	doLast {
-		File grammarDir = new File(internalDir, "grammar")
+		copy {
+			filter {
+				String line ->
 
-		ant.replace dir: parserDir, includes: "*.java", token: "${grammarDir}${File.separator}"
+				line - (parserDirName.replace("/" as char, File.separatorChar) + File.separatorChar)
+			}
 
-		ant.fixcrlf includes: "*.java", javafiles: "yes", srcdir: parserDir, tab: "add"
+			filter(FixCrLfFilter, javafiles: true, tab: FixCrLfFilter.AddAsisRemove.newInstance("add"))
 
-		File sourceFormatterIgnoreFile = new File(parserDir, "source_formatter.ignore")
+			from outputDirectory
+			include "**/*.java"
+			into "src/main/java"
+		}
+
+		File sourceFormatterIgnoreFile = file("src/main/java/${parserDirName}/source_formatter.ignore")
 
 		sourceFormatterIgnoreFile.createNewFile()
+
+		copy {
+			from outputDirectory
+			exclude "**/*.java"
+			into "src/main/resources"
+		}
 	}
 
 	ext {
@@ -32,17 +54,9 @@ generateGrammarSource {
 	}
 
 	maxHeapSize = "1024m"
-	outputDirectory = parserDir
+	outputDirectory = new File(temporaryDir, "generated")
 }
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
-}
-
-sourceSets {
-	main {
-		antlr {
-			srcDirs = files("src/com/liferay/dynamic/data/mapping/form/values/query/internal/grammar")
-		}
-	}
 }

@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../social-networking-api/src"
+	apiDirName = "../social-networking-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../social-networking-test/test/integration"
+	testDirName = "../social-networking-test/src/testIntegration/java"
 }
 
 dependencies {

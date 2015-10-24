@@ -1,11 +1,18 @@
 import com.liferay.gradle.util.FileUtil
 
-configurations {
-	antlr
+import org.apache.tools.ant.filters.FixCrLfFilter
 
-	provided {
-		extendsFrom antlr
-	}
+apply plugin: "antlr"
+
+String parserDirName = "com/liferay/wiki/engine/creole/parser/parser"
+
+cleanGenerateGrammarSource {
+	delete "src/main/java/" + parserDirName
+	delete "src/main/resources/" + parserDirName
+}
+
+compileJava {
+	dependsOn.remove "generateGrammarSource"
 }
 
 dependencies {
@@ -15,44 +22,61 @@ dependencies {
 	compile project(":apps:wiki:wiki-engine-input-editor-common")
 }
 
-task buildCreoleParser(type: JavaExec)
+generateGrammarSource {
+	File grammarFile = file("src/main/antlr/${parserDirName}/Creole10.g")
 
-buildCreoleParser {
-	File destinationDir = file("src/com/liferay/wiki/engine/creole/parser/parser")
-	File grammarFile = file("src/com/liferay/wiki/engine/creole/parser/grammar/Creole10.g")
+	deleteAllActions()
 
-	args "-o", FileUtil.relativize(destinationDir, grammarFile.parentFile)
-	args grammarFile.name
-
-	classpath = configurations.antlr
+	dependsOn cleanGenerateGrammarSource
 
 	doFirst {
-		delete destinationDir
+		javaexec {
+			args "-o", FileUtil.relativize(generateGrammarSource.outputDirectory, grammarFile.parentFile)
+			args grammarFile.name
+
+			classpath = generateGrammarSource.antlrClasspath
+			main = "org.antlr.Tool"
+			maxHeapSize = generateGrammarSource.maxHeapSize
+			workingDir = grammarFile.parentFile
+		}
 	}
 
 	doLast {
-		ant.replace(file: "src/com/liferay/wiki/engine/creole/parser/parser/Creole10Lexer.java") {
-			replacetoken "public class Creole10Lexer"
+		copy {
+			eachFile {
+				if (name in ["Creole10Lexer.java", "Creole10Parser.java"]) {
+					String javaClass = name[0 .. -6]
 
-			replacevalue """\
+					filter {
+						String line ->
+
+						line.replace "public class ${javaClass}", """\
 @SuppressWarnings(\"all\")
-public class Creole10Lexer"""
+public class ${javaClass}"""
+					}
+				}
+			}
+
+			filter(FixCrLfFilter, javafiles: true, tab: FixCrLfFilter.AddAsisRemove.newInstance("add"))
+
+			from outputDirectory
+			include "**/*.java"
+			into "src/main/java/" + parserDirName
 		}
 
-		ant.replace(file: "src/com/liferay/wiki/engine/creole/parser/parser/Creole10Parser.java") {
-			replacetoken "public class Creole10Parser"
-
-			replacevalue """\
-@SuppressWarnings(\"all\")
-public class Creole10Parser"""
+		copy {
+			from outputDirectory
+			exclude "**/*.java"
+			into "src/main/resources/" + parserDirName
 		}
-
-		ant.fixcrlf includes: "*.java", javafiles: "yes", srcdir: "src/com/liferay/wiki/engine/creole/parser/parser", tab: "add"
 	}
 
-	main = "org.antlr.Tool"
+	ext {
+		autoClean = false
+	}
+
 	maxHeapSize = "1512m"
-	workingDir = grammarFile.parentFile
+	outputDirectory = new File(temporaryDir, "generated")
 }
 
 liferay {

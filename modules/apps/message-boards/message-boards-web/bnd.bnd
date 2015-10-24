@@ -8,5 +8,5 @@ Export-Package:\
 	com.liferay.message.boards.web.trash
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /message-boards-web

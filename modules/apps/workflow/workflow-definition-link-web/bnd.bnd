@@ -6,4 +6,4 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources

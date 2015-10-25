@@ -20,6 +20,7 @@ import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.convert.ConvertException;
 import com.liferay.portal.convert.ConvertProcess;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -67,6 +69,7 @@ import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -391,8 +394,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		final String className = ParamUtil.getString(
-			actionRequest, "className");
+		String className = ParamUtil.getString(actionRequest, "className");
 
 		taskContextMap.put("className", className);
 
@@ -411,6 +413,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "blocking", false);
 
 		if (blocking) {
+			final String uuid = PortalUUIDUtil.generate();
+
+			taskContextMap.put("uuid", uuid);
+
 			final CountDownLatch countDownLatch = new CountDownLatch(1);
 
 			MessageListener messageListener = new MessageListener() {
@@ -419,27 +425,30 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				public void receive(Message message)
 					throws MessageListenerException {
 
-					String taskExecutorClassName = message.getString(
-						"taskExecutorClassName");
+					try {
+						BackgroundTask backgroundTask =
+							BackgroundTaskManagerUtil.getBackgroundTask(
+								message.getLong("backgroundTaskId"));
 
-					String expectedExecutorName =
-						_REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR;
+						Map<String, Serializable> taskContextMap =
+							backgroundTask.getTaskContextMap();
 
-					if (Validator.isNotNull(className)) {
-						expectedExecutorName =
-							_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR;
+						if (!uuid.equals(taskContextMap.get("uuid"))) {
+							return;
+						}
+					}
+					catch (PortalException pe) {
+						throw new MessageListenerException(pe);
 					}
 
-					if (taskExecutorClassName.equals(expectedExecutorName)) {
-						int status = message.getInteger("status");
+					int status = message.getInteger("status");
 
-						if ((status ==
+					if ((status ==
 							BackgroundTaskConstants.STATUS_CANCELLED) ||
-							(status == BackgroundTaskConstants.STATUS_FAILED) ||
-							(status ==
-								BackgroundTaskConstants.STATUS_SUCCESSFUL))
+						(status == BackgroundTaskConstants.STATUS_FAILED) ||
+						(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
 
-							countDownLatch.countDown();
+						countDownLatch.countDown();
 					}
 				}
 			};

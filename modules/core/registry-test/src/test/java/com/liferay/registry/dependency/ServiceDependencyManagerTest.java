@@ -335,6 +335,8 @@ public class ServiceDependencyManagerTest {
 
 			if (!dependencyWaiter.isAlive()) {
 				Assert.assertFalse(dependenciesSatisfied.get());
+
+				return;
 			}
 
 			Assert.fail("Dependencies should have timed out");

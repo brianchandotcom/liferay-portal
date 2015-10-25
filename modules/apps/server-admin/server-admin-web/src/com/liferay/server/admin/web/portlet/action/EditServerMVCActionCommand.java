@@ -409,8 +409,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR;
 		}
 
-		boolean blocking = ParamUtil.getBoolean(
-			actionRequest, "blocking", false);
+		boolean blocking = ParamUtil.getBoolean(actionRequest, "blocking");
 
 		if (blocking) {
 			final String uuid = PortalUUIDUtil.generate();

@@ -397,10 +397,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String className = ParamUtil.getString(actionRequest, "className");
 
 		taskContextMap.put("className", className);
-
-		long[] companyIds = PortalInstances.getCompanyIds();
-
-		taskContextMap.put("companyIds", companyIds);
+		taskContextMap.put("companyIds", PortalInstances.getCompanyIds());
 
 		String taskExecutorClassName = _REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR;
 
@@ -409,72 +406,69 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR;
 		}
 
-		boolean blocking = ParamUtil.getBoolean(actionRequest, "blocking");
-
-		if (blocking) {
-			final String uuid = PortalUUIDUtil.generate();
-
-			taskContextMap.put("uuid", uuid);
-
-			final CountDownLatch countDownLatch = new CountDownLatch(1);
-
-			MessageListener messageListener = new MessageListener() {
-
-				@Override
-				public void receive(Message message)
-					throws MessageListenerException {
-
-					try {
-						BackgroundTask backgroundTask =
-							BackgroundTaskManagerUtil.getBackgroundTask(
-								message.getLong("backgroundTaskId"));
-
-						Map<String, Serializable> taskContextMap =
-							backgroundTask.getTaskContextMap();
-
-						if (!uuid.equals(taskContextMap.get("uuid"))) {
-							return;
-						}
-					}
-					catch (PortalException pe) {
-						throw new MessageListenerException(pe);
-					}
-
-					int status = message.getInteger("status");
-
-					if ((status ==
-							BackgroundTaskConstants.STATUS_CANCELLED) ||
-						(status == BackgroundTaskConstants.STATUS_FAILED) ||
-						(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
-
-						countDownLatch.countDown();
-					}
-				}
-			};
-
-			MessageBusUtil.registerMessageListener(
-				DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
-
-			long timeout = ParamUtil.getLong(
-				actionRequest, "timeout", Time.HOUR);
-
-			try {
-				BackgroundTaskManagerUtil.addBackgroundTask(
-					themeDisplay.getUserId(), CompanyConstants.SYSTEM,
-					"reindex", taskExecutorClassName, taskContextMap,
-					new ServiceContext());
-
-				countDownLatch.await(timeout, TimeUnit.MILLISECONDS);
-			}
-			finally {
-				MessageBusUtil.unregisterMessageListener(
-					DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
-			}
-		}
-		else {
+		if (!ParamUtil.getBoolean(actionRequest, "blocking")) {
 			BackgroundTaskManagerUtil.addBackgroundTask(
 				themeDisplay.getUserId(), CompanyConstants.SYSTEM, "reindex",
 				taskExecutorClassName, taskContextMap, new ServiceContext());
+
+			return;
+		}
+
+		final String uuid = PortalUUIDUtil.generate();
+
+		taskContextMap.put("uuid", uuid);
+
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		MessageListener messageListener = new MessageListener() {
+
+			@Override
+			public void receive(Message message)
+				throws MessageListenerException {
+
+				try {
+					BackgroundTask backgroundTask =
+						BackgroundTaskManagerUtil.getBackgroundTask(
+							message.getLong("backgroundTaskId"));
+
+					Map<String, Serializable> taskContextMap =
+						backgroundTask.getTaskContextMap();
+
+					if (!uuid.equals(taskContextMap.get("uuid"))) {
+						return;
+					}
+				}
+				catch (PortalException pe) {
+					throw new MessageListenerException(pe);
+				}
+
+				int status = message.getInteger("status");
+
+				if ((status ==
+						BackgroundTaskConstants.STATUS_CANCELLED) ||
+					(status == BackgroundTaskConstants.STATUS_FAILED) ||
+					(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+
+					countDownLatch.countDown();
+				}
+			}
+		};
+
+		MessageBusUtil.registerMessageListener(
+			DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
+
+		try {
+			BackgroundTaskManagerUtil.addBackgroundTask(
+				themeDisplay.getUserId(), CompanyConstants.SYSTEM, "reindex",
+				taskExecutorClassName, taskContextMap, new ServiceContext());
+
+			countDownLatch.await(
+				ParamUtil.getLong(actionRequest, "timeout", Time.HOUR),
+				TimeUnit.MILLISECONDS);
+		}
+		finally {
+			MessageBusUtil.unregisterMessageListener(
+				DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
 		}
 	}
 

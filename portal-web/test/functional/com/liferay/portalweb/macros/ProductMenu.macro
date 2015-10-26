@@ -36,6 +36,14 @@
 	</command>
 
 	<command name="gotoControlPanelSystem" summary="Navigate to Product Menu > Control Panel > System > ${portlet}">
+
+		<if>
+			<condition function="IsElementPresent#isVisible" locator1="DockbarAddpanelcontent#CONTENT_TAB" />
+			<then>
+				<execute function="Click#clickAt" locator1="Dockbar#ADD_ICON" />
+			</then>
+		</if>
+
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
 		<execute macro="ProductMenuHelper#expandCategory">

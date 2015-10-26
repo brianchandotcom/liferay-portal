@@ -411,6 +411,25 @@ public class LocalizationImplTest {
 			LocalizationUtil.getLocalization(xml, _GERMAN_LANGUAGE_ID, false));
 	}
 
+	@Test
+	public void testUpdateLocalizationChunkText() {
+		String englishChunkText = "foo&bar";
+		String spanishChunkText = "bar&foo";
+
+		Map<Locale, String> localizationMap = new HashMap<>();
+
+		localizationMap.put(LocaleUtil.US, englishChunkText);
+		localizationMap.put(LocaleUtil.SPAIN, spanishChunkText);
+
+		String xml = LocalizationUtil.updateLocalization(
+			localizationMap, _xml, "static-content", "en_US");
+
+		Assert.assertEquals(
+			englishChunkText, LocalizationUtil.getLocalization(xml, "en_US"));
+		Assert.assertEquals(
+			spanishChunkText, LocalizationUtil.getLocalization(xml, "es_ES"));
+	}
+
 	private static final String _ENGLISH_HELLO = "Hello World";
 
 	private static final String _ENGLISH_LANGUAGE_ID = LocaleUtil.toLanguageId(

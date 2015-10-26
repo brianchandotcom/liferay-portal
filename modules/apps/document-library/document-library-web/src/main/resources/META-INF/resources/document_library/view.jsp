@@ -165,6 +165,8 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	</div>
 </div>
 
+<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
+
 <%
 if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
 	PortalUtil.setPageSubtitle(folder.getName(), request);

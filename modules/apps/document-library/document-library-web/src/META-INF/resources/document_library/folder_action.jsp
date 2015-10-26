@@ -226,9 +226,15 @@ String iconMenuId = null;
 					<c:if test="<%= folder.isMountPoint() %>">
 
 						<%
-						LocalRepository localRepository = RepositoryProviderUtil.getLocalRepository(folder.getRepositoryId());
+						LocalRepository localRepository = null;
 
-						if (localRepository.isCapabilityProvided(TemporaryFileEntriesCapability.class)) {
+						try {
+							localRepository = RepositoryProviderUtil.getLocalRepository(folder.getRepositoryId());
+						}
+						catch (UndeployedExternalRepositoryException uere) {
+						}
+
+						if ((localRepository != null) && localRepository.isCapabilityProvided(TemporaryFileEntriesCapability.class)) {
 						%>
 
 							<portlet:actionURL name="/document_library/edit_folder" var="deleteExpiredTemporaryFileEntriesURL">

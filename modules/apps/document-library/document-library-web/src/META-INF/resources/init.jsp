@@ -65,6 +65,7 @@ page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.repository.LocalRepository" %><%@
 page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
 page import="com.liferay.portal.kernel.repository.RepositoryProviderUtil" %><%@
+page import="com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException" %><%@
 page import="com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileShortcut" %><%@

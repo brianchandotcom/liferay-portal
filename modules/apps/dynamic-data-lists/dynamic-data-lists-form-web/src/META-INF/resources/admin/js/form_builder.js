@@ -119,36 +119,6 @@ AUI.add(
 						return FieldTypes.get(field.get('type'));
 					},
 
-					getField: function(name) {
-						var instance = this;
-
-						return AArray.find(
-							instance.getFields(),
-							function(item) {
-								return item.get('name') === name;
-							}
-						);
-					},
-
-					getFields: function() {
-						var instance = this;
-
-						var fields = [];
-
-						var visitor = instance.get('visitor');
-
-						visitor.set(
-							'fieldHandler',
-							function(field) {
-								fields.push(field);
-							}
-						);
-
-						visitor.visit();
-
-						return fields;
-					},
-
 					_afterActivePageNumberChange: function() {
 						var instance = this;
 
@@ -181,6 +151,19 @@ AUI.add(
 						instance._syncRowsLastColumnUI();
 					},
 
+					_afterSelectFieldType: function(event) {
+						var instance = this;
+
+						var fieldType = event.fieldType;
+
+						instance.hideFieldsPanel();
+
+						instance.showFieldSettingsPanel(
+							instance.createField(fieldType),
+							fieldType.get('label')
+						);
+					},
+
 					_getPageManagerInstance: function(config) {
 						var instance = this;
 
@@ -211,19 +194,6 @@ AUI.add(
 						visitor.set('pages', instance.get('layouts'));
 
 						return visitor;
-					},
-
-					_onClickFieldType: function(event) {
-						var instance = this;
-
-						var fieldType = event.currentTarget.getData('fieldType');
-
-						instance.hideFieldsPanel();
-
-						instance.showFieldSettingsPanel(
-							instance.createField(fieldType),
-							fieldType.get('label')
-						);
 					},
 
 					_onClickPaginationItem: function(event) {

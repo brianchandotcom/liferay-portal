@@ -55,6 +55,8 @@ AUI.add(
 
 							tooltip.set('trigger', helpIcon);
 						}
+
+						return instance;
 					},
 
 					_getLocalizedValue: function(localizedValue) {

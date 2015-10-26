@@ -15,6 +15,7 @@
 								'liferay-ddl-form-builder-field-support',
 								'liferay-ddl-form-builder-layout-deserializer',
 								'liferay-ddl-form-builder-layout-visitor',
+								'liferay-ddl-form-builder-pages-manager',
 								'liferay-ddm-form-field-types',
 								'liferay-ddm-form-renderer'
 							]

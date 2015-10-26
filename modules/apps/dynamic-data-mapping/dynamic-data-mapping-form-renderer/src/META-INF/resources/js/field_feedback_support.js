@@ -81,14 +81,10 @@ AUI.add(
 				var instance = this;
 
 				if (instance.hasValidation()) {
+					var container = instance.get('container');
 					var hasErrors = instance.hasErrors();
 
-					if (hasErrors) {
-						instance.showErrorFeedback();
-					}
-					else {
-						instance.showSuccessFeedback();
-					}
+					container.toggleClass('has-error', hasErrors);
 				}
 			},
 

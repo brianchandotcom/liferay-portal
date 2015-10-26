@@ -152,7 +152,7 @@ public class ReleaseInfo {
 
 	private static final String _CODE_NAME = "Wilberforce";
 
-	private static final String _DATE = "June 25, 2015";
+	private static final String _DATE = "October 29, 2015";
 
 	private static final String _NAME = "Liferay Portal Community Edition";
 
@@ -168,7 +168,7 @@ public class ReleaseInfo {
 
 	private static final String _VERSION = "7.0.0";
 
-	private static final String _VERSION_DISPLAY_NAME = "7.0.0 CE M6";
+	private static final String _VERSION_DISPLAY_NAME = "7.0.0 CE A2";
 
 	private static String _releaseInfo;
 	private static String _serverInfo;

@@ -24,20 +24,32 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 %>
 
 <c:if test="<%= !orderColumns.isEmpty() %>">
-	<li>
-		<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="orderByCol">
+	<li class="dropdown">
+		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+			<span class="management-bar-item-title"><liferay-ui:message key="order-by" />: <liferay-ui:message key="<%= orderColumns.get(orderByCol) %>" /></span>
+			<span class="icon-sort"></span>
+		</a>
+
+		<ul class="dropdown-menu">
 
 			<%
+			PortletURL orderByColURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+			orderByColURL.setParameter("orderByType", orderByType);
+
 			for (String orderColumn : orderColumns.keySet()) {
+				orderByColURL.setParameter("orderByCol", orderColumn);
 			%>
 
-				<aui:option label="<%= orderColumns.get(orderColumn) %>" selected="<%= orderByCol.equals(orderColumn) %>" value="<%= orderColumn %>" />
+				<li class="<%= orderByCol.equals(orderColumn) ? "active" : StringPool.BLANK %>">
+					<aui:a href="<%= orderByColURL.toString() %>" label="<%= orderColumns.get(orderColumn) %>" />
+				</li>
 
 			<%
 			}
 			%>
 
-		</aui:select>
+		</ul>
 	</li>
 </c:if>
 
@@ -64,25 +76,3 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 
 	<a class="btn hidden-xs" href="<%= orderByColDescURL %>"><span class="icon-caret-down icon-monospaced"></span></a>
 </li>
-
-<aui:script>
-
-	<%
-	PortletURL orderByTypeURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-	orderByTypeURL.setParameter("orderByType", orderByType);
-	%>
-
-	var orderByCol = $('#<%= namespace %>orderByCol');
-
-	orderByCol.on(
-		'change',
-		function(event) {
-			var uri = '<%= orderByTypeURL %>';
-
-			uri = Liferay.Util.addParams('<%= namespace %>orderByCol=' + orderByCol.val(), uri);
-
-			window.location.href = uri;
-		}
-	);
-</aui:script>

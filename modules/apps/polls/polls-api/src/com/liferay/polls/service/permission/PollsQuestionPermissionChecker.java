@@ -16,7 +16,7 @@ package com.liferay.polls.service.permission;
 
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
+import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -24,6 +24,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -64,7 +65,7 @@ public class PollsQuestionPermissionChecker
 			String actionId)
 		throws PortalException {
 
-		PollsQuestion question = PollsQuestionLocalServiceUtil.getQuestion(
+		PollsQuestion question = _pollsQuestionLocalService.getQuestion(
 			questionId);
 
 		return contains(permissionChecker, question, actionId);
@@ -103,5 +104,14 @@ public class PollsQuestionPermissionChecker
 
 		check(permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setPollsQuestionLocalService(
+		PollsQuestionLocalService pollsQuestionLocalService) {
+
+		_pollsQuestionLocalService = pollsQuestionLocalService;
+	}
+
+	private static PollsQuestionLocalService _pollsQuestionLocalService;
 
 }

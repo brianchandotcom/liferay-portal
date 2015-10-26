@@ -16,7 +16,7 @@ package com.liferay.polls.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
+import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shinn Lok
@@ -48,7 +49,7 @@ public class PollsQuestionStagedModelDataHandler
 	public void deleteStagedModel(PollsQuestion question)
 		throws PortalException {
 
-		PollsQuestionLocalServiceUtil.deleteQuestion(question);
+		_pollsQuestionLocalService.deleteQuestion(question);
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class PollsQuestionStagedModelDataHandler
 	public PollsQuestion fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
+		return _pollsQuestionLocalService.fetchPollsQuestionByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -76,10 +77,9 @@ public class PollsQuestionStagedModelDataHandler
 	public List<PollsQuestion> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return PollsQuestionLocalServiceUtil.
-			getPollsQuestionsByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<PollsQuestion>());
+		return _pollsQuestionLocalService.getPollsQuestionsByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<PollsQuestion>());
 	}
 
 	@Override
@@ -165,14 +165,14 @@ public class PollsQuestionStagedModelDataHandler
 			if (existingQuestion == null) {
 				serviceContext.setUuid(question.getUuid());
 
-				importedQuestion = PollsQuestionLocalServiceUtil.addQuestion(
+				importedQuestion = _pollsQuestionLocalService.addQuestion(
 					userId, question.getTitleMap(),
 					question.getDescriptionMap(), expirationMonth,
 					expirationDay, expirationYear, expirationHour,
 					expirationMinute, neverExpire, null, serviceContext);
 			}
 			else {
-				importedQuestion = PollsQuestionLocalServiceUtil.updateQuestion(
+				importedQuestion = _pollsQuestionLocalService.updateQuestion(
 					userId, existingQuestion.getQuestionId(),
 					question.getTitleMap(), question.getDescriptionMap(),
 					expirationMonth, expirationDay, expirationYear,
@@ -181,7 +181,7 @@ public class PollsQuestionStagedModelDataHandler
 			}
 		}
 		else {
-			importedQuestion = PollsQuestionLocalServiceUtil.addQuestion(
+			importedQuestion = _pollsQuestionLocalService.addQuestion(
 				userId, question.getTitleMap(), question.getDescriptionMap(),
 				expirationMonth, expirationDay, expirationYear, expirationHour,
 				expirationMinute, neverExpire, null, serviceContext);
@@ -189,5 +189,14 @@ public class PollsQuestionStagedModelDataHandler
 
 		portletDataContext.importClassedModel(question, importedQuestion);
 	}
+
+	@Reference(unbind = "-")
+	protected void setPollsQuestionLocalService(
+		PollsQuestionLocalService pollsQuestionLocalService) {
+
+		_pollsQuestionLocalService = pollsQuestionLocalService;
+	}
+
+	private PollsQuestionLocalService _pollsQuestionLocalService;
 
 }

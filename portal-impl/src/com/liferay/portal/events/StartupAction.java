@@ -160,11 +160,11 @@ public class StartupAction extends SimpleAction {
 		if (dbType.equals(DB.TYPE_MYSQL) &&
 			GetterUtil.getFloat(db.getVersionString()) < 5.6F) {
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Please upgrade to at least MySQL 5.6.4. The portal will " +
-						"soon drop support for older versions of MySQL.");
-			}
+			_log.error(
+				"Please upgrade to at least MySQL 5.6.4. The portal no " +
+					"longer supports older versions of MySQL.");
+
+			System.exit(1);
 		}
 
 		// Upgrade

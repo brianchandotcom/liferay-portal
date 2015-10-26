@@ -51,7 +51,7 @@ for (long calendarId : calendarIds) {
 Calendar defaultCalendar = null;
 
 for (Calendar groupCalendar : groupCalendars) {
-	if (groupCalendar.isDefaultCalendar()) {
+	if (groupCalendar.isDefaultCalendar() && CalendarPermission.contains(themeDisplay.getPermissionChecker(), groupCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) {
 		defaultCalendar = groupCalendar;
 	}
 }

@@ -680,6 +680,10 @@ public class ThemeDisplay
 		return _realUser.getUserId();
 	}
 
+	public Group getRefererGroup() {
+		return _refererGroup;
+	}
+
 	public long getRefererGroupId() {
 		return _refererGroupId;
 	}
@@ -1556,6 +1560,15 @@ public class ThemeDisplay
 
 	public void setRefererGroupId(long refererGroupId) {
 		_refererGroupId = refererGroupId;
+
+		if (_refererGroupId > 0) {
+			try {
+				_refererGroup = GroupLocalServiceUtil.getGroup(_refererGroupId);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
 	}
 
 	public void setRefererPlid(long refererPlid) {
@@ -1897,6 +1910,7 @@ public class ThemeDisplay
 	private int _realCompanyLogoHeight;
 	private int _realCompanyLogoWidth;
 	private User _realUser;
+	private Group _refererGroup;
 	private long _refererGroupId;
 	private long _refererPlid;
 	private transient HttpServletRequest _request;

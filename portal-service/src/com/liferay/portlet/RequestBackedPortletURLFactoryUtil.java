@@ -14,20 +14,26 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 public class RequestBackedPortletURLFactoryUtil {
 
@@ -49,7 +55,29 @@ public class RequestBackedPortletURLFactoryUtil {
 		}
 
 		return new LiferayPortletResponseRequestBackedPortletURLFactory(
+			PortalUtil.getLiferayPortletRequest(portletRequest),
 			PortalUtil.getLiferayPortletResponse(portletResponse));
+	}
+
+	private static PortletURL _populateControlPanelPortletURL(
+		LiferayPortletURL liferayPortletURL, long refererGroupId,
+		long refererPlid) {
+
+		if (refererGroupId > 0) {
+			liferayPortletURL.setRefererGroupId(refererGroupId);
+		}
+
+		if (refererPlid > 0) {
+			liferayPortletURL.setRefererPlid(refererPlid);
+		}
+
+		try {
+			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		catch (WindowStateException wse) {
+		}
+
+		return liferayPortletURL;
 	}
 
 	private static class HttpServletRequestRequestBackedPortletURLFactory
@@ -63,6 +91,67 @@ public class RequestBackedPortletURLFactoryUtil {
 		}
 
 		@Override
+		public PortletURL createControlPanelActionURL(
+			String portletId, Group group, long refererGroupId,
+			long refererPlid) {
+
+			return createControlPanelPortletURL(
+				portletId, group, refererGroupId, refererPlid,
+				PortletRequest.ACTION_PHASE);
+		}
+
+		@Override
+		public PortletURL createControlPanelPortletURL(
+			String portletId, Group group, long refererGroupId,
+			long refererPlid, String lifecycle) {
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if (group == null) {
+				group = themeDisplay.getScopeGroup();
+			}
+
+			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
+				_request, portletId,
+				PortalUtil.getControlPanelLayout(
+					themeDisplay.getCompanyId(), group),
+				lifecycle);
+
+			return _populateControlPanelPortletURL(
+				liferayPortletURL, refererGroupId, refererPlid);
+		}
+
+		@Override
+		public PortletURL createControlPanelRenderURL(
+			String portletId, Group group, long refererGroupId,
+			long refererPlid) {
+
+			return createControlPanelPortletURL(
+				portletId, group, refererGroupId, refererPlid,
+				PortletRequest.RENDER_PHASE);
+		}
+
+		@Override
+		public PortletURL createControlPanelResourceURL(
+			String portletId, Group group, long refererGroupId,
+			long refererPlid) {
+
+			return createControlPanelPortletURL(
+				portletId, group, refererGroupId, refererPlid,
+				PortletRequest.RESOURCE_PHASE);
+		}
+
+		@Override
+		public PortletURL createPortletURL(String portletId, String lifecycle) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			return PortletURLFactoryUtil.create(
+				_request, portletId, themeDisplay.getPlid(), lifecycle);
+		}
+
+		@Override
 		public PortletURL createRenderURL(String portletId) {
 			return createPortletURL(portletId, PortletRequest.RENDER_PHASE);
 		}
@@ -70,16 +159,6 @@ public class RequestBackedPortletURLFactoryUtil {
 		@Override
 		public PortletURL createResourceURL(String portletId) {
 			return createPortletURL(portletId, PortletRequest.RESOURCE_PHASE);
-		}
-
-		protected PortletURL createPortletURL(
-			String portletId, String lifecycle) {
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			return PortletURLFactoryUtil.create(
-				_request, portletId, themeDisplay.getPlid(), lifecycle);
 		}
 
 		private HttpServletRequestRequestBackedPortletURLFactory(
@@ -101,6 +180,65 @@ public class RequestBackedPortletURLFactoryUtil {
 		}
 
 		@Override
+		public PortletURL createControlPanelActionURL(
+			String portletId, Group group, long refererGroupId,
+			long refererPlid) {
+
+			return createControlPanelPortletURL(
+				portletId, group, refererGroupId, refererPlid,
+				PortletRequest.ACTION_PHASE);
+		}
+
+		@Override
+		public PortletURL createControlPanelPortletURL(
+			String portletId, Group group, long refererGroupId,
+			long refererPlid, String lifecycle) {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (group == null) {
+				group = themeDisplay.getScopeGroup();
+			}
+
+			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
+				_liferayPortletRequest, portletId,
+				PortalUtil.getControlPanelLayout(
+					themeDisplay.getCompanyId(), group),
+				lifecycle);
+
+			return _populateControlPanelPortletURL(
+				liferayPortletURL, refererGroupId, refererPlid);
+		}
+
+		@Override
+		public PortletURL createControlPanelRenderURL(
+			String portletId, Group group, long refererGroupId,
+			long refererPlid) {
+
+			return createControlPanelPortletURL(
+				portletId, group, refererGroupId, refererPlid,
+				PortletRequest.RENDER_PHASE);
+		}
+
+		@Override
+		public PortletURL createControlPanelResourceURL(
+			String portletId, Group group, long refererGroupId,
+			long refererPlid) {
+
+			return createControlPanelPortletURL(
+				portletId, group, refererGroupId, refererPlid,
+				PortletRequest.RESOURCE_PHASE);
+		}
+
+		@Override
+		public PortletURL createPortletURL(String portletId, String lifecycle) {
+			return _liferayPortletResponse.createLiferayPortletURL(
+				portletId, lifecycle);
+		}
+
+		@Override
 		public PortletURL createRenderURL(String portletId) {
 			return _liferayPortletResponse.createRenderURL(portletId);
 		}
@@ -111,11 +249,14 @@ public class RequestBackedPortletURLFactoryUtil {
 		}
 
 		private LiferayPortletResponseRequestBackedPortletURLFactory(
+			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse) {
 
+			_liferayPortletRequest = liferayPortletRequest;
 			_liferayPortletResponse = liferayPortletResponse;
 		}
 
+		private final LiferayPortletRequest _liferayPortletRequest;
 		private final LiferayPortletResponse _liferayPortletResponse;
 
 	}

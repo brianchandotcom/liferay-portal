@@ -128,9 +128,8 @@ public class SAPPortlet extends MVCPortlet {
 		printWriter.write(jsonArray.toString());
 	}
 
-	public Set<Map<String, String>> getRemoteServiceClassNames() {
-		Set<Map<String, String>> remoteServiceClassNames =
-			new LinkedHashSet<>();
+	public Set<Map<String, String>> getRemoteServiceClassMaps() {
+		Set<Map<String, String>> remoteServiceClassMaps = new LinkedHashSet<>();
 
 		Set<String> contextNames =
 			_jsonWebServiceActionsManager.getContextNames();
@@ -143,10 +142,9 @@ public class SAPPortlet extends MVCPortlet {
 			for (Map.Entry<String, Set<JSONWebServiceActionMapping>> entry :
 					jsonWebServiceActionMappingsMap.entrySet()) {
 
-				Map<String, String> remoteServiceClassName = new HashMap<>();
+				Map<String, String> remoteServiceClassMap = new HashMap<>();
 
-				remoteServiceClassName.put(
-					"serviceClassName", entry.getKey());
+				remoteServiceClassMap.put("serviceClassName", entry.getKey());
 
 				Set<JSONWebServiceActionMapping>
 					jsonWebServiceActionMappingsSet = entry.getValue();
@@ -157,15 +155,15 @@ public class SAPPortlet extends MVCPortlet {
 				JSONWebServiceActionMapping firstJSONWebServiceActionMapping =
 					iterator.next();
 
-				remoteServiceClassName.put(
+				remoteServiceClassMap.put(
 					"contextName",
 					firstJSONWebServiceActionMapping.getContextName());
 
-				remoteServiceClassNames.add(remoteServiceClassName);
+				remoteServiceClassMaps.add(remoteServiceClassMap);
 			}
 		}
 
-		return remoteServiceClassNames;
+		return remoteServiceClassMaps;
 	}
 
 	@Override
@@ -176,12 +174,11 @@ public class SAPPortlet extends MVCPortlet {
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 
 		if (mvcPath.equals("/edit_entry.jsp")) {
-			Set<Map<String, String>> remoteServiceClassNames =
-				getRemoteServiceClassNames();
+			Set<Map<String, String>> remoteServiceClassMaps =
+				getRemoteServiceClassMaps();
 
 			renderRequest.setAttribute(
-				SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES,
-				remoteServiceClassNames);
+				SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES, remoteServiceClassMaps);
 		}
 
 		super.render(renderRequest, renderResponse);

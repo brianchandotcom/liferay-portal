@@ -350,7 +350,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		}
 	}
 
-	protected volatile Props props;
+	protected Props props;
 
 	private String _unescape(String text) {
 		return StringUtil.replace(text, "&", ";", _unescapeMap);

@@ -21,8 +21,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -128,7 +131,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteRepositories(long groupId) {
+	public void deleteRepositories(long groupId) throws PortalException {
 		List<Repository> repositories = repositoryPersistence.findByGroupId(
 			groupId);
 
@@ -138,17 +141,32 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Repository deleteRepository(long repositoryId) {
+	public Repository deleteRepository(long repositoryId)
+		throws PortalException {
+
 		Repository repository = repositoryPersistence.fetchByPrimaryKey(
 			repositoryId);
 
-		if (repository != null) {
-			repositoryLocalService.deleteRepository(repository);
+		if (repository == null) {
+			return null;
 		}
 
-		repositoryProvider.invalidateRepository(repositoryId);
+		LocalRepository localRepository = repositoryProvider.getLocalRepository(
+			repositoryId);
 
-		return repository;
+		if (localRepository.isCapabilityProvided(
+				RepositoryEventTriggerCapability.class)) {
+
+			RepositoryEventTriggerCapability repositoryEventTriggerCapability =
+				localRepository.getCapability(
+					RepositoryEventTriggerCapability.class);
+
+			repositoryEventTriggerCapability.trigger(
+				RepositoryEventType.Delete.class, LocalRepository.class,
+				localRepository);
+		}
+
+		return repositoryLocalService.deleteRepository(repository);
 	}
 
 	@Override

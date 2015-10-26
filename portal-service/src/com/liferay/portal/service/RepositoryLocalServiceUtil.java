@@ -107,7 +107,8 @@ public class RepositoryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteRepositories(long groupId) {
+	public static void deleteRepositories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteRepositories(groupId);
 	}
 

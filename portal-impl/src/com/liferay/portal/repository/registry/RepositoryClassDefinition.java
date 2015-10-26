@@ -20,10 +20,15 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.repository.InitializedLocalRepository;
 import com.liferay.portal.repository.InitializedRepository;
@@ -34,6 +39,8 @@ import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerC
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Adolfo Pérez
@@ -62,6 +69,10 @@ public class RepositoryClassDefinition
 	@Override
 	public LocalRepository createLocalRepository(long repositoryId)
 		throws PortalException {
+
+		if (_localRepositoryCache.containsKey(repositoryId)) {
+			return _localRepositoryCache.get(repositoryId);
+		}
 
 		InitializedLocalRepository initializedLocalRepository =
 			new InitializedLocalRepository();
@@ -95,12 +106,18 @@ public class RepositoryClassDefinition
 		initializedLocalRepository.setDocumentRepository(
 			capabilityLocalRepository);
 
+		_localRepositoryCache.put(repositoryId, capabilityLocalRepository);
+
 		return capabilityLocalRepository;
 	}
 
 	@Override
 	public Repository createRepository(long repositoryId)
 		throws PortalException {
+
+		if (_repositoryCache.containsKey(repositoryId)) {
+			return _repositoryCache.get(repositoryId);
+		}
 
 		InitializedRepository initializedRepository =
 			new InitializedRepository();
@@ -132,6 +149,8 @@ public class RepositoryClassDefinition
 
 		initializedRepository.setDocumentRepository(capabilityRepository);
 
+		_repositoryCache.put(repositoryId, capabilityRepository);
+
 		return capabilityRepository;
 	}
 
@@ -153,6 +172,11 @@ public class RepositoryClassDefinition
 		return _repositoryDefiner.getSupportedParameters();
 	}
 
+	public void invalidateCache() {
+		_repositoryCache.clear();
+		_localRepositoryCache.clear();
+	}
+
 	@Override
 	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
 		if (_repositoryFactory != null) {
@@ -169,6 +193,11 @@ public class RepositoryClassDefinition
 
 		_repositoryDefiner = repositoryDefiner;
 		_rootRepositoryEventTrigger = rootRepositoryEventTrigger;
+	}
+
+	protected void invalidateCachedRepository(long repositoryId) {
+		_repositoryCache.remove(repositoryId);
+		_localRepositoryCache.remove(repositoryId);
 	}
 
 	protected void setUpCommonCapabilities(
@@ -194,10 +223,41 @@ public class RepositoryClassDefinition
 				new LiferayRepositoryEventTriggerCapability(
 					repositoryEventTrigger));
 		}
+
+		capabilityRegistry.addSupportedCapability(
+			CacheCapability.class, new CacheCapability());
 	}
 
+	private final Map<Long, LocalRepository> _localRepositoryCache =
+		new ConcurrentHashMap<>();
+	private final Map<Long, Repository> _repositoryCache =
+		new ConcurrentHashMap<>();
 	private final RepositoryDefiner _repositoryDefiner;
 	private RepositoryFactory _repositoryFactory;
 	private final RepositoryEventTrigger _rootRepositoryEventTrigger;
+
+	private class CacheCapability implements Capability, RepositoryEventAware {
+
+		@Override
+		public void registerRepositoryEventListeners(
+			RepositoryEventRegistry repositoryEventRegistry) {
+
+			repositoryEventRegistry.registerRepositoryEventListener(
+				RepositoryEventType.Delete.class, LocalRepository.class,
+				new RepositoryEventListener
+					<RepositoryEventType.Delete, LocalRepository>() {
+
+					@Override
+					public void execute(LocalRepository localRepository)
+						throws PortalException {
+
+						invalidateCachedRepository(
+							localRepository.getRepositoryId());
+					}
+
+				});
+		}
+
+	}
 
 }

@@ -98,7 +98,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 		com.liferay.portal.model.PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteRepositories(long groupId);
+	public void deleteRepositories(long groupId) throws PortalException;
 
 	/**
 	* Deletes the repository from the database. Also notifies the appropriate model listeners.

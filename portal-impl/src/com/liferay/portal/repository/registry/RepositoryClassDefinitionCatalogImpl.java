@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.registry;
 
+import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -40,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Adolfo Pérez
  */
 public class RepositoryClassDefinitionCatalogImpl
-	implements RepositoryClassDefinitionCatalog {
+	implements CacheRegistryItem, RepositoryClassDefinitionCatalog {
 
 	@Override
 	public Iterable<RepositoryClassDefinition>
@@ -55,10 +56,24 @@ public class RepositoryClassDefinitionCatalogImpl
 	}
 
 	@Override
+	public String getRegistryName() {
+		return getClass().getName();
+	}
+
+	@Override
 	public RepositoryClassDefinition getRepositoryClassDefinition(
 		String className) {
 
 		return _repositoryClassDefinitions.get(className);
+	}
+
+	@Override
+	public void invalidate() {
+		for (RepositoryClassDefinition repositoryClassDefinition :
+				_repositoryClassDefinitions.values()) {
+
+			repositoryClassDefinition.invalidateCache();
+		}
 	}
 
 	public void loadDefaultRepositoryDefiners() {

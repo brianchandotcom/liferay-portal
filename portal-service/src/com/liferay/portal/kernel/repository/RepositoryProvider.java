@@ -62,6 +62,4 @@ public interface RepositoryProvider {
 
 	public Repository getRepository(long repositoryId) throws PortalException;
 
-	public void invalidateRepository(long repositoryId);
-
 }

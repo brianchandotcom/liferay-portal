@@ -47,14 +47,9 @@ public class PoshiRunner {
 
 		List<String> classCommandNames = new ArrayList<>();
 		String testNameString = PropsValues.TEST_NAME;
-		List<String> testNames = new ArrayList<>();
 
-		if (testNameString.contains(",")) {
-			testNames = Arrays.asList(testNameString.split("\\s*,\\s*"));
-		}
-		else {
-			testNames = Arrays.asList(testNameString);
-		}
+		List<String> testNames = Arrays.asList(
+			testNameString.split("\\s*,\\s*"));
 
 		for (String testName : testNames) {
 			PoshiRunnerValidation.validate(testName);

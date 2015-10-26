@@ -191,8 +191,14 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
 
+		boolean stagedLocally = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("staged"));
 		boolean stagedRemotely = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("stagedRemotely"));
+
+		if (!stagedLocally && !stagedRemotely) {
+			return;
+		}
 
 		if (stagedRemotely) {
 			String remoteURL = StagingUtil.buildRemoteURL(

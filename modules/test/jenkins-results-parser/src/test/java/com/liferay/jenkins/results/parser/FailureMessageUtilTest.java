@@ -272,7 +272,8 @@ public class FailureMessageUtilTest {
 		"expected-results/FailureMessageUtilTest.html";
 
 	private static final File _testDependenciesDir = new File(
-		"src/test/resources/com/liferay/results/parser/dependencies/");
+		"src/test/resources/com/liferay/results/parser/dependencies/" +
+		"FailureMessageUtilTest");
 
 	private final Project _project;
 

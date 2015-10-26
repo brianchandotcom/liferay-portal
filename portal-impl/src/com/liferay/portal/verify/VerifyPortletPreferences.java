@@ -73,14 +73,12 @@ public class VerifyPortletPreferences extends VerifyProcess {
 
 			});
 		portletPreferencesActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.
+				PerformActionMethod<PortletPreferences>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(PortletPreferences portletPreferences)
 					throws PortalException {
-
-					PortletPreferences portletPreferences =
-						(PortletPreferences)object;
 
 					long layoutRevisionId = portletPreferences.getPlid();
 

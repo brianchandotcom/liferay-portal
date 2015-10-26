@@ -147,5 +147,5 @@ request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAs
 </c:if>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.asset_publisher.view_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.view_jsp");
 %>

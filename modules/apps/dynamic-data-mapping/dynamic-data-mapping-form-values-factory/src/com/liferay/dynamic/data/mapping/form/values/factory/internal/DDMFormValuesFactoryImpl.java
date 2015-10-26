@@ -136,7 +136,12 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		DDMFormField ddmFormField, Set<String> ddmFormFieldParameterNames) {
 
 		for (String ddmFormFieldParameterName : ddmFormFieldParameterNames) {
-			if (ddmFormFieldParameterName.contains(ddmFormField.getName())) {
+			String[] ddmFormFieldParameterNameParts =
+				getDDMFormFieldParameterNameParts(ddmFormFieldParameterName);
+
+			String fieldName = getFieldName(ddmFormFieldParameterNameParts);
+
+			if (fieldName.equals(ddmFormField.getName())) {
 				return true;
 			}
 		}
@@ -278,6 +283,12 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		}
 
 		return availableLocales;
+	}
+
+	protected String[] getDDMFormFieldParameterNameParts(
+		String ddmFormFieldParameterName) {
+
+		return StringUtil.split(ddmFormFieldParameterName, StringPool.DOLLAR);
 	}
 
 	protected Set<String> getDDMFormFieldParameterNames(
@@ -495,8 +506,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		String lastDDMFormFieldParameterName = getLastDDMFormFieldParameterName(
 			ddmFormFieldParameterName);
 
-		return StringUtil.split(
-			lastDDMFormFieldParameterName, StringPool.DOLLAR);
+		return getDDMFormFieldParameterNameParts(lastDDMFormFieldParameterName);
 	}
 
 	protected boolean isDDMFormFieldParameter(String parameterName) {

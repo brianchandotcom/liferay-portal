@@ -191,7 +191,8 @@ public class PortletCSSPortlet extends MVCPortlet {
 
 		String linkToLayoutUuid = GetterUtil.getString(
 			portletDataJSONObject.getString("portletLinksTarget"));
-		String showBorders = portletDataJSONObject.getString("showBorders");
+		String portletDecoratorId = portletDataJSONObject.getString(
+			"portletDecoratorId");
 		JSONObject titlesJSONObject = portletDataJSONObject.getJSONObject(
 			"titles");
 		boolean useCustomTitle = portletDataJSONObject.getBoolean(
@@ -228,23 +229,20 @@ public class PortletCSSPortlet extends MVCPortlet {
 		portletSetup.setValue(
 			"portletSetupUseCustomTitle", String.valueOf(useCustomTitle));
 
-		if (Validator.isNotNull(showBorders)) {
-			boolean showBordersBoolean = portletDataJSONObject.getBoolean(
-				"showBorders");
-
-			portletSetup.setValue(
-				"portletSetupShowBorders", String.valueOf(showBordersBoolean));
-		}
-		else {
-			portletSetup.reset("portletSetupShowBorders");
-		}
-
 		if (Validator.isNotNull(linkToLayoutUuid)) {
 			portletSetup.setValue(
 				"portletSetupLinkToLayoutUuid", linkToLayoutUuid);
 		}
 		else {
 			portletSetup.reset("portletSetupLinkToLayoutUuid");
+		}
+
+		if (Validator.isNotNull(portletDecoratorId)) {
+			portletSetup.setValue(
+				"portletSetupPortletDecoratorId", portletDecoratorId);
+		}
+		else {
+			portletSetup.reset("portletSetupPortletDecoratorId");
 		}
 
 		portletSetup.setValue("portletSetupCss", css);

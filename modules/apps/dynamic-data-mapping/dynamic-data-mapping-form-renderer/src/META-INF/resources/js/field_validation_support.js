@@ -31,7 +31,10 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
+				var evaluator = instance.get('evaluator');
+
 				instance._eventHandlers.push(
+					evaluator.after('evaluationEnded', A.bind('_afterValidationEvaluationEnded', instance)),
 					instance.after('blur', instance._afterBlur),
 					instance.after('parentChange', instance._afterParentChange)
 				);
@@ -46,11 +49,13 @@ AUI.add(
 			hasValidation: function() {
 				var instance = this;
 
+				var required = instance.get('required');
+
 				var validation = instance.get('validation');
 
 				var expression = validation.expression;
 
-				return !!expression && expression !== 'true';
+				return required || (!!expression && expression !== 'true');
 			},
 
 			processEvaluation: function(result) {
@@ -75,22 +80,23 @@ AUI.add(
 
 				var instanceId = instance.get('instanceId');
 
-				var validation = Util.getFieldByKey(result, instanceId, 'instanceId');
+				var fieldData = Util.getFieldByKey(result, instanceId, 'instanceId');
 
-				if (validation) {
-					var errorMessage = validation.errorMessage;
+				if (fieldData) {
+					instance.hideErrorMessage();
 
-					if (!errorMessage && !validation.valid) {
-						var strings = instance.get('strings');
+					if (fieldData.visible) {
+						var errorMessage = fieldData.errorMessage;
 
-						errorMessage = strings.defaultErrorMessage;
-					}
+						if (!errorMessage && !fieldData.valid) {
+							var strings = instance.get('strings');
 
-					if (errorMessage) {
-						instance.set('errorMessage', errorMessage);
-					}
-					else {
-						instance.hideErrorMessage();
+							errorMessage = strings.defaultErrorMessage;
+						}
+
+						if (errorMessage) {
+							instance.set('errorMessage', errorMessage);
+						}
 					}
 				}
 			},
@@ -105,10 +111,6 @@ AUI.add(
 
 					evaluator.evaluate(
 						function(result) {
-							instance.hideFeedback();
-
-							instance.processEvaluation(result);
-
 							if (callback) {
 								var hasErrors = instance.hasErrors();
 
@@ -138,6 +140,14 @@ AUI.add(
 				var evaluator = instance.get('evaluator');
 
 				evaluator.set('form', event.newVal);
+			},
+
+			_afterValidationEvaluationEnded: function(event) {
+				var instance = this;
+
+				instance.hideFeedback();
+
+				instance.processEvaluation(event.result);
 			},
 
 			_valueEvaluator: function() {

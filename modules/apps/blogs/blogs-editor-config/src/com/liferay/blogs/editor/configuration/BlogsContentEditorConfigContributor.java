@@ -126,7 +126,7 @@ public class BlogsContentEditorConfigContributor
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "blogs"));
+				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"));
 
 		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
 			new ArrayList<>();

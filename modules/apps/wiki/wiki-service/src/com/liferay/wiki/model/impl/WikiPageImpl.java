@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
@@ -110,6 +111,24 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			fileEntries = PortletFileRepositoryUtil.getPortletFileEntries(
 				getGroupId(), attachmentsFolderId,
 				WorkflowConstants.STATUS_APPROVED, start, end, null);
+		}
+
+		return fileEntries;
+	}
+
+	@Override
+	public List<FileEntry> getAttachmentsFileEntries(
+			int start, int end, OrderByComparator obc)
+		throws PortalException {
+
+		List<FileEntry> fileEntries = new ArrayList<>();
+
+		long attachmentsFolderId = getAttachmentsFolderId();
+
+		if (attachmentsFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			fileEntries = PortletFileRepositoryUtil.getPortletFileEntries(
+				getGroupId(), attachmentsFolderId,
+				WorkflowConstants.STATUS_APPROVED, start, end, obc);
 		}
 
 		return fileEntries;

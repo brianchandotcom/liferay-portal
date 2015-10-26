@@ -23,6 +23,13 @@ ItemSelectorCriterion itemSelectorCriterion = dlItemSelectorViewDisplayContext.g
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder"));
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true);
+
+searchContainer.setOrderByComparator(orderByComparator);
+
 List results = null;
 int total = 0;
 

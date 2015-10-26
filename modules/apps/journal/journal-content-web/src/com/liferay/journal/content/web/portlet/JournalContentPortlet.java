@@ -15,7 +15,6 @@
 package com.liferay.journal.content.web.portlet;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
-import com.liferay.journal.content.web.upgrade.JournalContentWebUpgrade;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -170,11 +169,6 @@ public class JournalContentPortlet extends MVCPortlet {
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContentWebUpgrade(
-		JournalContentWebUpgrade journalContentWebUpgrade) {
 	}
 
 	protected void unsetJournalContentSearchLocal(

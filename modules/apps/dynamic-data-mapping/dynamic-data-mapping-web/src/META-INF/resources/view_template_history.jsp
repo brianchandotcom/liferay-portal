@@ -23,6 +23,8 @@ long templateId = ParamUtil.getLong(request, "templateId");
 
 DDMTemplate template = DDMTemplateServiceUtil.getTemplate(templateId);
 
+String title = LanguageUtil.format(request, "x-history", template.getName(locale), false);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_template_history.jsp");
@@ -36,12 +38,27 @@ backURL.setParameter("redirect", redirect);
 backURL.setParameter("templateId", String.valueOf(templateId));
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	title='<%= LanguageUtil.format(request, "x-history", template.getName(locale), false) %>'
-/>
+<c:choose>
+	<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+		<%
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(backURL.toString());
+
+		renderResponse.setTitle(title);
+		%>
+
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:header
+			backURL="<%= backURL.toString() %>"
+			cssClass="container-fluid-1280"
+			title="<%= title %>"
+		/>
+	</c:otherwise>
+</c:choose>
+
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
 		total="<%= DDMTemplateVersionServiceUtil.getTemplateVersionsCount(templateId) %>"
@@ -94,6 +111,6 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

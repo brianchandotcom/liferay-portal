@@ -17,10 +17,14 @@ package com.liferay.journal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.LocaleException;
@@ -222,6 +226,34 @@ public class JournalTestUtilTest {
 	public void testAddFolder() throws Exception {
 		Assert.assertNotNull(
 			JournalTestUtil.addFolder(_group.getGroupId(), 0, "Test Folder"));
+	}
+
+	@Test
+	public void testDeleteDDMStructure() throws Exception {
+		String content = DDMStructureTestUtil.getSampleStructuredContent();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			JournalArticle.class.getName());
+
+		Assert.assertNotNull(
+			JournalTestUtil.addArticleWithXMLContent(
+				TestPropsValues.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				PortalUtil.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(), content,
+				ddmStructure.getStructureKey(), null,
+				LocaleUtil.getSiteDefault()));
+
+		DDMStructureLocalServiceUtil.deleteDDMStructure(ddmStructure);
+
+		try {
+			Assert.assertNull(
+				JournalArticleLocalServiceUtil.getArticle(
+					ddmStructure.getGroupId(), DDMStructure.class.getName(),
+					ddmStructure.getStructureId()));
+		}
+		catch (NoSuchArticleException nsae) {
+		}
 	}
 
 	@Test

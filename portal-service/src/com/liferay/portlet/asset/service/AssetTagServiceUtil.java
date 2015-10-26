@@ -108,8 +108,7 @@ public class AssetTagServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.lang.String className, long classPK) {
 		return getService().getTags(className, classPK);
 	}
 

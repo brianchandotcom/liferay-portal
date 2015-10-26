@@ -30,22 +30,6 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 <liferay-ui:error exception="<%= DuplicatePageException.class %>" message="there-is-already-a-page-with-the-specified-title" />
 
-<liferay-ui:error exception="<%= NodeChangeException.class %>">
-
-	<%
-	NodeChangeException nce = (NodeChangeException)errorException;
-	%>
-
-	<c:choose>
-		<c:when test="<%= nce.getType() == NodeChangeException.DUPLICATE_PAGE %>">
-			<liferay-ui:message arguments="<%= new String[] {nce.getNodeName(), nce.getPageTitle()} %>" key="x-already-has-a-page-titled-x" translateArguments="<%= false %>" />
-		</c:when>
-		<c:when test="<%= nce.getType() == NodeChangeException.REDIRECT_PAGE %>">
-			<liferay-ui:message arguments="<%= new String[] {nce.getPageTitle()} %>" key="x-is-a-redirection-page.-it-must-be-placed-in-the-same-node-as-its-redirect-page" translateArguments="<%= false %>" />
-		</c:when>
-	</c:choose>
-</liferay-ui:error>
-
 <liferay-ui:error exception="<%= PageTitleException.class %>" message="please-enter-a-valid-title" />
 
 <%@ include file="/html/portlet/wiki/page_name.jspf" %>
@@ -61,7 +45,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 	<liferay-ui:tabs
-		names="rename,change-parent,change-node"
+		names="rename,change-parent"
 		refresh="<%= false %>"
 	>
 
@@ -82,9 +66,6 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 		</liferay-ui:section>
 		<liferay-ui:section>
 			<%@ include file="/html/portlet/wiki/change_page_parent.jspf" %>
-		</liferay-ui:section>
-		<liferay-ui:section>
-			<%@ include file="/html/portlet/wiki/change_page_node.jspf" %>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 </aui:form>

@@ -17,10 +17,8 @@ package com.liferay.wiki.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -28,7 +26,6 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Roberto Díaz
@@ -77,17 +74,8 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelName(long classPK) throws PortalException {
-		WikiPage page = WikiPageLocalServiceUtil.fetchPage(classPK);
-
-		if (page == null) {
-			WikiNodeLocalServiceUtil.getNode(classPK);
-
-			return "wiki-node";
-		}
-		else {
-			return "wiki-page";
-		}
+	public String getContainerModelName() {
+		return "wiki-node";
 	}
 
 	@Override
@@ -169,65 +157,6 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 		}
 
 		return destinationContainerModelId;
-	}
-
-	@Override
-	public String getRootContainerModelClassName() {
-		return WikiNode.class.getName();
-	}
-
-	@Override
-	public long getRootContainerModelId(long classPK) throws PortalException {
-		WikiPage page = WikiPageLocalServiceUtil.fetchLatestPage(
-			classPK, WorkflowConstants.STATUS_ANY, false);
-
-		if (page == null) {
-			WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
-
-			return node.getNodeId();
-		}
-
-		return page.getNodeId();
-	}
-
-	@Override
-	public List<ContainerModel> getRootContainerModels(long groupId)
-		throws PortalException {
-
-		List<ContainerModel> containerModels = new ArrayList<>();
-
-		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(
-			groupId, WorkflowConstants.STATUS_APPROVED);
-
-		for (WikiNode node : nodes) {
-			containerModels.add(node);
-		}
-
-		return containerModels;
-	}
-
-	@Override
-	public int getRootContainerModelsCount(long groupId) {
-		return WikiNodeLocalServiceUtil.getNodesCount(groupId);
-	}
-
-	@Override
-	public String getRootContainerModelTitle(
-			long containerModelId, Locale locale)
-		throws PortalException {
-
-		WikiNode node = null;
-
-		WikiPage page = WikiPageLocalServiceUtil.fetchPage(containerModelId);
-
-		if (page == null) {
-			node = WikiNodeLocalServiceUtil.getNode(containerModelId);
-		}
-		else {
-			node = page.getNode();
-		}
-
-		return TrashUtil.getOriginalTitle(node.getName());
 	}
 
 	@Override

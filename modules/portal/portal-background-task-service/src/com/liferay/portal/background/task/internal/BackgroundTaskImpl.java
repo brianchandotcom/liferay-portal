@@ -15,7 +15,6 @@
 package com.liferay.portal.background.task.internal;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -84,11 +83,6 @@ public class BackgroundTaskImpl implements BackgroundTask {
 	@Override
 	public long getAttachmentsFolderId() {
 		return _backgroundTask.getAttachmentsFolderId();
-	}
-
-	@Override
-	public BackgroundTaskExecutor getBackgroundTaskExecutor() {
-		return _backgroundTask.getBackgroundTaskExecutor();
 	}
 
 	@Override

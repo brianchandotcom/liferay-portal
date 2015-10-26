@@ -23,7 +23,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivitySetting;
-import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
+import com.liferay.portlet.social.service.SocialActivitySettingService;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.social.activity.web.constants.SocialActivityPortletKeys;
 import com.liferay.social.activity.web.constants.SocialActivityWebKeys;
@@ -39,6 +39,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -87,7 +88,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		Map<String, Boolean> activitySettingsMap = new LinkedHashMap<>();
 
 		List<SocialActivitySetting> activitySettings =
-			SocialActivitySettingServiceUtil.getActivitySettings(
+			_socialActivitySettingService.getActivitySettings(
 				themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		String[] modelNames = SocialConfigurationUtil.getActivityModelNames();
@@ -99,7 +100,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		for (String modelName : modelNames) {
 			List<SocialActivityDefinition> activityDefinitions =
-				SocialActivitySettingServiceUtil.getActivityDefinitions(
+				_socialActivitySettingService.getActivityDefinitions(
 					themeDisplay.getScopeGroupId(), modelName);
 
 			for (SocialActivityDefinition activityDefinition :
@@ -128,5 +129,14 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return activitySettingsMap;
 	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivitySettingService(
+		SocialActivitySettingService socialActivitySettingService) {
+
+		_socialActivitySettingService = socialActivitySettingService;
+	}
+
+	private SocialActivitySettingService _socialActivitySettingService;
 
 }

@@ -300,14 +300,12 @@ public abstract class MDRRuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRRule>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MDRRule mdrRule)
 					throws PortalException {
-					MDRRule stagedModel = (MDRRule)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						mdrRule);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

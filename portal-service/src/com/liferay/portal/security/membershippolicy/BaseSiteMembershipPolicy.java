@@ -210,14 +210,10 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 
 			});
 		groupActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Group>() {
 
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					Group group = (Group)object;
-
+				public void performAction(Group group) throws PortalException {
 					verifyPolicy(group);
 
 					ActionableDynamicQuery userGroupRoleActionableDynamicQuery =
@@ -227,14 +223,13 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 					userGroupRoleActionableDynamicQuery.setGroupId(
 						group.getGroupId());
 					userGroupRoleActionableDynamicQuery.setPerformActionMethod(
-						new ActionableDynamicQuery.PerformActionMethod() {
+						new ActionableDynamicQuery.
+							PerformActionMethod<UserGroupRole>() {
 
 							@Override
-							public void performAction(Object object)
+							public void performAction(
+									UserGroupRole userGroupRole)
 								throws PortalException {
-
-								UserGroupRole userGroupRole =
-									(UserGroupRole)object;
 
 								verifyPolicy(userGroupRole.getRole());
 							}

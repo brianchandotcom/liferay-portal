@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
@@ -40,7 +39,6 @@ import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -48,7 +46,6 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -65,14 +62,6 @@ public class OrganizationStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-	}
 
 	@After
 	@Override

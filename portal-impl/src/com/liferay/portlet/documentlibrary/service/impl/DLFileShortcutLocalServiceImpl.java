@@ -239,26 +239,12 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public void disableFileShortcuts(long toFileEntryId) {
-		List<DLFileShortcut> fileShortcuts =
-			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
-
-		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			fileShortcut.setActive(false);
-
-			dlFileShortcutPersistence.update(fileShortcut);
-		}
+		updateFileShortcutsActive(toFileEntryId, false);
 	}
 
 	@Override
 	public void enableFileShortcuts(long toFileEntryId) {
-		List<DLFileShortcut> fileShortcuts =
-			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
-
-		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			fileShortcut.setActive(true);
-
-			dlFileShortcutPersistence.update(fileShortcut);
-		}
+		updateFileShortcutsActive(toFileEntryId, true);
 	}
 
 	@Override
@@ -328,12 +314,10 @@ public class DLFileShortcutLocalServiceImpl
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileShortcut>() {
 
 				@Override
-				public void performAction(Object object) {
-					DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
-
+				public void performAction(DLFileShortcut dlFileShortcut) {
 					dlFileShortcut.setTreePath(treePath);
 
 					updateDLFileShortcut(dlFileShortcut);
@@ -413,6 +397,18 @@ public class DLFileShortcutLocalServiceImpl
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			fileShortcut.setToFileEntryId(newToFileEntryId);
+
+			dlFileShortcutPersistence.update(fileShortcut);
+		}
+	}
+
+	@Override
+	public void updateFileShortcutsActive(long toFileEntryId, boolean active) {
+		List<DLFileShortcut> fileShortcuts =
+			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
+
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			fileShortcut.setActive(active);
 
 			dlFileShortcutPersistence.update(fileShortcut);
 		}

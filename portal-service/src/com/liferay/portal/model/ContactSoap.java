@@ -58,7 +58,6 @@ public class ContactSoap implements Serializable {
 		soapModel.setFacebookSn(model.getFacebookSn());
 		soapModel.setIcqSn(model.getIcqSn());
 		soapModel.setJabberSn(model.getJabberSn());
-		soapModel.setMsnSn(model.getMsnSn());
 		soapModel.setMySpaceSn(model.getMySpaceSn());
 		soapModel.setSkypeSn(model.getSkypeSn());
 		soapModel.setTwitterSn(model.getTwitterSn());
@@ -316,14 +315,6 @@ public class ContactSoap implements Serializable {
 		_jabberSn = jabberSn;
 	}
 
-	public String getMsnSn() {
-		return _msnSn;
-	}
-
-	public void setMsnSn(String msnSn) {
-		_msnSn = msnSn;
-	}
-
 	public String getMySpaceSn() {
 		return _mySpaceSn;
 	}
@@ -420,7 +411,6 @@ public class ContactSoap implements Serializable {
 	private String _facebookSn;
 	private String _icqSn;
 	private String _jabberSn;
-	private String _msnSn;
 	private String _mySpaceSn;
 	private String _skypeSn;
 	private String _twitterSn;

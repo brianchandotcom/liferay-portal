@@ -42,6 +42,7 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,8 +62,9 @@ import java.util.Set;
  */
 @RunWith(Arquillian.class)
 public class KaleoTaskPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -325,11 +327,9 @@ public class KaleoTaskPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoTaskLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoTask>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoTask kaleoTask = (KaleoTask)object;
-
+				public void performAction(KaleoTask kaleoTask) {
 					Assert.assertNotNull(kaleoTask);
 
 					count.increment();

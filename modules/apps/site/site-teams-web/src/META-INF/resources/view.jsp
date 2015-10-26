@@ -57,8 +57,8 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayStyleURL="<%= displayStyleURL %>"
-			displayViews='<%= new String[]{"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -73,7 +73,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= teamSearchContainer.getOrderByCol() %>"
 			orderByType="<%= teamSearchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[]{"name"} %>'
+			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= iteratorURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>

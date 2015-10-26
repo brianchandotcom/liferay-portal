@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.io.Serializable;
@@ -73,8 +73,8 @@ public class LayoutsRemotePublisherMessageListener
 			message.getPayload());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(exportImportConfigurationId);
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId);
 
 		messageStatus.setPayload(exportImportConfiguration);
 
@@ -101,7 +101,7 @@ public class LayoutsRemotePublisherMessageListener
 
 		initThreadLocals(userId, parameterMap);
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
@@ -122,5 +122,23 @@ public class LayoutsRemotePublisherMessageListener
 	)
 	protected void setDestination(Destination destination) {
 	}
+
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	@Reference
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+	private UserLocalService _userLocalService;
 
 }

@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -314,8 +314,8 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 				StringUtil.toLowerCase(durationScale.getValue()));
 		}
 
-		Trigger trigger = new IntervalTrigger(
-			groupName, groupName, dueDate, null, interval, timeUnit);
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
+			groupName, groupName, dueDate, interval, timeUnit);
 
 		Message message = new Message();
 

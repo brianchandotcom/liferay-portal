@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-navigation',
 	function(A) {
 		var ANode = A.Node;
-		var Dockbar = Liferay.Dockbar;
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
 

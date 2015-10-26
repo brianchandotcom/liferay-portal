@@ -41,6 +41,7 @@ import com.liferay.portlet.trash.service.persistence.TrashEntryUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class TrashEntryPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -337,11 +339,9 @@ public class TrashEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = TrashEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<TrashEntry>() {
 				@Override
-				public void performAction(Object object) {
-					TrashEntry trashEntry = (TrashEntry)object;
-
+				public void performAction(TrashEntry trashEntry) {
 					Assert.assertNotNull(trashEntry);
 
 					count.increment();

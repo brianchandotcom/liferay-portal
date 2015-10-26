@@ -16,7 +16,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="DeleteConfiguredKBFolder" priority="4">
+	<command name="DeleteConfiguredKBFolder" priority="3">
 		<var name="kbArticleContent" value="Article Content" />
 		<var name="pageName" value="Knowledge Base Page" />
 
@@ -146,7 +146,7 @@
 		<execute macro="KBArticle#deleteCP" />
 	</command>
 
-	<command name="Demo" priority="4">
+	<command name="Demo" priority="1">
 		<property name="portlet.properties.knowledge-base-portlet" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface${line.separator}admin.kb.article.default.sections=" />
 
 		<execute macro="Page#gotoContentCP">
@@ -340,63 +340,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14061" name="SearchChildArticleViaSearchPortletPG" priority="4">
-		<var name="advancedSearchConfiguration">
-			<![CDATA[
-				{"facets": [
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.ScopeFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "maxTerms": 10,
-				            "showAssetCount": true
-				        },
-				        "displayStyle": "scopes",
-				        "fieldName": "groupId",
-				        "label": "site",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.6
-				    },
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.AssetEntriesFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "values": [
-				                "com.liferay.portal.model.User",
-				                "com.liferay.portlet.blogs.model.BlogsEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFileEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFolder",
-				                "com.liferay.portlet.journal.model.JournalArticle",
-				                "com.liferay.portlet.journal.model.JournalFolder",
-				                "com.liferay.knowledgebase.model.KBArticle",
-				                "com.liferay.portlet.messageboards.model.MBMessage",
-				                "com.liferay.portlet.wiki.model.WikiPage"
-				            ]
-				        },
-				        "displayStyle": "asset_entries",
-				        "fieldName": "entryClassName",
-				        "label": "asset-type",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.5
-				    }
-				]}
-			]]>
-		</var>
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
+	<command name="SearchChildArticleViaSearchPortletPG" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -412,17 +356,12 @@
 			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="SearchPortlet#configureAdvancedSearchPG">
-			<var name="advancedSearchConfiguration" value="${advancedSearchConfiguration}" />
-			<var name="portletName" value="${searchPortletName}" />
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Knowledge Base Page" />
 		</execute>
 
 		<execute macro="Search#viewIncrementalSearchPG">
@@ -436,51 +375,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14061" name="SearchKBArticleInFolderViaSearchPortlet" priority="4">
-		<var name="advancedSearchConfiguration">
-			<![CDATA[
-				{"facets": [
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.ScopeFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "maxTerms": 10,
-				            "showAssetCount": true
-				        },
-				        "displayStyle": "scopes",
-				        "fieldName": "groupId",
-				        "label": "site",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.6
-				    },
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.AssetEntriesFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "values": [
-				                "com.liferay.portal.model.User",
-				                "com.liferay.portlet.blogs.model.BlogsEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFileEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFolder",
-				                "com.liferay.portlet.journal.model.JournalArticle",
-				                "com.liferay.portlet.journal.model.JournalFolder",
-				                "com.liferay.knowledgebase.model.KBArticle",
-				                "com.liferay.portlet.messageboards.model.MBMessage",
-				                "com.liferay.portlet.wiki.model.WikiPage"
-				            ]
-				        },
-				        "displayStyle": "asset_entries",
-				        "fieldName": "entryClassName",
-				        "label": "asset-type",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.5
-				    }
-				]}
-			]]>
-		</var>
-
+	<command name="SearchKBArticleInFolderViaSearchPortlet" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -491,22 +386,6 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
-		<execute macro="SearchPortlet#configureAdvancedSearchPG">
-			<var name="advancedSearchConfiguration" value="${advancedSearchConfiguration}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -539,10 +418,6 @@
 		<execute macro="KBArticle#configureKBArticleDisplayPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbFolderName" value="KB Folder" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
 		</execute>
 
 		<execute macro="Search#viewIncrementalSearchPG">
@@ -556,105 +431,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchKBArticlesViaKBSearchPG" priority="4">
-		<var name="kbArticleCounterList" value="1,2" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base" />
-		</execute>
-
-		<for list="${kbArticleCounterList}" param="kbCount">
-			<execute macro="KBArticle#addCP">
-				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
-				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
-			</execute>
-		</for>
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Search" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Search Page" />
-		</execute>
-
-		<execute macro="KBArticle#searchPGViaKBSearch">
-			<var name="searchTerm" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#viewSearchResultsPG">
-			<var name="kbArticleTitleList" value="Knowledge Base Article Title 1,Knowledge Base Article Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoPGViaKBSearchResult">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewPGViaKBSearch">
-			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#goBackToSearchResultsPG" />
-
-		<execute macro="KBArticle#viewSearchResultsPG">
-			<var name="kbArticleTitleList" value="Knowledge Base Article Title 1,Knowledge Base Article Title 2" />
-		</execute>
-	</command>
-
-	<command known-issues="LPS-54717" name="SearchKBArticleViaSearchPortlet" priority="4">
-		<var name="advancedSearchConfiguration">
-			<![CDATA[
-				{"facets": [
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.ScopeFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "maxTerms": 10,
-				            "showAssetCount": true
-				        },
-				        "displayStyle": "scopes",
-				        "fieldName": "groupId",
-				        "label": "site",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.6
-				    },
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.AssetEntriesFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "values": [
-				                "com.liferay.portal.model.User",
-				                "com.liferay.portlet.blogs.model.BlogsEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFileEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFolder",
-				                "com.liferay.portlet.journal.model.JournalArticle",
-				                "com.liferay.portlet.journal.model.JournalFolder",
-				                "com.liferay.knowledgebase.model.KBArticle",
-				                "com.liferay.portlet.messageboards.model.MBMessage",
-				                "com.liferay.portlet.wiki.model.WikiPage"
-				            ]
-				        },
-				        "displayStyle": "asset_entries",
-				        "fieldName": "entryClassName",
-				        "label": "asset-type",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.5
-				    }
-				]}
-			]]>
-		</var>
-
+	<command name="SearchKBArticleViaSearchPortlet" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -665,24 +442,7 @@
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
-		<execute macro="SearchPortlet#configureAdvancedSearchPG">
-			<var name="advancedSearchConfiguration" value="${advancedSearchConfiguration}" />
-			<var name="portletName" value="${searchPortletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -696,51 +456,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14061" name="SearchKBArticleWithSpecialCharactersViaSearchPortletPG" priority="4">
-		<var name="advancedSearchConfiguration">
-			<![CDATA[
-				{"facets": [
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.ScopeFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "maxTerms": 10,
-				            "showAssetCount": true
-				        },
-				        "displayStyle": "scopes",
-				        "fieldName": "groupId",
-				        "label": "site",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.6
-				    },
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.AssetEntriesFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "values": [
-				                "com.liferay.portal.model.User",
-				                "com.liferay.portlet.blogs.model.BlogsEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFileEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFolder",
-				                "com.liferay.portlet.journal.model.JournalArticle",
-				                "com.liferay.portlet.journal.model.JournalFolder",
-				                "com.liferay.knowledgebase.model.KBArticle",
-				                "com.liferay.portlet.messageboards.model.MBMessage",
-				                "com.liferay.portlet.wiki.model.WikiPage"
-				            ]
-				        },
-				        "displayStyle": "asset_entries",
-				        "fieldName": "entryClassName",
-				        "label": "asset-type",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.5
-				    }
-				]}
-			]]>
-		</var>
-
+	<command name="SearchKBArticleWithSpecialCharactersViaSearchPortletPG" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -752,24 +468,11 @@
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
-		<execute macro="SearchPortlet#configureAdvancedSearchPG">
-			<var name="advancedSearchConfiguration" value="${advancedSearchConfiguration}" />
-			<var name="portletName" value="${searchPortletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
 		<execute macro="Search#viewIncrementalSearchPG">
@@ -778,7 +481,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewConfiguredKBArticleWithinFolderViaKBDisplay" priority="4">
+	<command name="ViewConfiguredKBArticleWithinFolderViaKBDisplay" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -838,7 +541,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDefaultFolderViaKBDisplay" priority="4">
+	<command name="ViewDefaultFolderViaKBDisplay" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -1074,11 +777,6 @@
 			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
 		</execute>
 
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
 		<execute macro="KBArticle#viewSourceURLCP">
 			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/liferayui-taglibs/knowledge-base-article-parent-title-2-child-2.markdown" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
@@ -1094,7 +792,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleFriendlyURL" priority="3">
+	<command name="ViewKBArticleFriendlyURL" priority="4">
 		<var name="kbArticleContent" value="KB Article Content" />
 		<var name="kbArticleContent2" value="KB Article 2 Content" />
 		<var name="kbArticleTitle" value="Article Title" />
@@ -1167,8 +865,8 @@
 
 		<execute macro="KBArticle#viewSourceURLCP">
 			<var name="kbArticleSourceURL" value="${kbArticleSourceURL}" />
-		<var name="kbArticleTitle" value="${kbArticleTitle}" />
-</execute>
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Welcome" />
@@ -1389,7 +1087,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticlesInDifferentScopesPerSite" priority="4">
+	<command name="ViewKBArticlesInDifferentScopesPerSite" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page 1" />
 		</execute>
@@ -1767,13 +1465,13 @@
 		<execute macro="KBArticleSuggestion#viewDefaultResolved" />
 	</command>
 
-	<command name="ViewKBArticleSuggestionsWorkflowNotificationInGmail" priority="4">
+	<command name="ViewKBArticleSuggestionsWorkflowNotificationInGmail" priority="3">
 		<var name="kbArticleContent" value="KB Article Content" />
 		<var name="kbArticleTitle" value="KB Article Title" />
 		<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
 		<var name="pageName" value="Knowledge Base Display Page" />
-		<var name="userEmailAddress" property-value="email.address.4" />
-		<var name="userEmailPassword" property-value="email.password.4" />
+		<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
+		<var method="TestPropsUtil#get('email.password.4')" name="userEmailPassword" />
 		<var name="userName" value="Test Test" />
 		<var name="userScreenName" value="usersn" />
 		<var name="virtualHost" value="localhost" />
@@ -1782,23 +1480,23 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.password.1" />
+			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Instances" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#editCP">
 			<var name="mailDomain" value="gmail.com" />
-		<var name="virtualHost" value="${virtualHost}" />
-</execute>
+			<var name="virtualHost" value="${virtualHost}" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -1846,42 +1544,42 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-	 		<var name="portletName" value="Knowledge Base" />
-	 	</execute>
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
 
-	 	<execute macro="KBArticle#subscribeCP" />
+		<execute macro="KBArticle#subscribeCP" />
 
-	 	<execute macro="KBArticle#configureEmailCP">
-	 		<var name="emailFrom" value="true" />
-	 		<var name="userName" value="${userName}" />
-	 		<var name="userEmailAddress" value="${userEmailAddress}" />
-	 		<var name="suggestionReceived" value="true" />
-	 		<var name="suggestionInProgress" value="true" />
-	 		<var name="suggestionResolved" value="true" />
-	 	</execute>
+		<execute macro="KBArticle#configureEmailCP">
+			<var name="emailFrom" value="true" />
+			<var name="suggestionInProgress" value="true" />
+			<var name="suggestionReceived" value="true" />
+			<var name="suggestionResolved" value="true" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
-	 	<execute macro="User#logoutPG" />
+		<execute macro="User#logoutPG" />
 
-	 	<execute macro="User#loginUserPG">
-	 		<var name="password" value="test" />
-	 		<var name="userEmailAddress" value="test@liferay.com" />
-	 	</execute>
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
-	 		<var name="portletName" value="Knowledge Base" />
-	 	</execute>
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
 
 		<execute macro="KBArticle#addCP">
 			<var name="kbArticleContent" value="${kbArticleContent}" />
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 		</execute>
 
-	 	<execute macro="User#logoutPG" />
+		<execute macro="User#logoutPG" />
 
-	 	<execute macro="User#loginUserPG">
-	 		<var name="password" value="test" />
-	 		<var name="userEmailAddress" value="${userEmailAddress}" />
-	 	</execute>
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2218,7 +1916,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSuggestionsWithPermissions" priority="3">
+	<command name="ViewSuggestionsWithPermissions" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -2461,7 +2159,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewUnchangedKBArticlePriorityAfterEdit" priority="4">
+	<command name="ViewUnchangedKBArticlePriorityAfterEdit" priority="3">
 		<var name="kbArticleCounterList" value="1,2,3" />
 
 		<execute macro="Page#addPG">
@@ -2598,7 +2296,7 @@
 		</execute>
 
 		<execute macro="Page#viewTranslationsPG">
-			<var name="adminTranslation" value="Administración" />
+			<var name="adminTranslation" value="Administraci�n" />
 			<var name="mySitesTranslation" value="Mis Sitios" />
 			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain)." />
 			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
@@ -2615,7 +2313,7 @@
 			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edited" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edited" />
-			<var name="localizedSuccessMessage" value="Su petición ha terminado con éxito." />
+			<var name="localizedSuccessMessage" value="Su petici�n ha terminado con �xito." />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">

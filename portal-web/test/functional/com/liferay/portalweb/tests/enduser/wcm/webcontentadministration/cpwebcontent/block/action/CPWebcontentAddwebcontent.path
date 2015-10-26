@@ -59,11 +59,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_TRANSLATION</td>
-	<td>//a[@title='Add Translation']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TRANSLATION_LOCALE</td>
 	<td>//span[@locale='${key_translationLocale}']</td>
 	<td></td>

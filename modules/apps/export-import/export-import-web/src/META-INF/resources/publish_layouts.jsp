@@ -256,7 +256,7 @@ else if (!quickPublish) {
 					<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 				</portlet:actionURL>
 
-				<aui:form action='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? portletURL.toString() : updatePublishConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" : StringPool.BLANK %>' >
+				<aui:form action='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? portletURL.toString() : updatePublishConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" : StringPool.BLANK %>'>
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 					<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
 					<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
@@ -326,7 +326,7 @@ else if (!quickPublish) {
 						<div class="export-dialog-tree">
 
 							<%
-							String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
+							String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR : BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
 
 							int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(stagingGroupId, taskExecutorClassName, false);
 

@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the EmailAddress service. Represents a row in the &quot;EmailAddress&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,23 @@ public interface EmailAddress extends EmailAddressModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.EmailAddressImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<EmailAddress, Long> EMAIL_ADDRESS_ID_ACCESSOR = new Accessor<EmailAddress, Long>() {
+			@Override
+			public Long get(EmailAddress emailAddress) {
+				return emailAddress.getEmailAddressId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<EmailAddress> getTypeClass() {
+				return EmailAddress.class;
+			}
+		};
+
 	public com.liferay.portal.model.ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

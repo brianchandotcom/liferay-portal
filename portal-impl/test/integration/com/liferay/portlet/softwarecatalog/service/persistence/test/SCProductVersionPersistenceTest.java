@@ -43,6 +43,7 @@ import com.liferay.portlet.softwarecatalog.service.persistence.SCProductVersionU
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,8 +60,9 @@ import java.util.Set;
  * @generated
  */
 public class SCProductVersionPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -324,11 +326,9 @@ public class SCProductVersionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SCProductVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SCProductVersion>() {
 				@Override
-				public void performAction(Object object) {
-					SCProductVersion scProductVersion = (SCProductVersion)object;
-
+				public void performAction(SCProductVersion scProductVersion) {
 					Assert.assertNotNull(scProductVersion);
 
 					count.increment();

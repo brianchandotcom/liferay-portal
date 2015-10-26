@@ -22,9 +22,7 @@ import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.lar.WikiPortletDataHandler;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
@@ -63,11 +61,6 @@ public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			TestPropsValues.getUserId(), node.getNodeId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new WikiPortletDataHandler();
 	}
 
 	@Override

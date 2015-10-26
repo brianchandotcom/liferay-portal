@@ -1,5 +1,4 @@
 ;(function() {
-	/* global Loader */
 	var LiferayAUI = Liferay.AUI;
 
 	var COMBINE = LiferayAUI.getCombine();
@@ -8,7 +7,7 @@
 
 	var INPUT_EL = document.createElement('input');
 
-	var PATH_EDITORS = LiferayAUI.getEditorsPath();
+	var PATH_EDITOR_CKEDITOR = LiferayAUI.getEditorCKEditorPath();
 
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
@@ -41,14 +40,14 @@
 		filter: Liferay.AUI.getFilter(),
 		groups: {
 			editor: {
-				base: PATH_EDITORS + '/editors/',
+				base: PATH_EDITOR_CKEDITOR,
 				combine: COMBINE,
 				modules: {
 					'inline-editor-ckeditor': {
 						path: 'ckeditor/main.js'
 					}
 				},
-				root: PATH_EDITORS + '/editors/'
+				root: PATH_EDITOR_CKEDITOR
 			},
 
 			liferay: {
@@ -270,28 +269,6 @@
 							'autocomplete-base',
 							'autocomplete-filters',
 							'liferay-portlet-base'
-						]
-					},
-					'liferay-dockbar': {
-						path: 'dockbar.js',
-						requires: [
-							'aui-node',
-							'event-touch'
-						]
-					},
-					'liferay-dockbar-keyboard-interaction': {
-						path: 'dockbar_keyboard_interaction.js',
-						requires: [
-							'node-focusmanager',
-							'plugin'
-						]
-					},
-					'liferay-dockbar-underlay': {
-						path: 'dockbar_underlay.js',
-						requires: [
-							'aui-button',
-							'aui-io-plugin-deprecated',
-							'aui-overlay-manager-deprecated'
 						]
 					},
 					'liferay-dynamic-select': {
@@ -922,9 +899,6 @@
 				base: PATH_JAVASCRIPT + '/misc/',
 				combine: COMBINE,
 				modules: {
-					'soyutils': {
-						path: '/soyutils.js'
-					},
 					'swfobject': {
 						path: '/swfobject.js'
 					},
@@ -953,15 +927,6 @@
 		root: PATH_JAVASCRIPT + '/aui/',
 		useBrowserConsole: false
 	};
-
-	Loader.addModule(
-		{
-			dependencies: [],
-			exports: 'soy',
-			name: 'soyutils',
-			path: '/o/frontend-js-web/misc/soyutils.js'
-		}
-	);
 
 	CORE_MODULES.push('liferay-browser-selectors');
 })();

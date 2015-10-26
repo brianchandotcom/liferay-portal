@@ -112,7 +112,7 @@ The theme element contains the declarative data of a theme.
 <!ELEMENT theme (root-path?, templates-path?, css-path?, images-path?,
 javascript-path?, virtual-path?, template-extension?, settings?,
 control-panel-theme?, page-theme?, wap-theme?, roles?, color-scheme*,
-layout-templates?)>
+layout-templates?, portlet-decorator*)>
 
 <!--
 The id attribute specifies the unique key for a theme. For convenience, the id
@@ -383,3 +383,49 @@ See liferay-layout-templates_7_0_0.dtd.
 See liferay-layout-templates_7_0_0.dtd.
 -->
 <!ELEMENT custom (layout-template*)>
+
+<!--
+A theme can have many portlet decorators. A portlet decorator defines the style
+of the portlet borders.
+-->
+<!ELEMENT portlet-decorator (default-portlet-decorator?,
+	portlet-decorator-css-class,
+	portlet-decorator-thumbnail-path?)>
+
+<!--
+The id attribute specifies the key for a portlet decorator that is unique for
+its parent theme. For convenience, the id attribute can be referenced in the
+rest of the portlet decorator element as ${portlet-decorator-id}.
+
+The name attribute specifies the friendly name of a portlet decorator that is
+displayed to the user.
+-->
+<!ATTLIST portlet-decorator
+	id CDATA #REQUIRED
+	name CDATA #REQUIRED
+>
+
+<!--
+Set the default-portlet-decorator value to true if this is the default portlet
+decorator. The default value is false.
+-->
+<!ELEMENT default-portlet-decorator (#PCDATA)>
+
+<!--
+The portlet-decorator-css-class value is a css class name that represents the
+portlet-decorator.
+
+For convenience, the portlet-decorator-css-class attribute can be referenced in
+the rest of the portlet-decorator-css-class element as
+${portlet-decorator-css-class}.
+-->
+<!ELEMENT portlet-decorator-css-class (#PCDATA)>
+
+<!--
+The portlet-decorator-thumbnail-path value sets the location of the thumbnail
+path for the portlet-decorator.
+
+The default value is
+"${root-path}/images/portlet_decorators/${portlet-decorator-css-class}".
+-->
+<!ELEMENT portlet-decorator-thumbnail-path (#PCDATA)>

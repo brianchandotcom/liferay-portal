@@ -28,11 +28,13 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.model.CalEventModel;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -724,6 +726,12 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	@Override
 	public void setSecondReminder(int secondReminder) {
 		_secondReminder = secondReminder;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CalEvent.class.getName()));
 	}
 
 	public long getColumnBitmask() {

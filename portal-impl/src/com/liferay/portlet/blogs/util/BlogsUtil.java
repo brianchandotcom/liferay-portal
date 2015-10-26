@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
@@ -33,6 +34,8 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
+import com.liferay.portlet.blogs.util.comparator.EntryTitleComparator;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -214,6 +217,27 @@ public class BlogsUtil {
 				"the-site-name-associated-with-the-blog"));
 
 		return definitionTerms;
+	}
+
+	public static OrderByComparator<BlogsEntry> getOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = true;
+
+		if (orderByType.equals("desc")) {
+			orderByAsc = false;
+		}
+
+		OrderByComparator<BlogsEntry> orderByComparator = null;
+
+		if (orderByCol.equals("display-date")) {
+			orderByComparator = new EntryDisplayDateComparator(orderByAsc);
+		}
+		else {
+			orderByComparator = new EntryTitleComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	public static SearchContainerResults<AssetEntry> getSearchContainerResults(

@@ -86,6 +86,22 @@ public class ConfigurationImplTest {
 	}
 
 	@Test
+	public void testLoadEmptyProperties() throws Exception {
+		TestResourceClassLoader testResourceClassLoader =
+			new TestResourceClassLoader();
+
+		testResourceClassLoader.addPropertiesResource(
+			ConfigurationImplTest.class.getName(), StringPool.BLANK);
+
+		ConfigurationImpl configurationImpl = new ConfigurationImpl(
+			testResourceClassLoader, ConfigurationImplTest.class.getName());
+
+		Properties properties = configurationImpl.getProperties();
+
+		Assert.assertTrue(properties.isEmpty());
+	}
+
+	@Test
 	public void testMultiValueProperty() throws IOException {
 		TestResourceClassLoader testResourceClassLoader =
 			new TestResourceClassLoader();

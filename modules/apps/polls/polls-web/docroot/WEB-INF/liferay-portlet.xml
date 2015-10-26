@@ -6,6 +6,8 @@
 		<portlet-name>25</portlet-name>
 		<icon>/html/icons/polls.png</icon>
 		<struts-path>polls</struts-path>
+		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
+		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<private-request-attributes>false</private-request-attributes>

@@ -17,9 +17,9 @@ package com.liferay.marketplace.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +42,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AppModel extends AuditedModel, BaseModel<App> {
+public interface AppModel extends BaseModel<App>, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -69,6 +69,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 * @return the uuid of this app
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -76,6 +77,7 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 *
 	 * @param uuid the uuid of this app
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**

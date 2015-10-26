@@ -16,7 +16,7 @@ package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -28,13 +28,14 @@ import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryService;
 
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -76,7 +77,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 		if (companyId > 0) {
 			feedURL = StringPool.BLANK;
 
-			rss = BlogsEntryServiceUtil.getCompanyEntriesRSS(
+			rss = _blogsEntryService.getCompanyEntriesRSS(
 				companyId, new Date(), status, max, type, version, displayStyle,
 				feedURL, entryURL, themeDisplay);
 		}
@@ -85,14 +86,14 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 			entryURL = feedURL;
 
-			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
+			rss = _blogsEntryService.getGroupEntriesRSS(
 				groupId, new Date(), status, max, type, version, displayStyle,
 				feedURL, entryURL, themeDisplay);
 		}
 		else if (organizationId > 0) {
 			feedURL = StringPool.BLANK;
 
-			rss = BlogsEntryServiceUtil.getOrganizationEntriesRSS(
+			rss = _blogsEntryService.getOrganizationEntriesRSS(
 				organizationId, new Date(), status, max, type, version,
 				displayStyle, feedURL, entryURL, themeDisplay);
 		}
@@ -103,7 +104,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 			entryURL = feedURL;
 
-			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
+			rss = _blogsEntryService.getGroupEntriesRSS(
 				groupId, new Date(), status, max, type, version, displayStyle,
 				feedURL, entryURL, themeDisplay);
 		}
@@ -120,7 +121,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		BlogsGroupServiceOverriddenConfiguration
 			blogsGroupServiceOverridenConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
+				_configurationFactory.getConfiguration(
 					BlogsGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						themeDisplay.getSiteGroupId(),
@@ -128,5 +129,20 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		return blogsGroupServiceOverridenConfiguration.enableRss();
 	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryService(BlogsEntryService blogsEntryService) {
+		_blogsEntryService = blogsEntryService;
+	}
+
+	@Reference
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
+	}
+
+	private BlogsEntryService _blogsEntryService;
+	private ConfigurationFactory _configurationFactory;
 
 }

@@ -18,6 +18,8 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Enumeration;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +35,8 @@ public class BundlePortletServletContextHelper extends ServletContextHelper {
 	public BundlePortletServletContextHelper(Bundle bundle) {
 		super(bundle);
 
+		_bundle = bundle;
+
 		Class<?> clazz = getClass();
 
 		_string = clazz.getSimpleName() + '[' + bundle.getBundleId() + ']';
@@ -40,7 +44,7 @@ public class BundlePortletServletContextHelper extends ServletContextHelper {
 
 	@Override
 	public URL getResource(String name) {
-		URL url = super.getResource(name);
+		URL url = _getResourceInBundleOrFragments(name);
 
 		if (url == null) {
 			if (name.startsWith("/")) {
@@ -48,7 +52,8 @@ public class BundlePortletServletContextHelper extends ServletContextHelper {
 			}
 
 			if (!name.startsWith("META-INF/resources/")) {
-				url = super.getResource("META-INF/resources/" + name);
+				url = _getResourceInBundleOrFragments(
+					"META-INF/resources/" + name);
 			}
 		}
 
@@ -102,6 +107,28 @@ public class BundlePortletServletContextHelper extends ServletContextHelper {
 		return _string;
 	}
 
+	private URL _getResourceInBundleOrFragments(String name) {
+		String dirName = "/";
+		String fileName = name;
+
+		int index = name.lastIndexOf('/');
+
+		if (index > 0) {
+			dirName = name.substring(0, index);
+			fileName = name.substring(index + 1);
+		}
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			dirName, fileName, false);
+
+		if ((enumeration == null) || !enumeration.hasMoreElements()) {
+			return null;
+		}
+
+		return enumeration.nextElement();
+	}
+
+	private final Bundle _bundle;
 	private final String _string;
 
 }

@@ -37,7 +37,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.elasticsearch.action.ActionFuture;
 import org.elasticsearch.action.suggest.SuggestRequestBuilder;
 import org.elasticsearch.action.suggest.SuggestResponse;
 import org.elasticsearch.client.Client;
@@ -131,9 +130,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 			suggestRequestBuilder.setSuggestText(aggregateSuggester.getValue());
 		}
 
-		ActionFuture<SuggestResponse> future = suggestRequestBuilder.execute();
-
-		SuggestResponse suggestResponse = future.actionGet();
+		SuggestResponse suggestResponse = suggestRequestBuilder.get();
 
 		Suggest suggest = suggestResponse.getSuggest();
 

@@ -28,7 +28,6 @@ import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceWrapper;
 
 import java.io.Serializable;
@@ -62,7 +61,7 @@ public class MentionsBlogsEntryServiceWrapper
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(entryId);
 
 		int oldStatus = entry.getStatus();
 
@@ -105,6 +104,13 @@ public class MentionsBlogsEntryServiceWrapper
 	}
 
 	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setConfigurationFactory(
 		ConfigurationFactory configurationFactory) {
 
@@ -116,6 +122,7 @@ public class MentionsBlogsEntryServiceWrapper
 		_mentionsNotifier = mentionsNotifier;
 	}
 
+	private BlogsEntryLocalService _blogsEntryLocalService;
 	private volatile ConfigurationFactory _configurationFactory;
 	private MentionsNotifier _mentionsNotifier;
 

@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>NAVIGATION_MY_SITES</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'My Sites')]</td>
+	<td>//li[contains(@id,'MySitesPortlet_tabs')]/a[contains(.,'My Sites')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_AVAILABLE_SITES</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Available Sites')]</td>
+	<td>//li[contains(@id,'MySitesPortlet_tabs')]/a[contains(.,'Available Sites')]</td>
 	<td></td>
 </tr>
 <tr>

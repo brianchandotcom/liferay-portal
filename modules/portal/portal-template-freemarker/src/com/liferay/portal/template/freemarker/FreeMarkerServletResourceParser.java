@@ -71,7 +71,7 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 		URL url = servletContext.getResource(templateName);
 
 		if (url == null) {
-			url = PortalWebResourcesUtil.getResource(name);
+			url = PortalWebResourcesUtil.getResource(templateName);
 		}
 
 		if ((url == null) && templateName.endsWith("/init_custom.ftl")) {

@@ -23,6 +23,8 @@ public class ApplicationListWebKeys {
 
 	public static final String PANEL_CATEGORY = "PANEL_CATEGORY";
 
+	public static final String PANEL_CATEGORY_HELPER = "PANEL_CATEGORY_HELPER";
+
 	public static final String PANEL_CATEGORY_REGISTRY =
 		"PANEL_CATEGORY_REGISTRY";
 

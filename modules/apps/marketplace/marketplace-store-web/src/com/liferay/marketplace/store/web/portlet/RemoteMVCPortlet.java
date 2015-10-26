@@ -18,8 +18,11 @@ import com.liferay.marketplace.store.web.oauth.util.OAuthManager;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -47,8 +50,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.scribe.model.OAuthConstants;
 import org.scribe.model.OAuthRequest;
@@ -200,6 +205,21 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		}
 	}
 
+	protected String getClientPortletId() {
+		return StringPool.BLANK;
+	}
+
+	protected String getFileName(String contentDisposition) {
+		int pos = contentDisposition.indexOf("filename=\"");
+
+		if (pos == -1) {
+			return StringPool.BLANK;
+		}
+
+		return contentDisposition.substring(
+			pos + 10, contentDisposition.length() - 1);
+	}
+
 	protected Response getResponse(User user, OAuthRequest oAuthRequest)
 		throws Exception {
 
@@ -210,6 +230,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 			oAuthService.signRequest(token, oAuthRequest);
 		}
+
+		oAuthRequest.setFollowRedirects(false);
 
 		return oAuthRequest.send();
 	}
@@ -244,8 +266,26 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		setRequestParameters(actionRequest, actionResponse, oAuthRequest);
 
 		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "1");
+		addOAuthParameter(
+			oAuthRequest, "p_p_state", WindowState.NORMAL.toString());
 
-		getResponse(themeDisplay.getUser(), oAuthRequest);
+		Response response = getResponse(themeDisplay.getUser(), oAuthRequest);
+
+		if (response.getCode() == HttpServletResponse.SC_FOUND) {
+			String redirectLocation = response.getHeader(HttpHeaders.LOCATION);
+
+			actionResponse.sendRedirect(redirectLocation);
+		}
+		else {
+			HttpServletResponse httpServletResponse =
+				PortalUtil.getHttpServletResponse(actionResponse);
+
+			httpServletResponse.setContentType(
+				response.getHeader(HttpHeaders.CONTENT_TYPE));
+
+			ServletResponseUtil.write(
+				httpServletResponse, response.getStream());
+		}
 	}
 
 	protected void remoteRender(
@@ -287,7 +327,23 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		Response response = getResponse(themeDisplay.getUser(), oAuthRequest);
 
-		PortletResponseUtil.write(resourceResponse, response.getStream());
+		String contentType = response.getHeader(HttpHeaders.CONTENT_TYPE);
+
+		if (contentType.startsWith(ContentTypes.APPLICATION_OCTET_STREAM)) {
+			String contentDisposition = response.getHeader(
+				HttpHeaders.CONTENT_DISPOSITION);
+			int contentLength = GetterUtil.getInteger(
+				response.getHeader(HttpHeaders.CONTENT_LENGTH));
+
+			PortletResponseUtil.sendFile(
+				resourceRequest, resourceResponse,
+				getFileName(contentDisposition), response.getStream(),
+				contentLength, contentType,
+				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+		}
+		else {
+			PortletResponseUtil.write(resourceResponse, response.getStream());
+		}
 	}
 
 	protected void setBaseRequestParameters(
@@ -302,11 +358,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		addOAuthParameter(oAuthRequest, "clientAuthToken", clientAuthToken);
 
 		addOAuthParameter(
-			oAuthRequest, "clientPortletNamespace",
-			portletResponse.getNamespace());
+			oAuthRequest, "clientPortletId", getClientPortletId());
 		addOAuthParameter(
 			oAuthRequest, "clientURL",
-			PortalUtil.getCurrentURL(portletRequest));
+			PortalUtil.getCurrentCompleteURL(httpServletRequest));
 		addOAuthParameter(oAuthRequest, "p_p_id", getServerPortletId());
 	}
 

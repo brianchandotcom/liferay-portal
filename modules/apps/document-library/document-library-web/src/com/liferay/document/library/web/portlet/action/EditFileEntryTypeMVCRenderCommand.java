@@ -24,7 +24,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
@@ -34,6 +34,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -63,7 +64,7 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "fileEntryTypeId");
 
 			if (fileEntryTypeId > 0) {
-				dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
+				dlFileEntryType = _dlFileEntryTypeService.getFileEntryType(
 					fileEntryTypeId);
 
 				renderRequest.setAttribute(
@@ -102,5 +103,14 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 
 		return "/document_library/edit_file_entry_type.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryTypeService(
+		DLFileEntryTypeService dlFileEntryTypeService) {
+
+		_dlFileEntryTypeService = dlFileEntryTypeService;
+	}
+
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.asset.publisher.web.util;
 
+import com.liferay.asset.publisher.web.context.AssetEntryResult;
+import com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -183,15 +186,25 @@ public class AssetRSSUtil {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		List<AssetEntry> assetEntries = new ArrayList<>();
 
-		int rssDelta = GetterUtil.getInteger(
-			portletPreferences.getValue("rssDelta", "20"));
+		SearchContainer searchContainer = new SearchContainer();
 
-		return AssetPublisherUtil.getAssetEntries(
-			portletPreferences, themeDisplay.getLayout(),
-			themeDisplay.getScopeGroupId(), rssDelta, true);
+		AssetPublisherDisplayContext assetPublisherDisplayContext =
+			new AssetPublisherDisplayContext(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				portletPreferences);
+
+		searchContainer.setDelta(assetPublisherDisplayContext.getRSSDelta());
+
+		List<AssetEntryResult> assetEntryResults =
+			assetPublisherDisplayContext.getAssetEntryResults(searchContainer);
+
+		for (AssetEntryResult assetEntryResult : assetEntryResults) {
+			assetEntries.addAll(assetEntryResult.getAssetEntries());
+		}
+
+		return assetEntries;
 	}
 
 	protected static String getAssetPublisherURL(PortletRequest portletRequest)

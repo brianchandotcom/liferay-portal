@@ -58,11 +58,6 @@ public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 	}
 
 	@Override
-	public Date getLastPublishDate() {
-		return null;
-	}
-
-	@Override
 	public Class<?> getModelClass() {
 		return StagedTheme.class;
 	}
@@ -100,10 +95,6 @@ public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 	@Override
 	public void setCreateDate(Date createDate) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
 	}
 
 	@Override

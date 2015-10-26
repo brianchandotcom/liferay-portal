@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>DATA_DEFINITION</td>
-	<td>//div[label[contains(.,'Data Definition')]]//input[@type='text']</td>
+	<td>//div[label[contains(.,'Data Definition')]]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,7 +145,7 @@
 </tr>
 <tr>
 	<td>GOOGLE_ANALYTICS_ID</td>
-	<td>//input[contains(@id,'_165_googleAnalyticsId')]</td>
+	<td>//input[contains(@id,'googleAnalyticsId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -184,8 +184,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE_APPS_API_KEY</td>
+	<td>//div[label[contains(.,'Google Apps API Key')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_CLIENT_ID</td>
-	<td>//input[contains(@id,'google-client-id')]</td>
+	<td>//div[label[contains(.,'Google Client ID')]]/input[@type='text'] | //input[contains(@id,'google-client-id')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -389,6 +394,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STRUCTURE</td>
+	<td>//div[label[contains(.,'Structure')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBJECT</td>
 	<td>//input[contains(@id,'subject')] | //input[contains(@id,'Subject')]</td>
 	<td></td>
@@ -451,11 +461,6 @@
 <tr>
 	<td>WEB_ID</td>
 	<td>//input[contains(@id,'webId') and contains(@class,'input-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WINDOWS_LIVE_MESSENGER</td>
-	<td>//div[label[contains(.,'Windows Live Messenger')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

@@ -188,6 +188,11 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isCheckLayoutViewPermission() {
+		return true;
+	}
+
+	@Override
 	public boolean isFirstPageable() {
 		return _firstPageable;
 	}
@@ -195,6 +200,11 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	@Override
 	public boolean isFullPageDisplayable() {
 		return _fullPageDisplayable;
+	}
+
+	@Override
+	public boolean isInstanceable() {
+		return true;
 	}
 
 	@Override

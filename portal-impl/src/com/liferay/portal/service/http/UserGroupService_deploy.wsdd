@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portal_UserGroupService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns6_UserGroupSoap" type="java:com.liferay.portal.model.UserGroupSoap[]" innerType="cmp-ns:UserGroupSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns2_UserGroupSoap" type="java:com.liferay.portal.model.UserGroupSoap[]" innerType="cmp-ns:UserGroupSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -43,10 +43,10 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="getUserGroup" qname="operNS:getUserGroup" returnQName="getUserGroupReturn" returnType="rtns:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserGroups" qname="operNS:getUserGroups" returnQName="getUserGroupsReturn" returnType="rtns:ArrayOf_tns6_UserGroupSoap" returnItemType="tns2:UserGroupSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserGroups" qname="operNS:getUserGroups" returnQName="getUserGroupsReturn" returnType="rtns:ArrayOf_tns2_UserGroupSoap" returnItemType="tns2:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserUserGroups" qname="operNS:getUserUserGroups" returnQName="getUserUserGroupsReturn" returnType="rtns:ArrayOf_tns6_UserGroupSoap" returnItemType="tns2:UserGroupSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserUserGroups" qname="operNS:getUserUserGroups" returnQName="getUserUserGroupsReturn" returnType="rtns:ArrayOf_tns2_UserGroupSoap" returnItemType="tns2:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="unsetGroupUserGroups" qname="operNS:unsetGroupUserGroups" soapAction="">

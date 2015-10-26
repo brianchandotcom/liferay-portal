@@ -251,6 +251,8 @@ AUI.add(
 						var form = instance._getPrincipalForm();
 
 						if (instance._hasStructure() && !instance._hasTemplate() && !instance._updateStructureDefaultValues()) {
+							instance.one(SELECTOR_ACTION_NAME, form).val('');
+
 							instance._displayTemplateMessage();
 						}
 						else {

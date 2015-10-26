@@ -80,7 +80,7 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/message_boards/error.jsp");
 		}
 		catch (MessageBodyException | MessageSubjectException |
-				NoSuchThreadException | SplitThreadException e) {
+			   NoSuchThreadException | SplitThreadException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 		}

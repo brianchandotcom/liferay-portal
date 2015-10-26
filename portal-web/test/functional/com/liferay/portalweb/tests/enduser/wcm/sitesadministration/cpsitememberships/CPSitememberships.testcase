@@ -1,5 +1,5 @@
 <definition component-name="portal-wcm">
-	<property name="testray.main.component.name" value="Sites Administration" />
+	<property name="testray.main.component.name" value="Site Administration" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -239,27 +239,6 @@
 		</execute>
 	</command>
 
-	<command name="DeleteNoLiferaySite" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<var name="key_siteName" value="Liferay" />
-
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Liferay" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
-
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="Liferay" />
-		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX_DISABLED" />
-		<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
-		<execute function="AssertElementNotPresent" locator1="MenuItem#DELETE" value1="Delete" />
-		<execute function="AssertClickNoError" locator1="MenuItem#DEACTIVATE" value1="Deactivate" />
-		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
-
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
-	</command>
-
 	<command name="DeleteSiteTeam" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -298,9 +277,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Teams" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesUsers">
+			<var name="portlet" value="Site Teams" />
 		</execute>
 
 		<execute macro="Team#addCP">
@@ -636,30 +614,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoManualMembershipManagement" priority="4">
-		<execute macro="Site#manageMembershipOptions">
-			<var name="allowManualMembershipManagement" value="true" />
-		</execute>
-
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#manageMembershipOptions">
-			<var name="allowManualMembershipManagement" value="false" />
-		</execute>
-
-		<execute macro="Page#openURL" />
-
-		<execute macro="Page#changeSiteScope">
-			<var name="portletCategoryName" value="My Sites" />
-			<var name="siteName" value="Liferay" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
-	</command>
-
-	<command name="WebContentAdministrationSiteMembershipsPagination" priority="3">
+	<command name="SiteMembershipsPagination" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -769,7 +724,7 @@
 		</execute>
 	</command>
 
-	<command name="WebContentAdministrationSiteMembershipsSearch" priority="4">
+	<command name="SiteMembershipsSearch" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -968,5 +923,28 @@
 			<var name="userLastNameSearchValue" value="Three" />
 			<var name="userScreenName" value="member3" />
 		</execute>
+	</command>
+
+	<command name="ViewNoManualMembershipManagement" priority="3">
+		<execute macro="Site#manageMembershipOptions">
+			<var name="allowManualMembershipManagement" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#manageMembershipOptions">
+			<var name="allowManualMembershipManagement" value="false" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#changeSiteScope">
+			<var name="portletCategoryName" value="My Sites" />
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 	</command>
 </definition>

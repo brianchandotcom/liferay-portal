@@ -75,6 +75,10 @@ public class DDMFormFieldRenderingContext {
 		return _readOnly;
 	}
 
+	public boolean isRequired() {
+		return _required;
+	}
+
 	public boolean isShowEmptyFieldLabel() {
 		return _showEmptyFieldLabel;
 	}
@@ -137,6 +141,10 @@ public class DDMFormFieldRenderingContext {
 		_readOnly = readOnly;
 	}
 
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
 	}
@@ -160,6 +168,7 @@ public class DDMFormFieldRenderingContext {
 	private String _namespace;
 	private String _portletNamespace;
 	private boolean _readOnly;
+	private boolean _required;
 	private boolean _showEmptyFieldLabel;
 	private String _value;
 	private boolean _visible;

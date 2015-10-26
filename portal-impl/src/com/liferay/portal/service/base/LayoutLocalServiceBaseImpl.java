@@ -324,14 +324,12 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Layout>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(Layout layout)
 					throws PortalException {
-					Layout stagedModel = (Layout)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						layout);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

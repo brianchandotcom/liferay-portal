@@ -12,7 +12,7 @@
 		<execute macro="User#tearDownCP" />
 	</tear-down>
 
-	<command name="AddPageMultiplePagesToSite" priority="4">
+	<command name="AddPageMultiplePagesToSite" priority="3">
 		<execute macro="Page#openURL" />
 
 		<execute macro="Page#addPG">
@@ -30,7 +30,7 @@
 		<execute macro="SitePage#deleteSitepagesPG" />
 	</command>
 
-	<command name="AddPageWithMultipleChildPagesToSite" priority="4">
+	<command name="AddPageWithMultipleChildPagesToSite" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -284,7 +284,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangePageLayout" priority="4">
+	<command name="ChangePageLayout" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="site Page Name" />
 		</execute>
@@ -476,7 +476,7 @@
 		<execute macro="Blogs#viewControlsPG" />
 	</command>
 
-	<command name="ViewNoInfoMessageWhenChangingSiteTemplateAsUser" priority="4">
+	<command name="ViewNoInfoMessageWhenChangingSiteTemplateAsUser" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

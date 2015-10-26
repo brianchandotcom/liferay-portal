@@ -739,8 +739,6 @@ public class PortletContainerImpl implements PortletContainer {
 		String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
 			layout.getPlid(), portlet.getPortletId());
 
-		portletDisplay.setControlPanelCategory(
-			portlet.getControlPanelEntryCategory());
 		portletDisplay.setId(portlet.getPortletId());
 		portletDisplay.setInstanceId(portlet.getInstanceId());
 		portletDisplay.setNamespace(

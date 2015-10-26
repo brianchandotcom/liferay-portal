@@ -1,5 +1,4 @@
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 
 dependencies {
 	compile fileTree(dir: "lib", include: "*.jar")
@@ -15,7 +14,9 @@ targetCompatibility = "1.6"
 task downloadSrc(type: Copy)
 
 clean {
-	delete "src/com"
+	delete "lib"
+	delete "src/main/java"
+	delete "src/main/resources"
 }
 
 compileJava {
@@ -23,18 +24,29 @@ compileJava {
 }
 
 downloadSrc {
-	eachFile new ReplaceLeadingPathAction("gdata/java/lib": "lib", "gdata/java/sample/util/lib": "lib", "gdata/java": "src/com/google/gdata")
+	eachFile {
+		if (path.startsWith("gdata/java/lib") || path.startsWith("gdata/java/sample/util/lib")) {
+			path = "lib/" + name
+		}
+		else {
+			String dirName = "resources"
+
+			if (name.endsWith(".java")) {
+				dirName = "java"
+
+				filter {
+					String line ->
+
+					line.replace("sample.appsforyourdomain", "com.google.gdata.sample.appsforyourdomain")
+				}
+			}
+
+			path = "src/main/${dirName}/com/google/gdata/${path[11 .. (path.length() - 1)]}"
+		}
+	}
 
 	ext {
 		autoClean = false
-	}
-
-	filesMatching("**/*.java") {
-		filter {
-			String line ->
-
-			line.replace("sample.appsforyourdomain", "com.google.gdata.sample.appsforyourdomain")
-		}
 	}
 
 	from {
@@ -48,9 +60,11 @@ downloadSrc {
 	include "gdata/java/sample/appsforyourdomain/**"
 	include "gdata/java/sample/util/lib/sample-util.jar"
 
+	includeEmptyDirs = false
+
 	into projectDir
 
 	onlyIf {
-		!FileUtil.exists(project, "src/com")
+		!FileUtil.exists(project, "src/main/java")
 	}
 }

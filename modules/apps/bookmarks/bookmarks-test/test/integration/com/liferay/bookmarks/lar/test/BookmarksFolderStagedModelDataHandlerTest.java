@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -35,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -55,14 +52,6 @@ public class BookmarksFolderStagedModelDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-
-		super.setUp();
-	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

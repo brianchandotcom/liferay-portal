@@ -188,7 +188,11 @@
 		<execute function="AssertClick" locator1="MenuItem#MANAGE" value1="Manage" />
 
 		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
-		<execute function="AssertClick" locator1="SiteTemplates#CONFIGURATION" value1="Configuration" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Configuration" />
+		</execute>
+
 		<execute function="AssertClick" locator1="SiteTemplates#CONFIGURATION_SITE_TEMPLATE_SETTINGS" value1="Site Template Settings" />
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Site Template Settings" />
@@ -199,7 +203,7 @@
 
 		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#VIEW_PAGES" value1="View Pages" />
+		<execute function="AssertClick" locator1="MenuItem#VIEW_PAGES" value1="View Pages (Opens New Window)" />
 		<execute function="SelectWindow" locator1="home - ${siteTemplateName} - Liferay" />
 	</command>
 
@@ -301,7 +305,6 @@
 	</command>
 
 	<command name="viewResetPageChanges">
-		<execute function="Refresh" />
 		<execute function="AssertTextNotPresent" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page has been changed since the last update from the site template." />
 		<execute function="AssertTextNotPresent" locator1="Button#RESET_CHANGES" value1="Reset Changes" />
 

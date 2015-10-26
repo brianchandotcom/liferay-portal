@@ -35,9 +35,9 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 
 	@Override
 	public org.apache.lucene.search.Query translate(MatchQuery matchQuery) {
-		MatchQuery.Type type = matchQuery.getType();
+		MatchQuery.Type matchQueryType = matchQuery.getType();
 
-		if (type == MatchQuery.Type.BOOLEAN) {
+		if (matchQueryType == MatchQuery.Type.BOOLEAN) {
 			QueryParser queryParser = new QueryParser(
 				matchQuery.getField(), new KeywordAnalyzer());
 
@@ -55,13 +55,22 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 			value.endsWith(StringPool.QUOTE)) {
 
 			value = value.substring(1, value.length() - 1);
+
+			if (value.endsWith(StringPool.STAR)) {
+				value = value.substring(0, value.length() - 1);
+
+				matchQueryType = MatchQuery.Type.PHRASE_PREFIX;
+			}
+			else {
+				matchQueryType = MatchQuery.Type.PHRASE;
+			}
 		}
 
 		Term term = new Term(matchQuery.getField(), value);
 
 		org.apache.lucene.search.Query query = null;
 
-		if (type == MatchQuery.Type.PHRASE_PREFIX) {
+		if (matchQueryType == MatchQuery.Type.PHRASE_PREFIX) {
 			query = new PrefixQuery(term);
 		}
 		else {

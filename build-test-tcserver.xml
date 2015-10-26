@@ -44,7 +44,7 @@
 			set JAVA_OPTS=
 
 			call tcruntime-ctl install
-			call tcruntime-ctl start
+			call tcruntime-ctl run
 
 			set JAVA_OPTS=%JAVA_OPTS_TEMP%
 

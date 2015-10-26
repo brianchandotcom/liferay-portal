@@ -97,6 +97,12 @@ public class UpgradeMVCC extends UpgradeProcess {
 
 				upgradeMVCC(databaseMetaData, classElement);
 			}
+
+			String[] moduleTableNames = getModuleTableNames();
+
+			for (String moduleTableName : moduleTableNames) {
+				upgradeMVCC(databaseMetaData, moduleTableName);
+			}
 		}
 		finally {
 			DataAccess.cleanUp(connection);
@@ -116,6 +122,10 @@ public class UpgradeMVCC extends UpgradeProcess {
 		Element rootElement = document.getRootElement();
 
 		return rootElement.elements("class");
+	}
+
+	protected String[] getModuleTableNames() {
+		return new String[] {"BackgroundTask", "Lock_"};
 	}
 
 	protected String normalizeName(

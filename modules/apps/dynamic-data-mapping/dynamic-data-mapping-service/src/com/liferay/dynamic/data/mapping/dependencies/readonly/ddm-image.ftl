@@ -24,9 +24,18 @@
 		</div>
 
 		<#if !disabled>
-			<@aui.input name="${namespacedFieldName}URL" type="hidden" value="${src}" />
+			<@aui.input
+				name="${namespacedFieldName}URL"
+				type="hidden"
+				value="${src}"
+			/>
 
-			<@aui.input label="image-description" name="${namespacedFieldName}Alt" type="hidden" value="${alt}" />
+			<@aui.input
+				label="image-description"
+				name="${namespacedFieldName}Alt"
+				type="hidden"
+				value="${alt}"
+			/>
 		</#if>
 	</#if>
 

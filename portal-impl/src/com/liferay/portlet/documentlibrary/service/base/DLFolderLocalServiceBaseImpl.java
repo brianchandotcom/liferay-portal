@@ -351,14 +351,12 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFolder>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(DLFolder dlFolder)
 					throws PortalException {
-					DLFolder stagedModel = (DLFolder)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						dlFolder);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

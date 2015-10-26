@@ -30,7 +30,7 @@ boolean workflowAssetPreview = GetterUtil.getBoolean((Boolean)request.getAttribu
 JournalArticleDisplay articleDisplay = null;
 
 if (!workflowAssetPreview && article.isApproved()) {
-	articleDisplay = JournalContentUtil.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), null, null, languageId, 1, new PortletRequestModel(renderRequest, renderResponse), themeDisplay);
+	articleDisplay = JournalContentUtil.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), article.getVersion(), null, null, languageId, 1, new PortletRequestModel(renderRequest, renderResponse), themeDisplay);
 }
 else {
 	articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(article, null, null, languageId, 1, new PortletRequestModel(renderRequest, renderResponse), themeDisplay);

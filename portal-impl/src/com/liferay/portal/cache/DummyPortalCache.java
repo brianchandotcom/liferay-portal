@@ -14,7 +14,9 @@
 
 package com.liferay.portal.cache;
 
-import com.liferay.portal.kernel.cache.AbstractPortalCache;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;
@@ -26,14 +28,15 @@ import java.util.List;
  * @author Shuyang Zhou
  */
 public class DummyPortalCache<K extends Serializable, V>
-	extends AbstractPortalCache<K, V> {
+	implements PortalCache<K, V> {
 
-	public DummyPortalCache(
-		PortalCacheManager<K, V> portalCacheManager, String portalCacheName) {
-
-		super(portalCacheManager);
-
+	public DummyPortalCache(String portalCacheName) {
 		_portalCacheName = portalCacheName;
+	}
+
+	@Override
+	public V get(K key) {
+		return null;
 	}
 
 	@Override
@@ -51,8 +54,36 @@ public class DummyPortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public PortalCacheManager<K, V> getPortalCacheManager() {
+		return null;
+	}
+
+	@Override
 	public String getPortalCacheName() {
 		return _portalCacheName;
+	}
+
+	@Override
+	public void put(K key, V value) {
+	}
+
+	@Override
+	public void put(K key, V value, int timeToLive) {
+	}
+
+	@Override
+	public void registerPortalCacheListener(
+		PortalCacheListener<K, V> portalCacheListener) {
+	}
+
+	@Override
+	public void registerPortalCacheListener(
+		PortalCacheListener<K, V> portalCacheListener,
+		PortalCacheListenerScope portalCacheListenerScope) {
+	}
+
+	@Override
+	public void remove(K key) {
 	}
 
 	@Override
@@ -60,36 +91,12 @@ public class DummyPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	protected V doGet(K key) {
-		return null;
+	public void unregisterPortalCacheListener(
+		PortalCacheListener<K, V> portalCacheListener) {
 	}
 
 	@Override
-	protected void doPut(K key, V value, int timeToLive) {
-	}
-
-	@Override
-	protected V doPutIfAbsent(K key, V value, int timeToLive) {
-		return null;
-	}
-
-	@Override
-	protected void doRemove(K key) {
-	}
-
-	@Override
-	protected boolean doRemove(K key, V value) {
-		return false;
-	}
-
-	@Override
-	protected V doReplace(K key, V value, int timeToLive) {
-		return null;
-	}
-
-	@Override
-	protected boolean doReplace(K key, V oldValue, V newValue, int timeToLive) {
-		return true;
+	public void unregisterPortalCacheListeners() {
 	}
 
 	private final String _portalCacheName;

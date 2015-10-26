@@ -64,13 +64,11 @@ public abstract class BaseUserGroupMembershipPolicy
 			UserGroupLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<UserGroup>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(UserGroup userGroup)
 					throws PortalException {
-
-					UserGroup userGroup = (UserGroup)object;
 
 					verifyPolicy(userGroup);
 				}

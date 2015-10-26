@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>AVAILABLE</td>
+	<td>//div[label[contains(.,'Available')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BULLET_STYLE</td>
 	<td>//div[label[contains(.,'Bullet Style')]]/select</td>
 	<td></td>
@@ -84,11 +89,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLETS_AVAILABLE</td>
-	<td>//div[label[contains(.,'Portlets Available')]]/select</td>
-	<td></td>
-</tr>
-<tr>
 	<td>QUESTION</td>
 	<td>//div[label[contains(.,'Question')]]/select</td>
 	<td></td>
@@ -126,6 +126,11 @@
 <tr>
 	<td>SITES</td>
 	<td>//div[label[contains(.,'Sites')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIME_ZONE</td>
+	<td>//select[contains(@id,'timeZoneId')]</td>
 	<td></td>
 </tr>
 <tr>

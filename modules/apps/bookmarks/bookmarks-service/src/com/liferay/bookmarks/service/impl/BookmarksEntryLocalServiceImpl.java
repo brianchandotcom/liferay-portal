@@ -535,17 +535,19 @@ public class BookmarksEntryLocalServiceImpl
 			BookmarksEntry.class);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(BookmarksEntry entry)
 					throws PortalException {
-
-					BookmarksEntry entry = (BookmarksEntry)object;
 
 					entry.setTreePath(treePath);
 
 					updateBookmarksEntry(entry);
+
+					if (!reindex) {
+						return;
+					}
 
 					Document document = indexer.getDocument(entry);
 

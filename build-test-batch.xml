@@ -542,13 +542,13 @@
 			<if>
 				<isset property="test.batch.start.time" />
 				<then>
-					<script classpathref="project.classpath" language="beanshell">
+					<beanshell>
 						<![CDATA[
 							long testBatchStopTime = System.currentTimeMillis();
 
 							project.setProperty("test.batch.stop.time", String.valueOf(testBatchStopTime));
 						]]>
-					</script>
+					</beanshell>
 
 					<math
 						datatype="long"
@@ -563,7 +563,7 @@
 				</else>
 			</if>
 
-			<script classpathref="project.classpath" language="beanshell">
+			<beanshell>
 				<![CDATA[
 					import java.util.concurrent.TimeUnit;
 
@@ -606,7 +606,7 @@
 
 					project.setProperty("testray.build.time", sb.toString());
 				]]>
-			</script>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
@@ -823,6 +823,7 @@
 						<test-action>
 							<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
 								<property name="database.type" value="@{database.type}" />
+								<property name="print.java.process.on.fail" value="Bootstrap" />
 								<property name="test.class" value="${axis.variable}" />
 							</ant>
 						</test-action>
@@ -908,6 +909,7 @@
 							<antcall target="prepare-system-ext-properties" inheritAll="false" />
 
 							<gradle-execute dir="modules" task="testIntegration">
+								<arg value="-Ddatabase.type=@{database.type}" />
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
 							</gradle-execute>
 
@@ -933,9 +935,7 @@
 
 	<macrodef name="run-source-formatter">
 		<sequential>
-			<antcall target="test-package" inheritAll="false">
-				<param name="test.package" value="com.liferay.source.formatter" />
-			</antcall>
+			<gradle-execute dir="modules/util/source-formatter" task="test" />
 		</sequential>
 	</macrodef>
 
@@ -946,9 +946,11 @@
 		<sequential>
 			<echo>Sending testray results to @{testray.results.dir}.</echo>
 
-			<copy failonerror="false" todir="@{testray.results.dir}">
-				<fileset dir="@{test.results.suite.dir}" erroronmissingdir="false" includes="TESTS-*.xml" />
-			</copy>
+			<for list="uat" param="testray.base.dir.name">
+				<sequential>
+					<rsync rsync.dest="testray-results/@{testray.base.dir.name}" rsync.src="@{test.results.suite.dir}" />
+				</sequential>
+			</for>
 		</sequential>
 	</macrodef>
 
@@ -993,12 +995,20 @@
 		</sequential>
 	</macrodef>
 
+	<target name="functional-tomcat-hypersonic">
+		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
+	</target>
+
 	<target name="functional-tomcat-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
 	<target name="integration-db2">
 		<run-integration-test database.type="db2" />
+	</target>
+
+	<target name="integration-hypersonic">
+		<run-integration-test database.type="hypersonic" />
 	</target>
 
 	<target name="integration-mysql">
@@ -1019,6 +1029,10 @@
 
 	<target name="modules-integration-db2">
 		<run-modules-integration-test database.type="db2" />
+	</target>
+
+	<target name="modules-integration-hypersonic">
+		<run-modules-integration-test database.type="hypersonic" />
 	</target>
 
 	<target name="modules-integration-mysql">
@@ -1102,6 +1116,34 @@
 				<prepare-test-build />
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="ruby-sass-compiler">
+		<echo file="build.${user.name}.properties">sass.compiler.class.name=ruby</echo>
+
+		<antcall target="setup-sdk" inheritAll="false" />
+
+		<record action="start" name="${project.dir}/sass-compiler-log" />
+
+		<gradle-execute dir="modules" task="buildCSS" />
+
+		<ant dir="portal-web" target="build-css" inheritAll="false" />
+
+		<record action="stop" name="${project.dir}/sass-compiler-log" />
+
+		<fail message="The Sass compiler is not using Ruby.">
+			<condition>
+				<and>
+					<not>
+						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Using Ruby Sass compiler" />
+					</not>
+					<or>
+						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Unable to load Ruby compiler, falling back to native" />
+						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Using native Sass compiler" />
+					</or>
+				</and>
+			</condition>
+		</fail>
 	</target>
 
 	<target name="service-builder">
@@ -1255,6 +1297,10 @@ ${output.content}</echo>
 
 			<test-set-up>
 				<prepare-test-build />
+
+				<antcall target="prepare-portal-ext-properties" />
+
+				<antcall target="prepare-system-ext-properties" />
 			</test-set-up>
 		</run-batch-test>
 	</target>

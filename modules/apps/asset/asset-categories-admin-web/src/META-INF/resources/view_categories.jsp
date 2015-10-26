@@ -91,8 +91,8 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		</liferay-portlet:renderURL>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayStyleURL="<%= displayStyleURL %>"
 			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

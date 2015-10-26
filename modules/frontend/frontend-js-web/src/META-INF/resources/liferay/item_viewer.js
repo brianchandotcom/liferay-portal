@@ -349,6 +349,18 @@ AUI.add(
 						}
 
 						return links;
+					},
+
+					_syncCaptionUI: function() {
+						var instance = this;
+
+						var links = instance.get('links');
+
+						var link = links.item(instance.get('currentIndex'));
+
+						var caption = link.attr('title') || link.attr('data-title');
+
+						instance._captionEl.set('text', caption);
 					}
 				}
 			}

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.RepositoryServiceUtil;
+import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.PortletDisplay;
@@ -42,6 +42,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -96,12 +97,17 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setRepositoryService(RepositoryService repositoryService) {
+		_repositoryService = repositoryService;
+	}
+
 	protected void unmountRepository(ActionRequest actionRequest)
 		throws Exception {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 
-		RepositoryServiceUtil.deleteRepository(repositoryId);
+		_repositoryService.deleteRepository(repositoryId);
 	}
 
 	protected void updateRepository(ActionRequest actionRequest)
@@ -132,7 +138,7 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add repository
 
-			RepositoryServiceUtil.addRepository(
+			_repositoryService.addRepository(
 				themeDisplay.getScopeGroupId(), classNameId, folderId, name,
 				description, portletDisplay.getId(), typeSettingsProperties,
 				serviceContext);
@@ -141,9 +147,11 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update repository
 
-			RepositoryServiceUtil.updateRepository(
+			_repositoryService.updateRepository(
 				repositoryId, name, description);
 		}
 	}
+
+	private RepositoryService _repositoryService;
 
 }

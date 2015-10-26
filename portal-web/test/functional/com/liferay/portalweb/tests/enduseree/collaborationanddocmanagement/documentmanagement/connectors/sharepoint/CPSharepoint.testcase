@@ -43,12 +43,19 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMRepository#addCP">
-			<var name="dmRepositoryLibraryName" value="Documents" />
+		<execute macro="DMRepository#gotoAdd" />
+
+		<execute macro="DMRepository#select">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-			<var name="dmRepositorySiteURL" value="http://${sharepointVMHostName}" />
 			<var name="dmRepositoryType" value="Sharepoint" />
 		</execute>
+
+		<execute macro="DMRepository#addSharepoint">
+			<var name="dmRepositoryLibraryName" value="Documents" />
+			<var name="dmRepositorySiteURL" value="http://${sharepointVMHostName}" />
+		</execute>
+
+		<execute macro="DMRepository#save" />
 	</set-up>
 
 	<tear-down>
@@ -173,7 +180,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -189,7 +196,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkinCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -209,7 +216,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedinCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 
@@ -228,7 +235,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -248,7 +255,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 
@@ -526,7 +533,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -546,7 +553,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -577,7 +584,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 
@@ -679,7 +686,7 @@
 		</execute>
 
 		<execute macro="DMDocument#checkoutCP">
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -694,7 +701,7 @@
 			<var name="checkedOut" value="true" />
 			<var name="dmDocumentTitle" value="Document_1.xls" />
 			<var name="dmDocumentTitleEdit" value="Document_1_Edit.jpg" />
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -714,7 +721,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedoutCP" >
-			<var name="sharepointRepository" value="true" />
+			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>
 

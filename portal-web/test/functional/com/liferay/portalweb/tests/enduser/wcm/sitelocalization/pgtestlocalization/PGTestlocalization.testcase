@@ -22,7 +22,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="LPS-52724" name="CheckLocalizationChinese" priority="4">
+	<command name="CheckLocalizationChinese" priority="4">
 		<execute function="Click" locator1="TestLocalized#CHINESE_LOCALIZATION" />
 		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_1" value1="PASSED" />
 		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_2" value1="PASSED" />

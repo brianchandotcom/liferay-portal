@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the ClassName service. Represents a row in the &quot;ClassName_&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,4 +34,20 @@ public interface ClassName extends ClassNameModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ClassNameImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ClassName, Long> CLASS_NAME_ID_ACCESSOR = new Accessor<ClassName, Long>() {
+			@Override
+			public Long get(ClassName className) {
+				return className.getClassNameId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ClassName> getTypeClass() {
+				return ClassName.class;
+			}
+		};
 }

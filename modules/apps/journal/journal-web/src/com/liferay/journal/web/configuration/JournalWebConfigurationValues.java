@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class JournalWebConfigurationValues {
 
-	public static final String CHECK_INTERVAL = GetterUtil.getString(
+	public static final int CHECK_INTERVAL = GetterUtil.getInteger(
 		JournalWebConfigurationUtil.get("check.interval"));
 
 	public static final String DEFAULT_DISPLAY_VIEW = GetterUtil.getString(

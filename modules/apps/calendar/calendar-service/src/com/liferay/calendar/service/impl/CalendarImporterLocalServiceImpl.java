@@ -151,13 +151,11 @@ public class CalendarImporterLocalServiceImpl
 			calEventLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<CalEvent>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(CalEvent calEvent)
 					throws PortalException {
-
-					CalEvent calEvent = (CalEvent)object;
 
 					importCalEvent(calEvent);
 				}

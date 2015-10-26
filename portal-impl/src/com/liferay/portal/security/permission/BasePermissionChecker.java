@@ -43,13 +43,6 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	}
 
 	@Override
-	public List<Long> getGuestResourceBlockIds(
-		long companyId, long groupId, String name, String actionId) {
-
-		return Collections.emptyList();
-	}
-
-	@Override
 	public List<Long> getOwnerResourceBlockIds(
 		long companyId, long groupId, String name, String actionId) {
 

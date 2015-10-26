@@ -115,12 +115,10 @@ public class LegacyGoogleDocsMigration {
 			_dlFileEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
 				@Override
-				public void performAction(Object object) {
-					DLFileEntry dlFileEntry = (DLFileEntry)object;
-
+				public void performAction(DLFileEntry dlFileEntry) {
 					GoogleDocsMetadataHelper googleDocsMetadataHelper =
 						new GoogleDocsMetadataHelper(
 							_ddmStructureLocalService, dlFileEntry,

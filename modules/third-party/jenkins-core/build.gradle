@@ -7,6 +7,7 @@ String jenkinsCoreName = "jenkins-core"
 String jenkinsCoreVersion = "1.565.1"
 
 dependencies {
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "org.jenkins-ci.main", name: jenkinsCoreName, optional, version: jenkinsCoreVersion
 }
 

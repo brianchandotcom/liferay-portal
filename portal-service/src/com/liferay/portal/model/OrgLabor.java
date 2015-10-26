@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the OrgLabor service. Represents a row in the &quot;OrgLabor&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,23 @@ public interface OrgLabor extends OrgLaborModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.OrgLaborImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<OrgLabor, Long> ORG_LABOR_ID_ACCESSOR = new Accessor<OrgLabor, Long>() {
+			@Override
+			public Long get(OrgLabor orgLabor) {
+				return orgLabor.getOrgLaborId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<OrgLabor> getTypeClass() {
+				return OrgLabor.class;
+			}
+		};
+
 	public com.liferay.portal.model.ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

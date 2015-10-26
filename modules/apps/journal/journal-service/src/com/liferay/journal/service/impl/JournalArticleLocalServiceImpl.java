@@ -98,6 +98,7 @@ import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -170,6 +171,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 
@@ -213,8 +215,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  folderId the primary key of the web content article folder
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  classPK the primary key of the DDM structure, if the primary key
 	 *         of the DDMStructure class is given as the
 	 *         <code>classNameId</code> parameter, the primary key of the class
@@ -1276,6 +1279,36 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Deletes all the group's web content articles and resources matching the
+	 * class name and class primary key.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  className the DDMStructure class name if the web content article
+	 *         is related to a DDM structure, the primary key of the class name
+	 *         associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
+	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
+	 *         class name is given as the <code>className</code> parameter, the
+	 *         primary key of the class associated with the web content article,
+	 *         or <code>0</code> otherwise
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void deleteArticles(long groupId, String className, long classPK)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		List<JournalArticle> articles = journalArticlePersistence.findByG_C_C(
+			groupId, classNameId, classPK);
+
+		for (JournalArticle article : articles) {
+			journalArticleLocalService.deleteArticle(article, null, null);
+		}
+	}
+
+	/**
 	 * Deletes the layout's association with the web content articles for the
 	 * group.
 	 *
@@ -1309,10 +1342,9 @@ public class JournalArticleLocalServiceImpl
 	 *         modification date, status date, portlet preferences, and can set
 	 *         whether to add the default command update for the web content
 	 *         article. With respect to social activities, by setting the
-	 *         service context's command to {@link
-	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	 *         is considered a web content update activity; otherwise it is
-	 *         considered a web content add activity.
+	 *         service context's command to {@link Constants#UPDATE}, the
+	 *         invocation is considered a web content update activity; otherwise
+	 *         it is considered a web content add activity.
 	 * @return the web content article
 	 * @throws PortalException if a matching web content article could not be
 	 *         found or if a portal exception occurred
@@ -1345,10 +1377,9 @@ public class JournalArticleLocalServiceImpl
 	 *         modification date, status date, portlet preferences, and can set
 	 *         whether to add the default command update for the web content
 	 *         article. With respect to social activities, by setting the
-	 *         service context's command to {@link
-	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	 *         is considered a web content update activity; otherwise it is
-	 *         considered a web content add activity.
+	 *         service context's command to {@link Constants#UPDATE}, the
+	 *         invocation is considered a web content update activity; otherwise
+	 *         it is considered a web content add activity.
 	 * @throws PortalException if a matching web content article could not be
 	 *         found or if a portal exception occurred
 	 */
@@ -1684,12 +1715,13 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the primary key of the class name
-	 *         associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	 * @param  classPK the primary key of the DDM structure, if the the
-	 *         DDMStructure class name is given as the <code>className</code>
-	 *         parameter, the primary key of the class associated with the web
-	 *         content article, or <code>0</code> otherwise
+	 *         associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
+	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
+	 *         class name is given as the <code>className</code> parameter, the
+	 *         primary key of the class associated with the web content article,
+	 *         or <code>0</code> otherwise
 	 * @return the matching web content article
 	 * @throws PortalException if a matching web content article could not be
 	 *         found
@@ -2904,8 +2936,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the class name associated with the
-	 *         article, or {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         article, or JournalArticleConstants.CLASSNAME_ID_DEFAULT in the
+	 *         journal-api module otherwise
 	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
 	 *         class name is given as the <code>className</code> parameter, the
 	 *         primary key of the class associated with the web content article,
@@ -3414,9 +3446,9 @@ public class JournalArticleLocalServiceImpl
 	 *         portlet response, theme display, and can set whether to add the
 	 *         default command update for the web content article. With respect
 	 *         to social activities, by setting the service context's command to
-	 *         {@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	 *         invocation is considered a web content update activity; otherwise
-	 *         it is considered a web content add activity.
+	 *         {@link Constants#UPDATE}, the invocation is considered a web
+	 *         content update activity; otherwise it is considered a web content
+	 *         add activity.
 	 * @return the updated web content article, which was moved to a new folder
 	 * @throws PortalException if a matching web content article could not be
 	 *         found
@@ -3471,10 +3503,9 @@ public class JournalArticleLocalServiceImpl
 	 *         modification date, portlet preferences, and can set whether to
 	 *         add the default command update for the web content article. With
 	 *         respect to social activities, by setting the service context's
-	 *         command to {@link
-	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	 *         is considered a web content update activity; otherwise it is
-	 *         considered a web content add activity.
+	 *         command to {@link Constants#UPDATE}, the invocation is considered
+	 *         a web content update activity; otherwise it is considered a web
+	 *         content add activity.
 	 * @return the updated web content article, which was moved from the Recycle
 	 *         Bin to a new folder
 	 * @throws PortalException if a trashed web content article with the primary
@@ -3849,7 +3880,7 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  status the web content article's workflow status. For more
 	 *         information see {@link WorkflowConstants} for constants starting
 	 *         with the "STATUS_" prefix.
@@ -3912,10 +3943,9 @@ public class JournalArticleLocalServiceImpl
 	 * parameters without using the indexer, including a keywords parameter for
 	 * matching with the article's ID, title, description, and content, a DDM
 	 * structure key parameter, and a DDM template key parameter. It is
-	 * preferable to use the indexed version {@link #search(long, long,
-	 * java.util.List, long, String, String, String, java.util.LinkedHashMap,
-	 * int, int, Sort)} instead of this method wherever possible for performance
-	 * reasons.
+	 * preferable to use the indexed version {@link #search(long, long, List,
+	 * long, String, String, String, LinkedHashMap, int, int, Sort)} instead of
+	 * this method wherever possible for performance reasons.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -3929,11 +3959,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -3984,10 +4015,10 @@ public class JournalArticleLocalServiceImpl
 	 * parameters without using the indexer, including keyword parameters for
 	 * article ID, title, description, and content, a DDM structure key
 	 * parameter, a DDM template key parameter, and an AND operator switch. It
-	 * is preferable to use the indexed version {@link #search(long, long,
-	 * java.util.List, long, String, String, String, String, int, String,
-	 * String, java.util.LinkedHashMap, boolean, int, int, Sort)} instead of
-	 * this method wherever possible for performance reasons.
+	 * is preferable to use the indexed version {@link #search(long, long, List,
+	 * long, String, String, String, String, int, String, String, LinkedHashMap,
+	 * boolean, int, int, Sort)} instead of this method wherever possible for
+	 * performance reasons.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -4001,11 +4032,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -4081,11 +4113,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -4164,11 +4197,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -4241,11 +4275,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  title the title keywords (space separated, optionally
@@ -4301,10 +4336,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #search(long, long,
-	 *             java.util.List, long, String, String, String, String, int,
-	 *             String, String, java.util.LinkedHashMap, boolean, int, int,
-	 *             Sort)}
+	 * @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
+	 *             long, String, String, String, String, int, String, String,
+	 *             LinkedHashMap, boolean, int, int, Sort)}
 	 */
 	@Deprecated
 	@Override
@@ -4374,7 +4408,7 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  status the web content article's workflow status. For more
 	 *         information see {@link WorkflowConstants} for constants starting
 	 *         with the "STATUS_" prefix.
@@ -4418,11 +4452,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -4470,11 +4505,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -4530,11 +4566,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         the class name associated with the article, or
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -4610,10 +4647,11 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class, the
 	 *         primary key of the class name associated with the article, or
-	 *         {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
@@ -4697,10 +4735,11 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class, the
 	 *         primary key of the class name associated with the article, or
-	 *         {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *         JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *         module otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  title the title keywords (space separated, optionally
@@ -4839,13 +4878,11 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class.getName());
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(JournalArticle article)
 					throws PortalException {
-
-					JournalArticle article = (JournalArticle)object;
 
 					article.setTreePath(treePath);
 
@@ -4930,9 +4967,9 @@ public class JournalArticleLocalServiceImpl
 	 *         actions, URL title, and can set whether to add the default
 	 *         command update for the web content article. With respect to
 	 *         social activities, by setting the service context's command to
-	 *         {@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	 *         invocation is considered a web content update activity; otherwise
-	 *         it is considered a web content add activity.
+	 *         {@link Constants#UPDATE}, the invocation is considered a web
+	 *         content update activity; otherwise it is considered a web content
+	 *         add activity.
 	 * @return the updated web content article
 	 * @throws PortalException if a user with the primary key or a matching web
 	 *         content article could not be found, or if a portal exception
@@ -5118,9 +5155,9 @@ public class JournalArticleLocalServiceImpl
 	 *         actions, URL title , and can set whether to add the default
 	 *         command update for the web content article. With respect to
 	 *         social activities, by setting the service context's command to
-	 *         {@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	 *         invocation is considered a web content update activity; otherwise
-	 *         it is considered a web content add activity.
+	 *         {@link Constants#UPDATE}, the invocation is considered a web
+	 *         content update activity; otherwise it is considered a web content
+	 *         add activity.
 	 * @return the updated web content article
 	 * @throws PortalException if a user with the primary key or a matching web
 	 *         content article could not be found, or if a portal exception
@@ -5381,9 +5418,9 @@ public class JournalArticleLocalServiceImpl
 	 *         actions, URL title, and can set whether to add the default
 	 *         command update for the web content article. With respect to
 	 *         social activities, by setting the service context's command to
-	 *         {@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	 *         invocation is considered a web content update activity; otherwise
-	 *         it is considered a web content add activity.
+	 *         {@link Constants#UPDATE}, the invocation is considered a web
+	 *         content update activity; otherwise it is considered a web content
+	 *         add activity.
 	 * @return the updated web content article
 	 * @throws PortalException if a user with the primary key or a matching web
 	 *         content article could not be found, or if a portal exception
@@ -5406,9 +5443,8 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #updateArticleTranslation(long, String, double,
-	 *             java.util.Locale, String, String, String, Map,
-	 *             ServiceContext)}
+	 *             #updateArticleTranslation(long, String, double, Locale,
+	 *             String, String, String, Map, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -5707,8 +5743,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param groupId the primary key of the web content article's group
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 *        content article is related to a DDM structure, the primary key of
-	 *        the class name associated with the article, or {@link
-	 *        JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	 *        the class name associated with the article, or
+	 *        JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	 *        module otherwise
 	 * @param oldDDMTemplateKey the primary key of the web content article's old
 	 *        DDM template
 	 * @param newDDMTemplateKey the primary key of the web content article's new
@@ -5743,10 +5780,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, status date, and portlet preferences. With
 	 *         respect to social activities, by setting the service context's
-	 *         command to {@link
-	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	 *         is considered a web content update activity; otherwise it is
-	 *         considered a web content add activity.
+	 *         command to {@link Constants#UPDATE}, the invocation is considered
+	 *         a web content update activity; otherwise it is considered a web
+	 *         content add activity.
 	 * @param  workflowContext the web content article's configured workflow
 	 *         context
 	 * @return the updated web content article
@@ -5776,6 +5812,10 @@ public class JournalArticleLocalServiceImpl
 
 		int oldStatus = article.getStatus();
 
+		Date modifiedDate = serviceContext.getModifiedDate(now);
+
+		article.setModifiedDate(modifiedDate);
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			Date expirationDate = article.getExpirationDate();
 
@@ -5791,9 +5831,15 @@ public class JournalArticleLocalServiceImpl
 		article.setStatus(status);
 		article.setStatusByUserId(user.getUserId());
 		article.setStatusByUserName(user.getFullName());
-		article.setStatusDate(serviceContext.getModifiedDate(now));
+		article.setStatusDate(modifiedDate);
 
 		journalArticlePersistence.update(article);
+
+		if (JournalServiceConfigurationValues.
+				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
+
+			setArticlesExpirationDate(article);
+		}
 
 		if (hasModifiedLatestApprovedVersion(
 				article.getGroupId(), article.getArticleId(),
@@ -6017,8 +6063,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param      classNameId the primary key of the DDMStructure class if the
 	 *             web content article is related to a DDM structure, the
 	 *             primary key of the class name associated with the article, or
-	 *             {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *             otherwise
+	 *             JournalArticleConstants.CLASSNAME_ID_DEFAULT in the
+	 *             journal-api module otherwise
 	 * @param      oldDDMTemplateKey the primary key of the web content
 	 *             article's old DDM template
 	 * @param      newDDMTemplateKey the primary key of the web content
@@ -6038,28 +6084,19 @@ public class JournalArticleLocalServiceImpl
 	protected String buildArticleURL(
 		String articleURL, long groupId, long folderId, String articleId) {
 
-		StringBundler sb = new StringBundler(13);
-
-		sb.append(articleURL);
-		sb.append(StringPool.AMPERSAND);
-
 		String portletId = PortletProviderUtil.getPortletId(
 			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
 
-		sb.append(PortalUtil.getPortletNamespace(portletId));
+		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		sb.append("groupId=");
-		sb.append(groupId);
-		sb.append(StringPool.AMPERSAND);
-		sb.append(PortalUtil.getPortletNamespace(portletId));
-		sb.append("folderId=");
-		sb.append(folderId);
-		sb.append(StringPool.AMPERSAND);
-		sb.append(PortalUtil.getPortletNamespace(portletId));
-		sb.append("articleId=");
-		sb.append(articleId);
+		articleURL = HttpUtil.addParameter(
+			articleURL, namespace + "groupId", groupId);
+		articleURL = HttpUtil.addParameter(
+			articleURL, namespace + "folderId", folderId);
+		articleURL = HttpUtil.addParameter(
+			articleURL, namespace + "articleId", articleId);
 
-		return sb.toString();
+		return articleURL;
 	}
 
 	protected SearchContext buildSearchContext(
@@ -6260,8 +6297,6 @@ public class JournalArticleLocalServiceImpl
 
 				latestArticles.add(article);
 
-				String articleURL = StringPool.BLANK;
-
 				long ownerId = article.getGroupId();
 				int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
 				long plid = PortletKeys.PREFS_PLID_SHARED;
@@ -6273,6 +6308,13 @@ public class JournalArticleLocalServiceImpl
 					portletPreferencesLocalService.getPreferences(
 						article.getCompanyId(), ownerId, ownerType, plid,
 						portletId);
+
+				String articleURL = PortalUtil.getControlPanelFullURL(
+					article.getGroupId(), portletId, null);
+
+				articleURL = buildArticleURL(
+					articleURL, article.getGroupId(), article.getFolderId(),
+					article.getArticleId());
 
 				sendEmail(
 					article, articleURL, preferences, "review",
@@ -7428,6 +7470,39 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.flushNotificationsAsync();
 	}
 
+	protected void setArticlesExpirationDate(JournalArticle article) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		if (!article.isApproved() || (article.getExpirationDate() == null)) {
+			return;
+		}
+
+		final List<JournalArticle> articles =
+			journalArticlePersistence.findByG_A(
+				article.getGroupId(), article.getArticleId());
+
+		final Date expirationDate = article.getExpirationDate();
+
+		TransactionCommitCallbackUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					for (JournalArticle curArticle : articles) {
+						curArticle.setExpirationDate(expirationDate);
+
+						journalArticleLocalService.updateJournalArticle(
+							curArticle);
+					}
+
+					return null;
+				}
+
+			});
+	}
+
 	protected void startWorkflowInstance(
 			long userId, JournalArticle article, ServiceContext serviceContext)
 		throws PortalException {
@@ -7509,6 +7584,9 @@ public class JournalArticleLocalServiceImpl
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		Map<String, DDMFormField> fullHierarchyDDMFormFieldsMap =
 			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
 
 		Map<String, String> fieldsValuesMap = createFieldsValuesMap(content);
@@ -7520,7 +7598,13 @@ public class JournalArticleLocalServiceImpl
 			String ddmFormFieldValue = fieldValue.getValue();
 
 			updateDDMFormFieldPredefinedValue(
-				ddmFormFieldsMap.get(ddmFormFieldName), ddmFormFieldValue);
+				fullHierarchyDDMFormFieldsMap.get(ddmFormFieldName),
+				ddmFormFieldValue);
+
+			if (ddmFormFieldsMap.containsKey(ddmFormFieldName)) {
+				updateDDMFormFieldPredefinedValue(
+					ddmFormFieldsMap.get(ddmFormFieldName), ddmFormFieldValue);
+			}
 		}
 
 		ddmStructure.updateDDMForm(ddmForm);
@@ -7587,18 +7671,26 @@ public class JournalArticleLocalServiceImpl
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLanguageId(content));
 
-		if (!LanguageUtil.isAvailableLocale(groupId, articleDefaultLocale)) {
-			LocaleException le = new LocaleException(
-				LocaleException.TYPE_CONTENT,
-				"The locale " + articleDefaultLocale +
-					" is not available in site with groupId" + groupId);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			if (!LanguageUtil.isAvailableLocale(
+					groupId, articleDefaultLocale)) {
 
-			le.setSourceAvailableLocales(
-				Collections.singleton(articleDefaultLocale));
-			le.setTargetAvailableLocales(
-				LanguageUtil.getAvailableLocales(groupId));
+				LocaleException le = new LocaleException(
+					LocaleException.TYPE_CONTENT,
+					"The locale " + articleDefaultLocale +
+						" is not available in site with groupId" + groupId);
 
-			throw le;
+				le.setSourceAvailableLocales(
+					Collections.singleton(articleDefaultLocale));
+				le.setTargetAvailableLocales(
+					LanguageUtil.getAvailableLocales(groupId));
+
+				throw le;
+			}
+
+			if ((expirationDate != null) && expirationDate.before(new Date())) {
+				throw new ArticleExpirationDateException();
+			}
 		}
 
 		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
@@ -7615,7 +7707,8 @@ public class JournalArticleLocalServiceImpl
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
-		validateDDMStructureFields(ddmStructure, classNameId, content);
+		validateDDMStructureFields(
+			ddmStructure, classNameId, content, articleDefaultLocale);
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
@@ -7630,12 +7723,6 @@ public class JournalArticleLocalServiceImpl
 		}
 		else if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 			throw new NoSuchTemplateException();
-		}
-
-		if ((expirationDate != null) && expirationDate.before(new Date()) &&
-			!ExportImportThreadLocal.isImportInProcess()) {
-
-			throw new ArticleExpirationDateException();
 		}
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(
@@ -7743,7 +7830,7 @@ public class JournalArticleLocalServiceImpl
 
 	protected void validateDDMStructureFields(
 			DDMStructure ddmStructure, long classNameId, Fields fields,
-			Locale[] locales)
+			Locale defaultlocale)
 		throws PortalException {
 
 		for (com.liferay.dynamic.data.mapping.storage.Field field : fields) {
@@ -7751,30 +7838,25 @@ public class JournalArticleLocalServiceImpl
 				throw new StorageFieldNameException();
 			}
 
-			for (Locale locale : locales) {
-				if (ddmStructure.getFieldRequired(field.getName()) &&
-					Validator.isNull(field.getValue(locale)) &&
-					(classNameId ==
-						JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
+			if (ddmStructure.getFieldRequired(field.getName()) &&
+				Validator.isNull(field.getValue(defaultlocale)) &&
+				(classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
 
-					throw new StorageFieldRequiredException(
-						"Required field value is not present for " + locale);
-				}
+				throw new StorageFieldRequiredException(
+					"Required field value is not present for " + defaultlocale);
 			}
 		}
 	}
 
 	protected void validateDDMStructureFields(
-			DDMStructure ddmStructure, long classNameId, String content)
+			DDMStructure ddmStructure, long classNameId, String content,
+			Locale defaultlocale)
 		throws PortalException {
-
-		Locale[] contentLocales = LocaleUtil.fromLanguageIds(
-			LocalizationUtil.getAvailableLanguageIds(content));
 
 		Fields fields = DDMXMLUtil.getFields(ddmStructure, content);
 
 		validateDDMStructureFields(
-			ddmStructure, classNameId, fields, contentLocales);
+			ddmStructure, classNameId, fields, defaultlocale);
 	}
 
 	protected void validateDDMStructureId(

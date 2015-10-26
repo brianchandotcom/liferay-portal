@@ -32,10 +32,14 @@ if (Validator.isNull(displayStyle)) {
 if ((message != null) && layout.isTypeControlPanel()) {
 	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 }
+
+AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.getMessageId());
 %>
 
-<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
+<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
-<div class="displayStyle-<%= displayStyle %>">
-	<liferay-util:include page='<%= "/message_boards/view_message_" + displayStyle + ".jsp" %>' servletContext="<%= application %>" />
+	<div class="displayStyle-<%= displayStyle %>">
+		<liferay-util:include page='<%= "/message_boards/view_message_" + displayStyle + ".jsp" %>' servletContext="<%= application %>" />
+	</div>
 </div>

@@ -345,14 +345,12 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileShortcut>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(DLFileShortcut dlFileShortcut)
 					throws PortalException {
-					DLFileShortcut stagedModel = (DLFileShortcut)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						dlFileShortcut);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

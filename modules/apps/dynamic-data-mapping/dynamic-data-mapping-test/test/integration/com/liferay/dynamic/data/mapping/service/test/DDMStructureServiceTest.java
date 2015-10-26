@@ -223,8 +223,12 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	public void testDeleteStructureReferencedByTemplates() throws Exception {
 		DDMStructure structure = addStructure(_classNameId, "Test Structure");
 
-		addDisplayTemplate(structure.getPrimaryKey(), "Test Display Template");
-		addFormTemplate(structure.getPrimaryKey(), "Test Form Template");
+		addDisplayTemplate(
+			structure.getPrimaryKey(), "Test Display Template",
+			WorkflowConstants.STATUS_APPROVED);
+		addFormTemplate(
+			structure.getPrimaryKey(), "Test Form Template",
+			WorkflowConstants.STATUS_APPROVED);
 
 		DDMStructureLocalServiceUtil.deleteStructure(
 			structure.getStructureId());
@@ -317,8 +321,12 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	public void testGetTemplates() throws Exception {
 		DDMStructure structure = addStructure(_classNameId, "Test Structure");
 
-		addDisplayTemplate(structure.getStructureId(), "Test Display Template");
-		addFormTemplate(structure.getStructureId(), "Test Form Template");
+		addDisplayTemplate(
+			structure.getStructureId(), "Test Display Template",
+			WorkflowConstants.STATUS_APPROVED);
+		addFormTemplate(
+			structure.getStructureId(), "Test Form Template",
+			WorkflowConstants.STATUS_APPROVED);
 
 		List<DDMTemplate> templates = structure.getTemplates();
 

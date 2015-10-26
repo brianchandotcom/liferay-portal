@@ -1,7 +1,5 @@
-@import "bourbon";
-@import "mixins";
-
 @import "custom_responsive";
+@import "portlet_decorator";
 
 $bg-color: #F5F7F8;
 $solid-color: #47647A;
@@ -24,6 +22,7 @@ body {
 }
 
 #wrapper {
+	margin-top: 42px;
 	padding: 0;
 
 	#banner {
@@ -39,6 +38,10 @@ body {
 			letter-spacing: 2px;
 			margin-left: 20px;
 			vertical-align: middle;
+		}
+
+		.portlet-topper {
+			z-index: 1;
 		}
 
 		.navbar-toggle {
@@ -124,7 +127,7 @@ body {
 		}
 	}
 
-	#content{
+	#content {
 		.navbar-nav > li {
 			& > a {
 				color: $solid-color;
@@ -168,7 +171,7 @@ body {
 }
 
 .add-page-editor {
-	margin-top: 20px;
+	margin-top: 20px 0;
 
 	.btn {
 		padding: 3px 10px;

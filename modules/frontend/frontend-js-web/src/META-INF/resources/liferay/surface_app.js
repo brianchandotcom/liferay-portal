@@ -20,6 +20,8 @@ AUI.add(
 
 				Liferay.Data.sharedResources = Liferay.Data.sharedResources.concat(newResources);
 
+				Liferay.DOMTaskRunner.runTasks(frag);
+
 				content = frag;
 			}
 
@@ -43,6 +45,8 @@ AUI.add(
 
 									Surface.sendRedirect(redirect, instance.get('title'));
 								}
+
+								Liferay.DOMTaskRunner.reset();
 
 								Liferay.fire(
 									'surfaceEndNavigate',
@@ -133,6 +137,13 @@ AUI.add(
 				);
 
 				Liferay.on(
+					'*:portletRefreshed',
+					function(event) {
+						Surface.clearCache();
+					}
+				);
+
+				Liferay.on(
 					'surfaceScreenLoad',
 					function(event) {
 						Surface.resetAllPortlets();
@@ -142,27 +153,32 @@ AUI.add(
 				Liferay.on(
 					'surfaceEndNavigate',
 					function(event) {
-						var activeScreen = Surface.app.activeScreen;
+						if (!event.error) {
+							var activeScreen = Surface.app.activeScreen;
 
-						var dataChannel = activeScreen.get('dataChannel');
+							var dataChannel = activeScreen.get('dataChannel');
 
-						if (dataChannel.clearScreensCache) {
-							A.each(
-								Surface.app.screens,
-								function(value, key) {
-									if (value !== activeScreen) {
-										value.clearCache();
+							if (dataChannel.clearScreensCache) {
+								A.each(
+									Surface.app.screens,
+									function(value, key) {
+										if (value !== activeScreen) {
+											value.clearCache();
+										}
 									}
-								}
-							);
-						}
-
-						if (dataChannel.scrollElementId) {
-							var scrollElement = document.getElementById(dataChannel.scrollElementId);
-
-							if (scrollElement) {
-								scrollElement.scrollIntoView();
+								);
 							}
+
+							if (dataChannel.scrollElementId) {
+								var scrollElement = document.getElementById(dataChannel.scrollElementId);
+
+								if (scrollElement) {
+									scrollElement.scrollIntoView();
+								}
+							}
+						}
+						else {
+							window.location.href = event.path;
 						}
 					}
 				);

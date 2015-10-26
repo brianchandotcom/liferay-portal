@@ -16,6 +16,7 @@ package com.liferay.marketplace.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface App extends AppModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.marketplace.model.impl.AppImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<App, Long> APP_ID_ACCESSOR = new Accessor<App, Long>() {
+			@Override
+			public Long get(App app) {
+				return app.getAppId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<App> getTypeClass() {
+				return App.class;
+			}
+		};
+
 	public java.lang.String[] addContextName(java.lang.String contextName);
 
 	public java.lang.String[] getContextNames();

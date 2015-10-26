@@ -167,7 +167,7 @@ public class JSONArrayImpl implements JSONArray {
 
 	@Override
 	public JSONArray put(long value) {
-		_jsonArray.put(value);
+		_jsonArray.put(String.valueOf(value));
 
 		return this;
 	}

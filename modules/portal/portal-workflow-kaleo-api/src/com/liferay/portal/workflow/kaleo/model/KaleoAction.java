@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface KaleoAction extends KaleoActionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoActionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<KaleoAction, Long> KALEO_ACTION_ID_ACCESSOR = new Accessor<KaleoAction, Long>() {
+			@Override
+			public Long get(KaleoAction kaleoAction) {
+				return kaleoAction.getKaleoActionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoAction> getTypeClass() {
+				return KaleoAction.class;
+			}
+		};
 }

@@ -19,15 +19,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import javax.servlet.ServletContext;
 
@@ -62,11 +62,11 @@ public class LayoutAssetRendererFactory
 	public AssetEntry getAssetEntry(String className, long classPK)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(classPK);
+		Layout layout = _layoutLocalService.getLayout(classPK);
 
-		User user = UserLocalServiceUtil.getUserById(layout.getUserId());
+		User user = _userLocalService.getUserById(layout.getUserId());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.createAssetEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
 			classPK);
 
 		assetEntry.setGroupId(layout.getGroupId());
@@ -86,7 +86,7 @@ public class LayoutAssetRendererFactory
 	public AssetRenderer<Layout> getAssetRenderer(long plid, int type)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		LayoutAssetRenderer layoutAssetRenderer = new LayoutAssetRenderer(
 			layout);
@@ -120,6 +120,28 @@ public class LayoutAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private LayoutLocalService _layoutLocalService;
 	private ServletContext _servletContext;
+	private UserLocalService _userLocalService;
 
 }

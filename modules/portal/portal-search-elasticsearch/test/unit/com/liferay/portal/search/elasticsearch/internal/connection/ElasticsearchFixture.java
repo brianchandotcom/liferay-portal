@@ -25,8 +25,6 @@ import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 
 import java.io.File;
 
-import java.lang.reflect.Method;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +37,8 @@ import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.get.GetIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.ClusterAdminClient;
@@ -101,12 +101,16 @@ public class ElasticsearchFixture {
 		deleteTmpDir();
 	}
 
+	public AdminClient getAdminClient() {
+		Client client = _elasticsearchConnection.getClient();
+
+		return client.admin();
+	}
+
 	public ClusterHealthResponse getClusterHealthResponse(
 		HealthExpectations healthExpectations) {
 
-		Client client = _elasticsearchConnection.getClient();
-
-		AdminClient adminClient = client.admin();
+		AdminClient adminClient = getAdminClient();
 
 		ClusterAdminClient clusterAdminClient = adminClient.cluster();
 
@@ -130,10 +134,23 @@ public class ElasticsearchFixture {
 		return health.actionGet();
 	}
 
-	public IndicesAdminClient getIndicesAdminClient() {
-		Client client = _elasticsearchConnection.getClient();
+	public ElasticsearchConnection getElasticsearchConnection() {
+		return _elasticsearchConnection;
+	}
 
-		AdminClient adminClient = client.admin();
+	public GetIndexResponse getIndex(String... indices) {
+		IndicesAdminClient indicesAdminClient = getIndicesAdminClient();
+
+		GetIndexRequestBuilder getIndexRequestBuilder =
+			indicesAdminClient.prepareGetIndex();
+
+		getIndexRequestBuilder.addIndices(indices);
+
+		return getIndexRequestBuilder.get();
+	}
+
+	public IndicesAdminClient getIndicesAdminClient() {
+		AdminClient adminClient = getAdminClient();
 
 		return adminClient.indices();
 	}
@@ -166,6 +183,23 @@ public class ElasticsearchFixture {
 
 	}
 
+	protected void addClusterLoggingThresholdContributor(
+		EmbeddedElasticsearchConnection embeddedElasticsearchConnection) {
+
+		embeddedElasticsearchConnection.addSettingsContributor(
+			new BaseSettingsContributor(0) {
+
+				@Override
+				public void populate(Builder builder) {
+					builder.put(
+						"cluster.service.cluster.service." +
+							"slow_task_logging_threshold",
+						"600s");
+				}
+
+			});
+	}
+
 	protected void addDiskThresholdSettingsContributor(
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection) {
 
@@ -190,17 +224,13 @@ public class ElasticsearchFixture {
 		}
 
 		UnicastSettingsContributor unicastSettingsContributor =
-			new UnicastSettingsContributor();
+			new UnicastSettingsContributor() {
+				{
+					setClusterSettingsContext(_clusterSettingsContext);
 
-		execute(
-			UnicastSettingsContributor.class, "setClusterSettingsContext",
-			new Class<?>[] {ClusterSettingsContext.class},
-			unicastSettingsContributor, new Object[] {_clusterSettingsContext});
-
-		execute(
-			UnicastSettingsContributor.class, "activate",
-			new Class<?>[] {Map.class}, unicastSettingsContributor,
-			new Object[] {_elasticsearchConfigurationProperties});
+					activate(_elasticsearchConfigurationProperties);
+				}
+			};
 
 		embeddedElasticsearchConnection.addSettingsContributor(
 			unicastSettingsContributor);
@@ -210,6 +240,7 @@ public class ElasticsearchFixture {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			new EmbeddedElasticsearchConnection();
 
+		addClusterLoggingThresholdContributor(embeddedElasticsearchConnection);
 		addDiskThresholdSettingsContributor(embeddedElasticsearchConnection);
 		addUnicastSettingsContributor(embeddedElasticsearchConnection);
 
@@ -235,22 +266,6 @@ public class ElasticsearchFixture {
 
 	protected void deleteTmpDir() throws Exception {
 		FileUtils.deleteDirectory(new File(_tmpDirName));
-	}
-
-	protected void execute(
-		Class<?> clazz, String methodName, Class<?>[] parameterTypes,
-		Object instance, Object[] parameters) {
-
-		try {
-			Method method = clazz.getDeclaredMethod(methodName, parameterTypes);
-
-			method.setAccessible(true);
-
-			method.invoke(instance, parameters);
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
 	}
 
 	private ClusterSettingsContext _clusterSettingsContext;

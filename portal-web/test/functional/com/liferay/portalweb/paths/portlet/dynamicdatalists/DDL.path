@@ -21,7 +21,12 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//ul[contains(@aria-label,'Dynamic Data List')]//a[@role='menuitem']/span[contains(.,'Add')]</td>
+	<td>//a[@title='${key_ddlDataDefinitionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_EDIT_LIST</td>
+	<td>//a[@title='Edit List']</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,6 +48,11 @@
 <tr>
 	<td>RECORD_TABLE_ENTRY</td>
 	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr/td[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_ENTRY_2</td>
+	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr[2]/td[contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,8 +96,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECORD_TABLE_ACTIONS_1</td>
-	<td>xpath=//td[contains(@class,'entry-action last')]/div/a/i[contains(@class,'menu-arrow caret')][1]</td>
+	<td>RECORD_TABLE_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_ddlRecordFieldData}')]//td[contains(@class,'entry-action')]/div/a/span[contains(@class,'icon-ellipsis-vertical')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_ELLIPSIS_1</td>
+	<td>xpath=//td[contains(@class,'entry-action')]/div/a/span[contains(@class,'icon-ellipsis-vertical')][1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,37 +125,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--TOOLBAR-->
-<tr>
-	<td>TOOLBAR_ADD_FORM_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Form Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Display Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_EDIT_FORM_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Edit Form Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SELECT_LIST</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select List')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD_LIST</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add List')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
@@ -148,8 +132,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[5]/div/a)[1]</td>
+	<td>LIST_TABLE_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_ddlListName}')]//td[contains(@class,'entry-action')]/div/a/span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -168,8 +152,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_TABLE_ACTIONS_1</td>
-	<td>xpath=//td[contains(@class,'entry-action last')]/div/a/i[contains(@class,'menu-arrow caret')][1]</td>
+	<td>LIST_TABLE_ELLIPSIS_1</td>
+	<td>xpath=//td[contains(@class,'entry-action')]/div/a/span[contains(@class,'icon-ellipsis-vertical')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PORTLET_ACTIONS-->
+<tr>
+	<td>PORTLET_ACTIONS_ADD_FORM_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Form Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ACTIONS_ADD_DISPLAY_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Display Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ACTIONS_EDIT_FORM_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Edit Form Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ACTIONS_SELECT_LIST</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select List')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ACTIONS_ADD_LIST</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add List')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -181,6 +196,11 @@
 <tr>
 	<td>MENULIST_VIEW</td>
 	<td>//a[@role='menuitem' and contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENULIST_VIEW_SPECIFIC_RECORD</td>
+	<td>//tr[contains(.,'${key_ddlRecordFieldData}')]//a[@role='menuitem' and contains(.,'View')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -16,7 +16,6 @@ package com.liferay.mobile.device.rules.rule.group.action;
 
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.model.MDRAction;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +25,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -39,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward Han
@@ -58,14 +57,6 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 	@Override
 	public String getType() {
 		return getHandlerType();
-	}
-
-	public void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	public void setLayoutLocalService(LayoutLocalService layoutLocalService) {
-		_layoutLocalService = layoutLocalService;
 	}
 
 	@Override
@@ -123,7 +114,7 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 				return null;
 			}
 
-			layout = LayoutLocalServiceUtil.fetchLayout(
+			layout = _layoutLocalService.fetchLayout(
 				group.getDefaultPublicPlid());
 		}
 
@@ -138,16 +129,25 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		return null;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteRedirectActionHandler.class);
 
 	private static final Collection<String> _propertyNames =
 		Collections.unmodifiableCollection(Arrays.asList("groupId", "plid"));
 
-	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
-
-	@BeanReference(type = LayoutLocalService.class)
 	private LayoutLocalService _layoutLocalService;
 
 }

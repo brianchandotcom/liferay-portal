@@ -22,8 +22,8 @@ import com.liferay.microblogs.model.impl.MicroblogsEntryImpl;
 import com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -42,11 +42,13 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.sql.Timestamp;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -162,6 +164,27 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	@Override
 	public List<MicroblogsEntry> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -177,15 +200,19 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((companyId != microblogsEntry.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((companyId != microblogsEntry.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -242,10 +269,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -536,8 +563,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -561,10 +587,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -644,6 +670,27 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	@Override
 	public List<MicroblogsEntry> findByUserId(long userId, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByUserId(long userId, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -659,15 +706,19 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			finderArgs = new Object[] { userId, start, end, orderByComparator };
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((userId != microblogsEntry.getUserId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((userId != microblogsEntry.getUserId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -724,10 +775,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1017,8 +1068,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 		Object[] finderArgs = new Object[] { userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1042,10 +1092,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1130,6 +1180,28 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	@Override
 	public List<MicroblogsEntry> findByU_T(long userId, int type, int start,
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByU_T(userId, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByU_T(long userId, int type, int start,
+		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1149,16 +1221,20 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				};
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((userId != microblogsEntry.getUserId()) ||
-						(type != microblogsEntry.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((userId != microblogsEntry.getUserId()) ||
+							(type != microblogsEntry.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1219,10 +1295,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1530,8 +1606,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 		Object[] finderArgs = new Object[] { userId, type };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1559,10 +1634,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1658,6 +1733,30 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	public List<MicroblogsEntry> findByCCNI_CCPK(long creatorClassNameId,
 		long creatorClassPK, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByCCNI_CCPK(creatorClassNameId, creatorClassPK, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param creatorClassNameId the creator class name ID
+	 * @param creatorClassPK the creator class p k
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByCCNI_CCPK(long creatorClassNameId,
+		long creatorClassPK, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1677,16 +1776,20 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				};
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
-						(creatorClassPK != microblogsEntry.getCreatorClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
+							(creatorClassPK != microblogsEntry.getCreatorClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1747,10 +1850,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2092,11 +2195,37 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	public List<MicroblogsEntry> findByCCNI_CCPK(long creatorClassNameId,
 		long[] creatorClassPKs, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByCCNI_CCPK(creatorClassNameId, creatorClassPKs, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param creatorClassNameId the creator class name ID
+	 * @param creatorClassPK the creator class p k
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByCCNI_CCPK(long creatorClassNameId,
+		long[] creatorClassPKs, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		if (creatorClassPKs == null) {
 			creatorClassPKs = new long[0];
 		}
-		else {
+		else if (creatorClassPKs.length > 1) {
 			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
+
+			Arrays.sort(creatorClassPKs);
 		}
 
 		if (creatorClassPKs.length == 1) {
@@ -2122,17 +2251,21 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				};
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
-						!ArrayUtil.contains(creatorClassPKs,
-							microblogsEntry.getCreatorClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
+							!ArrayUtil.contains(creatorClassPKs,
+								microblogsEntry.getCreatorClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2196,11 +2329,11 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK,
 					finderArgs);
 
 				throw processException(e);
@@ -2241,8 +2374,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 		Object[] finderArgs = new Object[] { creatorClassNameId, creatorClassPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2270,10 +2402,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2297,15 +2429,17 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		if (creatorClassPKs == null) {
 			creatorClassPKs = new long[0];
 		}
-		else {
+		else if (creatorClassPKs.length > 1) {
 			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
+
+			Arrays.sort(creatorClassPKs);
 		}
 
 		Object[] finderArgs = new Object[] {
 				creatorClassNameId, StringUtil.merge(creatorClassPKs)
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK,
 				finderArgs, this);
 
 		if (count == null) {
@@ -2345,11 +2479,11 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK,
 					finderArgs);
 
 				throw processException(e);
@@ -2439,6 +2573,30 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	public List<MicroblogsEntry> findByCCNI_T(long creatorClassNameId,
 		int type, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByCCNI_T(creatorClassNameId, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param creatorClassNameId the creator class name ID
+	 * @param type the type
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByCCNI_T(long creatorClassNameId,
+		int type, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2458,16 +2616,20 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				};
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
-						(type != microblogsEntry.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
+							(type != microblogsEntry.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2528,10 +2690,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2840,8 +3002,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 		Object[] finderArgs = new Object[] { creatorClassNameId, type };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2869,10 +3030,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2960,6 +3121,30 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	public List<MicroblogsEntry> findByT_P(int type,
 		long parentMicroblogsEntryId, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByT_P(type, parentMicroblogsEntryId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where type = &#63; and parentMicroblogsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param parentMicroblogsEntryId the parent microblogs entry ID
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByT_P(int type,
+		long parentMicroblogsEntryId, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2979,16 +3164,20 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				};
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((type != microblogsEntry.getType()) ||
-						(parentMicroblogsEntryId != microblogsEntry.getParentMicroblogsEntryId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((type != microblogsEntry.getType()) ||
+							(parentMicroblogsEntryId != microblogsEntry.getParentMicroblogsEntryId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3049,10 +3238,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3366,8 +3555,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 		Object[] finderArgs = new Object[] { type, parentMicroblogsEntryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3395,10 +3583,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3508,6 +3696,31 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	public List<MicroblogsEntry> findByCCNI_CCPK_T(long creatorClassNameId,
 		long creatorClassPK, int type, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByCCNI_CCPK_T(creatorClassNameId, creatorClassPK, type,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param creatorClassNameId the creator class name ID
+	 * @param creatorClassPK the creator class p k
+	 * @param type the type
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByCCNI_CCPK_T(long creatorClassNameId,
+		long creatorClassPK, int type, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3527,17 +3740,21 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				};
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
-						(creatorClassPK != microblogsEntry.getCreatorClassPK()) ||
-						(type != microblogsEntry.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
+							(creatorClassPK != microblogsEntry.getCreatorClassPK()) ||
+							(type != microblogsEntry.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3602,10 +3819,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3967,11 +4184,38 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	public List<MicroblogsEntry> findByCCNI_CCPK_T(long creatorClassNameId,
 		long[] creatorClassPKs, int type, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByCCNI_CCPK_T(creatorClassNameId, creatorClassPKs, type,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param creatorClassNameId the creator class name ID
+	 * @param creatorClassPK the creator class p k
+	 * @param type the type
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByCCNI_CCPK_T(long creatorClassNameId,
+		long[] creatorClassPKs, int type, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		if (creatorClassPKs == null) {
 			creatorClassPKs = new long[0];
 		}
-		else {
+		else if (creatorClassPKs.length > 1) {
 			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
+
+			Arrays.sort(creatorClassPKs);
 		}
 
 		if (creatorClassPKs.length == 1) {
@@ -3997,18 +4241,22 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				};
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK_T,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
-						!ArrayUtil.contains(creatorClassPKs,
-							microblogsEntry.getCreatorClassPK()) ||
-						(type != microblogsEntry.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK_T,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId != microblogsEntry.getCreatorClassNameId()) ||
+							!ArrayUtil.contains(creatorClassPKs,
+								microblogsEntry.getCreatorClassPK()) ||
+							(type != microblogsEntry.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4078,11 +4326,11 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK_T,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK_T,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK_T,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CCNI_CCPK_T,
 					finderArgs);
 
 				throw processException(e);
@@ -4129,8 +4377,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				creatorClassNameId, creatorClassPK, type
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -4162,10 +4409,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4191,15 +4438,17 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		if (creatorClassPKs == null) {
 			creatorClassPKs = new long[0];
 		}
-		else {
+		else if (creatorClassPKs.length > 1) {
 			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
+
+			Arrays.sort(creatorClassPKs);
 		}
 
 		Object[] finderArgs = new Object[] {
 				creatorClassNameId, StringUtil.merge(creatorClassPKs), type
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK_T,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK_T,
 				finderArgs, this);
 
 		if (count == null) {
@@ -4245,11 +4494,11 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK_T,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK_T,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK_T,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK_T,
 					finderArgs);
 
 				throw processException(e);
@@ -4356,6 +4605,32 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	public List<MicroblogsEntry> findByU_C_T_S(long userId, Date createDate,
 		int type, int socialRelationType, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findByU_C_T_S(userId, createDate, type, socialRelationType,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where userId = &#63; and createDate = &#63; and type = &#63; and socialRelationType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param type the type
+	 * @param socialRelationType the social relation type
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByU_C_T_S(long userId, Date createDate,
+		int type, int socialRelationType, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4377,19 +4652,23 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				};
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((userId != microblogsEntry.getUserId()) ||
-						!Validator.equals(createDate,
-							microblogsEntry.getCreateDate()) ||
-						(type != microblogsEntry.getType()) ||
-						(socialRelationType != microblogsEntry.getSocialRelationType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((userId != microblogsEntry.getUserId()) ||
+							!Validator.equals(createDate,
+								microblogsEntry.getCreateDate()) ||
+							(type != microblogsEntry.getType()) ||
+							(socialRelationType != microblogsEntry.getSocialRelationType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4469,10 +4748,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4837,8 +5116,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				userId, createDate, type, socialRelationType
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -4885,10 +5163,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4917,7 +5195,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	 */
 	@Override
 	public void cacheResult(MicroblogsEntry microblogsEntry) {
-		EntityCacheUtil.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			MicroblogsEntryImpl.class, microblogsEntry.getPrimaryKey(),
 			microblogsEntry);
 
@@ -4932,7 +5210,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	@Override
 	public void cacheResult(List<MicroblogsEntry> microblogsEntries) {
 		for (MicroblogsEntry microblogsEntry : microblogsEntries) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 						MicroblogsEntryImpl.class,
 						microblogsEntry.getPrimaryKey()) == null) {
@@ -4948,41 +5226,41 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	 * Clears the cache for all microblogs entries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(MicroblogsEntryImpl.class);
+		entityCache.clearCache(MicroblogsEntryImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the microblogs entry.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(MicroblogsEntry microblogsEntry) {
-		EntityCacheUtil.removeResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			MicroblogsEntryImpl.class, microblogsEntry.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<MicroblogsEntry> microblogsEntries) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (MicroblogsEntry microblogsEntry : microblogsEntries) {
-			EntityCacheUtil.removeResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				MicroblogsEntryImpl.class, microblogsEntry.getPrimaryKey());
 		}
 	}
@@ -5140,10 +5418,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !MicroblogsEntryModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -5153,16 +5431,14 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { microblogsEntryModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -5172,14 +5448,14 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] { microblogsEntryModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 
@@ -5190,8 +5466,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getOriginalType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_T,
 					args);
 
 				args = new Object[] {
@@ -5199,8 +5475,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_T,
 					args);
 			}
 
@@ -5211,9 +5487,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getOriginalCreatorClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CCNI_CCPK,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_CCPK,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CCNI_CCPK, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_CCPK,
 					args);
 
 				args = new Object[] {
@@ -5221,9 +5496,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getCreatorClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CCNI_CCPK,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_CCPK,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CCNI_CCPK, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_CCPK,
 					args);
 			}
 
@@ -5234,8 +5508,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getOriginalType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CCNI_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CCNI_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_T,
 					args);
 
 				args = new Object[] {
@@ -5243,8 +5517,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CCNI_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CCNI_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_T,
 					args);
 			}
 
@@ -5255,8 +5529,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getOriginalParentMicroblogsEntryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P,
 					args);
 
 				args = new Object[] {
@@ -5264,8 +5538,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getParentMicroblogsEntryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P,
 					args);
 			}
 
@@ -5277,9 +5551,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getOriginalType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CCNI_CCPK_T,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_CCPK_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CCNI_CCPK_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_CCPK_T,
 					args);
 
 				args = new Object[] {
@@ -5288,9 +5561,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CCNI_CCPK_T,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_CCPK_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CCNI_CCPK_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CCNI_CCPK_T,
 					args);
 			}
 
@@ -5303,8 +5575,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getOriginalSocialRelationType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_T_S,
 					args);
 
 				args = new Object[] {
@@ -5314,13 +5586,13 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 						microblogsEntryModelImpl.getSocialRelationType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_T_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			MicroblogsEntryImpl.class, microblogsEntry.getPrimaryKey(),
 			microblogsEntry, false);
 
@@ -5400,7 +5672,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	 */
 	@Override
 	public MicroblogsEntry fetchByPrimaryKey(Serializable primaryKey) {
-		MicroblogsEntry microblogsEntry = (MicroblogsEntry)EntityCacheUtil.getResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+		MicroblogsEntry microblogsEntry = (MicroblogsEntry)entityCache.getResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				MicroblogsEntryImpl.class, primaryKey);
 
 		if (microblogsEntry == _nullMicroblogsEntry) {
@@ -5420,13 +5692,13 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 					cacheResult(microblogsEntry);
 				}
 				else {
-					EntityCacheUtil.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 						MicroblogsEntryImpl.class, primaryKey,
 						_nullMicroblogsEntry);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 					MicroblogsEntryImpl.class, primaryKey);
 
 				throw processException(e);
@@ -5476,7 +5748,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MicroblogsEntry microblogsEntry = (MicroblogsEntry)EntityCacheUtil.getResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MicroblogsEntry microblogsEntry = (MicroblogsEntry)entityCache.getResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 					MicroblogsEntryImpl.class, primaryKey);
 
 			if (microblogsEntry == null) {
@@ -5528,7 +5800,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 					MicroblogsEntryImpl.class, primaryKey, _nullMicroblogsEntry);
 			}
 		}
@@ -5583,6 +5855,26 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	@Override
 	public List<MicroblogsEntry> findAll(int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MicroblogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findAll(int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5598,8 +5890,12 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<MicroblogsEntry> list = (List<MicroblogsEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MicroblogsEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -5646,10 +5942,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5679,7 +5975,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -5692,11 +5988,11 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -5726,12 +6022,16 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(MicroblogsEntryImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(MicroblogsEntryImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MICROBLOGSENTRY = "SELECT microblogsEntry FROM MicroblogsEntry microblogsEntry";
 	private static final String _SQL_SELECT_MICROBLOGSENTRY_WHERE_PKS_IN = "SELECT microblogsEntry FROM MicroblogsEntry microblogsEntry WHERE microblogsEntryId IN (";
 	private static final String _SQL_SELECT_MICROBLOGSENTRY_WHERE = "SELECT microblogsEntry FROM MicroblogsEntry microblogsEntry WHERE ";

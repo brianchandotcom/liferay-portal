@@ -61,6 +61,7 @@
 
 		<execute macro="Site#addSiteTemplateCP">
 			<var name="siteName" value="Site Name" />
+			<var name="siteTemplateName" value="Site Template" />
 		</execute>
 
 		<execute macro="Page#gotoPagesCP">
@@ -92,6 +93,7 @@
 
 		<execute macro="Site#addSiteTemplateCP">
 			<var name="siteName" value="Site Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">
@@ -252,7 +254,9 @@
 
 		<execute macro="Site#gotoManageSitesTemplatesViaAddDropdown" />
 
-		<execute macro="SiteTemplates#viewDefaultCP" />
+		<execute macro="SiteTemplates#viewDefaultCP">
+			<var name="siteTemplateNameList" value="Intranet Site,Community Site" />
+		</execute>
 
 		<execute macro="SiteTemplates#addCP">
 			<var name="siteTemplateName" value="Site Template Name" />
@@ -340,7 +344,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesDynamicTemplates" priority="4">
+	<command name="SitesDynamicTemplates" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -548,16 +552,6 @@
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -800,7 +794,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesTemplateResourceInheritance" priority="4">
+	<command name="SitesTemplateResourceInheritance" priority="3">
 		<property name="portlet.plugins.includes" value="tasks-portlet" />
 
 		<execute macro="Page#gotoCP">

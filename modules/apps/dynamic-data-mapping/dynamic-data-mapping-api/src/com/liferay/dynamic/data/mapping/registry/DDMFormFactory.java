@@ -84,13 +84,14 @@ public class DDMFormFactory {
 
 		ddmFormField.setDataType(
 			ddmFormFactoryHelper.getDDMFormFieldDataType());
-		ddmFormField.setLabel(ddmFormFactoryHelper.getDDMFormFieldLabel());
-		ddmFormField.setLocalizable(
-			ddmFormFactoryHelper.isDDMFormFieldLocalizable(method));
 		ddmFormField.setDDMFormFieldOptions(
 			ddmFormFactoryHelper.getDDMFormFieldOptions());
 		ddmFormField.setDDMFormFieldValidation(
 			ddmFormFactoryHelper.getDDMFormFieldValidation());
+		ddmFormField.setLabel(ddmFormFactoryHelper.getDDMFormFieldLabel());
+		ddmFormField.setLocalizable(
+			ddmFormFactoryHelper.isDDMFormFieldLocalizable(method));
+		ddmFormField.setRequired(ddmFormFactoryHelper.isDDMFormFieldRequired());
 		ddmFormField.setVisibilityExpression(
 			ddmFormFactoryHelper.getDDMFormFieldVisibilityExpression());
 

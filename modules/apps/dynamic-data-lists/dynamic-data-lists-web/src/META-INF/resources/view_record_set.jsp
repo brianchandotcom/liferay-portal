@@ -26,12 +26,6 @@ long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
 boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= recordSet.getName(locale) %>"
-/>
-
 <c:choose>
 	<c:when test="<%= displayDDMTemplateId > 0 %>">
 		<liferay-util:include page="/view_template_records.jsp" servletContext="<%= application %>" />
@@ -49,7 +43,12 @@ boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 </c:choose>
 
 <%
-if (portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
+if (ddlDisplayContext.isAdminPortlet()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(recordSet.getName(locale));
+
 	PortalUtil.setPageSubtitle(recordSet.getName(locale), request);
 	PortalUtil.setPageDescription(recordSet.getDescription(locale), request);
 }

@@ -1,0 +1,21 @@
+<definition component-name="portal-security">
+	<property name="testray.main.component.name" value="Security" />
+
+	<command name="Login" priority="4">
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" />
+	</command>
+
+	<command name="LoginFirstTime" priority="4">
+		<execute macro="SignIn#signIn" />
+
+		<execute macro="SignIn#agreeToTermsOfUse" />
+
+		<execute macro="SignIn#setPasswordReminder" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+	</command>
+</definition>

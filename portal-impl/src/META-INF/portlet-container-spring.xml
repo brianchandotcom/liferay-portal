@@ -12,9 +12,7 @@
 			<bean class="com.liferay.portlet.PortletConfigFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.PortletInstanceFactory" class="com.liferay.portlet.PortletInstanceFactoryImpl">
-		<property name="invokerPortletFactory" ref="com.liferay.portlet.InvokerPortletFactory" />
-	</bean>
+	<bean id="com.liferay.portlet.PortletInstanceFactory" class="com.liferay.portlet.PortletInstanceFactoryImpl" />
 	<bean id="com.liferay.portlet.PortletInstanceFactoryUtil" class="com.liferay.portlet.PortletInstanceFactoryUtil">
 		<property name="portletInstanceFactory" ref="com.liferay.portlet.PortletInstanceFactory" />
 	</bean>

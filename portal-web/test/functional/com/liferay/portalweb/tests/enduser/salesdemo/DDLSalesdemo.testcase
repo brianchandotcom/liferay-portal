@@ -15,7 +15,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="Demo1" priority="4">
+	<command name="Demo1" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Company Picnic" />
 		</execute>
@@ -28,12 +28,12 @@
 			<var name="columnName" value="1_column" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Dynamic Data Lists Display" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Company Picnic" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
@@ -49,36 +49,40 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="First Name" />
-			<var name="fieldName" value="First_Name" />
+			<var name="fieldName" value="FirstName" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Last Name" />
-			<var name="fieldName" value="Last_Name" />
+			<var name="fieldName" value="LastName" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="What are you bringing?" />
-			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="fieldName" value="WhatAreYouBringing" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editFieldOptions">
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="What are you bringing?" />
-			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="fieldName" value="WhatAreYouBringing" />
 			<var name="fieldOptionsNames" value="Carrots,Beef Jerky,Chips" />
 			<var name="fieldOptionsValues" value="Carrots,Beef Jerky,Chips" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
-		<execute macro="DDLDataDefinition#selectCP">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Company Picnic" />
+		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
@@ -87,19 +91,19 @@
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="John" />
 			<var name="fieldFieldLabel" value="First Name" />
-			<var name="fieldName" value="First_Name" />
+			<var name="fieldName" value="FirstName" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Doe" />
 			<var name="fieldFieldLabel" value="Last Name" />
-			<var name="fieldName" value="Last_Name" />
+			<var name="fieldName" value="LastName" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="Beef Jerky" />
 			<var name="fieldFieldLabel" value="What are you bringing?" />
-			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="fieldName" value="WhatAreYouBringing" />
 		</execute>
 
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
@@ -111,19 +115,19 @@
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Jane" />
 			<var name="fieldFieldLabel" value="First Name" />
-			<var name="fieldName" value="First_Name" />
+			<var name="fieldName" value="FirstName" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Smith" />
 			<var name="fieldFieldLabel" value="Last Name" />
-			<var name="fieldName" value="Last_Name" />
+			<var name="fieldName" value="LastName" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="Carrots" />
 			<var name="fieldFieldLabel" value="What are you bringing?" />
-			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="fieldName" value="WhatAreYouBringing" />
 		</execute>
 
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
@@ -164,19 +168,19 @@
 		<execute macro="DDLRecord#populateFieldTextViaSpreadsheetView">
 			<var name="ddlRecordFieldData" value="Joe" />
 			<var name="ddlRecordRow" value="3" />
-			<var name="fieldName" value="First_Name" />
+			<var name="fieldName" value="FirstName" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldTextViaSpreadsheetView">
 			<var name="ddlRecordFieldData" value="Perkins" />
 			<var name="ddlRecordRow" value="3" />
-			<var name="fieldName" value="Last_Name" />
+			<var name="fieldName" value="LastName" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldSelectViaSpreadsheetView">
 			<var name="ddlRecordFieldData" value="Chips" />
 			<var name="ddlRecordRow" value="3" />
-			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="fieldName" value="WhatAreYouBringing" />
 		</execute>
 	</command>
 </definition>

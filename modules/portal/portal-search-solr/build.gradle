@@ -1,14 +1,17 @@
 dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
-	compile group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.2.1"
-	compile group: "org.apache.lucene", name: "lucene-core", version: "5.2.1"
-	compile group: "org.apache.lucene", name: "lucene-queries", version: "5.2.1"
-	compile group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
-	compile group: "org.apache.lucene", name: "lucene-suggest", version: "5.2.1"
-	compile group: "org.apache.solr", name: "solr-core", transitive: false, version: "5.2.1"
-	compile group: "org.apache.solr", name: "solr-solrj", version: "5.2.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	provided group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.2.1"
+	provided group: "org.apache.lucene", name: "lucene-core", version: "5.2.1"
+	provided group: "org.apache.lucene", name: "lucene-queries", version: "5.2.1"
+	provided group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
+	provided group: "org.apache.lucene", name: "lucene-suggest", version: "5.2.1"
+	provided group: "org.apache.solr", name: "solr-core", transitive: false, version: "5.2.1"
+	provided group: "org.apache.solr", name: "solr-solrj", version: "5.2.1"
 }
 
 liferay {

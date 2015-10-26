@@ -1,5 +1,21 @@
-#macro (breadcrumbs)
-	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW)
+#set ($css_main_file = "")
+#set ($is_signed_in = false)
+#set ($js_main_file = "")
+
+#if ($themeDisplay)
+	#set ($css_main_file = $htmlUtil.escape($portalUtil.getStaticResourceURL($request, "$themeDisplay.getPathThemeCss()/main.css")))
+	#set ($is_signed_in = $themeDisplay.isSignedIn())
+	#set ($js_main_file = $htmlUtil.escape($portalUtil.getStaticResourceURL($request, "$themeDisplay.getPathThemeCss()/main.js")))
+#end
+
+#set ($is_setup_complete = false)
+
+#if ($user)
+	#set ($is_setup_complete = $user.isSetupComplete())
+#end
+
+#macro (breadcrumbs $default_preferences)
+	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW, "", $!default_preferences)
 #end
 
 #macro (control_menu)
@@ -19,10 +35,6 @@
 #macro (date $date_format)
 $dateUtil.getCurrentDate($date_format, $locale)#end
 
-#macro (dockbar)
-	$theme.runtime("145")
-#end
-
 #macro (js $file_name)
 	#if ($file_name == $js_main_file)
 		<script id="mainLiferayThemeJavaScript" src="$file_name" type="text/javascript"></script>
@@ -37,8 +49,8 @@ $languageUtil.get($locale, $lang_key)#end
 #macro (language_format $lang_key $arguments)
 $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 
-#macro (languages)
-	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry", $portletProviderAction.VIEW)
+#macro (languages $default_preferences)
+	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry", $portletProviderAction.VIEW, "", $!default_preferences)
 #end
 
 #macro (menu $menu)
@@ -49,8 +61,8 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	$menu_tag.runTag()
 #end
 
-#macro (navigation_menu)
-	$theme.runtime("com.liferay.portal.theme.NavItem", $portletProviderAction.VIEW)
+#macro (navigation_menu $default_preferences)
+	$theme.runtime("com.liferay.portal.theme.NavItem", $portletProviderAction.VIEW, "", $!default_preferences)
 #end
 
 #macro (product_menu)
@@ -62,7 +74,7 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 #macro (product_menu_sidebar $state)
 	#if ($is_setup_complete && $is_signed_in)
 		<div class="$state lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
-			<div class="product-menu sidebar sidebar-inverse sidenav-menu">
+			<div class="product-menu sidebar sidenav-menu">
 				#product_menu()
 			</div>
 		</div>
@@ -81,20 +93,18 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	#set ($foo = $foo)
 #end
 
-#macro (search)
+#macro (search $default_preferences)
 	#if ($is_setup_complete)
-		$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW)
+		$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW, "", $!default_preferences)
 	#end
 #end
 
 #macro (user_personal_bar)
-	#if ($is_setup_complete)
-		#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
+	#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
 
-		$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)
+	$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)
 
-		$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
+	$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
 
-		$request.setAttribute("RENDER_PORTLET_BOUNDARY", $render_portlet_boundary)
-	#end
+	$request.setAttribute("RENDER_PORTLET_BOUNDARY", $render_portlet_boundary)
 #end

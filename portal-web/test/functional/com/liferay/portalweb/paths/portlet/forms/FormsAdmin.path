@@ -35,13 +35,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORMS_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'searchContainer')]//tr[contains(.,'${key_formName}')]/td[4]/div/a</td>
+	<td>FORMS_TABLE_ELLIPSIS</td>
+	<td>//li[contains(.,'${key_formName}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORMS_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[contains(@id,'searchContainer')]//tr/td[4]/div/a)[1]</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORMS_ENTRY_TABLE-->
+<tr>
+	<td>FORM_ENTRY_TABLE_ENTRY</td>
+	<td>//table[contains(.,'${key_fieldName}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 </tbody>

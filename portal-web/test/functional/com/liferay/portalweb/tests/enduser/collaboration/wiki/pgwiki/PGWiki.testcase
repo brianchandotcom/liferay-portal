@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWikiFrontPage" priority="4">
+	<command name="AddWikiFrontPage" priority="5">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
 		<execute macro="Page#gotoPG">
@@ -90,7 +90,7 @@
 	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
 		<var name="welcomeToLiferay">
 			<![CDATA[
-				<p><a href=http://www.liferay.com>Welcome to LIFERAY</a><p>
+				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
 			]]>
 		</var>
 		<var name="wikiChildPageHTMLContent" value="Welcome to LIFERAY" />
@@ -111,6 +111,7 @@
 		</execute>
 
 		<execute macro="WikiPage#addFrontPageChildPageFormatHTML">
+			<var name="welcomeToLiferay" value="${welcomeToLiferay}" />
 			<var name="wikiChildPageHTMLContent" value="${wikiChildPageHTMLContent}" />
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
 			<var name="wikiPageText" value="${wikiPageText}" />
@@ -120,10 +121,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#viewChildPagePGViaWD">
+		<execute macro="WikiPage#gotoChildPagePG">
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+
+		<execute macro="WikiPage#viewChildPagePG">
 			<var name="wikiChildPageContent" value="${wikiChildPageHTMLContent}" />
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 	</command>
 
@@ -425,7 +429,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPage" priority="4">
+	<command name="AddWikiPage" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 
@@ -457,7 +461,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPageChildPage" priority="4">
+	<command name="AddWikiPageChildPage" priority="5">
 		<var name="wikiChildPageContent" value="Wiki Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki Child Page Title" />
 		<var name="wikiPageContent" value="Wiki Page Content" />
@@ -506,10 +510,10 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPageFormatHTML" priority="4">
+	<command name="AddWikiPageFormatHTML" priority="5">
 		<var name="welcomeToLiferay">
 			<![CDATA[
-				<p><a href=http://www.liferay.com>Welcome to LIFERAY</a><p>
+				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
 			]]>
 		</var>
 		<var name="wikiPageContent" value="Welcome to LIFERAY" />
@@ -589,7 +593,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPages" priority="4">
+	<command name="AddWikiPages" priority="5">
 		<var name="wikiPageCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
@@ -624,7 +628,7 @@
 		</for>
 	</command>
 
-	<command name="CancelAddPage" priority="4">
+	<command name="CancelAddPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -648,7 +652,7 @@
 		</execute>
 	</command>
 
-	<command name="CancelEditPage" priority="4">
+	<command name="CancelEditPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -828,7 +832,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWikiPage" priority="4">
+	<command name="DeleteWikiPage" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 
@@ -864,7 +868,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDraftPage" priority="4">
+	<command name="EditDraftPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1089,7 +1093,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveRedirectLinkFromWikiPage" priority="4">
+	<command name="RemoveRedirectLinkFromWikiPage" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1257,7 +1261,7 @@
 			<var name="wikiPage1Title" value="${wikiPage1Title}" />
 			<var name="wikiPage2Content" value="${wikiPage2Content}" />
 			<var name="wikiPage2Title" value="${wikiPage2Title}" />
-			<var name="wikiVersion1Summary" value="Changed parent from &quot;.&quot;" />
+			<var name="wikiVersion1Summary" value="Changed parent from" />
 			<var name="wikiVersion2Summary" value="Reverted to 1.0" />
 		</execute>
 

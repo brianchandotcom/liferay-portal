@@ -14,6 +14,8 @@
 
 package com.liferay.configuration.admin.web.util;
 
+import com.liferay.configuration.admin.ExtendedAttributeDefinition;
+import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -37,8 +39,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.metatype.AttributeDefinition;
-import org.osgi.service.metatype.ObjectClassDefinition;
 
 /**
  * @author Marcellus Tavares
@@ -54,19 +54,19 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	public void
 		testGetValuesByConfigurationAndNegativeCardinalityWithTextField() {
 
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, -2);
-		whenAttributeDefinitionGetDefaultValue(attributeDefinition, null);
-		whenAttributeDefinitionGetID(attributeDefinition, "Text");
+		whenGetCardinality(extendedAttributeDefinition, -2);
+		whenGetDefaultValue(extendedAttributeDefinition, null);
+		whenGetID(extendedAttributeDefinition, "Text");
 
 		Configuration configuration = mock(Configuration.class);
 
@@ -79,10 +79,10 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 		properties.put("Text", vector);
 
-		whenConfigurationGetProperties(configuration, properties);
+		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -101,19 +101,19 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	public void
 		testGetValuesByConfigurationAndPositiveCardinalityWithTextField() {
 
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 2);
-		whenAttributeDefinitionGetDefaultValue(attributeDefinition, null);
-		whenAttributeDefinitionGetID(attributeDefinition, "Text");
+		whenGetCardinality(extendedAttributeDefinition, 2);
+		whenGetDefaultValue(extendedAttributeDefinition, null);
+		whenGetID(extendedAttributeDefinition, "Text");
 
 		Configuration configuration = mock(Configuration.class);
 
@@ -121,10 +121,10 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 		properties.put("Text", new String[] {"Joe Bloggs", "Ella Fitzgerald"});
 
-		whenConfigurationGetProperties(configuration, properties);
+		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -141,18 +141,18 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 	@Test
 	public void testGetValuesByConfigurationWithCheckboxField() {
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
-		whenAttributeDefinitionGetID(attributeDefinition, "Boolean");
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetID(extendedAttributeDefinition, "Boolean");
 
 		Configuration configuration = mock(Configuration.class);
 
@@ -160,10 +160,10 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 		properties.put("Boolean", Boolean.TRUE);
 
-		whenConfigurationGetProperties(configuration, properties);
+		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -177,24 +177,24 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 	@Test
 	public void testGetValuesByDefaultValueWithCheckboxField() {
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
-		whenAttributeDefinitionGetID(attributeDefinition, "Boolean");
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetID(extendedAttributeDefinition, "Boolean");
 
-		whenAttributeDefinitionGetDefaultValue(
-			attributeDefinition, new String[] {"false"});
+		whenGetDefaultValue(
+			extendedAttributeDefinition, new String[] {"false"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, null, null, false);
+			extendedObjectClassDefinition, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -208,27 +208,29 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 	@Test
 	public void testGetValuesByDefaultValueWithSelectField() {
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
-		whenAttributeDefinitionGetDefaultValue(
-			attributeDefinition, new String[] {"REQUEST_HEADER"});
-		whenAttributeDefinitionGetID(attributeDefinition, "Select");
-		whenAttributeDefinitionGetOptionLabels(
-			attributeDefinition, new String[] {"COOKIE", "REQUEST_HEADER"});
-		whenAttributeDefinitionGetOptionValues(
-			attributeDefinition, new String[] {"COOKIE", "REQUEST_HEADER"});
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetDefaultValue(
+			extendedAttributeDefinition, new String[] {"REQUEST_HEADER"});
+		whenGetID(extendedAttributeDefinition, "Select");
+		whenGetOptionLabels(
+			extendedAttributeDefinition,
+			new String[] {"COOKIE", "REQUEST_HEADER"});
+		whenGetOptionValues(
+			extendedAttributeDefinition,
+			new String[] {"COOKIE", "REQUEST_HEADER"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, null, null, false);
+			extendedObjectClassDefinition, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -243,23 +245,24 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 	@Test
 	public void testGetValuesByDefaultValueWithTextField() {
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 2);
-		whenAttributeDefinitionGetDefaultValue(
-			attributeDefinition, new String[] {"Joe Bloggs|Ella Fitzgerald"});
-		whenAttributeDefinitionGetID(attributeDefinition, "Text");
+		whenGetCardinality(extendedAttributeDefinition, 2);
+		whenGetDefaultValue(
+			extendedAttributeDefinition,
+			new String[] {"Joe Bloggs|Ella Fitzgerald"});
+		whenGetID(extendedAttributeDefinition, "Text");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, null, null, false);
+			extendedObjectClassDefinition, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -276,22 +279,22 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 
 	@Test
 	public void testGetValuesByEmptyDefaultValueWithTextField() {
-		ObjectClassDefinition objectClassDefinition = mock(
-			ObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
 
-		AttributeDefinition attributeDefinition = mock(
-			AttributeDefinition.class);
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
 
-		whenObjectClassDefinitionGetAttributeDefinitions(
-			objectClassDefinition,
-			new AttributeDefinition[] {attributeDefinition});
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
 
-		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
-		whenAttributeDefinitionGetDefaultValue(attributeDefinition, null);
-		whenAttributeDefinitionGetID(attributeDefinition, "Text");
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetDefaultValue(extendedAttributeDefinition, null);
+		whenGetID(extendedAttributeDefinition, "Text");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, null, null, false);
+			extendedObjectClassDefinition, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -330,75 +333,79 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		return value.getString(_enLocale);
 	}
 
-	protected void whenAttributeDefinitionGetCardinality(
-		AttributeDefinition attributeDefinition, int returnCardinality) {
-
-		when(
-			attributeDefinition.getCardinality()
-		).thenReturn(
-			returnCardinality
-		);
-	}
-
-	protected void whenAttributeDefinitionGetDefaultValue(
-		AttributeDefinition attributeDefinition, String[] returnDefaultValue) {
-
-		when(
-			attributeDefinition.getDefaultValue()
-		).thenReturn(
-			returnDefaultValue
-		);
-	}
-
-	protected void whenAttributeDefinitionGetID(
-		AttributeDefinition attributeDefinition, String returnID) {
-
-		when(
-			attributeDefinition.getID()
-		).thenReturn(
-			returnID
-		);
-	}
-
-	protected void whenAttributeDefinitionGetOptionLabels(
-		AttributeDefinition attributeDefinition, String[] returnOptionLabels) {
-
-		when(
-			attributeDefinition.getOptionLabels()
-		).thenReturn(
-			returnOptionLabels
-		);
-	}
-
-	protected void whenAttributeDefinitionGetOptionValues(
-		AttributeDefinition attributeDefinition, String[] returnOptionValues) {
-
-		when(
-			attributeDefinition.getOptionValues()
-		).thenReturn(
-			returnOptionValues
-		);
-	}
-
-	protected void whenConfigurationGetProperties(
-		Configuration configuration,
-		Dictionary<String, Object> returnProperties) {
-
-		when(
-			configuration.getProperties()
-		).thenReturn(
-			returnProperties
-		);
-	}
-
-	protected void whenObjectClassDefinitionGetAttributeDefinitions(
-		ObjectClassDefinition objectClassDefinition,
-		AttributeDefinition[] returnAttributeDefinitions) {
+	protected void whenGetAttributeDefinitions(
+		ExtendedObjectClassDefinition objectClassDefinition,
+		ExtendedAttributeDefinition[] extendedAttributeDefinitions) {
 
 		when(
 			objectClassDefinition.getAttributeDefinitions(Matchers.anyInt())
 		).thenReturn(
-			returnAttributeDefinitions
+			extendedAttributeDefinitions
+		);
+	}
+
+	protected void whenGetCardinality(
+		ExtendedAttributeDefinition extendedAttributeDefinition,
+		int cardinality) {
+
+		when(
+			extendedAttributeDefinition.getCardinality()
+		).thenReturn(
+			cardinality
+		);
+	}
+
+	protected void whenGetDefaultValue(
+		ExtendedAttributeDefinition extendedAttributeDefinition,
+		String[] defaultValue) {
+
+		when(
+			extendedAttributeDefinition.getDefaultValue()
+		).thenReturn(
+			defaultValue
+		);
+	}
+
+	protected void whenGetID(
+		ExtendedAttributeDefinition extendedAttributeDefinition, String id) {
+
+		when(
+			extendedAttributeDefinition.getID()
+		).thenReturn(
+			id
+		);
+	}
+
+	protected void whenGetOptionLabels(
+		ExtendedAttributeDefinition extendedAttributeDefinition,
+		String[] optionLabels) {
+
+		when(
+			extendedAttributeDefinition.getOptionLabels()
+		).thenReturn(
+			optionLabels
+		);
+	}
+
+	protected void whenGetOptionValues(
+		ExtendedAttributeDefinition extendedAttributeDefinition,
+		String[] optionValues) {
+
+		when(
+			extendedAttributeDefinition.getOptionValues()
+		).thenReturn(
+			optionValues
+		);
+	}
+
+	protected void whenGetProperties(
+		Configuration configuration,
+		Dictionary<String, Object> properties) {
+
+		when(
+			configuration.getProperties()
+		).thenReturn(
+			properties
 		);
 	}
 

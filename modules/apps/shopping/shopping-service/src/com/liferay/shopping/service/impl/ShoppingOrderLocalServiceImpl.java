@@ -17,7 +17,7 @@ package com.liferay.shopping.service.impl;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration;
@@ -781,11 +782,14 @@ public class ShoppingOrderLocalServiceImpl
 		}
 	}
 
+	@ServiceReference(type = ConfigurationFactory.class)
+	protected ConfigurationFactory configurationFactory;
+
 	private ShoppingGroupServiceOverriddenConfiguration
 			_getShoppingGroupServiceOverriddenConfiguration(long groupId)
 		throws ConfigurationException {
 
-		return ConfigurationFactoryUtil.getConfiguration(
+		return configurationFactory.getConfiguration(
 			ShoppingGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, ShoppingConstants.SERVICE_NAME));

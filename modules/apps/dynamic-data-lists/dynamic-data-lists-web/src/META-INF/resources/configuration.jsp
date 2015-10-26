@@ -21,8 +21,6 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(renderRequest, renderResponse);
-
 DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 %>
 
@@ -49,9 +47,11 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 			iteratorURL="<%= configurationRenderURL %>"
 			total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) %>"
 		>
-			<div class="form-search input-append">
-				<liferay-ui:input-search autoFocus="<%= true %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>'/>
-			</div>
+			<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+				<aui:nav-bar-search>
+					<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+				</aui:nav-bar-search>
+			</aui:nav-bar>
 
 			<liferay-ui:search-container-results
 				results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
@@ -108,7 +108,7 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 
 			<div class="separator"><!-- --></div>
 
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:fieldset>
 </aui:form>

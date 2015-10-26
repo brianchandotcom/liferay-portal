@@ -1,16 +1,19 @@
 Bundle-Name: Liferay Javadoc Formatter
 Bundle-SymbolicName: com.liferay.javadoc.formatter
-Bundle-Version: 1.0.5
+Bundle-Version: 1.0.8
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
 	*
 Include-Resource:\
 	classes,\
-	{META-INF/maven/plugin.xml=src/META-INF/maven/plugin.xml},\
+	{META-INF/maven/plugin.xml=src/main/resources/META-INF/maven/plugin.xml},\
 	@../../../lib/portal/xercesImpl.jar!/org/apache/xerces/xni/XNIException.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
@@ -43,5 +46,6 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jDocUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
-	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class,\
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class
 Main-Class: com.liferay.javadoc.formatter.JavadocFormatter

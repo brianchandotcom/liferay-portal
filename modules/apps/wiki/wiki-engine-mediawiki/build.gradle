@@ -1,9 +1,8 @@
 dependencies {
-	compile group: "com.liferay", name: "org.jamwiki", version: "1.0.7"
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-engine-input-editor-common")
+
+	provided group: "com.liferay", name: "org.jamwiki", version: "1.0.7"
 }
 
 liferay {

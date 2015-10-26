@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -152,6 +153,27 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	@Override
 	public List<DDLRecordVersion> findByRecordId(long recordId, int start,
 		int end, OrderByComparator<DDLRecordVersion> orderByComparator) {
+		return findByRecordId(recordId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d l record versions where recordId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param recordId the record ID
+	 * @param start the lower bound of the range of d d l record versions
+	 * @param end the upper bound of the range of d d l record versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching d d l record versions
+	 */
+	@Override
+	public List<DDLRecordVersion> findByRecordId(long recordId, int start,
+		int end, OrderByComparator<DDLRecordVersion> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -167,15 +189,19 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			finderArgs = new Object[] { recordId, start, end, orderByComparator };
 		}
 
-		List<DDLRecordVersion> list = (List<DDLRecordVersion>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<DDLRecordVersion> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDLRecordVersion ddlRecordVersion : list) {
-				if ((recordId != ddlRecordVersion.getRecordId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<DDLRecordVersion>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDLRecordVersion ddlRecordVersion : list) {
+					if ((recordId != ddlRecordVersion.getRecordId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -232,10 +258,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -525,8 +551,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 		Object[] finderArgs = new Object[] { recordId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -550,10 +575,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -630,7 +655,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 *
 	 * @param recordId the record ID
 	 * @param version the version
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
 	 */
 	@Override
@@ -641,7 +666,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_R_V,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_R_V,
 					finderArgs, this);
 		}
 
@@ -695,8 +720,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 				List<DDLRecordVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_R_V, finderArgs,
+						list);
 				}
 				else {
 					DDLRecordVersion ddlRecordVersion = list.get(0);
@@ -708,14 +733,13 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 					if ((ddlRecordVersion.getRecordId() != recordId) ||
 							(ddlRecordVersion.getVersion() == null) ||
 							!ddlRecordVersion.getVersion().equals(version)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_R_V,
 							finderArgs, ddlRecordVersion);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_R_V, finderArgs);
 
 				throw processException(e);
 			}
@@ -760,8 +784,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 		Object[] finderArgs = new Object[] { recordId, version };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -803,10 +826,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -894,6 +917,29 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	public List<DDLRecordVersion> findByR_S(long recordId, int status,
 		int start, int end,
 		OrderByComparator<DDLRecordVersion> orderByComparator) {
+		return findByR_S(recordId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d l record versions where recordId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param recordId the record ID
+	 * @param status the status
+	 * @param start the lower bound of the range of d d l record versions
+	 * @param end the upper bound of the range of d d l record versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching d d l record versions
+	 */
+	@Override
+	public List<DDLRecordVersion> findByR_S(long recordId, int status,
+		int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -913,16 +959,20 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 				};
 		}
 
-		List<DDLRecordVersion> list = (List<DDLRecordVersion>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<DDLRecordVersion> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDLRecordVersion ddlRecordVersion : list) {
-				if ((recordId != ddlRecordVersion.getRecordId()) ||
-						(status != ddlRecordVersion.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<DDLRecordVersion>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDLRecordVersion ddlRecordVersion : list) {
+					if ((recordId != ddlRecordVersion.getRecordId()) ||
+							(status != ddlRecordVersion.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -983,10 +1033,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1294,8 +1344,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 		Object[] finderArgs = new Object[] { recordId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1323,10 +1372,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1352,11 +1401,11 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public void cacheResult(DDLRecordVersion ddlRecordVersion) {
-		EntityCacheUtil.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordVersionImpl.class, ddlRecordVersion.getPrimaryKey(),
 			ddlRecordVersion);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_R_V,
 			new Object[] {
 				ddlRecordVersion.getRecordId(), ddlRecordVersion.getVersion()
 			}, ddlRecordVersion);
@@ -1372,7 +1421,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	@Override
 	public void cacheResult(List<DDLRecordVersion> ddlRecordVersions) {
 		for (DDLRecordVersion ddlRecordVersion : ddlRecordVersions) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 						DDLRecordVersionImpl.class,
 						ddlRecordVersion.getPrimaryKey()) == null) {
@@ -1388,43 +1437,43 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 * Clears the cache for all d d l record versions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(DDLRecordVersionImpl.class);
+		entityCache.clearCache(DDLRecordVersionImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the d d l record version.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(DDLRecordVersion ddlRecordVersion) {
-		EntityCacheUtil.removeResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordVersionImpl.class, ddlRecordVersion.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((DDLRecordVersionModelImpl)ddlRecordVersion);
 	}
 
 	@Override
 	public void clearCache(List<DDLRecordVersion> ddlRecordVersions) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (DDLRecordVersion ddlRecordVersion : ddlRecordVersions) {
-			EntityCacheUtil.removeResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DDLRecordVersionImpl.class, ddlRecordVersion.getPrimaryKey());
 
 			clearUniqueFindersCache((DDLRecordVersionModelImpl)ddlRecordVersion);
@@ -1439,9 +1488,9 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 					ddlRecordVersionModelImpl.getVersion()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_V, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_R_V, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_R_V, args,
 				ddlRecordVersionModelImpl);
 		}
 		else {
@@ -1452,9 +1501,9 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 						ddlRecordVersionModelImpl.getVersion()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_V, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_R_V, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_R_V, args,
 					ddlRecordVersionModelImpl);
 			}
 		}
@@ -1467,8 +1516,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 				ddlRecordVersionModelImpl.getVersion()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_R_V, args);
 
 		if ((ddlRecordVersionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_R_V.getColumnBitmask()) != 0) {
@@ -1477,8 +1526,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 					ddlRecordVersionModelImpl.getOriginalVersion()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_R_V, args);
 		}
 	}
 
@@ -1612,10 +1661,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !DDLRecordVersionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1625,14 +1674,14 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 						ddlRecordVersionModelImpl.getOriginalRecordId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECORDID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RECORDID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID,
 					args);
 
 				args = new Object[] { ddlRecordVersionModelImpl.getRecordId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECORDID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RECORDID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID,
 					args);
 			}
 
@@ -1643,8 +1692,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 						ddlRecordVersionModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
 					args);
 
 				args = new Object[] {
@@ -1652,13 +1701,13 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 						ddlRecordVersionModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordVersionImpl.class, ddlRecordVersion.getPrimaryKey(),
 			ddlRecordVersion, false);
 
@@ -1745,7 +1794,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion fetchByPrimaryKey(Serializable primaryKey) {
-		DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)EntityCacheUtil.getResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+		DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)entityCache.getResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DDLRecordVersionImpl.class, primaryKey);
 
 		if (ddlRecordVersion == _nullDDLRecordVersion) {
@@ -1765,13 +1814,13 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 					cacheResult(ddlRecordVersion);
 				}
 				else {
-					EntityCacheUtil.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 						DDLRecordVersionImpl.class, primaryKey,
 						_nullDDLRecordVersion);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DDLRecordVersionImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1821,7 +1870,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)EntityCacheUtil.getResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)entityCache.getResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DDLRecordVersionImpl.class, primaryKey);
 
 			if (ddlRecordVersion == null) {
@@ -1873,7 +1922,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DDLRecordVersionImpl.class, primaryKey,
 					_nullDDLRecordVersion);
 			}
@@ -1929,6 +1978,26 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	@Override
 	public List<DDLRecordVersion> findAll(int start, int end,
 		OrderByComparator<DDLRecordVersion> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d l record versions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of d d l record versions
+	 * @param end the upper bound of the range of d d l record versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of d d l record versions
+	 */
+	@Override
+	public List<DDLRecordVersion> findAll(int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1944,8 +2013,12 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<DDLRecordVersion> list = (List<DDLRecordVersion>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<DDLRecordVersion> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DDLRecordVersion>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1992,10 +2065,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2025,7 +2098,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2038,11 +2111,11 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2067,12 +2140,16 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(DDLRecordVersionImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(DDLRecordVersionImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDLRECORDVERSION = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion";
 	private static final String _SQL_SELECT_DDLRECORDVERSION_WHERE_PKS_IN = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion WHERE recordVersionId IN (";
 	private static final String _SQL_SELECT_DDLRECORDVERSION_WHERE = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion WHERE ";

@@ -19,7 +19,7 @@
 		<var name="ddlRecordFieldData" value="Record Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text Label" />
-		<var name="fieldName" value="Text_Name" />
+		<var name="fieldName" value="TextName" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -106,6 +106,7 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
@@ -133,7 +134,7 @@
 		<var name="ddlRecordFieldData" value="Record Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text Label" />
-		<var name="fieldName" value="Text_Name" />
+		<var name="fieldName" value="TextName" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -220,6 +221,7 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />

@@ -16,54 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-buttons>
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-%>
-
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
-			<portlet:renderURL var="addRecordSetURL">
-				<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item href="<%= addRecordSetURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
-
-			<aui:nav-item anchorId="manageDDMStructuresLink" iconCssClass="icon-cog" label="manage-data-definitions" selected='<%= toolbarItem.equals("manage-data-definitions") %>' />
-		</c:if>
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
-	</aui:nav-bar-search>
-</aui:nav-bar>
-
-<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
-	<aui:script>
-		AUI.$('#<portlet:namespace />manageDDMStructuresLink').on(
-			'click',
-			function() {
-				Liferay.Util.openDDMPortlet(
-					{
-						basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-						dialog: {
-							destroyOnHide: true
-						},
-						groupId: <%= scopeGroupId %>,
-
-						<%
-						Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-						%>
-
-						refererPortletName: '<%= portlet.getPortletName() %>',
-						refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
-						title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
-					}
-				);
-			}
-		);
-	</aui:script>
-</c:if>
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/sort_buttons.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>

@@ -29,6 +29,8 @@ import java.io.InputStream;
  */
 public interface DLValidator {
 
+	public String fixName(String name);
+
 	public boolean isValidName(String name);
 
 	public void validateDirectoryName(String directoryName)

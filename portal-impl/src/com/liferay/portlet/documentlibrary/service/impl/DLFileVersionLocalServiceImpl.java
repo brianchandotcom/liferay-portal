@@ -179,12 +179,10 @@ public class DLFileVersionLocalServiceImpl
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileVersion>() {
 
 				@Override
-				public void performAction(Object object) {
-					DLFileVersion dlFileVersion = (DLFileVersion)object;
-
+				public void performAction(DLFileVersion dlFileVersion) {
 					dlFileVersion.setTreePath(treePath);
 
 					updateDLFileVersion(dlFileVersion);

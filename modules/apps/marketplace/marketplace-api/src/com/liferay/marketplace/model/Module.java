@@ -16,6 +16,7 @@ package com.liferay.marketplace.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,5 +35,22 @@ public interface Module extends ModuleModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.marketplace.model.impl.ModuleImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Module, Long> MODULE_ID_ACCESSOR = new Accessor<Module, Long>() {
+			@Override
+			public Long get(Module module) {
+				return module.getModuleId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Module> getTypeClass() {
+				return Module.class;
+			}
+		};
+
 	public boolean isBundle();
 }

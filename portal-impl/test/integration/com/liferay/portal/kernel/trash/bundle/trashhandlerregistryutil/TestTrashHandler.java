@@ -27,7 +27,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 
@@ -103,17 +102,8 @@ public class TestTrashHandler implements TrashHandler {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
 	@Override
 	public String getContainerModelName() {
-		return null;
-	}
-
-	@Override
-	public String getContainerModelName(long classPK) {
 		return null;
 	}
 
@@ -189,34 +179,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	public String getRootContainerModelClassName() {
-		return null;
-	}
-
-	@Override
-	public long getRootContainerModelId(long classPK) {
-		return 0;
-	}
-
-	@Override
 	public String getRootContainerModelName() {
-		return null;
-	}
-
-	@Override
-	public List<ContainerModel> getRootContainerModels(long groupId) {
-		return null;
-	}
-
-	@Override
-	public int getRootContainerModelsCount(long groupId) {
-		return 0;
-	}
-
-	@Override
-	public String getRootContainerModelTitle(
-		long containerModelId, Locale locale) {
-
 		return null;
 	}
 
@@ -309,11 +272,6 @@ public class TestTrashHandler implements TrashHandler {
 
 	@Override
 	public boolean isRestorable(long classPK) {
-		return false;
-	}
-
-	@Override
-	public boolean isRootContainerModelMovable() {
 		return false;
 	}
 

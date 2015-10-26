@@ -16,11 +16,13 @@ package com.liferay.wiki.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Iván Zaera
  */
+@ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(id = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration")
 public interface WikiGroupServiceConfiguration {
 
@@ -124,7 +126,7 @@ public interface WikiGroupServiceConfiguration {
 	 * few characters are forbidden. Uncomment the regular expression below to
 	 * allow only CamelCase titles.
 	 */
-	@Meta.AD(deflt = "([^\\\\\\\\\\\\[\\\\]\\\\|:;%<>]+)", required = false)
+	@Meta.AD(deflt = "[^\\\\\\[\\]\\|:;%<>]+", required = false)
 	public String pageTitlesRegexp();
 
 	/**
@@ -133,7 +135,7 @@ public interface WikiGroupServiceConfiguration {
 	 * are forbidden in the regexp specified in the property
 	 * "wiki.page.titles.regexp".
 	 */
-	@Meta.AD(deflt = "([\\\\\\\\\\\\[\\\\]\\\\|:;%<>]+)", required = false)
+	@Meta.AD(deflt = "[\\\\\\[\\]\\|:;%<>]+", required = false)
 	public String pageTitlesRemoveRegexp();
 
 	/**

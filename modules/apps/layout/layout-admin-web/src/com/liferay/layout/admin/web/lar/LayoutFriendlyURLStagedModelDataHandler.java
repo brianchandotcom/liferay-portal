@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
-import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutFriendlyURLLocalService;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -47,7 +48,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(LayoutFriendlyURL layoutFriendlyURL) {
-		LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
+		_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
 			layoutFriendlyURL);
 	}
 
@@ -65,7 +66,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 	public LayoutFriendlyURL fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return LayoutFriendlyURLLocalServiceUtil.
+		return _layoutFriendlyURLLocalService.
 			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -73,7 +74,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 	public List<LayoutFriendlyURL> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return LayoutFriendlyURLLocalServiceUtil.
+		return _layoutFriendlyURLLocalService.
 			getLayoutFriendlyURLsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<LayoutFriendlyURL>());
@@ -133,13 +134,13 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			String friendlyURL = layoutFriendlyURL.getFriendlyURL();
 
 			if (Validator.isNumber(friendlyURL.substring(1))) {
-				Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+				Layout layout = _layoutLocalService.fetchLayout(plid);
 
 				friendlyURL = StringPool.SLASH + layout.getLayoutId();
 			}
 
 			importedLayoutFriendlyURL =
-				LayoutFriendlyURLLocalServiceUtil.addLayoutFriendlyURL(
+				_layoutFriendlyURLLocalService.addLayoutFriendlyURL(
 					userId, portletDataContext.getCompanyId(),
 					portletDataContext.getScopeGroupId(), plid,
 					portletDataContext.isPrivateLayout(), friendlyURL,
@@ -147,7 +148,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		}
 		else {
 			importedLayoutFriendlyURL =
-				LayoutFriendlyURLLocalServiceUtil.updateLayoutFriendlyURL(
+				_layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
 					userId, portletDataContext.getCompanyId(),
 					portletDataContext.getScopeGroupId(), plid,
 					portletDataContext.isPrivateLayout(),
@@ -170,7 +171,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 
 		if (existingLayoutFriendlyURL == null) {
 			existingLayoutFriendlyURL =
-				LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
+				_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
 					plid, layoutFriendlyURL.getLanguageId(), false);
 		}
 
@@ -187,7 +188,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 
 		for (int i = 1;; i++) {
 			LayoutFriendlyURL duplicateLayoutFriendlyURL =
-				LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
+				_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
 					portletDataContext.getScopeGroupId(),
 					layoutFriendlyURL.isPrivateLayout(),
 					layoutFriendlyURL.getFriendlyURL(),
@@ -206,5 +207,22 @@ public class LayoutFriendlyURLStagedModelDataHandler
 
 		return layoutFriendlyURL;
 	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutFriendlyURLLocalService(
+		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
+
+		_layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

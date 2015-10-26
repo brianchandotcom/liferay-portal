@@ -148,6 +148,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 		if (category.equals(PortletCategoryKeys.CONTROL_PANEL_APPS) ||
 			category.equals(PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION) ||
 			category.equals(PortletCategoryKeys.CONTROL_PANEL_SITES) ||
+			category.equals(PortletCategoryKeys.CONTROL_PANEL_SYSTEM) ||
 			category.equals(PortletCategoryKeys.CONTROL_PANEL_USERS)) {
 
 			groupId = 0;

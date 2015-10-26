@@ -25,7 +25,6 @@ import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,10 +32,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Alexander Chow
  */
-@Component(immediate = true, service = BookmarksServiceVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.bookmarks.service"},
+	service = VerifyProcess.class
+)
 public class BookmarksServiceVerifyProcess extends VerifyProcess {
 
-	@Activate
 	@Override
 	protected void doVerify() throws Exception {
 		updateEntryAssets();

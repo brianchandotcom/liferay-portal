@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -151,7 +152,9 @@ public class SessionTreeJSClickAction extends Action {
 			String json = portalPreferences.getValue(
 				SessionTreeJSClicks.class.getName(), treeId + "Plid");
 
-			ServletResponseUtil.write(response, json);
+			if (Validator.isNotNull(json)) {
+				ServletResponseUtil.write(response, json);
+			}
 
 			return null;
 		}

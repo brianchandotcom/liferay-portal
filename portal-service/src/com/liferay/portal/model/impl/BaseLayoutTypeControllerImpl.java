@@ -119,8 +119,18 @@ public abstract class BaseLayoutTypeControllerImpl
 	}
 
 	@Override
+	public boolean isCheckLayoutViewPermission() {
+		return true;
+	}
+
+	@Override
 	public boolean isFullPageDisplayable() {
 		return false;
+	}
+
+	@Override
+	public boolean isInstanceable() {
+		return true;
 	}
 
 	@Override

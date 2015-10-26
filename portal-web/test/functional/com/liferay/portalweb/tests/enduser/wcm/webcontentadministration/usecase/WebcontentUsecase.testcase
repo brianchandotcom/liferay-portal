@@ -23,9 +23,9 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="LPS-55073" name="AddAudioViaWebContent" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+	<command name="AddAudioViaWebContent" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">
@@ -41,8 +41,8 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">
@@ -59,6 +59,14 @@
 			<var name="dmDocumentTitle" value="Document_1.mp3" />
 		</execute>
 
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="Document_1.mp3" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Link#URL" value1="URL" />
+
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="dmDocumentURL" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -70,7 +78,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#uploadAudio" />
+		<execute macro="WebContent#uploadAudio">
+			<var name="dmDocumentURL" value="${dmDocumentURL}" />
+		</execute>
 
 		<execute macro="WebContent#publish" />
 
@@ -101,7 +111,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command known-issues="WCM-260" name="AddContentWithTitleAndAllFieldsNull" priority="4">
+	<command name="AddContentWithTitleAndAllFieldsNull" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -117,7 +127,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -385,8 +395,9 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
+	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
 
@@ -498,7 +509,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55128" name="DeleteTemplateAndStructureWithReferencedWebContent" priority="4">
+	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -676,7 +687,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -953,7 +964,9 @@
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#expirePGViaWCD" />
+		<execute macro="WebContent#expirePGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -980,8 +993,10 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1049,6 +1064,10 @@
 			<execute macro="Category#addCP">
 				<var name="categoryName" value="${categoryName}" />
 				<var name="vocabularyName" value="Vocabulary Name" />
+			</execute>
+
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Categories" />
 			</execute>
 		</for>
 
@@ -1481,6 +1500,12 @@
 			<var name="webContentTitle" value="WC WebContent 3 Title" />
 		</execute>
 
+		<execute macro="WebContentDisplayPortlet#configureSetupPG">
+			<var name="metadataNameList" value="Related Assets" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -1490,7 +1515,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56572" name="WebcontentAdministrationTemplateValidation" priority="4">
+	<command name="WebcontentAdministrationTemplateValidation" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -1507,11 +1532,11 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#saveAsDraft" />
+		<execute function="AssertClickNoError" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute macro="WebContentStructures#viewTemplateValidation" />
 
-		<execute macro="WebContent#publish" />
+		<execute function="AssertClickNoError" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute macro="WebContentStructures#viewTemplateValidation" />
 	</command>

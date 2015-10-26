@@ -44,6 +44,7 @@ import com.liferay.portlet.messageboards.service.persistence.MBThreadUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,8 +61,9 @@ import java.util.Set;
  * @generated
  */
 public class MBThreadPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -500,11 +502,9 @@ public class MBThreadPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MBThreadLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBThread>() {
 				@Override
-				public void performAction(Object object) {
-					MBThread mbThread = (MBThread)object;
-
+				public void performAction(MBThread mbThread) {
 					Assert.assertNotNull(mbThread);
 
 					count.increment();

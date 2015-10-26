@@ -15,7 +15,7 @@
 package com.liferay.document.library.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.web.social.DLFileEntryActivityInterpreter;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -29,6 +29,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -48,7 +49,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class DLFileEntryActivityInterpreterTest
-		extends BaseSocialActivityInterpreterTestCase {
+	extends BaseSocialActivityInterpreterTestCase {
 
 	@ClassRule
 	@Rule
@@ -81,7 +82,8 @@ public class DLFileEntryActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new DLFileEntryActivityInterpreter();
+		return getActivityInterpreter(
+			DLPortletKeys.DOCUMENT_LIBRARY, DLFileEntry.class.getName());
 	}
 
 	@Override

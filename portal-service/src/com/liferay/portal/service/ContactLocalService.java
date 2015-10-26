@@ -64,10 +64,10 @@ public interface ContactLocalService extends BaseLocalService,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle) throws PortalException;
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle)
+		throws PortalException;
 
 	/**
 	* Creates a new contact with the primary key. Does not add the contact to the database.
@@ -255,8 +255,8 @@ public interface ContactLocalService extends BaseLocalService,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle) throws PortalException;
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle)
+		throws PortalException;
 }

@@ -72,6 +72,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
+import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
@@ -643,6 +644,14 @@ public class DLImpl implements DL {
 	public <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType) {
 
+		return getRepositoryModelOrderByComparator(
+			orderByCol, orderByType, false);
+	}
+
+	@Override
+	public <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
+		String orderByCol, String orderByType, boolean orderByModel) {
+
 		boolean orderByAsc = true;
 
 		if (orderByType.equals("desc")) {
@@ -653,22 +662,23 @@ public class DLImpl implements DL {
 
 		if (orderByCol.equals("creationDate")) {
 			orderByComparator = new RepositoryModelCreateDateComparator<>(
-				orderByAsc);
+				orderByAsc, orderByModel);
 		}
 		else if (orderByCol.equals("downloads")) {
 			orderByComparator = new RepositoryModelReadCountComparator<>(
-				orderByAsc);
+				orderByAsc, orderByModel);
 		}
 		else if (orderByCol.equals("modifiedDate")) {
 			orderByComparator = new RepositoryModelModifiedDateComparator<>(
-				orderByAsc);
+				orderByAsc, orderByModel);
 		}
 		else if (orderByCol.equals("size")) {
-			orderByComparator = new RepositoryModelSizeComparator<>(orderByAsc);
+			orderByComparator = new RepositoryModelSizeComparator<>(
+				orderByAsc, orderByModel);
 		}
 		else {
 			orderByComparator = new RepositoryModelTitleComparator<>(
-				orderByAsc);
+				orderByAsc, orderByModel);
 		}
 
 		return orderByComparator;
@@ -899,13 +909,9 @@ public class DLImpl implements DL {
 			webDavURL.append(MANUAL_CHECK_IN_REQUIRED_PATH);
 		}
 
-		String fileEntryFileName = null;
-
 		Group group = null;
 
 		if (fileEntry != null) {
-			fileEntryFileName = HtmlUtil.unescape(fileEntry.getFileName());
-
 			group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
 		}
 		else {
@@ -940,7 +946,7 @@ public class DLImpl implements DL {
 
 		if (fileEntry != null) {
 			sb.append(StringPool.SLASH);
-			sb.append(HttpUtil.encodeURL(fileEntryFileName, true));
+			sb.append(DLWebDAVUtil.escapeURLTitle(fileEntry.getTitle()));
 		}
 
 		webDavURL.append(sb.toString());

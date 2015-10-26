@@ -25,22 +25,27 @@
 </tr>
 <tr>
 	<td>BACK_ARROW</td>
-	<td>//a[contains(@id,'allSitesLink')]</td>
+	<td>//a[contains(@id,'mySitesLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_COLLAPSED</td>
-	<td>//div[contains(@class,'active')]//a[contains(.,'${key_category}') and contains(@class,'collapsed')]</td>
+	<td>//div[contains(@class,'sidebar-body')]/div/div[contains(@class,'active')]//a[contains(.,'${key_category}') and contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_EXPANDED</td>
-	<td>//div[contains(@class,'active')]//a[contains(.,'${key_category}') and not(contains(@class,'collapsed'))]</td>
+	<td>//div[contains(@class,'sidebar-body')]/div/div[contains(@class,'active')]//a[contains(.,'${key_category}') and not(contains(@class,'collapsed'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PORTLET</td>
 	<td>//div[@class='list-group-item']//li/a[contains(.,'${key_portlet}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE</td>
+	<td>//div[contains(@id,'sites')]/ul/li/a[contains(.,'${key_site}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,6 +61,11 @@
 <tr>
 	<td>USER_FULL_NAME</td>
 	<td>//div[contains(@class,'nameplate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PROFILE</td>
+	<td>//div[contains(@class,'nameplate')]//a[contains(.,'Profile')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,8 +126,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_PANEL_MENU_ITEM_2</td>
+	<td>xpath=(//div[contains(@class,'active')]//a[.='${key_portletName}'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME</td>
-	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_siteName}')]</td>
+	<td>//div[contains(@class,'toolbar-group-content') and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

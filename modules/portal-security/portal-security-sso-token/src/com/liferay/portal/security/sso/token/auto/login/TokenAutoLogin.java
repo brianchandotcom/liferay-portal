@@ -32,7 +32,7 @@ import com.liferay.portal.security.sso.token.internal.constants.TokenConstants;
 import com.liferay.portal.security.sso.token.internal.module.configuration.TokenConfiguration;
 import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
 import com.liferay.portal.security.sso.token.security.auth.TokenRetriever;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -155,10 +155,10 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		}
 
 		if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			user = UserLocalServiceUtil.getUserByScreenName(companyId, login);
+			user = _userLocalService.getUserByScreenName(companyId, login);
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-			user = UserLocalServiceUtil.getUserByEmailAddress(companyId, login);
+			user = _userLocalService.getUserByEmailAddress(companyId, login);
 		}
 		else {
 			if (_log.isWarnEnabled()) {
@@ -190,6 +190,11 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		_tokenRetrievers.put(tokenRetriever.getTokenLocation(), tokenRetriever);
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void unsetTokenRetriever(TokenRetriever tokenRetriever) {
 		_tokenRetrievers.remove(tokenRetriever.getTokenLocation());
 	}
@@ -199,5 +204,6 @@ public class TokenAutoLogin extends BaseAutoLogin {
 	private volatile ConfigurationFactory _configurationFactory;
 	private final Map<TokenLocation, TokenRetriever> _tokenRetrievers =
 		new ConcurrentHashMap<>();
+	private UserLocalService _userLocalService;
 
 }

@@ -32,9 +32,11 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import com.liferay.service.access.policy.model.SAPEntry;
 import com.liferay.service.access.policy.model.SAPEntryModel;
@@ -86,6 +88,7 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "allowedServiceSignatures", Types.VARCHAR },
 			{ "defaultSAPEntry", Types.BOOLEAN },
+			{ "enabled", Types.BOOLEAN },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR }
 		};
@@ -101,11 +104,12 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("allowedServiceSignatures", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultSAPEntry", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("enabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SAPEntry (uuid_ VARCHAR(75) null,sapEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,allowedServiceSignatures STRING null,defaultSAPEntry BOOLEAN,name VARCHAR(75) null,title STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table SAPEntry (uuid_ VARCHAR(75) null,sapEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,allowedServiceSignatures STRING null,defaultSAPEntry BOOLEAN,enabled BOOLEAN,name VARCHAR(75) null,title STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table SAPEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY sapEntry.sapEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SAPEntry.sapEntryId ASC";
@@ -122,9 +126,10 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 				"value.object.column.bitmask.enabled.com.liferay.service.access.policy.model.SAPEntry"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long SAPENTRYID_COLUMN_BITMASK = 8L;
+	public static final long DEFAULTSAPENTRY_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long SAPENTRYID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -148,6 +153,7 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setAllowedServiceSignatures(soapModel.getAllowedServiceSignatures());
 		model.setDefaultSAPEntry(soapModel.getDefaultSAPEntry());
+		model.setEnabled(soapModel.getEnabled());
 		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 
@@ -223,6 +229,7 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
 		attributes.put("defaultSAPEntry", getDefaultSAPEntry());
+		attributes.put("enabled", getEnabled());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 
@@ -287,6 +294,12 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 		if (defaultSAPEntry != null) {
 			setDefaultSAPEntry(defaultSAPEntry);
+		}
+
+		Boolean enabled = (Boolean)attributes.get("enabled");
+
+		if (enabled != null) {
+			setEnabled(enabled);
 		}
 
 		String name = (String)attributes.get("name");
@@ -460,7 +473,35 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 	@Override
 	public void setDefaultSAPEntry(boolean defaultSAPEntry) {
+		_columnBitmask |= DEFAULTSAPENTRY_COLUMN_BITMASK;
+
+		if (!_setOriginalDefaultSAPEntry) {
+			_setOriginalDefaultSAPEntry = true;
+
+			_originalDefaultSAPEntry = _defaultSAPEntry;
+		}
+
 		_defaultSAPEntry = defaultSAPEntry;
+	}
+
+	public boolean getOriginalDefaultSAPEntry() {
+		return _originalDefaultSAPEntry;
+	}
+
+	@JSON
+	@Override
+	public boolean getEnabled() {
+		return _enabled;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
 	}
 
 	@JSON
@@ -588,6 +629,12 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				SAPEntry.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -689,6 +736,7 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		sapEntryImpl.setModifiedDate(getModifiedDate());
 		sapEntryImpl.setAllowedServiceSignatures(getAllowedServiceSignatures());
 		sapEntryImpl.setDefaultSAPEntry(getDefaultSAPEntry());
+		sapEntryImpl.setEnabled(getEnabled());
 		sapEntryImpl.setName(getName());
 		sapEntryImpl.setTitle(getTitle());
 
@@ -761,6 +809,10 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 		sapEntryModelImpl._setModifiedDate = false;
 
+		sapEntryModelImpl._originalDefaultSAPEntry = sapEntryModelImpl._defaultSAPEntry;
+
+		sapEntryModelImpl._setOriginalDefaultSAPEntry = false;
+
 		sapEntryModelImpl._originalName = sapEntryModelImpl._name;
 
 		sapEntryModelImpl._columnBitmask = 0;
@@ -821,6 +873,8 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 		sapEntryCacheModel.defaultSAPEntry = getDefaultSAPEntry();
 
+		sapEntryCacheModel.enabled = getEnabled();
+
 		sapEntryCacheModel.name = getName();
 
 		String name = sapEntryCacheModel.name;
@@ -842,7 +896,7 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -862,6 +916,8 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		sb.append(getAllowedServiceSignatures());
 		sb.append(", defaultSAPEntry=");
 		sb.append(getDefaultSAPEntry());
+		sb.append(", enabled=");
+		sb.append(getEnabled());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", title=");
@@ -873,7 +929,7 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.service.access.policy.model.SAPEntry");
@@ -916,6 +972,10 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		sb.append(getDefaultSAPEntry());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>enabled</column-name><column-value><![CDATA[");
+		sb.append(getEnabled());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
@@ -946,6 +1006,9 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 	private boolean _setModifiedDate;
 	private String _allowedServiceSignatures;
 	private boolean _defaultSAPEntry;
+	private boolean _originalDefaultSAPEntry;
+	private boolean _setOriginalDefaultSAPEntry;
+	private boolean _enabled;
 	private String _name;
 	private String _originalName;
 	private String _title;

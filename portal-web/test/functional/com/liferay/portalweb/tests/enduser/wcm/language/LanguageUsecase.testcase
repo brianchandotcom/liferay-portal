@@ -1,5 +1,5 @@
 <definition component-name="portal-wcm">
-	<property name="testray.main.component.name" value="WCM" />
+	<property name="testray.main.component.name" value="Localization" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -104,7 +104,7 @@
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">
 			<var name="localizedTitle" value="WC Titel" />
-			<var name="webContentTranslationLanguage" value="German (Germany)" />
+			<var name="webContentTranslationLanguage" value="Deutsch (Deutschland)" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -129,7 +129,7 @@
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">
 			<var name="localizedTitle" value="WC Otsikko" />
-			<var name="webContentTranslationLanguage" value="Finnish (Finland)" />
+			<var name="webContentTranslationLanguage" value="suomi (Suomi)" />
 		</execute>
 	</command>
 
@@ -281,10 +281,6 @@
 		<execute macro="LanguagePortlet#configureViewCurrentLanguages">
 			<var name="currentLanguages" value="Chinese (China),French (France),English (United States)" />
 		</execute>
-
-		<execute macro="LanguagePortlet#configureViewAvailableLanguages">
-			<var name="availableLanguages" value="Arabic (Saudi Arabia),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain)" />
-		</execute>
 	</command>
 
 	<command name="ViewRemovedCurrentSiteLanguagesViaLanguagePortlet" priority="4">
@@ -303,7 +299,7 @@
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
-			<var name="currentSiteLanguages" value="Arabic (Saudi Arabia),English (United States),German (Germany),Spanish (Spain)" />
+			<var name="currentSiteLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
 			<var name="defaultSiteLanguage" value="English (United States)" />
 			<var name="displaySettings" value="Display Settings" />
 		</execute>
@@ -319,7 +315,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesPresent">
-			<var name="currentLanguages" value="ARABIC,ENGLISH,GERMAN,SPANISH" />
+			<var name="currentLanguages" value="ENGLISH,GERMAN,SPANISH" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -327,7 +323,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#configureViewCurrentLanguages">
-			<var name="currentLanguages" value="Arabic (Saudi Arabia),English (United States),German (Germany),Spanish (Spain)" />
+			<var name="currentLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
 		</execute>
 
 		<execute macro="LanguagePortlet#configureViewAvailableLanguages">

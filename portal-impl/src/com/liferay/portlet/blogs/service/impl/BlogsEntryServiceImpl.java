@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -266,6 +267,21 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<BlogsEntry> getGroupEntries(
+		long groupId, int status, int start, int end,
+		OrderByComparator<BlogsEntry> obc) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.filterFindByG_NotS(
+				groupId, WorkflowConstants.STATUS_IN_TRASH, start, end, obc);
+		}
+		else {
+			return blogsEntryPersistence.filterFindByG_S(
+				groupId, status, start, end, obc);
+		}
+	}
+
+	@Override
 	public int getGroupEntriesCount(
 		long groupId, Date displayDate, int status) {
 
@@ -349,6 +365,34 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		}
 
 		return entries;
+	}
+
+	@Override
+	public List<BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int status, int start, int end,
+		OrderByComparator<BlogsEntry> obc) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.filterFindByG_U_NotS(
+				groupId, userId, WorkflowConstants.STATUS_IN_TRASH, start, end,
+				obc);
+		}
+		else {
+			return blogsEntryPersistence.filterFindByG_U_S(
+				groupId, userId, status, start, end, obc);
+		}
+	}
+
+	@Override
+	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.filterCountByG_U_NotS(
+				groupId, userId, WorkflowConstants.STATUS_IN_TRASH);
+		}
+		else {
+			return blogsEntryPersistence.filterCountByG_U_S(
+				groupId, userId, status);
+		}
 	}
 
 	@Override

@@ -1,0 +1,95 @@
+<definition component-name="portal-permissions">
+	<property name="testray.main.component.name" value="Permissions" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="UserGroup#tearDownCP" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="PortalSettings#tearDownCP" />
+	</tear-down>
+
+	<command name="AddUserGroupRegRole" priority="4">
+		<execute macro="Permissions#setUpRegRoleLoginUserCP">
+			<var name="roleName" value="Regrole Name" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USER_GROUPS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_GROUP_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add User Group" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USER_GROUPS_RESOURCE_PERMISSIONS_USER_GROUP_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_GROUP_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add User Group" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USER_GROUPS_RESOURCE_PERMISSIONS_USER_GROUP_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
+	</command>
+</definition>

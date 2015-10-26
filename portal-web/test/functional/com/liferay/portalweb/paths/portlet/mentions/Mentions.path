@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>MENTIONS_COMMENT_TAG_LINK</td>
+	<td>//div[contains(@id,'discussionMessage')]/p[contains(.,'${key_mentionsUserScreenName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENTIONS_HEADER</td>
 	<td>//h3[contains(.,'Mentions')]</td>
 	<td></td>

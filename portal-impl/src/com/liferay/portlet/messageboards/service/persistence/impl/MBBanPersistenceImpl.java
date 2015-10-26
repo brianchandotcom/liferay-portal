@@ -16,7 +16,9 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -150,6 +152,26 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public List<MBBan> findByUuid(String uuid, int start, int end,
 		OrderByComparator<MBBan> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards bans where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBBanModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of message boards bans
+	 * @param end the upper bound of the range of message boards bans (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards bans
+	 */
+	@Override
+	public List<MBBan> findByUuid(String uuid, int start, int end,
+		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -165,15 +187,19 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<MBBan> list = (List<MBBan>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBBan> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MBBan mbBan : list) {
-				if (!Validator.equals(uuid, mbBan.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MBBan>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MBBan mbBan : list) {
+					if (!Validator.equals(uuid, mbBan.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -244,10 +270,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -544,8 +570,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -583,10 +608,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -665,7 +690,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	 */
 	@Override
@@ -676,7 +701,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -730,7 +755,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				List<MBBan> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -743,14 +768,13 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					if ((mbBan.getUuid() == null) ||
 							!mbBan.getUuid().equals(uuid) ||
 							(mbBan.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, mbBan);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -795,8 +819,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -838,10 +861,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -927,6 +950,28 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public List<MBBan> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<MBBan> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards bans where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBBanModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards bans
+	 * @param end the upper bound of the range of message boards bans (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards bans
+	 */
+	@Override
+	public List<MBBan> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator<MBBan> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -946,16 +991,20 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				};
 		}
 
-		List<MBBan> list = (List<MBBan>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBBan> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MBBan mbBan : list) {
-				if (!Validator.equals(uuid, mbBan.getUuid()) ||
-						(companyId != mbBan.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MBBan>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MBBan mbBan : list) {
+					if (!Validator.equals(uuid, mbBan.getUuid()) ||
+							(companyId != mbBan.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1030,10 +1079,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1349,8 +1398,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1392,10 +1440,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1475,6 +1523,26 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public List<MBBan> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<MBBan> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards bans where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBBanModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of message boards bans
+	 * @param end the upper bound of the range of message boards bans (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards bans
+	 */
+	@Override
+	public List<MBBan> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1490,15 +1558,19 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<MBBan> list = (List<MBBan>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBBan> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MBBan mbBan : list) {
-				if ((groupId != mbBan.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MBBan>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MBBan mbBan : list) {
+					if ((groupId != mbBan.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1555,10 +1627,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1842,8 +1914,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1867,10 +1938,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1947,6 +2018,26 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public List<MBBan> findByUserId(long userId, int start, int end,
 		OrderByComparator<MBBan> orderByComparator) {
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards bans where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBBanModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of message boards bans
+	 * @param end the upper bound of the range of message boards bans (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards bans
+	 */
+	@Override
+	public List<MBBan> findByUserId(long userId, int start, int end,
+		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1962,15 +2053,19 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			finderArgs = new Object[] { userId, start, end, orderByComparator };
 		}
 
-		List<MBBan> list = (List<MBBan>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBBan> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MBBan mbBan : list) {
-				if ((userId != mbBan.getUserId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MBBan>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MBBan mbBan : list) {
+					if ((userId != mbBan.getUserId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2027,10 +2122,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2314,8 +2409,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		Object[] finderArgs = new Object[] { userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2339,10 +2433,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2421,6 +2515,26 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public List<MBBan> findByBanUserId(long banUserId, int start, int end,
 		OrderByComparator<MBBan> orderByComparator) {
+		return findByBanUserId(banUserId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards bans where banUserId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBBanModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param banUserId the ban user ID
+	 * @param start the lower bound of the range of message boards bans
+	 * @param end the upper bound of the range of message boards bans (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards bans
+	 */
+	@Override
+	public List<MBBan> findByBanUserId(long banUserId, int start, int end,
+		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2436,15 +2550,19 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			finderArgs = new Object[] { banUserId, start, end, orderByComparator };
 		}
 
-		List<MBBan> list = (List<MBBan>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBBan> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MBBan mbBan : list) {
-				if ((banUserId != mbBan.getBanUserId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MBBan>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MBBan mbBan : list) {
+					if ((banUserId != mbBan.getBanUserId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2501,10 +2619,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2788,8 +2906,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		Object[] finderArgs = new Object[] { banUserId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2813,10 +2930,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2893,7 +3010,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 *
 	 * @param groupId the group ID
 	 * @param banUserId the ban user ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	 */
 	@Override
@@ -2904,7 +3021,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_B,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_B,
 					finderArgs, this);
 		}
 
@@ -2944,8 +3061,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				List<MBBan> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_B, finderArgs,
+						list);
 				}
 				else {
 					MBBan mbBan = list.get(0);
@@ -2956,14 +3073,13 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 					if ((mbBan.getGroupId() != groupId) ||
 							(mbBan.getBanUserId() != banUserId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_B,
 							finderArgs, mbBan);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_B, finderArgs);
 
 				throw processException(e);
 			}
@@ -3008,8 +3124,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		Object[] finderArgs = new Object[] { groupId, banUserId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3037,10 +3152,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3066,13 +3181,13 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	@Override
 	public void cacheResult(MBBan mbBan) {
-		EntityCacheUtil.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanImpl.class, mbBan.getPrimaryKey(), mbBan);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { mbBan.getUuid(), mbBan.getGroupId() }, mbBan);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_B,
 			new Object[] { mbBan.getGroupId(), mbBan.getBanUserId() }, mbBan);
 
 		mbBan.resetOriginalValues();
@@ -3086,7 +3201,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public void cacheResult(List<MBBan> mbBans) {
 		for (MBBan mbBan : mbBans) {
-			if (EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 						MBBanImpl.class, mbBan.getPrimaryKey()) == null) {
 				cacheResult(mbBan);
 			}
@@ -3100,43 +3215,43 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 * Clears the cache for all message boards bans.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(MBBanImpl.class);
+		entityCache.clearCache(MBBanImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the message boards ban.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(MBBan mbBan) {
-		EntityCacheUtil.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanImpl.class, mbBan.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((MBBanModelImpl)mbBan);
 	}
 
 	@Override
 	public void clearCache(List<MBBan> mbBans) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (MBBan mbBan : mbBans) {
-			EntityCacheUtil.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 				MBBanImpl.class, mbBan.getPrimaryKey());
 
 			clearUniqueFindersCache((MBBanModelImpl)mbBan);
@@ -3150,19 +3265,18 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					mbBanModelImpl.getUuid(), mbBanModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				mbBanModelImpl);
 
 			args = new Object[] {
 					mbBanModelImpl.getGroupId(), mbBanModelImpl.getBanUserId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_B, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_G_B, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B, args,
-				mbBanModelImpl);
+			finderCache.putResult(FINDER_PATH_FETCH_BY_G_B, args, mbBanModelImpl);
 		}
 		else {
 			if ((mbBanModelImpl.getColumnBitmask() &
@@ -3171,9 +3285,9 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 						mbBanModelImpl.getUuid(), mbBanModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					mbBanModelImpl);
 			}
 
@@ -3184,9 +3298,9 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 						mbBanModelImpl.getBanUserId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_B, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_G_B, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_G_B, args,
 					mbBanModelImpl);
 			}
 		}
@@ -3197,8 +3311,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				mbBanModelImpl.getUuid(), mbBanModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((mbBanModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -3207,16 +3321,16 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					mbBanModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
 				mbBanModelImpl.getGroupId(), mbBanModelImpl.getBanUserId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
 
 		if ((mbBanModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_B.getColumnBitmask()) != 0) {
@@ -3225,8 +3339,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					mbBanModelImpl.getOriginalBanUserId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
 		}
 	}
 
@@ -3389,10 +3503,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !MBBanModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -3400,14 +3514,14 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { mbBanModelImpl.getOriginalUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { mbBanModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -3418,16 +3532,16 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 						mbBanModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
 						mbBanModelImpl.getUuid(), mbBanModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -3435,14 +3549,14 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { mbBanModelImpl.getOriginalGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { mbBanModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -3450,14 +3564,14 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { mbBanModelImpl.getOriginalUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] { mbBanModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 
@@ -3467,21 +3581,19 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 						mbBanModelImpl.getOriginalBanUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BANUSERID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BANUSERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_BANUSERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BANUSERID,
 					args);
 
 				args = new Object[] { mbBanModelImpl.getBanUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BANUSERID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BANUSERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_BANUSERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BANUSERID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanImpl.class, mbBan.getPrimaryKey(), mbBan, false);
 
 		clearUniqueFindersCache(mbBanModelImpl);
@@ -3560,7 +3672,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	@Override
 	public MBBan fetchByPrimaryKey(Serializable primaryKey) {
-		MBBan mbBan = (MBBan)EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+		MBBan mbBan = (MBBan)entityCache.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 				MBBanImpl.class, primaryKey);
 
 		if (mbBan == _nullMBBan) {
@@ -3579,12 +3691,12 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					cacheResult(mbBan);
 				}
 				else {
-					EntityCacheUtil.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 						MBBanImpl.class, primaryKey, _nullMBBan);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 					MBBanImpl.class, primaryKey);
 
 				throw processException(e);
@@ -3634,7 +3746,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MBBan mbBan = (MBBan)EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+			MBBan mbBan = (MBBan)entityCache.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 					MBBanImpl.class, primaryKey);
 
 			if (mbBan == null) {
@@ -3686,7 +3798,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 					MBBanImpl.class, primaryKey, _nullMBBan);
 			}
 		}
@@ -3741,6 +3853,25 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public List<MBBan> findAll(int start, int end,
 		OrderByComparator<MBBan> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards bans.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBBanModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of message boards bans
+	 * @param end the upper bound of the range of message boards bans (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of message boards bans
+	 */
+	@Override
+	public List<MBBan> findAll(int start, int end,
+		OrderByComparator<MBBan> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3756,8 +3887,12 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<MBBan> list = (List<MBBan>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBBan> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<MBBan>)finderCache.getResult(finderPath, finderArgs,
+					this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3804,10 +3939,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3837,7 +3972,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -3850,11 +3985,11 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -3884,12 +4019,14 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(MBBanImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(MBBanImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_MBBAN = "SELECT mbBan FROM MBBan mbBan";
 	private static final String _SQL_SELECT_MBBAN_WHERE_PKS_IN = "SELECT mbBan FROM MBBan mbBan WHERE banId IN (";
 	private static final String _SQL_SELECT_MBBAN_WHERE = "SELECT mbBan FROM MBBan mbBan WHERE ";

@@ -148,6 +148,11 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public boolean isShowBackURLInTitleBar() {
+		return true;
+	}
+
+	@Override
 	protected String getDefaultEditTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "new-application-display-template");
 	}

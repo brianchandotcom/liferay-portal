@@ -41,7 +41,7 @@
 </tr>
 <tr>
   	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_STRUCTURE_WORKFLOW_SELECT</td>
-  	<td>//tr[contains(.,'${key_structureName}')]/td[2]/div/select</td>
+	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[2]/div/select</td>
   	<td></td>
 </tr>
 <tr>

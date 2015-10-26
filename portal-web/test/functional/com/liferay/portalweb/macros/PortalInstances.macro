@@ -61,8 +61,16 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Instances" />
+		<execute macro="SignOut#signOutOfSpecificURL">
+			<var name="url" value="http://localhost:8080" />
+		</execute>
+
+		<execute macro="SignIn#signInSpecificURL">
+			<var name="url" value="http://localhost:8080" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Portal Instances" />
 		</execute>
 
 		<while>

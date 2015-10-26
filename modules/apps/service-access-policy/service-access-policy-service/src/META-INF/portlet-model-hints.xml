@@ -13,6 +13,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="defaultSAPEntry" type="boolean" />
+		<field name="enabled" type="boolean" />
 		<field name="name" type="String" />
 		<field name="title" type="String" localized="true" />
 	</model>

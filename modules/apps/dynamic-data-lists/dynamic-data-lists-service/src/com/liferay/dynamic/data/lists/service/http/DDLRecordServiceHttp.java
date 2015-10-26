@@ -16,14 +16,14 @@ package com.liferay.dynamic.data.lists.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.lists.service.DDLRecordServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
-
-import com.liferay.dynamic.data.lists.service.DDLRecordServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -58,7 +58,7 @@ public class DDLRecordServiceHttp {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		HttpPrincipal httpPrincipal, long groupId, long recordSetId,
 		int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.DDMFormValues ddmFormValues,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -311,7 +311,7 @@ public class DDLRecordServiceHttp {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		HttpPrincipal httpPrincipal, long recordId, boolean majorVersion,
 		int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.DDMFormValues ddmFormValues,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -420,7 +420,7 @@ public class DDLRecordServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(DDLRecordServiceHttp.class);
 	private static final Class<?>[] _addRecordParameterTypes0 = new Class[] {
 			long.class, long.class, int.class,
-			com.liferay.portlet.dynamicdatamapping.DDMFormValues.class,
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addRecordParameterTypes1 = new Class[] {
@@ -452,13 +452,13 @@ public class DDLRecordServiceHttp {
 		};
 	private static final Class<?>[] _updateRecordParameterTypes8 = new Class[] {
 			long.class, boolean.class, int.class,
-			com.liferay.portlet.dynamicdatamapping.DDMFormValues.class,
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateRecordParameterTypes9 = new Class[] {
 			long.class, boolean.class, int.class,
-			com.liferay.dynamic.data.mapping.storage.Fields.class,
-			boolean.class, com.liferay.portal.service.ServiceContext.class
+			com.liferay.dynamic.data.mapping.storage.Fields.class, boolean.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateRecordParameterTypes10 = new Class[] {
 			long.class, int.class, java.util.Map.class, boolean.class,

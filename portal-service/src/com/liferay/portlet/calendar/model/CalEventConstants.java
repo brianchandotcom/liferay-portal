@@ -37,8 +37,6 @@ public class CalEventConstants {
 
 	public static final int REMIND_BY_ICQ = 4;
 
-	public static final int REMIND_BY_MSN = 5;
-
 	public static final int REMIND_BY_NONE = 0;
 
 	public static final int REMIND_BY_SMS = 2;

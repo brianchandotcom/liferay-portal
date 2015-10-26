@@ -492,6 +492,12 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
+	public void updateFileShortcutsActive(long toFileEntryId, boolean active) {
+		_dlFileShortcutLocalService.updateFileShortcutsActive(toFileEntryId,
+			active);
+	}
+
+	@Override
 	public void updateStatus(long userId, long fileShortcutId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

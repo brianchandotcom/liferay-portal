@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 
 import java.util.Locale;
 import java.util.Map;
@@ -41,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
 		"mvc.command.name=updateRecordSet"
 	},
 	service = MVCActionCommand.class
@@ -60,11 +62,21 @@ public class UpdateRecordSetMVCActionCommand
 		updatePortletPreferences(actionRequest, recordSet);
 	}
 
+	@Override
 	@Reference
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
-		_ddlRecordSetService = ddlRecordSetService;
+		this.ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Override
+	@Reference
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		this.workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 	}
 
 	protected DDLRecordSet updateRecordSet(ActionRequest actionRequest)
@@ -82,11 +94,9 @@ public class UpdateRecordSetMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
 
-		return _ddlRecordSetService.updateRecordSet(
+		return ddlRecordSetService.updateRecordSet(
 			recordSetId, ddmStructureId, nameMap, descriptionMap,
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
 	}
-
-	private DDLRecordSetService _ddlRecordSetService;
 
 }

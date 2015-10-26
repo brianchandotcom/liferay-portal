@@ -394,9 +394,7 @@ public class AuthVerifierPipeline {
 
 				Object value = serviceReferenceProperties.get(key);
 
-				if (value instanceof String) {
-					properties.setProperty(propertiesKey, (String)value);
-				}
+				properties.setProperty(propertiesKey, String.valueOf(value));
 			}
 
 			return properties;

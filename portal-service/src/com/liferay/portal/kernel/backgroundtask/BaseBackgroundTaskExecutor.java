@@ -33,6 +33,9 @@ public abstract class BaseBackgroundTaskExecutor
 	implements BackgroundTaskExecutor {
 
 	@Override
+	public abstract BackgroundTaskExecutor clone();
+
+	@Override
 	public BackgroundTaskStatusMessageTranslator
 		getBackgroundTaskStatusMessageTranslator() {
 

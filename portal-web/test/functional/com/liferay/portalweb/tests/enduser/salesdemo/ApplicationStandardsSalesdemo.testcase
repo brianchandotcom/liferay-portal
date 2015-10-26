@@ -9,7 +9,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="sales-demo" name="WebProxyDemo" priority="4">
+	<command name="WebProxyDemo" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Proxy Page" />
 			<var name="pageType" value="1 Column" />

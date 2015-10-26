@@ -43,4 +43,7 @@ public interface BlogsGroupServiceConfiguration {
 	)
 	public String rssFeedType();
 
+	@Meta.AD(deflt = "300", required = false)
+	public int smallImageWidth();
+
 }

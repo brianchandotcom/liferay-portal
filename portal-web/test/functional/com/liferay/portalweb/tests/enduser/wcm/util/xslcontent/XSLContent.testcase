@@ -31,8 +31,8 @@
 			<var name="portletName" value="XSL Content" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Configuration Admin" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Configuration Admin" />
 		</execute>
 
 		<execute macro="XSLContent#configureConfigurationAdminXSL" />

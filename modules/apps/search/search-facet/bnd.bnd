@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Search Facet
+Bundle-SymbolicName: com.liferay.search.facet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.search.facet.*

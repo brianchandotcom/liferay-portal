@@ -24,7 +24,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewSamplePHP" priority="4">
+	<command name="ViewSamplePHP" priority="2">
 		<property name="portlet.plugins.includes" value="sample-php-portlet" />
 
 		<execute macro="Page#gotoPG">

@@ -17,7 +17,7 @@ package com.liferay.site.admin.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITES_ADMINISTRATION_SITES,
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_SITES,
 		"service.ranking:Integer=100"
 	},
 	service = PanelApp.class
@@ -41,11 +41,12 @@ public class SitesPanelApp extends BaseControlPanelEntryPanelApp {
 		return SiteAdminPortletKeys.SITE_ADMIN;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + SiteAdminPortletKeys.SITE_ADMIN + ")",
+		unbind = "-"
+	)
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

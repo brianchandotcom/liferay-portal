@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.util.comparator.FolderNameComparator;
 
 import java.util.ArrayList;
@@ -33,6 +33,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Spasic
@@ -111,7 +112,7 @@ public class FolderAtomCollectionAdapter
 
 		long folderEntryId = GetterUtil.getLong(resourceName);
 
-		DLAppServiceUtil.deleteFolder(folderEntryId);
+		_dlAppService.deleteFolder(folderEntryId);
 	}
 
 	@Override
@@ -121,7 +122,7 @@ public class FolderAtomCollectionAdapter
 
 		long folderEntryId = GetterUtil.getLong(resourceName);
 
-		return DLAppServiceUtil.getFolder(folderEntryId);
+		return _dlAppService.getFolder(folderEntryId);
 	}
 
 	@Override
@@ -135,7 +136,7 @@ public class FolderAtomCollectionAdapter
 			"parentFolderId");
 
 		if (parentFolderId != 0) {
-			Folder parentFolder = DLAppServiceUtil.getFolder(parentFolderId);
+			Folder parentFolder = _dlAppService.getFolder(parentFolderId);
 
 			repositoryId = parentFolder.getRepositoryId();
 		}
@@ -143,14 +144,13 @@ public class FolderAtomCollectionAdapter
 			repositoryId = atomRequestContext.getLongParameter("repositoryId");
 		}
 
-		int count = DLAppServiceUtil.getFoldersCount(
-			repositoryId, parentFolderId);
+		int count = _dlAppService.getFoldersCount(repositoryId, parentFolderId);
 
 		AtomPager atomPager = new AtomPager(atomRequestContext, count);
 
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-		return DLAppServiceUtil.getFolders(
+		return _dlAppService.getFolders(
 			repositoryId, parentFolderId, atomPager.getStart(),
 			atomPager.getEnd() + 1, new FolderNameComparator());
 	}
@@ -167,7 +167,7 @@ public class FolderAtomCollectionAdapter
 			"parentFolderId");
 
 		if (parentFolderId != 0) {
-			Folder parentFolder = DLAppServiceUtil.getFolder(parentFolderId);
+			Folder parentFolder = _dlAppService.getFolder(parentFolderId);
 
 			repositoryId = parentFolder.getRepositoryId();
 		}
@@ -177,7 +177,7 @@ public class FolderAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		Folder folder = DLAppServiceUtil.addFolder(
+		Folder folder = _dlAppService.addFolder(
 			repositoryId, parentFolderId, title, summary, serviceContext);
 
 		return folder;
@@ -191,10 +191,17 @@ public class FolderAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLAppServiceUtil.updateFolder(
+		_dlAppService.updateFolder(
 			folder.getFolderId(), title, summary, serviceContext);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
 	private static final String _COLLECTION_NAME = "folders";
+
+	private DLAppService _dlAppService;
 
 }

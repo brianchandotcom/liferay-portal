@@ -24,4 +24,14 @@
 
 		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
 	</command>
+
+	<command name="removeTag">
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
+
+		<execute function="Click" locator1="AssetCategorization#TAG_REMOVE" />
+
+		<execute function="AssertElementNotPresent" locator1="AssetCategorization#TAG" />
+	</command>
 </definition>

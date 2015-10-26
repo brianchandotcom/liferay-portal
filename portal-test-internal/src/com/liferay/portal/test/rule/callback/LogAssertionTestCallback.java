@@ -23,6 +23,7 @@ import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedMultipleLogs;
 import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LogAssertionAppender;
 import com.liferay.portal.test.rule.LogAssertionHandler;
@@ -30,6 +31,9 @@ import com.liferay.portal.test.rule.LogAssertionUncaughtExceptionHandler;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
@@ -44,7 +48,7 @@ import org.junit.runner.Description;
  * @author Shuyang Zhou
  */
 public class LogAssertionTestCallback
-	extends BaseTestCallback<CaptureAppender, CaptureAppender> {
+	extends BaseTestCallback<List<CaptureAppender>, List<CaptureAppender>> {
 
 	public static final LogAssertionTestCallback INSTANCE =
 		new LogAssertionTestCallback();
@@ -63,16 +67,17 @@ public class LogAssertionTestCallback
 	}
 
 	public static void endAssert(
-		ExpectedLogs expectedLogs, CaptureAppender captureAppender) {
+		List<ExpectedLogs> expectedLogsList,
+		List<CaptureAppender> captureAppenders) {
 
-		if (expectedLogs != null) {
+		for (CaptureAppender captureAppender : captureAppenders) {
 			try {
-				for (LoggingEvent loggingEvent :
-						captureAppender.getLoggingEvents()) {
+				for (LoggingEvent loggingEvent
+					 : captureAppender.getLoggingEvents()) {
 
 					String renderedMessage = loggingEvent.getRenderedMessage();
 
-					if (!isExpected(expectedLogs, renderedMessage)) {
+					if (!isExpected(expectedLogsList, renderedMessage)) {
 						Assert.fail(renderedMessage);
 					}
 				}
@@ -105,7 +110,9 @@ public class LogAssertionTestCallback
 		}
 	}
 
-	public static CaptureAppender startAssert(ExpectedLogs expectedLogs) {
+	public static List<CaptureAppender> startAssert(
+		List<ExpectedLogs> expectedLogsList) {
+
 		_thread = Thread.currentThread();
 		_uncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
 
@@ -113,49 +120,81 @@ public class LogAssertionTestCallback
 			new LogAssertionUncaughtExceptionHandler(
 				_uncaughtExceptionHandler));
 
-		CaptureAppender captureAppender = null;
+		List<CaptureAppender> captureAppenders = new ArrayList<>(
+			expectedLogsList.size());
 
-		if (expectedLogs != null) {
+		for (ExpectedLogs expectedLogs : expectedLogsList) {
 			Class<?> clazz = expectedLogs.loggerClass();
 
-			captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
-				clazz.getName(), Level.toLevel(expectedLogs.level()));
+			captureAppenders.add(
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					clazz.getName(), Level.toLevel(expectedLogs.level())));
 		}
 
 		installJdk14Handler();
 		installLog4jAppender();
 
-		return captureAppender;
+		return captureAppenders;
 	}
 
 	@Override
 	public void doAfterClass(
-		Description description, CaptureAppender captureAppender) {
+		Description description, List<CaptureAppender> captureAppenders) {
 
-		ExpectedLogs expectedLogs = description.getAnnotation(
-			ExpectedLogs.class);
+		ExpectedMultipleLogs expectedMultipleLogs = description.getAnnotation(
+			ExpectedMultipleLogs.class);
 
-		endAssert(expectedLogs, captureAppender);
+		List<ExpectedLogs> expectedLogsList = new ArrayList<>();
+
+		if (expectedMultipleLogs == null) {
+			ExpectedLogs expectedLogs = description.getAnnotation(
+				ExpectedLogs.class);
+
+			if (expectedLogs != null) {
+				expectedLogsList.add(expectedLogs);
+			}
+		}
+		else {
+			expectedLogsList.addAll(
+				Arrays.asList(expectedMultipleLogs.expectedMultipleLogs()));
+		}
+
+		endAssert(expectedLogsList, captureAppenders);
 	}
 
 	@Override
 	public void doAfterMethod(
-		Description description, CaptureAppender captureAppender,
+		Description description, List<CaptureAppender> captureAppenders,
 		Object target) {
 
-		doAfterClass(description, captureAppender);
+		doAfterClass(description, captureAppenders);
 	}
 
 	@Override
-	public CaptureAppender doBeforeClass(Description description) {
-		ExpectedLogs expectedLogs = description.getAnnotation(
-			ExpectedLogs.class);
+	public List<CaptureAppender> doBeforeClass(Description description) {
+		ExpectedMultipleLogs expectedMultipleLogs = description.getAnnotation(
+			ExpectedMultipleLogs.class);
 
-		return startAssert(expectedLogs);
+		List<ExpectedLogs> expectedLogsList = new ArrayList<>();
+
+		if (expectedMultipleLogs == null) {
+			ExpectedLogs expectedLogs = description.getAnnotation(
+				ExpectedLogs.class);
+
+			if (expectedLogs != null) {
+				expectedLogsList.add(expectedLogs);
+			}
+		}
+		else {
+			expectedLogsList.addAll(
+				Arrays.asList(expectedMultipleLogs.expectedMultipleLogs()));
+		}
+
+		return startAssert(expectedLogsList);
 	}
 
 	@Override
-	public CaptureAppender doBeforeMethod(
+	public List<CaptureAppender> doBeforeMethod(
 		Description description, Object target) {
 
 		return doBeforeClass(description);
@@ -179,34 +218,41 @@ public class LogAssertionTestCallback
 	}
 
 	protected static boolean isExpected(
-		ExpectedLogs expectedLogs, String renderedMessage) {
+		List<ExpectedLogs> expectedLogsList, String renderedMessage) {
 
-		for (ExpectedLog expectedLog : expectedLogs.expectedLogs()) {
-			String dbType = expectedLog.dbType();
+		for (ExpectedLogs expectedLogs : expectedLogsList) {
+			for (ExpectedLog expectedLog : expectedLogs.expectedLogs()) {
+				String dbType = expectedLog.dbType();
 
-			if (Validator.isNotNull(dbType)) {
-				DB db = DBFactoryUtil.getDB();
+				if (Validator.isNotNull(dbType)) {
+					DB db = DBFactoryUtil.getDB();
 
-				if (!Validator.equals(dbType, db.getType())) {
-					continue;
+					if (!Validator.equals(dbType, db.getType())) {
+						continue;
+					}
 				}
-			}
 
-			ExpectedType expectedType = expectedLog.expectedType();
+				ExpectedType expectedType = expectedLog.expectedType();
 
-			if (expectedType == ExpectedType.EXACT) {
-				if (renderedMessage.equals(expectedLog.expectedLog())) {
-					return true;
+				if (expectedType == ExpectedType.CONTAINS) {
+					if (renderedMessage.contains(expectedLog.expectedLog())) {
+						return true;
+					}
 				}
-			}
-			else if (expectedType == ExpectedType.POSTFIX) {
-				if (renderedMessage.endsWith(expectedLog.expectedLog())) {
-					return true;
+				else if (expectedType == ExpectedType.EXACT) {
+					if (renderedMessage.equals(expectedLog.expectedLog())) {
+						return true;
+					}
 				}
-			}
-			else if (expectedType == ExpectedType.PREFIX) {
-				if (renderedMessage.startsWith(expectedLog.expectedLog())) {
-					return true;
+				else if (expectedType == ExpectedType.POSTFIX) {
+					if (renderedMessage.endsWith(expectedLog.expectedLog())) {
+						return true;
+					}
+				}
+				else if (expectedType == ExpectedType.PREFIX) {
+					if (renderedMessage.startsWith(expectedLog.expectedLog())) {
+						return true;
+					}
 				}
 			}
 		}

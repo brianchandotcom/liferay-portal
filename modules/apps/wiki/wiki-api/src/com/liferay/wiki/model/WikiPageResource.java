@@ -16,6 +16,7 @@ package com.liferay.wiki.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,21 @@ public interface WikiPageResource extends WikiPageResourceModel, PersistedModel 
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.wiki.model.impl.WikiPageResourceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<WikiPageResource, Long> RESOURCE_PRIM_KEY_ACCESSOR =
+		new Accessor<WikiPageResource, Long>() {
+			@Override
+			public Long get(WikiPageResource wikiPageResource) {
+				return wikiPageResource.getResourcePrimKey();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<WikiPageResource> getTypeClass() {
+				return WikiPageResource.class;
+			}
+		};
 }

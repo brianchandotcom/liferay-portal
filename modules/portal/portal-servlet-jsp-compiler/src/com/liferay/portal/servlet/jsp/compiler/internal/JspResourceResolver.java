@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarFile;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 
 import org.apache.felix.utils.log.Logger;
@@ -82,7 +84,7 @@ public class JspResourceResolver implements ResourceResolver {
 			return classLoader.getResource(name);
 		}
 
-		return bundle.getResource(name);
+		return url;
 	}
 
 	@Override
@@ -97,7 +99,7 @@ public class JspResourceResolver implements ResourceResolver {
 		if (bundle.equals(_bundle) || bundle.equals(_jspBundle)) {
 			resources = bundleWiring.listResources(path, filePattern, options);
 		}
-		else if (exportsPackage(bundleWiring, path.replace('/', '.'))) {
+		else if (isExportsPackage(bundleWiring, path.replace('/', '.'))) {
 			if (bundle.getBundleId() == 0) {
 				resources = handleSystemBundle(
 					bundleWiring, path, filePattern, options);
@@ -136,7 +138,7 @@ public class JspResourceResolver implements ResourceResolver {
 		}
 
 		if (((urls == null) || urls.isEmpty()) &&
-			exportsPackage(bundleWiring, packageName)) {
+			isExportsPackage(bundleWiring, packageName)) {
 
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
@@ -158,11 +160,13 @@ public class JspResourceResolver implements ResourceResolver {
 			return resources;
 		}
 
-		String matcherRegex = fileRegex.replace("*", "[^/]*");
+		String matcherRegex = replace(fileRegex, '*', "[^/]*");
 
-		matcherRegex = matcherRegex.replace(".", "\\.");
+		matcherRegex = replace(matcherRegex, '.', "\\.");
 
 		matcherRegex = path + "/" + matcherRegex;
+
+		Pattern pattern = Pattern.compile(matcherRegex);
 
 		for (URL url : urls) {
 			try {
@@ -178,7 +182,9 @@ public class JspResourceResolver implements ResourceResolver {
 
 					String name = zipEntry.getName();
 
-					if (name.matches(matcherRegex)) {
+					Matcher matcher = pattern.matcher(name);
+
+					if (matcher.matches()) {
 						resources.add(name);
 					}
 				}
@@ -193,13 +199,13 @@ public class JspResourceResolver implements ResourceResolver {
 		return resources;
 	}
 
-	private boolean exportsPackage(
+	protected boolean isExportsPackage(
 		BundleWiring bundleWiring, String packageName) {
 
-		List<BundleWire> providedWires = bundleWiring.getProvidedWires(
+		List<BundleWire> bundleWires = bundleWiring.getProvidedWires(
 			"osgi.wiring.package");
 
-		for (BundleWire bundleWire : providedWires) {
+		for (BundleWire bundleWire : bundleWires) {
 			BundleCapability bundleCapability = bundleWire.getCapability();
 
 			Map<String, Object> attributes = bundleCapability.getAttributes();
@@ -210,6 +216,30 @@ public class JspResourceResolver implements ResourceResolver {
 		}
 
 		return false;
+	}
+
+	protected String replace(String s, char oldSub, String newSub) {
+		int y = s.indexOf(oldSub);
+
+		if (y < 0) {
+			return s;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		int x = 0;
+
+		while (x <= y) {
+			sb.append(s.substring(x, y));
+			sb.append(newSub);
+
+			x = y + 1;
+			y = s.indexOf(oldSub, x);
+		}
+
+		sb.append(s.substring(x));
+
+		return sb.toString();
 	}
 
 	private final Bundle _bundle;

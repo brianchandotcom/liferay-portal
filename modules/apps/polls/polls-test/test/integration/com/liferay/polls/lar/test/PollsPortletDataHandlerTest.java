@@ -16,13 +16,11 @@ package com.liferay.polls.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.polls.constants.PollsPortletKeys;
-import com.liferay.polls.lar.PollsPortletDataHandler;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -49,11 +47,6 @@ public class PollsPortletDataHandlerTest
 		PollsTestUtil.addVote(
 			stagingGroup.getGroupId(), question.getQuestionId(),
 			choice.getChoiceId());
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new PollsPortletDataHandler();
 	}
 
 	@Override

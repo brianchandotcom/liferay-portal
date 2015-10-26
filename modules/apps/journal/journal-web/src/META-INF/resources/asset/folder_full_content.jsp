@@ -17,20 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalFolder folder = ActionUtil.getFolder(request);
+JournalFolder folder = journalDisplayContext.getFolder();
 %>
 
 <c:if test="<%= folder != null %>">
 
 	<%
-	int status = WorkflowConstants.STATUS_APPROVED;
-
-	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-		status = WorkflowConstants.STATUS_ANY;
-	}
-
-	int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folder.getFolderId(), status);
-	int entriesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, folder.getFolderId(), status);
+	int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folder.getFolderId(), journalDisplayContext.getStatus());
+	int entriesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, folder.getFolderId(), journalDisplayContext.getStatus());
 	%>
 
 	<aui:row>
@@ -66,7 +60,7 @@ JournalFolder folder = ActionUtil.getFolder(request);
 			<liferay-ui:custom-attributes-available className="<%= JournalFolder.class.getName() %>">
 				<liferay-ui:custom-attribute-list
 					className="<%= JournalFolder.class.getName() %>"
-					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+					classPK="<%= folder.getFolderId() %>"
 					editable="<%= false %>"
 					label="<%= true %>"
 				/>

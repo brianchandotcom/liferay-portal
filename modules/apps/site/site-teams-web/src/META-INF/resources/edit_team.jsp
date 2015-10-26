@@ -32,7 +32,7 @@ Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") : HtmlUtil.escape(team.getName())));
+renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") : team.getName()));
 %>
 
 <portlet:actionURL name="editTeam" var="editTeamURL">

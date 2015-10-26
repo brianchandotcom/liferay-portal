@@ -16,8 +16,6 @@ package com.liferay.portlet.display.template.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
-import com.liferay.portal.kernel.portlet.PortletBag;
-import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -26,9 +24,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
-
-import java.util.List;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -54,17 +49,6 @@ public class PortletDisplayTemplatePortletDataHandlerTest
 		DDMTemplateTestUtil.addTemplate(
 			stagingGroup.getGroupId(), 0,
 			PortalUtil.getClassNameId(PortletDisplayTemplate.class));
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		PortletBag portletBag = PortletBagPool.get(
-			PortletKeys.PORTLET_DISPLAY_TEMPLATE);
-
-		List<PortletDataHandler> portletDataHandlerInstances =
-			portletBag.getPortletDataHandlerInstances();
-
-		return portletDataHandlerInstances.get(0);
 	}
 
 	@Override

@@ -19,12 +19,16 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.DuplicateGroupException" %><%@
+<%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
+page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
+page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
+page import="com.liferay.portal.DuplicateGroupException" %><%@
 page import="com.liferay.portal.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.GroupInheritContentException" %><%@
 page import="com.liferay.portal.GroupKeyException" %><%@
@@ -123,6 +127,7 @@ page import="com.liferay.site.admin.web.constants.SiteAdminPortletKeys" %><%@
 page import="com.liferay.util.PKParser" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Collections" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
@@ -131,6 +136,7 @@ page import="java.util.Map" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %><%@
+page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 

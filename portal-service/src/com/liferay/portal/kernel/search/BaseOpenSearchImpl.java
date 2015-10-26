@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -526,14 +529,7 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 		return themeDisplay.getPortalURL() + searchPath;
 	}
 
-	protected PortletURL getPortletURL(
-			HttpServletRequest request, String portletId)
-		throws Exception {
-
-		return getPortletURL(request, portletId, 0);
-	}
-
-	protected PortletURL getPortletURL(
+	protected long getPlid(
 			HttpServletRequest request, String portletId, long scopeGroupId)
 		throws Exception {
 
@@ -559,8 +555,43 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 			}
 		}
 
+		return plid;
+	}
+
+	protected PortletURL getPortletURL(
+			HttpServletRequest request, String portletId)
+		throws Exception {
+
+		return getPortletURL(request, portletId, 0);
+	}
+
+	protected PortletURL getPortletURL(
+			HttpServletRequest request, String portletId, long scopeGroupId)
+		throws Exception {
+
+		long plid = getPlid(request, portletId, scopeGroupId);
+
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			request, portletId, plid, PortletRequest.RENDER_PHASE);
+
+		portletURL.setPortletMode(PortletMode.VIEW);
+		portletURL.setWindowState(WindowState.MAXIMIZED);
+
+		return portletURL;
+	}
+
+	protected PortletURL getPortletURL(
+			HttpServletRequest request, String className,
+			PortletProvider.Action action, long scopeGroupId)
+		throws Exception {
+
+		LiferayPortletURL portletURL =
+			(LiferayPortletURL)PortletProviderUtil.getPortletURL(
+				request, className, action);
+
+		long plid = getPlid(request, portletURL.getPortletId(), scopeGroupId);
+
+		portletURL.setPlid(plid);
 
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(WindowState.MAXIMIZED);

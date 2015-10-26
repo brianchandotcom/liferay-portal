@@ -3,3 +3,6 @@ Bundle-SymbolicName: com.liferay.osgi.service.tracker.map
 Bundle-Version: 1.0.1
 Export-Package: com.liferay.osgi.service.tracker.map
 Private-Package: com.liferay.osgi.service.tracker.map.internal
+Include-Resource:\
+	classes,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*

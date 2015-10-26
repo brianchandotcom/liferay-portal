@@ -51,38 +51,6 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 		</c:if>
 	</h4>
 
-	<%
-	String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-	%>
-
-	<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
-		<div class="asset-author">
-
-			<%
-			User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
-
-			String displayDate = StringPool.BLANK;
-
-			if (assetEntry.getPublishDate() != null) {
-				displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
-			}
-			else if (assetEntry.getModifiedDate() != null) {
-				displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
-			}
-			%>
-
-			<div class="asset-avatar">
-				<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
-			</div>
-
-			<div class="asset-user-info">
-				<span class="user-info"><%= userDisplay.getFullName() %></span>
-
-				<span class="date-info"><%= displayDate %></span>
-			</div>
-		</div>
-	</c:if>
-
 	<div class="asset-content">
 		<div class="asset-summary">
 			<liferay-ui:asset-display
@@ -100,6 +68,6 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 		className="<%= assetEntry.getClassName() %>"
 		classPK="<%= assetEntry.getClassPK() %>"
 		filterByMetadata="<%= true %>"
-		metadataFields="<%= metadataFields %>"
+		metadataFields="<%= assetPublisherDisplayContext.getMetadataFields() %>"
 	/>
 </div>

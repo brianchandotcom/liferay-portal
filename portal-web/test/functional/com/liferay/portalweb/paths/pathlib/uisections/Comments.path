@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>ENTRY_COUNT_PANEL</td>
-	<td>//div[@class='view-entry-container']//h2[contains(.,'Comments')]</td>
+	<td>//h2[contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 <tr>

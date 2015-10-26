@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Subscription service. Represents a row in the &quot;Subscription&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,4 +34,20 @@ public interface Subscription extends SubscriptionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.SubscriptionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Subscription, Long> SUBSCRIPTION_ID_ACCESSOR = new Accessor<Subscription, Long>() {
+			@Override
+			public Long get(Subscription subscription) {
+				return subscription.getSubscriptionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Subscription> getTypeClass() {
+				return Subscription.class;
+			}
+		};
 }

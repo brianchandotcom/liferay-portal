@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,8 +57,9 @@ import java.util.Set;
  * @generated
  */
 public class AddressPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -152,8 +154,6 @@ public class AddressPersistenceTest {
 
 		newAddress.setPrimary(RandomTestUtil.randomBoolean());
 
-		newAddress.setLastPublishDate(RandomTestUtil.nextDate());
-
 		_addresses.add(_persistence.update(newAddress));
 
 		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
@@ -195,9 +195,6 @@ public class AddressPersistenceTest {
 			newAddress.getMailing());
 		Assert.assertEquals(existingAddress.getPrimary(),
 			newAddress.getPrimary());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingAddress.getLastPublishDate()),
-			Time.getShortTimestamp(newAddress.getLastPublishDate()));
 	}
 
 	@Test
@@ -294,8 +291,7 @@ public class AddressPersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "street1", true, "street2",
 			true, "street3", true, "city", true, "zip", true, "regionId", true,
-			"countryId", true, "typeId", true, "mailing", true, "primary",
-			true, "lastPublishDate", true);
+			"countryId", true, "typeId", true, "mailing", true, "primary", true);
 	}
 
 	@Test
@@ -404,11 +400,9 @@ public class AddressPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AddressLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Address>() {
 				@Override
-				public void performAction(Object object) {
-					Address address = (Address)object;
-
+				public void performAction(Address address) {
 					Assert.assertNotNull(address);
 
 					count.increment();
@@ -534,8 +528,6 @@ public class AddressPersistenceTest {
 		address.setMailing(RandomTestUtil.randomBoolean());
 
 		address.setPrimary(RandomTestUtil.randomBoolean());
-
-		address.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_addresses.add(_persistence.update(address));
 

@@ -107,6 +107,11 @@ public class UserGroupRoleLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteUserGroupRoles(long groupId, int roleType) {
+		_userGroupRoleLocalService.deleteUserGroupRoles(groupId, roleType);
+	}
+
+	@Override
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds) {
 		_userGroupRoleLocalService.deleteUserGroupRoles(userId, groupId, roleIds);
 	}

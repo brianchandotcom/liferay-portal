@@ -81,8 +81,7 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "score", Types.DOUBLE },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "score", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -97,10 +96,9 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("score", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RatingsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table RatingsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table RatingsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY ratingsEntry.entryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RatingsEntry.entryId ASC";
@@ -147,7 +145,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setScore(soapModel.getScore());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -222,7 +219,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("score", getScore());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -290,12 +286,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		if (score != null) {
 			setScore(score);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -529,17 +519,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		return _originalScore;
 	}
 
-	@JSON
-	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -587,7 +566,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		ratingsEntryImpl.setClassNameId(getClassNameId());
 		ratingsEntryImpl.setClassPK(getClassPK());
 		ratingsEntryImpl.setScore(getScore());
-		ratingsEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		ratingsEntryImpl.resetOriginalValues();
 
@@ -727,21 +705,12 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		ratingsEntryCacheModel.score = getScore();
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			ratingsEntryCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			ratingsEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
 		return ratingsEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -763,8 +732,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		sb.append(getClassPK());
 		sb.append(", score=");
 		sb.append(getScore());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -772,7 +739,7 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.ratings.model.RatingsEntry");
@@ -818,10 +785,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 			"<column><column-name>score</column-name><column-value><![CDATA[");
 		sb.append(getScore());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -854,7 +817,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	private double _score;
 	private double _originalScore;
 	private boolean _setOriginalScore;
-	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private RatingsEntry _escapedModel;
 }

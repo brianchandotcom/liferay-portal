@@ -17,6 +17,8 @@ package com.liferay.portal.json;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 
+import jodd.json.JoddJson;
+import jodd.json.JsonContext;
 import jodd.json.JsonSerializer;
 import jodd.json.TypeJsonSerializer;
 
@@ -89,6 +91,23 @@ public class JSONSerializerImpl implements JSONSerializer {
 		return this;
 	}
 
+	static {
+		JoddJson.defaultSerializers.register(
+			Long.TYPE, new LongToStringTypeJSONSerializer());
+		JoddJson.defaultSerializers.register(
+			Long.class, new LongToStringTypeJSONSerializer());
+	}
+
 	private final JsonSerializer _jsonSerializer;
+
+	private static class LongToStringTypeJSONSerializer
+		implements TypeJsonSerializer<Long> {
+
+		@Override
+		public void serialize(JsonContext jsonContext, Long value) {
+			jsonContext.writeString(Long.toString(value));
+		}
+
+	}
 
 }

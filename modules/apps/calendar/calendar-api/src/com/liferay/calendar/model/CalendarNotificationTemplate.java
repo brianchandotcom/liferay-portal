@@ -16,6 +16,7 @@ package com.liferay.calendar.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,6 +36,25 @@ public interface CalendarNotificationTemplate
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<CalendarNotificationTemplate, Long> CALENDAR_NOTIFICATION_TEMPLATE_ID_ACCESSOR =
+		new Accessor<CalendarNotificationTemplate, Long>() {
+			@Override
+			public Long get(
+				CalendarNotificationTemplate calendarNotificationTemplate) {
+				return calendarNotificationTemplate.getCalendarNotificationTemplateId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<CalendarNotificationTemplate> getTypeClass() {
+				return CalendarNotificationTemplate.class;
+			}
+		};
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getNotificationTypeSettingsProperties();
 
 	public void setTypeSettingsProperties(

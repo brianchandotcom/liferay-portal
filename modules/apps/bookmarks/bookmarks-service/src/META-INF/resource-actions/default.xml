@@ -5,8 +5,8 @@
 	<model-resource>
 		<model-name>com.liferay.bookmarks</model-name>
 		<portlet-ref>
-			<portlet-name>28_WAR_bookmarksweb</portlet-name>
-			<portlet-name>198_WAR_bookmarksweb</portlet-name>
+			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
+			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -37,8 +37,8 @@
 	<model-resource>
 		<model-name>com.liferay.bookmarks.model.BookmarksFolder</model-name>
 		<portlet-ref>
-			<portlet-name>28_WAR_bookmarksweb</portlet-name>
-			<portlet-name>198_WAR_bookmarksweb</portlet-name>
+			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
+			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -70,8 +70,8 @@
 	<model-resource>
 		<model-name>com.liferay.bookmarks.model.BookmarksEntry</model-name>
 		<portlet-ref>
-			<portlet-name>28_WAR_bookmarksweb</portlet-name>
-			<portlet-name>198_WAR_bookmarksweb</portlet-name>
+			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
+			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>

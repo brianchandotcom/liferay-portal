@@ -17,47 +17,46 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
-
-String navigation = ParamUtil.getString(request, "navigation", "home");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewArticlesHomeURL">
 			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item
 			href="<%= viewArticlesHomeURL %>"
 			label="folders"
-			selected='<%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(ddmStructureKey) %>'
+			selected="<%= (journalDisplayContext.isNavigationHome() && (journalDisplayContext.getFolderId() == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(ddmStructureKey) %>"
 		/>
 
 		<portlet:renderURL var="viewRecentArticlesURL">
 			<portlet:param name="navigation" value="recent" />
 			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item
 			href="<%= viewRecentArticlesURL %>"
 			label="recent"
-			selected='<%= navigation.equals("recent") %>'
+			selected="<%= journalDisplayContext.isNavigationRecent() %>"
 		/>
 
 		<portlet:renderURL var="viewMyArticlesURL">
 			<portlet:param name="navigation" value="mine" />
 			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item
 			href="<%= viewMyArticlesURL %>"
 			label="mine"
-			selected='<%= navigation.equals("mine") %>'
+			selected="<%= journalDisplayContext.isNavigationMine() %>"
 		/>
 
 		<aui:nav-item
@@ -75,6 +74,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 					<portlet:param name="browseBy" value="structure" />
 					<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 					<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+					<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 				</portlet:renderURL>
 
 				<aui:nav-item
@@ -96,7 +96,8 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 		<%
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("folderId", String.valueOf(folderId));
+		portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+		portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
 		%>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">

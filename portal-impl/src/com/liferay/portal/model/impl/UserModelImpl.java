@@ -108,7 +108,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			{ "lockoutDate", Types.TIMESTAMP },
 			{ "agreedToTermsOfUse", Types.BOOLEAN },
 			{ "emailAddressVerified", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -154,11 +153,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		TABLE_COLUMNS_MAP.put("lockoutDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("agreedToTermsOfUse", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("emailAddressVerified", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table User_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,lastPublishDate DATE null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table User_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table User_";
 	public static final String ORDER_BY_JPQL = " ORDER BY user.userId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY User_.userId ASC";
@@ -241,7 +239,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		model.setLockoutDate(soapModel.getLockoutDate());
 		model.setAgreedToTermsOfUse(soapModel.getAgreedToTermsOfUse());
 		model.setEmailAddressVerified(soapModel.getEmailAddressVerified());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 
 		return model;
@@ -269,42 +266,47 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public static final String MAPPING_TABLE_USERS_GROUPS_NAME = "Users_Groups";
 	public static final Object[][] MAPPING_TABLE_USERS_GROUPS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "userId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE = "create table Users_Groups (groupId LONG not null,userId LONG not null,primary key (groupId, userId))";
+	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE = "create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,primary key (companyId, groupId, userId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_Groups"), true);
 	public static final String MAPPING_TABLE_USERS_ORGS_NAME = "Users_Orgs";
 	public static final Object[][] MAPPING_TABLE_USERS_ORGS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "organizationId", Types.BIGINT },
 			{ "userId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERS_ORGS_SQL_CREATE = "create table Users_Orgs (organizationId LONG not null,userId LONG not null,primary key (organizationId, userId))";
+	public static final String MAPPING_TABLE_USERS_ORGS_SQL_CREATE = "create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,primary key (companyId, organizationId, userId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ORGS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_Orgs"), true);
 	public static final String MAPPING_TABLE_USERS_ROLES_NAME = "Users_Roles";
 	public static final Object[][] MAPPING_TABLE_USERS_ROLES_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "roleId", Types.BIGINT },
 			{ "userId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE = "create table Users_Roles (roleId LONG not null,userId LONG not null,primary key (roleId, userId))";
+	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE = "create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,primary key (companyId, roleId, userId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ROLES = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_Roles"), true);
 	public static final String MAPPING_TABLE_USERS_TEAMS_NAME = "Users_Teams";
 	public static final Object[][] MAPPING_TABLE_USERS_TEAMS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "teamId", Types.BIGINT },
 			{ "userId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE = "create table Users_Teams (teamId LONG not null,userId LONG not null,primary key (teamId, userId))";
+	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE = "create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,primary key (companyId, teamId, userId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_Teams"), true);
 	public static final String MAPPING_TABLE_USERS_USERGROUPS_NAME = "Users_UserGroups";
 	public static final Object[][] MAPPING_TABLE_USERS_USERGROUPS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE = "create table Users_UserGroups (userId LONG not null,userGroupId LONG not null,primary key (userId, userGroupId))";
+	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE = "create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,primary key (companyId, userId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_UserGroups"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
@@ -387,7 +389,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		attributes.put("lockoutDate", getLockoutDate());
 		attributes.put("agreedToTermsOfUse", getAgreedToTermsOfUse());
 		attributes.put("emailAddressVerified", getEmailAddressVerified());
-		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -641,12 +642,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if (emailAddressVerified != null) {
 			setEmailAddressVerified(emailAddressVerified);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -1370,17 +1365,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@JSON
 	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
-	@JSON
-	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1479,7 +1463,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userImpl.setLockoutDate(getLockoutDate());
 		userImpl.setAgreedToTermsOfUse(getAgreedToTermsOfUse());
 		userImpl.setEmailAddressVerified(getEmailAddressVerified());
-		userImpl.setLastPublishDate(getLastPublishDate());
 		userImpl.setStatus(getStatus());
 
 		userImpl.resetOriginalValues();
@@ -1831,15 +1814,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		userCacheModel.emailAddressVerified = getEmailAddressVerified();
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			userCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			userCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
 		userCacheModel.status = getStatus();
 
 		return userCacheModel;
@@ -1847,7 +1821,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1929,8 +1903,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(getAgreedToTermsOfUse());
 		sb.append(", emailAddressVerified=");
 		sb.append(getEmailAddressVerified());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append("}");
@@ -1940,7 +1912,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(130);
+		StringBundler sb = new StringBundler(127);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.User");
@@ -2107,10 +2079,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(getEmailAddressVerified());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -2183,7 +2151,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private Date _lockoutDate;
 	private boolean _agreedToTermsOfUse;
 	private boolean _emailAddressVerified;
-	private Date _lastPublishDate;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

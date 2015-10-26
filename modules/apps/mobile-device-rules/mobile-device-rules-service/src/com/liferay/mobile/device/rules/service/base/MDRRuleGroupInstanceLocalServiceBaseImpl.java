@@ -332,14 +332,13 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRRuleGroupInstance>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(
+					MDRRuleGroupInstance mdrRuleGroupInstance)
 					throws PortalException {
-					MDRRuleGroupInstance stagedModel = (MDRRuleGroupInstance)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						mdrRuleGroupInstance);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

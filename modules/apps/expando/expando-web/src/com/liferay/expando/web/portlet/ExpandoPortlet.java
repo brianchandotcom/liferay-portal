@@ -15,7 +15,6 @@
 package com.liferay.expando.web.portlet;
 
 import com.liferay.expando.web.constants.ExpandoPortletKeys;
-import com.liferay.expando.web.upgrade.ExpandoWebUpgrade;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -37,7 +36,7 @@ import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoColumnService;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoPresetUtil;
 
@@ -68,8 +67,6 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.control-panel-entry-category=configuration",
-		"com.liferay.portlet.control-panel-entry-weight=2.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-expando",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
@@ -84,8 +81,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + ExpandoPortletKeys.EXPANDO,
 		"javax.portlet.portlet-mode=text/html",
-		"javax.portlet.portlet-name=" + ExpandoPortletKeys.EXPANDO,
 		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = Portlet.class
@@ -128,7 +125,7 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		long columnId = ParamUtil.getLong(actionRequest, "columnId");
 
-		ExpandoColumnServiceUtil.deleteColumn(columnId);
+		_expandoColumnService.deleteColumn(columnId);
 	}
 
 	public void updateExpando(
@@ -344,7 +341,10 @@ public class ExpandoPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setExpandoWebUpgrade(ExpandoWebUpgrade expandoWebUpgrade) {
+	protected void setExpandoColumnService(
+		ExpandoColumnService expandoColumnService) {
+
+		_expandoColumnService = expandoColumnService;
 	}
 
 	protected void updateProperties(
@@ -378,5 +378,7 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		expandoBridge.setAttributeProperties(name, properties);
 	}
+
+	private ExpandoColumnService _expandoColumnService;
 
 }

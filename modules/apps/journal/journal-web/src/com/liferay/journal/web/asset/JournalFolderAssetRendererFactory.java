@@ -16,7 +16,7 @@ package com.liferay.journal.web.asset;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"search.asset.type=com.liferay.journal.model.JournalFolder"
-	},
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = AssetRendererFactory.class
 )
 public class JournalFolderAssetRendererFactory
@@ -57,13 +54,14 @@ public class JournalFolderAssetRendererFactory
 		setCategorizable(false);
 		setClassName(JournalFolder.class.getName());
 		setPortletId(JournalPortletKeys.JOURNAL);
+		setSearchable(true);
 	}
 
 	@Override
 	public AssetRenderer<JournalFolder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
+		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
 
 		JournalFolderAssetRenderer journalFolderAssetRenderer =
 			new JournalFolderAssetRenderer(folder);
@@ -112,7 +110,7 @@ public class JournalFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
+		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
 
 		return JournalFolderPermission.contains(
 			permissionChecker, folder, actionId);
@@ -130,6 +128,14 @@ public class JournalFolderAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
+	}
+
+	private JournalFolderLocalService _journalFolderLocalService;
 	private ServletContext _servletContext;
 
 }

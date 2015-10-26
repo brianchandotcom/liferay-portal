@@ -257,6 +257,7 @@
 				<classpath mode="compile">lib/development/bsh.jar</classpath>
 				<classpath mode="compile">lib/development/catalina.jar</classpath>
 				<classpath mode="compile">lib/development/cobertura.jar</classpath>
+				<classpath mode="compile">lib/development/com.liferay.ant.beanshell.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.bnd.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.build.logger.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.heap.dump.jar</classpath>
@@ -265,12 +266,10 @@
 				<classpath mode="compile">lib/development/dtdparser.jar</classpath>
 				<classpath mode="compile">lib/development/dumbster.jar</classpath>
 				<classpath mode="compile">lib/development/error-prone-ant.jar</classpath>
-				<classpath mode="compile">lib/development/firebird.jar</classpath>
 				<classpath mode="compile">lib/development/gson.jar</classpath>
 				<classpath mode="compile">lib/development/hamcrest-core.jar</classpath>
 				<classpath mode="compile">lib/development/hamcrest-library.jar</classpath>
 				<classpath mode="compile">lib/development/hsql.jar</classpath>
-				<classpath mode="compile">lib/development/interbase.jar</classpath>
 				<classpath mode="compile">lib/development/j2h.jar</classpath>
 				<classpath mode="compile">lib/development/jalopy.jar</classpath>
 				<classpath mode="compile">lib/development/jargs.jar</classpath>
@@ -288,7 +287,6 @@
 				<classpath mode="compile">lib/development/jsonassert.jar</classpath>
 				<classpath mode="compile">lib/development/jsp-api.jar</classpath>
 				<classpath mode="compile">lib/development/jta.jar</classpath>
-				<classpath mode="compile">lib/development/jtds.jar</classpath>
 				<classpath mode="compile">lib/development/junit.jar</classpath>
 				<classpath mode="compile">lib/development/jutf7.jar</classpath>
 				<classpath mode="compile">lib/development/jymsg.jar</classpath>
@@ -314,7 +312,6 @@
 				<classpath mode="compile">lib/development/powermock-reflect.jar</classpath>
 				<classpath mode="compile">lib/development/qdox.jar</classpath>
 				<classpath mode="compile">lib/development/resin.jar</classpath>
-				<classpath mode="compile">lib/development/sap.jar</classpath>
 				<classpath mode="compile">lib/development/saxpath.jar</classpath>
 				<classpath mode="compile">lib/development/script-10.jar</classpath>
 				<classpath mode="compile">lib/development/sdk-addon-api-0.2.jar</classpath>
@@ -454,7 +451,6 @@
 				<classpath mode="compile">lib/portal/mime4j-dom.jar</classpath>
 				<classpath mode="compile">lib/portal/mimepull.jar</classpath>
 				<classpath mode="compile">lib/portal/monte-cc.jar</classpath>
-				<classpath mode="compile">lib/portal/msnm.jar</classpath>
 				<classpath mode="compile">lib/portal/nekohtml.jar</classpath>
 				<classpath mode="compile">lib/portal/netcdf.jar</classpath>
 				<classpath mode="compile">lib/portal/netty-all.jar</classpath>

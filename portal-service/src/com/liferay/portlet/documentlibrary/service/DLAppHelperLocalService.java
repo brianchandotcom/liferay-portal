@@ -113,9 +113,18 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries();
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#moveDependentsToTrash(DLFolder)}
+	*/
+	@java.lang.Deprecated
 	public void moveDependentsToTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
 		long trashEntryId) throws PortalException;
+
+	public void moveDependentsToTrash(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId,
@@ -175,6 +184,11 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#restoreDependentsFromTrash(DLFolder)}
+	*/
+	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders)
 		throws PortalException;
@@ -187,6 +201,10 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public void restoreDependentsFromTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
 		long trashEntryId) throws PortalException;
+
+	public void restoreDependentsFromTrash(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws PortalException;
 
 	public void restoreFileEntryFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)

@@ -179,6 +179,7 @@ boolean choiceField = checkboxField || radioField;
 			languageId="<%= languageId %>"
 			model="<%= model %>"
 			placeholder="<%= placeholder %>"
+			timeFormat='<%= GetterUtil.getString(dynamicAttributes.get("timeFormat")) %>'
 		/>
 	</c:when>
 	<c:when test='<%= baseType.equals("checkbox") %>'>

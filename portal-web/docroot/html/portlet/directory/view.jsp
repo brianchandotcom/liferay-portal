@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/directory/view");
+portletURL.setParameter("mvcRenderCommandName", "/directory/view");
 portletURL.setParameter("tabs1", tabs1);
 
 pageContext.setAttribute("portletURL", portletURL);

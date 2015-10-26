@@ -30,10 +30,12 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
@@ -47,10 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
-		"search.asset.type=com.liferay.calendar.model.CalendarBooking"
-	},
+	property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
 	service = AssetRendererFactory.class
 )
 public class CalendarBookingAssetRendererFactory
@@ -62,6 +61,7 @@ public class CalendarBookingAssetRendererFactory
 		setLinkable(true);
 		setClassName(CalendarBooking.class.getName());
 		setPortletId(CalendarPortletKeys.CALENDAR);
+		setSearchable(true);
 	}
 
 	@Override
@@ -115,8 +115,9 @@ public class CalendarBookingAssetRendererFactory
 			return null;
 		}
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			CalendarPortletKeys.CALENDAR);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, CalendarPortletKeys.CALENDAR, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
 

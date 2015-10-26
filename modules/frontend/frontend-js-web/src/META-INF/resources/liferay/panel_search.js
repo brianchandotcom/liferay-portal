@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-panel-search',
 	function(A) {
-		var Dockbar = Liferay.Dockbar;
-
 		var Lang = A.Lang;
 
 		var PanelSearch = A.Component.create(

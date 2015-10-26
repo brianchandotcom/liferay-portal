@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 
-<project name="portal-impl" basedir="." default="compile"
+<project
+	basedir="."
+	default="compile"
+	name="portal-impl"
 	xmlns:antelope="antlib:ise.antelope.tasks"
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	xmlns:if="ant:if"
+	xmlns:unless="ant:unless"
 >
 	<property name="test.properties" value="portal-test.properties" />
 
@@ -620,6 +625,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			newenvironment="true"
 			outputproperty="build-service.output"
 		>
+			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
 			<jvmarg value="-Xms512m" />
 			<jvmarg value="-Xmx1024m" />
 			<jvmarg value="-Xss2048k" />
@@ -639,7 +645,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="service.osgi.module=false" />
 			<arg value="service.plugin.name=" />
 			<arg value="service.props.util=com.liferay.portal.util.PropsUtil" />
-			<arg value="service.remoting.file=${basedir}/../portal-web/docroot/WEB-INF/remoting-servlet.xml" />
 			<arg value="service.resources.dir=${basedir}/src" />
 			<arg value="service.spring.file=${basedir}/src/META-INF/portal-spring.xml" />
 			<arg value="service.spring.namespaces=beans" />
@@ -791,9 +796,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				<equals arg1="${upgrade.table.dir}" arg2="" />
 			</not>
 			<then>
-				<ant antfile="build-common.xml" dir="${sdk.dir}" inheritAll="false" target="prepare-upgrade-table">
-					<property name="upgrade.table.dir" value="${upgrade.table.dir}" />
-				</ant>
+				<antcall target="prepare-upgrade-table" />
 
 				<java
 					classname="com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder"
@@ -997,6 +1000,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		>
 			<jvmarg value="-Xmx512m" />
 			<jvmarg value="-Xss2048k" />
+			<jvmarg value="-Dsource.formatter.check.modules.service.util=${source.formatter.check.modules.service.util}" />
 			<jvmarg value="-Dsource.formatter.check.unprocessed.exceptions=${source.formatter.check.unprocessed.exceptions}" />
 			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
 			<arg value="format.current.branch=${format.current.branch}" />
@@ -1038,6 +1042,66 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
+	</target>
+
+	<target name="prepare-upgrade-table">
+		<for param="zip.file">
+			<path>
+				<fileset
+					dir="${upgrade.table.dir}"
+					includes="*.zip"
+				/>
+			</path>
+			<sequential>
+				<antelope:stringutil string="@{zip.file}" property="zip.version.beginindex">
+					<indexof string="src-" fromindex="0" />
+				</antelope:stringutil>
+
+				<math
+					datatype="int"
+					operand1="${zip.version.beginindex}"
+					operand2="4"
+					operation="+"
+					result="zip.version.beginindex"
+				/>
+
+				<antelope:stringutil string="@{zip.file}" property="zip.version.endindex">
+					<indexof string=".zip" fromindex="0" />
+				</antelope:stringutil>
+
+				<antelope:stringutil string="@{zip.file}" property="zip.version">
+					<substring beginindex="${zip.version.beginindex}" endindex="${zip.version.endindex}" />
+				</antelope:stringutil>
+
+				<if>
+					<or>
+						<not>
+							<uptodate
+								srcfile="@{zip.file}"
+								targetfile="${upgrade.table.dir}/${zip.version}"
+							/>
+						</not>
+						<not>
+							<available file="${upgrade.table.dir}/${zip.version}/indexes.sql" />
+						</not>
+					</or>
+					<then>
+						<mkdir dir="${upgrade.table.dir}/${zip.version}" />
+
+						<unzip
+							dest="${upgrade.table.dir}/${zip.version}"
+							src="@{zip.file}"
+						>
+							<patternset>
+								<include name="**/*ModelImpl.java" />
+								<include name="**/sql/indexes.sql" />
+							</patternset>
+							<mapper type="flatten" />
+						</unzip>
+					</then>
+				</if>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="rebuild-hypersonic">

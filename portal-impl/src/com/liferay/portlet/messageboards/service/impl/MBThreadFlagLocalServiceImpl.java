@@ -85,8 +85,7 @@ public class MBThreadFlagLocalServiceImpl
 			}
 		}
 		else if (!DateUtil.equals(
-					threadFlag.getModifiedDate(), thread.getLastPostDate(),
-					true)) {
+					threadFlag.getModifiedDate(), thread.getLastPostDate())) {
 
 			threadFlag.setModifiedDate(thread.getLastPostDate());
 
@@ -158,7 +157,7 @@ public class MBThreadFlagLocalServiceImpl
 
 		if ((threadFlag != null) &&
 			DateUtil.equals(
-				threadFlag.getModifiedDate(), thread.getLastPostDate(), true)) {
+				threadFlag.getModifiedDate(), thread.getLastPostDate())) {
 
 			return true;
 		}

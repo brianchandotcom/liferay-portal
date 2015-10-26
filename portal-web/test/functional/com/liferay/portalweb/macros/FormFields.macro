@@ -5,6 +5,10 @@
 		<execute function="Click" locator1="FormFields#OPTIONS_ADD_ROW_BUTTON" />
 	</command>
 
+	<command name="addRepeatableField">
+		<execute function="Click" locator1="FormFields#FIELD_ADD" />
+	</command>
+
 	<command name="disableCheckbox">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -35,6 +39,12 @@
 		<execute function="Check" locator1="FormFields#CHECKBOX" />
 	</command>
 
+	<command name="enableSwitcher">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Click" locator1="FormFields#SWITCHER" />
+	</command>
+
 	<command name="save">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -44,6 +54,12 @@
 		<var name="key_radioOption" value="${radioOption}" />
 
 		<execute function="Click" locator1="FormFields#RADIO_OPTION" />
+	</command>
+
+	<command name="selectSelectOption">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Select" locator1="FormFields#SELECT_OPTION" value1="${selectOption}" />
 	</command>
 
 	<command name="viewCheckboxLabel">
@@ -63,6 +79,19 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#RADIO_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewRepeatableTextFieldLabel">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}" />
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL_2" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewSelectLabel">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#SELECT_LABEL" value1="${fieldLabel}" />
 	</command>
 
 	<command name="viewTextLabel">

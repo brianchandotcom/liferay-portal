@@ -33,44 +33,37 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/blogs/search.jsp" />
-</liferay-portlet:renderURL>
+<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-<aui:form action="<%= searchURL %>" method="get" name="fm1">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<%
+int pageDelta = GetterUtil.getInteger(blogsPortletInstanceConfiguration.pageDelta());
 
-	<%
-	int pageDelta = GetterUtil.getInteger(blogsPortletInstanceConfiguration.pageDelta());
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, pageDelta, portletURL, null, null);
 
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, pageDelta, portletURL, null, null);
+searchContainer.setDelta(pageDelta);
+searchContainer.setDeltaConfigurable(false);
 
-	searchContainer.setDelta(pageDelta);
-	searchContainer.setDeltaConfigurable(false);
+int total = 0;
+List results = null;
 
-	int total = 0;
-	List results = null;
+if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
+	SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResults(searchContainer);
 
-	if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
-		SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResults(searchContainer);
+	searchContainer.setTotal(searchContainerResults.getTotal());
 
-		searchContainer.setTotal(searchContainerResults.getTotal());
+	results = searchContainerResults.getResults();
+}
+else {
+	int status = WorkflowConstants.STATUS_APPROVED;
 
-		results = searchContainerResults.getResults();
-	}
-	else {
-		int status = WorkflowConstants.STATUS_APPROVED;
+	total = BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, status);
 
-		total = BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, status);
+	searchContainer.setTotal(total);
 
-		searchContainer.setTotal(total);
+	results = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, status, searchContainer.getStart(), searchContainer.getEnd());
+}
 
-		results = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, status, searchContainer.getStart(), searchContainer.getEnd());
-	}
+searchContainer.setResults(results);
+%>
 
-	searchContainer.setResults(results);
-	%>
-
-	<%@ include file="/blogs/view_entries.jspf" %>
-</aui:form>
+<%@ include file="/blogs/view_entries.jspf" %>

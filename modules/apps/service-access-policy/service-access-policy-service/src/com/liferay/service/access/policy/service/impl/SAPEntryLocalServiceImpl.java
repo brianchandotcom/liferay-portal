@@ -55,8 +55,8 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	@Override
 	public SAPEntry addSAPEntry(
 			long userId, String allowedServiceSignatures,
-			boolean defaultSAPEntry, String name, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			boolean defaultSAPEntry, boolean enabled, String name,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Service access policy entry
@@ -80,6 +80,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		sapEntry.setUserName(user.getFullName());
 		sapEntry.setAllowedServiceSignatures(allowedServiceSignatures);
 		sapEntry.setDefaultSAPEntry(defaultSAPEntry);
+		sapEntry.setEnabled(enabled);
 		sapEntry.setName(name);
 		sapEntry.setTitleMap(titleMap);
 
@@ -95,19 +96,21 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void checkDefaultSAPEntry(long companyId) throws PortalException {
+	public void checkSystemSAPEntries(long companyId) throws PortalException {
 		SAPConfiguration sapConfiguration =
 			configurationFactory.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
 
-		SAPEntry applicationSAPEntry = sapEntryPersistence.fetchByC_N(
-			companyId, sapConfiguration.defaultApplicationSAPEntryName());
-		SAPEntry userSAPEntry = sapEntryPersistence.fetchByC_N(
-			companyId, sapConfiguration.defaultUserSAPEntryName());
+		SAPEntry systemDefaultSAPEntry = sapEntryPersistence.fetchByC_N(
+			companyId, sapConfiguration.systemDefaultSAPEntryName());
+		SAPEntry systemUserPasswordSAPEntry = sapEntryPersistence.fetchByC_N(
+			companyId, sapConfiguration.systemUserPasswordSAPEntryName());
 
-		if ((applicationSAPEntry != null) && (userSAPEntry != null)) {
+		if ((systemDefaultSAPEntry != null) &&
+			(systemUserPasswordSAPEntry != null)) {
+
 			return;
 		}
 
@@ -115,44 +118,43 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		Role guestRole = roleLocalService.getRole(
 			companyId, RoleConstants.GUEST);
 
-		if (applicationSAPEntry == null) {
+		if (systemDefaultSAPEntry == null) {
 			Map<Locale, String> titleMap = new HashMap<>();
 
 			titleMap.put(
 				LocaleUtil.getDefault(),
-				sapConfiguration.defaultApplicationSAPEntryDescription());
+				sapConfiguration.systemDefaultSAPEntryDescription());
 
-			applicationSAPEntry = addSAPEntry(
+			systemDefaultSAPEntry = addSAPEntry(
 				defaultUserId,
-				sapConfiguration.
-					defaultApplicationSAPEntryServiceSignatures(),
-				true, sapConfiguration.defaultApplicationSAPEntryName(),
-				titleMap, new ServiceContext());
-
-			resourcePermissionLocalService.setResourcePermissions(
-				applicationSAPEntry.getCompanyId(), SAPEntry.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(applicationSAPEntry.getSapEntryId()),
-				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
-		}
-
-		if (userSAPEntry == null) {
-			Map<Locale, String> titleMap = new HashMap<>();
-
-			titleMap.put(
-				LocaleUtil.getDefault(),
-				sapConfiguration.defaultUserSAPEntryDescription());
-
-			userSAPEntry = addSAPEntry(
-				defaultUserId,
-				sapConfiguration.defaultUserSAPEntryServiceSignatures(), true,
-				sapConfiguration.defaultUserSAPEntryName(), titleMap,
+				sapConfiguration.systemDefaultSAPEntryServiceSignatures(), true,
+				true, sapConfiguration.systemDefaultSAPEntryName(), titleMap,
 				new ServiceContext());
 
 			resourcePermissionLocalService.setResourcePermissions(
-				userSAPEntry.getCompanyId(), SAPEntry.class.getName(),
+				systemDefaultSAPEntry.getCompanyId(), SAPEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(userSAPEntry.getSapEntryId()),
+				String.valueOf(systemDefaultSAPEntry.getSapEntryId()),
+				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
+		}
+
+		if (systemUserPasswordSAPEntry == null) {
+			Map<Locale, String> titleMap = new HashMap<>();
+
+			titleMap.put(
+				LocaleUtil.getDefault(),
+				sapConfiguration.systemUserPasswordSAPEntryDescription());
+
+			systemUserPasswordSAPEntry = addSAPEntry(
+				defaultUserId,
+				sapConfiguration.systemUserPasswordSAPEntryServiceSignatures(),
+				false, true, sapConfiguration.systemUserPasswordSAPEntryName(),
+				titleMap, new ServiceContext());
+
+			resourcePermissionLocalService.setResourcePermissions(
+				systemUserPasswordSAPEntry.getCompanyId(),
+				SAPEntry.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(systemUserPasswordSAPEntry.getSapEntryId()),
 				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
 		}
 	}
@@ -201,6 +203,13 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<SAPEntry> getDefaultSAPEntries(
+		long companyId, boolean defaultSAPEntry) {
+
+		return sapEntryPersistence.findByC_D(companyId, defaultSAPEntry);
+	}
+
+	@Override
 	public SAPEntry getSAPEntry(long companyId, String name)
 		throws PortalException {
 
@@ -209,7 +218,8 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 	@Override
 	public SAPEntry updateSAPEntry(
-			long sapEntryId, String allowedServiceSignatures, String name,
+			long sapEntryId, String allowedServiceSignatures,
+			boolean defaultSAPEntry, boolean enabled, String name,
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -224,7 +234,8 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			throw new DuplicateSAPEntryNameException();
 		}
 
-		if (sapEntry.isDefaultSAPEntry()) {
+		if (sapEntry.isSystem()) {
+			defaultSAPEntry = sapEntry.getDefaultSAPEntry();
 			name = sapEntry.getName();
 		}
 
@@ -233,6 +244,8 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		validate(name, titleMap);
 
 		sapEntry.setAllowedServiceSignatures(allowedServiceSignatures);
+		sapEntry.setDefaultSAPEntry(defaultSAPEntry);
+		sapEntry.setEnabled(enabled);
 		sapEntry.setName(name);
 		sapEntry.setTitleMap(titleMap);
 

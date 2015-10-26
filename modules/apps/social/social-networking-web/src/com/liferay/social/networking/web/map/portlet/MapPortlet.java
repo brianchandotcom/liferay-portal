@@ -17,6 +17,9 @@ package com.liferay.social.networking.web.map.portlet;
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.util.Portal;
+import com.liferay.social.networking.model.MeetupsRegistration;
+import com.liferay.social.networking.service.MeetupsEntryLocalService;
+import com.liferay.social.networking.service.WallEntryLocalService;
 import com.liferay.social.networking.web.constants.SocialNetworkingWebKeys;
 
 import java.io.IOException;
@@ -69,8 +72,23 @@ public class MapPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMeetupsEntryLocalService(
+		MeetupsEntryLocalService meetupsEntryLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setMeetupsRegistrationLocalService(
+		MeetupsRegistration meetupsRegistrationLocalService) {
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortal(Portal portal) {
 		_portal = portal;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWallEntryLocalService(
+		WallEntryLocalService wallEntryLocalService) {
 	}
 
 	private IPGeocoder _ipGeocoder;

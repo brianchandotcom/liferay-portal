@@ -30,7 +30,6 @@ import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
 import java.util.Collection;
-import java.util.concurrent.Future;
 
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -92,9 +91,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 				deleteRequestBuilder.setRefresh(true);
 			}
 
-			Future<DeleteResponse> future = deleteRequestBuilder.execute();
-
-			DeleteResponse deleteResponse = future.get();
+			DeleteResponse deleteResponse = deleteRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, deleteResponse);
 		}
@@ -128,9 +125,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 				bulkRequestBuilder.setRefresh(true);
 			}
 
-			Future<BulkResponse> future = bulkRequestBuilder.execute();
-
-			BulkResponse bulkResponse = future.get();
+			BulkResponse bulkResponse = bulkRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, bulkResponse);
 		}

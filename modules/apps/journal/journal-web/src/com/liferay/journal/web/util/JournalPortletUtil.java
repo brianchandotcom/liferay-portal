@@ -14,7 +14,6 @@
 
 package com.liferay.journal.web.util;
 
-import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -26,18 +25,11 @@ import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.ArticleReviewDateComparator;
 import com.liferay.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
-import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortalPreferences;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +38,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,7 +53,7 @@ public class JournalPortletUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			JournalArticle article, HttpServletRequest request,
-			RenderResponse renderResponse)
+			PortletURL portletURL)
 		throws Exception {
 
 		JournalFolder folder = article.getFolder();
@@ -70,15 +61,12 @@ public class JournalPortletUtil {
 		if (folder.getFolderId() !=
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			addPortletBreadcrumbEntries(folder, request, renderResponse);
+			addPortletBreadcrumbEntries(folder, request, portletURL);
 		}
 
 		JournalArticle unescapedArticle = article.toUnescapedModel();
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/view_article.jsp");
+		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter(
 			"groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter(
@@ -90,7 +78,7 @@ public class JournalPortletUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			JournalFolder folder, HttpServletRequest request,
-			LiferayPortletResponse liferayPortletResponse)
+			PortletURL portletURL)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -99,17 +87,19 @@ public class JournalPortletUtil {
 		String actionName = ParamUtil.getString(
 			request, ActionRequest.ACTION_NAME);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
 		if (actionName.equals("selectFolder")) {
-			portletURL.setParameter(
-				"mvcPath", "/html/portlet/journal/select_folder.jsp");
+			portletURL.setParameter("mvcPath", "/select_folder.jsp");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString());
 		}
 		else {
+			portletURL.setParameter(
+				"folderId",
+				String.valueOf(
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
 			Map<String, Object> data = new HashMap<>();
 
 			data.put("direction-right", Boolean.TRUE.toString());
@@ -162,19 +152,7 @@ public class JournalPortletUtil {
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			JournalFolder folder, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)renderResponse;
-
-		addPortletBreadcrumbEntries(folder, request, liferayPortletResponse);
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			long folderId, HttpServletRequest request,
-			RenderResponse renderResponse)
+			long folderId, HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
 
 		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -184,7 +162,7 @@ public class JournalPortletUtil {
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
 			folderId);
 
-		addPortletBreadcrumbEntries(folder, request, renderResponse);
+		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
 
 	public static OrderByComparator<JournalArticle> getArticleOrderByComparator(
@@ -221,35 +199,6 @@ public class JournalPortletUtil {
 		}
 
 		return orderByComparator;
-	}
-
-	public static String getDisplayStyle(
-		LiferayPortletRequest liferayPortletRequest, String[] displayViews) {
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				liferayPortletRequest);
-
-		String displayStyle = ParamUtil.getString(
-			liferayPortletRequest, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = portalPreferences.getValue(
-				JournalPortletKeys.JOURNAL, "display-style",
-				JournalWebConfigurationValues.DEFAULT_DISPLAY_VIEW);
-		}
-		else {
-			if (ArrayUtil.contains(displayViews, displayStyle)) {
-				portalPreferences.setValue(
-					JournalPortletKeys.JOURNAL, "display-style", displayStyle);
-			}
-		}
-
-		if (!ArrayUtil.contains(displayViews, displayStyle)) {
-			displayStyle = displayViews[0];
-		}
-
-		return displayStyle;
 	}
 
 }

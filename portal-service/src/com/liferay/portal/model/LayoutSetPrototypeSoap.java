@@ -46,7 +46,6 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setActive(model.getActive());
-		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -202,14 +201,6 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		_active = active;
 	}
 
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _layoutSetPrototypeId;
@@ -222,5 +213,4 @@ public class LayoutSetPrototypeSoap implements Serializable {
 	private String _description;
 	private String _settings;
 	private boolean _active;
-	private Date _lastPublishDate;
 }

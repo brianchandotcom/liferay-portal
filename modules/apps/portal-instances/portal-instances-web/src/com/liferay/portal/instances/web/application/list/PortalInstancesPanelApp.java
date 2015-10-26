@@ -18,7 +18,7 @@ import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION,
-		"service.ranking:Integer=400"
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_SYSTEM,
+		"service.ranking:Integer=200"
 	},
 	service = PanelApp.class
 )
@@ -41,11 +41,12 @@ public class PortalInstancesPanelApp extends BaseControlPanelEntryPanelApp {
 		return PortalInstancesPortletKeys.PORTAL_INSTANCES;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES + ")",
+		unbind = "-"
+	)
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

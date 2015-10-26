@@ -70,8 +70,9 @@ public class JournalArticleLocalServiceUtil {
 	* @param folderId the primary key of the web content article folder
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param classPK the primary key of the DDM structure, if the primary key
 	of the DDMStructure class is given as the
 	<code>classNameId</code> parameter, the primary key of the class
@@ -486,6 +487,28 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Deletes all the group's web content articles and resources matching the
+	* class name and class primary key.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param className the DDMStructure class name if the web content article
+	is related to a DDM structure, the primary key of the class name
+	associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
+	* @param classPK the primary key of the DDM structure, if the DDMStructure
+	class name is given as the <code>className</code> parameter, the
+	primary key of the class associated with the web content article,
+	or <code>0</code> otherwise
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void deleteArticles(long groupId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteArticles(groupId, className, classPK);
+	}
+
+	/**
 	* Deletes all the group's web content articles and resources in the folder,
 	* including recycled articles.
 	*
@@ -652,10 +675,9 @@ public class JournalArticleLocalServiceUtil {
 	modification date, status date, portlet preferences, and can set
 	whether to add the default command update for the web content
 	article. With respect to social activities, by setting the
-	service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	service context's command to {@link Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
 	* @throws PortalException if a matching web content article could not be
 	found or if a portal exception occurred
 	*/
@@ -682,10 +704,9 @@ public class JournalArticleLocalServiceUtil {
 	modification date, status date, portlet preferences, and can set
 	whether to add the default command update for the web content
 	article. With respect to social activities, by setting the
-	service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	service context's command to {@link Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
 	* @return the web content article
 	* @throws PortalException if a matching web content article could not be
 	found or if a portal exception occurred
@@ -869,12 +890,13 @@ public class JournalArticleLocalServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param className the DDMStructure class name if the web content article
 	is related to a DDM structure, the primary key of the class name
-	associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	* @param classPK the primary key of the DDM structure, if the the
-	DDMStructure class name is given as the <code>className</code>
-	parameter, the primary key of the class associated with the web
-	content article, or <code>0</code> otherwise
+	associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
+	* @param classPK the primary key of the DDM structure, if the DDMStructure
+	class name is given as the <code>className</code> parameter, the
+	primary key of the class associated with the web content article,
+	or <code>0</code> otherwise
 	* @return the matching web content article
 	* @throws PortalException if a matching web content article could not be
 	found
@@ -1910,8 +1932,8 @@ public class JournalArticleLocalServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param className the DDMStructure class name if the web content article
 	is related to a DDM structure, the class name associated with the
-	article, or {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	otherwise
+	article, or JournalArticleConstants.CLASSNAME_ID_DEFAULT in the
+	journal-api module otherwise
 	* @param classPK the primary key of the DDM structure, if the DDMStructure
 	class name is given as the <code>className</code> parameter, the
 	primary key of the class associated with the web content article,
@@ -2355,9 +2377,9 @@ public class JournalArticleLocalServiceUtil {
 	portlet response, theme display, and can set whether to add the
 	default command update for the web content article. With respect
 	to social activities, by setting the service context's command to
-	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	invocation is considered a web content update activity; otherwise
-	it is considered a web content add activity.
+	{@link Constants#UPDATE}, the invocation is considered a web
+	content update activity; otherwise it is considered a web content
+	add activity.
 	* @return the updated web content article, which was moved to a new folder
 	* @throws PortalException if a matching web content article could not be
 	found
@@ -2383,10 +2405,9 @@ public class JournalArticleLocalServiceUtil {
 	modification date, portlet preferences, and can set whether to
 	add the default command update for the web content article. With
 	respect to social activities, by setting the service context's
-	command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	command to {@link Constants#UPDATE}, the invocation is considered
+	a web content update activity; otherwise it is considered a web
+	content add activity.
 	* @return the updated web content article, which was moved from the Recycle
 	Bin to a new folder
 	* @throws PortalException if a trashed web content article with the primary
@@ -2522,11 +2543,12 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param title the title keywords (space separated, optionally
@@ -2572,10 +2594,9 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #search(long, long,
-	java.util.List, long, String, String, String, String, int,
-	String, String, java.util.LinkedHashMap, boolean, int, int,
-	Sort)}
+	* @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
+	long, String, String, String, String, int, String, String,
+	LinkedHashMap, boolean, int, int, Sort)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
@@ -2598,10 +2619,10 @@ public class JournalArticleLocalServiceUtil {
 	* parameters without using the indexer, including keyword parameters for
 	* article ID, title, description, and content, a DDM structure key
 	* parameter, a DDM template key parameter, and an AND operator switch. It
-	* is preferable to use the indexed version {@link #search(long, long,
-	* java.util.List, long, String, String, String, String, int, String,
-	* String, java.util.LinkedHashMap, boolean, int, int, Sort)} instead of
-	* this method wherever possible for performance reasons.
+	* is preferable to use the indexed version {@link #search(long, long, List,
+	* long, String, String, String, String, int, String, String, LinkedHashMap,
+	* boolean, int, int, Sort)} instead of this method wherever possible for
+	* performance reasons.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -2615,11 +2636,12 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param version the web content article's version (optionally
@@ -2692,11 +2714,12 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param version the web content article's version (optionally
@@ -2772,11 +2795,12 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
@@ -2812,10 +2836,9 @@ public class JournalArticleLocalServiceUtil {
 	* parameters without using the indexer, including a keywords parameter for
 	* matching with the article's ID, title, description, and content, a DDM
 	* structure key parameter, and a DDM template key parameter. It is
-	* preferable to use the indexed version {@link #search(long, long,
-	* java.util.List, long, String, String, String, java.util.LinkedHashMap,
-	* int, int, Sort)} instead of this method wherever possible for performance
-	* reasons.
+	* preferable to use the indexed version {@link #search(long, long, List,
+	* long, String, String, String, LinkedHashMap, int, int, Sort)} instead of
+	* this method wherever possible for performance reasons.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -2829,11 +2852,12 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param keywords the keywords (space separated), which may occur in the
 	web content article ID, title, description, or content
 	(optionally <code>null</code>). If the keywords value is not
@@ -2926,7 +2950,7 @@ public class JournalArticleLocalServiceUtil {
 	*
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
@@ -2988,11 +3012,12 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param version the web content article's version (optionally
@@ -3048,11 +3073,12 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param version the web content article's version (optionally
@@ -3110,11 +3136,12 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param keywords the keywords (space separated), which may occur in the
 	web content article ID, title, description, or content
 	(optionally <code>null</code>). If the keywords value is not
@@ -3173,7 +3200,7 @@ public class JournalArticleLocalServiceUtil {
 	*
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
@@ -3212,10 +3239,11 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class, the
 	primary key of the class name associated with the article, or
-	{@link JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param title the title keywords (space separated, optionally
@@ -3290,10 +3318,11 @@ public class JournalArticleLocalServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
 	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
+	(optionally {@link Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class, the
 	primary key of the class name associated with the article, or
-	{@link JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure
 	* @param ddmTemplateKey the primary key of the web content article's DDM
@@ -3443,9 +3472,9 @@ public class JournalArticleLocalServiceUtil {
 	actions, URL title, and can set whether to add the default
 	command update for the web content article. With respect to
 	social activities, by setting the service context's command to
-	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	invocation is considered a web content update activity; otherwise
-	it is considered a web content add activity.
+	{@link Constants#UPDATE}, the invocation is considered a web
+	content update activity; otherwise it is considered a web content
+	add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3536,9 +3565,9 @@ public class JournalArticleLocalServiceUtil {
 	actions, URL title , and can set whether to add the default
 	command update for the web content article. With respect to
 	social activities, by setting the service context's command to
-	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	invocation is considered a web content update activity; otherwise
-	it is considered a web content add activity.
+	{@link Constants#UPDATE}, the invocation is considered a web
+	content update activity; otherwise it is considered a web content
+	add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3602,9 +3631,9 @@ public class JournalArticleLocalServiceUtil {
 	actions, URL title, and can set whether to add the default
 	command update for the web content article. With respect to
 	social activities, by setting the service context's command to
-	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	invocation is considered a web content update activity; otherwise
-	it is considered a web content add activity.
+	{@link Constants#UPDATE}, the invocation is considered a web
+	content update activity; otherwise it is considered a web content
+	add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3626,9 +3655,8 @@ public class JournalArticleLocalServiceUtil {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
-	#updateArticleTranslation(long, String, double,
-	java.util.Locale, String, String, String, Map,
-	ServiceContext)}
+	#updateArticleTranslation(long, String, double, Locale,
+	String, String, String, Map, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.journal.model.JournalArticle updateArticleTranslation(
@@ -3757,8 +3785,9 @@ public class JournalArticleLocalServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param oldDDMTemplateKey the primary key of the web content article's old
 	DDM template
 	* @param newDDMTemplateKey the primary key of the web content article's new
@@ -3795,10 +3824,9 @@ public class JournalArticleLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, status date, and portlet preferences. With
 	respect to social activities, by setting the service context's
-	command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	command to {@link Constants#UPDATE}, the invocation is considered
+	a web content update activity; otherwise it is considered a web
+	content add activity.
 	* @param workflowContext the web content article's configured workflow
 	context
 	* @return the updated web content article
@@ -3885,8 +3913,8 @@ public class JournalArticleLocalServiceUtil {
 	* @param classNameId the primary key of the DDMStructure class if the
 	web content article is related to a DDM structure, the
 	primary key of the class name associated with the article, or
-	{@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	otherwise
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the
+	journal-api module otherwise
 	* @param oldDDMTemplateKey the primary key of the web content
 	article's old DDM template
 	* @param newDDMTemplateKey the primary key of the web content

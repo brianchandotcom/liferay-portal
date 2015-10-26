@@ -451,6 +451,11 @@ public class DLFileShortcutLocalServiceUtil {
 		getService().updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
 	}
 
+	public static void updateFileShortcutsActive(long toFileEntryId,
+		boolean active) {
+		getService().updateFileShortcutsActive(toFileEntryId, active);
+	}
+
 	public static void updateStatus(long userId, long fileShortcutId,
 		int status, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

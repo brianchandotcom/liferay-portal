@@ -61,12 +61,12 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutPrototypeLocalService;
+import com.liferay.portal.service.LayoutSetLocalService;
+import com.liferay.portal.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
@@ -154,7 +154,7 @@ public class LayoutImportController implements ImportController {
 			Map<String, String[]> parameterMap =
 				(Map<String, String[]>)settingsMap.get("parameterMap");
 
-			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
 			zipReader = ZipReaderFactoryUtil.getZipReader(file);
@@ -260,7 +260,7 @@ public class LayoutImportController implements ImportController {
 			Map<String, String[]> parameterMap =
 				(Map<String, String[]>)settingsMap.get("parameterMap");
 
-			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
 			zipReader = ZipReaderFactoryUtil.getZipReader(file);
@@ -320,7 +320,7 @@ public class LayoutImportController implements ImportController {
 				!layoutPlids.containsValue(layout.getPlid())) {
 
 				try {
-					LayoutLocalServiceUtil.deleteLayout(
+					_layoutLocalService.deleteLayout(
 						layout, false, serviceContext);
 				}
 				catch (NoSuchLayoutException nsle) {
@@ -389,7 +389,7 @@ public class LayoutImportController implements ImportController {
 			parameterMap,
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			portletDataContext.getGroupId());
 
 		if (group.isLayoutSetPrototype()) {
@@ -410,7 +410,7 @@ public class LayoutImportController implements ImportController {
 
 		LayoutCache layoutCache = new LayoutCache();
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
@@ -470,7 +470,7 @@ public class LayoutImportController implements ImportController {
 			deleteMissingLayouts = false;
 
 			LayoutPrototype layoutPrototype =
-				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+				_layoutPrototypeLocalService.getLayoutPrototype(
 					group.getClassPK());
 
 			String layoutPrototypeUuid = GetterUtil.getString(
@@ -481,7 +481,7 @@ public class LayoutImportController implements ImportController {
 			if (Validator.isNotNull(layoutPrototypeUuid)) {
 				try {
 					existingLayoutPrototype =
-						LayoutPrototypeLocalServiceUtil.
+						_layoutPrototypeLocalService.
 							getLayoutPrototypeByUuidAndCompanyId(
 								layoutPrototypeUuid, companyId);
 				}
@@ -491,18 +491,18 @@ public class LayoutImportController implements ImportController {
 
 			if (existingLayoutPrototype == null) {
 				List<Layout> layouts =
-					LayoutLocalServiceUtil.getLayoutsByLayoutPrototypeUuid(
+					_layoutLocalService.getLayoutsByLayoutPrototypeUuid(
 						layoutPrototype.getUuid());
 
 				layoutPrototype.setUuid(layoutPrototypeUuid);
 
-				LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
+				_layoutPrototypeLocalService.updateLayoutPrototype(
 					layoutPrototype);
 
 				for (Layout layout : layouts) {
 					layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
 
-					LayoutLocalServiceUtil.updateLayout(layout);
+					_layoutLocalService.updateLayout(layout);
 				}
 			}
 		}
@@ -510,7 +510,7 @@ public class LayoutImportController implements ImportController {
 				 larType.equals("layout-set-prototype")) {
 
 			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+				_layoutSetPrototypeLocalService.getLayoutSetPrototype(
 					group.getClassPK());
 
 			String importedLayoutSetPrototypeUuid = GetterUtil.getString(
@@ -521,7 +521,7 @@ public class LayoutImportController implements ImportController {
 			if (Validator.isNotNull(importedLayoutSetPrototypeUuid)) {
 				try {
 					existingLayoutSetPrototype =
-						LayoutSetPrototypeLocalServiceUtil.
+						_layoutSetPrototypeLocalService.
 							getLayoutSetPrototypeByUuidAndCompanyId(
 								importedLayoutSetPrototypeUuid, companyId);
 				}
@@ -531,20 +531,20 @@ public class LayoutImportController implements ImportController {
 
 			if (existingLayoutSetPrototype == null) {
 				List<LayoutSet> layoutSets =
-					LayoutSetLocalServiceUtil.
+					_layoutSetLocalService.
 						getLayoutSetsByLayoutSetPrototypeUuid(
 							layoutSetPrototype.getUuid());
 
 				layoutSetPrototype.setUuid(importedLayoutSetPrototypeUuid);
 
-				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 					layoutSetPrototype);
 
 				for (LayoutSet curLayoutSet : layoutSets) {
 					curLayoutSet.setLayoutSetPrototypeUuid(
 						importedLayoutSetPrototypeUuid);
 
-					LayoutSetLocalServiceUtil.updateLayoutSet(curLayoutSet);
+					_layoutSetLocalService.updateLayoutSet(curLayoutSet);
 				}
 			}
 		}
@@ -558,7 +558,7 @@ public class LayoutImportController implements ImportController {
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);
 
-			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}
 
 		// Look and feel
@@ -570,12 +570,12 @@ public class LayoutImportController implements ImportController {
 				logoPath);
 
 			if (ArrayUtil.isNotEmpty(iconBytes)) {
-				LayoutSetLocalServiceUtil.updateLogo(
+				_layoutSetLocalService.updateLogo(
 					portletDataContext.getGroupId(),
 					portletDataContext.isPrivateLayout(), true, iconBytes);
 			}
 			else {
-				LayoutSetLocalServiceUtil.updateLogo(
+				_layoutSetLocalService.updateLogo(
 					portletDataContext.getGroupId(),
 					portletDataContext.isPrivateLayout(), false, (File)null);
 			}
@@ -587,7 +587,7 @@ public class LayoutImportController implements ImportController {
 			String settings = GetterUtil.getString(
 				headerElement.elementText("settings"));
 
-			LayoutSetLocalServiceUtil.updateSettings(
+			_layoutSetLocalService.updateSettings(
 				portletDataContext.getGroupId(),
 				portletDataContext.isPrivateLayout(), settings);
 		}
@@ -602,7 +602,7 @@ public class LayoutImportController implements ImportController {
 			for (Element portletElement : portletElements) {
 				String portletId = portletElement.attributeValue("portlet-id");
 
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				Portlet portlet = _portletLocalService.getPortletById(
 					portletDataContext.getCompanyId(), portletId);
 
 				if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
@@ -650,7 +650,7 @@ public class LayoutImportController implements ImportController {
 			layoutSetPrototypeLinkEnabled) {
 
 			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.
+				_layoutSetPrototypeLocalService.
 					getLayoutSetPrototypeByUuidAndCompanyId(
 						layoutSetPrototypeUuid, companyId);
 
@@ -673,7 +673,7 @@ public class LayoutImportController implements ImportController {
 					true);
 
 				if (sourcePrototypeLayout == null) {
-					LayoutLocalServiceUtil.deleteLayout(
+					_layoutLocalService.deleteLayout(
 						layout, false, serviceContext);
 				}
 			}
@@ -713,7 +713,7 @@ public class LayoutImportController implements ImportController {
 			long oldPlid = GetterUtil.getLong(
 				portletElement.attributeValue("old-plid"));
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
 			if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
@@ -873,13 +873,13 @@ public class LayoutImportController implements ImportController {
 
 		// Page count
 
-		layoutSet = LayoutSetLocalServiceUtil.updatePageCount(
+		layoutSet = _layoutSetLocalService.updatePageCount(
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
 		// Site
 
-		GroupLocalServiceUtil.updateSite(portletDataContext.getGroupId(), true);
+		_groupLocalService.updateSite(portletDataContext.getGroupId(), true);
 
 		// Page priorities
 
@@ -897,7 +897,7 @@ public class LayoutImportController implements ImportController {
 			long lastMergeTime = System.currentTimeMillis();
 
 			for (Layout layout : layouts.values()) {
-				layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+				layout = _layoutLocalService.getLayout(layout.getPlid());
 
 				if (modifiedLayouts.contains(layout)) {
 					continue;
@@ -916,7 +916,7 @@ public class LayoutImportController implements ImportController {
 			// triggers LayoutSetPrototypeLayoutModelListener and that may have
 			// updated this layout set
 
-			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layoutSet = _layoutSetLocalService.getLayoutSet(
 				layoutSet.getLayoutSetId());
 
 			UnicodeProperties settingsProperties =
@@ -931,7 +931,7 @@ public class LayoutImportController implements ImportController {
 				settingsProperties.setProperty(
 					Sites.LAST_MERGE_TIME, String.valueOf(lastMergeTime));
 
-				LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+				_layoutSetLocalService.updateLayoutSet(layoutSet);
 			}
 		}
 
@@ -958,7 +958,7 @@ public class LayoutImportController implements ImportController {
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 
-		Group group = GroupLocalServiceUtil.getGroup(targetGroupId);
+		Group group = _groupLocalService.getGroup(targetGroupId);
 
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
@@ -1017,7 +1017,7 @@ public class LayoutImportController implements ImportController {
 		for (Element portletElement : portletElements) {
 			String portletId = portletElement.attributeValue("portlet-id");
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
 			if ((portlet == null) || !portlet.isActive() ||
@@ -1045,11 +1045,51 @@ public class LayoutImportController implements ImportController {
 		_exportImportLifecycleManager = exportImportLifecycleManager;
 	}
 
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
+	}
+
+	@Reference
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+
+		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
 	@Reference(unbind = "-")
 	protected void setPortletImportController(
 		PortletImportController portletImportController) {
 
 		_portletImportController = portletImportController;
+	}
+
+	@Reference
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
 	}
 
 	protected void setPortletScope(
@@ -1071,12 +1111,12 @@ public class LayoutImportController implements ImportController {
 			Group scopeGroup = null;
 
 			if (scopeLayoutType.equals("company")) {
-				scopeGroup = GroupLocalServiceUtil.getCompanyGroup(
+				scopeGroup = _groupLocalService.getCompanyGroup(
 					portletDataContext.getCompanyId());
 			}
 			else if (Validator.isNotNull(scopeLayoutUuid)) {
 				Layout scopeLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					_layoutLocalService.getLayoutByUuidAndGroupId(
 						scopeLayoutUuid, portletDataContext.getGroupId(),
 						portletDataContext.isPrivateLayout());
 
@@ -1090,7 +1130,7 @@ public class LayoutImportController implements ImportController {
 						LocaleUtil.getDefault(),
 						String.valueOf(scopeLayout.getPlid()));
 
-					scopeGroup = GroupLocalServiceUtil.addGroup(
+					scopeGroup = _groupLocalService.addGroup(
 						portletDataContext.getUserId(null),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID,
 						Layout.class.getName(), scopeLayout.getPlid(),
@@ -1107,7 +1147,7 @@ public class LayoutImportController implements ImportController {
 							portletElement.attributeValue("private-layout"));
 
 						Layout oldLayout =
-							LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+							_layoutLocalService.getLayoutByUuidAndGroupId(
 								scopeLayoutUuid,
 								portletDataContext.getSourceGroupId(),
 								privateLayout);
@@ -1118,13 +1158,13 @@ public class LayoutImportController implements ImportController {
 							scopeGroup.setLiveGroupId(
 								oldScopeGroup.getGroupId());
 
-							GroupLocalServiceUtil.updateGroup(scopeGroup);
+							_groupLocalService.updateGroup(scopeGroup);
 						}
 						else {
 							oldScopeGroup.setLiveGroupId(
 								scopeGroup.getGroupId());
 
-							GroupLocalServiceUtil.updateGroup(oldScopeGroup);
+							_groupLocalService.updateGroup(oldScopeGroup);
 						}
 					}
 					catch (NoSuchLayoutException nsle) {
@@ -1202,7 +1242,7 @@ public class LayoutImportController implements ImportController {
 			}
 		}
 
-		List<Layout> layoutSetLayouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layoutSetLayouts = _layoutLocalService.getLayouts(
 			portletDataContext.getGroupId(), privateLayout);
 
 		for (Layout layout : layoutSetLayouts) {
@@ -1213,7 +1253,7 @@ public class LayoutImportController implements ImportController {
 				layout.setPriority(++maxPriority);
 			}
 
-			LayoutLocalServiceUtil.updateLayout(layout);
+			_layoutLocalService.updateLayout(layout);
 		}
 	}
 
@@ -1267,7 +1307,7 @@ public class LayoutImportController implements ImportController {
 			throw new LARTypeException(larType);
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+		Group group = _groupLocalService.fetchGroup(groupId);
 
 		String layoutsImportMode = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
@@ -1298,7 +1338,7 @@ public class LayoutImportController implements ImportController {
 				companySourceGroup = true;
 			}
 			else if (group.isStaged() || group.hasStagingGroup()) {
-				Group sourceGroup = GroupLocalServiceUtil.fetchGroup(
+				Group sourceGroup = _groupLocalService.fetchGroup(
 					sourceGroupId);
 
 				companySourceGroup = sourceGroup.isCompany();
@@ -1361,7 +1401,7 @@ public class LayoutImportController implements ImportController {
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
 			try {
-				LayoutSetPrototypeLocalServiceUtil.
+				_layoutSetPrototypeLocalService.
 					getLayoutSetPrototypeByUuidAndCompanyId(
 						layoutSetPrototypeUuid, companyId);
 			}
@@ -1390,7 +1430,7 @@ public class LayoutImportController implements ImportController {
 
 			if (Validator.isNotNull(layoutPrototypeUuid)) {
 				try {
-					LayoutPrototypeLocalServiceUtil.
+					_layoutPrototypeLocalService.
 						getLayoutPrototypeByUuidAndCompanyId(
 							layoutPrototypeUuid, companyId);
 				}
@@ -1417,9 +1457,15 @@ public class LayoutImportController implements ImportController {
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
 	private PortletImportController _portletImportController;
+	private PortletLocalService _portletLocalService;
 	private final ThemeImporter _themeImporter = ThemeImporter.getInstance();
 
 }

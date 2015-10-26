@@ -43,6 +43,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,8 +60,9 @@ import java.util.Set;
  * @generated
  */
 public class DLFolderPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -343,6 +345,19 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_M_T_H() throws Exception {
+		_persistence.countByG_M_T_H(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), StringPool.BLANK,
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_M_T_H(0L, RandomTestUtil.randomBoolean(),
+			StringPool.NULL, RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_M_T_H(0L, RandomTestUtil.randomBoolean(),
+			(String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_P_H_S() throws Exception {
 		_persistence.countByG_P_H_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
@@ -507,11 +522,9 @@ public class DLFolderPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLFolderLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFolder>() {
 				@Override
-				public void performAction(Object object) {
-					DLFolder dlFolder = (DLFolder)object;
-
+				public void performAction(DLFolder dlFolder) {
 					Assert.assertNotNull(dlFolder);
 
 					count.increment();

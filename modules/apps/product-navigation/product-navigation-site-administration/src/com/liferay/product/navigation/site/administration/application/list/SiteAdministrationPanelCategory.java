@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_SITES,
+		"panel.category.key=" + PanelCategoryKeys.SITES,
 		"service.ranking:Integer=100"
 	},
 	service = PanelCategory.class
@@ -68,6 +68,10 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
+
+		if (group.isControlPanel()) {
+			return false;
+		}
 
 		if (GroupPermissionUtil.contains(
 				permissionChecker, group,

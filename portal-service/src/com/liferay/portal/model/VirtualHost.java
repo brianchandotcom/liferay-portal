@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the VirtualHost service. Represents a row in the &quot;VirtualHost&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,4 +34,20 @@ public interface VirtualHost extends VirtualHostModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.VirtualHostImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<VirtualHost, Long> VIRTUAL_HOST_ID_ACCESSOR = new Accessor<VirtualHost, Long>() {
+			@Override
+			public Long get(VirtualHost virtualHost) {
+				return virtualHost.getVirtualHostId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<VirtualHost> getTypeClass() {
+				return VirtualHost.class;
+			}
+		};
 }

@@ -27,22 +27,22 @@
 <!--SUBSCRIPTIONS-->
 <tr>
 	<td>SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION_LABEL</td>
-	<td>//label[@for='_86_enableRss']</td>
+	<td>//label[contains(@for,'enableRss')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION</td>
-	<td>//input[@id='_86_enableRss']</td>
+	<td>//input[contains(@id,'enableRss')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTIONS_ENABLE_EMAIL_SUBSCRIPTION_LABEL</td>
-	<td>//label[@for='_86_enableEmailSubscription']</td>
+	<td>//label[contains(@for,'enableEmailSubscription')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTIONS_ENABLE_EMAIL_SUBSCRIPTION</td>
-	<td>//input[@id='_86_enableEmailSubscription']</td>
+	<td>//input[contains(@id,'enableEmailSubscription')]</td>
 	<td></td>
 </tr>
 <tr>

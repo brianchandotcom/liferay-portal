@@ -11,6 +11,7 @@ $experimental-support-for-khtml: false !default;
 	$webkit: $experimental-support-for-webkit,
 	$o: $experimental-support-for-opera,
 	$ms: $experimental-support-for-microsoft,
+	$khtml: $experimental-support-for-khtml,
 	$official: true
 ) {
 	$params: (

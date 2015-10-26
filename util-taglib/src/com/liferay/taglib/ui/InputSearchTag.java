@@ -17,14 +17,19 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.BaseValidatorTagSupport;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Díaz
  */
-public class InputSearchTag extends IncludeTag {
+public class InputSearchTag extends BaseValidatorTagSupport {
+
+	@Override
+	public String getInputName() {
+		return _name;
+	}
 
 	public void setAutoFocus(boolean autoFocus) {
 		_autoFocus = autoFocus;
@@ -101,16 +106,14 @@ public class InputSearchTag extends IncludeTag {
 
 		String cssClass = _cssClass;
 
-		String name = _name;
-
-		if (Validator.isNull(name)) {
-			name = DisplayTerms.KEYWORDS;
+		if (Validator.isNull(_name)) {
+			_name = DisplayTerms.KEYWORDS;
 		}
 
 		String id = _id;
 
 		if (Validator.isNull(id)) {
-			id = name;
+			id = _name;
 		}
 
 		String placeholder = _placeholder;
@@ -131,7 +134,7 @@ public class InputSearchTag extends IncludeTag {
 			"liferay-ui:input-search:buttonLabel", buttonLabel);
 		request.setAttribute("liferay-ui:input-search:cssClass", cssClass);
 		request.setAttribute("liferay-ui:input-search:id", id);
-		request.setAttribute("liferay-ui:input-search:name", name);
+		request.setAttribute("liferay-ui:input-search:name", _name);
 		request.setAttribute(
 			"liferay-ui:input-search:placeholder", placeholder);
 		request.setAttribute("liferay-ui:input-search:showButton", _showButton);

@@ -89,6 +89,7 @@ public class SearchContainerColumnUserTag<R> extends SearchContainerColumnTag {
 
 			userSearchEntry.setServletContext(servletContext);
 
+			userSearchEntry.setShowDetails(isShowDetails());
 			userSearchEntry.setUserId(_userId);
 			userSearchEntry.setValign(getValign());
 
@@ -110,6 +111,7 @@ public class SearchContainerColumnUserTag<R> extends SearchContainerColumnTag {
 				_orderable = false;
 				_orderableProperty = null;
 				_property = null;
+				_showDetails = true;
 				valign = SearchEntry.DEFAULT_VALIGN;
 			}
 		}
@@ -188,6 +190,10 @@ public class SearchContainerColumnUserTag<R> extends SearchContainerColumnTag {
 		return _orderable;
 	}
 
+	public boolean isShowDetails() {
+		return _showDetails;
+	}
+
 	public void setDate(Date date) {
 		_date = date;
 	}
@@ -208,6 +214,10 @@ public class SearchContainerColumnUserTag<R> extends SearchContainerColumnTag {
 		_property = property;
 	}
 
+	public void setShowDetails(boolean showDetails) {
+		_showDetails = showDetails;
+	}
+
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
@@ -217,6 +227,7 @@ public class SearchContainerColumnUserTag<R> extends SearchContainerColumnTag {
 	private boolean _orderable;
 	private String _orderableProperty;
 	private String _property;
+	private boolean _showDetails = true;
 	private long _userId;
 
 }

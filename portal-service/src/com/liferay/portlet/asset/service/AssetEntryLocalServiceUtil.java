@@ -578,6 +578,15 @@ public class AssetEntryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
+		long classTypeId, java.lang.String keywords, boolean showNonindexable,
+		int[] statuses, int start, int end) {
+		return getService()
+				   .search(companyId, groupIds, userId, className, classTypeId,
+			keywords, showNonindexable, statuses, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, long userId, java.lang.String className,
 		long classTypeId, java.lang.String keywords, int status, int start,
 		int end) {
 		return getService()
@@ -595,6 +604,18 @@ public class AssetEntryLocalServiceUtil {
 				   .search(companyId, groupIds, userId, className, classTypeId,
 			userName, title, description, assetCategoryIds, assetTagNames,
 			showNonindexable, status, andSearch, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, long userId, java.lang.String className,
+		long classTypeId, java.lang.String userName, java.lang.String title,
+		java.lang.String description, java.lang.String assetCategoryIds,
+		java.lang.String assetTagNames, boolean showNonindexable,
+		int[] statuses, boolean andSearch, int start, int end) {
+		return getService()
+				   .search(companyId, groupIds, userId, className, classTypeId,
+			userName, title, description, assetCategoryIds, assetTagNames,
+			showNonindexable, statuses, andSearch, start, end);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
@@ -809,6 +830,12 @@ public class AssetEntryLocalServiceUtil {
 		java.lang.String className, long classPK, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateVisible(className, classPK, visible);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetEntry updateVisible(
+		com.liferay.portlet.asset.model.AssetEntry entry, boolean visible)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateVisible(entry, visible);
 	}
 
 	/**

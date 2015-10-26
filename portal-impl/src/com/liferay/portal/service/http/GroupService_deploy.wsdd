@@ -160,12 +160,6 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserSitesGroups" qname="operNS:getUserSitesGroups" returnQName="getUserSitesGroupsReturn" returnType="rtns:ArrayOf_tns2_GroupSoap" returnItemType="tns2:GroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="classNames" type="tns:ArrayOf_xsd_string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="includeControlPanel" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="max" type="tns:int"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserSitesGroups" qname="operNS:getUserSitesGroups" returnQName="getUserSitesGroupsReturn" returnType="rtns:ArrayOf_tns2_GroupSoap" returnItemType="tns2:GroupSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="classNames" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="max" type="tns:int"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserSites" qname="operNS:getUserSites" returnQName="getUserSitesReturn" returnType="rtns:ArrayOf_tns2_GroupSoap" returnItemType="tns2:GroupSoap" soapAction=""> </operation>

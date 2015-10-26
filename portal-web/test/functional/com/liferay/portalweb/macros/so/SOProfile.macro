@@ -122,13 +122,6 @@
 		</if>
 
 		<if>
-			<isset var="userInstantMessengerWindowsLiveMessenger" />
-			<then>
-				<execute function="Type" locator1="SOProfileAddInstantMessenger#WINDOWS_LIVE_MESSENGER_FIELD" value1="${userInstantMessengerWindowsLiveMessenger}" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="userInstantMessengerYM" />
 			<then>
 				<execute function="Type" locator1="SOProfileAddInstantMessenger#YM_FIELD" value1="${userInstantMessengerYM}" />
@@ -142,7 +135,6 @@
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_MSN_CONTENT" value1="msn ${userInstantMessengerWindowsLiveMessenger}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>
@@ -510,13 +502,6 @@
 		</if>
 
 		<if>
-			<isset var="userInstantMessengerWindowsLiveMessenger" />
-			<then>
-				<execute function="Type" locator1="SOProfileAddInstantMessenger#WINDOWS_LIVE_MESSENGER_FIELD" value1="${userInstantMessengerWindowsLiveMessenger}" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="userInstantMessengerYM" />
 			<then>
 				<execute function="Type" locator1="SOProfileAddInstantMessenger#YM_FIELD" value1="${userInstantMessengerYM}" />
@@ -530,7 +515,6 @@
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_MSN_CONTENT" value1="msn ${userInstantMessengerWindowsLiveMessenger}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>
@@ -546,7 +530,6 @@
 		<execute function="Type" locator1="SOProfileAddInstantMessenger#ICQ_FIELD" value1="" />
 		<execute function="Type" locator1="SOProfileAddInstantMessenger#JABBER_FIELD" value1="" />
 		<execute function="Type" locator1="SOProfileAddInstantMessenger#SKYPE_FIELD" value1="" />
-		<execute function="Type" locator1="SOProfileAddInstantMessenger#WINDOWS_LIVE_MESSENGER_FIELD" value1="" />
 		<execute function="Type" locator1="SOProfileAddInstantMessenger#YM_FIELD" value1="" />
 		<execute function="Click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
@@ -1045,7 +1028,6 @@
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
-		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_MSN_CONTENT" value1="msn ${userInstantMessengerWindowsLiveMessenger}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>

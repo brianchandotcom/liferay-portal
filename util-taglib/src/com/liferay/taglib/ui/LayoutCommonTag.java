@@ -17,10 +17,8 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,11 +50,7 @@ public class LayoutCommonTag extends IncludeTag {
 			WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() &&
-			!themeDisplay.isStatePopUp() && !themeDisplay.isWidget() &&
-			(!_DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP ||
-			 !Validator.equals(
-				 themeDisplay.getControlPanelCategory(),
-				 PortletCategoryKeys.USER_MY_ACCOUNT))) {
+			!themeDisplay.isStatePopUp() && !themeDisplay.isWidget()) {
 
 			_includeStaticPortlets = true;
 		}
@@ -75,11 +69,6 @@ public class LayoutCommonTag extends IncludeTag {
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
-
-	private static final boolean _DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP =
-		GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP));
 
 	private static final String _PAGE =
 		"/html/taglib/ui/layout_common/page.jsp";

@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetada
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class DLFileEntryMetadataPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -308,11 +310,10 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLFileEntryMetadataLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileEntryMetadata>() {
 				@Override
-				public void performAction(Object object) {
-					DLFileEntryMetadata dlFileEntryMetadata = (DLFileEntryMetadata)object;
-
+				public void performAction(
+					DLFileEntryMetadata dlFileEntryMetadata) {
 					Assert.assertNotNull(dlFileEntryMetadata);
 
 					count.increment();

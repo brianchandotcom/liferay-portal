@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,6 +45,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -97,7 +98,7 @@ public class EditFolderMVCResourceCommand implements MVCResourceCommand {
 				themeDisplay.getLocale(), "documents-and-media");
 
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				Folder folder = DLAppServiceUtil.getFolder(folderId);
+				Folder folder = _dlAppService.getFolder(folderId);
 
 				zipFileName = folder.getName();
 			}
@@ -123,12 +124,17 @@ public class EditFolderMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
 	protected void zipFolder(
 			long repositoryId, long folderId, String path, ZipWriter zipWriter)
 		throws Exception {
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
 				repositoryId, folderId, WorkflowConstants.STATUS_APPROVED,
 				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -151,5 +157,7 @@ public class EditFolderMVCResourceCommand implements MVCResourceCommand {
 			}
 		}
 	}
+
+	private DLAppService _dlAppService;
 
 }

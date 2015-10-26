@@ -306,6 +306,11 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	@Override
+	public boolean isSearchable() {
+		return _searchable;
+	}
+
+	@Override
 	public boolean isSelectable() {
 		return _selectable;
 	}
@@ -343,6 +348,10 @@ public abstract class BaseAssetRendererFactory<T>
 		_linkable = linkable;
 	}
 
+	protected void setSearchable(boolean searchable) {
+		_searchable = searchable;
+	}
+
 	protected void setSelectable(boolean selectable) {
 		_selectable = selectable;
 	}
@@ -363,6 +372,7 @@ public abstract class BaseAssetRendererFactory<T>
 	private String _className;
 	private boolean _linkable;
 	private String _portletId;
+	private boolean _searchable;
 	private boolean _selectable = true;
 	private boolean _supportsClassTypes;
 

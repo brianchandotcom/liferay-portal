@@ -91,10 +91,6 @@ public interface WikiPageService extends BaseService {
 		java.lang.String tempFolderName, java.io.InputStream inputStream,
 		java.lang.String mimeType) throws PortalException;
 
-	public void changeNode(long nodeId, java.lang.String title, long newNodeId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
 	public void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)

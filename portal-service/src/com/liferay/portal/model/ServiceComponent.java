@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the ServiceComponent service. Represents a row in the &quot;ServiceComponent&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,24 @@ public interface ServiceComponent extends ServiceComponentModel, PersistedModel 
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ServiceComponentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ServiceComponent, Long> SERVICE_COMPONENT_ID_ACCESSOR =
+		new Accessor<ServiceComponent, Long>() {
+			@Override
+			public Long get(ServiceComponent serviceComponent) {
+				return serviceComponent.getServiceComponentId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ServiceComponent> getTypeClass() {
+				return ServiceComponent.class;
+			}
+		};
+
 	public java.lang.String getIndexesSQL();
 
 	public java.lang.String getSequencesSQL();

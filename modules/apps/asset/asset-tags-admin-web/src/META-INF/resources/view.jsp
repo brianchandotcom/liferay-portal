@@ -40,8 +40,8 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayStyleURL="<%= portletURL %>"
-			displayViews='<%= new String[]{"list"} %>'
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -66,6 +66,10 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 			<%
 			String keywords = ParamUtil.getString(request, "keywords", null);
+
+			if (Validator.isNotNull(keywords)) {
+				keywords = StringUtil.quote(keywords, StringPool.PERCENT);
+			}
 
 			total = AssetTagServiceUtil.getTagsCount(scopeGroupId, keywords);
 

@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface KaleoLog extends KaleoLogModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoLogImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<KaleoLog, Long> KALEO_LOG_ID_ACCESSOR = new Accessor<KaleoLog, Long>() {
+			@Override
+			public Long get(KaleoLog kaleoLog) {
+				return kaleoLog.getKaleoLogId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoLog> getTypeClass() {
+				return KaleoLog.class;
+			}
+		};
 }

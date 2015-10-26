@@ -65,7 +65,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -85,6 +85,8 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		sb.append(allowedServiceSignatures);
 		sb.append(", defaultSAPEntry=");
 		sb.append(defaultSAPEntry);
+		sb.append(", enabled=");
+		sb.append(enabled);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", title=");
@@ -138,6 +140,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		}
 
 		sapEntryImpl.setDefaultSAPEntry(defaultSAPEntry);
+		sapEntryImpl.setEnabled(enabled);
 
 		if (name == null) {
 			sapEntryImpl.setName(StringPool.BLANK);
@@ -169,6 +172,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		modifiedDate = objectInput.readLong();
 		allowedServiceSignatures = objectInput.readUTF();
 		defaultSAPEntry = objectInput.readBoolean();
+		enabled = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 	}
@@ -205,6 +209,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		}
 
 		objectOutput.writeBoolean(defaultSAPEntry);
+		objectOutput.writeBoolean(enabled);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -230,6 +235,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 	public long modifiedDate;
 	public String allowedServiceSignatures;
 	public boolean defaultSAPEntry;
+	public boolean enabled;
 	public String name;
 	public String title;
 }

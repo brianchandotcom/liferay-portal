@@ -17,7 +17,7 @@ package com.liferay.site.admin.web.portlet;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BaseControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
@@ -26,6 +26,7 @@ import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
 import java.util.LinkedHashMap;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -50,7 +51,7 @@ public class SiteAdminControlPanelEntry extends BaseControlPanelEntry {
 			groupParams.put("site", Boolean.TRUE);
 			groupParams.put("usersGroups", permissionChecker.getUserId());
 
-			int count = GroupLocalServiceUtil.searchCount(
+			int count = _groupLocalService.searchCount(
 				permissionChecker.getCompanyId(), null, null, groupParams);
 
 			if (count > 0) {
@@ -60,5 +61,12 @@ public class SiteAdminControlPanelEntry extends BaseControlPanelEntry {
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
 
 }

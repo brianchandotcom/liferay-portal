@@ -14,11 +14,11 @@
 
 package com.liferay.portal.dao.db;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
@@ -40,8 +40,8 @@ import java.util.List;
  */
 public class MySQLDB extends BaseDB {
 
-	public static DB getInstance() {
-		return _instance;
+	public MySQLDB(int majorVersion, int minorVersion) {
+		super(TYPE_MYSQL, majorVersion, minorVersion);
 	}
 
 	@Override
@@ -92,17 +92,8 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsDateMilliseconds() {
-		return _SUPPORTS_DATE_MILLISECONDS;
-	}
-
-	@Override
 	public boolean isSupportsUpdateWithInnerJoin() {
 		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
-	}
-
-	protected MySQLDB() {
-		super(TYPE_MYSQL);
 	}
 
 	@Override
@@ -143,6 +134,10 @@ public class MySQLDB extends BaseDB {
 
 	@Override
 	protected String[] getTemplate() {
+		if (GetterUtil.getFloat(getVersionString()) >= 5.6F) {
+			_MYSQL[8] = " datetime(6)";
+		}
+
 		return _MYSQL;
 	}
 
@@ -208,10 +203,6 @@ public class MySQLDB extends BaseDB {
 		" longtext", " varchar", "  auto_increment", "commit"
 	};
 
-	private static final boolean _SUPPORTS_DATE_MILLISECONDS = false;
-
 	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
-
-	private static final MySQLDB _instance = new MySQLDB();
 
 }

@@ -8,6 +8,7 @@ create table SAPEntry (
 	modifiedDate DATE null,
 	allowedServiceSignatures STRING null,
 	defaultSAPEntry BOOLEAN,
+	enabled BOOLEAN,
 	name VARCHAR(75) null,
 	title STRING null
 );

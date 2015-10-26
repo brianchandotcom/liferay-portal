@@ -36,15 +36,15 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
@@ -58,6 +58,7 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -85,7 +86,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 		for (long fileEntryId : fileEntryIds) {
-			DLAppServiceUtil.cancelCheckOut(fileEntryId);
+			_dlAppService.cancelCheckOut(fileEntryId);
 		}
 	}
 
@@ -99,7 +100,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		for (long fileEntryId : fileEntryIds) {
-			DLAppServiceUtil.checkInFileEntry(
+			_dlAppService.checkInFileEntry(
 				fileEntryId, false, StringPool.BLANK, serviceContext);
 		}
 	}
@@ -114,7 +115,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		for (long fileEntryId : fileEntryIds) {
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
+			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
 		}
 	}
 
@@ -131,15 +132,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			long deleteFolderId = deleteFolderIds[i];
 
 			if (moveToTrash) {
-				Folder folder = DLAppServiceUtil.moveFolderToTrash(
-					deleteFolderId);
+				Folder folder = _dlAppService.moveFolderToTrash(deleteFolderId);
 
 				if (folder.getModel() instanceof TrashedModel) {
 					trashedModels.add((TrashedModel)folder.getModel());
 				}
 			}
 			else {
-				DLAppServiceUtil.deleteFolder(deleteFolderId);
+				_dlAppService.deleteFolder(deleteFolderId);
 			}
 		}
 
@@ -153,15 +153,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (moveToTrash) {
 				FileShortcut fileShortcut =
-					DLAppServiceUtil.moveFileShortcutToTrash(
-						deleteFileShortcutId);
+					_dlAppService.moveFileShortcutToTrash(deleteFileShortcutId);
 
 				if (fileShortcut.getModel() instanceof TrashedModel) {
 					trashedModels.add((TrashedModel)fileShortcut.getModel());
 				}
 			}
 			else {
-				DLAppServiceUtil.deleteFileShortcut(deleteFileShortcutId);
+				_dlAppService.deleteFileShortcut(deleteFileShortcutId);
 			}
 		}
 
@@ -170,7 +169,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteFileEntryId : deleteFileEntryIds) {
 			if (moveToTrash) {
-				FileEntry fileEntry = DLAppServiceUtil.moveFileEntryToTrash(
+				FileEntry fileEntry = _dlAppService.moveFileEntryToTrash(
 					deleteFileEntryId);
 
 				if (fileEntry.getModel() instanceof TrashedModel) {
@@ -178,7 +177,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 			else {
-				DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
+				_dlAppService.deleteFileEntry(deleteFileEntryId);
 			}
 		}
 
@@ -230,48 +229,41 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof DuplicateLockException ||
-				e instanceof NoSuchFileEntryException ||
-				e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
+		catch (DuplicateLockException | NoSuchFileEntryException |
+			   NoSuchFolderException | PrincipalException e) {
 
-				if (e instanceof DuplicateLockException) {
-					DuplicateLockException dle = (DuplicateLockException)e;
+			if (e instanceof DuplicateLockException) {
+				DuplicateLockException dle = (DuplicateLockException)e;
 
-					SessionErrors.add(
-						actionRequest, dle.getClass(), dle.getLock());
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof SourceFileNameException) {
-
-				if (e instanceof DuplicateFileException) {
-					HttpServletResponse response =
-						PortalUtil.getHttpServletResponse(actionResponse);
-
-					response.setStatus(
-						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
-				}
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException ||
-					 e instanceof InvalidFolderException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
 			}
 			else {
-				throw new PortletException(e);
+				SessionErrors.add(actionRequest, e.getClass());
 			}
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (DuplicateFileEntryException | DuplicateFolderNameException |
+			   SourceFileNameException e) {
+
+			if (e instanceof DuplicateFileEntryException) {
+				HttpServletResponse response =
+					PortalUtil.getHttpServletResponse(actionResponse);
+
+				response.setStatus(
+					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
+			}
+
+			SessionErrors.add(actionRequest, e.getClass());
+		}
+		catch (AssetCategoryException | AssetTagException |
+			   InvalidFolderException e) {
+
+			SessionErrors.add(actionRequest, e.getClass(), e);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
 		}
 	}
 
@@ -285,14 +277,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
 		for (long folderId : folderIds) {
-			DLAppServiceUtil.moveFolder(folderId, newFolderId, serviceContext);
+			_dlAppService.moveFolder(folderId, newFolderId, serviceContext);
 		}
 
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
 		for (long fileEntryId : fileEntryIds) {
-			DLAppServiceUtil.moveFileEntry(
+			_dlAppService.moveFileEntry(
 				fileEntryId, newFolderId, serviceContext);
 		}
 
@@ -304,10 +296,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				continue;
 			}
 
-			FileShortcut fileShortcut = DLAppServiceUtil.getFileShortcut(
+			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
 				fileShortcutId);
 
-			DLAppServiceUtil.updateFileShortcut(
+			_dlAppService.updateFileShortcut(
 				fileShortcutId, newFolderId, fileShortcut.getToFileEntryId(),
 				serviceContext);
 		}
@@ -320,8 +312,21 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
+
+	private DLAppService _dlAppService;
+	private TrashEntryService _trashEntryService;
 
 }

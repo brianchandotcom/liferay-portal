@@ -79,7 +79,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -105,8 +105,6 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		sb.append(settings);
 		sb.append(", active=");
 		sb.append(active);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -173,13 +171,6 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 
 		layoutPrototypeImpl.setActive(active);
 
-		if (lastPublishDate == Long.MIN_VALUE) {
-			layoutPrototypeImpl.setLastPublishDate(null);
-		}
-		else {
-			layoutPrototypeImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
 		layoutPrototypeImpl.resetOriginalValues();
 
 		return layoutPrototypeImpl;
@@ -199,7 +190,6 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		description = objectInput.readUTF();
 		settings = objectInput.readUTF();
 		active = objectInput.readBoolean();
-		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -250,7 +240,6 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		}
 
 		objectOutput.writeBoolean(active);
-		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -265,5 +254,4 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 	public String description;
 	public String settings;
 	public boolean active;
-	public long lastPublishDate;
 }

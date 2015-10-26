@@ -160,6 +160,8 @@ public interface AssetRendererFactory<T> {
 
 	public boolean isListable(long classPK);
 
+	public boolean isSearchable();
+
 	public boolean isSelectable();
 
 	public boolean isSupportsClassTypes();

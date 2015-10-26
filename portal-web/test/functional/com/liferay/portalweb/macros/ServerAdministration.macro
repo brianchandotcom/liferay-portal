@@ -42,20 +42,16 @@
 		<if>
 			<equals arg1="${enableXuggler}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Xuggler appears to be installed correctly. Enable to allow audio and video preview generation." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Xuggler appears to be installed correctly. Enable to allow audio and video preview generation."  />
 				<execute function="Check" locator1="ServerAdministrationExternalServices#XUGGLER_ENABLED_CHECKBOX"  />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPServeradministrationExternalservices#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPServeradministrationExternalservices#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureFileUploadOverallMaximumFileSize">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
-		</execute>
-
 		<execute function="AssertClick" locator1="NavTab#FILE_UPLOADS" value1="File Uploads" />
 		<execute function="Type" locator1="CPServeradministrationFileuploads#FILE_UPLOADS_GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
 		<execute function="AssertClick" locator1="CPServeradministrationFileuploads#SAVE_BUTTON" value1="Save" />
@@ -114,8 +110,8 @@
 	</command>
 
 	<command name="tearDownDMFileUploadSettings">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#FILE_UPLOADS" value1="File Uploads" />
@@ -124,8 +120,8 @@
 	</command>
 
 	<command name="tearDownMailServerSettings">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#MAIL" value1="Mail" />

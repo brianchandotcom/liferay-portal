@@ -130,6 +130,11 @@ public class DDMXMLImpl implements DDMXML {
 						dynamicElementElement.attributeValue(
 							"default-language-id");
 
+					if (Validator.isNull(defaultLanguageId)) {
+						defaultLanguageId = rootElement.attributeValue(
+							"default-locale");
+					}
+
 					Locale defaultLocale = LocaleUtil.fromLanguageId(
 						defaultLanguageId);
 

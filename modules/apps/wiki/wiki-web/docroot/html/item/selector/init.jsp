@@ -31,18 +31,27 @@ page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView" %><%@
 page import="com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.ResourceBundle" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<%
+ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
+%>

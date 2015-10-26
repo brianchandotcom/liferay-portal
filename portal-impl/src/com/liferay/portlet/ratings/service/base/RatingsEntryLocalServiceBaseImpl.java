@@ -328,14 +328,12 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<RatingsEntry>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(RatingsEntry ratingsEntry)
 					throws PortalException {
-					RatingsEntry stagedModel = (RatingsEntry)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						ratingsEntry);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

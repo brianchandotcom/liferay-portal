@@ -19,13 +19,15 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration" %><%@
+page import="com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMWebKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
@@ -69,7 +71,7 @@ page import="com.liferay.dynamic.data.mapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationValues" %><%@
+page import="com.liferay.dynamic.data.mapping.web.context.util.DDMWebRequestHelper" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.PortletPreferencesException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -184,6 +186,10 @@ if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
 else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 }
+
+DDMWebRequestHelper ddmWebRequestHelper = new DDMWebRequestHelper(request);
+
+DDMServiceConfiguration ddmServiceConfiguration = ddmWebRequestHelper.getDDMServiceConfiguration();
 %>
 
 <%@ include file="/init-ext.jsp" %>

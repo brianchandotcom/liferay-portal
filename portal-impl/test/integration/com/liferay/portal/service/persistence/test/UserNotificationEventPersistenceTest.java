@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -55,8 +56,9 @@ import java.util.Set;
  * @generated
  */
 public class UserNotificationEventPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -413,11 +415,10 @@ public class UserNotificationEventPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserNotificationEventLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserNotificationEvent>() {
 				@Override
-				public void performAction(Object object) {
-					UserNotificationEvent userNotificationEvent = (UserNotificationEvent)object;
-
+				public void performAction(
+					UserNotificationEvent userNotificationEvent) {
 					Assert.assertNotNull(userNotificationEvent);
 
 					count.increment();

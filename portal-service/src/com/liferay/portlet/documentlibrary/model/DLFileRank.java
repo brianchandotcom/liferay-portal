@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface DLFileRank extends DLFileRankModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DLFileRank, Long> FILE_RANK_ID_ACCESSOR = new Accessor<DLFileRank, Long>() {
+			@Override
+			public Long get(DLFileRank dlFileRank) {
+				return dlFileRank.getFileRankId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DLFileRank> getTypeClass() {
+				return DLFileRank.class;
+			}
+		};
 }

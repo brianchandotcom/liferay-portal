@@ -81,6 +81,25 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the s a p entries where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching s a p entries
+	*/
+	public java.util.List<SAPEntry> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first s a p entry in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -258,6 +277,26 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public java.util.List<SAPEntry> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the s a p entries where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching s a p entries
+	*/
+	public java.util.List<SAPEntry> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first s a p entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -448,6 +487,25 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator);
 
 	/**
+	* Returns an ordered range of all the s a p entries where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching s a p entries
+	*/
+	public java.util.List<SAPEntry> findByCompanyId(long companyId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Returns the first s a p entry in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -583,6 +641,218 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public int filterCountByCompanyId(long companyId);
 
 	/**
+	* Returns all the s a p entries where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @return the matching s a p entries
+	*/
+	public java.util.List<SAPEntry> findByC_D(long companyId,
+		boolean defaultSAPEntry);
+
+	/**
+	* Returns a range of all the s a p entries where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @return the range of matching s a p entries
+	*/
+	public java.util.List<SAPEntry> findByC_D(long companyId,
+		boolean defaultSAPEntry, int start, int end);
+
+	/**
+	* Returns an ordered range of all the s a p entries where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching s a p entries
+	*/
+	public java.util.List<SAPEntry> findByC_D(long companyId,
+		boolean defaultSAPEntry, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the s a p entries where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching s a p entries
+	*/
+	public java.util.List<SAPEntry> findByC_D(long companyId,
+		boolean defaultSAPEntry, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first s a p entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s a p entry
+	* @throws com.liferay.service.access.policy.NoSuchEntryException if a matching s a p entry could not be found
+	*/
+	public SAPEntry findByC_D_First(long companyId, boolean defaultSAPEntry,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
+		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+
+	/**
+	* Returns the first s a p entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s a p entry, or <code>null</code> if a matching s a p entry could not be found
+	*/
+	public SAPEntry fetchByC_D_First(long companyId, boolean defaultSAPEntry,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator);
+
+	/**
+	* Returns the last s a p entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s a p entry
+	* @throws com.liferay.service.access.policy.NoSuchEntryException if a matching s a p entry could not be found
+	*/
+	public SAPEntry findByC_D_Last(long companyId, boolean defaultSAPEntry,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
+		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+
+	/**
+	* Returns the last s a p entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s a p entry, or <code>null</code> if a matching s a p entry could not be found
+	*/
+	public SAPEntry fetchByC_D_Last(long companyId, boolean defaultSAPEntry,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator);
+
+	/**
+	* Returns the s a p entries before and after the current s a p entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param sapEntryId the primary key of the current s a p entry
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next s a p entry
+	* @throws com.liferay.service.access.policy.NoSuchEntryException if a s a p entry with the primary key could not be found
+	*/
+	public SAPEntry[] findByC_D_PrevAndNext(long sapEntryId, long companyId,
+		boolean defaultSAPEntry,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
+		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+
+	/**
+	* Returns all the s a p entries that the user has permission to view where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @return the matching s a p entries that the user has permission to view
+	*/
+	public java.util.List<SAPEntry> filterFindByC_D(long companyId,
+		boolean defaultSAPEntry);
+
+	/**
+	* Returns a range of all the s a p entries that the user has permission to view where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @return the range of matching s a p entries that the user has permission to view
+	*/
+	public java.util.List<SAPEntry> filterFindByC_D(long companyId,
+		boolean defaultSAPEntry, int start, int end);
+
+	/**
+	* Returns an ordered range of all the s a p entries that the user has permissions to view where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching s a p entries that the user has permission to view
+	*/
+	public java.util.List<SAPEntry> filterFindByC_D(long companyId,
+		boolean defaultSAPEntry, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator);
+
+	/**
+	* Returns the s a p entries before and after the current s a p entry in the ordered set of s a p entries that the user has permission to view where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param sapEntryId the primary key of the current s a p entry
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next s a p entry
+	* @throws com.liferay.service.access.policy.NoSuchEntryException if a s a p entry with the primary key could not be found
+	*/
+	public SAPEntry[] filterFindByC_D_PrevAndNext(long sapEntryId,
+		long companyId, boolean defaultSAPEntry,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
+		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+
+	/**
+	* Removes all the s a p entries where companyId = &#63; and defaultSAPEntry = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	*/
+	public void removeByC_D(long companyId, boolean defaultSAPEntry);
+
+	/**
+	* Returns the number of s a p entries where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @return the number of matching s a p entries
+	*/
+	public int countByC_D(long companyId, boolean defaultSAPEntry);
+
+	/**
+	* Returns the number of s a p entries that the user has permission to view where companyId = &#63; and defaultSAPEntry = &#63;.
+	*
+	* @param companyId the company ID
+	* @param defaultSAPEntry the default s a p entry
+	* @return the number of matching s a p entries that the user has permission to view
+	*/
+	public int filterCountByC_D(long companyId, boolean defaultSAPEntry);
+
+	/**
 	* Returns the s a p entry where companyId = &#63; and name = &#63; or throws a {@link com.liferay.service.access.policy.NoSuchEntryException} if it could not be found.
 	*
 	* @param companyId the company ID
@@ -607,7 +877,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*
 	* @param companyId the company ID
 	* @param name the name
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching s a p entry, or <code>null</code> if a matching s a p entry could not be found
 	*/
 	public SAPEntry fetchByC_N(long companyId, java.lang.String name,
@@ -722,6 +992,23 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public java.util.List<SAPEntry> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the s a p entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SAPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of s a p entries
+	* @param end the upper bound of the range of s a p entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of s a p entries
+	*/
+	public java.util.List<SAPEntry> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the s a p entries from the database.

@@ -27,7 +27,8 @@ public interface ProcessorCapability extends Capability {
 
 	public void cleanUp(FileVersion fileVersion) throws PortalException;
 
-	public void copyPrevious(FileVersion fileVersion) throws PortalException;
+	public void copy(FileEntry fileEntry, FileVersion fileVersion)
+		throws PortalException;
 
 	public void generateNew(FileEntry fileEntry) throws PortalException;
 

@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>SITE_NAME</td>
-	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_siteName}')]</td>
+	<td>//div[contains(@class,'toolbar-group-content') and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_PAGES_LINK</td>
-	<td>//ul[@class='visit-links']/li/a</td>
+	<td>//ul[contains(@id,'navTag')]/li[contains(.,'View Pages')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -272,21 +272,6 @@
 <tr>
 	<td>STAGING_SITE_PAGES_VARIATION_MENULIST_VARIATION_NAME</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_sitePagesVariationName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_BUTTON</td>
-	<td>//div/ul/li[contains(.,'Staging')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_MENULIST_PUBLISH_TO_LIVE</td>
-	<td>//a[contains(.,'Publish to Live')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_MENULIST_MANAGE_SITE_PAGES_VARIATIONS</td>
-	<td>//li[@class='publish-link-container']/a[contains(.,'Manage Site Pages Variation')]</td>
 	<td></td>
 </tr>
 <tr>

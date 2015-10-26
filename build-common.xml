@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
 
-<project name="build-common"
+<project
+	name="build-common"
 	xmlns:antelope="antlib:ise.antelope.tasks"
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	xmlns:if="ant:if"
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	xmlns:sonar="antlib:org.sonar.ant"
+	xmlns:unless="ant:unless"
 >
 	<dirname file="${ant.file.build-common}" property="project.dir.native" />
 
@@ -82,6 +85,8 @@
 	<taskdef classpathref="lib.classpath" resource="net/sf/antcontrib/antlib.xml" />
 	<typedef classpathref="lib.classpath" resource="org/apache/maven/artifact/ant/antlib.xml" uri="antlib:org.apache.maven.artifact.ant" />
 	<taskdef classpathref="lib.classpath" resource="tasks.properties" />
+
+	<taskdef classname="com.liferay.ant.beanshell.BeanShellTask" classpathref="lib.classpath" name="beanshell" />
 
 	<taskdef classname="com.liferay.ant.bnd.BaselineJarTask" classpathref="lib.classpath" name="baseline-jar" />
 	<taskdef classname="com.liferay.ant.bnd.ReleaseToRepoTask" classpathref="lib.classpath" name="release-to-repo" />
@@ -456,15 +461,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</and>
 		<then>
 			<property name="jdk.7.home" value="${env.JAVA_HOME}" />
-		</then>
-	</if>
-
-	<if>
-		<not>
-			<equals arg1="${junit.debug}" arg2="true" />
-		</not>
-		<then>
-			<var name="junit.debug.jpda" value="" />
 		</then>
 	</if>
 
@@ -956,11 +952,11 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<junit dir="${project.dir}" fork="on" forkmode="@{forkmode}" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
 				<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 				<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
-				<sysproperty key="junit.debug" value="${junit.debug}" />
+				<sysproperty if:true="${jvm.debug}" key="jvm.debug" value="true" />
 				<sysproperty key="whip.agent" value="${whip.agent}" />
 				<sysproperty key="whip.datafile" file="test-coverage/@{test.type}/whip.dat" />
 				<sysproperty key="whip.instrument.dump" value="${whip.instrument.dump}" />
-				<jvmarg line="${junit.debug.jpda}" />
+				<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 				<jvmarg line="${junit.java.gc}" />
 				<jvmarg line="${whip.agent}" />
 				<jvmarg value="-Xss2m" />
@@ -1617,8 +1613,6 @@ rerun your task.
 				auto.deploy.dir=${liferay.home}/osgi/apps
 				clean.delete.ivy.md5=true
 				clean.delete.lib=true
-				ivy.home=${ivy.home}
-				ivy.log.level=${ivy.log.level}
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}
 				junit.java.unit.gc.logging=${junit.java.unit.gc.logging}

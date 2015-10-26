@@ -48,7 +48,6 @@ AUI.add(
 
 						instance._win = win;
 						instance._body = body;
-						instance._dockbar = Liferay.Dockbar && Liferay.Dockbar.dockBar;
 
 						hudcrumbs.hide();
 
@@ -65,7 +64,6 @@ AUI.add(
 
 						body.append(hudcrumbs);
 
-						Liferay.on('dockbar:pinned', instance._calculateDimensions, instance);
 						Liferay.on('surfaceStartNavigate', instance._onStartNavigate, instance);
 					},
 
@@ -73,7 +71,6 @@ AUI.add(
 						var instance = this;
 
 						Liferay.detach('surfaceStartNavigate', instance._onStartNavigate);
-						Liferay.detach('dockbar:pinned', instance._calculateDimensions);
 
 						var win = instance._win;
 

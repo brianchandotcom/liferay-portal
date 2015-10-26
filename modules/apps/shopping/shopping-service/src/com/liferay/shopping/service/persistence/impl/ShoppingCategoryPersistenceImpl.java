@@ -16,8 +16,8 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -36,6 +36,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.shopping.exception.NoSuchCategoryException;
 import com.liferay.shopping.model.ShoppingCategory;
@@ -158,6 +159,27 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	@Override
 	public List<ShoppingCategory> findByGroupId(long groupId, int start,
 		int end, OrderByComparator<ShoppingCategory> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping categories where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of shopping categories
+	 * @param end the upper bound of the range of shopping categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching shopping categories
+	 */
+	@Override
+	public List<ShoppingCategory> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<ShoppingCategory> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -173,15 +195,19 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<ShoppingCategory> list = (List<ShoppingCategory>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingCategory> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ShoppingCategory shoppingCategory : list) {
-				if ((groupId != shoppingCategory.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ShoppingCategory>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ShoppingCategory shoppingCategory : list) {
+					if ((groupId != shoppingCategory.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -238,10 +264,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -841,8 +867,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -866,10 +891,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1003,6 +1028,30 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	public List<ShoppingCategory> findByG_P(long groupId,
 		long parentCategoryId, int start, int end,
 		OrderByComparator<ShoppingCategory> orderByComparator) {
+		return findByG_P(groupId, parentCategoryId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping categories where groupId = &#63; and parentCategoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param start the lower bound of the range of shopping categories
+	 * @param end the upper bound of the range of shopping categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching shopping categories
+	 */
+	@Override
+	public List<ShoppingCategory> findByG_P(long groupId,
+		long parentCategoryId, int start, int end,
+		OrderByComparator<ShoppingCategory> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1022,16 +1071,20 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 				};
 		}
 
-		List<ShoppingCategory> list = (List<ShoppingCategory>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingCategory> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ShoppingCategory shoppingCategory : list) {
-				if ((groupId != shoppingCategory.getGroupId()) ||
-						(parentCategoryId != shoppingCategory.getParentCategoryId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ShoppingCategory>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ShoppingCategory shoppingCategory : list) {
+					if ((groupId != shoppingCategory.getGroupId()) ||
+							(parentCategoryId != shoppingCategory.getParentCategoryId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1092,10 +1145,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1732,8 +1785,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 		Object[] finderArgs = new Object[] { groupId, parentCategoryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1761,10 +1813,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1895,7 +1947,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
 	 */
 	@Override
@@ -1906,7 +1958,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_N,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_N,
 					finderArgs, this);
 		}
 
@@ -1960,8 +2012,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 				List<ShoppingCategory> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, finderArgs,
+						list);
 				}
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
@@ -1980,14 +2032,13 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 					if ((shoppingCategory.getGroupId() != groupId) ||
 							(shoppingCategory.getName() == null) ||
 							!shoppingCategory.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
 							finderArgs, shoppingCategory);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, finderArgs);
 
 				throw processException(e);
 			}
@@ -2032,8 +2083,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 		Object[] finderArgs = new Object[] { groupId, name };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2075,10 +2125,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2106,11 +2156,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public void cacheResult(ShoppingCategory shoppingCategory) {
-		EntityCacheUtil.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey(),
 			shoppingCategory);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
 			new Object[] {
 				shoppingCategory.getGroupId(), shoppingCategory.getName()
 			}, shoppingCategory);
@@ -2126,7 +2176,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	@Override
 	public void cacheResult(List<ShoppingCategory> shoppingCategories) {
 		for (ShoppingCategory shoppingCategory : shoppingCategories) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingCategoryImpl.class,
 						shoppingCategory.getPrimaryKey()) == null) {
@@ -2142,43 +2192,43 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * Clears the cache for all shopping categories.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(ShoppingCategoryImpl.class);
+		entityCache.clearCache(ShoppingCategoryImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the shopping category.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(ShoppingCategory shoppingCategory) {
-		EntityCacheUtil.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((ShoppingCategoryModelImpl)shoppingCategory);
 	}
 
 	@Override
 	public void clearCache(List<ShoppingCategory> shoppingCategories) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (ShoppingCategory shoppingCategory : shoppingCategories) {
-			EntityCacheUtil.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey());
 
 			clearUniqueFindersCache((ShoppingCategoryModelImpl)shoppingCategory);
@@ -2193,9 +2243,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 					shoppingCategoryModelImpl.getName()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, args,
 				shoppingCategoryModelImpl);
 		}
 		else {
@@ -2206,9 +2256,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 						shoppingCategoryModelImpl.getName()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, args,
 					shoppingCategoryModelImpl);
 			}
 		}
@@ -2221,8 +2271,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 				shoppingCategoryModelImpl.getName()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
 
 		if ((shoppingCategoryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
@@ -2231,8 +2281,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 					shoppingCategoryModelImpl.getOriginalName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
 		}
 	}
 
@@ -2389,10 +2439,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !ShoppingCategoryModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2402,14 +2452,14 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 						shoppingCategoryModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { shoppingCategoryModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -2420,8 +2470,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 						shoppingCategoryModelImpl.getOriginalParentCategoryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
 					args);
 
 				args = new Object[] {
@@ -2429,13 +2479,13 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 						shoppingCategoryModelImpl.getParentCategoryId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey(),
 			shoppingCategory, false);
 
@@ -2517,7 +2567,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory fetchByPrimaryKey(Serializable primaryKey) {
-		ShoppingCategory shoppingCategory = (ShoppingCategory)EntityCacheUtil.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+		ShoppingCategory shoppingCategory = (ShoppingCategory)entityCache.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCategoryImpl.class, primaryKey);
 
 		if (shoppingCategory == _nullShoppingCategory) {
@@ -2537,13 +2587,13 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 					cacheResult(shoppingCategory);
 				}
 				else {
-					EntityCacheUtil.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingCategoryImpl.class, primaryKey,
 						_nullShoppingCategory);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingCategoryImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2593,7 +2643,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ShoppingCategory shoppingCategory = (ShoppingCategory)EntityCacheUtil.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingCategory shoppingCategory = (ShoppingCategory)entityCache.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingCategoryImpl.class, primaryKey);
 
 			if (shoppingCategory == null) {
@@ -2645,7 +2695,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingCategoryImpl.class, primaryKey,
 					_nullShoppingCategory);
 			}
@@ -2701,6 +2751,26 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	@Override
 	public List<ShoppingCategory> findAll(int start, int end,
 		OrderByComparator<ShoppingCategory> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping categories.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of shopping categories
+	 * @param end the upper bound of the range of shopping categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of shopping categories
+	 */
+	@Override
+	public List<ShoppingCategory> findAll(int start, int end,
+		OrderByComparator<ShoppingCategory> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2716,8 +2786,12 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<ShoppingCategory> list = (List<ShoppingCategory>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingCategory> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ShoppingCategory>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2764,10 +2838,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2797,7 +2871,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2810,11 +2884,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2839,12 +2913,16 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(ShoppingCategoryImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(ShoppingCategoryImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SHOPPINGCATEGORY = "SELECT shoppingCategory FROM ShoppingCategory shoppingCategory";
 	private static final String _SQL_SELECT_SHOPPINGCATEGORY_WHERE_PKS_IN = "SELECT shoppingCategory FROM ShoppingCategory shoppingCategory WHERE categoryId IN (";
 	private static final String _SQL_SELECT_SHOPPINGCATEGORY_WHERE = "SELECT shoppingCategory FROM ShoppingCategory shoppingCategory WHERE ";

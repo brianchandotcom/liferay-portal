@@ -47,8 +47,6 @@ public interface BackgroundTask {
 
 	public long getAttachmentsFolderId();
 
-	public BackgroundTaskExecutor getBackgroundTaskExecutor();
-
 	public long getBackgroundTaskId();
 
 	public long getCompanyId();

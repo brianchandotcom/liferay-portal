@@ -321,14 +321,12 @@ public abstract class EmailAddressLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<EmailAddress>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(EmailAddress emailAddress)
 					throws PortalException {
-					EmailAddress stagedModel = (EmailAddress)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						emailAddress);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

@@ -1,7 +1,7 @@
 define(
     "frontend-js-metal-web@1.0.0/metal/src/soy/SoyComponent",
-    ['exports', 'module', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/soy/SoyComponentAop'],
-    function (exports, module, _metalSrcCore, _metalSrcDomDom, _metalSrcObjectObject, _metalSrcComponentComponent, _metalSrcComponentComponentRegistry, _metalSrcSoySoyComponentAop) {
+    ['exports', 'module', 'soyutils', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/soy/SoyComponentAop'],
+    function (exports, module, _soyutils, _metalSrcCore, _metalSrcDomDom, _metalSrcObjectObject, _metalSrcComponentComponent, _metalSrcComponentComponentRegistry, _metalSrcSoySoyComponentAop) {
         'use strict';
 
         var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -13,6 +13,8 @@ define(
         function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
         function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+        var _soyutils2 = _interopRequireDefault(_soyutils);
 
         var _core = _interopRequireDefault(_metalSrcCore);
 

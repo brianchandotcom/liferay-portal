@@ -1352,14 +1352,18 @@ public class AssetPublisherDisplayContext {
 			return;
 		}
 
-		_ddmStructureDisplayFieldValue = GetterUtil.getString(
+		_ddmStructureDisplayFieldValue = ParamUtil.getString(
+			_request, "ddmStructureDisplayFieldValue",
 			_portletPreferences.getValue(
 				"ddmStructureDisplayFieldValue", StringPool.BLANK));
-		_ddmStructureFieldName = GetterUtil.getString(
+		_ddmStructureFieldName = ParamUtil.getString(
+			_request, "ddmStructureFieldName",
 			_portletPreferences.getValue(
 				"ddmStructureFieldName", StringPool.BLANK));
-		_ddmStructureFieldValue = _portletPreferences.getValue(
-			"ddmStructureFieldValue", StringPool.BLANK);
+		_ddmStructureFieldValue = ParamUtil.getString(
+			_request, "ddmStructureFieldValue",
+			_portletPreferences.getValue(
+				"ddmStructureFieldValue", StringPool.BLANK));
 
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
 			Validator.isNotNull(_ddmStructureFieldValue)) {

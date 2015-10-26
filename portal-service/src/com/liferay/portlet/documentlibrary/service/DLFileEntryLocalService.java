@@ -606,6 +606,11 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public int getRepositoryFileEntriesCount(long repositoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUniqueTitle(long groupId, long folderId,
+		long fileEntryId, java.lang.String title, java.lang.String extension)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasExtraSettings();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

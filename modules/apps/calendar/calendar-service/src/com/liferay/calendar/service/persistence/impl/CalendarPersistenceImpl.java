@@ -22,8 +22,8 @@ import com.liferay.calendar.model.impl.CalendarImpl;
 import com.liferay.calendar.model.impl.CalendarModelImpl;
 import com.liferay.calendar.service.persistence.CalendarPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -42,6 +42,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -156,6 +157,28 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	@Override
 	public List<Calendar> findByResourceBlockId(long resourceBlockId,
 		int start, int end, OrderByComparator<Calendar> orderByComparator) {
+		return findByResourceBlockId(resourceBlockId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the calendars where resourceBlockId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param start the lower bound of the range of calendars
+	 * @param end the upper bound of the range of calendars (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching calendars
+	 */
+	@Override
+	public List<Calendar> findByResourceBlockId(long resourceBlockId,
+		int start, int end, OrderByComparator<Calendar> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -175,15 +198,19 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				};
 		}
 
-		List<Calendar> list = (List<Calendar>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Calendar> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Calendar calendar : list) {
-				if ((resourceBlockId != calendar.getResourceBlockId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Calendar>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Calendar calendar : list) {
+					if ((resourceBlockId != calendar.getResourceBlockId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -240,10 +267,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -533,8 +560,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 		Object[] finderArgs = new Object[] { resourceBlockId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -558,10 +584,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -639,6 +665,26 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	@Override
 	public List<Calendar> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Calendar> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the calendars where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of calendars
+	 * @param end the upper bound of the range of calendars (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching calendars
+	 */
+	@Override
+	public List<Calendar> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Calendar> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -654,15 +700,19 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<Calendar> list = (List<Calendar>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Calendar> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Calendar calendar : list) {
-				if (!Validator.equals(uuid, calendar.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Calendar>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Calendar calendar : list) {
+					if (!Validator.equals(uuid, calendar.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -733,10 +783,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1037,8 +1087,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1076,10 +1125,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1158,7 +1207,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching calendar, or <code>null</code> if a matching calendar could not be found
 	 */
 	@Override
@@ -1169,7 +1218,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -1223,7 +1272,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				List<Calendar> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -1236,14 +1285,13 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 					if ((calendar.getUuid() == null) ||
 							!calendar.getUuid().equals(uuid) ||
 							(calendar.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, calendar);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -1288,8 +1336,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1331,10 +1378,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1421,6 +1468,28 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	@Override
 	public List<Calendar> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<Calendar> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the calendars where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of calendars
+	 * @param end the upper bound of the range of calendars (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching calendars
+	 */
+	@Override
+	public List<Calendar> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator<Calendar> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1440,16 +1509,20 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				};
 		}
 
-		List<Calendar> list = (List<Calendar>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Calendar> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Calendar calendar : list) {
-				if (!Validator.equals(uuid, calendar.getUuid()) ||
-						(companyId != calendar.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Calendar>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Calendar calendar : list) {
+					if (!Validator.equals(uuid, calendar.getUuid()) ||
+							(companyId != calendar.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1524,10 +1597,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1848,8 +1921,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1891,10 +1963,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1980,6 +2052,29 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	@Override
 	public List<Calendar> findByG_C(long groupId, long calendarResourceId,
 		int start, int end, OrderByComparator<Calendar> orderByComparator) {
+		return findByG_C(groupId, calendarResourceId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the calendars where groupId = &#63; and calendarResourceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param calendarResourceId the calendar resource ID
+	 * @param start the lower bound of the range of calendars
+	 * @param end the upper bound of the range of calendars (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching calendars
+	 */
+	@Override
+	public List<Calendar> findByG_C(long groupId, long calendarResourceId,
+		int start, int end, OrderByComparator<Calendar> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1999,16 +2094,20 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				};
 		}
 
-		List<Calendar> list = (List<Calendar>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Calendar> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Calendar calendar : list) {
-				if ((groupId != calendar.getGroupId()) ||
-						(calendarResourceId != calendar.getCalendarResourceId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Calendar>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Calendar calendar : list) {
+					if ((groupId != calendar.getGroupId()) ||
+							(calendarResourceId != calendar.getCalendarResourceId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2069,10 +2168,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2645,8 +2744,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 		Object[] finderArgs = new Object[] { groupId, calendarResourceId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2674,10 +2772,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2826,6 +2924,30 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	public List<Calendar> findByG_C_D(long groupId, long calendarResourceId,
 		boolean defaultCalendar, int start, int end,
 		OrderByComparator<Calendar> orderByComparator) {
+		return findByG_C_D(groupId, calendarResourceId, defaultCalendar, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the calendars where groupId = &#63; and calendarResourceId = &#63; and defaultCalendar = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param calendarResourceId the calendar resource ID
+	 * @param defaultCalendar the default calendar
+	 * @param start the lower bound of the range of calendars
+	 * @param end the upper bound of the range of calendars (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching calendars
+	 */
+	@Override
+	public List<Calendar> findByG_C_D(long groupId, long calendarResourceId,
+		boolean defaultCalendar, int start, int end,
+		OrderByComparator<Calendar> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2847,17 +2969,21 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				};
 		}
 
-		List<Calendar> list = (List<Calendar>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Calendar> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Calendar calendar : list) {
-				if ((groupId != calendar.getGroupId()) ||
-						(calendarResourceId != calendar.getCalendarResourceId()) ||
-						(defaultCalendar != calendar.getDefaultCalendar())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Calendar>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Calendar calendar : list) {
+					if ((groupId != calendar.getGroupId()) ||
+							(calendarResourceId != calendar.getCalendarResourceId()) ||
+							(defaultCalendar != calendar.getDefaultCalendar())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2922,10 +3048,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3538,8 +3664,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				groupId, calendarResourceId, defaultCalendar
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -3571,10 +3696,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3658,10 +3783,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	 */
 	@Override
 	public void cacheResult(Calendar calendar) {
-		EntityCacheUtil.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 			CalendarImpl.class, calendar.getPrimaryKey(), calendar);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { calendar.getUuid(), calendar.getGroupId() }, calendar);
 
 		calendar.resetOriginalValues();
@@ -3675,8 +3800,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	@Override
 	public void cacheResult(List<Calendar> calendars) {
 		for (Calendar calendar : calendars) {
-			if (EntityCacheUtil.getResult(
-						CalendarModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 						CalendarImpl.class, calendar.getPrimaryKey()) == null) {
 				cacheResult(calendar);
 			}
@@ -3690,43 +3814,43 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	 * Clears the cache for all calendars.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(CalendarImpl.class);
+		entityCache.clearCache(CalendarImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the calendar.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(Calendar calendar) {
-		EntityCacheUtil.removeResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 			CalendarImpl.class, calendar.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((CalendarModelImpl)calendar);
 	}
 
 	@Override
 	public void clearCache(List<Calendar> calendars) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Calendar calendar : calendars) {
-			EntityCacheUtil.removeResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 				CalendarImpl.class, calendar.getPrimaryKey());
 
 			clearUniqueFindersCache((CalendarModelImpl)calendar);
@@ -3740,9 +3864,9 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 					calendarModelImpl.getUuid(), calendarModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				calendarModelImpl);
 		}
 		else {
@@ -3753,9 +3877,9 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 						calendarModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					calendarModelImpl);
 			}
 		}
@@ -3766,8 +3890,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				calendarModelImpl.getUuid(), calendarModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((calendarModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -3776,8 +3900,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 					calendarModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 	}
 
@@ -3942,10 +4066,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !CalendarModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -3955,16 +4079,16 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 						calendarModelImpl.getOriginalResourceBlockId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
 					args);
 
 				args = new Object[] { calendarModelImpl.getResourceBlockId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
 					args);
 			}
 
@@ -3972,14 +4096,14 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { calendarModelImpl.getOriginalUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { calendarModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -3990,8 +4114,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 						calendarModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -3999,8 +4123,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 						calendarModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -4011,8 +4135,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 						calendarModelImpl.getOriginalCalendarResourceId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
 
 				args = new Object[] {
@@ -4020,8 +4144,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 						calendarModelImpl.getCalendarResourceId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
 			}
 
@@ -4033,8 +4157,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 						calendarModelImpl.getOriginalDefaultCalendar()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_D, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_D,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_D, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_D,
 					args);
 
 				args = new Object[] {
@@ -4043,13 +4167,13 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 						calendarModelImpl.getDefaultCalendar()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_D, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_D,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_D, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_D,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 			CalendarImpl.class, calendar.getPrimaryKey(), calendar, false);
 
 		clearUniqueFindersCache(calendarModelImpl);
@@ -4137,7 +4261,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	 */
 	@Override
 	public Calendar fetchByPrimaryKey(Serializable primaryKey) {
-		Calendar calendar = (Calendar)EntityCacheUtil.getResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+		Calendar calendar = (Calendar)entityCache.getResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 				CalendarImpl.class, primaryKey);
 
 		if (calendar == _nullCalendar) {
@@ -4156,12 +4280,12 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 					cacheResult(calendar);
 				}
 				else {
-					EntityCacheUtil.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 						CalendarImpl.class, primaryKey, _nullCalendar);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 					CalendarImpl.class, primaryKey);
 
 				throw processException(e);
@@ -4211,7 +4335,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Calendar calendar = (Calendar)EntityCacheUtil.getResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+			Calendar calendar = (Calendar)entityCache.getResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 					CalendarImpl.class, primaryKey);
 
 			if (calendar == null) {
@@ -4263,7 +4387,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 					CalendarImpl.class, primaryKey, _nullCalendar);
 			}
 		}
@@ -4318,6 +4442,25 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	@Override
 	public List<Calendar> findAll(int start, int end,
 		OrderByComparator<Calendar> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the calendars.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of calendars
+	 * @param end the upper bound of the range of calendars (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of calendars
+	 */
+	@Override
+	public List<Calendar> findAll(int start, int end,
+		OrderByComparator<Calendar> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4333,8 +4476,12 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Calendar> list = (List<Calendar>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Calendar> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Calendar>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -4381,10 +4528,10 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4414,7 +4561,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -4427,11 +4574,11 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -4461,12 +4608,16 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(CalendarImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(CalendarImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CALENDAR = "SELECT calendar FROM Calendar calendar";
 	private static final String _SQL_SELECT_CALENDAR_WHERE_PKS_IN = "SELECT calendar FROM Calendar calendar WHERE calendarId IN (";
 	private static final String _SQL_SELECT_CALENDAR_WHERE = "SELECT calendar FROM Calendar calendar WHERE ";

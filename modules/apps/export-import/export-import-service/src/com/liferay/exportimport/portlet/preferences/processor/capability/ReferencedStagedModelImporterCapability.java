@@ -25,9 +25,15 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
+@Component(
+	immediate = true,
+	service = {Capability.class, ReferencedStagedModelImporterCapability.class}
+)
 public class ReferencedStagedModelImporterCapability implements Capability {
 
 	@Override

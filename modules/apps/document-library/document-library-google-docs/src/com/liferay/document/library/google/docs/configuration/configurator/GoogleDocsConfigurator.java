@@ -46,13 +46,11 @@ public class GoogleDocsConfigurator {
 			_companyLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Company>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(Company company)
 					throws PortalException {
-
-					Company company = (Company)object;
 
 					GoogleDocsDLFileEntryTypeHelper
 						googleDocsDLFileEntryTypeHelper =

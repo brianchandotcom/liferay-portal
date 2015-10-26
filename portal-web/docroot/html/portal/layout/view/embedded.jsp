@@ -24,7 +24,7 @@
 	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
 	%>
 
-	<iframe frameborder="0" id="embeddedIframe" src="<%= HtmlUtil.escapeHREF(typeSettingsProperties.getProperty("url")) %>" width="100%"></iframe>
+	<iframe frameborder="0" id="embeddedIframe" src="<%= HtmlUtil.escapeHREF(typeSettingsProperties.getProperty("embeddedLayoutURL")) %>" width="100%"></iframe>
 </div>
 
 <liferay-ui:layout-common />

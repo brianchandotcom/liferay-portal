@@ -15,13 +15,8 @@
 package com.liferay.message.boards.social.test;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-
-import java.util.Collection;
 
 /**
  * @author Adolfo Pérez
@@ -31,32 +26,8 @@ public abstract class BaseMBSocialActivityInterpreterTestCase
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		try {
-			Registry registry = RegistryUtil.getRegistry();
-
-			Collection<SocialActivityInterpreter> socialActivityInterpreters =
-				registry.getServices(
-					SocialActivityInterpreter.class,
-					"(javax.portlet.name=" +
-						MBPortletKeys.MESSAGE_BOARDS + ")");
-
-			for (SocialActivityInterpreter socialActivityInterpreter :
-					socialActivityInterpreters) {
-
-				if (ArrayUtil.contains(
-						socialActivityInterpreter.getClassNames(),
-						getClassName())) {
-
-					return socialActivityInterpreter;
-				}
-			}
-
-			throw new IllegalStateException(
-				"No activity interpreter found for class " + getClassName());
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return getActivityInterpreter(
+			MBPortletKeys.MESSAGE_BOARDS, getClassName());
 	}
 
 	protected abstract String getClassName();

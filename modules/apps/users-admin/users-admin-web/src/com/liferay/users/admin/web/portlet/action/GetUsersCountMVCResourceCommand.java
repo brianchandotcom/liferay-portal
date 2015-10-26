@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
@@ -34,6 +34,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gavin Wan
@@ -77,7 +78,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 
 			params.put("usersOrgs", organizationId);
 
-			count+= UserLocalServiceUtil.searchCount(
+			count+= _userLocalService.searchCount(
 				companyId, null, status, params);
 		}
 
@@ -120,11 +121,18 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 
 			params.put("usersUserGroups", userGroupId);
 
-			count+= UserLocalServiceUtil.searchCount(
+			count+= _userLocalService.searchCount(
 				companyId, null, status, params);
 		}
 
 		return count;
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private UserLocalService _userLocalService;
 
 }

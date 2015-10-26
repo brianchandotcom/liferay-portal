@@ -93,7 +93,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("lockoutDate", getLockoutDate());
 		attributes.put("agreedToTermsOfUse", getAgreedToTermsOfUse());
 		attributes.put("emailAddressVerified", getEmailAddressVerified());
-		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -344,12 +343,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (emailAddressVerified != null) {
 			setEmailAddressVerified(emailAddressVerified);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -866,16 +859,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* Returns the last publish date of this user.
-	*
-	* @return the last publish date of this user
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _user.getLastPublishDate();
-	}
-
-	/**
 	* Returns the ldap server ID of this user.
 	*
 	* @return the ldap server ID of this user
@@ -987,23 +970,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
-		java.lang.String[] classNames, boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getMySiteGroups(classNames, includeControlPanel, max);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getMySiteGroups(classNames, max);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getMySiteGroups(includeControlPanel, max);
 	}
 
 	@Override
@@ -1024,7 +993,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
-	boolean, int)}
+	int)}
 	*/
 	@Deprecated
 	@Override
@@ -1047,8 +1016,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(boolean,
-	int)}
+	* @deprecated As of 6.2.0, replaced by {@link User#getMySiteGroups(int)}
 	*/
 	@Deprecated
 	@Override
@@ -1767,16 +1735,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public void setLastName(java.lang.String lastName) {
 		_user.setLastName(lastName);
-	}
-
-	/**
-	* Sets the last publish date of this user.
-	*
-	* @param lastPublishDate the last publish date of this user
-	*/
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_user.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

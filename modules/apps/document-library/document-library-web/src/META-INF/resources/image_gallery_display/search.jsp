@@ -129,5 +129,5 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.image_gallery_display.search_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_document_library_web.image_gallery_display.search_jsp");
 %>

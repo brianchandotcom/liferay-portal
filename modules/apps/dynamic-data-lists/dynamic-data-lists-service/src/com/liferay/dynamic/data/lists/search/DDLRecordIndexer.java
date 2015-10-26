@@ -230,7 +230,9 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexRecords(companyId);
+		reindexRecords(
+			companyId, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+		reindexRecords(companyId, DDLRecordSetConstants.SCOPE_FORMS);
 	}
 
 	protected String extractDDMContent(
@@ -272,11 +274,10 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		return StringPool.BLANK;
 	}
 
-	protected void reindexRecords(long companyId) throws Exception {
+	protected void reindexRecords(long companyId, int scope) throws Exception {
 		Long[] minAndMaxRecordIds =
 			DDLRecordLocalServiceUtil.getMinAndMaxCompanyRecordIds(
-				companyId, WorkflowConstants.STATUS_APPROVED,
-				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+				companyId, WorkflowConstants.STATUS_APPROVED, scope);
 
 		if ((minAndMaxRecordIds[0] == null) ||
 			(minAndMaxRecordIds[1] == null)) {
@@ -291,7 +292,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		long endRecordId = startRecordId + DEFAULT_INTERVAL;
 
 		while (startRecordId <= maxRecordId) {
-			reindexRecords(companyId, startRecordId, endRecordId);
+			reindexRecords(companyId, startRecordId, endRecordId, scope);
 
 			startRecordId = endRecordId;
 			endRecordId += DEFAULT_INTERVAL;
@@ -299,14 +300,13 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	}
 
 	protected void reindexRecords(
-			long companyId, long startRecordId, long endRecordId)
+			long companyId, long startRecordId, long endRecordId, int scope)
 		throws Exception {
 
 		List<DDLRecord> records =
 			DDLRecordLocalServiceUtil.getMinAndMaxCompanyRecords(
-				companyId, WorkflowConstants.STATUS_APPROVED,
-				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, startRecordId,
-				endRecordId);
+				companyId, WorkflowConstants.STATUS_APPROVED, scope,
+				startRecordId, endRecordId);
 
 		Collection<Document> documents = new ArrayList<>(records.size());
 

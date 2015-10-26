@@ -17,14 +17,19 @@ package com.liferay.mobile.device.rules.rule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.Collection;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * @author Edward Han
+ * @author Mate Thurzo
  */
 public class RuleGroupProcessorUtil {
 
@@ -38,7 +43,7 @@ public class RuleGroupProcessorUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			RuleGroupProcessorUtil.class);
 
-		return _instance._serviceTracker.getService();
+		return _instance._getRuleGroupProcessor();
 	}
 
 	public static RuleHandler getRuleHandler(String ruleType) {
@@ -61,18 +66,63 @@ public class RuleGroupProcessorUtil {
 		return getRuleGroupProcessor().unregisterRuleHandler(ruleType);
 	}
 
-	public RuleGroupProcessorUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+	private RuleGroupProcessorUtil() {
+		Bundle bundle = FrameworkUtil.getBundle(RuleGroupProcessorUtil.class);
 
-		_serviceTracker = registry.trackServices(RuleGroupProcessor.class);
+		_bundleContext = bundle.getBundleContext();
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, RuleGroupProcessor.class,
+			new RuleGroupProcessorServiceTrackerCustomizer());
 
 		_serviceTracker.open();
+	}
+
+	private RuleGroupProcessor _getRuleGroupProcessor() {
+		return _ruleGroupProcessor;
 	}
 
 	private static final RuleGroupProcessorUtil _instance =
 		new RuleGroupProcessorUtil();
 
+	private final BundleContext _bundleContext;
+	private RuleGroupProcessor _ruleGroupProcessor;
 	private final ServiceTracker<RuleGroupProcessor, RuleGroupProcessor>
 		_serviceTracker;
+
+	private class RuleGroupProcessorServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<RuleGroupProcessor, RuleGroupProcessor> {
+
+		@Override
+		public RuleGroupProcessor addingService(
+			ServiceReference<RuleGroupProcessor> serviceReference) {
+
+			_ruleGroupProcessor = _bundleContext.getService(serviceReference);
+
+			return _ruleGroupProcessor;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<RuleGroupProcessor> serviceReference,
+			RuleGroupProcessor ruleGroupProcessor) {
+
+			removedService(serviceReference, ruleGroupProcessor);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<RuleGroupProcessor> serviceReference,
+			RuleGroupProcessor ruleGroupProcessor) {
+
+			_bundleContext.ungetService(serviceReference);
+
+			_ruleGroupProcessor = null;
+		}
+
+	}
 
 }

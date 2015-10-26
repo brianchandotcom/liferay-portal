@@ -1180,27 +1180,13 @@ public class LocalizationImpl implements Localization {
 						xmlStreamReader.getLocalName());
 					xmlStreamWriter.writeAttribute(_LANGUAGE_ID, languageId);
 
-					while (xmlStreamReader.hasNext()) {
-						event = xmlStreamReader.next();
+					String text = xmlStreamReader.getElementText();
 
-						if ((event == XMLStreamConstants.CHARACTERS) ||
-							(event == XMLStreamConstants.CDATA)) {
-
-							String text = xmlStreamReader.getText();
-
-							if (cdata) {
-								xmlStreamWriter.writeCData(text);
-							}
-							else {
-								xmlStreamWriter.writeCharacters(
-									xmlStreamReader.getText());
-							}
-
-							break;
-						}
-						else if (event == XMLStreamConstants.END_ELEMENT) {
-							break;
-						}
+					if (cdata) {
+						xmlStreamWriter.writeCData(text);
+					}
+					else {
+						xmlStreamWriter.writeCharacters(text);
 					}
 
 					xmlStreamWriter.writeEndElement();
@@ -1246,12 +1232,11 @@ public class LocalizationImpl implements Localization {
 
 		if (resourceBundle.containsKey(key)) {
 			try {
-				value = resourceBundle.getString(key);
+				value = ResourceBundleUtil.getString(resourceBundle, key);
 
 				value = new String(
 					value.getBytes(StringPool.ISO_8859_1), StringPool.UTF8);
 			}
-
 			catch (Exception e) {
 			}
 		}

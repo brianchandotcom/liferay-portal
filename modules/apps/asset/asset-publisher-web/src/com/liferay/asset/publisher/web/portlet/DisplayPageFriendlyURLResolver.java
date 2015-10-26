@@ -17,7 +17,7 @@ package com.liferay.asset.publisher.web.portlet;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -31,12 +31,12 @@ import com.liferay.portal.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.security.auth.AuthTokenUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
 
 import java.util.List;
 import java.util.Locale;
@@ -47,6 +47,7 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -65,8 +66,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
 
 		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
-				groupId, urlTitle);
+			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
 
 		Layout layout = getJournalArticleLayout(
 			groupId, privateLayout, friendlyURL);
@@ -155,7 +155,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		PortalUtil.addPageDescription(
 			journalArticle.getDescription(locale), request);
 
-		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
 			JournalArticle.class.getName(), journalArticle.getPrimaryKey());
 
 		if (!assetTags.isEmpty()) {
@@ -192,11 +192,35 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
 
 		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
-				groupId, urlTitle);
+			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
 
-		return LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+		return _layoutLocalService.getLayoutByUuidAndGroupId(
 			journalArticle.getLayoutUuid(), groupId, privateLayout);
 	}
+
+	@Reference(unbind = "-")
+	protected void setAssetTagLocalService(
+		AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	private AssetTagLocalService _assetTagLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

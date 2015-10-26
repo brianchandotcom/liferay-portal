@@ -38,6 +38,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 >
 	<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= currentURLObj.toString() %>" />
 	<aui:input name="deleteUserIds" type="hidden" />
+	<aui:input name="status" type="hidden" value="<%= status %>" />
 
 	<%
 	UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();

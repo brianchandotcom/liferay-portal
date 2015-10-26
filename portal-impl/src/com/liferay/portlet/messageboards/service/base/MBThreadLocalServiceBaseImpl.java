@@ -349,14 +349,12 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBThread>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MBThread mbThread)
 					throws PortalException {
-					MBThread stagedModel = (MBThread)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						mbThread);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

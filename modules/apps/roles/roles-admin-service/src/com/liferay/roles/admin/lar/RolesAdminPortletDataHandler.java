@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.RoleImpl;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
@@ -89,12 +89,12 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
+		List<Role> roles = _roleLocalService.getRoles(
 			portletDataContext.getCompanyId());
 
 		for (Role role : roles) {
 			if (!role.isSystem() && !role.isTeam()) {
-				RoleLocalServiceUtil.deleteRole(role);
+				_roleLocalService.deleteRole(role);
 			}
 		}
 
@@ -159,7 +159,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext, final boolean export) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			RoleLocalServiceUtil.getExportActionableDynamicQuery(
+			_roleLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.setAddCriteriaMethod(
@@ -180,23 +180,20 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 			});
 
-		final ActionableDynamicQuery.PerformActionMethod performActionMethod =
-			actionableDynamicQuery.getPerformActionMethod();
+		final ActionableDynamicQuery.PerformActionMethod<Role>
+			performActionMethod =
+				actionableDynamicQuery.getPerformActionMethod();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Role>() {
 
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
+				public void performAction(Role role) throws PortalException {
 					if (!export) {
 						return;
 					}
 
-					Role role = (Role)object;
-
-					long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+					long defaultUserId = _userLocalService.getDefaultUserId(
 						portletDataContext.getCompanyId());
 
 					if (!portletDataContext.getBooleanParameter(
@@ -206,7 +203,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 						return;
 					}
 
-					performActionMethod.performAction(object);
+					performActionMethod.performAction(role);
 				}
 
 			});
@@ -218,5 +215,18 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private RoleLocalService _roleLocalService;
+	private UserLocalService _userLocalService;
 
 }

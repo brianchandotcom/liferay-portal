@@ -28,7 +28,7 @@ AUI.add(
 
 					title: {
 						validator: Lang.isString,
-						value: Liferay.Language.get('select-image')
+						value: Liferay.Language.get('select-file')
 					},
 
 					url: {

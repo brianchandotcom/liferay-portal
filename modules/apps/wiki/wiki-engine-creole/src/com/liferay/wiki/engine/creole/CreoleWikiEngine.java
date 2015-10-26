@@ -30,7 +30,7 @@ import com.liferay.wiki.engine.creole.parser.visitor.impl.LinkNodeCollectorVisit
 import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +100,7 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 
 				boolean existingLink = false;
 
-				if (WikiPageLocalServiceUtil.getPagesCount(
+				if (_wikiPageLocalService.getPagesCount(
 						page.getNodeId(), title, true) > 0) {
 
 					existingLink = true;
@@ -169,6 +169,13 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	protected void unsetWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
@@ -180,5 +187,6 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 
 	private ServletContext _servletContext;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

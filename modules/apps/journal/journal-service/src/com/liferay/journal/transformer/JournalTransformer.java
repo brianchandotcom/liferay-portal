@@ -175,6 +175,16 @@ public class JournalTransformer {
 			portletRequestModel, script, langType, propagateException);
 	}
 
+	protected void addChildrenTemplateNode(
+		Template template, TemplateNode templateNode) {
+
+		template.put(templateNode.getName(), templateNode);
+
+		for (TemplateNode childTemplateNode : templateNode.getChildren()) {
+			addChildrenTemplateNode(template, childTemplateNode);
+		}
+	}
+
 	protected String doTransform(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
 			Map<String, String> tokens, String viewMode, String languageId,
@@ -294,7 +304,7 @@ public class JournalTransformer {
 
 					if (templateNodes != null) {
 						for (TemplateNode templateNode : templateNodes) {
-							template.put(templateNode.getName(), templateNode);
+							addChildrenTemplateNode(template, templateNode);
 						}
 					}
 

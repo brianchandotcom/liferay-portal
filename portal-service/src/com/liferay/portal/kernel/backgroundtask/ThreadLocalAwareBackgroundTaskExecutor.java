@@ -34,6 +34,15 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 	}
 
 	@Override
+	public BackgroundTaskExecutor clone() {
+		BackgroundTaskExecutor backgroundTaskExecutor =
+			new ThreadLocalAwareBackgroundTaskExecutor(
+				getBackgroundTaskExecutor(), _backgroundTaskThreadLocalManager);
+
+		return backgroundTaskExecutor;
+	}
+
+	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 

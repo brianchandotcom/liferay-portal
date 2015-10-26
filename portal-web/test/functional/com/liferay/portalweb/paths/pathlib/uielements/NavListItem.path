@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE_APPS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Google Apps')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HOME</td>
 	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Home')]/a/span</td>
 	<td></td>

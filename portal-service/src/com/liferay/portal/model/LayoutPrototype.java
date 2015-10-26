@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the LayoutPrototype service. Represents a row in the &quot;LayoutPrototype&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,24 @@ public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutPrototypeImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<LayoutPrototype, Long> LAYOUT_PROTOTYPE_ID_ACCESSOR =
+		new Accessor<LayoutPrototype, Long>() {
+			@Override
+			public Long get(LayoutPrototype layoutPrototype) {
+				return layoutPrototype.getLayoutPrototypeId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<LayoutPrototype> getTypeClass() {
+				return LayoutPrototype.class;
+			}
+		};
+
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

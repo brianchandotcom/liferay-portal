@@ -1,8 +1,8 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":portal-cache:portal-cache")
 	compile project(":portal-cache:portal-cache-ehcache-provider")
+
+	provided group: "net.sf.ehcache", name: "ehcache", version: "2.8.3"
 }
 
 liferay {

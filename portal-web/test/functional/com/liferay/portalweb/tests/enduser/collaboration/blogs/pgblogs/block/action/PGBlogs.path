@@ -203,12 +203,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_GENERIC</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved')]//div[@class='entry-body']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CONTENT_SPECIFIC</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved')]//div[@class='entry-body']/div[contains(.,'${key_entryContent}')]</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved')]/div[contains(@class,'entry-body')]/p</td>
 	<td></td>
 </tr>
 <tr>

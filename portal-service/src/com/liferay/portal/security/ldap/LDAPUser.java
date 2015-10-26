@@ -107,10 +107,6 @@ public class LDAPUser {
 		return _user.getMiddleName();
 	}
 
-	public String getMsnSn() {
-		return _contact.getMsnSn();
-	}
-
 	public String getMySpaceSn() {
 		return _contact.getMySpaceSn();
 	}
@@ -323,10 +319,6 @@ public class LDAPUser {
 
 	public void setMiddleName(String middleName) {
 		_user.setMiddleName(middleName);
-	}
-
-	public void setMsnSn(String msnSn) {
-		_contact.setMsnSn(msnSn);
 	}
 
 	public void setMySpaceSn(String mySpaceSn) {

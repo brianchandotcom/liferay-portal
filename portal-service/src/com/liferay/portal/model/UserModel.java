@@ -705,22 +705,6 @@ public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
 	public void setEmailAddressVerified(boolean emailAddressVerified);
 
 	/**
-	 * Returns the last publish date of this user.
-	 *
-	 * @return the last publish date of this user
-	 */
-	@Override
-	public Date getLastPublishDate();
-
-	/**
-	 * Sets the last publish date of this user.
-	 *
-	 * @param lastPublishDate the last publish date of this user
-	 */
-	@Override
-	public void setLastPublishDate(Date lastPublishDate);
-
-	/**
 	 * Returns the status of this user.
 	 *
 	 * @return the status of this user

@@ -21,16 +21,16 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.LayoutRevisionLocalService;
+import com.liferay.portal.service.LayoutSetBranchLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import javax.servlet.ServletContext;
 
@@ -67,16 +67,15 @@ public class LayoutRevisionAssetRendererFactory
 		throws PortalException {
 
 		LayoutRevision layoutRevision =
-			LayoutRevisionLocalServiceUtil.getLayoutRevision(classPK);
+			_layoutRevisionLocalService.getLayoutRevision(classPK);
 
 		LayoutSetBranch layoutSetBranch =
-			LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
+			_layoutSetBranchLocalService.getLayoutSetBranch(
 				layoutRevision.getLayoutSetBranchId());
 
-		User user = UserLocalServiceUtil.getUserById(
-			layoutRevision.getUserId());
+		User user = _userLocalService.getUserById(layoutRevision.getUserId());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.createAssetEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
 			classPK);
 
 		assetEntry.setGroupId(layoutRevision.getGroupId());
@@ -106,7 +105,7 @@ public class LayoutRevisionAssetRendererFactory
 		throws PortalException {
 
 		LayoutRevision layoutRevision =
-			LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
+			_layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
 
 		LayoutRevisionAssetRenderer layoutRevisionAssetRenderer =
 			new LayoutRevisionAssetRenderer(layoutRevision);
@@ -145,6 +144,36 @@ public class LayoutRevisionAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutRevisionLocalService(
+		LayoutRevisionLocalService layoutRevisionLocalService) {
+
+		_layoutRevisionLocalService = layoutRevisionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetBranchLocalService(
+		LayoutSetBranchLocalService layoutSetBranchLocalService) {
+
+		_layoutSetBranchLocalService = layoutSetBranchLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 	private ServletContext _servletContext;
+	private UserLocalService _userLocalService;
 
 }

@@ -172,19 +172,22 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		<aui:button-row>
 
 			<%
-			boolean hasManageBookingsPermission = CalendarPermission.contains(permissionChecker, calendar, CalendarActionKeys.MANAGE_BOOKINGS);
+			boolean hasManageBookingsPermission = CalendarPermission.contains(permissionChecker, calendar, CalendarActionKeys.MANAGE_BOOKINGS) && !calendarBooking.isDraft();
+			boolean hasWorkflowInstanceLink = WorkflowInstanceLinkLocalServiceUtil.hasWorkflowInstanceLink(themeDisplay.getCompanyId(), calendarBooking.getGroupId(), CalendarBooking.class.getName(), calendarBooking.getCalendarBookingId());
 			%>
 
-			<c:if test="<%= hasManageBookingsPermission && (calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_APPROVED) %>">
-				<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_APPROVED + ");" %>' value="accept" />
-			</c:if>
+			<c:if test="<%= hasManageBookingsPermission && !hasWorkflowInstanceLink %>">
+				<c:if test="<%= calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_APPROVED %>">
+					<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_APPROVED + ");" %>' value="accept" />
+				</c:if>
 
-			<c:if test="<%= hasManageBookingsPermission && (calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_MAYBE) %>">
-				<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_MAYBE + ");" %>' value="maybe" />
-			</c:if>
+				<c:if test="<%= calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_MAYBE %>">
+					<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_MAYBE + ");" %>' value="maybe" />
+				</c:if>
 
-			<c:if test="<%= hasManageBookingsPermission && (calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_DENIED) %>">
-				<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_DENIED + ");" %>' value="decline" />
+				<c:if test="<%= calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_DENIED %>">
+					<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_DENIED + ");" %>' value="decline" />
+				</c:if>
 			</c:if>
 		</aui:button-row>
 	</aui:fieldset>
@@ -199,6 +202,9 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 </aui:script>
 
 <c:if test="<%= calendarBooking.isRecurring() %>">
+
+	<%@ include file="/calendar_booking_recurrence_language_keys.jspf" %>
+
 	<aui:script use="liferay-calendar-recurrence-util">
 		var summaryNode = A.one('#<portlet:namespace />recurrenceSummary');
 
@@ -223,20 +229,37 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		</c:choose>
 
 		<%
+		Frequency frequency = recurrence.getFrequency();
+
+		PositionalWeekday positionalWeekday = null;
+
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		List<Weekday> weekdays = new ArrayList<Weekday>();
 
-		for (PositionalWeekday positionalWeekday : recurrence.getPositionalWeekdays()) {
-			weekdays.add(positionalWeekday.getWeekday());
+		for (PositionalWeekday curPositionalWeekday : recurrence.getPositionalWeekdays()) {
+			positionalWeekday = curPositionalWeekday;
+
+			weekdays.add(curPositionalWeekday.getWeekday());
 		}
 		%>
+
+		var positionalWeekday = null;
+
+		<c:if test="<%= (frequency.equals(Frequency.MONTHLY) || frequency.equals(Frequency.YEARLY)) && (positionalWeekday != null) %>">
+			positionalWeekday = {
+				month: <%= startTimeJCalendar.get(java.util.Calendar.MONTH) %>,
+				position: <%= positionalWeekday.getPosition() %>,
+				weekday: '<%= positionalWeekday.getWeekday() %>'
+			};
+		</c:if>
 
 		var recurrence = {
 			count: <%= recurrence.getCount() %>,
 			endValue: endValue,
-			frequency: '<%= String.valueOf(recurrence.getFrequency()) %>',
+			frequency: '<%= String.valueOf(frequency) %>',
 			interval: <%= recurrence.getInterval() %>,
+			positionalWeekday: positionalWeekday,
 			untilDate: untilDate,
 			weekdays: <%= jsonSerializer.serialize(weekdays) %>
 		};

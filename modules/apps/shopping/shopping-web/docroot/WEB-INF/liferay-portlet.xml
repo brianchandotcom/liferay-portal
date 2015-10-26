@@ -24,6 +24,8 @@
 		<configuration-action-class>com.liferay.shopping.web.portlet.action.ShoppingConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.shopping.lar.ShoppingPortletDataHandler</portlet-data-handler-class>
+		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
+		<control-panel-entry-weight>11.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>true</use-default-template>

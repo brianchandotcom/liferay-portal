@@ -14,17 +14,24 @@
 
 package com.liferay.portal.search.elasticsearch.internal.index;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
+import com.liferay.portal.search.elasticsearch.settings.IndexSettingsContributor;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Future;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
@@ -35,14 +42,21 @@ import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRespon
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.ImmutableSettings.Builder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
 	immediate = true,
 	property = {
 		"indexConfigFileName=/META-INF/index-settings.json",
@@ -66,32 +80,11 @@ public class CompanyIndexFactory implements IndexFactory {
 		CreateIndexRequestBuilder createIndexRequestBuilder =
 			indicesAdminClient.prepareCreate(String.valueOf(companyId));
 
-		if (Validator.isNotNull(_indexConfigFileName)) {
-			ImmutableSettings.Builder builder =
-				ImmutableSettings.settingsBuilder();
+		addMappings(createIndexRequestBuilder);
+		setSettings(createIndexRequestBuilder);
 
-			Class<?> clazz = getClass();
-
-			builder.classLoader(clazz.getClassLoader());
-
-			builder.loadFromClasspath(_indexConfigFileName);
-
-			createIndexRequestBuilder.setSettings(builder);
-		}
-
-		for (Map.Entry<String, String> entry : _typeMappings.entrySet()) {
-			Class<?> clazz = getClass();
-
-			String typeMapping = StringUtil.read(
-				clazz.getClassLoader(), entry.getValue());
-
-			createIndexRequestBuilder.addMapping(entry.getKey(), typeMapping);
-		}
-
-		Future<CreateIndexResponse> future =
-			createIndexRequestBuilder.execute();
-
-		CreateIndexResponse createIndexResponse = future.get();
+		CreateIndexResponse createIndexResponse =
+			createIndexRequestBuilder.get();
 
 		LogUtil.logActionResponse(_log, createIndexResponse);
 	}
@@ -109,10 +102,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
 			indicesAdminClient.prepareDelete(String.valueOf(companyId));
 
-		Future<DeleteIndexResponse> future =
-			deleteIndexRequestBuilder.execute();
-
-		DeleteIndexResponse deleteIndexResponse = future.get();
+		DeleteIndexResponse deleteIndexResponse =
+			deleteIndexRequestBuilder.get();
 
 		LogUtil.logActionResponse(_log, deleteIndexResponse);
 	}
@@ -125,10 +116,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		_typeMappings = typeMappings;
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		setIndexConfigFileName(
-			MapUtil.getString(properties, "indexConfigFileName"));
+	protected static Map<String, String> getTypeMappings(
+		Map<String, Object> properties) {
 
 		Map<String, String> typeMappings = new HashMap<>();
 
@@ -140,7 +129,49 @@ public class CompanyIndexFactory implements IndexFactory {
 			}
 		}
 
+		return typeMappings;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		ElasticsearchConfiguration elasticsearchConfiguration =
+			Configurable.createConfigurable(
+				ElasticsearchConfiguration.class, properties);
+
+		setAdditionalIndexConfigurations(
+			elasticsearchConfiguration.additionalIndexConfigurations());
+		setIndexConfigFileName(
+			MapUtil.getString(properties, "indexConfigFileName"));
+
+		Map<String, String> typeMappings = getTypeMappings(properties);
+
 		setTypeMappings(typeMappings);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addIndexSettingsContributor(
+		IndexSettingsContributor indexSettingsContributor) {
+
+		_indexSettingsContributors.add(indexSettingsContributor);
+	}
+
+	protected void addMappings(
+			CreateIndexRequestBuilder createIndexRequestBuilder)
+		throws Exception {
+
+		for (Map.Entry<String, String> entry : _typeMappings.entrySet()) {
+			Class<?> clazz = getClass();
+
+			String typeMapping = StringUtil.read(
+				clazz.getClassLoader(), entry.getValue());
+
+			createIndexRequestBuilder.addMapping(entry.getKey(), typeMapping);
+		}
 	}
 
 	protected boolean hasIndex(
@@ -150,12 +181,69 @@ public class CompanyIndexFactory implements IndexFactory {
 		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
 			indicesAdminClient.prepareExists(String.valueOf(companyId));
 
-		Future<IndicesExistsResponse> future =
-			indicesExistsRequestBuilder.execute();
-
-		IndicesExistsResponse indicesExistsResponse = future.get();
+		IndicesExistsResponse indicesExistsResponse =
+			indicesExistsRequestBuilder.get();
 
 		return indicesExistsResponse.isExists();
+	}
+
+	protected void loadAdditionalIndexConfigurations(Builder builder) {
+		if (ArrayUtil.isEmpty(_additionalIndexConfigurations)) {
+			return;
+		}
+
+		String source = StringUtil.merge(
+			_additionalIndexConfigurations, StringPool.NEW_LINE);
+
+		builder.loadFromSource(source);
+	}
+
+	protected void loadIndexConfigFile(ImmutableSettings.Builder builder) {
+		if (Validator.isNull(_indexConfigFileName)) {
+			return;
+		}
+
+		Class<?> clazz = getClass();
+
+		builder.classLoader(clazz.getClassLoader());
+
+		builder.loadFromClasspath(_indexConfigFileName);
+	}
+
+	protected void loadIndexSettingsContributors(
+		ImmutableSettings.Builder builder) {
+
+		for (IndexSettingsContributor indexSettingsContributor :
+				_indexSettingsContributors) {
+
+			indexSettingsContributor.populate(builder);
+		}
+	}
+
+	protected void removeIndexSettingsContributor(
+		IndexSettingsContributor indexSettingsContributor) {
+
+		_indexSettingsContributors.remove(indexSettingsContributor);
+	}
+
+	protected void setAdditionalIndexConfigurations(
+		String[] additionalIndexConfigurations) {
+
+		_additionalIndexConfigurations = additionalIndexConfigurations;
+	}
+
+	protected void setSettings(
+		CreateIndexRequestBuilder createIndexRequestBuilder) {
+
+		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
+
+		loadIndexConfigFile(builder);
+
+		loadAdditionalIndexConfigurations(builder);
+
+		loadIndexSettingsContributors(builder);
+
+		createIndexRequestBuilder.setSettings(builder);
 	}
 
 	private static final String _PREFIX = "typeMappings.";
@@ -163,7 +251,10 @@ public class CompanyIndexFactory implements IndexFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyIndexFactory.class);
 
+	private String[] _additionalIndexConfigurations;
 	private String _indexConfigFileName;
+	private final Set<IndexSettingsContributor> _indexSettingsContributors =
+		new ConcurrentSkipListSet<>();
 	private Map<String, String> _typeMappings = new HashMap<>();
 
 }

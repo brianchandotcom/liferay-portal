@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.PasswordPolicyLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniela Zapata Riesco
@@ -44,7 +45,7 @@ public class PasswordPolicyStagedModelDataHandler
 	public void deleteStagedModel(PasswordPolicy passwordPolicy)
 		throws PortalException {
 
-		PasswordPolicyLocalServiceUtil.deletePasswordPolicy(passwordPolicy);
+		_passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy);
 	}
 
 	@Override
@@ -52,12 +53,11 @@ public class PasswordPolicyStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		PasswordPolicy passwordPolicy =
-			PasswordPolicyLocalServiceUtil.
-				fetchPasswordPolicyByUuidAndCompanyId(
-					uuid, group.getCompanyId());
+			_passwordPolicyLocalService.fetchPasswordPolicyByUuidAndCompanyId(
+				uuid, group.getCompanyId());
 
 		if (passwordPolicy != null) {
 			deleteStagedModel(passwordPolicy);
@@ -71,8 +71,8 @@ public class PasswordPolicyStagedModelDataHandler
 		List<PasswordPolicy> passwordPolicies = new ArrayList<>();
 
 		passwordPolicies.add(
-			PasswordPolicyLocalServiceUtil.
-				fetchPasswordPolicyByUuidAndCompanyId(uuid, companyId));
+			_passwordPolicyLocalService.fetchPasswordPolicyByUuidAndCompanyId(
+				uuid, companyId));
 
 		return passwordPolicies;
 	}
@@ -109,14 +109,12 @@ public class PasswordPolicyStagedModelDataHandler
 			passwordPolicy);
 
 		PasswordPolicy existingPasswordPolicy =
-			PasswordPolicyLocalServiceUtil.
-				fetchPasswordPolicyByUuidAndCompanyId(
-					passwordPolicy.getUuid(),
-					portletDataContext.getCompanyId());
+			_passwordPolicyLocalService.fetchPasswordPolicyByUuidAndCompanyId(
+				passwordPolicy.getUuid(), portletDataContext.getCompanyId());
 
 		if (existingPasswordPolicy == null) {
 			existingPasswordPolicy =
-				PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
+				_passwordPolicyLocalService.fetchPasswordPolicy(
 					portletDataContext.getCompanyId(),
 					passwordPolicy.getName());
 		}
@@ -127,7 +125,7 @@ public class PasswordPolicyStagedModelDataHandler
 			serviceContext.setUuid(passwordPolicy.getUuid());
 
 			importedPasswordPolicy =
-				PasswordPolicyLocalServiceUtil.addPasswordPolicy(
+				_passwordPolicyLocalService.addPasswordPolicy(
 					userId, passwordPolicy.isDefaultPolicy(),
 					passwordPolicy.getName(), passwordPolicy.getDescription(),
 					passwordPolicy.getChangeable(),
@@ -152,7 +150,7 @@ public class PasswordPolicyStagedModelDataHandler
 		}
 		else {
 			importedPasswordPolicy =
-				PasswordPolicyLocalServiceUtil.updatePasswordPolicy(
+				_passwordPolicyLocalService.updatePasswordPolicy(
 					existingPasswordPolicy.getPasswordPolicyId(),
 					passwordPolicy.getName(), passwordPolicy.getDescription(),
 					passwordPolicy.isChangeable(),
@@ -179,5 +177,20 @@ public class PasswordPolicyStagedModelDataHandler
 		portletDataContext.importClassedModel(
 			passwordPolicy, importedPasswordPolicy);
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPasswordPolicyLocalService(
+		PasswordPolicyLocalService passwordPolicyLocalService) {
+
+		_passwordPolicyLocalService = passwordPolicyLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private PasswordPolicyLocalService _passwordPolicyLocalService;
 
 }

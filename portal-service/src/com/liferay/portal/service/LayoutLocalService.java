@@ -1039,6 +1039,10 @@ public interface LayoutLocalService extends BaseLocalService,
 		java.lang.String layoutUuid) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayouts(com.liferay.portal.model.Group group)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayouts(com.liferay.portal.model.Group group,
 		boolean privateLayout) throws PortalException;
 

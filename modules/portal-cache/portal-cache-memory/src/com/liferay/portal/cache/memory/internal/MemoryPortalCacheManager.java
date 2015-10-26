@@ -17,7 +17,6 @@ package com.liferay.portal.cache.memory.internal;
 import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
@@ -148,11 +147,6 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 				portalCacheListenerPropertiesSet,
 				portalCacheBootstrapLoaderProperties),
 			null);
-	}
-
-	@Override
-	protected String getPortalCacheManagerType() {
-		return PortalCacheManagerTypes.MEMORY;
 	}
 
 	@Override

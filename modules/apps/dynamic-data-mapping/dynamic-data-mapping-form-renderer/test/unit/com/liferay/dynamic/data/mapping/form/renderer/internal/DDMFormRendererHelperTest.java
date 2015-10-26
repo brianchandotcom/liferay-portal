@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -59,6 +61,7 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormEvaluator();
 		setUpDDMFormFieldTypeServicesTracker();
 		setUpLocaleUtil();
 		setUpStringUtil();
@@ -220,8 +223,7 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		Map<String, String> renderedDDMFormFieldsMap =
 			ddmFormFieldRendererHelper.getRenderedDDMFormFieldsMap();
 
-		Assert.assertEquals(2, renderedDDMFormFieldsMap.size());
-
+		Assert.assertEquals(7, renderedDDMFormFieldsMap.size());
 		Assert.assertEquals(
 			renderedNameDDMFormField, renderedDDMFormFieldsMap.get("Name"));
 		Assert.assertEquals(
@@ -276,6 +278,7 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
 			ddmForm, ddmFormRenderingContext);
 
+		ddmFormRendererHelper.setDDMFormEvaluator(_ddmFormEvaluator);
 		ddmFormRendererHelper.setDDMFormFieldTypeServicesTracker(
 			_ddmFormFieldTypeServicesTracker);
 
@@ -424,6 +427,16 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		return sb.toString();
 	}
 
+	protected void setUpDDMFormEvaluator() throws Exception {
+		when(
+			_ddmFormEvaluator.evaluate(
+				Matchers.any(DDMForm.class), Matchers.any(DDMFormValues.class),
+				Matchers.any(Locale.class))
+		).thenReturn(
+			new DDMFormEvaluationResult()
+		);
+	}
+
 	protected void setUpDDMFormFieldRenderer() throws Exception {
 		when(
 			_ddmFormFieldRenderer.render(
@@ -493,6 +506,9 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 	private static final String _PORTLET_NAMESPACE = "_NAMESPACE_";
 
 	private static final String _RANDOM_STRING = "_RANDOM_";
+
+	@Mock
+	private DDMFormEvaluator _ddmFormEvaluator;
 
 	@Mock
 	private DDMFormFieldRenderer _ddmFormFieldRenderer;

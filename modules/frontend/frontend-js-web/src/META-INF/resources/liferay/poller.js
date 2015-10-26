@@ -343,7 +343,7 @@ AUI.add(
 			url: _url
 		};
 
-		A.getDoc().on(
+		A.getWin().on(
 			'focus',
 			function(event) {
 				_metaData.startPolling = true;

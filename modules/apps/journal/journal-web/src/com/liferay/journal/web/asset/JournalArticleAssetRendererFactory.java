@@ -15,14 +15,14 @@
 package com.liferay.journal.web.asset;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
-import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
@@ -60,10 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"search.asset.type=com.liferay.journal.model.JournalArticle"
-	},
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = AssetRendererFactory.class
 )
 public class JournalArticleAssetRendererFactory
@@ -75,6 +73,7 @@ public class JournalArticleAssetRendererFactory
 		setClassName(JournalArticle.class.getName());
 		setLinkable(true);
 		setPortletId(JournalPortletKeys.JOURNAL);
+		setSearchable(true);
 		setSupportsClassTypes(true);
 	}
 
@@ -84,28 +83,27 @@ public class JournalArticleAssetRendererFactory
 		throws PortalException {
 
 		JournalArticle article =
-			JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
+			_journalArticleLocalService.fetchJournalArticle(classPK);
 
 		if (article == null) {
 			JournalArticleResource articleResource =
-				JournalArticleResourceLocalServiceUtil.getArticleResource(
-					classPK);
+				_journalArticleResourceLocalService.getArticleResource(classPK);
 
 			if (type == TYPE_LATEST_APPROVED) {
-				article = JournalArticleLocalServiceUtil.fetchDisplayArticle(
+				article = _journalArticleLocalService.fetchDisplayArticle(
 					articleResource.getGroupId(),
 					articleResource.getArticleId());
 			}
 
 			if (article == null) {
-				article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				article = _journalArticleLocalService.fetchLatestArticle(
 					articleResource.getGroupId(),
 					articleResource.getArticleId(),
 					WorkflowConstants.STATUS_ANY);
 			}
 
 			if ((article == null) && (type == TYPE_LATEST)) {
-				article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				article = _journalArticleLocalService.fetchLatestArticle(
 					classPK, WorkflowConstants.STATUS_ANY);
 			}
 		}
@@ -125,7 +123,7 @@ public class JournalArticleAssetRendererFactory
 		throws PortalException {
 
 		JournalArticle article =
-			JournalArticleServiceUtil.getDisplayArticleByUrlTitle(
+			_journalArticleService.getDisplayArticleByUrlTitle(
 				groupId, urlTitle);
 
 		return new JournalArticleAssetRenderer(article);
@@ -159,8 +157,8 @@ public class JournalArticleAssetRendererFactory
 	@Override
 	public String getTypeName(Locale locale, long subtypeId) {
 		try {
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getStructure(subtypeId);
+			DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+				subtypeId);
 
 			return ddmStructure.getName(locale);
 		}
@@ -174,14 +172,15 @@ public class JournalArticleAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			JournalPortletKeys.JOURNAL);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, JournalPortletKeys.JOURNAL, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 
 		if (classTypeId > 0) {
 			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchDDMStructure(classTypeId);
+				_ddmStructureLocalService.fetchDDMStructure(classTypeId);
 
 			if (ddmStructure != null) {
 				portletURL.setParameter(
@@ -240,9 +239,8 @@ public class JournalArticleAssetRendererFactory
 
 	@Override
 	public boolean isListable(long classPK) {
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.fetchLatestArticle(
-				classPK, WorkflowConstants.STATUS_APPROVED, true);
+		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
+			classPK, WorkflowConstants.STATUS_APPROVED, true);
 
 		if ((article != null) && article.isIndexable()) {
 			return true;
@@ -263,6 +261,40 @@ public class JournalArticleAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleResourceLocalService(
+		JournalArticleResourceLocalService journalArticleResourceLocalService) {
+
+		_journalArticleResourceLocalService =
+			journalArticleResourceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleService(
+		JournalArticleService journalArticleService) {
+
+		_journalArticleService = journalArticleService;
+	}
+
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
+	private JournalArticleService _journalArticleService;
 	private ServletContext _servletContext;
 
 }

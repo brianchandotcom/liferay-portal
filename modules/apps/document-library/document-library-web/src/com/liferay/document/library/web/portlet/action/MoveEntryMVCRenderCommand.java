@@ -51,6 +51,7 @@ public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			ActionUtil.getFileEntries(renderRequest);
+			ActionUtil.getFileEntry(renderRequest);
 			ActionUtil.getFileShortcuts(renderRequest);
 			ActionUtil.getFolders(renderRequest);
 		}

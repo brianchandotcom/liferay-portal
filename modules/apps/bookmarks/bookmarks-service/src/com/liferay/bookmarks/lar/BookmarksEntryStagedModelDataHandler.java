@@ -17,24 +17,19 @@ package com.liferay.bookmarks.lar;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -45,41 +40,6 @@ public class BookmarksEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<BookmarksEntry> {
 
 	public static final String[] CLASS_NAMES = {BookmarksEntry.class.getName()};
-
-	@Override
-	public void deleteStagedModel(BookmarksEntry entry) throws PortalException {
-		BookmarksEntryLocalServiceUtil.deleteEntry(entry);
-	}
-
-	@Override
-	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws PortalException {
-
-		BookmarksEntry entry = fetchStagedModelByUuidAndGroupId(uuid, groupId);
-
-		if (entry != null) {
-			deleteStagedModel(entry);
-		}
-	}
-
-	@Override
-	public BookmarksEntry fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return BookmarksEntryLocalServiceUtil.
-			fetchBookmarksEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	@Override
-	public List<BookmarksEntry> fetchStagedModelsByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return BookmarksEntryLocalServiceUtil.
-			getBookmarksEntriesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<BookmarksEntry>());
-	}
 
 	@Override
 	public String[] getClassNames() {
@@ -134,8 +94,6 @@ public class BookmarksEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, BookmarksEntry entry)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(entry.getUserUuid());
-
 		Map<Long, Long> folderIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				BookmarksFolder.class);
@@ -143,60 +101,45 @@ public class BookmarksEntryStagedModelDataHandler
 		long folderId = MapUtil.getLong(
 			folderIds, entry.getFolderId(), entry.getFolderId());
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			entry);
+		BookmarksEntry importedEntry = (BookmarksEntry)entry.clone();
 
-		BookmarksEntry importedEntry = null;
+		importedEntry.setGroupId(portletDataContext.getScopeGroupId());
+		importedEntry.setFolderId(folderId);
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksEntry existingEntry = fetchStagedModelByUuidAndGroupId(
+		BookmarksEntry existingEntry =
+			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				entry.getUuid(), portletDataContext.getScopeGroupId());
 
-			if (existingEntry == null) {
-				serviceContext.setUuid(entry.getUuid());
-
-				importedEntry = BookmarksEntryLocalServiceUtil.addEntry(
-					userId, portletDataContext.getScopeGroupId(), folderId,
-					entry.getName(), entry.getUrl(), entry.getDescription(),
-					serviceContext);
-			}
-			else {
-				importedEntry = BookmarksEntryLocalServiceUtil.updateEntry(
-					userId, existingEntry.getEntryId(),
-					portletDataContext.getScopeGroupId(), folderId,
-					entry.getName(), entry.getUrl(), entry.getDescription(),
-					serviceContext);
-			}
+		if (existingEntry == null) {
+			importedEntry =_stagedModelRepository.addStagedModel(
+				portletDataContext, importedEntry);
 		}
 		else {
-			importedEntry = BookmarksEntryLocalServiceUtil.addEntry(
-				userId, portletDataContext.getScopeGroupId(), folderId,
-				entry.getName(), entry.getUrl(), entry.getDescription(),
-				serviceContext);
+			entry.setEntryId(existingEntry.getEntryId());
+
+			importedEntry = _stagedModelRepository.updateStagedModel(
+				portletDataContext, importedEntry);
 		}
 
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
 
 	@Override
-	protected void doRestoreStagedModel(
-			PortletDataContext portletDataContext, BookmarksEntry entry)
-		throws Exception {
-
-		long userId = portletDataContext.getUserId(entry.getUserUuid());
-
-		BookmarksEntry existingEntry = fetchStagedModelByUuidAndGroupId(
-			entry.getUuid(), portletDataContext.getScopeGroupId());
-
-		if ((existingEntry == null) || !existingEntry.isInTrash()) {
-			return;
-		}
-
-		TrashHandler trashHandler = existingEntry.getTrashHandler();
-
-		if (trashHandler.isRestorable(existingEntry.getEntryId())) {
-			trashHandler.restoreTrashEntry(userId, existingEntry.getEntryId());
-		}
+	protected StagedModelRepository<BookmarksEntry> getStagedModelRepository() {
+		return _stagedModelRepository;
 	}
+
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
+		unbind = "-"
+	)
+	protected void setStagedModelRepository(
+		StagedModelRepository<BookmarksEntry> stagedModelRepository) {
+
+		_stagedModelRepository = stagedModelRepository;
+	}
+
+	private StagedModelRepository<BookmarksEntry> _stagedModelRepository;
 
 }

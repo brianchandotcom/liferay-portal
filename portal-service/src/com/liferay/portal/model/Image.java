@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Image service. Represents a row in the &quot;Image&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,23 @@ public interface Image extends ImageModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ImageImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Image, Long> IMAGE_ID_ACCESSOR = new Accessor<Image, Long>() {
+			@Override
+			public Long get(Image image) {
+				return image.getImageId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Image> getTypeClass() {
+				return Image.class;
+			}
+		};
+
 	public byte[] getTextObj();
 
 	public void setTextObj(byte[] textObj);

@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Ticket service. Represents a row in the &quot;Ticket&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,5 +34,22 @@ public interface Ticket extends TicketModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.TicketImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Ticket, Long> TICKET_ID_ACCESSOR = new Accessor<Ticket, Long>() {
+			@Override
+			public Long get(Ticket ticket) {
+				return ticket.getTicketId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Ticket> getTypeClass() {
+				return Ticket.class;
+			}
+		};
+
 	public boolean isExpired();
 }

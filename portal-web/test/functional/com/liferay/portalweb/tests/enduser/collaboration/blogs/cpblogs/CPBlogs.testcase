@@ -20,7 +20,7 @@
 		<var name="entryTitle2" value="Blogs Entry2 Title" />
 		<var name="entryTitle3" value="Blogs Entry3 Title" />
 
-		<task summary="Add a blogs entry called '${entryTitle1}' with content '${entryContent1}'.">
+		<task summary="Add a blogs entry called '${entryTitle1}' with content '${entryContent1}'">
 			<execute macro="Page#gotoContentCP">
 				<var name="portletName" value="Blogs" />
 			</execute>
@@ -31,7 +31,7 @@
 			</execute>
 		</task>
 
-		<task summary="Add a blogs entry called '${entryTitle2}' with content '${entryContent2}'.">
+		<task summary="Add a blogs entry called '${entryTitle2}' with content '${entryContent2}'">
 			<execute macro="Page#gotoContentCP">
 				<var name="portletName" value="Blogs" />
 			</execute>
@@ -42,7 +42,7 @@
 			</execute>
 		</task>
 
-		<task summary="Add a blogs entry called '${entryTitle3}' with content '${entryContent3}'.">
+		<task summary="Add a blogs entry called '${entryTitle3}' with content '${entryContent3}'">
 			<execute macro="Page#gotoContentCP">
 				<var name="portletName" value="Blogs" />
 			</execute>
@@ -53,7 +53,7 @@
 			</execute>
 		</task>
 
-		<task summary="Ensure blogs entry '${entryTitle1}' with content '${entryContent1}' can be found.">
+		<task summary="Ensure blogs entry '${entryTitle1}' with content '${entryContent1}' can be found">
 			<execute macro="Page#gotoContentCP">
 				<var name="portletName" value="Blogs" />
 			</execute>
@@ -68,7 +68,7 @@
 			</execute>
 		</task>
 
-		<task summary="Ensure blogs entry '${entryTitle2}' with content '${entryContent2}' can be found.">
+		<task summary="Ensure blogs entry '${entryTitle2}' with content '${entryContent2}' can be found">
 			<execute macro="Page#gotoContentCP">
 				<var name="portletName" value="Blogs" />
 			</execute>
@@ -83,7 +83,7 @@
 			</execute>
 		</task>
 
-		<task summary="Ensure blogs entry '${entryTitle3}' with content '${entryContent3}' can be found.">
+		<task summary="Ensure blogs entry '${entryTitle3}' with content '${entryContent3}' can be found">
 			<execute macro="Page#gotoContentCP">
 				<var name="portletName" value="Blogs" />
 			</execute>
@@ -123,45 +123,6 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryComment" priority="4">
-		<var name="entryComment" value="Blogs Entry Comment Body" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntryComment#add">
-			<var name="entryComment" value="${entryComment}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntryComment#viewCP">
-			<var name="commentCount" value="1" />
-			<var name="entryComment" value="${entryComment}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-	</command>
-
 	<command name="AddBlogsEntryContentNull" priority="4">
 		<var name="entryContent" value="" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -186,7 +147,7 @@
 
 	<command name="AddBlogsEntryTitleEscapeCharacters" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="&amp; &lt; &gt; &quot; Escape Characters Entry" />
+		<var name="entryTitle">&amp; &lt; &gt; &quot; Escape Characters Entry</var>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -259,7 +220,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntries" priority="4">
+	<command name="DeleteBlogsEntries" priority="5">
 		<var name="blogsEntryCounterList" value="1,2,3" />
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
@@ -311,7 +272,7 @@
 		</for>
 	</command>
 
-	<command name="DeleteBlogsEntryComment" priority="4">
+	<command name="DeleteBlogsEntryComment" priority="5">
 		<var name="entryComment" value="Blogs Entry Comment Body" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -365,7 +326,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryComment" priority="4">
+	<command name="EditBlogsEntryComment" priority="5">
 		<var name="entryComment" value="Blogs Entry Comment Body" />
 		<var name="entryCommentEdit" value="Blogs Entry Comment Body Edit" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -420,7 +381,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryContent" priority="4">
+	<command name="EditBlogsEntryContent" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -464,7 +425,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryTitle" priority="4">
+	<command name="EditBlogsEntryTitle" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
@@ -482,7 +443,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoEditCP">
+		<execute macro="BlogsNavigator#gotoEditCP">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
@@ -543,49 +504,6 @@
 		</execute>
 	</command>
 
-	<command name="RateBlogsEntry" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#rateThumbsUp">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewThumbsUp">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="voteCount" value="1" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewThumbsDown">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="voteCount" value="0" />
-		</execute>
-
-		<execute macro="BlogsEntry#rateThumbsDown">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewThumbsUp">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="voteCount" value="0" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewThumbsDown">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="voteCount" value="1" />
-		</execute>
-	</command>
-
 	<command name="SaveBlogsEntryDraft" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -602,10 +520,11 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryStatus" value="Draft" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewDraft">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -628,10 +547,11 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryStatus" value="Draft" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewDraft">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -731,26 +651,36 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryViewCount" priority="4">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
+	<command name="ViewBlogsEntryDraftWithCoverImage" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute macro="Blogs#addEntryWithUploadedCoverImage">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="navTab" value="Upload Image" />
+			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewViewCountCP">
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryViewCount" value="0" />
+		<execute macro="BlogsEntry#saveAsDraft" />
+
+		<execute function="Click" locator1="Icon#BACK" />
+
+		<execute macro="Blogs#viewDraftStatusViaAdmin">
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewViewCountCP">
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 	</command>
 
@@ -759,9 +689,15 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addWithNullCustomAbstract">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute function="Click" locator1="Button#COG" />
+
+		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
+
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid abstract." />
 	</command>
 </definition>

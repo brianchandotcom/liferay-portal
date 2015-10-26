@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.model.impl.WallEntryImpl;
 import com.liferay.social.networking.service.persistence.WallEntryFinder;
@@ -33,7 +32,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class WallEntryFinderImpl
-	extends BasePersistenceImpl<WallEntry> implements WallEntryFinder {
+	extends WallEntryFinderBaseImpl implements WallEntryFinder {
 
 	public static final String COUNT_BY_G1_G2_U1_U2 =
 		WallEntryFinder.class.getName() + ".countByG1_G2_U1_U2";

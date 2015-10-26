@@ -78,6 +78,26 @@
 		</for>
 	</command>
 
+	<command name="gotoBlogsCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="portletName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Blogs#PERMISSIONS" value1="Permissions" />
+
+		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="gotoBlogsEntryCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="pageName" value="${pageName}" />
@@ -105,31 +125,11 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<var name="key_entryTitle" value="${entryTitle}" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="PGBlogs#ENTRY_PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-	</command>
-
-	<command name="gotoBlogsCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="portletName" value="Blogs" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteScopeName" value="${siteScopeName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Blogs#PERMISSIONS" value1="Permissions" />
-
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="gotoConfigurationPG">
@@ -270,7 +270,7 @@
 
 		<execute function="Click" locator1="ControlMenu#EDIT_COG" />
 
-		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
+		<execute function="Click" locator1="SitePages#TOOLBAR_PERMISSIONS" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 	</command>

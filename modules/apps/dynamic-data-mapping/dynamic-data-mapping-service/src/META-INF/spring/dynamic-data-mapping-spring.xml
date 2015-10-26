@@ -77,10 +77,6 @@
 	<bean id="com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil" class="com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil">
 		<property name="DDMFormValuesToFieldsConverter" ref="com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter" />
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.util.DDMIndexer" class="com.liferay.dynamic.data.mapping.util.impl.DDMIndexerImpl" />
-	<bean id="com.liferay.dynamic.data.mapping.util.DDMIndexerUtil" class="com.liferay.dynamic.data.mapping.util.DDMIndexerUtil">
-		<property name="DDMIndexer" ref="com.liferay.dynamic.data.mapping.util.DDMIndexer" />
-	</bean>
 	<bean id="com.liferay.dynamic.data.mapping.util.DDMTemplateHelperUtil" class="com.liferay.dynamic.data.mapping.util.DDMTemplateHelperUtil">
 		<property name="DDMTemplateHelper">
 			<bean class="com.liferay.dynamic.data.mapping.util.impl.DDMTemplateHelperImpl" />

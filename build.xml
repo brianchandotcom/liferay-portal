@@ -115,7 +115,7 @@
 
 			<delete failonerror="false">
 				<fileset
-					dir="${liferay.home}/data/hsql"
+					dir="${liferay.home}/data/hypersonic"
 					includes="${database.name}.*"
 				/>
 			</delete>
@@ -291,7 +291,7 @@
 
 		<ant dir="portal-web" target="deploy" inheritAll="false" />
 
-		<copy todir="${liferay.home}/data/hsql">
+		<copy todir="${liferay.home}/data/hypersonic">
 			<fileset dir="sql">
 				<include name="${database.name}.properties" />
 				<include name="${database.name}.script" />
@@ -337,6 +337,7 @@
 		<gradle-execute dir="${project.dir}/modules" task="deploy">
 			<arg value="--parallel" />
 			<arg value="-Dportal.build=true" />
+			<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 		</gradle-execute>
 
 		<stopwatch action="elapsed" name="modules.stopwatch" />
@@ -359,7 +360,7 @@
 
 	<target name="deploy-additional-jars">
 		<copy todir="${app.server.lib.global.dir}">
-			<fileset dir="lib/development" includes="hsql.jar,jtds.jar,mysql.jar,postgresql.jar" />
+			<fileset dir="lib/development" includes="hsql.jar,mysql.jar,postgresql.jar" />
 			<fileset dir="lib/global" />
 		</copy>
 
@@ -543,6 +544,8 @@
 	<target name="install-portal-snapshots">
 		<install-portal-snapshot artifact.dir="portal-impl" artifact.name="portal-impl" />
 		<install-portal-snapshot artifact.dir="portal-service" artifact.name="portal-service" />
+		<install-portal-snapshot artifact.dir="portal-test" artifact.name="portal-test" />
+		<install-portal-snapshot artifact.dir="portal-test-internal" artifact.name="portal-test-internal" />
 		<install-portal-snapshot artifact.dir="portal-web" artifact.name="portal-web" />
 		<install-portal-snapshot artifact.dir="util-bridges" artifact.name="util-bridges" />
 		<install-portal-snapshot artifact.dir="util-java" artifact.name="util-java" />
@@ -820,13 +823,26 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="startServer.sh server1" />
-				</exec>
+				<if>
+					<os family="unix" />
+					<then>
+						<chmod file="${app.server.websphere.bin.dir}/startServer.sh" perm="a+x" />
 
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c startServer.bat server1" />
-				</exec>
+						<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh">
+							<arg value="-c" />
+							<arg value="./startServer.sh server1" />
+						</exec>
+					</then>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+								<arg value="/c" />
+								<arg value="startServer.bat server1" />
+							</exec>
+						</then>
+					</elseif>
+				</if>
 
 				<echo>Installing liferay-portal.war.</echo>
 
@@ -862,23 +878,36 @@ print AdminConfig.save()
 print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 				</echo>
 
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="wsadmin.sh -f ${basedir}/wsadmin.py" />
-				</exec>
+				<if>
+					<os family="unix" />
+					<then>
+						<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh">
+							<arg value="-c" />
+							<arg value="./wsadmin.sh -f ${basedir}/wsadmin.py" />
+						</exec>
 
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c wsadmin.bat -f ${basedir}\wsadmin.py" />
-				</exec>
+						<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh">
+							<arg value="-c" />
+							<arg value="./stopServer.sh server1" />
+						</exec>
+					</then>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+								<arg value="/c" />
+								<arg value="wsadmin.bat -f ${basedir}\wsadmin.py" />
+							</exec>
+
+							<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+								<arg value="/c" />
+								<arg value="stopServer.bat server1" />
+							</exec>
+						</then>
+					</elseif>
+				</if>
 
 				<delete file="wsadmin.py" />
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="stopServer.sh server1" />
-				</exec>
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c stopServer.bat server1" />
-				</exec>
 			</then>
 		</if>
 	</target>
@@ -912,28 +941,6 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		</gradle-execute>
 
 		<ant dir="portal-web" target="update-gradle-cache" inheritAll="false" />
-	</target>
-
-	<target name="update-plugins-to-svn-revision">
-		<loadfile property="svn.info.revision.valid" srcfile="svn-revision" />
-
-		<script classpathref="project.classpath" language="beanshell">
-			String svnInfoOutput = project.getProperty("svn.info.revision.valid");
-
-			int x = svnInfoOutput.indexOf("Revision: ");
-
-			x = svnInfoOutput.indexOf(" ", x);
-
-			int y = svnInfoOutput.indexOf("Username:", x);
-
-			String revision = svnInfoOutput.substring(x, y).trim();
-
-			project.setProperty("svn.info.revision", revision);
-		</script>
-
-		<exec dir="${lp.plugins.dir}" executable="cmd.exe" os="${os.windows}">
-			<arg line="/c svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.revision}" />
-		</exec>
 	</target>
 
 	<target name="validate-xml">

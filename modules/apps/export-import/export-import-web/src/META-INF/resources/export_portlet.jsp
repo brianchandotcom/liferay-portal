@@ -18,10 +18,6 @@
 
 <%
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
-
-PortletURL portletURL = currentURLObj;
-
-portletURL.setParameter("tabs3", "current-and-previous");
 %>
 
 <liferay-ui:tabs
@@ -32,7 +28,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 	<liferay-ui:section>
 
 		<%
-		int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName(), false);
+		int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), BackgroundTaskExecutorNames.PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR, false);
 		%>
 
 		<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
@@ -41,14 +37,22 @@ portletURL.setParameter("tabs3", "current-and-previous");
 			</liferay-util:include>
 		</div>
 
-		<portlet:actionURL name="exportImport" var="exportPortletURL">
+		<portlet:actionURL name="exportImport" var="exportURL">
 			<portlet:param name="mvcRenderCommandName" value="exportImport" />
 		</portlet:actionURL>
 
-		<aui:form action='<%= exportPortletURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
+		<liferay-portlet:renderURL var="redirectURL">
+			<portlet:param name="mvcRenderCommandName" value="exportImport" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+			<portlet:param name="tabs2" value="export" />
+			<portlet:param name="tabs3" value="current-and-previous" />
+			<portlet:param name="portletResource" value="<%= portletResource %>" />
+		</liferay-portlet:renderURL>
+
+		<aui:form action='<%= exportURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 			<aui:input name="tabs1" type="hidden" value="export_import" />
 			<aui:input name="tabs2" type="hidden" value="export" />
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 			<aui:input name="plid" type="hidden" value="<%= exportableLayout.getPlid() %>" />
 			<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
@@ -142,7 +146,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								<li class="tree-item">
 									<div class="hide" id="<portlet:namespace />range">
 										<aui:fieldset cssClass="portlet-data-section" label="date-range">
-											<aui:input data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
+											<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
 
 											<aui:input data-name='<%= LanguageUtil.get(request, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
 

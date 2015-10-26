@@ -51,9 +51,7 @@ public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to include " + getJspPath(), se);
-			}
+			_log.error("Unable to include " + getJspPath(), se);
 
 			return false;
 		}

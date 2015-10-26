@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface MBBan extends MBBanModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.messageboards.model.impl.MBBanImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<MBBan, Long> BAN_ID_ACCESSOR = new Accessor<MBBan, Long>() {
+			@Override
+			public Long get(MBBan mbBan) {
+				return mbBan.getBanId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<MBBan> getTypeClass() {
+				return MBBan.class;
+			}
+		};
 }

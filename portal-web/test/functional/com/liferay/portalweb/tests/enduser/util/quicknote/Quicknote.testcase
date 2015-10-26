@@ -13,7 +13,7 @@
 		</execute>
 	</set-up>
 
-	<command name="AddQuickNote" priority="4">
+	<command name="AddQuickNote" priority="2">
 		<var name="portletName" value="Quick Note" />
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />

@@ -18,7 +18,7 @@ import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.prototype.web.constants.LayoutPrototypePortletKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITES_ADMINISTRATION_SITES,
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_SITES,
 		"service.ranking:Integer=300"
 	},
 	service = PanelApp.class
@@ -41,11 +41,12 @@ public class PageTemplatesPanelApp extends BaseControlPanelEntryPanelApp {
 		return LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE + ")",
+		unbind = "-"
+	)
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

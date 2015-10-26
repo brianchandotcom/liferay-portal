@@ -14,8 +14,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_TITLE_HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_CONTENT</td>
 	<td>//div[@class='asset-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_PENCIL</td>
+	<td>//i[@class='icon-edit-sign']</td>
 	<td></td>
 </tr>
 <tr>

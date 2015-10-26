@@ -11,13 +11,13 @@
  */
 {template .options}
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		<span class="control-label">
+		<label class="control-label">
 			{$label}
 
 			{if $required}
 				<b>*</b>
 			{/if}
-		</span>
+		</label>
 
 		<input name="{$name}" type="hidden" />
 
@@ -48,27 +48,27 @@
 {template .option}
 	<div class="ddm-options-row lfr-form-row">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<label>Label</label>
 			</div>
 
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<label>Value</label>
 			</div>
 
-			<div class="col-md-4"></div>
+			<div class="col-md-2"></div>
 		</div>
 
 		<div class="row">
-			<div class="col-md-4">
-				<input class="ddm-options-field-label" name="label" type="text" value="{$label}" />
+			<div class="col-md-5">
+				<input class="ddm-options-field-label form-control" name="label" type="text" value="{$label}" />
 			</div>
 
-			<div class="col-md-4">
-				<input class="ddm-options-field-value" name="value" type="text" value="{$value}" />
+			<div class="col-md-5">
+				<input class="ddm-options-field-value form-control" name="value" type="text" value="{$value}" />
 			</div>
 
-			<div class="col-md-4"></div>
+			<div class="col-md-2"></div>
 		</div>
 	</div>
 {/template}

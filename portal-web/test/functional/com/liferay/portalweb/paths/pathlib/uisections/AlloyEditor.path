@@ -116,6 +116,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--TRACKBACK-->
+<tr>
+	<td>TRACKBACKS_TO_SEND</td>
+	<td>//input[contains(@id,'trackbacks')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONTENT_EDITOR-->
 <tr>
 	<td>CONTENT_EDITOR_SWITCH_ACE_EDITOR</td>

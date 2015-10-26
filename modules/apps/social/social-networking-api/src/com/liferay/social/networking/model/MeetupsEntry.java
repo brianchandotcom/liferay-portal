@@ -16,6 +16,7 @@ package com.liferay.social.networking.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface MeetupsEntry extends MeetupsEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.social.networking.model.impl.MeetupsEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<MeetupsEntry, Long> MEETUPS_ENTRY_ID_ACCESSOR = new Accessor<MeetupsEntry, Long>() {
+			@Override
+			public Long get(MeetupsEntry meetupsEntry) {
+				return meetupsEntry.getMeetupsEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<MeetupsEntry> getTypeClass() {
+				return MeetupsEntry.class;
+			}
+		};
 }

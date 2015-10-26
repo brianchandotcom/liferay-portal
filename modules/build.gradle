@@ -1,8 +1,5 @@
 import com.liferay.gradle.util.FileUtil
 
-import org.gradle.internal.hash.HashUtil
-import org.gradle.internal.hash.HashValue
-
 buildscript {
 	repositories {
 		if (!Boolean.getBoolean("maven.local.ignore")) {
@@ -10,12 +7,12 @@ buildscript {
 		}
 
 		maven {
-			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+			url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.13"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.21"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.1"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.0.2"
 	}
@@ -30,49 +27,6 @@ gradle.beforeProject {
 
 	if (buildGradleFile.exists() && project.parent) {
 		project.apply from: rootProject.file("build-module.gradle")
-	}
-}
-
-gradle.buildFinished {
-	if (System.getProperty("line.separator") == "\n") {
-		return;
-	}
-
-	ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
-
-	exec {
-		commandLine "git", "ls-files", "--exclude-standard", "--others"
-		standardOutput = byteArrayOutputStream
-		workingDir = gradle.gradleUserHomeDir
-	}
-
-	String output = byteArrayOutputStream.toString()
-
-	List<String> fileNames = output.readLines()
-
-	fileNames.retainAll {
-		it.endsWith ".pom"
-	}
-
-	fileNames.each {
-		String pomFileName ->
-
-		File pomFile = new File(gradle.gradleUserHomeDir, pomFileName)
-
-		ant.fixcrlf eol: "lf", file: pomFile, fixlast: false
-
-		HashValue hashValue = HashUtil.sha1(pomFile)
-
-		String hash = hashValue.asHexString()
-		File hashDir = pomFile.parentFile
-
-		if (hashDir.name != hash) {
-			boolean success = hashDir.renameTo new File(hashDir.parentFile, hash)
-
-			if (!success) {
-				delete hashDir
-			}
-		}
 	}
 }
 
@@ -97,12 +51,12 @@ gradle.taskGraph.useFilter {
 		}
 	}
 	else if (task.name == "test") {
-		if (!_hasTestClasses(task.project, "test/unit")) {
+		if (!_hasTestClasses(task.project, "src/test/java") && !_hasTestClasses(task.project, "test/unit")) {
 			return false
 		}
 	}
 	else if (task.name == "testIntegration") {
-		if (!_hasTestClasses(task.project, "test/integration")) {
+		if (!_hasTestClasses(task.project, "src/testIntegration/java") && !_hasTestClasses(task.project, "test/integration")) {
 			return false
 		}
 	}

@@ -245,8 +245,6 @@ public interface PropsKeys {
 
 	public static final String BLOGS_IMAGE_MAX_SIZE = "blogs.image.max.size";
 
-	public static final String BLOGS_IMAGE_SMALL_MAX_SIZE = "blogs.image.small.max.size";
-
 	public static final String BLOGS_LINKBACK_EXCERPT_LENGTH = "blogs.linkback.excerpt.length";
 
 	public static final String BLOGS_PAGE_ABSTRACT_LENGTH = "blogs.page.abstract.length";
@@ -515,6 +513,10 @@ public interface PropsKeys {
 
 	public static final String DEFAULT_LOGOUT_PAGE_PATH = "default.logout.page.path";
 
+	public static final String DEFAULT_PORTLET_DECORATOR_CSS_CLASS = "default.portlet.decorator.css.class";
+
+	public static final String DEFAULT_PORTLET_DECORATOR_ID = "default.portlet.decorator.id";
+
 	public static final String DEFAULT_REGULAR_COLOR_SCHEME_ID = "default.regular.color.scheme.id";
 
 	public static final String DEFAULT_REGULAR_THEME_ID = "default.regular.theme.id";
@@ -749,9 +751,9 @@ public interface PropsKeys {
 
 	public static final String DL_TABS_VISIBLE = "dl.tabs.visible";
 
-	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
+	public static final String DL_WEBDAV_SUBSTITUTION_CHAR = "dl.webdav.substitution.char";
 
-	public static final String DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP = "dockbar.administrative.links.show.in.pop.up";
+	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
 
 	public static final String DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS = "dynamic.resource.servlet.allowed.paths";
 
@@ -944,6 +946,8 @@ public interface PropsKeys {
 	public static final String INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH = "index.sortable.text.fields.truncated.length";
 
 	public static final String INDEX_WITH_THREAD = "index.with.thread";
+
+	public static final String INDEXER_ENABLED = "indexer.enabled";
 
 	public static final String INTRABAND_IMPL = "intraband.impl";
 
@@ -1513,10 +1517,6 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_WEB_GENERATOR_JSP_COMPILER_DEPENDENCIES = "module.framework.web.generator.jsp.compiler.dependencies";
 
-	public static final String MSN_LOGIN = "msn.login";
-
-	public static final String MSN_PASSWORD = "msn.password";
-
 	public static final String MULTI_VALUE_MAP = "multi.value.map.";
 
 	public static final String MY_SITES_DIRECTORY_SITE_EXCLUDES = "my.sites.directory.site.excludes";
@@ -1620,8 +1620,6 @@ public interface PropsKeys {
 	public static final String ORGANIZATIONS_FORM_UPDATE_MAIN = "organizations.form.update.main";
 
 	public static final String ORGANIZATIONS_FORM_UPDATE_MISCELLANEOUS = "organizations.form.update.miscellaneous";
-
-	public static final String ORGANIZATIONS_INDEXER_ENABLED = "organizations.indexer.enabled";
 
 	public static final String ORGANIZATIONS_MEMBERSHIP_STRICT = "organizations.membership.strict";
 
@@ -1758,10 +1756,6 @@ public interface PropsKeys {
 	public static final String POP_SERVER_NOTIFICATIONS_INTERVAL = "pop.server.notifications.interval";
 
 	public static final String POP_SERVER_SUBDOMAIN = "pop.server.subdomain";
-
-	public static final String PORTAL_CACHE_MANAGER_TYPE_MULTI_VM ="portal.cache.manager.type.multi.vm";
-
-	public static final String PORTAL_CACHE_MANAGER_TYPE_SINGLE_VM ="portal.cache.manager.type.single.vm";
 
 	public static final String PORTAL_FABRIC_AGENT_SELECTOR_CLASS = "portal.fabric.agent.selector.class";
 
@@ -1930,6 +1924,8 @@ public interface PropsKeys {
 	public static final String RESOURCE_REPOSITORIES_ROOT = "resource.repositories.root";
 
 	public static final String REST_PROXY_URL_PREFIXES_ALLOWED = "rest.proxy.url.prefixes.allowed";
+
+	public static final String RETRY_ADVICE_MAX_RETRIES = "retry.advice.max.retries";
 
 	public static final String ROBOTS_TXT_WITH_SITEMAP = "robots.txt.with.sitemap";
 
@@ -2353,8 +2349,6 @@ public interface PropsKeys {
 
 	public static final String USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE = "user.groups.copy.layouts.to.user.personal.site";
 
-	public static final String USER_GROUPS_INDEXER_ENABLED = "user.groups.indexer.enabled";
-
 	public static final String USER_GROUPS_NAME_ALLOW_NUMERIC = "user.groups.name.allow.numeric";
 
 	public static final String USER_GROUPS_SEARCH_WITH_INDEX = "user.groups.search.with.index";
@@ -2408,8 +2402,6 @@ public interface PropsKeys {
 	public static final String USERS_IMAGE_MAX_SIZE = "users.image.max.size";
 
 	public static final String USERS_IMAGE_MAX_WIDTH = "users.image.max.width";
-
-	public static final String USERS_INDEXER_ENABLED = "users.indexer.enabled";
 
 	public static final String USERS_LIST_VIEWS = "users.list.views";
 

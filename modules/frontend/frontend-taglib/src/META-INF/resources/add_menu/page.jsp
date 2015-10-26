@@ -33,7 +33,7 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 		}
 		%>
 
-		<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(addMenuItem.getLabel()) %>">
+		<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(addMenuItem.getLabel()) %>">
 			<span class="icon-plus"></span>
 		</a>
 
@@ -65,7 +65,7 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 				%>
 
 					<li>
-						<a href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
+						<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
 					</li>
 
 				<%

@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.TreeModel;
 
@@ -35,6 +36,23 @@ public interface DLFolder extends DLFolderModel, PersistedModel, TreeModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DLFolder, Long> FOLDER_ID_ACCESSOR = new Accessor<DLFolder, Long>() {
+			@Override
+			public Long get(DLFolder dlFolder) {
+				return dlFolder.getFolderId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DLFolder> getTypeClass() {
+				return DLFolder.class;
+			}
+		};
+
 	public java.util.List<java.lang.Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

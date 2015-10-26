@@ -17,8 +17,8 @@ package com.liferay.mobile.device.rules.web.portlet.action;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -28,6 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -50,7 +51,7 @@ public class EditRuleGroupInstanceMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "ruleGroupInstanceId");
 
 		MDRRuleGroupInstance ruleGroupInstance =
-			MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(
+			_mdrRuleGroupInstanceLocalService.fetchRuleGroupInstance(
 				ruleGroupInstanceId);
 
 		renderRequest.setAttribute(
@@ -59,7 +60,7 @@ public class EditRuleGroupInstanceMVCRenderCommand implements MVCRenderCommand {
 		long ruleGroupId = BeanParamUtil.getLong(
 			ruleGroupInstance, renderRequest, "ruleGroupId");
 
-		MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(
+		MDRRuleGroup ruleGroup = _mdrRuleGroupLocalService.fetchRuleGroup(
 			ruleGroupId);
 
 		renderRequest.setAttribute(
@@ -67,5 +68,22 @@ public class EditRuleGroupInstanceMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_rule_group_instance_priorities.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupLocalService(
+		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
+
+		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
+	}
+
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

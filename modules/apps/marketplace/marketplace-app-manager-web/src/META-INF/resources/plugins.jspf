@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+%>
+
 <table class="table table-condensed">
 	<thead>
 		<tr>
@@ -100,25 +104,20 @@
 						<liferay-ui:message key="portlet" />
 
 						<%
-						String controlPanelEntryCategory = portlet.getControlPanelEntryCategory();
+						String tooltipTitle = StringPool.BLANK;
+
+						if (panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.SITE_ADMINISTRATION)) {
+							tooltipTitle = "this-portlet-is-available-in-site-administration";
+						}
+						else if (panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.USER)) {
+							tooltipTitle = "this-portlet-is-available-in-my-account";
+						}
+						else if (panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.CONTROL_PANEL)) {
+							tooltipTitle = "this-portlet-is-available-in-the-control-panel";
+						}
 						%>
 
-						<c:if test="<%= Validator.isNotNull(controlPanelEntryCategory) %>">
-
-							<%
-							String tooltipTitle = StringPool.BLANK;
-
-							if (controlPanelEntryCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-								tooltipTitle = "this-portlet-is-available-in-site-administration";
-							}
-							else if (controlPanelEntryCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
-								tooltipTitle = "this-portlet-is-available-in-my-account";
-							}
-							else {
-								tooltipTitle = "this-portlet-is-available-in-the-control-panel";
-							}
-							%>
-
+						<c:if test="<%= Validator.isNotNull(tooltipTitle) %>">
 							<i class="icon-wrench" data-title="<liferay-ui:message key="<%= tooltipTitle %>" />"></i>
 						</c:if>
 					</td>

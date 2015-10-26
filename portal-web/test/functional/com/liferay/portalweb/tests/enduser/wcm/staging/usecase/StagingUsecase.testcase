@@ -135,7 +135,7 @@
 		</execute>
 	</command>
 
-	<command name="ActivateStagingWithWebContentLinkingDMImage" priority="4">
+	<command name="ActivateStagingWithWebContentLinkingDMImage" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteName" value="Liferay" />
@@ -192,7 +192,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteLivePage" priority="4">
+	<command name="DeleteLivePage" priority="5">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -586,7 +586,7 @@
 		</execute>
 	</command>
 
-	<command name="PublishCustomPortletTitle" priority="4">
+	<command name="PublishCustomPortletTitle" priority="3">
 		<execute test-case="super#AddSitePagesVariation" />
 
 		<var name="pageName" value="Staging Test Page" />
@@ -686,7 +686,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingAssetPublisher" priority="4">
+	<command name="StagingAssetPublisher" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -759,7 +759,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingBlogs" priority="4">
+	<command name="StagingBlogs" priority="3">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -840,7 +840,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
@@ -878,7 +878,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
@@ -967,7 +967,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry Content 2" />
 			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
@@ -989,7 +989,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingBlogsCP" priority="4">
+	<command name="StagingBlogsCP" priority="3">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -1021,9 +1021,9 @@
 		<execute macro="Staging#publishToLive" />
 	</command>
 
-	<command name="StagingDemoDocumentsAndMedia" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+	<command name="StagingDemoDocumentsAndMedia" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#FILE_UPLOADS" value1="File Uploads" />
@@ -1397,6 +1397,13 @@
 
 		<execute macro="Page#editPageLayoutColumn">
 			<var name="columnName" value="1_column" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Home" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Community Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
@@ -1859,9 +1866,11 @@
 			<var name="pageName" value="Wiki" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Home" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Community Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -1916,7 +1925,7 @@
 		<execute function="AssertTextEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 	</command>
 
-	<command name="StagingKaleoPageRevision" priority="4">
+	<command name="StagingKaleoPageRevision" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page Name 1" />
 			<var name="siteName" value="Community Site Name" />
@@ -1970,7 +1979,7 @@
 			<var name="siteScopeName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
@@ -2008,13 +2017,13 @@
 		</execute>
 	</command>
 
-	<command name="StagingKaleoWebContentLinkingUnapprovedContent" priority="4">
+	<command name="StagingKaleoWebContentLinkingUnapprovedContent" priority="3">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Workflow Configuration" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
@@ -2199,7 +2208,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
@@ -2491,7 +2500,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingLogo" priority="4">
+	<command name="StagingLogo" priority="3">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -2571,7 +2580,7 @@
 		<execute macro="Page#viewCustomLogoPG" />
 	</command>
 
-	<command name="StagingMultipleDM" priority="4">
+	<command name="StagingMultipleDM" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -2658,6 +2667,15 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Workflow#configureWebContentWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+		</execute>
+
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -2667,16 +2685,6 @@
 		<execute macro="Staging#activateStagingCP">
 			<var name="pageVersioningEnabled" value="true" />
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Workflow Configuration" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="Workflow#configureSiteWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2735,7 +2743,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_UNAPPROVED" value1="Web Content Title 2 is not approved." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="Web Content Title 2 is not approved." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -2789,18 +2797,16 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page 2" />
 			<var name="pageStaging" value="true" />
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#gotoPublishToLive" />
+		<execute macro="Staging#markAsReadyForPublication" />
 
-		<execute macro="Staging#configurePublishToLive">
-			<var name="contentDateRange" value="All" />
-		</execute>
+		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#publishToLive" />
 
@@ -2813,11 +2819,15 @@
 		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Content 2" />
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Web Content" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteScopeName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
 			<var name="webContentTitle" value="Web Content Title 2" />
 		</execute>
 
@@ -3101,7 +3111,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingPublishPage" priority="4">
+	<command name="StagingPublishPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -3279,7 +3289,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingRemoteDMViaGlobalScope" priority="4">
+	<command name="StagingRemoteDMViaGlobalScope" priority="3">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
@@ -3374,7 +3384,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingRemoteDocumentSubtypeViaAP" priority="4">
+	<command name="StagingRemoteDocumentSubtypeViaAP" priority="3">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -3483,7 +3493,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -3578,7 +3588,7 @@
 		<for list="Text,Text Box" param="structureFieldName">
 			<execute macro="DynamicDataMapping#viewField">
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -4240,7 +4250,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPublishDMWithModifiedTitle" priority="5">
+	<command name="ViewPublishDMWithModifiedTitle" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />

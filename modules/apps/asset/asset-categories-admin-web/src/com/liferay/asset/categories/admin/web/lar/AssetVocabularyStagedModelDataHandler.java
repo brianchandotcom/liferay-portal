@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -37,6 +37,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
@@ -54,7 +55,7 @@ public class AssetVocabularyStagedModelDataHandler
 	public void deleteStagedModel(AssetVocabulary vocabulary)
 		throws PortalException {
 
-		AssetVocabularyLocalServiceUtil.deleteVocabulary(vocabulary);
+		_assetVocabularyLocalService.deleteVocabulary(vocabulary);
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class AssetVocabularyStagedModelDataHandler
 	public AssetVocabulary fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return AssetVocabularyLocalServiceUtil.
+		return _assetVocabularyLocalService.
 			fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -82,7 +83,7 @@ public class AssetVocabularyStagedModelDataHandler
 	public List<AssetVocabulary> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return AssetVocabularyLocalServiceUtil.
+		return _assetVocabularyLocalService.
 			getAssetVocabulariesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<AssetVocabulary>());
@@ -178,7 +179,7 @@ public class AssetVocabularyStagedModelDataHandler
 
 			serviceContext.setUuid(vocabulary.getUuid());
 
-			importedVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
+			importedVocabulary = _assetVocabularyLocalService.addVocabulary(
 				userId, portletDataContext.getScopeGroupId(), StringPool.BLANK,
 				getVocabularyTitleMap(
 					portletDataContext.getScopeGroupId(), vocabulary, name),
@@ -190,13 +191,12 @@ public class AssetVocabularyStagedModelDataHandler
 				vocabulary.getUuid(), portletDataContext.getScopeGroupId(),
 				vocabulary.getName(), 2);
 
-			importedVocabulary =
-				AssetVocabularyLocalServiceUtil.updateVocabulary(
-					existingVocabulary.getVocabularyId(), StringPool.BLANK,
-					getVocabularyTitleMap(
-						portletDataContext.getScopeGroupId(), vocabulary, name),
-					vocabulary.getDescriptionMap(), vocabulary.getSettings(),
-					serviceContext);
+			importedVocabulary = _assetVocabularyLocalService.updateVocabulary(
+				existingVocabulary.getVocabularyId(), StringPool.BLANK,
+				getVocabularyTitleMap(
+					portletDataContext.getScopeGroupId(), vocabulary, name),
+				vocabulary.getDescriptionMap(), vocabulary.getSettings(),
+				serviceContext);
 		}
 
 		Map<Long, Long> vocabularyIds =
@@ -245,5 +245,14 @@ public class AssetVocabularyStagedModelDataHandler
 
 		return titleMap;
 	}
+
+	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.service.RepositoryEntryLocalService;
+import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -39,6 +39,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -53,8 +54,7 @@ public class RepositoryStagedModelDataHandler
 	public void deleteStagedModel(Repository repository)
 		throws PortalException {
 
-		RepositoryLocalServiceUtil.deleteRepository(
-			repository.getRepositoryId());
+		_repositoryLocalService.deleteRepository(repository.getRepositoryId());
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class RepositoryStagedModelDataHandler
 	public Repository fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return RepositoryLocalServiceUtil.fetchRepositoryByUuidAndGroupId(
+		return _repositoryLocalService.fetchRepositoryByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -81,7 +81,7 @@ public class RepositoryStagedModelDataHandler
 	public List<Repository> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return RepositoryLocalServiceUtil.getRepositoriesByUuidAndCompanyId(
+		return _repositoryLocalService.getRepositoriesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<Repository>());
 	}
@@ -104,7 +104,7 @@ public class RepositoryStagedModelDataHandler
 		Element repositoryElement = portletDataContext.getExportDataElement(
 			repository);
 
-		Folder folder = DLAppLocalServiceUtil.getFolder(
+		Folder folder = _dlAppLocalService.getFolder(
 			repository.getDlFolderId());
 
 		if (folder.getModel() instanceof DLFolder) {
@@ -119,7 +119,7 @@ public class RepositoryStagedModelDataHandler
 			repository);
 
 		List<RepositoryEntry> repositoryEntries =
-			RepositoryEntryLocalServiceUtil.getRepositoryEntries(
+			_repositoryEntryLocalService.getRepositoryEntries(
 				repository.getRepositoryId());
 
 		for (RepositoryEntry repositoryEntry : repositoryEntries) {
@@ -156,7 +156,7 @@ public class RepositoryStagedModelDataHandler
 
 				if (existingRepository == null) {
 					existingRepository =
-						RepositoryLocalServiceUtil.fetchRepository(
+						_repositoryLocalService.fetchRepository(
 							portletDataContext.getScopeGroupId(),
 							repository.getName());
 				}
@@ -164,18 +164,17 @@ public class RepositoryStagedModelDataHandler
 				if (existingRepository == null) {
 					serviceContext.setUuid(repository.getUuid());
 
-					importedRepository =
-						RepositoryLocalServiceUtil.addRepository(
-							userId, portletDataContext.getScopeGroupId(),
-							repository.getClassNameId(),
-							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-							repository.getName(), repository.getDescription(),
-							repository.getPortletId(),
-							repository.getTypeSettingsProperties(), hidden,
-							serviceContext);
+					importedRepository = _repositoryLocalService.addRepository(
+						userId, portletDataContext.getScopeGroupId(),
+						repository.getClassNameId(),
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						repository.getName(), repository.getDescription(),
+						repository.getPortletId(),
+						repository.getTypeSettingsProperties(), hidden,
+						serviceContext);
 				}
 				else {
-					RepositoryLocalServiceUtil.updateRepository(
+					_repositoryLocalService.updateRepository(
 						existingRepository.getRepositoryId(),
 						repository.getName(), repository.getDescription());
 
@@ -183,7 +182,7 @@ public class RepositoryStagedModelDataHandler
 				}
 			}
 			else {
-				importedRepository = RepositoryLocalServiceUtil.addRepository(
+				importedRepository = _repositoryLocalService.addRepository(
 					userId, portletDataContext.getScopeGroupId(),
 					repository.getClassNameId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -214,7 +213,30 @@ public class RepositoryStagedModelDataHandler
 		PortletDataContext portletDataContext, Repository stagedModel) {
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+
+		_repositoryEntryLocalService = repositoryEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+
+		_repositoryLocalService = repositoryLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RepositoryStagedModelDataHandler.class);
+
+	private DLAppLocalService _dlAppLocalService;
+	private RepositoryEntryLocalService _repositoryEntryLocalService;
+	private RepositoryLocalService _repositoryLocalService;
 
 }

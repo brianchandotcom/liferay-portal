@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,8 +57,9 @@ import java.util.Set;
  * @generated
  */
 public class PhonePersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -140,8 +142,6 @@ public class PhonePersistenceTest {
 
 		newPhone.setPrimary(RandomTestUtil.randomBoolean());
 
-		newPhone.setLastPublishDate(RandomTestUtil.nextDate());
-
 		_phones.add(_persistence.update(newPhone));
 
 		Phone existingPhone = _persistence.findByPrimaryKey(newPhone.getPrimaryKey());
@@ -168,9 +168,6 @@ public class PhonePersistenceTest {
 			newPhone.getExtension());
 		Assert.assertEquals(existingPhone.getTypeId(), newPhone.getTypeId());
 		Assert.assertEquals(existingPhone.getPrimary(), newPhone.getPrimary());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingPhone.getLastPublishDate()),
-			Time.getShortTimestamp(newPhone.getLastPublishDate()));
 	}
 
 	@Test
@@ -257,7 +254,7 @@ public class PhonePersistenceTest {
 			true, "uuid", true, "phoneId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "number", true, "extension",
-			true, "typeId", true, "primary", true, "lastPublishDate", true);
+			true, "typeId", true, "primary", true);
 	}
 
 	@Test
@@ -362,11 +359,9 @@ public class PhonePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PhoneLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Phone>() {
 				@Override
-				public void performAction(Object object) {
-					Phone phone = (Phone)object;
-
+				public void performAction(Phone phone) {
 					Assert.assertNotNull(phone);
 
 					count.increment();
@@ -480,8 +475,6 @@ public class PhonePersistenceTest {
 		phone.setTypeId(RandomTestUtil.nextLong());
 
 		phone.setPrimary(RandomTestUtil.randomBoolean());
-
-		phone.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_phones.add(_persistence.update(phone));
 

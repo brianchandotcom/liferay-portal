@@ -1,5 +1,5 @@
 <definition component-name="portal-util-misc">
-	<property name="testray.main.component.name" value="WCM" />
+	<property name="testray.main.component.name" value="IFrame Portlet" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

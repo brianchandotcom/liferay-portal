@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the PortalPreferences service. Represents a row in the &quot;PortalPreferences&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,4 +34,21 @@ public interface PortalPreferences extends PortalPreferencesModel, PersistedMode
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.PortalPreferencesImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<PortalPreferences, Long> PORTAL_PREFERENCES_ID_ACCESSOR =
+		new Accessor<PortalPreferences, Long>() {
+			@Override
+			public Long get(PortalPreferences portalPreferences) {
+				return portalPreferences.getPortalPreferencesId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<PortalPreferences> getTypeClass() {
+				return PortalPreferences.class;
+			}
+		};
 }

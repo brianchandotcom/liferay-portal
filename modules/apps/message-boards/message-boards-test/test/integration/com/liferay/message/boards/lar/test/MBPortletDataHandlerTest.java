@@ -34,7 +34,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -45,11 +44,8 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -172,27 +168,6 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		modelDeletionCounters.remove(manifestSummaryKey);
 
 		super.checkManifestSummary(expectedManifestSummary);
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		try {
-			Registry registry = RegistryUtil.getRegistry();
-
-			Collection<PortletDataHandler> portletDataHandlers =
-				registry.getServices(
-					PortletDataHandler.class,
-					"(javax.portlet.name=" +
-						MBPortletKeys.MESSAGE_BOARDS + ")");
-
-			Iterator<PortletDataHandler> iterator =
-				portletDataHandlers.iterator();
-
-			return iterator.next();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@Override

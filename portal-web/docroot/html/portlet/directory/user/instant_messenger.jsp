@@ -22,12 +22,11 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 String aim = selContact.getAimSn();
 String icq = selContact.getIcqSn();
 String jabber = selContact.getJabberSn();
-String msn = selContact.getMsnSn();
 String skype = selContact.getSkypeSn();
 String ym = selContact.getYmSn();
 %>
 
-<c:if test="<%= Validator.isNotNull(aim) || Validator.isNotNull(icq) || Validator.isNotNull(jabber) || Validator.isNotNull(msn) || Validator.isNotNull(skype) || Validator.isNotNull(ym) %>">
+<c:if test="<%= Validator.isNotNull(aim) || Validator.isNotNull(icq) || Validator.isNotNull(jabber) || Validator.isNotNull(skype) || Validator.isNotNull(ym) %>">
 	<h3 class="icon-comments"><liferay-ui:message key="instant-messenger" /></h3>
 
 	<dl class="property-list">
@@ -67,15 +66,6 @@ String ym = selContact.getYmSn();
 			<dd>
 				<%= HtmlUtil.escape(skype) %>
 				<a href="callto://<%= HtmlUtil.escapeAttribute(skype) %>"><img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="call-this-user" />" class="instant-messenger-logo" src="http://mystatus.skype.com/smallicon/<%= HtmlUtil.escapeAttribute(skype) %>" /></a>
-			</dd>
-		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(msn) %>">
-			<dt>
-				<liferay-ui:message key="windows-live-messenger" />
-			</dt>
-			<dd>
-				<%= HtmlUtil.escape(msn) %>
 			</dd>
 		</c:if>
 

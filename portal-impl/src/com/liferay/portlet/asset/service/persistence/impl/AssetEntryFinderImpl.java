@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -34,6 +35,8 @@ import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryFinderImpl;
+import com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Timestamp;
@@ -58,6 +61,9 @@ public class AssetEntryFinderImpl
 	public static final String FIND_BY_AND_TAG_IDS =
 		AssetEntryFinder.class.getName() + ".findByAndTagIds";
 
+	public static final String FIND_BY_CLASS_NAME_ID =
+		AssetEntryFinder.class.getName() + ".findByClassNameId";
+
 	@Override
 	public int countEntries(AssetEntryQuery entryQuery) {
 		Session session = null;
@@ -78,6 +84,80 @@ public class AssetEntryFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<AssetEntry> findByDLFileEntryC_T(
+		long classNameId, String treePath) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_CLASS_NAME_ID);
+
+			sql = StringUtil.replace(
+				sql, "[$JOIN$]", CustomSQLUtil.get(
+					DLFileEntryFinderImpl.JOIN_AE_BY_DL_FILE_ENTRY));
+			sql = StringUtil.replace(
+				sql, "[$WHERE$]", "DLFileEntry.treePath LIKE ? AND");
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(
+				CustomSQLUtil.keywords(treePath, WildcardMode.TRAILING)[0]);
+			qPos.add(classNameId);
+
+			q.addEntity(AssetEntryImpl.TABLE_NAME, AssetEntryImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<AssetEntry> findByDLFolderC_T(
+		long classNameId, String treePath) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_CLASS_NAME_ID);
+
+			sql = StringUtil.replace(
+				sql, "[$JOIN$]", CustomSQLUtil.get(
+					DLFolderFinderImpl.JOIN_AE_BY_DL_FOLDER));
+			sql = StringUtil.replace(
+				sql, "[$WHERE$]", "DLFolder.treePath LIKE ? AND");
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(
+				CustomSQLUtil.keywords(treePath, WildcardMode.TRAILING)[0]);
+			qPos.add(classNameId);
+
+			q.addEntity(AssetEntryImpl.TABLE_NAME, AssetEntryImpl.class);
+
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

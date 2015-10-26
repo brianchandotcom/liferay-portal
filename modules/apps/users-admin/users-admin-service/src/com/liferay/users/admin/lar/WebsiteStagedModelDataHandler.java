@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Website;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.WebsiteLocalServiceUtil;
+import com.liferay.portal.service.WebsiteLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Mendez Gonzalez
@@ -45,11 +46,10 @@ public class WebsiteStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		Website website =
-			WebsiteLocalServiceUtil.fetchWebsiteByUuidAndCompanyId(
-				uuid, group.getCompanyId());
+		Website website = _websiteLocalService.fetchWebsiteByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 
 		if (website != null) {
 			deleteStagedModel(website);
@@ -58,7 +58,7 @@ public class WebsiteStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(Website website) {
-		WebsiteLocalServiceUtil.deleteWebsite(website);
+		_websiteLocalService.deleteWebsite(website);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class WebsiteStagedModelDataHandler
 		List<Website> websites = new ArrayList<>();
 
 		websites.add(
-			WebsiteLocalServiceUtil.fetchWebsiteByUuidAndCompanyId(
+			_websiteLocalService.fetchWebsiteByUuidAndCompanyId(
 				uuid, companyId));
 
 		return websites;
@@ -103,7 +103,7 @@ public class WebsiteStagedModelDataHandler
 			website);
 
 		Website existingWebsite =
-			WebsiteLocalServiceUtil.fetchWebsiteByUuidAndCompanyId(
+			_websiteLocalService.fetchWebsiteByUuidAndCompanyId(
 				website.getUuid(), portletDataContext.getCompanyGroupId());
 
 		Website importedWebsite = null;
@@ -111,18 +111,33 @@ public class WebsiteStagedModelDataHandler
 		if (existingWebsite == null) {
 			serviceContext.setUuid(website.getUuid());
 
-			importedWebsite = WebsiteLocalServiceUtil.addWebsite(
+			importedWebsite = _websiteLocalService.addWebsite(
 				userId, website.getClassName(), website.getClassPK(),
 				website.getUrl(), website.getTypeId(), website.isPrimary(),
 				serviceContext);
 		}
 		else {
-			importedWebsite = WebsiteLocalServiceUtil.updateWebsite(
+			importedWebsite = _websiteLocalService.updateWebsite(
 				existingWebsite.getWebsiteId(), website.getUrl(),
 				website.getTypeId(), website.isPrimary());
 		}
 
 		portletDataContext.importClassedModel(website, importedWebsite);
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWebsiteLocalService(
+		WebsiteLocalService websiteLocalService) {
+
+		_websiteLocalService = websiteLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private WebsiteLocalService _websiteLocalService;
 
 }

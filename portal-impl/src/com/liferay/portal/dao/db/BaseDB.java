@@ -169,6 +169,16 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public int getMajorVersion() {
+		return _majorVersion;
+	}
+
+	@Override
+	public int getMinorVersion() {
+		return _minorVersion;
+	}
+
+	@Override
 	public String getTemplateFalse() {
 		return getTemplate()[2];
 	}
@@ -181,6 +191,11 @@ public abstract class BaseDB implements DB {
 	@Override
 	public String getType() {
 		return _type;
+	}
+
+	@Override
+	public String getVersionString() {
+		return _majorVersion + StringPool.PERIOD + _minorVersion;
 	}
 
 	@Override
@@ -201,11 +216,6 @@ public abstract class BaseDB implements DB {
 	@Override
 	public boolean isSupportsAlterColumnType() {
 		return _SUPPORTS_ALTER_COLUMN_TYPE;
-	}
-
-	@Override
-	public boolean isSupportsDateMilliseconds() {
-		return _SUPPORTS_DATE_MILLISECONDS;
 	}
 
 	@Override
@@ -509,8 +519,10 @@ public abstract class BaseDB implements DB {
 		addIndexes(con, indexesSQL, validIndexNames);
 	}
 
-	protected BaseDB(String type) {
+	protected BaseDB(String type, int majorVersion, int minorVersion) {
 		_type = type;
+		_majorVersion = majorVersion;
+		_minorVersion = minorVersion;
 
 		String[] actual = getTemplate();
 
@@ -1101,8 +1113,6 @@ public abstract class BaseDB implements DB {
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = true;
 
-	private static final boolean _SUPPORTS_DATE_MILLISECONDS = true;
-
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = true;
 
 	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = true;
@@ -1144,6 +1154,8 @@ public abstract class BaseDB implements DB {
 		_templatePattern = Pattern.compile(sb.toString());
 	}
 
+	private final int _majorVersion;
+	private final int _minorVersion;
 	private boolean _supportsStringCaseSensitiveQuery;
 	private final Map<String, String> _templateMap = new HashMap<>();
 	private final String _type;

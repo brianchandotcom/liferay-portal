@@ -6,20 +6,26 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Select" locator1="RelatedassetsConfiguration#FILTER_SELECT" value1="Categories" />
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+		<execute function="Click" locator1="Button#SELECT_CATEGORIES" />
+
+		<execute function="SelectFrameTop" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="Click" locator1="RelatedassetsConfiguration#CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
 		<execute function="Click" locator1="Button#CLOSE_IFRAME" />
+
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="AssertTextEquals" locator1="RelatedassetsConfiguration#CATEGORY" value1="${categoryName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="gotoBookmarksSelectionPG">

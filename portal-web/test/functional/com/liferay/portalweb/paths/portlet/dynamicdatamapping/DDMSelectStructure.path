@@ -46,13 +46,23 @@
 </tr>
 <!--DDM_STRUCTURE_TABLE-->
 <tr>
+	<td>DDM_STRUCTURE_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]//td[contains(@class,'entry-action')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_ELLIPSIS_1</td>
+	<td>xpath=(//td[contains(@class,'entry-action')]//span[contains(@class,'icon-ellipsis-vertical')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DDM_STRUCTURE_TABLE</td>
 	<td>//div[contains(@id,'ddmStructuresSearchContainer')]/table/tbody/tr[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ALL_CHECKBOX</td>
-	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//input[contains(@name,'allRowIds')]</td>
+	<td>//div[contains(@id,'DDMPortlet_managementBarContainerId')]//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

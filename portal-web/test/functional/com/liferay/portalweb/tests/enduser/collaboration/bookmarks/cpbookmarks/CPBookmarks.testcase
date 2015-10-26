@@ -11,7 +11,7 @@
 		<execute macro="BookmarksFolder#tearDownCP" />
 	</tear-down>
 
-	<command name="AddBookmark" priority="4">
+	<command name="AddBookmark" priority="5">
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -36,7 +36,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBookmarks" priority="4">
+	<command name="AddBookmarks" priority="5">
 		<var name="bookmark1Description" value="This is a test bookmark!" />
 		<var name="bookmark1Name" value="Test Bookmark" />
 		<var name="bookmark1URL" value="http://www.liferay.com" />
@@ -83,7 +83,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder" priority="4">
+	<command name="AddFolder" priority="5">
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 
@@ -121,7 +121,7 @@
 		<execute macro="Bookmark#addNullCP" />
 	</command>
 
-	<command name="AddNullFolder" priority="4">
+	<command name="AddNullFolder" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Bookmarks" />
 		</execute>
@@ -205,7 +205,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBookmark" priority="4">
+	<command name="DeleteBookmark" priority="5">
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -274,7 +274,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBookmark" priority="4">
+	<command name="EditBookmark" priority="5">
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -315,7 +315,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolder" priority="4">
+	<command name="EditFolder" priority="5">
 		<var name="editFolderDescription" value="This is a test bookmarks folder edit!" />
 		<var name="editFolderName" value="Test Bookmarks Folder Edit" />
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
@@ -378,7 +378,7 @@
 		</execute>
 	</command>
 
-	<command name="MergeSubfolderBookmarkToFolder" priority="4">
+	<command name="MergeSubfolderBookmarkToFolder" priority="3">
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -478,7 +478,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveToRecycleBinFolder" priority="4">
+	<command name="MoveToRecycleBinFolder" priority="5">
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 
@@ -510,7 +510,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBookmark" priority="4">
+	<command name="SearchBookmark" priority="3">
 		<var name="bookmark2Description" value="This is another test bookmark!" />
 		<var name="bookmark2Name" value="Test Bookmark 2" />
 		<var name="bookmark2URL" value="http://www.digg.com" />
@@ -546,7 +546,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBookmarks" priority="4">
+	<command name="SearchBookmarks" priority="3">
 		<var name="bookmark1Description" value="This is a test bookmark!" />
 		<var name="bookmark1Name" value="Test Bookmark" />
 		<var name="bookmark1URL" value="http://www.liferay.com" />
@@ -609,7 +609,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchNullBookmark" priority="4">
+	<command name="SearchNullBookmark" priority="3">
 		<var name="bookmark2Description" value="This is another test bookmark!" />
 		<var name="bookmark2Name" value="Test Bookmark 2" />
 		<var name="bookmark2URL" value="http://www.digg.com" />

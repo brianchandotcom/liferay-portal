@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.util.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -56,9 +56,13 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alexander Chow
  */
+@Component(immediate = true, service = DDMIndexer.class)
 public class DDMIndexerImpl implements DDMIndexer {
 
 	@Override
@@ -84,7 +88,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				for (Locale locale : locales) {
 					String name = encodeName(
-						ddmStructure.getStructureId(), field.getName(), locale);
+						ddmStructure.getStructureId(), field.getName(), locale,
+						indexType);
 
 					Serializable value = field.getValue(locale);
 
@@ -177,12 +182,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 							String[] stringArray = ArrayUtil.toStringArray(
 								jsonArray);
 
-							if (indexType.equals("keyword")) {
-								document.addKeywordSortable(name, stringArray);
-							}
-							else {
-								document.addTextSortable(name, stringArray);
-							}
+							document.addKeywordSortable(name, stringArray);
 						}
 						else {
 							if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {
@@ -217,11 +217,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 		String[] ddmStructureFieldNameParts = StringUtil.split(
 			ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
-			GetterUtil.getLong(ddmStructureFieldNameParts[1]));
+		DDMStructure structure = _ddmStructureLocalService.getStructure(
+			GetterUtil.getLong(ddmStructureFieldNameParts[2]));
 
 		String fieldName = StringUtil.replaceLast(
-			ddmStructureFieldNameParts[2],
+			ddmStructureFieldNameParts[3],
 			StringPool.UNDERLINE.concat(LocaleUtil.toLanguageId(locale)),
 			StringPool.BLANK);
 
@@ -246,19 +246,26 @@ public class DDMIndexerImpl implements DDMIndexer {
 	public String encodeName(
 		long ddmStructureId, String fieldName, Locale locale) {
 
-		StringBundler sb = new StringBundler(7);
+		String indexType = StringPool.BLANK;
 
-		sb.append(DDM_FIELD_PREFIX);
-		sb.append(ddmStructureId);
-		sb.append(DDM_FIELD_SEPARATOR);
-		sb.append(fieldName);
+		if (ddmStructureId > 0) {
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.fetchDDMStructure(ddmStructureId);
 
-		if (locale != null) {
-			sb.append(StringPool.UNDERLINE);
-			sb.append(LocaleUtil.toLanguageId(locale));
+			if (ddmStructure != null) {
+				try {
+					indexType = ddmStructure.getFieldProperty(
+						fieldName, "indexType");
+				}
+				catch (PortalException e) {
+					throw new IllegalArgumentException(
+						"Unable to obtain index tpe for field " + fieldName +
+							" and DDM structure ID " + ddmStructureId);
+				}
+			}
 		}
 
-		return sb.toString();
+		return encodeName(ddmStructureId, fieldName, locale, indexType);
 	}
 
 	@Override
@@ -344,6 +351,38 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return sb.toString();
 	}
 
+	protected String encodeName(
+		long ddmStructureId, String fieldName, Locale locale,
+		String indexType) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(DDM_FIELD_PREFIX);
+
+		if (Validator.isNotNull(indexType)) {
+			sb.append(indexType);
+			sb.append(DDM_FIELD_SEPARATOR);
+		}
+
+		sb.append(ddmStructureId);
+		sb.append(DDM_FIELD_SEPARATOR);
+		sb.append(fieldName);
+
+		if (locale != null) {
+			sb.append(StringPool.UNDERLINE);
+			sb.append(LocaleUtil.toLanguageId(locale));
+		}
+
+		return sb.toString();
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
 	protected Fields toFields(
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues) {
 
@@ -359,5 +398,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
+
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

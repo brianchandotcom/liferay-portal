@@ -204,5 +204,5 @@ request.setAttribute("view.jsp-showIconLabel", true);
 </c:if>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.asset_publisher.display_full_content_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_publisher_web.display.full_content_jsp");
 %>

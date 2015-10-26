@@ -40,6 +40,7 @@ import com.liferay.portlet.softwarecatalog.service.persistence.SCFrameworkVersio
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,8 +57,9 @@ import java.util.Set;
  * @generated
  */
 public class SCFrameworkVersionPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -328,11 +330,9 @@ public class SCFrameworkVersionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SCFrameworkVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SCFrameworkVersion>() {
 				@Override
-				public void performAction(Object object) {
-					SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)object;
-
+				public void performAction(SCFrameworkVersion scFrameworkVersion) {
 					Assert.assertNotNull(scFrameworkVersion);
 
 					count.increment();

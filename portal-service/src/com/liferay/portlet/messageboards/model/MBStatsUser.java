@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface MBStatsUser extends MBStatsUserModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<MBStatsUser, Long> STATS_USER_ID_ACCESSOR = new Accessor<MBStatsUser, Long>() {
+			@Override
+			public Long get(MBStatsUser mbStatsUser) {
+				return mbStatsUser.getStatsUserId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<MBStatsUser> getTypeClass() {
+				return MBStatsUser.class;
+			}
+		};
 }

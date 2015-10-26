@@ -23,9 +23,9 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.TeamLocalServiceUtil;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.TeamLocalService;
+import com.liferay.portal.service.UserGroupLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -35,6 +35,7 @@ import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Akos Thurzo
@@ -54,8 +55,7 @@ public class TeamStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Team team = TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(
-			uuid, groupId);
+		Team team = _teamLocalService.fetchTeamByUuidAndGroupId(uuid, groupId);
 
 		if (team != null) {
 			deleteStagedModel(team);
@@ -64,7 +64,7 @@ public class TeamStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(Team team) throws PortalException {
-		TeamLocalServiceUtil.deleteTeam(team);
+		_teamLocalService.deleteTeam(team);
 	}
 
 	@Override
@@ -74,8 +74,7 @@ public class TeamStagedModelDataHandler
 
 		Element teamElement = portletDataContext.getExportDataElement(team);
 
-		List<User> teamUsers = UserLocalServiceUtil.getTeamUsers(
-			team.getTeamId());
+		List<User> teamUsers = _userLocalService.getTeamUsers(team.getTeamId());
 
 		if (ListUtil.isNotEmpty(teamUsers)) {
 			for (User user : teamUsers) {
@@ -86,7 +85,7 @@ public class TeamStagedModelDataHandler
 		}
 
 		List<UserGroup> teamUserGroups =
-			UserGroupLocalServiceUtil.getTeamUserGroups(team.getTeamId());
+			_userGroupLocalService.getTeamUserGroups(team.getTeamId());
 
 		if (ListUtil.isNotEmpty(teamUserGroups)) {
 			for (UserGroup userGroup : teamUserGroups) {
@@ -102,14 +101,14 @@ public class TeamStagedModelDataHandler
 
 	@Override
 	public Team fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(uuid, groupId);
+		return _teamLocalService.fetchTeamByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
 	public List<Team> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return TeamLocalServiceUtil.getTeamsByUuidAndCompanyId(uuid, companyId);
+		return _teamLocalService.getTeamsByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -136,12 +135,12 @@ public class TeamStagedModelDataHandler
 
 			serviceContext.setUuid(team.getUuid());
 
-			importedTeam = TeamLocalServiceUtil.addTeam(
+			importedTeam = _teamLocalService.addTeam(
 				userId, portletDataContext.getScopeGroupId(), team.getName(),
 				team.getDescription(), serviceContext);
 		}
 		else {
-			importedTeam = TeamLocalServiceUtil.updateTeam(
+			importedTeam = _teamLocalService.updateTeam(
 				existingTeam.getTeamId(), team.getName(),
 				team.getDescription());
 		}
@@ -154,15 +153,14 @@ public class TeamStagedModelDataHandler
 				userElement.attributeValue("company-id"));
 			String uuid = userElement.attributeValue("uuid");
 
-			User user = UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
+			User user = _userLocalService.fetchUserByUuidAndCompanyId(
 				uuid, companyId);
 
 			if ((user != null) &&
-				!UserLocalServiceUtil.hasTeamUser(
+				!_userLocalService.hasTeamUser(
 					importedTeam.getTeamId(), user.getUserId())) {
 
-				UserLocalServiceUtil.addTeamUser(
-					importedTeam.getTeamId(), user);
+				_userLocalService.addTeamUser(importedTeam.getTeamId(), user);
 			}
 		}
 
@@ -175,14 +173,14 @@ public class TeamStagedModelDataHandler
 			String uuid = userGroupElement.attributeValue("uuid");
 
 			UserGroup userGroup =
-				UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
+				_userGroupLocalService.fetchUserGroupByUuidAndCompanyId(
 					uuid, companyId);
 
 			if ((userGroup != null) &&
-				!UserGroupLocalServiceUtil.hasTeamUserGroup(
+				!_userGroupLocalService.hasTeamUserGroup(
 					importedTeam.getTeamId(), userGroup.getUserGroupId())) {
 
-				UserGroupLocalServiceUtil.addTeamUserGroup(
+				_userGroupLocalService.addTeamUserGroup(
 					importedTeam.getTeamId(), userGroup);
 			}
 		}
@@ -197,7 +195,7 @@ public class TeamStagedModelDataHandler
 			return team;
 		}
 
-		return TeamLocalServiceUtil.fetchTeam(groupId, name);
+		return _teamLocalService.fetchTeam(groupId, name);
 	}
 
 	@Override
@@ -205,5 +203,26 @@ public class TeamStagedModelDataHandler
 			PortletDataContext portletDataContext, Team team)
 		throws PortletDataException {
 	}
+
+	@Reference(unbind = "-")
+	protected void setTeamLocalService(TeamLocalService teamLocalService) {
+		_teamLocalService = teamLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupLocalService(
+		UserGroupLocalService userGroupLocalService) {
+
+		_userGroupLocalService = userGroupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private TeamLocalService _teamLocalService;
+	private UserGroupLocalService _userGroupLocalService;
+	private UserLocalService _userLocalService;
 
 }

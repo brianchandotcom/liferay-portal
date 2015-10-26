@@ -23,6 +23,7 @@ public class PortletCategoryKeys {
 		PortletCategoryKeys.CONTROL_PANEL_APPS,
 		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION,
 		PortletCategoryKeys.CONTROL_PANEL_SITES,
+		PortletCategoryKeys.CONTROL_PANEL_SYSTEM,
 		PortletCategoryKeys.CONTROL_PANEL_USERS
 	};
 
@@ -50,6 +51,8 @@ public class PortletCategoryKeys {
 		"control_panel.configuration";
 
 	public static final String CONTROL_PANEL_SITES = "control_panel.sites";
+
+	public static final String CONTROL_PANEL_SYSTEM = "control_panel.system";
 
 	public static final String CONTROL_PANEL_USERS = "control_panel.users";
 

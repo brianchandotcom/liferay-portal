@@ -56,6 +56,7 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 				firstDayOfWeek="<%= cal.getFirstDayOfWeek() - 1 %>"
 				monthParam="schedulerStartDateMonth"
 				monthValue="<%= startMonth %>"
+				name="startDate"
 				yearParam="schedulerStartDateYear"
 				yearValue="<%= startYear %>"
 			/>
@@ -69,6 +70,7 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 				hourValue="<%= startHour %>"
 				minuteParam="schedulerStartDateMinute"
 				minuteValue="<%= startMinute %>"
+				name="startTime"
 			/>
 		</div>
 	</aui:field-wrapper>
@@ -85,6 +87,7 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 				firstDayOfWeek="<%= cal.getFirstDayOfWeek() - 1 %>"
 				monthParam="schedulerEndDateMonth"
 				monthValue="<%= endMonth %>"
+				name="endDate"
 				yearParam="schedulerEndDateYear"
 				yearValue="<%= endYear %>"
 			/>
@@ -98,6 +101,7 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 				hourValue="<%= endHour %>"
 				minuteParam="schedulerEndDateMinute"
 				minuteValue="<%= endMinute %>"
+				name="endTime"
 			/>
 		</div>
 	</aui:field-wrapper>

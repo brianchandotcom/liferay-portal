@@ -17,21 +17,15 @@ package com.liferay.bookmarks.lar;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
-import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
@@ -40,7 +34,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -98,12 +91,10 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		BookmarksFolderLocalServiceUtil.deleteFolders(
-			portletDataContext.getScopeGroupId());
-
-		BookmarksEntryLocalServiceUtil.deleteEntries(
-			portletDataContext.getScopeGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		_bookmarksEntryStagedModelRepository.deleteStagedModels(
+			portletDataContext);
+		_bookmarksFolderStagedModelRepository.deleteStagedModels(
+			portletDataContext);
 
 		return portletPreferences;
 	}
@@ -126,15 +117,15 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery folderActionableDynamicQuery =
-			BookmarksFolderLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+		ExportActionableDynamicQuery folderActionableDynamicQuery =
+			_bookmarksFolderStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		folderActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery entryActionableDynamicQuery =
-			BookmarksEntryLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+			_bookmarksEntryStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		entryActionableDynamicQuery.performActions();
 
@@ -184,81 +175,52 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery entryExportActionableDynamicQuery =
-			BookmarksEntryLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+			_bookmarksEntryStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		entryExportActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery folderExportActionableDynamicQuery =
-			BookmarksFolderLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+			_bookmarksFolderStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		folderExportActionableDynamicQuery.performCount();
 	}
 
-	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
+		unbind = "-"
+	)
+	protected void setBookmarksEntryStagedModelRepository(
+		StagedModelRepository<BookmarksEntry>
+			bookmarksEntryStagedModelRepository) {
 
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("rootFolderId", null));
-
-		if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-				rootFolderId);
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				portletDataContext.getCompanyId(), portletId);
-
-			portletDataContext.addReferenceElement(
-				portlet, portletDataContext.getExportDataRootElement(), folder,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(NAMESPACE, "entries"));
-		}
-
-		return portletPreferences;
+		_bookmarksEntryStagedModelRepository =
+			bookmarksEntryStagedModelRepository;
 	}
 
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
+		unbind = "-"
+	)
+	protected void setBookmarksFolderStagedModelRepository(
+		StagedModelRepository<BookmarksFolder>
+			bookmarksFolderStagedModelRepository) {
 
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("rootFolderId", null));
-
-		if (rootFolderId > 0) {
-			String rootFolderPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, BookmarksFolder.class.getName(),
-				rootFolderId);
-
-			BookmarksFolder folder =
-				(BookmarksFolder)portletDataContext.getZipEntryAsObject(
-					rootFolderPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folder);
-
-			Map<Long, Long> folderIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					BookmarksFolder.class);
-
-			rootFolderId = MapUtil.getLong(
-				folderIds, rootFolderId, rootFolderId);
-
-			portletPreferences.setValue(
-				"rootFolderId", String.valueOf(rootFolderId));
-		}
-
-		return portletPreferences;
+		_bookmarksFolderStagedModelRepository =
+			bookmarksFolderStagedModelRepository;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private StagedModelRepository<BookmarksEntry>
+		_bookmarksEntryStagedModelRepository;
+	private StagedModelRepository<BookmarksFolder>
+		_bookmarksFolderStagedModelRepository;
 
 }

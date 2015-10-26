@@ -445,7 +445,7 @@ public class GroupServiceWrapper implements GroupService,
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
-	String[], boolean, int)}
+	String[], int)}
 	*/
 	@Deprecated
 	@Override
@@ -566,7 +566,7 @@ public class GroupServiceWrapper implements GroupService,
 	*
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserSitesGroups(long, String[], boolean, int)}.
+	#getUserSitesGroups(long, String[], int)}.
 	* @param max the maximum number of groups to return
 	* @return the user's groups &quot;sites&quot;
 	* @throws PortalException if a portal exception occurred
@@ -576,15 +576,6 @@ public class GroupServiceWrapper implements GroupService,
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _groupService.getUserSitesGroups(classNames, max);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		long userId, java.lang.String[] classNames,
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _groupService.getUserSitesGroups(userId, classNames,
-			includeControlPanel, max);
 	}
 
 	/**
@@ -615,7 +606,7 @@ public class GroupServiceWrapper implements GroupService,
 	* @param userId the primary key of the user
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserSitesGroups(long, String[], boolean, int)}.
+	#getUserSitesGroups(long, String[], int)}.
 	* @param max the maximum number of groups to return
 	* @return the user's groups &quot;sites&quot;
 	* @throws PortalException if a portal exception occurred

@@ -118,5 +118,5 @@ if (assetEntryId > 0) {
 </c:if>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.taglib.ui.asset_links.page_jsp");
+private static Log _log = LogFactoryUtil.getLog("portal_web.docroot.html.taglib.ui.asset_links.page_jsp");
 %>

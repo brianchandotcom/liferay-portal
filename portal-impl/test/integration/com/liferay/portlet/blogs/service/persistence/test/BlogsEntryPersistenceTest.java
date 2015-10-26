@@ -43,6 +43,7 @@ import com.liferay.portlet.blogs.service.persistence.BlogsEntryUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,8 +60,9 @@ import java.util.Set;
  * @generated
  */
 public class BlogsEntryPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -593,11 +595,9 @@ public class BlogsEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = BlogsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BlogsEntry>() {
 				@Override
-				public void performAction(Object object) {
-					BlogsEntry blogsEntry = (BlogsEntry)object;
-
+				public void performAction(BlogsEntry blogsEntry) {
 					Assert.assertNotNull(blogsEntry);
 
 					count.increment();

@@ -30,7 +30,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWikiFrontPageChildPage" priority="4">
+	<command name="AddWikiFrontPageChildPage" priority="5">
 		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
 		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
@@ -73,10 +73,10 @@
 		</execute>
 
 		<execute macro="WikiPage#addChildPagePGViaWD">
-			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
-			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -84,17 +84,17 @@
 		</execute>
 
 		<execute macro="WikiPage#viewChildPagePGViaWD">
-			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
-			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 	</command>
 
 	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
 		<var name="welcomeToLiferay">
 			<![CDATA[
-				<p><a href=http://www.liferay.com>Welcome to LIFERAY</a><p>
+				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
 			]]>
 		</var>
 		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
@@ -140,6 +140,7 @@
 		</execute>
 
 		<execute macro="WikiPage#addFrontPageChildPageFormatHTMLViaWD">
+			<var name="welcomeToLiferay" value="${welcomeToLiferay}" />
 			<var name="wikiChildPageHTMLContent" value="${wikiChildPageHTMLContent}" />
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
 		</execute>
@@ -149,10 +150,19 @@
 		</execute>
 
 		<execute macro="WikiPage#viewChildPagePGViaWD">
-			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
-			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiChildPageContent" value="Welcome to LIFERAY" />
+			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="WikiPage#gotoChildPagePG">
+			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewChildPagePG">
+			<var name="wikiChildPageContent" value="Welcome to LIFERAY" />
+			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
 		</execute>
 	</command>
 

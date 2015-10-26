@@ -313,14 +313,12 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileEntryType>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(DLFileEntryType dlFileEntryType)
 					throws PortalException {
-					DLFileEntryType stagedModel = (DLFileEntryType)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						dlFileEntryType);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

@@ -22,13 +22,14 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.OrgLaborServiceUtil;
+import com.liferay.portal.service.OrgLaborService;
 import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,7 +49,7 @@ public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
 
 		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
 
-		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
+		_orgLaborService.deleteOrgLabor(orgLaborId);
 	}
 
 	@Override
@@ -81,6 +82,11 @@ public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setOrgLaborService(OrgLaborService orgLaborService) {
+		_orgLaborService = orgLaborService;
 	}
 
 	protected void updateOrgLabor(ActionRequest actionRequest)
@@ -117,7 +123,7 @@ public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add organization labor
 
-			OrgLaborServiceUtil.addOrgLabor(
+			_orgLaborService.addOrgLabor(
 				organizationId, typeId, sunOpen, sunClose, monOpen, monClose,
 				tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose,
 				friOpen, friClose, satOpen, satClose);
@@ -126,11 +132,13 @@ public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update organization labor
 
-			OrgLaborServiceUtil.updateOrgLabor(
+			_orgLaborService.updateOrgLabor(
 				orgLaborId, typeId, sunOpen, sunClose, monOpen, monClose,
 				tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose,
 				friOpen, friClose, satOpen, satClose);
 		}
 	}
+
+	private OrgLaborService _orgLaborService;
 
 }

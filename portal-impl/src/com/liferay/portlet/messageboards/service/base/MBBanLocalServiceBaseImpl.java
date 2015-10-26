@@ -298,14 +298,12 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBBan>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MBBan mbBan)
 					throws PortalException {
-					MBBan stagedModel = (MBBan)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						mbBan);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

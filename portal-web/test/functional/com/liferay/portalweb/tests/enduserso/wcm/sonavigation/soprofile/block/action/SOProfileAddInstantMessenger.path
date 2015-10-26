@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WINDOWS_LIVE_MESSENGER_FIELD</td>
-	<td>//input[contains(@id,'msnSn')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>YM_FIELD</td>
 	<td>//input[contains(@id,'ymSn')]</td>
 	<td></td>

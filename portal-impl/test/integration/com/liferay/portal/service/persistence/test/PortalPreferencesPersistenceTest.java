@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -55,8 +56,9 @@ import java.util.Set;
  * @generated
  */
 public class PortalPreferencesPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -279,11 +281,9 @@ public class PortalPreferencesPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PortalPreferencesLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PortalPreferences>() {
 				@Override
-				public void performAction(Object object) {
-					PortalPreferences portalPreferences = (PortalPreferences)object;
-
+				public void performAction(PortalPreferences portalPreferences) {
 					Assert.assertNotNull(portalPreferences);
 
 					count.increment();

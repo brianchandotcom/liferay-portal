@@ -18,6 +18,7 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortletCategoryUtil;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -65,7 +66,9 @@ public class PortletPanelAppAdapterServiceTrackerCustomizer
 		Dictionary<String, Object> panelAppProperties =
 			new HashMapDictionary<>();
 
-		panelAppProperties.put("panel.category.key", controlPanelCategory);
+		panelAppProperties.put(
+			"panel.category.key",
+			PortletCategoryUtil.getPortletCategoryKey(controlPanelCategory));
 
 		Integer serviceRanking = getServiceRanking(serviceReference);
 

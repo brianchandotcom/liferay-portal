@@ -66,6 +66,13 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
+	public com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException;
+
 	public void addBackgroundTaskAttachment(long userId, long backgroundTaskId,
 		java.lang.String fileName, java.io.File file) throws PortalException;
 

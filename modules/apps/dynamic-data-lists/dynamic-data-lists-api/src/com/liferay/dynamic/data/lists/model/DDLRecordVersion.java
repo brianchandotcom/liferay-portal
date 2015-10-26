@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,24 @@ public interface DDLRecordVersion extends DDLRecordVersionModel, PersistedModel 
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DDLRecordVersion, Long> RECORD_VERSION_ID_ACCESSOR =
+		new Accessor<DDLRecordVersion, Long>() {
+			@Override
+			public Long get(DDLRecordVersion ddlRecordVersion) {
+				return ddlRecordVersion.getRecordVersionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DDLRecordVersion> getTypeClass() {
+				return DDLRecordVersion.class;
+			}
+		};
+
 	public com.liferay.dynamic.data.lists.model.DDLRecord getRecord()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

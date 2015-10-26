@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  */
 public class UnicodeFormatter {
 
+	public static final String UNICODE_PREFIX = "\\u";
+
 	public static String bytesToHex(byte[] bytes) {
 		char[] array = new char[bytes.length * 2];
 
@@ -123,7 +125,7 @@ public class UnicodeFormatter {
 		char[] hexes = new char[4];
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(_UNICODE_PREFIX);
+			sb.append(UNICODE_PREFIX);
 			sb.append(_charToHex(array[i], hexes));
 		}
 
@@ -140,7 +142,7 @@ public class UnicodeFormatter {
 		char[] hexes = new char[4];
 
 		for (int i = 0; i < s.length(); i++) {
-			sb.append(_UNICODE_PREFIX);
+			sb.append(UNICODE_PREFIX);
 			sb.append(_charToHex(s.charAt(i), hexes));
 		}
 
@@ -175,8 +177,6 @@ public class UnicodeFormatter {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
 		'E', 'F'
 	};
-
-	private static final String _UNICODE_PREFIX = "\\u";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UnicodeFormatter.class);

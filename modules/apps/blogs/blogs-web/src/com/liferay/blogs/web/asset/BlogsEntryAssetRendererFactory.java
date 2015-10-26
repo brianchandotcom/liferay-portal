@@ -22,12 +22,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
+import com.liferay.portlet.blogs.service.BlogsEntryService;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
@@ -49,10 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
-		"search.asset.type=com.liferay.portlet.blogs.model.BlogsEntry"
-	},
+	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
 	service = AssetRendererFactory.class
 )
 public class BlogsEntryAssetRendererFactory
@@ -64,13 +62,14 @@ public class BlogsEntryAssetRendererFactory
 		setClassName(BlogsEntry.class.getName());
 		setLinkable(true);
 		setPortletId(BlogsPortletKeys.BLOGS);
+		setSearchable(true);
 	}
 
 	@Override
 	public AssetRenderer<BlogsEntry> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
 		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
 			new BlogsEntryAssetRenderer(entry);
@@ -86,7 +85,7 @@ public class BlogsEntryAssetRendererFactory
 			long groupId, String urlTitle)
 		throws PortalException {
 
-		BlogsEntry entry = BlogsEntryServiceUtil.getEntry(groupId, urlTitle);
+		BlogsEntry entry = _blogsEntryService.getEntry(groupId, urlTitle);
 
 		return new BlogsEntryAssetRenderer(entry);
 	}
@@ -111,8 +110,9 @@ public class BlogsEntryAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			BlogsPortletKeys.BLOGS);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, BlogsPortletKeys.BLOGS, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
 
@@ -167,6 +167,20 @@ public class BlogsEntryAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/blogs/blogs.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryService(BlogsEntryService blogsEntryService) {
+		_blogsEntryService = blogsEntryService;
+	}
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryService _blogsEntryService;
 	private ServletContext _servletContext;
 
 }

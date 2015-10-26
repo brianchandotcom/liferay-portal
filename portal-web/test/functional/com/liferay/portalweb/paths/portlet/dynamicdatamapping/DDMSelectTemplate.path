@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO</td>
+	<td>//form[contains(@id,'DDMPortlet')]//div[contains(@class,'empty-message')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -82,7 +87,7 @@
 <!--TEMPLATE_TABLE-->
 <tr>
 	<td>TEMPLATE_TABLE_ALL_CHECKBOX</td>
-	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//input[contains(@name,'allRowIds')]</td>
+	<td>//div[contains(@id,'DDMPortlet_managementBarContainerId')]//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -126,7 +131,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_ACTIONS</td>
+	<td>TEMPLATE_TABLE_ELLIPSIS</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[9]/div/a)[1]</td>
 	<td></td>
 </tr>
@@ -136,13 +141,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_ACTIONS_1</td>
+	<td>TEMPLATE_TABLE_ELLIPSIS_1</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[9]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_templateName}')]//button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_ddlTemplateName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

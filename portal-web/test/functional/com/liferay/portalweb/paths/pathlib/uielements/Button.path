@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>ADD_PRODUCER</td>
-	<td>//button[contains(.,'Add Producer')]</td>
+	<td>//a[contains(.,'Add Producer')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_PORTLET</td>
-	<td>//button[contains(.,'Add Portlet')]</td>
+	<td>//a[contains(.,'Add Portlet')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>BASIC_PREVIEW</td>
-	<td>//a[contains(.,'Basic Preview')]</td>
+	<td>//button[contains(.,'Basic Preview')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -271,6 +271,11 @@
 <tr>
 	<td>ENTER</td>
 	<td>//button[contains(.,'Enter')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXECUTE</td>
+	<td>//button[contains(.,'Execute')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -464,6 +469,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_ATTACHMENT</td>
+	<td>//div[contains(@id,'selectedFileName')]//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE</td>
 	<td>//button[contains(.,'Save')] | //div[@class='button-holder ']/button[contains(.,'Save')]</td>
 	<td></td>
@@ -510,7 +520,7 @@
 </tr>
 <tr>
 	<td>SELECT_CATEGORIES</td>
-	<td>//button[contains(.,'Select Categories')]</td>
+	<td>//button[contains(.,'Select Categories')] | //button[@title='Select Categories']</td>
 	<td></td>
 </tr>
 <tr>
@@ -530,7 +540,7 @@
 </tr>
 <tr>
 	<td>SELECT_SCOPE</td>
-	<td>//div[contains (@class,'btn-group')]/a[@title='Default']</td>
+	<td>//div[contains(@class,'btn-group')]/a[@title='Default']</td>
 	<td></td>
 </tr>
 <tr>
@@ -574,6 +584,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNDO</td>
+	<td>//a[contains(.,'Undo')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNLOCK</td>
 	<td>//button[contains(.,'Unlock')]</td>
 	<td></td>
@@ -595,7 +610,7 @@
 </tr>
 <tr>
 	<td>VIEW_HISTORY</td>
-	<td>//a[contains(.,'View History')]</td>
+	<td>//button[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.scheduler.CronTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1487,7 +1487,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), targetGroupId, ActionKeys.PUBLISH_STAGING);
 
-		Trigger trigger = new CronTrigger(
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
 			PortalUUIDUtil.generate(), groupName, schedulerStartDate,
 			schedulerEndDate, cronText);
 
@@ -1600,7 +1600,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), sourceGroupId, ActionKeys.PUBLISH_STAGING);
 
-		Trigger trigger = new CronTrigger(
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
 			PortalUUIDUtil.generate(), groupName, schedulerStartDate,
 			schedulerEndDate, cronText);
 

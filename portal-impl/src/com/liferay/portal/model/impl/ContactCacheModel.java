@@ -79,7 +79,7 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -129,8 +129,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		sb.append(icqSn);
 		sb.append(", jabberSn=");
 		sb.append(jabberSn);
-		sb.append(", msnSn=");
-		sb.append(msnSn);
 		sb.append(", mySpaceSn=");
 		sb.append(mySpaceSn);
 		sb.append(", skypeSn=");
@@ -263,13 +261,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 			contactImpl.setJabberSn(jabberSn);
 		}
 
-		if (msnSn == null) {
-			contactImpl.setMsnSn(StringPool.BLANK);
-		}
-		else {
-			contactImpl.setMsnSn(msnSn);
-		}
-
 		if (mySpaceSn == null) {
 			contactImpl.setMySpaceSn(StringPool.BLANK);
 		}
@@ -364,7 +355,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		facebookSn = objectInput.readUTF();
 		icqSn = objectInput.readUTF();
 		jabberSn = objectInput.readUTF();
-		msnSn = objectInput.readUTF();
 		mySpaceSn = objectInput.readUTF();
 		skypeSn = objectInput.readUTF();
 		twitterSn = objectInput.readUTF();
@@ -466,13 +456,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 			objectOutput.writeUTF(jabberSn);
 		}
 
-		if (msnSn == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(msnSn);
-		}
-
 		if (mySpaceSn == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -561,7 +544,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 	public String facebookSn;
 	public String icqSn;
 	public String jabberSn;
-	public String msnSn;
 	public String mySpaceSn;
 	public String skypeSn;
 	public String twitterSn;

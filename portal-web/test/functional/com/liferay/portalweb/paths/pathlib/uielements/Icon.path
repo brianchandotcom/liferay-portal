@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH</td>
-	<td>//a[contains(@class,'toggle-advanced') and i[@class='icon-search']]</td>
+	<td>//a[contains(@class,'toggle-advanced') and i[@class='caret']]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,12 +35,22 @@
 </tr>
 <tr>
 	<td>BODY_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@class,'portlet-content-container')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//div[contains(@class,'portlet') and contains(@class,'container')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BODY_VERTICAL_ELLIPSIS_2</td>
-	<td>xpath=(//div[contains(@class,'portlet-content-container')]//span[contains(@class,'icon-ellipsis-vertical')])[2]</td>
+	<td>xpath=(//div[contains(@class,'portlet') and contains(@class,'container')]//span[contains(@class,'icon-ellipsis-vertical')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARET_LEFT</td>
+	<td>//span[contains(@class,'icon-caret-left')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARET_RIGHT</td>
+	<td>//span[contains(@class,'icon-caret-right')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,6 +76,11 @@
 <tr>
 	<td>DESCRIPTIVE_VERTICAL_ELLIPSIS</td>
 	<td>//li[@data-title='${key_assetEntry}']//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS</td>
+	<td>//h2[contains(.,'${key_assetHeader}')]//..//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,12 +150,17 @@
 </tr>
 <tr>
 	<td>LIST_VERTICAL_ELLIPSIS</td>
-	<td>//tr[td[contains(.,'${key_assetEntry}')]]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//tr[td[contains(.,'${key_listEntry}')]]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOCALIZED_FLAG</td>
 	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE</td>
+	<td>//a[contains(@id,'merge')]//span[contains(@class,'icon-random')]</td>
 	<td></td>
 </tr>
 <tr>

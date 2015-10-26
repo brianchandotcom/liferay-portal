@@ -16,8 +16,8 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -37,6 +37,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.shopping.exception.NoSuchOrderException;
 import com.liferay.shopping.model.ShoppingOrder;
@@ -157,6 +158,27 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	@Override
 	public List<ShoppingOrder> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<ShoppingOrder> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping orders where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of shopping orders
+	 * @param end the upper bound of the range of shopping orders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching shopping orders
+	 */
+	@Override
+	public List<ShoppingOrder> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<ShoppingOrder> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -172,15 +194,19 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<ShoppingOrder> list = (List<ShoppingOrder>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingOrder> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ShoppingOrder shoppingOrder : list) {
-				if ((groupId != shoppingOrder.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ShoppingOrder>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ShoppingOrder shoppingOrder : list) {
+					if ((groupId != shoppingOrder.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -237,10 +263,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -839,8 +865,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -864,10 +889,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -985,7 +1010,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * Returns the shopping order where number = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param number the number
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	 */
 	@Override
@@ -995,7 +1020,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_NUMBER,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_NUMBER,
 					finderArgs, this);
 		}
 
@@ -1044,7 +1069,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 				List<ShoppingOrder> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_NUMBER,
 						finderArgs, list);
 				}
 				else {
@@ -1056,14 +1081,13 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 					if ((shoppingOrder.getNumber() == null) ||
 							!shoppingOrder.getNumber().equals(number)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_NUMBER,
 							finderArgs, shoppingOrder);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_NUMBER, finderArgs);
 
 				throw processException(e);
 			}
@@ -1106,8 +1130,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 		Object[] finderArgs = new Object[] { number };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1145,10 +1168,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1220,7 +1243,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * Returns the shopping order where ppTxnId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param ppTxnId the pp txn ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	 */
 	@Override
@@ -1231,7 +1254,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_PPTXNID,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_PPTXNID,
 					finderArgs, this);
 		}
 
@@ -1280,7 +1303,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 				List<ShoppingOrder> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
 						finderArgs, list);
 				}
 				else {
@@ -1299,13 +1322,13 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 					if ((shoppingOrder.getPpTxnId() == null) ||
 							!shoppingOrder.getPpTxnId().equals(ppTxnId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
 							finderArgs, shoppingOrder);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_PPTXNID,
 					finderArgs);
 
 				throw processException(e);
@@ -1349,8 +1372,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 		Object[] finderArgs = new Object[] { ppTxnId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1388,10 +1410,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1492,6 +1514,31 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	public List<ShoppingOrder> findByG_U_PPPS(long groupId, long userId,
 		String ppPaymentStatus, int start, int end,
 		OrderByComparator<ShoppingOrder> orderByComparator) {
+		return findByG_U_PPPS(groupId, userId, ppPaymentStatus, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping orders where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param ppPaymentStatus the pp payment status
+	 * @param start the lower bound of the range of shopping orders
+	 * @param end the upper bound of the range of shopping orders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching shopping orders
+	 */
+	@Override
+	public List<ShoppingOrder> findByG_U_PPPS(long groupId, long userId,
+		String ppPaymentStatus, int start, int end,
+		OrderByComparator<ShoppingOrder> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1511,18 +1558,22 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 				};
 		}
 
-		List<ShoppingOrder> list = (List<ShoppingOrder>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingOrder> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ShoppingOrder shoppingOrder : list) {
-				if ((groupId != shoppingOrder.getGroupId()) ||
-						(userId != shoppingOrder.getUserId()) ||
-						!Validator.equals(ppPaymentStatus,
-							shoppingOrder.getPpPaymentStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ShoppingOrder>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ShoppingOrder shoppingOrder : list) {
+					if ((groupId != shoppingOrder.getGroupId()) ||
+							(userId != shoppingOrder.getUserId()) ||
+							!Validator.equals(ppPaymentStatus,
+								shoppingOrder.getPpPaymentStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1601,10 +1652,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2317,8 +2368,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 		Object[] finderArgs = new Object[] { groupId, userId, ppPaymentStatus };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -2364,10 +2414,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2469,14 +2519,14 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public void cacheResult(ShoppingOrder shoppingOrder) {
-		EntityCacheUtil.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey(),
 			shoppingOrder);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_NUMBER,
 			new Object[] { shoppingOrder.getNumber() }, shoppingOrder);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
 			new Object[] { shoppingOrder.getPpTxnId() }, shoppingOrder);
 
 		shoppingOrder.resetOriginalValues();
@@ -2490,7 +2540,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	@Override
 	public void cacheResult(List<ShoppingOrder> shoppingOrders) {
 		for (ShoppingOrder shoppingOrder : shoppingOrders) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey()) == null) {
 				cacheResult(shoppingOrder);
@@ -2505,43 +2555,43 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * Clears the cache for all shopping orders.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(ShoppingOrderImpl.class);
+		entityCache.clearCache(ShoppingOrderImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the shopping order.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(ShoppingOrder shoppingOrder) {
-		EntityCacheUtil.removeResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((ShoppingOrderModelImpl)shoppingOrder);
 	}
 
 	@Override
 	public void clearCache(List<ShoppingOrder> shoppingOrders) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (ShoppingOrder shoppingOrder : shoppingOrders) {
-			EntityCacheUtil.removeResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey());
 
 			clearUniqueFindersCache((ShoppingOrderModelImpl)shoppingOrder);
@@ -2553,16 +2603,16 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		if (isNew) {
 			Object[] args = new Object[] { shoppingOrderModelImpl.getNumber() };
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
 				shoppingOrderModelImpl);
 
 			args = new Object[] { shoppingOrderModelImpl.getPpTxnId() };
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
 				shoppingOrderModelImpl);
 		}
 		else {
@@ -2570,9 +2620,9 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 					FINDER_PATH_FETCH_BY_NUMBER.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { shoppingOrderModelImpl.getNumber() };
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
 					shoppingOrderModelImpl);
 			}
 
@@ -2580,9 +2630,9 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 					FINDER_PATH_FETCH_BY_PPTXNID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { shoppingOrderModelImpl.getPpTxnId() };
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
 					shoppingOrderModelImpl);
 			}
 		}
@@ -2592,28 +2642,28 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		ShoppingOrderModelImpl shoppingOrderModelImpl) {
 		Object[] args = new Object[] { shoppingOrderModelImpl.getNumber() };
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
 
 		if ((shoppingOrderModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_NUMBER.getColumnBitmask()) != 0) {
 			args = new Object[] { shoppingOrderModelImpl.getOriginalNumber() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
 		}
 
 		args = new Object[] { shoppingOrderModelImpl.getPpTxnId() };
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
 
 		if ((shoppingOrderModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_PPTXNID.getColumnBitmask()) != 0) {
 			args = new Object[] { shoppingOrderModelImpl.getOriginalPpTxnId() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
 		}
 	}
 
@@ -2769,10 +2819,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !ShoppingOrderModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2782,14 +2832,14 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 						shoppingOrderModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { shoppingOrderModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -2801,8 +2851,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 						shoppingOrderModelImpl.getOriginalPpPaymentStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_PPPS, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_PPPS,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_PPPS, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_PPPS,
 					args);
 
 				args = new Object[] {
@@ -2811,13 +2861,13 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 						shoppingOrderModelImpl.getPpPaymentStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_PPPS, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_PPPS,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_PPPS, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_PPPS,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey(),
 			shoppingOrder, false);
 
@@ -2939,7 +2989,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder fetchByPrimaryKey(Serializable primaryKey) {
-		ShoppingOrder shoppingOrder = (ShoppingOrder)EntityCacheUtil.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+		ShoppingOrder shoppingOrder = (ShoppingOrder)entityCache.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingOrderImpl.class, primaryKey);
 
 		if (shoppingOrder == _nullShoppingOrder) {
@@ -2959,12 +3009,12 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 					cacheResult(shoppingOrder);
 				}
 				else {
-					EntityCacheUtil.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingOrderImpl.class, primaryKey, _nullShoppingOrder);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingOrderImpl.class, primaryKey);
 
 				throw processException(e);
@@ -3014,7 +3064,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ShoppingOrder shoppingOrder = (ShoppingOrder)EntityCacheUtil.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingOrder shoppingOrder = (ShoppingOrder)entityCache.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingOrderImpl.class, primaryKey);
 
 			if (shoppingOrder == null) {
@@ -3066,7 +3116,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingOrderImpl.class, primaryKey, _nullShoppingOrder);
 			}
 		}
@@ -3121,6 +3171,26 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	@Override
 	public List<ShoppingOrder> findAll(int start, int end,
 		OrderByComparator<ShoppingOrder> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the shopping orders.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of shopping orders
+	 * @param end the upper bound of the range of shopping orders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of shopping orders
+	 */
+	@Override
+	public List<ShoppingOrder> findAll(int start, int end,
+		OrderByComparator<ShoppingOrder> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3136,8 +3206,12 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<ShoppingOrder> list = (List<ShoppingOrder>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ShoppingOrder> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ShoppingOrder>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3184,10 +3258,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3217,7 +3291,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -3230,11 +3304,11 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -3264,12 +3338,16 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(ShoppingOrderImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(ShoppingOrderImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SHOPPINGORDER = "SELECT shoppingOrder FROM ShoppingOrder shoppingOrder";
 	private static final String _SQL_SELECT_SHOPPINGORDER_WHERE_PKS_IN = "SELECT shoppingOrder FROM ShoppingOrder shoppingOrder WHERE orderId IN (";
 	private static final String _SQL_SELECT_SHOPPINGORDER_WHERE = "SELECT shoppingOrder FROM ShoppingOrder shoppingOrder WHERE ";

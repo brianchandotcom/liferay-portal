@@ -122,17 +122,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 			<c:if test="<%= organization != null %>">
 
 				<%
-				long logoId = 0;
-
-				LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, false);
-				LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, true);
-
-				if (publicLayoutSet.getLogoId() > 0) {
-					logoId = publicLayoutSet.getLogoId();
-				}
-				else if (privateLayoutSet.getLogoId() > 0) {
-					logoId = privateLayoutSet.getLogoId();
-				}
+				long logoId = organization.getLogoId();
 				%>
 
 				<liferay-ui:logo-selector
@@ -140,6 +130,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 					defaultLogo="<%= logoId == 0 %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 					logoDisplaySelector=".organization-logo"
+					maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) %>"
 					tempImageFileName="<%= String.valueOf(groupId) %>"
 				/>
 			</c:if>

@@ -433,7 +433,7 @@ AUI.add(
 				valueFn: function() {
 					var instance = this;
 
-					var name = LiferayFormBuilderUtil.normalizeKey(instance.get('label'));
+					var name = LiferayFormBuilderUtil.normalizeKey(instance.get('label')) + instance._randomString(4);
 
 					while (UNIQUE_FIELD_NAMES_MAP.has(name)) {
 						name = A.FormBuilderField.buildFieldName(name);
@@ -460,6 +460,12 @@ AUI.add(
 
 			UNIQUE_FIELD_NAMES_MAP.remove(event.prevVal);
 			UNIQUE_FIELD_NAMES_MAP.put(event.newVal, instance);
+		};
+
+		LiferayFieldSupport.prototype._randomString = function(length) {
+			var randomString = Liferay.Util.randomInt().toString(36);
+
+			return randomString.substring(0, length);
 		};
 
 		var LocalizableFieldSupport = function() {

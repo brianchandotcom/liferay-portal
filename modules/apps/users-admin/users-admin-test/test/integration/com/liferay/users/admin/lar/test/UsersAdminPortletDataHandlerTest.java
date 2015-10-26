@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
-import com.liferay.users.admin.lar.UsersAdminPortletDataHandler;
 import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import org.junit.ClassRule;
@@ -44,11 +42,6 @@ public class UsersAdminPortletDataHandlerTest
 	@Override
 	protected void addStagedModels() throws Exception {
 		_organization = OrganizationTestUtil.addOrganization();
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new UsersAdminPortletDataHandler();
 	}
 
 	@Override

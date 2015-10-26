@@ -17,104 +17,56 @@
 <%@ include file="/html/taglib/ui/asset_metadata/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("liferay-ui:asset-metadata:className");
-long classPK = GetterUtil.getLong(request.getAttribute("liferay-ui:asset-metadata:classPK"));
-boolean filterByMetadata = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-metadata:filterByMetadata"));
+AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-ui:asset-metadata:assetEntry");
 String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metadata:metadataFields");
-
-AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
-
-AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 %>
 
-<div class="taglib-asset-metadata">
+<c:if test="<%= !ArrayUtil.isEmpty(metadataFields) %>">
+	<dl class="taglib-asset-metadata">
+		<aui:layout>
+			<c:choose>
+				<c:when test="<%= metadataFields.length == 1 %>">
 
-	<%
-	for (String metadataField : metadataFields) {
-		String iconCssClass = StringPool.BLANK;
-		String value = null;
+					<%
+					request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataFields[0]);
+					%>
 
-		if (metadataField.equals("create-date")) {
-			iconCssClass = "icon-calendar";
-			value = dateFormatDate.format(assetEntry.getCreateDate());
-		}
-		else if (metadataField.equals("modified-date")) {
-			iconCssClass = "icon-calendar";
-			value = dateFormatDate.format(assetEntry.getModifiedDate());
-		}
-		else if (metadataField.equals("publish-date")) {
-			iconCssClass = "icon-calendar";
+					<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
+				</c:when>
+				<c:otherwise>
+					<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
 
-			if (assetEntry.getPublishDate() == null) {
-				value = StringPool.BLANK;
-			}
-			else {
-				value = dateFormatDate.format(assetEntry.getPublishDate());
-			}
-		}
-		else if (metadataField.equals("expiration-date")) {
-			iconCssClass = "icon-calendar";
+						<%
+						request.setAttribute("liferay-ui:asset-metadata:metadataField", "author");
 
-			if (assetEntry.getExpirationDate() == null) {
-				value = StringPool.BLANK;
-			}
-			else {
-				value = dateFormatDate.format(assetEntry.getExpirationDate());
-			}
-		}
-		else if (metadataField.equals("priority")) {
-			iconCssClass = "icon-long-arrow-up";
+						metadataFields = ArrayUtil.remove(metadataFields, String.valueOf("author"));
+						%>
 
-			value = LanguageUtil.get(request, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
-		}
-		else if (metadataField.equals("author")) {
-			iconCssClass = "icon-user";
+						<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
+					</c:if>
 
-			String userName = PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName());
+					<liferay-util:buffer var="metadataPanelContent">
 
-			value = LanguageUtil.get(request, "by") + StringPool.SPACE + HtmlUtil.escape(userName);
-		}
-		else if (metadataField.equals("view-count")) {
-			int viewCount = assetEntry.getViewCount();
+						<%
+						for (String metadataField : metadataFields) {
+							request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataField);
+						%>
 
-			value = viewCount + StringPool.SPACE + LanguageUtil.get(request, (viewCount == 1) ? "view" : "views");
-		}
-		else if (metadataField.equals("categories")) {
-			value = "categories";
-		}
-		else if (metadataField.equals("tags")) {
-			value = "tags";
-		}
+							<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
 
-		if (Validator.isNotNull(value)) {
-	%>
+						<%
+						}
+						%>
 
-			<span class="metadata-entry <%= "metadata-" + metadataField %> <%= iconCssClass %>">
-				<c:choose>
-					<c:when test='<%= value.equals("categories") %>' >
-						<liferay-ui:asset-categories-summary
-							className="<%= assetEntry.getClassName() %>"
-							classPK="<%= assetEntry.getClassPK () %>"
-							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
-						/>
-					</c:when>
-					<c:when test='<%= value.equals("tags") %>' >
-						<liferay-ui:asset-tags-summary
-							className="<%= assetEntry.getClassName() %>"
-							classPK="<%= assetEntry.getClassPK () %>"
-							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<%= value %>
-					</c:otherwise>
-				</c:choose>
-			</span>
+					</liferay-util:buffer>
 
-	<%
-		}
-	}
-	%>
-
-</div>
+					<c:if test="<%= Validator.isNotNull(metadataPanelContent) %>">
+						<liferay-ui:panel collapsible="<%= true %>" cssClass="asset-metadata-panel" defaultState="closed" extended="<%= false %>" id='<%= "metadataPanel" + assetEntry.getEntryId() %>' persistState="<%= false %>" title="more-details">
+							<%= metadataPanelContent %>
+						</liferay-ui:panel>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+		</aui:layout>
+	</dl>
+</c:if>

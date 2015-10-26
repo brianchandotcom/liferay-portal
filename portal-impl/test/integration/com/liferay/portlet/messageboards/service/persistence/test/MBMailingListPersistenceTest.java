@@ -43,6 +43,7 @@ import com.liferay.portlet.messageboards.service.persistence.MBMailingListUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,8 +60,9 @@ import java.util.Set;
  * @generated
  */
 public class MBMailingListPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -410,11 +412,9 @@ public class MBMailingListPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MBMailingListLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBMailingList>() {
 				@Override
-				public void performAction(Object object) {
-					MBMailingList mbMailingList = (MBMailingList)object;
-
+				public void performAction(MBMailingList mbMailingList) {
 					Assert.assertNotNull(mbMailingList);
 
 					count.increment();

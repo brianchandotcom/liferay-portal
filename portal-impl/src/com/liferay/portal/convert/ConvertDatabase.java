@@ -86,7 +86,7 @@ public class ConvertDatabase extends BaseConvertProcess {
 
 		Dialect dialect = DialectDetector.getDialect(dataSource);
 
-		DB db = DBFactoryUtil.getDB(dialect);
+		DB db = DBFactoryUtil.getDB(dialect, dataSource);
 
 		List<String> modelNames = ModelHintsUtil.getModels();
 

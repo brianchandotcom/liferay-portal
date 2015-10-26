@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SITE_NAME</td>
-	<td>//h3[@class='header-title']/span[contains(.,'${key_childSiteName}')]</td>
+	<td>//ul[contains(@class,'breadcrumb')]/li/a[contains(.,'${key_childSiteName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -21,57 +21,57 @@
 <!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[1]/input</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[1]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_NAME</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[2]/a</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_TYPE</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[3]/a</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_MEMBERS_USERS</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[4]/div[@class='user-count']</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[4]/div[@class='user-count']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_MEMBERS_ORGS</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[4]/div[@class='organization-count']</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[4]/div[@class='organization-count']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_ACTIVE</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[5]</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_PENDING_REQUESTS</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[6]</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[6]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_TAGS</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[7]</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[7]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_ACTIONS</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[8]/div/a</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[8]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_ACTIONS_GENERIC</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr/td[8]/div/a</td>
+	<td>//table[contains(@class,'table-list')]//tr/td[8]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_CHILD_SITE</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[2]/div/a[2]</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[2]/div/a[2]</td>
 	<td></td>
 </tr>
 </tbody>

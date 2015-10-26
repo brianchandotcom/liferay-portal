@@ -97,11 +97,6 @@
 </tr>
 <!--USER_TABLE-->
 <tr>
-	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_TABLE_CHECKBOX_1</td>
 	<td>xpath=(//tr/td[1]/input[contains(@name,'rowIds')])[1]</td>
 	<td></td>

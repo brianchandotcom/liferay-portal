@@ -343,14 +343,11 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<User>() {
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-					User stagedModel = (User)object;
-
+				public void performAction(User user) throws PortalException {
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						user);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

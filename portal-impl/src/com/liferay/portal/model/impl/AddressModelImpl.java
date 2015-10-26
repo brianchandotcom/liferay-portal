@@ -91,8 +91,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			{ "countryId", Types.BIGINT },
 			{ "typeId", Types.BIGINT },
 			{ "mailing", Types.BOOLEAN },
-			{ "primary_", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "primary_", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -117,10 +116,9 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		TABLE_COLUMNS_MAP.put("typeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mailing", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Address (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Address (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Address";
 	public static final String ORDER_BY_JPQL = " ORDER BY address.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Address.createDate ASC";
@@ -178,7 +176,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		model.setTypeId(soapModel.getTypeId());
 		model.setMailing(soapModel.getMailing());
 		model.setPrimary(soapModel.getPrimary());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -263,7 +260,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		attributes.put("typeId", getTypeId());
 		attributes.put("mailing", getMailing());
 		attributes.put("primary", getPrimary());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -391,12 +387,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 		if (primary != null) {
 			setPrimary(primary);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -789,17 +779,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _originalPrimary;
 	}
 
-	@JSON
-	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -857,7 +836,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		addressImpl.setTypeId(getTypeId());
 		addressImpl.setMailing(getMailing());
 		addressImpl.setPrimary(getPrimary());
-		addressImpl.setLastPublishDate(getLastPublishDate());
 
 		addressImpl.resetOriginalValues();
 
@@ -1049,21 +1027,12 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 		addressCacheModel.primary = getPrimary();
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			addressCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			addressCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
 		return addressCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1105,8 +1074,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		sb.append(getMailing());
 		sb.append(", primary=");
 		sb.append(getPrimary());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1114,7 +1081,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Address");
@@ -1200,10 +1167,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
 		sb.append(getPrimary());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1248,7 +1211,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	private boolean _primary;
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
-	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private Address _escapedModel;
 }

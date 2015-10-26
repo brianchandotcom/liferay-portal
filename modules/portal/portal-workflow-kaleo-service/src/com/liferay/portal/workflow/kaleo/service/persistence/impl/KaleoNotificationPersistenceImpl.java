@@ -16,8 +16,8 @@ package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -33,6 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationImpl;
@@ -155,6 +156,27 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	@Override
 	public List<KaleoNotification> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator<KaleoNotification> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo notifications where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo notifications
+	 * @param end the upper bound of the range of kaleo notifications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo notifications
+	 */
+	@Override
+	public List<KaleoNotification> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<KaleoNotification> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -170,15 +192,19 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<KaleoNotification> list = (List<KaleoNotification>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoNotification> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoNotification kaleoNotification : list) {
-				if ((companyId != kaleoNotification.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoNotification>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoNotification kaleoNotification : list) {
+					if ((companyId != kaleoNotification.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -235,10 +261,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -529,8 +555,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -554,10 +579,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -641,6 +666,29 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	public List<KaleoNotification> findByKaleoDefinitionId(
 		long kaleoDefinitionId, int start, int end,
 		OrderByComparator<KaleoNotification> orderByComparator) {
+		return findByKaleoDefinitionId(kaleoDefinitionId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo notifications where kaleoDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID
+	 * @param start the lower bound of the range of kaleo notifications
+	 * @param end the upper bound of the range of kaleo notifications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo notifications
+	 */
+	@Override
+	public List<KaleoNotification> findByKaleoDefinitionId(
+		long kaleoDefinitionId, int start, int end,
+		OrderByComparator<KaleoNotification> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -660,15 +708,19 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 				};
 		}
 
-		List<KaleoNotification> list = (List<KaleoNotification>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoNotification> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoNotification kaleoNotification : list) {
-				if ((kaleoDefinitionId != kaleoNotification.getKaleoDefinitionId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoNotification>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoNotification kaleoNotification : list) {
+					if ((kaleoDefinitionId != kaleoNotification.getKaleoDefinitionId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -725,10 +777,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1026,8 +1078,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 		Object[] finderArgs = new Object[] { kaleoDefinitionId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1051,10 +1102,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1142,6 +1193,30 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	public List<KaleoNotification> findByKCN_KCPK(String kaleoClassName,
 		long kaleoClassPK, int start, int end,
 		OrderByComparator<KaleoNotification> orderByComparator) {
+		return findByKCN_KCPK(kaleoClassName, kaleoClassPK, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class p k
+	 * @param start the lower bound of the range of kaleo notifications
+	 * @param end the upper bound of the range of kaleo notifications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo notifications
+	 */
+	@Override
+	public List<KaleoNotification> findByKCN_KCPK(String kaleoClassName,
+		long kaleoClassPK, int start, int end,
+		OrderByComparator<KaleoNotification> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1161,17 +1236,21 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 				};
 		}
 
-		List<KaleoNotification> list = (List<KaleoNotification>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoNotification> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoNotification kaleoNotification : list) {
-				if (!Validator.equals(kaleoClassName,
-							kaleoNotification.getKaleoClassName()) ||
-						(kaleoClassPK != kaleoNotification.getKaleoClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoNotification>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoNotification kaleoNotification : list) {
+					if (!Validator.equals(kaleoClassName,
+								kaleoNotification.getKaleoClassName()) ||
+							(kaleoClassPK != kaleoNotification.getKaleoClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1246,10 +1325,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1577,8 +1656,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 		Object[] finderArgs = new Object[] { kaleoClassName, kaleoClassPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1620,10 +1698,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1726,6 +1804,31 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	public List<KaleoNotification> findByKCN_KCPK_ET(String kaleoClassName,
 		long kaleoClassPK, String executionType, int start, int end,
 		OrderByComparator<KaleoNotification> orderByComparator) {
+		return findByKCN_KCPK_ET(kaleoClassName, kaleoClassPK, executionType,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class p k
+	 * @param executionType the execution type
+	 * @param start the lower bound of the range of kaleo notifications
+	 * @param end the upper bound of the range of kaleo notifications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo notifications
+	 */
+	@Override
+	public List<KaleoNotification> findByKCN_KCPK_ET(String kaleoClassName,
+		long kaleoClassPK, String executionType, int start, int end,
+		OrderByComparator<KaleoNotification> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1747,19 +1850,23 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 				};
 		}
 
-		List<KaleoNotification> list = (List<KaleoNotification>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoNotification> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoNotification kaleoNotification : list) {
-				if (!Validator.equals(kaleoClassName,
-							kaleoNotification.getKaleoClassName()) ||
-						(kaleoClassPK != kaleoNotification.getKaleoClassPK()) ||
-						!Validator.equals(executionType,
-							kaleoNotification.getExecutionType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoNotification>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoNotification kaleoNotification : list) {
+					if (!Validator.equals(kaleoClassName,
+								kaleoNotification.getKaleoClassName()) ||
+							(kaleoClassPK != kaleoNotification.getKaleoClassPK()) ||
+							!Validator.equals(executionType,
+								kaleoNotification.getExecutionType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1852,10 +1959,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2222,8 +2329,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 				kaleoClassName, kaleoClassPK, executionType
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -2283,10 +2389,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2317,7 +2423,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	 */
 	@Override
 	public void cacheResult(KaleoNotification kaleoNotification) {
-		EntityCacheUtil.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoNotificationImpl.class, kaleoNotification.getPrimaryKey(),
 			kaleoNotification);
 
@@ -2332,7 +2438,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	@Override
 	public void cacheResult(List<KaleoNotification> kaleoNotifications) {
 		for (KaleoNotification kaleoNotification : kaleoNotifications) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoNotificationImpl.class,
 						kaleoNotification.getPrimaryKey()) == null) {
@@ -2348,41 +2454,41 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	 * Clears the cache for all kaleo notifications.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(KaleoNotificationImpl.class);
+		entityCache.clearCache(KaleoNotificationImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the kaleo notification.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(KaleoNotification kaleoNotification) {
-		EntityCacheUtil.removeResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoNotificationImpl.class, kaleoNotification.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<KaleoNotification> kaleoNotifications) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (KaleoNotification kaleoNotification : kaleoNotifications) {
-			EntityCacheUtil.removeResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoNotificationImpl.class, kaleoNotification.getPrimaryKey());
 		}
 	}
@@ -2541,10 +2647,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !KaleoNotificationModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2554,16 +2660,14 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 						kaleoNotificationModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { kaleoNotificationModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -2573,18 +2677,18 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 						kaleoNotificationModelImpl.getOriginalKaleoDefinitionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEODEFINITIONID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEODEFINITIONID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID,
 					args);
 
 				args = new Object[] {
 						kaleoNotificationModelImpl.getKaleoDefinitionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEODEFINITIONID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEODEFINITIONID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID,
 					args);
 			}
 
@@ -2595,8 +2699,8 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 						kaleoNotificationModelImpl.getOriginalKaleoClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KCN_KCPK,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KCN_KCPK,
 					args);
 
 				args = new Object[] {
@@ -2604,8 +2708,8 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 						kaleoNotificationModelImpl.getKaleoClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KCN_KCPK,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KCN_KCPK,
 					args);
 			}
 
@@ -2617,9 +2721,8 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 						kaleoNotificationModelImpl.getOriginalExecutionType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK_ET,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KCN_KCPK_ET,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK_ET, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KCN_KCPK_ET,
 					args);
 
 				args = new Object[] {
@@ -2628,14 +2731,13 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 						kaleoNotificationModelImpl.getExecutionType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK_ET,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KCN_KCPK_ET,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KCN_KCPK_ET, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KCN_KCPK_ET,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoNotificationImpl.class, kaleoNotification.getPrimaryKey(),
 			kaleoNotification, false);
 
@@ -2721,7 +2823,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	 */
 	@Override
 	public KaleoNotification fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoNotification kaleoNotification = (KaleoNotification)EntityCacheUtil.getResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+		KaleoNotification kaleoNotification = (KaleoNotification)entityCache.getResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoNotificationImpl.class, primaryKey);
 
 		if (kaleoNotification == _nullKaleoNotification) {
@@ -2741,13 +2843,13 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 					cacheResult(kaleoNotification);
 				}
 				else {
-					EntityCacheUtil.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoNotificationImpl.class, primaryKey,
 						_nullKaleoNotification);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoNotificationImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2797,7 +2899,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoNotification kaleoNotification = (KaleoNotification)EntityCacheUtil.getResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+			KaleoNotification kaleoNotification = (KaleoNotification)entityCache.getResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoNotificationImpl.class, primaryKey);
 
 			if (kaleoNotification == null) {
@@ -2849,7 +2951,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(KaleoNotificationModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoNotificationImpl.class, primaryKey,
 					_nullKaleoNotification);
 			}
@@ -2905,6 +3007,26 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	@Override
 	public List<KaleoNotification> findAll(int start, int end,
 		OrderByComparator<KaleoNotification> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo notifications.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of kaleo notifications
+	 * @param end the upper bound of the range of kaleo notifications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of kaleo notifications
+	 */
+	@Override
+	public List<KaleoNotification> findAll(int start, int end,
+		OrderByComparator<KaleoNotification> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2920,8 +3042,12 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<KaleoNotification> list = (List<KaleoNotification>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoNotification> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<KaleoNotification>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2968,10 +3094,10 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3001,7 +3127,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -3014,11 +3140,11 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -3043,12 +3169,16 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(KaleoNotificationImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(KaleoNotificationImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEONOTIFICATION = "SELECT kaleoNotification FROM KaleoNotification kaleoNotification";
 	private static final String _SQL_SELECT_KALEONOTIFICATION_WHERE_PKS_IN = "SELECT kaleoNotification FROM KaleoNotification kaleoNotification WHERE kaleoNotificationId IN (";
 	private static final String _SQL_SELECT_KALEONOTIFICATION_WHERE = "SELECT kaleoNotification FROM KaleoNotification kaleoNotification WHERE ";

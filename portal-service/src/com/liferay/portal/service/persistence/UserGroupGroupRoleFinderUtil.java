@@ -25,6 +25,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class UserGroupGroupRoleFinderUtil {
+	public static java.util.List<com.liferay.portal.model.UserGroupGroupRole> findByGroupRoleType(
+		long groupId, int roleType) {
+		return getFinder().findByGroupRoleType(groupId, roleType);
+	}
+
 	public static java.util.List<com.liferay.portal.model.UserGroupGroupRole> findByUserGroupsUsers(
 		long userId) {
 		return getFinder().findByUserGroupsUsers(userId);

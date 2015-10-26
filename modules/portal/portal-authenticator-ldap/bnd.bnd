@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Portal Authenticator LDAP
-Bundle-SymbolicName: com.liferay.portal.authenticator.ldap
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.authenticator.ldap.configuration.*;version=${plugin.full.version}
-Include-Resource: classes

@@ -42,6 +42,7 @@ import com.liferay.portlet.social.service.persistence.SocialActivityCounterUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,8 +59,9 @@ import java.util.Set;
  * @generated
  */
 public class SocialActivityCounterPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -359,11 +361,10 @@ public class SocialActivityCounterPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SocialActivityCounterLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SocialActivityCounter>() {
 				@Override
-				public void performAction(Object object) {
-					SocialActivityCounter socialActivityCounter = (SocialActivityCounter)object;
-
+				public void performAction(
+					SocialActivityCounter socialActivityCounter) {
 					Assert.assertNotNull(socialActivityCounter);
 
 					count.increment();

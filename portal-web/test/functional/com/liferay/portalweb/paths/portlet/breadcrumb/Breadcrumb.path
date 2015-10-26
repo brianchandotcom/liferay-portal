@@ -10,17 +10,17 @@
 <tbody>
 <tr>
 	<td>BREADCRUMB_ENTRY</td>
-	<td>//div[@class='portlet-content']//ul[@aria-label='Breadcrumb']</td>
+	<td>//ul[@aria-label='Breadcrumb']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_PAGE</td>
-	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'breadcrumb') and contains(@class,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
+	<td>//div[contains(@class,'portlet-content')]//ul[contains(@class,'breadcrumb') and contains(@class,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_PAGE_LINK</td>
-	<td>//div[contains(@class,'breadcrumb')]/ul/li/a[@href='${key_URL}']</td>
+	<td>//div[contains(@id,'breadcrumb')]/ul/li/a[@href='${key_URL}']</td>
 	<td></td>
 </tr>
 <tr>

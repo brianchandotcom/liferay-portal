@@ -228,12 +228,10 @@ public class ConvertDocumentLibrary
 
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
 				@Override
-				public void performAction(Object object) {
-					DLFileEntry dlFileEntry = (DLFileEntry)object;
-
+				public void performAction(DLFileEntry dlFileEntry) {
 					migrateDLFileEntry(
 						dlFileEntry.getCompanyId(),
 						dlFileEntry.getDataRepositoryId(),
@@ -284,12 +282,10 @@ public class ConvertDocumentLibrary
 			ImageLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Image>() {
 
 				@Override
-				public void performAction(Object object) {
-					Image image = (Image)object;
-
+				public void performAction(Image image) {
 					String fileName =
 						image.getImageId() + StringPool.PERIOD +
 							image.getType();
@@ -312,13 +308,11 @@ public class ConvertDocumentLibrary
 			MBMessageLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(MBMessage mbMessage)
 					throws PortalException {
-
-					MBMessage mbMessage = (MBMessage)object;
 
 					for (FileEntry fileEntry :
 							mbMessage.getAttachmentsFileEntries()) {

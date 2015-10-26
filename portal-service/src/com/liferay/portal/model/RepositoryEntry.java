@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the RepositoryEntry service. Represents a row in the &quot;RepositoryEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,4 +34,21 @@ public interface RepositoryEntry extends RepositoryEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.RepositoryEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<RepositoryEntry, Long> REPOSITORY_ENTRY_ID_ACCESSOR =
+		new Accessor<RepositoryEntry, Long>() {
+			@Override
+			public Long get(RepositoryEntry repositoryEntry) {
+				return repositoryEntry.getRepositoryEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<RepositoryEntry> getTypeClass() {
+				return RepositoryEntry.class;
+			}
+		};
 }

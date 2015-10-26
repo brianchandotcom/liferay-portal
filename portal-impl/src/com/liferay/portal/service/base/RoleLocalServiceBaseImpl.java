@@ -336,14 +336,11 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Role>() {
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-					Role stagedModel = (Role)object;
-
+				public void performAction(Role role) throws PortalException {
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						role);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

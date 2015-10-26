@@ -41,6 +41,7 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRe
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,8 +61,9 @@ import java.util.Set;
  */
 @RunWith(Arquillian.class)
 public class KaleoNotificationRecipientPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -367,11 +369,10 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoNotificationRecipientLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoNotificationRecipient>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoNotificationRecipient kaleoNotificationRecipient = (KaleoNotificationRecipient)object;
-
+				public void performAction(
+					KaleoNotificationRecipient kaleoNotificationRecipient) {
 					Assert.assertNotNull(kaleoNotificationRecipient);
 
 					count.increment();

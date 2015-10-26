@@ -21,14 +21,14 @@ DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_D
 
 boolean editable = ParamUtil.getBoolean(request, "editable", true);
 
-if (editable || portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
+if (editable || ddlDisplayContext.isAdminPortlet()) {
 	editable = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD) && DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
 }
 
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 %>
 
-<div class="lfr-spreadsheet-container">
+<div class="container-fluid-1280 lfr-spreadsheet-container">
 	<div id="<portlet:namespace />spreadsheet">
 		<div class="table-striped yui3-datatable yui3-widget" id="<portlet:namespace />dataTable">
 			<div class="yui3-datatable-content yui3-datatable-scrollable" id="<portlet:namespace />dataTableContent"></div>

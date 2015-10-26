@@ -1,10 +1,12 @@
 (function() {
 	var LiferayAUI = Liferay.AUI;
 
+	var combine = LiferayAUI.getCombine();
+
 	window.__CONFIG__ = {
 		basePath: '',
-		combine: LiferayAUI.getCombine(),
-		url: LiferayAUI.getComboPath()
+		combine: combine,
+		url: combine ? LiferayAUI.getComboPath() : themeDisplay.getPortalURL()
 	};
 
 	__CONFIG__.maps = Liferay.MAPS;

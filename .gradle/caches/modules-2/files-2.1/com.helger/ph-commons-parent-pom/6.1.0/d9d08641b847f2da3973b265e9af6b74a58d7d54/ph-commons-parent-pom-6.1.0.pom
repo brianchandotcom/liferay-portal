@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.helger</groupId>
+    <artifactId>parent-pom</artifactId>
+    <version>1.4.0</version>
+  </parent>
+  <artifactId>ph-commons-parent-pom</artifactId>
+  <version>6.1.0</version>
+  <packaging>pom</packaging>
+  <name>ph-commons-parent-pom</name>
+  <description>Base POM to build the ph-commons projects</description>
+  <url>https://github.com/phax/ph-commons</url>
+  <inceptionYear>2014</inceptionYear>
+ 
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <scm>
+    <connection>scm:git:git@github.com:phax/ph-commons.git</connection>
+    <developerConnection>scm:git:git@github.com:phax/ph-commons.git</developerConnection>
+    <url>http://github.com/phax/ph-commons</url>
+    <tag>ph-commons-parent-pom-6.1.0</tag>
+  </scm>
+
+  <organization>
+    <name>Philip Helger</name>
+    <url>http://www.helger.com</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>philip</id>
+      <name>Philip Helger</name>
+      <email>ph(at)helger.com</email>
+      <url>http://www.helger.com</url>
+    </developer>
+  </developers>
+  
+  <dependencyManagement>
+    <dependencies>
+    <!-- We need annotations and not jsr305 because SuppressFBWarnings annotation is required! -->
+    <!-- Version 3.0.0 is for Java 1.7+ -->
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>annotations</artifactId>
+      <version>2.0.3</version>
+    </dependency>
+    <!-- Xerces is required when handling XML 1.1!!! -->
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <version>1.4.01</version>
+    </dependency>
+
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-commons</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-jaxb</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  <modules>
+    <module>ph-commons</module>
+    <module>ph-jaxb</module>
+  </modules>
+</project>

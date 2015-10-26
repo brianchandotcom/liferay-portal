@@ -330,14 +330,12 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMTemplate>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(DDMTemplate ddmTemplate)
 					throws PortalException {
-					DDMTemplate stagedModel = (DDMTemplate)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						ddmTemplate);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

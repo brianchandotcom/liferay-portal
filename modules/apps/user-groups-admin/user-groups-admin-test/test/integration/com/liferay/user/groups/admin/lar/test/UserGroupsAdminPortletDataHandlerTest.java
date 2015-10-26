@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
-import com.liferay.user.groups.admin.web.lar.UserGroupsAdminPortletDataHandler;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -42,11 +40,6 @@ public class UserGroupsAdminPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new UserGroupsAdminPortletDataHandler();
 	}
 
 	@Override

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
@@ -44,6 +44,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -92,7 +93,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		long targetFileVersionId = ParamUtil.getLong(
 			renderRequest, "targetFileVersionId");
 
-		FileVersion sourceFileVersion = DLAppServiceUtil.getFileVersion(
+		FileVersion sourceFileVersion = _dlAppService.getFileVersion(
 			sourceFileVersionId);
 
 		InputStream sourceIs = sourceFileVersion.getContentStream(false);
@@ -109,7 +110,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 				sourceContent.getBytes(StringPool.UTF8));
 		}
 
-		FileVersion targetFileVersion = DLAppLocalServiceUtil.getFileVersion(
+		FileVersion targetFileVersion = _dlAppLocalService.getFileVersion(
 			targetFileVersionId);
 
 		InputStream targetIs = targetFileVersion.getContentStream(false);
@@ -165,5 +166,18 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 				targetFileVersion.getVersion());
 		renderRequest.setAttribute(WebKeys.DIFF_RESULTS, diffResults);
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
 
 }

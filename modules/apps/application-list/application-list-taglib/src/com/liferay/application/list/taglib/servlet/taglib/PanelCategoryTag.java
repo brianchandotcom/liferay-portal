@@ -19,7 +19,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
-import com.liferay.application.list.taglib.display.context.logic.PanelCategoryHelper;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;

@@ -152,6 +152,14 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
+		return _blogsEntryService.getGroupEntries(groupId, status, start, end,
+			obc);
+	}
+
+	@Override
 	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
 		int status) {
 		return _blogsEntryService.getGroupEntriesCount(groupId, displayDate,
@@ -173,6 +181,20 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		return _blogsEntryService.getGroupEntriesRSS(groupId, displayDate,
 			status, max, type, version, displayStyle, feedURL, entryURL,
 			themeDisplay);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
+		return _blogsEntryService.getGroupUserEntries(groupId, userId, status,
+			start, end, obc);
+	}
+
+	@Override
+	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
+		return _blogsEntryService.getGroupUserEntriesCount(groupId, userId,
+			status);
 	}
 
 	@Override

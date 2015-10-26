@@ -1,5 +1,3 @@
-@import "mixins";
-
 @include media-query(null, $screen-sm-max) {
 	.responsive-table-horizontal {
 		display: block;

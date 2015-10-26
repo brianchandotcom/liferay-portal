@@ -14,7 +14,6 @@
 
 package com.liferay.portal.repository.capabilities;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
@@ -50,8 +49,8 @@ public class LiferayProcessorCapability
 	}
 
 	@Override
-	public void copyPrevious(FileVersion fileVersion) throws PortalException {
-		registerDLProcessorCallback(fileVersion.getFileEntry(), fileVersion);
+	public void copy(FileEntry fileEntry, FileVersion fileVersion) {
+		registerDLProcessorCallback(fileEntry, fileVersion);
 	}
 
 	@Override

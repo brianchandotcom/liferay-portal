@@ -16,6 +16,7 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.model.ClassName;
@@ -56,6 +57,8 @@ public class TransactionInterceptorTest {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					DefaultTransactionExecutor.class.getName(), Level.ERROR)) {
+
+			CacheRegistryUtil.clear();
 
 			long classNameId = CounterLocalServiceUtil.increment();
 

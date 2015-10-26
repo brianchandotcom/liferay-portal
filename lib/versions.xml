@@ -18,7 +18,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/alloy-taglib.jar</file-name>
-				<version>1.1.5</version>
+				<version>1.1.6</version>
 				<project-name>Alloy TagLibs</project-name>
 				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
 				<licenses>
@@ -212,26 +212,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/firebird.jar</file-name>
-				<version></version>
-				<project-name>Firebird</project-name>
-				<project-url>http://www.firebirdsql.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Initial Developer's Public License 1.0</license-name>
-						<license-url>http://www.firebirdsql.org/en/initial-developer-s-public-license-version-1-0</license-url>
-					</license>
-					<license>
-						<license-name>Public Domain</license-name>
-						<license-url>http://en.wikipedia.org/wiki/Public_domain</license-url>
-					</license>
-					<license>
-						<license-name>Technology License From Sun Microsystems Inc. To Doug Lea</license-name>
-						<license-url>http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/sun-u.c.license.pdf</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/gson.jar</file-name>
 				<version>2.2.4</version>
 				<project-name>Gson</project-name>
@@ -281,18 +261,6 @@
 				<comments>
 					See LPS-58322.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/development/interbase.jar</file-name>
-				<version>6.01</version>
-				<project-name>InterBase</project-name>
-				<project-url>http://info.borland.com/devsupport/interbase/opensource</project-url>
-				<licenses>
-					<license>
-						<license-name>InterBase Public License 1.0 and Amendments</license-name>
-						<license-url>http://www.firebirdsql.org/en/interbase-public-license</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/development/j2h.jar</file-name>
@@ -513,18 +481,6 @@
 				<comments>
 					See LPS-27200.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/development/jtds.jar</file-name>
-				<version>1.3.1</version>
-				<project-name>jTDS</project-name>
-				<project-url>http://jtds.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/development/junit.jar</file-name>
@@ -820,18 +776,6 @@
 				<comments>
 					See LEP-5048 and LPS-15805.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/development/sap.jar</file-name>
-				<version></version>
-				<project-name>SAP DB / MaxDB</project-name>
-				<project-url>http://www.sapdb.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/development/saxpath.jar</file-name>
@@ -1505,7 +1449,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-compress.jar</file-name>
-				<version>1.8.1</version>
+				<version>1.9</version>
 				<project-name>Commons Compress</project-name>
 				<project-url>http://commons.apache.org/compress</project-url>
 				<licenses>
@@ -2553,7 +2497,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/metadata-extractor.jar</file-name>
-				<version>2.6.2</version>
+				<version>2.8.0</version>
 				<project-name>Metadata Extractor</project-name>
 				<project-url>http://www.drewnoakes.com/code/exif</project-url>
 				<licenses>
@@ -2608,19 +2552,6 @@
 					<license>
 						<license-name>LGPL 3.0</license-name>
 						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/msnm.jar</file-name>
-				<version>1.2.2</version>
-				<project-name>JMSN - Open source MSN messenger clone</project-name>
-				<project-url>http://jmsn.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-						<copyright-notice>Copyright (c) 2002 Jang-Ho Hwang. All rights reserved.</copyright-notice>
 					</license>
 				</licenses>
 			</library>
@@ -3291,7 +3222,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-core.jar</file-name>
-				<version>1.6</version>
+				<version>1.10</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -3303,7 +3234,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-parsers.jar</file-name>
-				<version>1.6</version>
+				<version>1.10</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -3312,9 +3243,6 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
-				<comments>
-					See LPS-49991.
-				</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/tomcat-jdbc.jar</file-name>

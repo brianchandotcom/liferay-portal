@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the User service. Represents a row in the &quot;User_&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,23 @@ public interface User extends UserModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.UserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<User, Long> USER_ID_ACCESSOR = new Accessor<User, Long>() {
+			@Override
+			public Long get(User user) {
+				return user.getUserId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<User> getTypeClass() {
+				return User.class;
+			}
+		};
+
 	public void addRemotePreference(
 		com.liferay.portal.kernel.util.RemotePreference remotePreference);
 
@@ -284,15 +303,7 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		int max) throws com.liferay.portal.kernel.exception.PortalException;
-
-	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
-		java.lang.String[] classNames, boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		java.lang.String[] classNames, int max)
@@ -306,8 +317,7 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(boolean,
-	int)}
+	* @deprecated As of 6.2.0, replaced by {@link User#getMySiteGroups(int)}
 	*/
 	@java.lang.Deprecated()
 	public java.util.List<com.liferay.portal.model.Group> getMySites(
@@ -323,7 +333,7 @@ public interface User extends UserModel, PersistedModel {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
-	boolean, int)}
+	int)}
 	*/
 	@java.lang.Deprecated()
 	public java.util.List<com.liferay.portal.model.Group> getMySites(

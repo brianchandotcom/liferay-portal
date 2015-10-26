@@ -131,6 +131,9 @@ AUI.add(
 							recurrence: schedulerEvent.get('recurrence'),
 							secondReminder: schedulerEvent.get('secondReminder'),
 							secondReminderType: schedulerEvent.get('secondReminderType'),
+							serviceContext: {
+								languageId: themeDisplay.getLanguageId()
+							},
 							startTimeDay: startDate.getDate(),
 							startTimeHour: startDate.getHours(),
 							startTimeMinute: startDate.getMinutes(),
@@ -265,6 +268,7 @@ AUI.add(
 						firstReminder: calendarBooking.firstReminder,
 						firstReminderType: calendarBooking.firstReminderType,
 						hasChildCalendarBookings: calendarBooking.hasChildCalendarBookings,
+						hasWorkflowInstanceLink: calendarBooking.hasWorkflowInstanceLink,
 						instanceIndex: calendarBooking.instanceIndex,
 						location: calendarBooking.location,
 						parentCalendarBookingId: calendarBooking.parentCalendarBookingId,
@@ -323,7 +327,7 @@ AUI.add(
 						'/calendar.calendarbooking/delete-calendar-booking-instance': {
 							allFollowing: allFollowing,
 							calendarBookingId: schedulerEvent.get('calendarBookingId'),
-							startTime: CalendarUtil.toUTC(schedulerEvent.get('startDate')).getTime()
+							instanceIndex: schedulerEvent.get('instanceIndex')
 						}
 					},
 					{
@@ -767,6 +771,9 @@ AUI.add(
 							recurrence: schedulerEvent.get('recurrence'),
 							secondReminder: schedulerEvent.get('secondReminder'),
 							secondReminderType: schedulerEvent.get('secondReminderType'),
+							serviceContext: {
+								languageId: themeDisplay.getLanguageId()
+							},
 							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content')))
 						}
 					},
@@ -824,6 +831,9 @@ AUI.add(
 							recurrence: schedulerEvent.get('recurrence'),
 							secondReminder: schedulerEvent.get('secondReminder'),
 							secondReminderType: schedulerEvent.get('secondReminderType'),
+							serviceContext: {
+								languageId: themeDisplay.getLanguageId()
+							},
 							startTimeDay: startDate.getDate(),
 							startTimeHour: startDate.getHours(),
 							startTimeMinute: startDate.getMinutes(),
@@ -955,6 +965,11 @@ AUI.add(
 					},
 
 					hasChildCalendarBookings: {
+						validator: isBoolean,
+						value: false
+					},
+
+					hasWorkflowInstanceLink: {
 						validator: isBoolean,
 						value: false
 					},
@@ -1455,7 +1470,12 @@ AUI.add(
 						A.each(
 							Liferay.CalendarUtil.availableCalendars,
 							function(item, index) {
-								item.reset(calendarEvents[index]);
+								item.reset(
+									calendarEvents[index],
+									{
+										skipSyncUI: true
+									}
+								);
 							}
 						);
 
@@ -1844,6 +1864,7 @@ AUI.add(
 								declineLinkEnabled: instance._hasWorkflowStatusPermission(schedulerEvent, CalendarWorkflow.STATUS_DENIED),
 								editing: editing,
 								endTime: templateData.endDate,
+								hasWorkflowInstanceLink:  schedulerEvent.get('hasWorkflowInstanceLink'),
 								instanceIndex: schedulerEvent.get('instanceIndex'),
 								maybeLinkEnabled: instance._hasWorkflowStatusPermission(schedulerEvent, CalendarWorkflow.STATUS_MAYBE),
 								permissions: permissions,
@@ -1896,10 +1917,12 @@ AUI.add(
 									render: true
 								}
 							],
-							'header'
+							'body'
 						);
 
-						instance.popover.headerNode.toggleClass('hide', !templateData.permissions.VIEW_BOOKING_DETAILS);
+						if (instance.popover.headerNode) {
+							instance.popover.headerNode.toggleClass('hide', !templateData.permissions.VIEW_BOOKING_DETAILS);
+						}
 
 						instance._showResources();
 					},

@@ -25,15 +25,16 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.UserGroupServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.OrganizationLocalService;
+import com.liferay.portal.service.UserGroupService;
+import com.liferay.portal.service.UserService;
 import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -88,14 +89,31 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupService(UserGroupService userGroupService) {
+		_userGroupService = userGroupService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
+	}
+
 	protected void updateOrganizationUserGroups(ActionRequest actionRequest)
 		throws Exception {
 
 		long organizationId = ParamUtil.getLong(
 			actionRequest, "organizationId");
 
-		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(organizationId);
+		Organization organization = _organizationLocalService.getOrganization(
+			organizationId);
 
 		long groupId = organization.getGroupId();
 
@@ -104,8 +122,8 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		long[] removeUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
-		UserGroupServiceUtil.addGroupUserGroups(groupId, addUserGroupIds);
-		UserGroupServiceUtil.unsetGroupUserGroups(groupId, removeUserGroupIds);
+		_userGroupService.addGroupUserGroups(groupId, addUserGroupIds);
+		_userGroupService.unsetGroupUserGroups(groupId, removeUserGroupIds);
 	}
 
 	protected void updateOrganizationUsers(ActionRequest actionRequest)
@@ -119,8 +137,12 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		UserServiceUtil.addOrganizationUsers(organizationId, addUserIds);
-		UserServiceUtil.unsetOrganizationUsers(organizationId, removeUserIds);
+		_userService.addOrganizationUsers(organizationId, addUserIds);
+		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
 	}
+
+	private OrganizationLocalService _organizationLocalService;
+	private UserGroupService _userGroupService;
+	private UserService _userService;
 
 }

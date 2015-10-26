@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE_CONTENT_LINK</td>
+	<td>//div[contains(@class,'alert-success')]//a[contains(.,'${key_assetName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN_LINK</td>
+	<td>//div[contains(@class,'alert-success')]//a[contains(.,'the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE_RESTORE_LOCATION</td>
 	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')] </td>
 	<td></td>

@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	test-classes/integration,\
-	../../../portal-impl/test/test-portal-impl.properties,\
 	@../../../util-java/util-java.jar!/com/liferay/util/Encryptor*.class
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))"

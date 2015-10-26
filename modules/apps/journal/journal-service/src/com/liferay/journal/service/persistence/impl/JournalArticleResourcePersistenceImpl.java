@@ -22,8 +22,8 @@ import com.liferay.journal.model.impl.JournalArticleResourceImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -152,6 +153,27 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	public List<JournalArticleResource> findByUuid(String uuid, int start,
 		int end, OrderByComparator<JournalArticleResource> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal article resources where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of journal article resources
+	 * @param end the upper bound of the range of journal article resources (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching journal article resources
+	 */
+	@Override
+	public List<JournalArticleResource> findByUuid(String uuid, int start,
+		int end, OrderByComparator<JournalArticleResource> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -167,15 +189,19 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<JournalArticleResource> list = (List<JournalArticleResource>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<JournalArticleResource> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (JournalArticleResource journalArticleResource : list) {
-				if (!Validator.equals(uuid, journalArticleResource.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<JournalArticleResource>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (JournalArticleResource journalArticleResource : list) {
+					if (!Validator.equals(uuid, journalArticleResource.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -246,10 +272,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -555,8 +581,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -594,10 +619,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -678,7 +703,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	 */
 	@Override
@@ -689,7 +714,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -743,7 +768,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				List<JournalArticleResource> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -756,14 +781,13 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					if ((journalArticleResource.getUuid() == null) ||
 							!journalArticleResource.getUuid().equals(uuid) ||
 							(journalArticleResource.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, journalArticleResource);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -809,8 +833,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -852,10 +875,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -938,6 +961,27 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	public List<JournalArticleResource> findByGroupId(long groupId, int start,
 		int end, OrderByComparator<JournalArticleResource> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal article resources where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of journal article resources
+	 * @param end the upper bound of the range of journal article resources (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching journal article resources
+	 */
+	@Override
+	public List<JournalArticleResource> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<JournalArticleResource> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -953,15 +997,19 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<JournalArticleResource> list = (List<JournalArticleResource>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<JournalArticleResource> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (JournalArticleResource journalArticleResource : list) {
-				if ((groupId != journalArticleResource.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<JournalArticleResource>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (JournalArticleResource journalArticleResource : list) {
+					if ((groupId != journalArticleResource.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1018,10 +1066,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1313,8 +1361,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1338,10 +1385,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1420,7 +1467,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	 */
 	@Override
@@ -1431,7 +1478,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_A,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_A,
 					finderArgs, this);
 		}
 
@@ -1486,8 +1533,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				List<JournalArticleResource> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_A, finderArgs,
+						list);
 				}
 				else {
 					JournalArticleResource journalArticleResource = list.get(0);
@@ -1500,14 +1547,13 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 							(journalArticleResource.getArticleId() == null) ||
 							!journalArticleResource.getArticleId()
 													   .equals(articleId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_A,
 							finderArgs, journalArticleResource);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_A, finderArgs);
 
 				throw processException(e);
 			}
@@ -1553,8 +1599,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		Object[] finderArgs = new Object[] { groupId, articleId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1596,10 +1641,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1627,17 +1672,17 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 */
 	@Override
 	public void cacheResult(JournalArticleResource journalArticleResource) {
-		EntityCacheUtil.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleResourceImpl.class,
 			journalArticleResource.getPrimaryKey(), journalArticleResource);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				journalArticleResource.getUuid(),
 				journalArticleResource.getGroupId()
 			}, journalArticleResource);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_A,
 			new Object[] {
 				journalArticleResource.getGroupId(),
 				journalArticleResource.getArticleId()
@@ -1655,7 +1700,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	public void cacheResult(
 		List<JournalArticleResource> journalArticleResources) {
 		for (JournalArticleResource journalArticleResource : journalArticleResources) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 						JournalArticleResourceImpl.class,
 						journalArticleResource.getPrimaryKey()) == null) {
@@ -1671,44 +1716,44 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 * Clears the cache for all journal article resources.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(JournalArticleResourceImpl.class);
+		entityCache.clearCache(JournalArticleResourceImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the journal article resource.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(JournalArticleResource journalArticleResource) {
-		EntityCacheUtil.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleResourceImpl.class,
 			journalArticleResource.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((JournalArticleResourceModelImpl)journalArticleResource);
 	}
 
 	@Override
 	public void clearCache(List<JournalArticleResource> journalArticleResources) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (JournalArticleResource journalArticleResource : journalArticleResources) {
-			EntityCacheUtil.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 				JournalArticleResourceImpl.class,
 				journalArticleResource.getPrimaryKey());
 
@@ -1725,9 +1770,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					journalArticleResourceModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				journalArticleResourceModelImpl);
 
 			args = new Object[] {
@@ -1735,9 +1780,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					journalArticleResourceModelImpl.getArticleId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_G_A, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_G_A, args,
 				journalArticleResourceModelImpl);
 		}
 		else {
@@ -1748,9 +1793,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 						journalArticleResourceModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					journalArticleResourceModelImpl);
 			}
 
@@ -1761,9 +1806,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 						journalArticleResourceModelImpl.getArticleId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_G_A, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_G_A, args,
 					journalArticleResourceModelImpl);
 			}
 		}
@@ -1776,8 +1821,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				journalArticleResourceModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((journalArticleResourceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -1786,8 +1831,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					journalArticleResourceModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -1795,8 +1840,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				journalArticleResourceModelImpl.getArticleId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_A, args);
 
 		if ((journalArticleResourceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_A.getColumnBitmask()) != 0) {
@@ -1805,8 +1850,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					journalArticleResourceModelImpl.getOriginalArticleId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_A, args);
 		}
 	}
 
@@ -1952,10 +1997,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !JournalArticleResourceModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1965,14 +2010,14 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 						journalArticleResourceModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { journalArticleResourceModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -1982,19 +2027,19 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 						journalArticleResourceModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { journalArticleResourceModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleResourceImpl.class,
 			journalArticleResource.getPrimaryKey(), journalArticleResource,
 			false);
@@ -2071,7 +2116,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 */
 	@Override
 	public JournalArticleResource fetchByPrimaryKey(Serializable primaryKey) {
-		JournalArticleResource journalArticleResource = (JournalArticleResource)EntityCacheUtil.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+		JournalArticleResource journalArticleResource = (JournalArticleResource)entityCache.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 				JournalArticleResourceImpl.class, primaryKey);
 
 		if (journalArticleResource == _nullJournalArticleResource) {
@@ -2091,13 +2136,13 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					cacheResult(journalArticleResource);
 				}
 				else {
-					EntityCacheUtil.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 						JournalArticleResourceImpl.class, primaryKey,
 						_nullJournalArticleResource);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 					JournalArticleResourceImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2147,7 +2192,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			JournalArticleResource journalArticleResource = (JournalArticleResource)EntityCacheUtil.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleResource journalArticleResource = (JournalArticleResource)entityCache.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 					JournalArticleResourceImpl.class, primaryKey);
 
 			if (journalArticleResource == null) {
@@ -2200,7 +2245,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 					JournalArticleResourceImpl.class, primaryKey,
 					_nullJournalArticleResource);
 			}
@@ -2256,6 +2301,26 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	public List<JournalArticleResource> findAll(int start, int end,
 		OrderByComparator<JournalArticleResource> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal article resources.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of journal article resources
+	 * @param end the upper bound of the range of journal article resources (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of journal article resources
+	 */
+	@Override
+	public List<JournalArticleResource> findAll(int start, int end,
+		OrderByComparator<JournalArticleResource> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2271,8 +2336,12 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<JournalArticleResource> list = (List<JournalArticleResource>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<JournalArticleResource> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<JournalArticleResource>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2319,10 +2388,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2352,7 +2421,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2365,11 +2434,11 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2399,12 +2468,16 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(JournalArticleResourceImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(JournalArticleResourceImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE = "SELECT journalArticleResource FROM JournalArticleResource journalArticleResource";
 	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE_WHERE_PKS_IN = "SELECT journalArticleResource FROM JournalArticleResource journalArticleResource WHERE resourcePrimKey IN (";
 	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE_WHERE = "SELECT journalArticleResource FROM JournalArticleResource journalArticleResource WHERE ";

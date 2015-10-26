@@ -40,6 +40,7 @@ import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.recurrence.Weekday;
+import com.liferay.calendar.search.CalendarSearcher;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarBookingServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
@@ -48,7 +49,6 @@ import com.liferay.calendar.service.CalendarResourceServiceUtil;
 import com.liferay.calendar.service.CalendarServiceUtil;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.CalendarResourceUtil;
-import com.liferay.calendar.util.CalendarSearcher;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -77,6 +78,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -105,11 +107,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -746,6 +750,23 @@ public class CalendarPortlet extends MVCPortlet {
 					actionRequest, weekday.getValue());
 
 				if (checked) {
+					java.util.Calendar startTimeJCalendar = getJCalendar(
+						actionRequest, "startTime");
+
+					java.util.Calendar weekdayJCalendar =
+						JCalendarUtil.getJCalendar(
+							startTimeJCalendar.getTimeInMillis(),
+							getTimeZone(actionRequest));
+
+					weekdayJCalendar.set(
+						java.util.Calendar.DAY_OF_WEEK,
+						weekday.getCalendarWeekday());
+
+					weekdayJCalendar = JCalendarUtil.getJCalendar(
+						weekdayJCalendar, calendarTimeZone);
+
+					weekday = Weekday.getWeekday(weekdayJCalendar);
+
 					positionalWeekdays.add(new PositionalWeekday(weekday, 0));
 				}
 			}
@@ -916,11 +937,15 @@ public class CalendarPortlet extends MVCPortlet {
 			resourceRequest, "statuses");
 
 		List<CalendarBooking> calendarBookings =
-			CalendarBookingServiceUtil.search(
+			Collections.<CalendarBooking>emptyList();
+
+		if (!ArrayUtil.isEmpty(calendarIds)) {
+			calendarBookings = CalendarBookingServiceUtil.search(
 				themeDisplay.getCompanyId(), new long[0], calendarIds,
 				new long[0], -1, null, startTimeJCalendar.getTimeInMillis(),
 				endTimeJCalendar.getTimeInMillis(), true, statuses,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		}
 
 		JSONArray jsonArray = CalendarUtil.toCalendarBookingsJSONArray(
 			themeDisplay, calendarBookings, getTimeZone(resourceRequest));
@@ -1083,7 +1108,7 @@ public class CalendarPortlet extends MVCPortlet {
 
 		long calendarId = ParamUtil.getLong(resourceRequest, "calendarId");
 
-		Calendar calendar = CalendarLocalServiceUtil.getCalendar(calendarId);
+		Calendar calendar = CalendarServiceUtil.getCalendar(calendarId);
 
 		String fileName =
 			calendar.getName(themeDisplay.getLocale()) + CharPool.PERIOD +
@@ -1139,8 +1164,11 @@ public class CalendarPortlet extends MVCPortlet {
 			}
 		}
 		else {
-			String message = themeDisplay.translate(
-				"failed-to-import-empty-file");
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", themeDisplay.getLocale(), getClass());
+
+			String message = ResourceBundleUtil.getString(
+				resourceBundle, "failed-to-import-empty-file");
 
 			jsonObject.put("error", message);
 		}

@@ -16,6 +16,7 @@ package com.liferay.shopping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface ShoppingCart extends ShoppingCartModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.shopping.model.impl.ShoppingCartImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ShoppingCart, Long> CART_ID_ACCESSOR = new Accessor<ShoppingCart, Long>() {
+			@Override
+			public Long get(ShoppingCart shoppingCart) {
+				return shoppingCart.getCartId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ShoppingCart> getTypeClass() {
+				return ShoppingCart.class;
+			}
+		};
+
 	public void addItemId(long itemId, java.lang.String fields);
 
 	public com.liferay.shopping.model.ShoppingCoupon getCoupon()

@@ -6,12 +6,9 @@
 
 	var BODY_CONTENT = 'bodyContent';
 
-	var REGION = 'region';
-
 	var TRIGGER = 'trigger';
 
 	Liferay.Portal.Tabs._show = function(event) {
-		var id = event.id;
 		var names = event.names;
 		var namespace = event.namespace;
 
@@ -122,6 +119,11 @@
 						zIndex: Liferay.zIndex.TOOLTIP
 					}
 				).render();
+
+				cached.after(
+					'visibleChange',
+					A.bind('_syncUIPosAlign', cached)
+				);
 
 				instance._cached = cached;
 			}

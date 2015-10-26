@@ -2518,7 +2518,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54232" name="StagingUncheckAppCTRefAllAndContentAll" priority="4">
+	<command name="StagingUncheckAppCTRefAllAndContentAll" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
@@ -2561,7 +2561,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="WCM-345,LPS-54232" name="StagingUncheckAppCTRefAllAndContentAT" priority="4">
+	<command name="StagingUncheckAppCTRefAllAndContentAT" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
@@ -2604,7 +2604,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54232" name="StagingUncheckAppCTRefAllAndContentWC" priority="4">
+	<command name="StagingUncheckAppCTRefAllAndContentWC" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
@@ -4016,7 +4016,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="WCM-206" name="UserSegmentViewSpecificContentWithCategorizationViaContentListPortlet" priority="4">
+	<command name="UserSegmentViewSpecificContentWithCategorizationViaContentListPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />

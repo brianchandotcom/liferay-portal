@@ -66,7 +66,9 @@
 		<if>
 			<isset var="kbArticleAttachment" />
 			<then>
-				<execute macro="KBArticle#selectAttachmentCP" />
+				<execute macro="KBArticle#selectAttachmentCP">
+					<var name="kbArticleAttachment" value="${kbArticleAttachment}" />
+				</execute>
 			</then>
 		</if>
 
@@ -104,7 +106,10 @@
 		<if>
 			<isset var="categoryName" />
 			<then>
-				<execute macro="KBArticle#selectCategoryCP" />
+				<execute macro="KBArticle#selectCategoryCP">
+					<var name="categoryName" value="${categoryName}" />
+					<var name="vocabularyName" value="${vocabularyName}" />
+				</execute>
 			</then>
 		</if>
 
@@ -414,8 +419,8 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="Click" locator1="KnowledgeBase#MENUBAR_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertClick" locator1="NavBar#ACTIONS" value1="Actions" />
+		<execute function="ClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete the selected articles?" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
@@ -423,7 +428,7 @@
 	</command>
 
 	<command name="deletePGViaKBArticle">
-		<execute function="Click" locator1="PGKnowledgebasearticle#ARTICLE_ACTIONS_BUTTON" />
+		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
 		<execute function="AssertClickNoError" locator1="PGKnowledgebasearticle#ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected article no longer exists." />
@@ -456,7 +461,9 @@
 		<if>
 			<isset var="kbArticleAttachment" />
 			<then>
-				<execute macro="KBArticle#selectAttachmentCP" />
+				<execute macro="KBArticle#selectAttachmentCP">
+					<var name="kbArticleAttachment" value="${kbArticleAttachment}" />
+				</execute>
 			</then>
 		</if>
 
@@ -666,7 +673,7 @@
 	<command name="moveArticleViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" value1="Actions" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
@@ -802,8 +809,8 @@
 	<command name="selectPGViaKBArticle">
 		<execute function="AssertClick" locator1="Message#INFO" value1="Please configure this portlet to make it visible to all users." />
 
-		<execute function="SelectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfiguration#SELECT_BUTTON" value1="Select" />
+		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 		<execute function="SelectWindow" locator1="title=Knowledge Base Article" />
 
@@ -813,13 +820,13 @@
 
 		<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
 
-		<execute function="SelectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectRelatedAssetCP">
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
 
 		<var name="key_kbArticleRelatedAssetType" value="${kbArticleRelatedAssetType}" />
 
@@ -898,7 +905,7 @@
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected articles?" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No articles were found." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#MESSAGE_NO_ARTICLES_FOUND" value1="No articles were found." />
 			</then>
 		</if>
 	</command>
@@ -940,7 +947,7 @@
 	<command name="viewArticleHistoryPG">
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_TITLE" value1="${kbArticleTitle}" />
 
 		<if>
 			<isset var="kbArticleTitleRemovedDiff" />
@@ -991,6 +998,11 @@
 
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
+	</command>
+
+	<command name="viewBlogsEntryRelatedAssetViaKBDisplayPG">
+		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_TITLE" value1="${RelatedAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
 	</command>
 
 	<command name="viewChildArticleCP">
@@ -1066,8 +1078,8 @@
 		<if>
 			<isset var="kbChildArticleTitle" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbChildArticleTitle}" />
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbChildArticleContent}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ADMIN_VIEW_CHILD_ARTICLE_TITLE" value1="${kbChildArticleTitle}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ADMIN_VIEW_CHILD_ARTICLE_CONTENT" value1="${kbChildArticleContent}" />
 			</then>
 		</if>
 
@@ -1093,7 +1105,7 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No articles were found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#MESSAGE_NO_ARTICLES_FOUND" value1="No articles were found." />
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#ARTICLE_TABLE_KB_GENERIC" />
 	</command>
 
@@ -1411,22 +1423,7 @@
 
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
-	</command>
-
-	<command name="viewRelatedAssetViaKBDisplayPG">
-		<if>
-			<equals arg1="${RelatedAssetType}" arg2="Blogs Entry" />
-			<then>
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
-			</then>
-		</if>
-
-		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_TITLE" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
 	<command name="viewSearchResultsPG">
@@ -1480,7 +1477,7 @@
 	</command>
 
 	<command name="viewViaKBDisplayPG">
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_CONTENT" value1="${kbArticleContent}" />
 
 		<if>

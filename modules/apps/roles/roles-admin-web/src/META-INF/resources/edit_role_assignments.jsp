@@ -62,7 +62,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRoleAssignmentsURL %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
@@ -106,7 +106,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 		form.fm('addGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form);
+		submitForm(form, '<%= editRoleAssignmentsURL %>');
 	}
 
 	function <portlet:namespace />updateRoleUsers(assignmentsRedirect) {
@@ -118,7 +118,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form);
+		submitForm(form, '<%= editRoleAssignmentsURL %>');
 	}
 </aui:script>
 

@@ -16,6 +16,7 @@ package com.liferay.portlet.calendar.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -36,6 +37,23 @@ public interface CalEvent extends CalEventModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.calendar.model.impl.CalEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<CalEvent, Long> EVENT_ID_ACCESSOR = new Accessor<CalEvent, Long>() {
+			@Override
+			public Long get(CalEvent calEvent) {
+				return calEvent.getEventId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<CalEvent> getTypeClass() {
+				return CalEvent.class;
+			}
+		};
+
 	public com.liferay.portal.kernel.cal.TZSRecurrence getRecurrenceObj();
 
 	public void setRecurrenceObj(

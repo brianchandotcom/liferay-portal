@@ -17,9 +17,9 @@ package com.liferay.portal.kernel.security.auth.http;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -42,9 +42,6 @@ public class HttpAuthorizationHeader {
 	public static final String SCHEME_BASIC = "Basic";
 
 	public static final String SCHEME_DIGEST = "Digest";
-
-	public HttpAuthorizationHeader() {
-	}
 
 	public HttpAuthorizationHeader(String scheme) {
 		_scheme = scheme;
@@ -72,32 +69,24 @@ public class HttpAuthorizationHeader {
 
 	@Override
 	public String toString() {
-		if (StringUtil.equalsIgnoreCase(_scheme, SCHEME_BASIC)) {
-			return toStringBasic();
+		if (_scheme.equals(SCHEME_BASIC) &&
+			!Validator.isBlank(
+				getAuthParameter(AUTH_PARAMETER_NAME_USERNAME))) {
+
+			String userName = getAuthParameter(AUTH_PARAMETER_NAME_USERNAME);
+			String password = getAuthParameter(AUTH_PARAMETER_NAME_PASSWORD);
+
+			String userNameAndPassword = userName + StringPool.COLON + password;
+
+			String encodedUserNameAndPassword = Base64.encode(
+				userNameAndPassword.getBytes());
+
+			return SCHEME_BASIC + StringPool.SPACE + encodedUserNameAndPassword;
 		}
-		else if (StringUtil.equalsIgnoreCase(_scheme, SCHEME_DIGEST)) {
-			return toStringDigest();
-		}
 
-		throw new UnsupportedOperationException("Scheme " + _scheme);
-	}
+		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 2);
 
-	protected String toStringBasic() {
-		String userName = getAuthParameter(AUTH_PARAMETER_NAME_USERNAME);
-		String password = getAuthParameter(AUTH_PARAMETER_NAME_PASSWORD);
-
-		String userNameAndPassword = userName + StringPool.COLON + password;
-
-		String encodedUserNameAndPassword = Base64.encode(
-			userNameAndPassword.getBytes());
-
-		return SCHEME_BASIC + StringPool.SPACE + encodedUserNameAndPassword;
-	}
-
-	protected String toStringDigest() {
-		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 1);
-
-		sb.append(SCHEME_DIGEST);
+		sb.append(_scheme);
 		sb.append(StringPool.SPACE);
 
 		for (Map.Entry<String, String> entry : _authParameters.entrySet()) {
@@ -114,7 +103,7 @@ public class HttpAuthorizationHeader {
 		return sb.toString();
 	}
 
-	private final Map<String, String> _authParameters = new HashMap<>();
+	private final Map<String, String> _authParameters = new LinkedHashMap<>();
 	private String _scheme;
 
 }

@@ -185,6 +185,8 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 					Summary summary = searchResult.getSummary();
 
+					summary.setQueryTerms(hits.getQueryTerms());
+
 					JournalArticle article = null;
 					JournalFolder curFolder = null;
 
@@ -223,7 +225,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 								commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 								containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= article.getDescription(locale) %>"
+								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : article.getDescription(locale) %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
 								rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
@@ -323,7 +325,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 								actionJspServletContext="<%= application %>"
 								containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= curArticle.getDescription(locale) %>"
+								description="<%= LocalizationUtil.getLocalization(curArticle.getContent(), themeDisplay.getLanguageId()) %>"
 								queryTerms="<%= queryTerms %>"
 								rowCheckerId="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
 								rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
@@ -378,5 +380,5 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 </div>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.journal.search_resources_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_journal_web.search_resources_jsp");
 %>

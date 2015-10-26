@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.Store;
 
+import java.io.IOException;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -49,10 +51,11 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			ConfigurationAdmin configurationAdmin = bundleContext.getService(
 				serviceReference);
 
-			_s3StoreConfiguration = configurationAdmin.getConfiguration(
-				"com.liferay.portal.store.s3.configuration." +
-					"S3StoreConfiguration",
-				null);
+			Configuration s3StoreConfiguration =
+				configurationAdmin.getConfiguration(
+					"com.liferay.portal.store.s3.configuration." +
+						"S3StoreConfiguration",
+					null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -65,7 +68,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			properties.put("tempDirCleanUpExpunge", "7");
 			properties.put("tempDirCleanUpFrequency", "100");
 
-			_s3StoreConfiguration.update(properties);
+			s3StoreConfiguration.update(properties);
 
 			Filter filter = bundleContext.createFilter(
 				"(&(objectClass=" + Store.class.getName() +
@@ -81,7 +84,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			serviceTracker.close();
 
 			if (s3Store == null) {
-				_s3StoreConfiguration.delete();
+				s3StoreConfiguration.delete();
 
 				throw new IllegalStateException(
 					"S3 store was not registered within 10 seconds");
@@ -93,14 +96,25 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) {
+	public void stop(BundleContext bundleContext) throws IOException {
+		ServiceReference<ConfigurationAdmin> serviceReference =
+			bundleContext.getServiceReference(ConfigurationAdmin.class);
+
 		try {
-			_s3StoreConfiguration.delete();
+			ConfigurationAdmin configurationAdmin = bundleContext.getService(
+				serviceReference);
+
+			Configuration s3StoreConfiguration =
+				configurationAdmin.getConfiguration(
+					"com.liferay.portal.store.s3.configuration." +
+						"S3StoreConfiguration",
+					null);
+
+			s3StoreConfiguration.delete();
 		}
-		catch (Exception e) {
+		finally {
+			bundleContext.ungetService(serviceReference);
 		}
 	}
-
-	private Configuration _s3StoreConfiguration;
 
 }

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SELECT_FILE_CHECKBOX</td>
-	<td>//input[contains(@class,'select-file') and contains (@data-title,'${key_fileName}')]</td>
+	<td>//input[contains(@class,'select-file') and contains(@data-title,'${key_fileName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -91,8 +91,8 @@ public class PanelCategoryRegistry {
 						return panelCategory.hasAccessPermission(
 							permissionChecker, group);
 					}
-					catch (PortalException e) {
-						_log.error(e);
+					catch (PortalException pe) {
+						_log.error(pe, pe);
 					}
 
 					return false;
@@ -101,15 +101,27 @@ public class PanelCategoryRegistry {
 			});
 	}
 
-	public PanelCategory getFirstChildPanelCategory(String panelCategoryKey) {
-		List<PanelCategory> childPanelCategories =
-			_childPanelCategoriesServiceTrackerMap.getService(panelCategoryKey);
+	public PanelCategory getFirstChildPanelCategory(
+		String panelCategoryKey, PermissionChecker permissionChecker,
+		Group group) {
 
-		if (childPanelCategories == null) {
-			return null;
+		List<PanelCategory> panelCategories = getChildPanelCategories(
+			panelCategoryKey);
+
+		for (PanelCategory panelCategory : panelCategories) {
+			try {
+				if (panelCategory.hasAccessPermission(
+						permissionChecker, group)) {
+
+					return panelCategory;
+				}
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
 		}
 
-		return childPanelCategories.get(0);
+		return null;
 	}
 
 	public PanelCategory getPanelCategory(String panelCategoryKey) {

@@ -16,7 +16,9 @@ package com.liferay.portlet.asset.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -49,6 +51,7 @@ import com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -160,6 +163,27 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public List<AssetVocabulary> findByUuid(String uuid, int start, int end,
 		OrderByComparator<AssetVocabulary> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	@Override
+	public List<AssetVocabulary> findByUuid(String uuid, int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -175,15 +199,19 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<AssetVocabulary> list = (List<AssetVocabulary>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AssetVocabulary> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AssetVocabulary assetVocabulary : list) {
-				if (!Validator.equals(uuid, assetVocabulary.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AssetVocabulary>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetVocabulary assetVocabulary : list) {
+					if (!Validator.equals(uuid, assetVocabulary.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -254,10 +282,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -560,8 +588,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -599,10 +626,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -682,7 +709,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	@Override
@@ -693,7 +720,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -747,7 +774,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				List<AssetVocabulary> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -760,14 +787,13 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					if ((assetVocabulary.getUuid() == null) ||
 							!assetVocabulary.getUuid().equals(uuid) ||
 							(assetVocabulary.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, assetVocabulary);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -812,8 +838,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -855,10 +880,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -947,6 +972,29 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public List<AssetVocabulary> findByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<AssetVocabulary> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	@Override
+	public List<AssetVocabulary> findByUuid_C(String uuid, long companyId,
+		int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -966,16 +1014,20 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				};
 		}
 
-		List<AssetVocabulary> list = (List<AssetVocabulary>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AssetVocabulary> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AssetVocabulary assetVocabulary : list) {
-				if (!Validator.equals(uuid, assetVocabulary.getUuid()) ||
-						(companyId != assetVocabulary.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AssetVocabulary>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetVocabulary assetVocabulary : list) {
+					if (!Validator.equals(uuid, assetVocabulary.getUuid()) ||
+							(companyId != assetVocabulary.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1050,10 +1102,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1375,8 +1427,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1418,10 +1469,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1508,6 +1559,27 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public List<AssetVocabulary> findByGroupId(long groupId, int start,
 		int end, OrderByComparator<AssetVocabulary> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	@Override
+	public List<AssetVocabulary> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1523,15 +1595,19 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<AssetVocabulary> list = (List<AssetVocabulary>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AssetVocabulary> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AssetVocabulary assetVocabulary : list) {
-				if ((groupId != assetVocabulary.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AssetVocabulary>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetVocabulary assetVocabulary : list) {
+					if ((groupId != assetVocabulary.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1588,10 +1664,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2220,8 +2296,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
-		else {
+		else if (groupIds.length > 1) {
 			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -2350,11 +2428,34 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public List<AssetVocabulary> findByGroupId(long[] groupIds, int start,
 		int end, OrderByComparator<AssetVocabulary> orderByComparator) {
+		return findByGroupId(groupIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where groupId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	@Override
+	public List<AssetVocabulary> findByGroupId(long[] groupIds, int start,
+		int end, OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean retrieveFromCache) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
-		else {
+		else if (groupIds.length > 1) {
 			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
 		}
 
 		if (groupIds.length == 1) {
@@ -2377,15 +2478,20 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				};
 		}
 
-		List<AssetVocabulary> list = (List<AssetVocabulary>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
-				finderArgs, this);
+		List<AssetVocabulary> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AssetVocabulary assetVocabulary : list) {
-				if (!ArrayUtil.contains(groupIds, assetVocabulary.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AssetVocabulary>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetVocabulary assetVocabulary : list) {
+					if (!ArrayUtil.contains(groupIds,
+								assetVocabulary.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2443,11 +2549,11 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID,
 					finderArgs);
 
 				throw processException(e);
@@ -2485,8 +2591,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2510,10 +2615,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2536,13 +2641,15 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
-		else {
+		else if (groupIds.length > 1) {
 			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
 		}
 
 		Object[] finderArgs = new Object[] { StringUtil.merge(groupIds) };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
 				finderArgs, this);
 
 		if (count == null) {
@@ -2576,11 +2683,11 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
 					finderArgs);
 
 				throw processException(e);
@@ -2656,8 +2763,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
-		else {
+		else if (groupIds.length > 1) {
 			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -2777,6 +2886,27 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public List<AssetVocabulary> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator<AssetVocabulary> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	@Override
+	public List<AssetVocabulary> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2792,15 +2922,19 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<AssetVocabulary> list = (List<AssetVocabulary>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AssetVocabulary> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AssetVocabulary assetVocabulary : list) {
-				if ((companyId != assetVocabulary.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AssetVocabulary>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetVocabulary assetVocabulary : list) {
+					if ((companyId != assetVocabulary.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2857,10 +2991,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3150,8 +3284,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -3175,10 +3308,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3255,7 +3388,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	@Override
@@ -3266,7 +3399,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_N,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_N,
 					finderArgs, this);
 		}
 
@@ -3320,8 +3453,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				List<AssetVocabulary> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, finderArgs,
+						list);
 				}
 				else {
 					AssetVocabulary assetVocabulary = list.get(0);
@@ -3333,14 +3466,13 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					if ((assetVocabulary.getGroupId() != groupId) ||
 							(assetVocabulary.getName() == null) ||
 							!assetVocabulary.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
 							finderArgs, assetVocabulary);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, finderArgs);
 
 				throw processException(e);
 			}
@@ -3385,8 +3517,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		Object[] finderArgs = new Object[] { groupId, name };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3428,10 +3559,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3511,6 +3642,29 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public List<AssetVocabulary> findByG_LikeN(long groupId, String name,
 		int start, int end, OrderByComparator<AssetVocabulary> orderByComparator) {
+		return findByG_LikeN(groupId, name, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset vocabularies
+	 */
+	@Override
+	public List<AssetVocabulary> findByG_LikeN(long groupId, String name,
+		int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3518,18 +3672,23 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKEN;
 		finderArgs = new Object[] { groupId, name, start, end, orderByComparator };
 
-		List<AssetVocabulary> list = (List<AssetVocabulary>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AssetVocabulary> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AssetVocabulary assetVocabulary : list) {
-				if ((groupId != assetVocabulary.getGroupId()) ||
-						!StringUtil.wildcardMatches(assetVocabulary.getName(),
-							name, CharPool.UNDERLINE, CharPool.PERCENT,
-							CharPool.BACK_SLASH, false)) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AssetVocabulary>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetVocabulary assetVocabulary : list) {
+					if ((groupId != assetVocabulary.getGroupId()) ||
+							!StringUtil.wildcardMatches(
+								assetVocabulary.getName(), name,
+								CharPool.UNDERLINE, CharPool.PERCENT,
+								CharPool.BACK_SLASH, false)) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3604,10 +3763,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4280,8 +4439,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		Object[] finderArgs = new Object[] { groupId, name };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4323,10 +4481,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4421,15 +4579,15 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public void cacheResult(AssetVocabulary assetVocabulary) {
-		EntityCacheUtil.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey(),
 			assetVocabulary);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { assetVocabulary.getUuid(), assetVocabulary.getGroupId() },
 			assetVocabulary);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
 			new Object[] { assetVocabulary.getGroupId(), assetVocabulary.getName() },
 			assetVocabulary);
 
@@ -4444,7 +4602,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public void cacheResult(List<AssetVocabulary> assetVocabularies) {
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetVocabularyImpl.class,
 						assetVocabulary.getPrimaryKey()) == null) {
@@ -4460,43 +4618,43 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 * Clears the cache for all asset vocabularies.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(AssetVocabularyImpl.class);
+		entityCache.clearCache(AssetVocabularyImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the asset vocabulary.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(AssetVocabulary assetVocabulary) {
-		EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((AssetVocabularyModelImpl)assetVocabulary);
 	}
 
 	@Override
 	public void clearCache(List<AssetVocabulary> assetVocabularies) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
-			EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 				AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey());
 
 			clearUniqueFindersCache((AssetVocabularyModelImpl)assetVocabulary);
@@ -4511,9 +4669,9 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					assetVocabularyModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				assetVocabularyModelImpl);
 
 			args = new Object[] {
@@ -4521,9 +4679,9 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					assetVocabularyModelImpl.getName()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, args,
 				assetVocabularyModelImpl);
 		}
 		else {
@@ -4534,9 +4692,9 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						assetVocabularyModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					assetVocabularyModelImpl);
 			}
 
@@ -4547,9 +4705,9 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						assetVocabularyModelImpl.getName()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, args,
 					assetVocabularyModelImpl);
 			}
 		}
@@ -4562,8 +4720,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				assetVocabularyModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((assetVocabularyModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -4572,8 +4730,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					assetVocabularyModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -4581,8 +4739,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				assetVocabularyModelImpl.getName()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
 
 		if ((assetVocabularyModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
@@ -4591,8 +4749,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					assetVocabularyModelImpl.getOriginalName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
 		}
 	}
 
@@ -4759,10 +4917,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !AssetVocabularyModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -4772,14 +4930,14 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						assetVocabularyModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { assetVocabularyModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -4790,8 +4948,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						assetVocabularyModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -4799,8 +4957,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						assetVocabularyModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -4810,14 +4968,14 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						assetVocabularyModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { assetVocabularyModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -4827,21 +4985,19 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						assetVocabularyModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { assetVocabularyModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey(),
 			assetVocabulary, false);
 
@@ -4925,7 +5081,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByPrimaryKey(Serializable primaryKey) {
-		AssetVocabulary assetVocabulary = (AssetVocabulary)EntityCacheUtil.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+		AssetVocabulary assetVocabulary = (AssetVocabulary)entityCache.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 				AssetVocabularyImpl.class, primaryKey);
 
 		if (assetVocabulary == _nullAssetVocabulary) {
@@ -4945,13 +5101,13 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					cacheResult(assetVocabulary);
 				}
 				else {
-					EntityCacheUtil.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetVocabularyImpl.class, primaryKey,
 						_nullAssetVocabulary);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 					AssetVocabularyImpl.class, primaryKey);
 
 				throw processException(e);
@@ -5001,7 +5157,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			AssetVocabulary assetVocabulary = (AssetVocabulary)EntityCacheUtil.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+			AssetVocabulary assetVocabulary = (AssetVocabulary)entityCache.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 					AssetVocabularyImpl.class, primaryKey);
 
 			if (assetVocabulary == null) {
@@ -5053,7 +5209,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 					AssetVocabularyImpl.class, primaryKey, _nullAssetVocabulary);
 			}
 		}
@@ -5108,6 +5264,26 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public List<AssetVocabulary> findAll(int start, int end,
 		OrderByComparator<AssetVocabulary> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset vocabularies.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of asset vocabularies
+	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of asset vocabularies
+	 */
+	@Override
+	public List<AssetVocabulary> findAll(int start, int end,
+		OrderByComparator<AssetVocabulary> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5123,8 +5299,12 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<AssetVocabulary> list = (List<AssetVocabulary>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AssetVocabulary> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AssetVocabulary>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -5171,10 +5351,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5204,7 +5384,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -5217,11 +5397,11 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -5251,12 +5431,14 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(AssetVocabularyImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(AssetVocabularyImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_ASSETVOCABULARY = "SELECT assetVocabulary FROM AssetVocabulary assetVocabulary";
 	private static final String _SQL_SELECT_ASSETVOCABULARY_WHERE_PKS_IN = "SELECT assetVocabulary FROM AssetVocabulary assetVocabulary WHERE vocabularyId IN (";
 	private static final String _SQL_SELECT_ASSETVOCABULARY_WHERE = "SELECT assetVocabulary FROM AssetVocabulary assetVocabulary WHERE ";

@@ -152,13 +152,12 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 						});
 					actionableDynamicQuery.setGroupId(category.getGroupId());
 					actionableDynamicQuery.setPerformActionMethod(
-						new ActionableDynamicQuery.PerformActionMethod() {
+						new ActionableDynamicQuery.
+							PerformActionMethod<MBMessage>() {
 
 							@Override
-							public void performAction(Object object)
+							public void performAction(MBMessage message)
 								throws PortalException {
-
-								MBMessage message = (MBMessage)object;
 
 								propagateMessageRolePermissions(
 									actionRequest, className, categoryId,
@@ -194,13 +193,11 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 		actionableDynamicQuery.setGroupId(groupId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(MBMessage message)
 					throws PortalException {
-
-					MBMessage message = (MBMessage)object;
 
 					propagateMessageRolePermissions(
 						actionRequest, className, groupId,

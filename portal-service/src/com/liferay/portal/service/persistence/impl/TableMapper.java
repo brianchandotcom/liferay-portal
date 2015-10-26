@@ -24,31 +24,36 @@ import java.util.List;
  */
 public interface TableMapper<L extends BaseModel<L>, R extends BaseModel<R>> {
 
-	public boolean addTableMapping(long leftPrimaryKey, long rightPrimaryKey);
+	public boolean addTableMapping(
+		long companyId, long leftPrimaryKey, long rightPrimaryKey);
 
 	public boolean containsTableMapping(
-		long leftPrimaryKey, long rightPrimaryKey);
+		long companyId, long leftPrimaryKey, long rightPrimaryKey);
 
-	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey);
+	public int deleteLeftPrimaryKeyTableMappings(
+		long companyId, long leftPrimaryKey);
 
-	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey);
+	public int deleteRightPrimaryKeyTableMappings(
+		long companyId, long rightPrimaryKey);
 
 	public boolean deleteTableMapping(
-		long leftPrimaryKey, long rightPrimaryKey);
+		long companyId, long leftPrimaryKey, long rightPrimaryKey);
 
 	public void destroy();
 
 	public List<L> getLeftBaseModels(
-		long rightPrimaryKey, int start, int end, OrderByComparator<L> obc);
+		long companyId, long rightPrimaryKey, int start, int end,
+		OrderByComparator<L> obc);
 
-	public long[] getLeftPrimaryKeys(long rightPrimaryKey);
+	public long[] getLeftPrimaryKeys(long companyId, long rightPrimaryKey);
 
 	public TableMapper<R, L> getReverseTableMapper();
 
 	public List<R> getRightBaseModels(
-		long leftPrimaryKey, int start, int end, OrderByComparator<R> obc);
+		long companyId, long leftPrimaryKey, int start, int end,
+		OrderByComparator<R> obc);
 
-	public long[] getRightPrimaryKeys(long leftPrimaryKey);
+	public long[] getRightPrimaryKeys(long companyId, long leftPrimaryKey);
 
 	public boolean matches(String leftColumnName, String rightColumnName);
 

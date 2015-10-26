@@ -25,7 +25,7 @@ PanelCategory mySitesPanelCategory = panelCategoryRegistry.getPanelCategory(Pane
 Group group = themeDisplay.getSiteGroup();
 %>
 
-<div class="toolbar">
+<div class="site-administration-toolbar toolbar">
 	<c:if test="<%= (mySitesPanelCategory != null) && mySitesPanelCategory.hasAccessPermission(permissionChecker, group) %>">
 		<div class="toolbar-group-field">
 			<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />mySitesLink"></a>
@@ -42,8 +42,8 @@ Group group = themeDisplay.getSiteGroup();
 	</c:if>
 
 	<div class="toolbar-group-content">
-		<aui:a href="<%= group.getDisplayURL(themeDisplay) %>">
-			<%= group.getDescriptiveName(locale) %>
+		<aui:a cssClass="site-administration-title" href="<%= group.getDisplayURL(themeDisplay) %>">
+			<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 
 			<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
 				<c:choose>
@@ -68,6 +68,22 @@ Group group = themeDisplay.getSiteGroup();
 
 			if (stagingGroup != null) {
 				stagingGroupURL = stagingGroup.getDisplayURL(themeDisplay);
+
+				if (Validator.isNull(stagingGroupURL)) {
+					PortletURL groupAdministrationURL = null;
+
+					PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+					String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, stagingGroup);
+
+					if (Validator.isNotNull(portletId)) {
+						groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, stagingGroup, portletId, 0, PortletRequest.RENDER_PHASE);
+
+						if (groupAdministrationURL != null) {
+							stagingGroupURL = groupAdministrationURL.toString();
+						}
+					}
+				}
 			}
 		}
 		%>
@@ -88,6 +104,22 @@ Group group = themeDisplay.getSiteGroup();
 
 				if (liveGroup != null) {
 					liveGroupURL = liveGroup.getDisplayURL(themeDisplay);
+
+					if (Validator.isNull(liveGroupURL)) {
+						PortletURL groupAdministrationURL = null;
+
+						PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+						String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, liveGroup);
+
+						if (Validator.isNotNull(portletId)) {
+							groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, liveGroup, portletId, 0, PortletRequest.RENDER_PHASE);
+
+							if (groupAdministrationURL != null) {
+								liveGroupURL = groupAdministrationURL.toString();
+							}
+						}
+					}
 				}
 			}
 		}

@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguagePortletInstanceConfiguration;
 
 import java.util.ArrayList;
@@ -46,6 +44,9 @@ public class SiteNavigationLanguageDisplayContext {
 
 	public SiteNavigationLanguageDisplayContext(HttpServletRequest request)
 		throws ConfigurationException {
+
+		_portletDisplayTemplate = (PortletDisplayTemplate)request.getAttribute(
+			WebKeys.PORTLET_DISPLAY_TEMPLATE);
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -121,8 +122,8 @@ public class SiteNavigationLanguageDisplayContext {
 			_siteNavigationLanguagePortletInstanceConfiguration.displayStyle();
 
 		if (displayStyle != null) {
-			_ddmTemplateKey =
-				getPortletDisplayTemplate().getDDMTemplateKey(displayStyle);
+			_ddmTemplateKey = _portletDisplayTemplate.getDDMTemplateKey(
+				displayStyle);
 		}
 
 		return _ddmTemplateKey;
@@ -165,16 +166,11 @@ public class SiteNavigationLanguageDisplayContext {
 		return _siteNavigationLanguagePortletInstanceConfiguration;
 	}
 
-	protected PortletDisplayTemplate getPortletDisplayTemplate() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(PortletDisplayTemplate.class);
-	}
-
 	private String[] _availableLanguageIds;
 	private String _ddmTemplateKey;
 	private long _displayStyleGroupId;
 	private String[] _languageIds;
+	private final PortletDisplayTemplate _portletDisplayTemplate;
 	private final SiteNavigationLanguagePortletInstanceConfiguration
 		_siteNavigationLanguagePortletInstanceConfiguration;
 	private final ThemeDisplay _themeDisplay;

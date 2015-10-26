@@ -24,12 +24,21 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
@@ -42,6 +51,7 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -50,11 +60,20 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
+import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
+import java.io.File;
+
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -85,6 +104,22 @@ public class StagingImplTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testInitialPublication() throws Exception {
+		boolean stagingDeleteTempLarOnSuccess =
+			PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS;
+
+		PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS = false;
+
+		try {
+			doTestInitialPublication();
+		}
+		finally {
+			PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS =
+				stagingDeleteTempLarOnSuccess;
+		}
 	}
 
 	@Test
@@ -182,6 +217,68 @@ public class StagingImplTest {
 		return AssetCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(), groupId, 0, titleMap, descriptionMap,
 			assetVocabulary.getVocabularyId(), new String[0], serviceContext);
+	}
+
+	protected void doTestInitialPublication() throws Exception {
+		LayoutTestUtil.addLayout(_group);
+		LayoutTestUtil.addLayout(_group, true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		enableLocalStaging(false);
+
+		Assert.assertEquals(
+			1,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				_group.getGroupId()));
+
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+
+		String userIdStrategyString = MapUtil.getString(
+			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+
+		UserIdStrategy userIdStrategy =
+			ExportImportHelperUtil.getUserIdStrategy(
+				TestPropsValues.getUserId(), userIdStrategyString);
+
+		String includePattern = String.valueOf(_group.getGroupId()) + "*.lar";
+
+		String[] larFileNames = FileUtil.find(
+			SystemProperties.get(SystemProperties.TMP_DIR), includePattern,
+			null);
+
+		Arrays.sort(larFileNames);
+
+		File larFile = new File(larFileNames[larFileNames.length - 1]);
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(larFile);
+
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				_group.getCompanyId(), _group.getGroupId(), parameterMap,
+				userIdStrategy, zipReader);
+
+		String journalPortletPath = ExportImportPathUtil.getPortletPath(
+			portletDataContext, JournalPortletKeys.JOURNAL);
+
+		String portletData = portletDataContext.getZipEntryAsString(
+			journalPortletPath + StringPool.SLASH + _group.getGroupId() +
+				"/portlet-data.xml");
+
+		Document document = SAXReaderUtil.read(portletData);
+
+		portletDataContext.setImportDataRootElement(document.getRootElement());
+
+		Element journalElement = portletDataContext.getImportDataGroupElement(
+			JournalArticle.class);
+
+		List<Element> journalStagedModelElements = journalElement.elements(
+			"staged-model");
+
+		Assert.assertEquals(0, journalStagedModelElements.size());
 	}
 
 	protected void enableLocalStaging(boolean branching) throws Exception {

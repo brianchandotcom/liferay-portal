@@ -39,57 +39,61 @@ boolean quote = false;
 boolean splitThread = false;
 %>
 
-<portlet:actionURL name="/message_boards/move_thread" var="moveThreadURL" />
+<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<portlet:actionURL name="/message_boards/move_thread" var="moveThreadURL">
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/move_thread" />
+	</portlet:actionURL>
 
-<aui:form action="<%= moveThreadURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "moveThread();" %>'>
-	<aui:input name="threadId" type="hidden" value="<%= thread.getThreadId() %>" />
-	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
+	<aui:form action="<%= moveThreadURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "moveThread();" %>'>
+		<aui:input name="threadId" type="hidden" value="<%= thread.getThreadId() %>" />
+		<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="move-thread"
-	/>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			title="move-thread"
+		/>
 
-	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
-	<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
-	<liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="please-enter-a-valid-category" />
+		<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
+		<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
+		<liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="please-enter-a-valid-category" />
 
-	<%
-	long breadcrumbsMessageId = message.getMessageId();
-	%>
+		<%
+		long breadcrumbsMessageId = message.getMessageId();
+		%>
 
-	<aui:fieldset>
-		<div class="form-group">
-			<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(request, "message-boards-home") %>' />
+		<aui:fieldset>
+			<div class="form-group">
+				<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(request, "message-boards-home") %>' />
 
-			<aui:button name="selectCategoryButton" value="select" />
-		</div>
+				<aui:button name="selectCategoryButton" value="select" />
+			</div>
 
-		<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post" name="addExplanationPost" onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
+			<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post" name="addExplanationPost" onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
 
-		<div id="<portlet:namespace />explanationPost" style="display: none;">
-			<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
-				<aui:validator name="required">
-					function() {
-						return AUI.$('#<portlet:namespace />addExplanationPost').prop('checked');
-					}
-				</aui:validator>
-			</aui:input>
+			<div id="<portlet:namespace />explanationPost" style="display: none;">
+				<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
+					<aui:validator name="required">
+						function() {
+							return AUI.$('#<portlet:namespace />addExplanationPost').prop('checked');
+						}
+					</aui:validator>
+				</aui:input>
 
-			<aui:field-wrapper label="body">
-				<%@ include file="/message_boards/bbcode_editor.jspf" %>
+				<aui:field-wrapper label="body">
+					<%@ include file="/message_boards/bbcode_editor.jspf" %>
 
-				<aui:input name="body" type="hidden" />
-			</aui:field-wrapper>
-		</div>
-	</aui:fieldset>
+					<aui:input name="body" type="hidden" />
+				</aui:field-wrapper>
+			</div>
+		</aui:fieldset>
 
-	<aui:button-row>
-		<aui:button type="submit" value="move-thread" />
+		<aui:button-row>
+			<aui:button type="submit" value="move-thread" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
 
 <aui:script>
 	function <portlet:namespace />moveThread() {

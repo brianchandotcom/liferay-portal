@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the UserNotificationEvent service. Represents a row in the &quot;UserNotificationEvent&quot; database table, with each column mapped to a property of this class.
  *
@@ -33,4 +35,21 @@ public interface UserNotificationEvent extends UserNotificationEventModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.UserNotificationEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<UserNotificationEvent, Long> USER_NOTIFICATION_EVENT_ID_ACCESSOR =
+		new Accessor<UserNotificationEvent, Long>() {
+			@Override
+			public Long get(UserNotificationEvent userNotificationEvent) {
+				return userNotificationEvent.getUserNotificationEventId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<UserNotificationEvent> getTypeClass() {
+				return UserNotificationEvent.class;
+			}
+		};
 }

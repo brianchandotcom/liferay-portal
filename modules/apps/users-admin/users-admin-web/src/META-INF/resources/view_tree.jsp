@@ -240,7 +240,6 @@ if (organization != null) {
 
 					<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 					<aui:input name="deleteOrganizationIds" type="hidden" />
-					<aui:input name="status" type="hidden" value="<%= status %>" />
 
 					<c:if test="<%= showOrganizations %>">
 						<liferay-util:buffer var="organizationsPanelTitle">

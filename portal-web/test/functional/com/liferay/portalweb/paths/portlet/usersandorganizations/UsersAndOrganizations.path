@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ALL_ORGANIZATIONS_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'All Organizations')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_USERS_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'All Users')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD</td>
 	<td>//ul[@role='menubar']/li/a[@title='Add']/span</td>
 	<td></td>
@@ -39,105 +24,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_ICON</td>
-	<td>//a[@id='toggle_id_users_admin_organization_searchtoggleAdvanced']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BACK</td>
-	<td>//a[contains(@id,'TabsBack')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADVANCED_SEARCH-->
-<tr>
-	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
-	<td>//select[contains(@id,'andOperator')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_NAME_FIELD</td>
-	<td>//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_STREET_FIELD</td>
-	<td>//input[contains(@id,'street')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_CITY_FIELD</td>
-	<td>//input[contains(@id,'city')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_TYPE_SELECT</td>
-	<td>//select[contains(@id,'type')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_COUNTRY_SELECT</td>
-	<td>//select[contains(@id,'countryId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_REGION_SELECT</td>
-	<td>//select[contains(@id,'regionId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_POSTAL_CODE_FIELD</td>
-	<td>//input[contains(@id,'zip')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
-	<td>//input[contains(@id,'firstName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
-	<td>//input[contains(@id,'middleName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
-	<td>//input[contains(@id,'lastName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
-	<td>//input[contains(@id,'screenName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
-	<td>//input[contains(@id,'emailAddress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
-	<td>//select[contains(@id,'status')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--ORGANIZATION_TABLE-->
 <tr>
-	<td>ORGANIZATION_TABLE_ALL_CHECKBOX</td>
-	<td>//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a/strong</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -186,11 +80,6 @@
 	<td></td>
 </tr>
 <!--USER_TABLE-->
-<tr>
-	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]/input</td>

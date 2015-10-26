@@ -676,5 +676,5 @@ private String _getVariableReferenceCode(String variableName, String accessor, S
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com.liferay.dynamic.data.mapping.web.portlet.edit_template_display_jspf");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_dynamic_data_mapping_web.edit_template_display_jspf");
 %>

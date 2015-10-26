@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,6 +36,24 @@ public interface KaleoTimerInstanceToken extends KaleoTimerInstanceTokenModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<KaleoTimerInstanceToken, Long> KALEO_TIMER_INSTANCE_TOKEN_ID_ACCESSOR =
+		new Accessor<KaleoTimerInstanceToken, Long>() {
+			@Override
+			public Long get(KaleoTimerInstanceToken kaleoTimerInstanceToken) {
+				return kaleoTimerInstanceToken.getKaleoTimerInstanceTokenId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoTimerInstanceToken> getTypeClass() {
+				return KaleoTimerInstanceToken.class;
+			}
+		};
+
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getKaleoInstanceToken()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -338,11 +337,6 @@ public class BreadcrumbUtil {
 		if (themeDisplay.isAddSessionIdToURL()) {
 			layoutURL = PortalUtil.getURLWithSessionId(
 				layoutURL, themeDisplay.getSessionId());
-		}
-
-		if (layout.isTypeControlPanel()) {
-			layoutURL = HttpUtil.removeParameter(
-				layoutURL, "controlPanelCategory");
 		}
 
 		breadcrumbEntry.setURL(layoutURL);

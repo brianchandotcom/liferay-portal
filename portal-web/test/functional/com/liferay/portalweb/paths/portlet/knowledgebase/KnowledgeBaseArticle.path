@@ -114,6 +114,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ADMIN_VIEW-->
+<tr>
+	<td>ADMIN_VIEW_CHILD_ARTICLE_TITLE</td>
+	<td>//div[@class='kb-elements']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_VIEW_CHILD_ARTICLE_CONTENT</td>
+	<td>//div[@class='kb-element-body']//p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ATTACHMENTS-->
 <tr>
 	<td>ATTACHMENTS_ADD_LINK</td>
@@ -172,6 +188,11 @@
 	<td></td>
 </tr>
 <!--HISTORY-->
+<tr>
+	<td>HISTORY_TITLE</td>
+	<td>//div[@class='kb-title']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>HISTORY_CONTENT_ADDED_DIFF</td>
 	<td>//div[@class='kb-entity-body']/div/span[contains(@class,'diff-html-added')]</td>

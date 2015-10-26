@@ -1,0 +1,279 @@
+<definition component-name="portal-deployment-hypersonic">
+	<property name="setup.wizard.enabled" value="true" />
+	<property name="testray.main.component.name" value="Setup Wizard" />
+
+	<command name="HSQLtoDB2" priority="4">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.db2.password" />
+			<var name="databaseType" value="DB2" />
+			<var name="databaseUserName" property-value="database.db2.username" />
+			<var name="jdbcDriverClassName" property-value="database.db2.driver" />
+			<var name="jdbcURL" property-value="database.db2.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoDB2SampleDataDisabled" priority="4">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.db2.password" />
+			<var name="databaseType" value="DB2" />
+			<var name="databaseUserName" property-value="database.db2.username" />
+			<var name="jdbcDriverClassName" property-value="database.db2.driver" />
+			<var name="jdbcURL" property-value="database.db2.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoHSQLLportal1" priority="4">
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databaseName" value="lportal1" />
+			<var name="databasePassword" property-value="database.hypersonic.password" />
+			<var name="databaseType" value="Hypersonic" />
+			<var name="databaseUserName" property-value="database.hypersonic.username" />
+			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
+			<var name="jdbcURL" property-value="database.hypersonic.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoHSQLLportal1SampleDataDisabled" priority="4">
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databaseName" value="lportal1" />
+			<var name="databasePassword" property-value="database.hypersonic.password" />
+			<var name="databaseType" value="Hypersonic" />
+			<var name="databaseUserName" property-value="database.hypersonic.username" />
+			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
+			<var name="jdbcURL" property-value="database.hypersonic.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoHSQLSampleDataDisabled" priority="4">
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.hypersonic.password" />
+			<var name="databaseType" value="Hypersonic" />
+			<var name="databaseUserName" property-value="database.hypersonic.username" />
+			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
+			<var name="jdbcURL" property-value="database.hypersonic.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoMySQLSampleDataDisabled" priority="4">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=mysql -Ddelete.liferay.home=false" />
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databaseName" value="lportal1" />
+			<var name="databasePassword" property-value="database.mysql.password" />
+			<var name="databaseType" value="MySQL" />
+			<var name="databaseUserName" property-value="database.mysql.username" />
+			<var name="jdbcDriverClassName" property-value="database.mysql.driver" />
+			<var name="jdbcURL" property-value="database.mysql.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoOracle" priority="4">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.oracle.password" />
+			<var name="databaseType" value="Oracle" />
+			<var name="databaseUserName" property-value="database.oracle.username" />
+			<var name="jdbcDriverClassName" property-value="database.oracle.driver" />
+			<var name="jdbcURL" property-value="database.oracle.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoOracleSampleDataDisabled" priority="4">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.oracle.password" />
+			<var name="databaseType" value="Oracle" />
+			<var name="databaseUserName" property-value="database.oracle.username" />
+			<var name="jdbcDriverClassName" property-value="database.oracle.driver" />
+			<var name="jdbcURL" property-value="database.oracle.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoPostgreSQL" priority="4">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=postgresql -Ddelete.liferay.home=false" />
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.postgresql.password" />
+			<var name="databaseType" value="PostgreSQL" />
+			<var name="databaseUserName" property-value="database.postgresql.username" />
+			<var name="jdbcDriverClassName" property-value="database.postgresql.driver" />
+			<var name="jdbcURL" property-value="database.postgresql.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoPostgreSQLSampleDataDisabled" priority="4">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=postgresql -Ddelete.liferay.home=false" />
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.postgresql.password" />
+			<var name="databaseType" value="PostgreSQL" />
+			<var name="databaseUserName" property-value="database.postgresql.username" />
+			<var name="jdbcDriverClassName" property-value="database.postgresql.driver" />
+			<var name="jdbcURL" property-value="database.postgresql.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoSybase" priority="4">
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.sybase.password" />
+			<var name="databaseType" value="Sybase" />
+			<var name="databaseUserName" property-value="database.sybase.username" />
+			<var name="jdbcDriverClassName" property-value="database.sybase.driver" />
+			<var name="jdbcURL" property-value="database.sybase.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoSybaseSampleDataDisabled" priority="4">
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.sybase.password" />
+			<var name="databaseType" value="Sybase" />
+			<var name="databaseUserName" property-value="database.sybase.username" />
+			<var name="jdbcDriverClassName" property-value="database.sybase.driver" />
+			<var name="jdbcURL" property-value="database.sybase.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+</definition>

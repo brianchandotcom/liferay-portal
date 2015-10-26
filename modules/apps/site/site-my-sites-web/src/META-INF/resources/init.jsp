@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -48,8 +49,10 @@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Collections" %><%@
 page import="java.util.LinkedHashMap" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>

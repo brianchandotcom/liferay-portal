@@ -88,12 +88,16 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@ page import="com.liferay.portlet.PortletURLUtil" %>
+
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <%
-String currentURL = PortalUtil.getCurrentURL(request);
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
 
 Group group = themeDisplay.getScopeGroup();
 

@@ -17,8 +17,8 @@ package com.liferay.mobile.device.rules.lar;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -45,7 +46,7 @@ public class MDRRuleStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MDRRule rule) {
-		MDRRuleLocalServiceUtil.deleteRule(rule);
+		_mdrRuleLocalService.deleteRule(rule);
 	}
 
 	@Override
@@ -61,15 +62,14 @@ public class MDRRuleStagedModelDataHandler
 
 	@Override
 	public MDRRule fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return MDRRuleLocalServiceUtil.fetchMDRRuleByUuidAndGroupId(
-			uuid, groupId);
+		return _mdrRuleLocalService.fetchMDRRuleByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
 	public List<MDRRule> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MDRRuleLocalServiceUtil.getMDRRulesByUuidAndCompanyId(
+		return _mdrRuleLocalService.getMDRRulesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MDRRule>());
 	}
@@ -89,7 +89,7 @@ public class MDRRuleStagedModelDataHandler
 			PortletDataContext portletDataContext, MDRRule rule)
 		throws Exception {
 
-		MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.getRuleGroup(
+		MDRRuleGroup ruleGroup = _mdrRuleGroupLocalService.getRuleGroup(
 			rule.getRuleGroupId());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -129,20 +129,20 @@ public class MDRRuleStagedModelDataHandler
 			if (existingRule == null) {
 				serviceContext.setUuid(rule.getUuid());
 
-				importedRule = MDRRuleLocalServiceUtil.addRule(
+				importedRule = _mdrRuleLocalService.addRule(
 					ruleGroupId, rule.getNameMap(), rule.getDescriptionMap(),
 					rule.getType(), rule.getTypeSettingsProperties(),
 					serviceContext);
 			}
 			else {
-				importedRule = MDRRuleLocalServiceUtil.updateRule(
+				importedRule = _mdrRuleLocalService.updateRule(
 					existingRule.getRuleId(), rule.getNameMap(),
 					rule.getDescriptionMap(), rule.getType(),
 					rule.getTypeSettingsProperties(), serviceContext);
 			}
 		}
 		else {
-			importedRule = MDRRuleLocalServiceUtil.addRule(
+			importedRule = _mdrRuleLocalService.addRule(
 				ruleGroupId, rule.getNameMap(), rule.getDescriptionMap(),
 				rule.getType(), rule.getTypeSettingsProperties(),
 				serviceContext);
@@ -150,5 +150,22 @@ public class MDRRuleStagedModelDataHandler
 
 		portletDataContext.importClassedModel(rule, importedRule);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupLocalService(
+		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
+
+		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleLocalService(
+		MDRRuleLocalService mdrRuleLocalService) {
+
+		_mdrRuleLocalService = mdrRuleLocalService;
+	}
+
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+	private MDRRuleLocalService _mdrRuleLocalService;
 
 }

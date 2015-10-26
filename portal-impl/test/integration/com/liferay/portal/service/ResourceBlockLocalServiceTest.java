@@ -126,7 +126,7 @@ public class ResourceBlockLocalServiceTest {
 				expectedLog =
 					"Attempt to insert duplicate key row in object " +
 						"'ResourceBlock'",
-				expectedType = ExpectedType.PREFIX
+				expectedType = ExpectedType.CONTAINS
 			)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class
@@ -256,7 +256,7 @@ public class ResourceBlockLocalServiceTest {
 				expectedLog =
 					"Attempt to insert duplicate key row in object " +
 						"'ResourceBlock'",
-				expectedType = ExpectedType.PREFIX
+				expectedType = ExpectedType.CONTAINS
 			)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class

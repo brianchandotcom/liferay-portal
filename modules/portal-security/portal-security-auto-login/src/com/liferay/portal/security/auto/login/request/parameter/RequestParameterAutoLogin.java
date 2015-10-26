@@ -30,7 +30,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auto.login.request.parameter.constants.RequestParameterAutoLoginConstants;
 import com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,11 +79,11 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		long userId = 0;
 
 		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-			userId = UserLocalServiceUtil.getUserIdByEmailAddress(
+			userId = _userLocalService.getUserIdByEmailAddress(
 				company.getCompanyId(), login);
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			userId = UserLocalServiceUtil.getUserIdByScreenName(
+			userId = _userLocalService.getUserIdByScreenName(
 				company.getCompanyId(), login);
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
@@ -94,7 +94,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		}
 
 		if (userId > 0) {
-			User user = UserLocalServiceUtil.getUserById(userId);
+			User user = _userLocalService.getUserById(userId);
 
 			String userPassword = user.getPassword();
 
@@ -146,6 +146,11 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		_configurationFactory = configurationFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private RequestParameterAutoLoginConfiguration
 		_getRequestParameterAutoLoginConfiguration(long companyId) {
 
@@ -176,5 +181,6 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		RequestParameterAutoLogin.class);
 
 	private volatile ConfigurationFactory _configurationFactory;
+	private UserLocalService _userLocalService;
 
 }

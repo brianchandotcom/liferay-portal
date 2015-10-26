@@ -17,7 +17,9 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchUserTrackerPathException;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -152,6 +154,29 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	@Override
 	public List<UserTrackerPath> findByUserTrackerId(long userTrackerId,
 		int start, int end, OrderByComparator<UserTrackerPath> orderByComparator) {
+		return findByUserTrackerId(userTrackerId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user tracker paths where userTrackerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserTrackerPathModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userTrackerId the user tracker ID
+	 * @param start the lower bound of the range of user tracker paths
+	 * @param end the upper bound of the range of user tracker paths (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching user tracker paths
+	 */
+	@Override
+	public List<UserTrackerPath> findByUserTrackerId(long userTrackerId,
+		int start, int end,
+		OrderByComparator<UserTrackerPath> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -171,15 +196,19 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 				};
 		}
 
-		List<UserTrackerPath> list = (List<UserTrackerPath>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<UserTrackerPath> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (UserTrackerPath userTrackerPath : list) {
-				if ((userTrackerId != userTrackerPath.getUserTrackerId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<UserTrackerPath>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (UserTrackerPath userTrackerPath : list) {
+					if ((userTrackerId != userTrackerPath.getUserTrackerId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -236,10 +265,10 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -530,8 +559,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 		Object[] finderArgs = new Object[] { userTrackerId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -555,10 +583,10 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -583,7 +611,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public void cacheResult(UserTrackerPath userTrackerPath) {
-		EntityCacheUtil.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerPathImpl.class, userTrackerPath.getPrimaryKey(),
 			userTrackerPath);
 
@@ -598,7 +626,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	@Override
 	public void cacheResult(List<UserTrackerPath> userTrackerPaths) {
 		for (UserTrackerPath userTrackerPath : userTrackerPaths) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 						UserTrackerPathImpl.class,
 						userTrackerPath.getPrimaryKey()) == null) {
@@ -614,41 +642,41 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 * Clears the cache for all user tracker paths.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(UserTrackerPathImpl.class);
+		entityCache.clearCache(UserTrackerPathImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the user tracker path.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(UserTrackerPath userTrackerPath) {
-		EntityCacheUtil.removeResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerPathImpl.class, userTrackerPath.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<UserTrackerPath> userTrackerPaths) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (UserTrackerPath userTrackerPath : userTrackerPaths) {
-			EntityCacheUtil.removeResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 				UserTrackerPathImpl.class, userTrackerPath.getPrimaryKey());
 		}
 	}
@@ -783,10 +811,10 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !UserTrackerPathModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -796,21 +824,21 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 						userTrackerPathModelImpl.getOriginalUserTrackerId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERTRACKERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERTRACKERID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERTRACKERID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERTRACKERID,
 					args);
 
 				args = new Object[] { userTrackerPathModelImpl.getUserTrackerId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERTRACKERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERTRACKERID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERTRACKERID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERTRACKERID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerPathImpl.class, userTrackerPath.getPrimaryKey(),
 			userTrackerPath, false);
 
@@ -883,7 +911,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public UserTrackerPath fetchByPrimaryKey(Serializable primaryKey) {
-		UserTrackerPath userTrackerPath = (UserTrackerPath)EntityCacheUtil.getResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+		UserTrackerPath userTrackerPath = (UserTrackerPath)entityCache.getResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 				UserTrackerPathImpl.class, primaryKey);
 
 		if (userTrackerPath == _nullUserTrackerPath) {
@@ -903,13 +931,13 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 					cacheResult(userTrackerPath);
 				}
 				else {
-					EntityCacheUtil.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 						UserTrackerPathImpl.class, primaryKey,
 						_nullUserTrackerPath);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 					UserTrackerPathImpl.class, primaryKey);
 
 				throw processException(e);
@@ -959,7 +987,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			UserTrackerPath userTrackerPath = (UserTrackerPath)EntityCacheUtil.getResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+			UserTrackerPath userTrackerPath = (UserTrackerPath)entityCache.getResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 					UserTrackerPathImpl.class, primaryKey);
 
 			if (userTrackerPath == null) {
@@ -1011,7 +1039,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 					UserTrackerPathImpl.class, primaryKey, _nullUserTrackerPath);
 			}
 		}
@@ -1066,6 +1094,26 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	@Override
 	public List<UserTrackerPath> findAll(int start, int end,
 		OrderByComparator<UserTrackerPath> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user tracker paths.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserTrackerPathModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of user tracker paths
+	 * @param end the upper bound of the range of user tracker paths (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of user tracker paths
+	 */
+	@Override
+	public List<UserTrackerPath> findAll(int start, int end,
+		OrderByComparator<UserTrackerPath> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1081,8 +1129,12 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<UserTrackerPath> list = (List<UserTrackerPath>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<UserTrackerPath> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<UserTrackerPath>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1129,10 +1181,10 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1162,7 +1214,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1175,11 +1227,11 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -1209,12 +1261,14 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(UserTrackerPathImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(UserTrackerPathImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_USERTRACKERPATH = "SELECT userTrackerPath FROM UserTrackerPath userTrackerPath";
 	private static final String _SQL_SELECT_USERTRACKERPATH_WHERE_PKS_IN = "SELECT userTrackerPath FROM UserTrackerPath userTrackerPath WHERE userTrackerPathId IN (";
 	private static final String _SQL_SELECT_USERTRACKERPATH_WHERE = "SELECT userTrackerPath FROM UserTrackerPath userTrackerPath WHERE ";

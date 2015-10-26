@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.search.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.ClassUtils;
@@ -64,10 +64,8 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	@Override
-	public List<Indexer<?>> getIndexers() {
-		List<Indexer<?>> indexers = new ArrayList<>(_indexers.values());
-
-		return Collections.unmodifiableList(indexers);
+	public Set<Indexer<?>> getIndexers() {
+		return new HashSet<>(_indexers.values());
 	}
 
 	@Override

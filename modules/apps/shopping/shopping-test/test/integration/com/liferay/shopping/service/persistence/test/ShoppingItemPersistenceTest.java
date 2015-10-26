@@ -46,6 +46,7 @@ import com.liferay.shopping.service.persistence.ShoppingItemUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -65,8 +66,9 @@ import java.util.Set;
  */
 @RunWith(Arquillian.class)
 public class ShoppingItemPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -446,11 +448,9 @@ public class ShoppingItemPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ShoppingItemLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ShoppingItem>() {
 				@Override
-				public void performAction(Object object) {
-					ShoppingItem shoppingItem = (ShoppingItem)object;
-
+				public void performAction(ShoppingItem shoppingItem) {
 					Assert.assertNotNull(shoppingItem);
 
 					count.increment();

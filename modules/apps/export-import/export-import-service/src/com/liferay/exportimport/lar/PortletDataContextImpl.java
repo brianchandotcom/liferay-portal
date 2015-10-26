@@ -15,6 +15,7 @@
 package com.liferay.exportimport.lar;
 
 import com.liferay.exportimport.xstream.ConverterAdapter;
+import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -59,6 +60,7 @@ import com.liferay.portal.model.PortletModel;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
@@ -89,9 +91,9 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
+import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
-import com.liferay.portlet.exportimport.xstream.XStreamConverterRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 
@@ -113,6 +115,10 @@ import java.util.Map;
 import java.util.Set;
 
 import jodd.bean.BeanUtil;
+
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * <p>
@@ -1656,6 +1662,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 				continue;
 			}
 
+			if (isPrivateLayout() &&
+				resourceName.equals(Layout.class.getName()) &&
+				roleName.equals(RoleConstants.GUEST)) {
+
+				continue;
+			}
+
 			String[] actionIds = StringUtil.split(permission.getValue());
 
 			roleIdsToActionIds.put(role.getRoleId(), actionIds);
@@ -2481,22 +2494,32 @@ public class PortletDataContextImpl implements PortletDataContext {
 				XStreamAliasRegistryUtil.getAliasesClassLoader(
 					XStream.class.getClassLoader())));
 
-		Map<Class<?>, String> aliases = XStreamAliasRegistryUtil.getAliases();
-
-		for (Map.Entry<Class<?>, String> alias : aliases.entrySet()) {
-			_xStream.alias(alias.getValue(), alias.getKey());
-		}
-
-		Set<XStreamConverter> xStreamConverters =
-			XStreamConverterRegistryUtil.getXStreamConverters();
-
-		for (XStreamConverter xStreamConverter : xStreamConverters) {
-			_xStream.registerConverter(
-				new ConverterAdapter(xStreamConverter),
-				XStream.PRIORITY_VERY_HIGH);
-		}
-
 		_xStream.omitField(HashMap.class, "cache_bitmask");
+
+		if (ListUtil.isEmpty(_xStreamConfigurators)) {
+			return;
+		}
+
+		for (XStreamConfigurator xStreamConfigurator : _xStreamConfigurators) {
+			List<XStreamAlias> xStreamAliases =
+				xStreamConfigurator.getXStreamAliases();
+
+			if (ListUtil.isNotEmpty(xStreamAliases)) {
+				for (XStreamAlias xStreamAlias : xStreamAliases) {
+					_xStream.alias(
+						xStreamAlias.getName(), xStreamAlias.getClazz());
+				}
+			}
+
+			List<XStreamConverter> xStreamConverters =
+				xStreamConfigurator.getXStreamConverters();
+
+			for (XStreamConverter xStreamConverter : xStreamConverters) {
+				_xStream.registerConverter(
+					new ConverterAdapter(xStreamConverter),
+					XStream.PRIORITY_VERY_HIGH);
+			}
+		}
 	}
 
 	protected boolean isResourceMain(ClassedModel classedModel) {
@@ -2507,6 +2530,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return true;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC
+	)
+	protected void setXStreamConfigurators(
+		List<XStreamConfigurator> xStreamConfigurators) {
+
+		_xStreamConfigurators = xStreamConfigurators;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -2555,6 +2588,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
 	private transient XStream _xStream;
+	private transient List<XStreamConfigurator> _xStreamConfigurators;
 	private transient ZipReader _zipReader;
 	private transient ZipWriter _zipWriter;
 

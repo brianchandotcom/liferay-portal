@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -39,8 +39,8 @@ import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
 import com.liferay.portlet.dynamicdatamapping.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
@@ -81,7 +81,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
-		DLFileEntryTypeServiceUtil.deleteFileEntryType(fileEntryTypeId);
+		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
 	}
 
 	@Override
@@ -167,6 +167,23 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		_ddmBeanTranslator = ddmBeanTranslator;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryTypeService(
+		DLFileEntryTypeService dlFileEntryTypeService) {
+
+		_dlFileEntryTypeService = dlFileEntryTypeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	protected void subscribeFileEntryType(ActionRequest actionRequest)
 		throws Exception {
 
@@ -176,7 +193,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
-		DLAppServiceUtil.subscribeFileEntryType(
+		_dlAppService.subscribeFileEntryType(
 			themeDisplay.getScopeGroupId(), fileEntryTypeId);
 	}
 
@@ -189,7 +206,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
-		DLAppServiceUtil.unsubscribeFileEntryType(
+		_dlAppService.unsubscribeFileEntryType(
 			themeDisplay.getScopeGroupId(), fileEntryTypeId);
 	}
 
@@ -225,13 +242,13 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 			long groupId = themeDisplay.getScopeGroupId();
 
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(groupId);
+			Group scopeGroup = _groupLocalService.getGroup(groupId);
 
 			if (scopeGroup.isLayout()) {
 				groupId = scopeGroup.getParentGroupId();
 			}
 
-			DLFileEntryTypeServiceUtil.addFileEntryType(
+			_dlFileEntryTypeService.addFileEntryType(
 				groupId, null, nameMap, descriptionMap, ddmStructureIds,
 				serviceContext);
 		}
@@ -239,7 +256,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update file entry type
 
-			DLFileEntryTypeServiceUtil.updateFileEntryType(
+			_dlFileEntryTypeService.updateFileEntryType(
 				fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
 				serviceContext);
 		}
@@ -247,5 +264,8 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 	private DDM _ddm;
 	private DDMBeanTranslator _ddmBeanTranslator;
+	private DLAppService _dlAppService;
+	private DLFileEntryTypeService _dlFileEntryTypeService;
+	private GroupLocalService _groupLocalService;
 
 }

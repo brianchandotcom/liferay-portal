@@ -16,25 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String navigation = ParamUtil.getString(request, "navigation", "home");
-
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
-String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
-
-PortletURL displayStyleURL = renderResponse.createRenderURL();
-
-displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
-displayStyleURL.setParameter("folderId", String.valueOf(folderId));
-
-if (!ddmStructureKey.equals("0")) {
-	displayStyleURL.setParameter("ddmStructureKey", ddmStructureKey);
-}
-%>
-
 <liferay-frontend:management-bar-display-buttons
-	displayStyleURL="<%= displayStyleURL %>"
 	displayViews="<%= journalDisplayContext.getDisplayViews() %>"
+	portletURL="<%= journalDisplayContext.getPortletURL() %>"
 	selectedDisplayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
 />

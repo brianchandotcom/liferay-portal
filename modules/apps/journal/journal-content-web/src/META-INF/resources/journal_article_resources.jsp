@@ -19,39 +19,27 @@
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
 AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAssetRenderer();
+
+User assetRendererUser = UserLocalServiceUtil.fetchUserById(assetRenderer.getUserId());
+
+String title = assetRenderer.getTitle(locale);
+
+if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
+	Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
+
+	title = title + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + articleGroup.getDescriptiveName(locale) + StringPool.CLOSE_PARENTHESIS;
+}
 %>
 
-<div class="article-preview-content">
-	<div class="card-horizontal">
-		<div class="card-row">
-			<div class="card-col-5">
-				<div class="card-media-primary" style="background-image: url('<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>');"></div>
-			</div>
-
-			<div class="card-col-7 card-col-gutters">
-				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
-
-				<h4>
-					<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>
-
-					<c:if test="<%= article.getGroupId() != themeDisplay.getScopeGroupId() %>">
-
-						<%
-						Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
-						%>
-
-						(<%= articleGroup.getDescriptiveName(locale) %>)
-					</c:if>
-				</h4>
-
-				<p><%= assetRenderer.getSummary() %></p>
-
-				<liferay-ui:user-display
-					markupView="lexicon"
-					showLink="<%= false %>"
-					userId="<%= assetRenderer.getUserId() %>"
-				/>
-			</div>
-		</div>
-	</div>
-</div>
+<liferay-frontend:vertical-card
+	cssClass="article-preview-content"
+	imageUrl="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>"
+	smallImageCSSClass="user-icon user-icon-lg"
+	smallImageUrl="<%= (assetRendererUser != null) ? assetRendererUser.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+	subtitle="<%= assetRenderer.getSummary() %>"
+	title="<%= HtmlUtil.escape(title) %>"
+>
+	<liferay-frontend:vertical-card-footer>
+		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+	</liferay-frontend:vertical-card-footer>
+</liferay-frontend:vertical-card>

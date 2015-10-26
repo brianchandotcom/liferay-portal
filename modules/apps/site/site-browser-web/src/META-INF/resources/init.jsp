@@ -27,6 +27,7 @@ page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.Group" %><%@
@@ -38,7 +39,6 @@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
 
@@ -48,8 +48,7 @@ page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 
@@ -58,8 +57,6 @@ page import="javax.portlet.WindowState" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %>
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
 boolean filterManageableGroups = true;
 
 if (permissionChecker.isCompanyAdmin()) {

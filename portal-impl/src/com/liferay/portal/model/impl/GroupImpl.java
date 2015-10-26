@@ -56,7 +56,6 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -73,9 +72,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 /**
  * Represents either a site or a generic resource container.
@@ -109,20 +105,6 @@ public class GroupImpl extends GroupBaseImpl {
 	@Override
 	public void clearStagingGroup() {
 		_stagingGroup = null;
-	}
-
-	@Override
-	public PortletURL getAdministrationURL(ThemeDisplay themeDisplay) {
-		Portlet portlet = PortalUtil.getFirstSiteAdministrationPortlet(
-			themeDisplay);
-
-		if (portlet == null) {
-			return null;
-		}
-
-		return PortalUtil.getControlPanelPortletURL(
-			themeDisplay.getRequest(), this, portlet.getPortletId(), 0,
-			PortletRequest.RENDER_PHASE);
 	}
 
 	@Override
@@ -321,21 +303,6 @@ public class GroupImpl extends GroupBaseImpl {
 
 				return PortalUtil.addPreservedParameters(
 					themeDisplay, groupFriendlyURL);
-			}
-			catch (PortalException pe) {
-				_log.error(pe);
-			}
-		}
-		else {
-			try {
-				if (GroupPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), this,
-						ActionKeys.VIEW_SITE_ADMINISTRATION)) {
-
-					PortletURL portletURL = getAdministrationURL(themeDisplay);
-
-					return portletURL.toString();
-				}
 			}
 			catch (PortalException pe) {
 				_log.error(pe);

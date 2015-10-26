@@ -61,6 +61,10 @@ public class UserSearchEntry extends TextSearchEntry {
 		return _userId;
 	}
 
+	public boolean isShowDetails() {
+		return _showDetails;
+	}
+
 	@Override
 	public void print(
 			Writer writer, HttpServletRequest request,
@@ -69,6 +73,9 @@ public class UserSearchEntry extends TextSearchEntry {
 
 		request.setAttribute(
 			"liferay-ui:search-container-column-user:date", _date);
+		request.setAttribute(
+			"liferay-ui:search-container-column-user:showDetails",
+			_showDetails);
 		request.setAttribute(
 			"liferay-ui:search-container-column-user:userId", _userId);
 
@@ -104,6 +111,10 @@ public class UserSearchEntry extends TextSearchEntry {
 		_servletContext = servletContext;
 	}
 
+	public void setShowDetails(boolean showDetails) {
+		_showDetails = showDetails;
+	}
+
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
@@ -115,6 +126,7 @@ public class UserSearchEntry extends TextSearchEntry {
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
+	private boolean _showDetails = true;
 	private long _userId;
 
 }

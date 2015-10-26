@@ -101,7 +101,7 @@ public class LockLocalServiceTest {
 			@ExpectedLog(
 				dbType = DB.TYPE_SYBASE,
 				expectedLog = "Attempt to insert duplicate key row",
-				expectedType = ExpectedType.PREFIX
+				expectedType = ExpectedType.CONTAINS
 			)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class
@@ -240,7 +240,7 @@ public class LockLocalServiceTest {
 				String message = cause.getMessage();
 
 				if ((cause instanceof BatchUpdateException) &&
-					message.equals(
+					message.contains(
 						"Attempt to insert duplicate key row in object " +
 							"'Lock_' with unique index 'IX_228562AD'\n")) {
 

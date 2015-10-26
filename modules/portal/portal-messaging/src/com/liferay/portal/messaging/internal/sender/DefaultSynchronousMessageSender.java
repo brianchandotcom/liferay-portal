@@ -14,6 +14,8 @@
 
 package com.liferay.portal.messaging.internal.sender;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -90,9 +92,18 @@ public class DefaultSynchronousMessageSender
 		message.setResponseId(responseId);
 
 		SynchronousMessageListener synchronousMessageListener =
-			new SynchronousMessageListener(_messageBus, message, timeout);
+			new SynchronousMessageListener(
+				_messageBus, message, timeout, _entityCache, _finderCache);
 
 		return synchronousMessageListener.send();
+	}
+
+	public void setEntityCache(EntityCache entityCache) {
+		_entityCache = entityCache;
+	}
+
+	public void setFinderCache(FinderCache finderCache) {
+		_finderCache = finderCache;
 	}
 
 	public void setMessageBus(MessageBus messageBus) {
@@ -113,6 +124,8 @@ public class DefaultSynchronousMessageSender
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSynchronousMessageSender.class);
 
+	private EntityCache _entityCache;
+	private FinderCache _finderCache;
 	private MessageBus _messageBus;
 	private long _timeout;
 

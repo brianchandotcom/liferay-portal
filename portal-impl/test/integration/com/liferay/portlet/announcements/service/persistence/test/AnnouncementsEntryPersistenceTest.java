@@ -41,6 +41,7 @@ import com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryU
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class AnnouncementsEntryPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -369,11 +371,9 @@ public class AnnouncementsEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AnnouncementsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AnnouncementsEntry>() {
 				@Override
-				public void performAction(Object object) {
-					AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)object;
-
+				public void performAction(AnnouncementsEntry announcementsEntry) {
 					Assert.assertNotNull(announcementsEntry);
 
 					count.increment();

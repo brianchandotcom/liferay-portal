@@ -88,8 +88,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "settings_", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "active_", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -106,10 +105,9 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutPrototype (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,layoutPrototypeId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,settings_ STRING null,active_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPrototype (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,layoutPrototypeId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,settings_ STRING null,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPrototype";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutPrototype.layoutPrototypeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutPrototype.layoutPrototypeId ASC";
@@ -155,7 +153,6 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		model.setDescription(soapModel.getDescription());
 		model.setSettings(soapModel.getSettings());
 		model.setActive(soapModel.getActive());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -233,7 +230,6 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
 		attributes.put("active", getActive());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -313,12 +309,6 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 		if (active != null) {
 			setActive(active);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -708,17 +698,6 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		return _originalActive;
 	}
 
-	@JSON
-	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -850,7 +829,6 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		layoutPrototypeImpl.setDescription(getDescription());
 		layoutPrototypeImpl.setSettings(getSettings());
 		layoutPrototypeImpl.setActive(getActive());
-		layoutPrototypeImpl.setLastPublishDate(getLastPublishDate());
 
 		layoutPrototypeImpl.resetOriginalValues();
 
@@ -1000,21 +978,12 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 		layoutPrototypeCacheModel.active = getActive();
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			layoutPrototypeCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			layoutPrototypeCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
 		return layoutPrototypeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1040,8 +1009,6 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		sb.append(getSettings());
 		sb.append(", active=");
 		sb.append(getActive());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1049,7 +1016,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutPrototype");
@@ -1103,10 +1070,6 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1137,7 +1100,6 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
-	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private LayoutPrototype _escapedModel;
 }

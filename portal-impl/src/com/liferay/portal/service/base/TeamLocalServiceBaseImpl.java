@@ -303,14 +303,11 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Team>() {
 				@Override
-				public void performAction(Object object)
-					throws PortalException {
-					Team stagedModel = (Team)object;
-
+				public void performAction(Team team) throws PortalException {
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						team);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

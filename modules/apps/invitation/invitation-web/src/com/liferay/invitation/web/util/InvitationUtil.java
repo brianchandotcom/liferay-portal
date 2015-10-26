@@ -90,6 +90,18 @@ public class InvitationUtil {
 		return map;
 	}
 
+	public static String getEmailMessageBodyXml(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String prefix) {
+
+		return LocalizationUtil.getLocalizationXmlFromPreferences(
+			preferences, portletRequest, "emailMessageBody", prefix,
+			ContentUtil.get(
+				InvitationUtil.class.getClassLoader(),
+				"com/liferay/invitation/web/util/dependencies" +
+					"/email_message_body.tmpl"));
+	}
+
 	public static int getEmailMessageMaxRecipients(
 		PortletPreferences portletPreferences) {
 
@@ -116,6 +128,18 @@ public class InvitationUtil {
 		}
 
 		return map;
+	}
+
+	public static String getEmailMessageSubjectXml(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String prefix) {
+
+		return LocalizationUtil.getLocalizationXmlFromPreferences(
+			preferences, portletRequest, "emailMessageSubject", prefix,
+			ContentUtil.get(
+				InvitationUtil.class.getClassLoader(),
+				"com/liferay/invitation/web/util/dependencies" +
+					"/email_message_subject.tmpl"));
 	}
 
 }

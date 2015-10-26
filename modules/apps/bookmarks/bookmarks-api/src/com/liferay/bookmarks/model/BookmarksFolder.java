@@ -16,6 +16,7 @@ package com.liferay.bookmarks.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.TreeModel;
 
@@ -36,6 +37,23 @@ public interface BookmarksFolder extends BookmarksFolderModel, PermissionedModel
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.bookmarks.model.impl.BookmarksFolderImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<BookmarksFolder, Long> FOLDER_ID_ACCESSOR = new Accessor<BookmarksFolder, Long>() {
+			@Override
+			public Long get(BookmarksFolder bookmarksFolder) {
+				return bookmarksFolder.getFolderId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<BookmarksFolder> getTypeClass() {
+				return BookmarksFolder.class;
+			}
+		};
+
 	public java.util.List<java.lang.Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

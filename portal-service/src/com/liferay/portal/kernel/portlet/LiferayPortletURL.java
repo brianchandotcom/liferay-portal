@@ -163,8 +163,6 @@ public interface LiferayPortletURL
 	 */
 	public void setAnchor(boolean anchor);
 
-	public void setControlPanelCategory(String controlPanelCategory);
-
 	/**
 	 * Sets whether the render parameters in the current request should be
 	 * copied to this URL.

@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRule;
-import com.liferay.mobile.device.rules.service.MDRRuleServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleService;
 import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -26,6 +26,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -48,7 +49,7 @@ public class EditRuleMVCResourceCommand extends BaseMVCResourceCommand {
 		long ruleId = ParamUtil.getLong(resourceRequest, "ruleId");
 
 		if (ruleId > 0) {
-			MDRRule rule = MDRRuleServiceUtil.fetchRule(ruleId);
+			MDRRule rule = _mdrRuleService.fetchRule(ruleId);
 
 			resourceRequest.setAttribute(
 				MDRWebKeys.MOBILE_DEVICE_RULES_RULE, rule);
@@ -60,5 +61,12 @@ public class EditRuleMVCResourceCommand extends BaseMVCResourceCommand {
 			getPortletConfig(resourceRequest), resourceRequest,
 			resourceResponse, ActionUtil.getRuleEditorJSP(type));
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleService(MDRRuleService mdrRuleService) {
+		_mdrRuleService = mdrRuleService;
+	}
+
+	private MDRRuleService _mdrRuleService;
 
 }

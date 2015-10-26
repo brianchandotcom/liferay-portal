@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -81,7 +82,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RepositoryUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -577,10 +578,14 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
+			serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
+
 			copyFileEntryMetadata(
 				dlFileEntry.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
 				fileEntryId, dlFileVersionId, dlFileVersion.getFileVersionId(),
 				serviceContext);
+
+			serviceContext.setAttribute("validateDDMFormValues", Boolean.TRUE);
 		}
 
 		return dlFileEntry;
@@ -727,13 +732,11 @@ public class DLFileEntryLocalServiceImpl
 			});
 		actionableDynamicQuery.setGroupId(groupId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(DLFileEntry dlFileEntry)
 					throws PortalException {
-
-					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
 					if (includeTrashedEntries ||
 						!dlFileEntry.isInTrashExplicitly()) {
@@ -1507,6 +1510,38 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public String getUniqueTitle(
+			long groupId, long folderId, long fileEntryId, String title,
+			String extension)
+		throws PortalException {
+
+		String uniqueTitle = title;
+
+		for (int i = 1;; i++) {
+			String uniqueFileName = DLUtil.getSanitizedFileName(
+				uniqueTitle, extension);
+
+			try {
+				validateFile(
+					groupId, folderId, fileEntryId, uniqueFileName,
+					uniqueTitle);
+
+				return uniqueTitle;
+			}
+			catch (PortalException pe) {
+				if (!(pe instanceof DuplicateFolderNameException) &&
+					 !(pe instanceof DuplicateFileEntryException)) {
+
+					throw pe;
+				}
+			}
+
+			uniqueTitle = FileUtil.appendParentheticalSuffix(
+				title, String.valueOf(i));
+		}
+	}
+
+	@Override
 	public boolean hasExtraSettings() {
 		if (dlFileEntryFinder.countByExtraSettings() > 0) {
 			return true;
@@ -1778,13 +1813,11 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntry.class.getName());
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(DLFileEntry dlFileEntry)
 					throws PortalException {
-
-					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
 					dlFileEntry.setTreePath(treePath);
 
@@ -2043,7 +2076,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
-			throw new DuplicateFileException(title);
+			throw new DuplicateFileEntryException(title);
 		}
 
 		dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
@@ -2052,7 +2085,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
-			throw new DuplicateFileException(title);
+			throw new DuplicateFileEntryException(title);
 		}
 	}
 
@@ -2508,15 +2541,6 @@ public class DLFileEntryLocalServiceImpl
 		validateFile(
 			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
 			dlFileEntry.getFileName(), dlFileEntry.getTitle());
-
-		if (DLStoreUtil.hasFile(
-				user.getCompanyId(),
-				DLFolderConstants.getDataRepositoryId(
-					dlFileEntry.getGroupId(), newFolderId),
-				dlFileEntry.getName(), StringPool.BLANK)) {
-
-			throw new DuplicateFileException(dlFileEntry.getName());
-		}
 
 		dlFileEntry.setFolderId(newFolderId);
 		dlFileEntry.setTreePath(dlFileEntry.buildTreePath());

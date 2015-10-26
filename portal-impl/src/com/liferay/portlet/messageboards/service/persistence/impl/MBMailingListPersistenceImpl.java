@@ -16,7 +16,9 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -153,6 +155,27 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	@Override
 	public List<MBMailingList> findByUuid(String uuid, int start, int end,
 		OrderByComparator<MBMailingList> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards mailing lists where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of message boards mailing lists
+	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards mailing lists
+	 */
+	@Override
+	public List<MBMailingList> findByUuid(String uuid, int start, int end,
+		OrderByComparator<MBMailingList> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -168,15 +191,19 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<MBMailingList> list = (List<MBMailingList>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBMailingList> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MBMailingList mbMailingList : list) {
-				if (!Validator.equals(uuid, mbMailingList.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MBMailingList>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MBMailingList mbMailingList : list) {
+					if (!Validator.equals(uuid, mbMailingList.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -247,10 +274,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -551,8 +578,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -590,10 +616,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -672,7 +698,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	@Override
@@ -683,7 +709,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -737,7 +763,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				List<MBMailingList> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -750,14 +776,13 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					if ((mbMailingList.getUuid() == null) ||
 							!mbMailingList.getUuid().equals(uuid) ||
 							(mbMailingList.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, mbMailingList);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -802,8 +827,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -845,10 +869,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -936,6 +960,28 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	@Override
 	public List<MBMailingList> findByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<MBMailingList> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards mailing lists where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards mailing lists
+	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards mailing lists
+	 */
+	@Override
+	public List<MBMailingList> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<MBMailingList> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -955,16 +1001,20 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				};
 		}
 
-		List<MBMailingList> list = (List<MBMailingList>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBMailingList> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MBMailingList mbMailingList : list) {
-				if (!Validator.equals(uuid, mbMailingList.getUuid()) ||
-						(companyId != mbMailingList.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MBMailingList>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MBMailingList mbMailingList : list) {
+					if (!Validator.equals(uuid, mbMailingList.getUuid()) ||
+							(companyId != mbMailingList.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1039,10 +1089,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1364,8 +1414,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1407,10 +1456,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1491,6 +1540,27 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	@Override
 	public List<MBMailingList> findByActive(boolean active, int start, int end,
 		OrderByComparator<MBMailingList> orderByComparator) {
+		return findByActive(active, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards mailing lists where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of message boards mailing lists
+	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching message boards mailing lists
+	 */
+	@Override
+	public List<MBMailingList> findByActive(boolean active, int start, int end,
+		OrderByComparator<MBMailingList> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1506,15 +1576,19 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			finderArgs = new Object[] { active, start, end, orderByComparator };
 		}
 
-		List<MBMailingList> list = (List<MBMailingList>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBMailingList> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MBMailingList mbMailingList : list) {
-				if ((active != mbMailingList.getActive())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MBMailingList>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MBMailingList mbMailingList : list) {
+					if ((active != mbMailingList.getActive())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1571,10 +1645,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1863,8 +1937,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		Object[] finderArgs = new Object[] { active };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1888,10 +1961,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1968,7 +2041,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 *
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	@Override
@@ -1979,7 +2052,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C,
 					finderArgs, this);
 		}
 
@@ -2019,8 +2092,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				List<MBMailingList> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C, finderArgs,
+						list);
 				}
 				else {
 					MBMailingList mbMailingList = list.get(0);
@@ -2031,14 +2104,13 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 					if ((mbMailingList.getGroupId() != groupId) ||
 							(mbMailingList.getCategoryId() != categoryId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C,
 							finderArgs, mbMailingList);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -2083,8 +2155,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		Object[] finderArgs = new Object[] { groupId, categoryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2112,10 +2183,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2141,15 +2212,15 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public void cacheResult(MBMailingList mbMailingList) {
-		EntityCacheUtil.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListImpl.class, mbMailingList.getPrimaryKey(),
 			mbMailingList);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { mbMailingList.getUuid(), mbMailingList.getGroupId() },
 			mbMailingList);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C,
 			new Object[] {
 				mbMailingList.getGroupId(), mbMailingList.getCategoryId()
 			}, mbMailingList);
@@ -2165,7 +2236,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	@Override
 	public void cacheResult(List<MBMailingList> mbMailingLists) {
 		for (MBMailingList mbMailingList : mbMailingLists) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 						MBMailingListImpl.class, mbMailingList.getPrimaryKey()) == null) {
 				cacheResult(mbMailingList);
@@ -2180,43 +2251,43 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 * Clears the cache for all message boards mailing lists.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(MBMailingListImpl.class);
+		entityCache.clearCache(MBMailingListImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the message boards mailing list.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(MBMailingList mbMailingList) {
-		EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListImpl.class, mbMailingList.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((MBMailingListModelImpl)mbMailingList);
 	}
 
 	@Override
 	public void clearCache(List<MBMailingList> mbMailingLists) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (MBMailingList mbMailingList : mbMailingLists) {
-			EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 				MBMailingListImpl.class, mbMailingList.getPrimaryKey());
 
 			clearUniqueFindersCache((MBMailingListModelImpl)mbMailingList);
@@ -2231,9 +2302,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					mbMailingListModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				mbMailingListModelImpl);
 
 			args = new Object[] {
@@ -2241,9 +2312,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					mbMailingListModelImpl.getCategoryId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_G_C, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_G_C, args,
 				mbMailingListModelImpl);
 		}
 		else {
@@ -2254,9 +2325,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						mbMailingListModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					mbMailingListModelImpl);
 			}
 
@@ -2267,9 +2338,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						mbMailingListModelImpl.getCategoryId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_G_C, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_G_C, args,
 					mbMailingListModelImpl);
 			}
 		}
@@ -2282,8 +2353,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				mbMailingListModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((mbMailingListModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -2292,8 +2363,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					mbMailingListModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -2301,8 +2372,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				mbMailingListModelImpl.getCategoryId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C, args);
 
 		if ((mbMailingListModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_C.getColumnBitmask()) != 0) {
@@ -2311,8 +2382,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					mbMailingListModelImpl.getOriginalCategoryId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C, args);
 		}
 	}
 
@@ -2479,10 +2550,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !MBMailingListModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2492,14 +2563,14 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						mbMailingListModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { mbMailingListModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -2510,8 +2581,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						mbMailingListModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -2519,8 +2590,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						mbMailingListModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -2530,19 +2601,19 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						mbMailingListModelImpl.getOriginalActive()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 
 				args = new Object[] { mbMailingListModelImpl.getActive() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListImpl.class, mbMailingList.getPrimaryKey(),
 			mbMailingList, false);
 
@@ -2639,7 +2710,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList fetchByPrimaryKey(Serializable primaryKey) {
-		MBMailingList mbMailingList = (MBMailingList)EntityCacheUtil.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+		MBMailingList mbMailingList = (MBMailingList)entityCache.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 				MBMailingListImpl.class, primaryKey);
 
 		if (mbMailingList == _nullMBMailingList) {
@@ -2659,12 +2730,12 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					cacheResult(mbMailingList);
 				}
 				else {
-					EntityCacheUtil.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 						MBMailingListImpl.class, primaryKey, _nullMBMailingList);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 					MBMailingListImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2714,7 +2785,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MBMailingList mbMailingList = (MBMailingList)EntityCacheUtil.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+			MBMailingList mbMailingList = (MBMailingList)entityCache.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 					MBMailingListImpl.class, primaryKey);
 
 			if (mbMailingList == null) {
@@ -2766,7 +2837,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 					MBMailingListImpl.class, primaryKey, _nullMBMailingList);
 			}
 		}
@@ -2821,6 +2892,26 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	@Override
 	public List<MBMailingList> findAll(int start, int end,
 		OrderByComparator<MBMailingList> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards mailing lists.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of message boards mailing lists
+	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of message boards mailing lists
+	 */
+	@Override
+	public List<MBMailingList> findAll(int start, int end,
+		OrderByComparator<MBMailingList> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2836,8 +2927,12 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<MBMailingList> list = (List<MBMailingList>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MBMailingList> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<MBMailingList>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2884,10 +2979,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2917,7 +3012,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2930,11 +3025,11 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2964,12 +3059,14 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(MBMailingListImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(MBMailingListImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_MBMAILINGLIST = "SELECT mbMailingList FROM MBMailingList mbMailingList";
 	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE_PKS_IN = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE mailingListId IN (";
 	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE ";

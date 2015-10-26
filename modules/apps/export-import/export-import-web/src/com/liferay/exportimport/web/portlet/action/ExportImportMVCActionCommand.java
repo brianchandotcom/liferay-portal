@@ -19,30 +19,40 @@ import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.exportimport.LARFileException;
 import com.liferay.portlet.exportimport.LARFileNameException;
 import com.liferay.portlet.exportimport.LARFileSizeException;
 import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.MissingReference;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
+import com.liferay.portlet.exportimport.service.ExportImportService;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.io.InputStream;
@@ -54,6 +64,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -66,8 +77,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCActionCommand.class
 )
-public class ExportImportMVCActionCommand
-	extends ImportLayoutsMVCActionCommand {
+public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -91,66 +101,76 @@ public class ExportImportMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		if (Validator.isNull(cmd)) {
+			String portletId = PortalUtil.getPortletId(actionRequest);
+
+			Map<String, String[]> parameterMap =
+				ExportImportConfigurationParameterMapFactory.buildParameterMap(
+					actionRequest);
+
+			SessionMessages.add(
+				actionRequest, portletId + "parameterMap", parameterMap);
+
+			return;
+		}
+
 		try {
-			if (Validator.isNotNull(cmd)) {
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-				if (cmd.equals(Constants.ADD_TEMP)) {
-					addTempFileEntry(
-						actionRequest,
-						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
-
-					validateFile(
-						actionRequest, actionResponse,
-						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
-				}
-				else if (cmd.equals("copy_from_live")) {
-					StagingUtil.copyFromLive(actionRequest, portlet);
-				}
-				else if (cmd.equals(Constants.DELETE_TEMP)) {
-					deleteTempFileEntry(
-						actionRequest, actionResponse,
-						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
-				}
-				else if (cmd.equals(Constants.EXPORT)) {
-					hideDefaultSuccessMessage(actionRequest);
-
-					exportData(actionRequest, portlet);
-
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-				else if (cmd.equals(Constants.IMPORT)) {
-					hideDefaultSuccessMessage(actionRequest);
-
-					importData(
-						actionRequest,
-						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
-
-					SessionMessages.add(
-						actionRequest,
-						PortalUtil.getPortletId(actionRequest) +
-							SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET,
+			if (cmd.equals(Constants.ADD_TEMP)) {
+				_importLayoutsMVCActionCommand.addTempFileEntry(
+					actionRequest,
+					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId());
 
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-				else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-					hideDefaultSuccessMessage(actionRequest);
+				validateFile(
+					actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME +
+						portlet.getPortletId());
+			}
+			else if (cmd.equals("copy_from_live")) {
+				StagingUtil.copyFromLive(actionRequest, portlet);
+			}
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
+				_importLayoutsMVCActionCommand.deleteTempFileEntry(
+					actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME +
+						portlet.getPortletId());
+			}
+			else if (cmd.equals(Constants.EXPORT)) {
+				hideDefaultSuccessMessage(actionRequest);
 
-					StagingUtil.publishToLive(actionRequest, portlet);
-				}
+				exportData(actionRequest, portlet);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.IMPORT)) {
+				hideDefaultSuccessMessage(actionRequest);
+
+				importData(
+					actionRequest,
+					ExportImportHelper.TEMP_FOLDER_NAME +
+						portlet.getPortletId());
+
+				SessionMessages.add(
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET,
+					portlet.getPortletId());
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
+				hideDefaultSuccessMessage(actionRequest);
+
+				StagingUtil.publishToLive(actionRequest, portlet);
 			}
 		}
 		catch (Exception e) {
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
-				handleUploadException(
+				_importLayoutsMVCActionCommand.handleUploadException(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId(),
@@ -201,13 +221,13 @@ public class ExportImportMVCActionCommand
 						fileName);
 
 			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
+				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						themeDisplay.getUserId(),
 						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
 						exportPortletSettingsMap);
 
-			ExportImportServiceUtil.exportPortletInfoAsFileInBackground(
+			_exportImportService.exportPortletInfoAsFileInBackground(
 				exportImportConfiguration);
 		}
 		catch (Exception e) {
@@ -223,10 +243,8 @@ public class ExportImportMVCActionCommand
 		}
 	}
 
-	@Override
 	protected void importData(
-			ActionRequest actionRequest, String fileName,
-			InputStream inputStream)
+			ActionRequest actionRequest, InputStream inputStream)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -245,17 +263,121 @@ public class ExportImportMVCActionCommand
 					themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					themeDisplay.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
 					importPortletSettingsMap);
 
-		ExportImportServiceUtil.importPortletInfoInBackground(
+		_exportImportService.importPortletInfoInBackground(
 			exportImportConfiguration, inputStream);
 	}
 
-	@Override
+	protected void importData(ActionRequest actionRequest, String folderName)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(
+			groupId, themeDisplay.getUserId(), folderName);
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = _dlFileEntryLocalService.getFileAsStream(
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+
+			importData(actionRequest, inputStream);
+
+			_importLayoutsMVCActionCommand.deleteTempFileEntry(
+				groupId, folderName);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
+	@Reference
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	@Reference
+	protected void setExportImportService(
+		ExportImportService exportImportService) {
+
+		_exportImportService = exportImportService;
+	}
+
+	@Reference
+	protected void setImportLayoutsMVCActionCommand(
+		ImportLayoutsMVCActionCommand importLayoutsMVCActionCommand) {
+
+		_importLayoutsMVCActionCommand = importLayoutsMVCActionCommand;
+	}
+
+	protected void validateFile(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String folderName)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(
+			groupId, themeDisplay.getUserId(), folderName);
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = _dlFileEntryLocalService.getFileAsStream(
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+
+			MissingReferences missingReferences = validateFile(
+				actionRequest, inputStream);
+
+			Map<String, MissingReference> weakMissingReferences =
+				missingReferences.getWeakMissingReferences();
+
+			if (weakMissingReferences.isEmpty()) {
+				return;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			if ((weakMissingReferences != null) &&
+				!weakMissingReferences.isEmpty()) {
+
+				jsonObject.put(
+					"warningMessages",
+					StagingUtil.getWarningMessagesJSONArray(
+						themeDisplay.getLocale(), weakMissingReferences));
+			}
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
 	protected MissingReferences validateFile(
 			ActionRequest actionRequest, InputStream inputStream)
 		throws Exception {
@@ -276,17 +398,23 @@ public class ExportImportMVCActionCommand
 					themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					themeDisplay.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
 					importPortletSettingsMap);
 
-		return ExportImportServiceUtil.validateImportPortletInfo(
+		return _exportImportService.validateImportPortletInfo(
 			exportImportConfiguration, inputStream);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportMVCActionCommand.class);
+
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+	private ExportImportService _exportImportService;
+	private ImportLayoutsMVCActionCommand _importLayoutsMVCActionCommand;
 
 }

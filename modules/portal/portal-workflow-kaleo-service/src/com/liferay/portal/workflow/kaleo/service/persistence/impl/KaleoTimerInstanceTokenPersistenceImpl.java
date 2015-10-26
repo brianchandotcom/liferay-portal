@@ -16,8 +16,8 @@ package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -33,6 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenImpl;
@@ -157,6 +158,29 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	public List<KaleoTimerInstanceToken> findByKaleoInstanceId(
 		long kaleoInstanceId, int start, int end,
 		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
+		return findByKaleoInstanceId(kaleoInstanceId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTimerInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo timer instance tokens
+	 */
+	@Override
+	public List<KaleoTimerInstanceToken> findByKaleoInstanceId(
+		long kaleoInstanceId, int start, int end,
+		OrderByComparator<KaleoTimerInstanceToken> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -176,15 +200,19 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				};
 		}
 
-		List<KaleoTimerInstanceToken> list = (List<KaleoTimerInstanceToken>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoTimerInstanceToken> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
-				if ((kaleoInstanceId != kaleoTimerInstanceToken.getKaleoInstanceId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoTimerInstanceToken>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
+					if ((kaleoInstanceId != kaleoTimerInstanceToken.getKaleoInstanceId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -241,10 +269,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -543,8 +571,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 		Object[] finderArgs = new Object[] { kaleoInstanceId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -568,10 +595,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -652,7 +679,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	 *
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param kaleoTimerId the kaleo timer ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
 	 */
 	@Override
@@ -663,7 +690,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_KITI_KTI,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_KITI_KTI,
 					finderArgs, this);
 		}
 
@@ -703,7 +730,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				List<KaleoTimerInstanceToken> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KITI_KTI,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_KITI_KTI,
 						finderArgs, list);
 				}
 				else {
@@ -722,13 +749,13 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 					if ((kaleoTimerInstanceToken.getKaleoInstanceTokenId() != kaleoInstanceTokenId) ||
 							(kaleoTimerInstanceToken.getKaleoTimerId() != kaleoTimerId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KITI_KTI,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_KITI_KTI,
 							finderArgs, kaleoTimerInstanceToken);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KITI_KTI,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_KITI_KTI,
 					finderArgs);
 
 				throw processException(e);
@@ -775,8 +802,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 		Object[] finderArgs = new Object[] { kaleoInstanceTokenId, kaleoTimerId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -804,10 +830,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -895,6 +921,30 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	public List<KaleoTimerInstanceToken> findByKITI_C(
 		long kaleoInstanceTokenId, boolean completed, int start, int end,
 		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
+		return findByKITI_C(kaleoInstanceTokenId, completed, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTimerInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param completed the completed
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo timer instance tokens
+	 */
+	@Override
+	public List<KaleoTimerInstanceToken> findByKITI_C(
+		long kaleoInstanceTokenId, boolean completed, int start, int end,
+		OrderByComparator<KaleoTimerInstanceToken> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -914,16 +964,20 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				};
 		}
 
-		List<KaleoTimerInstanceToken> list = (List<KaleoTimerInstanceToken>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoTimerInstanceToken> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
-				if ((kaleoInstanceTokenId != kaleoTimerInstanceToken.getKaleoInstanceTokenId()) ||
-						(completed != kaleoTimerInstanceToken.getCompleted())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoTimerInstanceToken>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
+					if ((kaleoInstanceTokenId != kaleoTimerInstanceToken.getKaleoInstanceTokenId()) ||
+							(completed != kaleoTimerInstanceToken.getCompleted())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -984,10 +1038,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1305,8 +1359,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 		Object[] finderArgs = new Object[] { kaleoInstanceTokenId, completed };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1334,10 +1387,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1439,6 +1492,32 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		long kaleoInstanceTokenId, boolean completed, boolean blocking,
 		int start, int end,
 		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
+		return findByKITI_C_B(kaleoInstanceTokenId, completed, blocking, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63; and blocking = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTimerInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param completed the completed
+	 * @param blocking the blocking
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo timer instance tokens
+	 */
+	@Override
+	public List<KaleoTimerInstanceToken> findByKITI_C_B(
+		long kaleoInstanceTokenId, boolean completed, boolean blocking,
+		int start, int end,
+		OrderByComparator<KaleoTimerInstanceToken> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1458,17 +1537,21 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				};
 		}
 
-		List<KaleoTimerInstanceToken> list = (List<KaleoTimerInstanceToken>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoTimerInstanceToken> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
-				if ((kaleoInstanceTokenId != kaleoTimerInstanceToken.getKaleoInstanceTokenId()) ||
-						(completed != kaleoTimerInstanceToken.getCompleted()) ||
-						(blocking != kaleoTimerInstanceToken.getBlocking())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoTimerInstanceToken>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
+					if ((kaleoInstanceTokenId != kaleoTimerInstanceToken.getKaleoInstanceTokenId()) ||
+							(completed != kaleoTimerInstanceToken.getCompleted()) ||
+							(blocking != kaleoTimerInstanceToken.getBlocking())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1533,10 +1616,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1875,8 +1958,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				kaleoInstanceTokenId, completed, blocking
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -1908,10 +1990,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1938,11 +2020,11 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public void cacheResult(KaleoTimerInstanceToken kaleoTimerInstanceToken) {
-		EntityCacheUtil.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoTimerInstanceTokenImpl.class,
 			kaleoTimerInstanceToken.getPrimaryKey(), kaleoTimerInstanceToken);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KITI_KTI,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_KITI_KTI,
 			new Object[] {
 				kaleoTimerInstanceToken.getKaleoInstanceTokenId(),
 				kaleoTimerInstanceToken.getKaleoTimerId()
@@ -1960,7 +2042,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	public void cacheResult(
 		List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens) {
 		for (KaleoTimerInstanceToken kaleoTimerInstanceToken : kaleoTimerInstanceTokens) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoTimerInstanceTokenImpl.class,
 						kaleoTimerInstanceToken.getPrimaryKey()) == null) {
@@ -1976,33 +2058,33 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	 * Clears the cache for all kaleo timer instance tokens.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(KaleoTimerInstanceTokenImpl.class);
+		entityCache.clearCache(KaleoTimerInstanceTokenImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the kaleo timer instance token.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(KaleoTimerInstanceToken kaleoTimerInstanceToken) {
-		EntityCacheUtil.removeResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoTimerInstanceTokenImpl.class,
 			kaleoTimerInstanceToken.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((KaleoTimerInstanceTokenModelImpl)kaleoTimerInstanceToken);
 	}
@@ -2010,11 +2092,11 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public void clearCache(
 		List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (KaleoTimerInstanceToken kaleoTimerInstanceToken : kaleoTimerInstanceTokens) {
-			EntityCacheUtil.removeResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoTimerInstanceTokenImpl.class,
 				kaleoTimerInstanceToken.getPrimaryKey());
 
@@ -2031,9 +2113,9 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 					kaleoTimerInstanceTokenModelImpl.getKaleoTimerId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KITI_KTI, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_KITI_KTI, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KITI_KTI, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_KITI_KTI, args,
 				kaleoTimerInstanceTokenModelImpl);
 		}
 		else {
@@ -2044,9 +2126,9 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 						kaleoTimerInstanceTokenModelImpl.getKaleoTimerId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KITI_KTI, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_KITI_KTI, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KITI_KTI, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_KITI_KTI, args,
 					kaleoTimerInstanceTokenModelImpl);
 			}
 		}
@@ -2059,8 +2141,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				kaleoTimerInstanceTokenModelImpl.getKaleoTimerId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KITI_KTI, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KITI_KTI, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_KITI_KTI, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_KITI_KTI, args);
 
 		if ((kaleoTimerInstanceTokenModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_KITI_KTI.getColumnBitmask()) != 0) {
@@ -2069,8 +2151,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 					kaleoTimerInstanceTokenModelImpl.getOriginalKaleoTimerId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KITI_KTI, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KITI_KTI, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_KITI_KTI, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_KITI_KTI, args);
 		}
 	}
 
@@ -2230,10 +2312,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !KaleoTimerInstanceTokenModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2243,18 +2325,18 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 						kaleoTimerInstanceTokenModelImpl.getOriginalKaleoInstanceId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEOINSTANCEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEOINSTANCEID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOINSTANCEID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOINSTANCEID,
 					args);
 
 				args = new Object[] {
 						kaleoTimerInstanceTokenModelImpl.getKaleoInstanceId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEOINSTANCEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KALEOINSTANCEID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOINSTANCEID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOINSTANCEID,
 					args);
 			}
 
@@ -2265,8 +2347,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 						kaleoTimerInstanceTokenModelImpl.getOriginalCompleted()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KITI_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KITI_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KITI_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KITI_C,
 					args);
 
 				args = new Object[] {
@@ -2274,8 +2356,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 						kaleoTimerInstanceTokenModelImpl.getCompleted()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KITI_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KITI_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KITI_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KITI_C,
 					args);
 			}
 
@@ -2287,8 +2369,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 						kaleoTimerInstanceTokenModelImpl.getOriginalBlocking()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KITI_C_B, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KITI_C_B,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KITI_C_B, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KITI_C_B,
 					args);
 
 				args = new Object[] {
@@ -2297,13 +2379,13 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 						kaleoTimerInstanceTokenModelImpl.getBlocking()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KITI_C_B, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KITI_C_B,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KITI_C_B, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KITI_C_B,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoTimerInstanceTokenImpl.class,
 			kaleoTimerInstanceToken.getPrimaryKey(), kaleoTimerInstanceToken,
 			false);
@@ -2397,7 +2479,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public KaleoTimerInstanceToken fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoTimerInstanceToken kaleoTimerInstanceToken = (KaleoTimerInstanceToken)EntityCacheUtil.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+		KaleoTimerInstanceToken kaleoTimerInstanceToken = (KaleoTimerInstanceToken)entityCache.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoTimerInstanceTokenImpl.class, primaryKey);
 
 		if (kaleoTimerInstanceToken == _nullKaleoTimerInstanceToken) {
@@ -2417,13 +2499,13 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 					cacheResult(kaleoTimerInstanceToken);
 				}
 				else {
-					EntityCacheUtil.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoTimerInstanceTokenImpl.class, primaryKey,
 						_nullKaleoTimerInstanceToken);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoTimerInstanceTokenImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2474,7 +2556,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoTimerInstanceToken kaleoTimerInstanceToken = (KaleoTimerInstanceToken)EntityCacheUtil.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+			KaleoTimerInstanceToken kaleoTimerInstanceToken = (KaleoTimerInstanceToken)entityCache.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoTimerInstanceTokenImpl.class, primaryKey);
 
 			if (kaleoTimerInstanceToken == null) {
@@ -2527,7 +2609,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoTimerInstanceTokenImpl.class, primaryKey,
 					_nullKaleoTimerInstanceToken);
 			}
@@ -2583,6 +2665,26 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public List<KaleoTimerInstanceToken> findAll(int start, int end,
 		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo timer instance tokens.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTimerInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of kaleo timer instance tokens
+	 */
+	@Override
+	public List<KaleoTimerInstanceToken> findAll(int start, int end,
+		OrderByComparator<KaleoTimerInstanceToken> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2598,8 +2700,12 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<KaleoTimerInstanceToken> list = (List<KaleoTimerInstanceToken>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoTimerInstanceToken> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<KaleoTimerInstanceToken>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2646,10 +2752,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2679,7 +2785,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2692,11 +2798,11 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2721,12 +2827,16 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(KaleoTimerInstanceTokenImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(KaleoTimerInstanceTokenImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOTIMERINSTANCETOKEN = "SELECT kaleoTimerInstanceToken FROM KaleoTimerInstanceToken kaleoTimerInstanceToken";
 	private static final String _SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE_PKS_IN =
 		"SELECT kaleoTimerInstanceToken FROM KaleoTimerInstanceToken kaleoTimerInstanceToken WHERE kaleoTimerInstanceTokenId IN (";

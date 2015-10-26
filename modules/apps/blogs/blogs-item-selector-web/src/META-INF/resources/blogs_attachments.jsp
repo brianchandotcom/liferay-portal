@@ -23,6 +23,13 @@ BlogsItemSelectorCriterion blogsItemSelectorCriterion = blogsItemSelectorViewDis
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curBlogsAttachments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments"));
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+
+searchContainer.setOrderByComparator(orderByComparator);
+
 Folder folder = blogsItemSelectorViewDisplayContext.fetchAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 
 int total = 0;

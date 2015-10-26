@@ -28,6 +28,7 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
+import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +38,22 @@ import java.io.InputStream;
  * @author Adolfo Pérez
  */
 public final class DLValidatorImpl implements DLValidator {
+
+	@Override
+	public String fixName(String name) {
+		if (Validator.isNull(name)) {
+			return StringPool.UNDERLINE;
+		}
+
+		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
+			name = StringUtil.replace(
+				name, blacklistChar, StringPool.UNDERLINE);
+		}
+
+		name = replaceDLCharLastBlacklist(name);
+
+		return replaceDLNameBlacklist(name);
+	}
 
 	@Override
 	public boolean isValidName(String name) {
@@ -51,7 +68,7 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
-			if (blacklistLastChar.startsWith(_UNICODE_PREFIX)) {
+			if (blacklistLastChar.startsWith(UnicodeFormatter.UNICODE_PREFIX)) {
 				blacklistLastChar = UnicodeFormatter.parseString(
 					blacklistLastChar);
 			}
@@ -61,13 +78,7 @@ public final class DLValidatorImpl implements DLValidator {
 			}
 		}
 
-		String nameWithoutExtension = name;
-
-		if (name.contains(StringPool.PERIOD)) {
-			int index = name.lastIndexOf(StringPool.PERIOD);
-
-			nameWithoutExtension = name.substring(0, index);
-		}
+		String nameWithoutExtension = FileUtil.stripExtension(name);
 
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			if (StringUtil.equalsIgnoreCase(
@@ -117,6 +128,11 @@ public final class DLValidatorImpl implements DLValidator {
 	public void validateFileName(String fileName) throws FileNameException {
 		if (!isValidName(fileName)) {
 			throw new FileNameException(fileName);
+		}
+
+		if (!DLWebDAVUtil.isRepresentableTitle(fileName)) {
+			throw new FileNameException(
+				"Unrepresentable WebDAV title for file name " + fileName);
 		}
 	}
 
@@ -197,6 +213,50 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 	}
 
-	private static final String _UNICODE_PREFIX = "\\u";
+	protected String replaceDLCharLastBlacklist(String title) {
+		String previousTitle = null;
+
+		while (!title.equals(previousTitle)) {
+			previousTitle = title;
+
+			for (String blacklistLastChar :
+					PropsValues.DL_CHAR_LAST_BLACKLIST) {
+
+				if (blacklistLastChar.startsWith(
+						UnicodeFormatter.UNICODE_PREFIX)) {
+
+					blacklistLastChar = UnicodeFormatter.parseString(
+						blacklistLastChar);
+				}
+
+				if (title.endsWith(blacklistLastChar)) {
+					title = StringUtil.replaceLast(
+						title, blacklistLastChar, StringPool.BLANK);
+				}
+			}
+		}
+
+		return title;
+	}
+
+	protected String replaceDLNameBlacklist(String title) {
+		String extension = FileUtil.getExtension(title);
+		String nameWithoutExtension = FileUtil.stripExtension(title);
+
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			if (StringUtil.equalsIgnoreCase(
+					nameWithoutExtension, blacklistName)) {
+
+				if (Validator.isNull(extension)) {
+					return nameWithoutExtension + StringPool.UNDERLINE;
+				}
+
+				return nameWithoutExtension + StringPool.UNDERLINE +
+					StringPool.PERIOD + extension;
+			}
+		}
+
+		return title;
+	}
 
 }

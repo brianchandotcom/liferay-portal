@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.adapter.StagedTheme;
-import com.liferay.portal.service.ThemeLocalServiceUtil;
+import com.liferay.portal.service.ThemeLocalService;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -78,7 +79,7 @@ public class StagedThemeStagedModelDataHandler
 
 		String classPK = referenceElement.attributeValue("class-pk");
 
-		List<Theme> themes = ThemeLocalServiceUtil.getThemes(
+		List<Theme> themes = _themeLocalService.getThemes(
 			portletDataContext.getCompanyId());
 
 		for (Theme theme : themes) {
@@ -101,5 +102,12 @@ public class StagedThemeStagedModelDataHandler
 	protected void doImportStagedModel(
 		PortletDataContext portletDataContext, StagedTheme stagedTheme) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setThemeLocalService(ThemeLocalService themeLocalService) {
+		_themeLocalService = themeLocalService;
+	}
+
+	private ThemeLocalService _themeLocalService;
 
 }

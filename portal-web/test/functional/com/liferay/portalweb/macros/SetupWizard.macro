@@ -56,7 +56,7 @@
 		<execute macro="User#firstLoginPG" />
 	</command>
 
-	<command name="configurePG">
+	<command name="configurePG" summary="Configure JDBC to ${databaseType} for Liferay with the Setup Wizard">
 		<execute macro="SetupWizard#viewDefaultPortalNamePG" />
 
 		<execute macro="SetupWizard#configureSampleDataPG">

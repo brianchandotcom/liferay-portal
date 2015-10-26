@@ -41,9 +41,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 			<portlet:param name="mvcPath" value="/view_container_model.jsp" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(entry.getClassNameId()) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
-			<portlet:param name="containerModelClassName" value="<%= trashHandler.getRootContainerModelClassName() %>" />
-			<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getRootContainerModelId(entry.getClassPK())) %>" />
-			<portlet:param name="rootContainerModelMovable" value="<%= String.valueOf(trashHandler.isRootContainerModelMovable()) %>" />
+			<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(entry.getClassPK()))) %>" />
 		</portlet:renderURL>
 
 		<%

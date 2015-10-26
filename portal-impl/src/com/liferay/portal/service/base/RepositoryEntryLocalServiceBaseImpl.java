@@ -304,14 +304,12 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<RepositoryEntry>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(RepositoryEntry repositoryEntry)
 					throws PortalException {
-					RepositoryEntry stagedModel = (RepositoryEntry)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						repositoryEntry);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

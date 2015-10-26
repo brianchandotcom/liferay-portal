@@ -15,9 +15,15 @@
 package com.liferay.site.navigation.language.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.site.navigation.language.web.upgrade.SiteNavigationLanguageWebUpgrade;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,9 +56,24 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteNavigationLanguagePortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setSiteNavigationLanguageWebUpgrade(
-		SiteNavigationLanguageWebUpgrade siteNavigationLanguageWebUpgrade) {
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_TEMPLATE, _portletDisplayTemplate);
+
+		super.doDispatch(renderRequest, renderResponse);
 	}
+
+	@Reference
+	protected void setPortletDisplayTemplate(
+		PortletDisplayTemplate portletDisplayTemplate) {
+
+		_portletDisplayTemplate = portletDisplayTemplate;
+	}
+
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

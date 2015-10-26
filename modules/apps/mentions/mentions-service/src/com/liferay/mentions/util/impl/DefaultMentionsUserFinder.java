@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.portlet.social.util.SocialInteractionsConfiguration;
 
@@ -29,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -49,12 +50,12 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 
 			params.put("wildcardMode", WildcardMode.TRAILING);
 
-			return UserLocalServiceUtil.search(
+			return _userLocalService.search(
 				companyId, query, WorkflowConstants.STATUS_APPROVED, params, 0,
 				_MAX_USERS, new UserScreenNameComparator());
 		}
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		int[] types =
 			socialInteractionsConfiguration.
@@ -65,7 +66,7 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 			socialInteractionsConfiguration.
 				isSocialInteractionsSitesEnabled()) {
 
-			return UserLocalServiceUtil.searchSocial(
+			return _userLocalService.searchSocial(
 				user.getGroupIds(), userId, types, query, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
@@ -73,7 +74,7 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 		if (socialInteractionsConfiguration.
 				isSocialInteractionsSitesEnabled()) {
 
-			return UserLocalServiceUtil.searchSocial(
+			return _userLocalService.searchSocial(
 				companyId, user.getGroupIds(), query, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
@@ -81,13 +82,20 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 		if (socialInteractionsConfiguration.
 				isSocialInteractionsSocialRelationTypesEnabled()) {
 
-			return UserLocalServiceUtil.searchSocial(
+			return _userLocalService.searchSocial(
 				userId, types, query, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 
 		return Collections.emptyList();
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final int _MAX_USERS = 100;
+
+	private UserLocalService _userLocalService;
 
 }

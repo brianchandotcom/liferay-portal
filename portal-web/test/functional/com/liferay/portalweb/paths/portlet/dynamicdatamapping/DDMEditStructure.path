@@ -304,7 +304,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_DELETE_ICON</td>
-	<td>xpath=(//div[contains(@class,'component') and contains(@class,'form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')]/../../div/div/button/span[contains (@class,'glyphicon-trash')])[1]</td>
+	<td>xpath=(//div[contains(@class,'component') and contains(@class,'form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')]/../../div/div/button/span[contains(@class,'glyphicon-trash')])[1]</td>
 	<td></td>
 </tr>
 <tr>

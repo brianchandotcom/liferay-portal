@@ -19,6 +19,8 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -32,7 +34,6 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -58,7 +59,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -67,6 +67,7 @@ import org.junit.runner.RunWith;
  * @author Daniel Kocsis
  */
 @RunWith(Arquillian.class)
+@Sync
 public class MBMessageStagedModelDataHandlerTest
 	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 
@@ -74,14 +75,9 @@ public class MBMessageStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
-
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-	}
+			new LiferayIntegrationTestRule(),
+			SynchronousDestinationTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

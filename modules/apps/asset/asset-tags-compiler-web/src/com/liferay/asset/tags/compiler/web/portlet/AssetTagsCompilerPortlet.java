@@ -14,13 +14,11 @@
 
 package com.liferay.asset.tags.compiler.web.portlet;
 
-import com.liferay.asset.tags.compiler.web.upgrade.AssetTagsCompilerWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -48,10 +46,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AssetTagsCompilerPortlet extends MVCPortlet {
-
-	@Reference(unbind = "-")
-	protected void setAssetTagsCompilerWebUpgrade(
-		AssetTagsCompilerWebUpgrade assetTagsCompilerWebUpgrade) {
-	}
-
 }

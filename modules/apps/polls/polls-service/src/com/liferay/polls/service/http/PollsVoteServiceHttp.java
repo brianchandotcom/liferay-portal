@@ -16,6 +16,8 @@ package com.liferay.polls.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.service.PollsVoteServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -23,14 +25,12 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
 
-import com.liferay.polls.service.PollsVoteServiceUtil;
-
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.polls.service.PollsVoteServiceUtil} service utility. The
+ * {@link PollsVoteServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -49,8 +49,8 @@ import com.liferay.polls.service.PollsVoteServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see PollsVoteServiceSoap
- * @see com.liferay.portal.security.auth.HttpPrincipal
- * @see com.liferay.polls.service.PollsVoteServiceUtil
+ * @see HttpPrincipal
+ * @see PollsVoteServiceUtil
  * @generated
  */
 @ProviderType

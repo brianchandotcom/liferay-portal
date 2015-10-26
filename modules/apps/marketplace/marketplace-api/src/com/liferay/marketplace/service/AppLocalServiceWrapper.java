@@ -279,8 +279,9 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getBundledApps() {
-		return _appLocalService.getBundledApps();
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return _appLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
@@ -299,6 +300,11 @@ public class AppLocalServiceWrapper implements AppLocalService,
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _appLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getPrepackagedApps() {
+		return _appLocalService.getPrepackagedApps();
 	}
 
 	@Override

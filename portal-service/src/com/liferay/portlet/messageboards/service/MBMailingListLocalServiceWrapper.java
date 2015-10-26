@@ -267,6 +267,12 @@ public class MBMailingListLocalServiceWrapper
 			categoryId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return _mbMailingListLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	/**
 	* Returns the message boards mailing list with the primary key.
 	*

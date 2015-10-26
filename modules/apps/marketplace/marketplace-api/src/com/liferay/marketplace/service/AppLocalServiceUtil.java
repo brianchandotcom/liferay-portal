@@ -268,8 +268,9 @@ public class AppLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static java.util.Map<java.lang.String, java.lang.String> getBundledApps() {
-		return getService().getBundledApps();
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static java.util.List<com.liferay.marketplace.model.App> getInstalledApps() {
@@ -285,6 +286,10 @@ public class AppLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.Map<java.lang.String, java.lang.String> getPrepackagedApps() {
+		return getService().getPrepackagedApps();
 	}
 
 	public static void installApp(long remoteAppId)

@@ -23,9 +23,9 @@ import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.ExpandoValue;
-import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
-import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
-import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
+import com.liferay.portlet.expando.service.ExpandoTableLocalService;
+import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 
 import java.util.List;
 
@@ -33,6 +33,16 @@ import java.util.List;
  * @author Peter Shin
  */
 public class UpgradeExpando extends UpgradeProcess {
+
+	public UpgradeExpando(
+		ExpandoColumnLocalService expandoColumnLocalService,
+		ExpandoTableLocalService expandoTableLocalService,
+		ExpandoValueLocalService expandoValueLocalService) {
+
+		_expandoColumnLocalService = expandoColumnLocalService;
+		_expandoTableLocalService = expandoTableLocalService;
+		_expandoValueLocalService = expandoValueLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -45,47 +55,48 @@ public class UpgradeExpando extends UpgradeProcess {
 		ExpandoTable expandoTable = null;
 
 		try {
-			expandoTable = ExpandoTableLocalServiceUtil.getTable(
+			expandoTable = _expandoTableLocalService.getTable(
 				companyId, User.class.getName(), "MP");
 		}
 		catch (NoSuchTableException nste) {
 			return;
 		}
 
-		ExpandoColumn oldExpandoColumn =
-			ExpandoColumnLocalServiceUtil.getColumn(
-				companyId, User.class.getName(), expandoTable.getName(),
-				"client-id");
+		ExpandoColumn oldExpandoColumn = _expandoColumnLocalService.getColumn(
+			companyId, User.class.getName(), expandoTable.getName(),
+			"client-id");
 
 		if (oldExpandoColumn == null) {
 			return;
 		}
 
-		ExpandoColumn newExpandoColumn =
-			ExpandoColumnLocalServiceUtil.getColumn(
-				companyId, User.class.getName(), expandoTable.getName(),
-				"clientID");
+		ExpandoColumn newExpandoColumn = _expandoColumnLocalService.getColumn(
+			companyId, User.class.getName(), expandoTable.getName(),
+			"clientID");
 
 		if (newExpandoColumn == null) {
-			newExpandoColumn = ExpandoColumnLocalServiceUtil.updateColumn(
+			newExpandoColumn = _expandoColumnLocalService.updateColumn(
 				oldExpandoColumn.getColumnId(), "clientID",
 				ExpandoColumnConstants.STRING);
 		}
 
 		List<ExpandoValue> expandoValues =
-			ExpandoValueLocalServiceUtil.getColumnValues(
+			_expandoValueLocalService.getColumnValues(
 				oldExpandoColumn.getColumnId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 		for (ExpandoValue expandoValue : expandoValues) {
-			ExpandoValueLocalServiceUtil.addValue(
+			_expandoValueLocalService.addValue(
 				expandoValue.getCompanyId(), User.class.getName(),
 				expandoTable.getName(), newExpandoColumn.getName(),
 				expandoValue.getClassPK(), expandoValue.getString());
 		}
 
-		ExpandoColumnLocalServiceUtil.deleteColumn(
-			oldExpandoColumn.getColumnId());
+		_expandoColumnLocalService.deleteColumn(oldExpandoColumn.getColumnId());
 	}
+
+	private final ExpandoColumnLocalService _expandoColumnLocalService;
+	private final ExpandoTableLocalService _expandoTableLocalService;
+	private final ExpandoValueLocalService _expandoValueLocalService;
 
 }

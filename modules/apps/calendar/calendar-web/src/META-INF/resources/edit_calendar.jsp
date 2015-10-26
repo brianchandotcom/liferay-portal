@@ -30,6 +30,22 @@ String backURL = ParamUtil.getString(request, "backURL");
 Calendar calendar = (Calendar)request.getAttribute(CalendarWebKeys.CALENDAR);
 
 CalendarResource calendarResource = (CalendarResource)request.getAttribute(CalendarWebKeys.CALENDAR_RESOURCE);
+
+if (calendarResource == null) {
+	calendarResource = calendar.getCalendarResource();
+}
+
+String calendarName = null;
+
+if (calendar != null) {
+	calendarName = calendar.getName(locale);
+}
+
+String calendarResourceName = calendarResource.getName(locale);
+
+if (Validator.isNotNull(calendarName) && !calendarName.equals(calendarResourceName)) {
+	calendarName = calendarResourceName + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + calendarName;
+}
 %>
 
 <liferay-portlet:renderURL var="portletURL">

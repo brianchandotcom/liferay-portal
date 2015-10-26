@@ -612,7 +612,6 @@
 			<var name="userInstantMessengerICQ" value="socialofficesn" />
 			<var name="userInstantMessengerJabber" value="socialofficesn" />
 			<var name="userInstantMessengerSkype" value="socialofficesn" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="socialofficesn" />
 			<var name="userInstantMessengerYM" value="socialofficesn" />
 		</execute>
 
@@ -667,7 +666,6 @@
 			<var name="userInstantMessengerICQ" value="socialofficesnedit" />
 			<var name="userInstantMessengerJabber" value="socialofficesnedit" />
 			<var name="userInstantMessengerSkype" value="socialofficesnedit" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="socialofficesnedit" />
 			<var name="userInstantMessengerYM" value="socialofficesnedit" />
 		</execute>
 

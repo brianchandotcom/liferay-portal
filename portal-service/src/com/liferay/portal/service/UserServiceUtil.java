@@ -1202,7 +1202,6 @@ public class UserServiceUtil {
 	* @param facebookSn the user's new Facebook screen name
 	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param msnSn the user's new MSN screen name
 	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
@@ -1249,11 +1248,10 @@ public class UserServiceUtil {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds,
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
 		java.util.List<com.liferay.portal.model.Address> addresses,
@@ -1269,10 +1267,10 @@ public class UserServiceUtil {
 			screenName, emailAddress, facebookId, openId, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDelivers, serviceContext);
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
+			twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
+			websites, announcementsDelivers, serviceContext);
 	}
 
 	/**
@@ -1311,7 +1309,6 @@ public class UserServiceUtil {
 	* @param facebookSn the user's new Facebook screen name
 	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param msnSn the user's new MSN screen name
 	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
@@ -1345,11 +1342,10 @@ public class UserServiceUtil {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds,
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1360,9 +1356,9 @@ public class UserServiceUtil {
 			screenName, emailAddress, facebookId, openId, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, serviceContext);
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, mySpaceSn, skypeSn,
+			twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, serviceContext);
 	}
 
 	/**
@@ -1403,7 +1399,6 @@ public class UserServiceUtil {
 	* @param facebookSn the user's new Facebook screen name
 	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param msnSn the user's new MSN screen name
 	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
@@ -1443,11 +1438,10 @@ public class UserServiceUtil {
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String smsSn, java.lang.String aimSn,
 		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds,
+		java.lang.String jabberSn, java.lang.String mySpaceSn,
+		java.lang.String skypeSn, java.lang.String twitterSn,
+		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
 		java.util.List<com.liferay.portal.model.Address> addresses,
@@ -1464,10 +1458,10 @@ public class UserServiceUtil {
 			portraitBytes, languageId, timeZoneId, greeting, comments,
 			firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
-			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
-			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
-			userGroupIds, addresses, emailAddresses, phones, websites,
-			announcementsDelivers, serviceContext);
+			icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
+			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
+			addresses, emailAddresses, phones, websites, announcementsDelivers,
+			serviceContext);
 	}
 
 	public static UserService getService() {

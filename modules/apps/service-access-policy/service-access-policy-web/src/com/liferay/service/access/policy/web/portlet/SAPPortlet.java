@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.service.access.policy.service.SAPEntryService;
+import com.liferay.service.access.policy.web.constants.SAPPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -36,8 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=configuration",
-		"com.liferay.portlet.control-panel-entry-weight=11",
 		"com.liferay.portlet.css-class-wrapper=service-access-policy-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
@@ -49,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + SAPPortletKeys.SERVICE_ACCESS_POLICY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
@@ -74,6 +74,9 @@ public class SAPPortlet extends MVCPortlet {
 
 		String allowedServiceSignatures = ParamUtil.getString(
 			actionRequest, "allowedServiceSignatures");
+		boolean defaultSAPEntry = ParamUtil.getBoolean(
+			actionRequest, "defaultSAPEntry");
+		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
 		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
@@ -83,12 +86,13 @@ public class SAPPortlet extends MVCPortlet {
 
 		if (sapEntryId > 0) {
 			_sapEntryService.updateSAPEntry(
-				sapEntryId, allowedServiceSignatures, name, titleMap,
-				serviceContext);
+				sapEntryId, allowedServiceSignatures, defaultSAPEntry, enabled,
+				name, titleMap, serviceContext);
 		}
 		else {
 			_sapEntryService.addSAPEntry(
-				allowedServiceSignatures, name, titleMap, serviceContext);
+				allowedServiceSignatures, defaultSAPEntry, enabled, name,
+				titleMap, serviceContext);
 		}
 	}
 

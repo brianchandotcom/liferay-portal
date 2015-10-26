@@ -101,8 +101,4 @@
 		<execute function="AssertTextEquals" locator1="ControlMenuPreviewPanel#PREVIEW_MESSAGE" value1="Preview may not be accurate." />
 		<execute function="SelectFrame" locator1="//iframe[@id='devicePreviewIframe']" />
 	</command>
-
-	<command name="selectMobileDevice">
-		<execute function="SikuliClick" locator1="MobileDevice#MOBILE_DEVICE_SCREENSHOT" />
-	</command>
 </definition>

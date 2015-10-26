@@ -15,7 +15,7 @@
 package com.liferay.blogs.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.web.social.BlogsActivityInterpreter;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -65,7 +65,8 @@ public class BlogsActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new BlogsActivityInterpreter();
+		return getActivityInterpreter(
+			BlogsPortletKeys.BLOGS, BlogsEntry.class.getName());
 	}
 
 	@Override

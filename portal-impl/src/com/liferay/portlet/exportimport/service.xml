@@ -80,6 +80,7 @@
 		<reference package-path="com.liferay.portal" entity="LayoutRevision" />
 		<reference package-path="com.liferay.portal" entity="LayoutSet" />
 		<reference package-path="com.liferay.portal" entity="LayoutSetBranch" />
+		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
 	</entity>
 	<exceptions>
 		<exception>LARFile</exception>

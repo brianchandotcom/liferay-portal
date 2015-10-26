@@ -1211,6 +1211,11 @@ public class LayoutLocalServiceUtil {
 			companyId, layoutUuid);
 	}
 
+	public static boolean hasLayouts(com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasLayouts(group);
+	}
+
 	public static boolean hasLayouts(com.liferay.portal.model.Group group,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {

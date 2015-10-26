@@ -19,12 +19,13 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BaseControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -49,7 +50,7 @@ public class MyPagesControlPanelEntry extends BaseControlPanelEntry {
 
 		if ((PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
 			 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) &&
-			!RoleLocalServiceUtil.hasUserRole(
+			!_roleLocalService.hasUserRole(
 				permissionChecker.getUserId(), permissionChecker.getCompanyId(),
 				RoleConstants.POWER_USER, true)) {
 
@@ -58,5 +59,12 @@ public class MyPagesControlPanelEntry extends BaseControlPanelEntry {
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	private RoleLocalService _roleLocalService;
 
 }

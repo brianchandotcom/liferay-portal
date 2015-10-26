@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>DATE_SCHEDULE_TITLE_FIELD</td>
-	<td>//input[@id='_200_description']</td>
+	<td>//input[contains(@id,'ExportImportPortlet_description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 <!--PAGES-->
 <tr>
 	<td>PAGES_CHANGE_LINK</td>
-	<td>//div/a[@id='_200_pagesLink']</td>
+	<td>//div/a[contains(@id,'pagesLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -177,12 +177,12 @@
 <!--DATE_RANGE-->
 <tr>
 	<td>DATE_RANGE_START_DATE</td>
-	<td>//input[@name='_200_startDate']</td>
+	<td>//input[contains(@name,'startDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATE_RANGE_END_DATE</td>
-	<td>//input[@name='_200_endDate']</td>
+	<td>//input[contains(@name,'endDate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='_200_PERMISSIONS']</td>
+	<td>//input[contains(@id,'PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -251,12 +251,12 @@
 <!--PUBLISH_TEMPLATES-->
 <tr>
 	<td>PUBLISH_TEMPLATES_NAME_FIELD</td>
-	<td>//input[@id='_200_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_TEMPLATES_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_200_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -287,7 +287,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_UNDO_BUTTON</td>
-	<td>//a[@id='_200_undo']</td>
+	<td>//a[contains(@id,'undo')]</td>
 	<td></td>
 </tr>
 </tbody>

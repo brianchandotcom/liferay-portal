@@ -110,8 +110,8 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 			}
 		}
 		catch (DiscussionMaxCommentsException | MessageBodyException |
-			NoSuchMessageException | PrincipalException |
-			RequiredMessageException e) {
+			   NoSuchMessageException | PrincipalException |
+			   RequiredMessageException e) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

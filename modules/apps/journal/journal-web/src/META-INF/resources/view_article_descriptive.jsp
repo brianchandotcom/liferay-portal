@@ -43,7 +43,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 %>
 
 <liferay-ui:app-view-entry
-	actionJsp="/article_action.jsp"
+	actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 	actionJspServletContext="<%= application %>"
 	assetCategoryClassName="<%= JournalArticle.class.getName() %>"
 	assetCategoryClassPK="<%= article.getResourcePrimKey() %>"

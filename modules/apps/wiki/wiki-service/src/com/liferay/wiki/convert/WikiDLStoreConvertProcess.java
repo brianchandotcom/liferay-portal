@@ -60,13 +60,11 @@ public class WikiDLStoreConvertProcess implements DLStoreConvertProcess {
 
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<WikiPage>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(WikiPage wikiPage)
 					throws PortalException {
-
-					WikiPage wikiPage = (WikiPage)object;
 
 					for (FileEntry fileEntry :
 							wikiPage.getAttachmentsFileEntries()) {

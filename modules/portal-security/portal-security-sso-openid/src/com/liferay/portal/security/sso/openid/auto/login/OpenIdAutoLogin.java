@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +56,7 @@ public class OpenIdAutoLogin extends BaseAutoLogin {
 
 		session.removeAttribute(WebKeys.OPEN_ID_LOGIN);
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		String[] credentials = new String[3];
 
@@ -72,6 +72,12 @@ public class OpenIdAutoLogin extends BaseAutoLogin {
 		_openId = openId;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private OpenId _openId;
+	private UserLocalService _userLocalService;
 
 }

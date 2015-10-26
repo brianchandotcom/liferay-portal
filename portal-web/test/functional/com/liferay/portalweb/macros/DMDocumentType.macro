@@ -14,13 +14,13 @@
 			<execute macro="DMDocumentType#addField">
 				<var name="field" value="${dmDocumentTypeFieldName}" />
 				<var name="fieldFieldLabel" value="${dmDocumentTypeFieldName}" />
-				<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
 		<execute function="SelectFrame" locator1="DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_IFRAME" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="DocumentsAndMediaDocumentTypes#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -63,7 +63,7 @@
 			<execute macro="DMDocumentType#addField">
 				<var name="field" value="${dmDocumentTypeFieldName}" />
 				<var name="fieldFieldLabel" value="${dmDocumentTypeFieldName}" />
-				<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -126,7 +126,7 @@
 					<execute macro="DMDocumentType#addField">
 						<var name="field" value="${dmDocumentTypeFieldName}" />
 						<var name="fieldFieldLabel" value="${dmDocumentTypeFieldName}" />
-						<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '_')" name="fieldName" />
+						<var method="StringUtil#replace('${dmDocumentTypeFieldName}', ' ', '')" name="fieldName" />
 					</execute>
 				</for>
 			</then>

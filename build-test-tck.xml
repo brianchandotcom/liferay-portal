@@ -157,7 +157,7 @@ servletContextNames=${tck.servlet.context.names}</echo>
 	<target name="record-test-tck-package-names">
 		<ant antfile="build-test-tck.xml" target="prepare-tck" />
 
-		<script classpathref="project.classpath" language="beanshell">
+		<beanshell>
 			<![CDATA[
 				import org.apache.tools.ant.DirectoryScanner;
 
@@ -247,7 +247,7 @@ servletContextNames=${tck.servlet.context.names}</echo>
 
 				project.setProperty("test.tck.package.names", sb.toString());
 			]]>
-		</script>
+		</beanshell>
 
 		<echo file="test.tck.package.names.properties">${test.tck.package.names}</echo>
 	</target>

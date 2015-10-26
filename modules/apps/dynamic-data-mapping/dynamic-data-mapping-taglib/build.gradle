@@ -10,7 +10,6 @@ buildTaglibs {
 }
 
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	compile project(":apps:portlet-display-template:portlet-display-template")

@@ -61,6 +61,14 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 	}
 
 	@Override
+	public DDMTemplateVersion getLatestTemplateVersion()
+		throws PortalException {
+
+		return DDMTemplateVersionLocalServiceUtil.getLatestTemplateVersion(
+			getTemplateId());
+	}
+
+	@Override
 	public String getSmallImageType() throws PortalException {
 		if ((_smallImageType == null) && isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.getImage(

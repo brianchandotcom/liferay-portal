@@ -34,20 +34,54 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
+	public static final String ORDER_BY_MODEL_ASC =
+		"modelFolder DESC, title ASC";
+
+	public static final String ORDER_BY_MODEL_DESC =
+		"modelFolder DESC, title DESC";
+
 	public RepositoryModelTitleComparator() {
 		this(false);
 	}
 
 	public RepositoryModelTitleComparator(boolean ascending) {
 		_ascending = ascending;
+		_orderByModel = false;
+	}
+
+	public RepositoryModelTitleComparator(
+		boolean ascending, boolean orderByModel) {
+
+		_ascending = ascending;
+		_orderByModel = orderByModel;
 	}
 
 	@Override
 	public int compare(T t1, T t2) {
+		int value = 0;
+
 		String name1 = getName(t1);
 		String name2 = getName(t2);
 
-		int value = name1.compareToIgnoreCase(name2);
+		if (_orderByModel) {
+			if (((t1 instanceof DLFolder) || (t1 instanceof Folder)) &&
+				((t2 instanceof DLFolder) || (t2 instanceof Folder))) {
+
+				name1.compareToIgnoreCase(name2);
+			}
+			else if ((t1 instanceof DLFolder) || (t1 instanceof Folder)) {
+				value = -1;
+			}
+			else if ((t2 instanceof DLFolder) || (t2 instanceof Folder)) {
+				value = 1;
+			}
+			else {
+				name1.compareToIgnoreCase(name2);
+			}
+		}
+		else {
+			value = name1.compareToIgnoreCase(name2);
+		}
 
 		if (_ascending) {
 			return value;
@@ -59,11 +93,21 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
+		if (_orderByModel) {
+			if (_ascending) {
+				return ORDER_BY_MODEL_ASC;
+			}
+			else {
+				return ORDER_BY_MODEL_DESC;
+			}
 		}
 		else {
-			return ORDER_BY_DESC;
+			if (_ascending) {
+				return ORDER_BY_ASC;
+			}
+			else {
+				return ORDER_BY_DESC;
+			}
 		}
 	}
 
@@ -111,5 +155,6 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 	}
 
 	private final boolean _ascending;
+	private final boolean _orderByModel;
 
 }

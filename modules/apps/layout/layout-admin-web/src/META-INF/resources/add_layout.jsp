@@ -87,6 +87,10 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 			<liferay-ui:message arguments='<%= Validator.isNull(lte.getLayoutType()) ? type : "layout.types." + lte.getLayoutType() %>' key="the-first-page-cannot-be-of-type-x" />
 		</c:if>
 
+		<c:if test="<%= lte.getType() == LayoutTypeException.NOT_INSTANCEABLE %>">
+			<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-be-selected" />
+		</c:if>
+
 		<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">
 			<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-have-child-pages" />
 		</c:if>
@@ -171,6 +175,10 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 						}
 
 						LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+						if (!layoutTypeController.isInstanceable()) {
+							continue;
+						}
 
 						ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
 					%>

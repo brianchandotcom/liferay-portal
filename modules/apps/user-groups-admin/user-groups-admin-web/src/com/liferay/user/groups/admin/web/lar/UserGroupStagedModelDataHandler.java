@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Mendez Gonzalez
@@ -45,7 +46,7 @@ public class UserGroupStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		UserGroup userGroup = fetchStagedModelByUuidAndGroupId(
 			uuid, group.getCompanyId());
@@ -57,7 +58,7 @@ public class UserGroupStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(UserGroup userGroup) throws PortalException {
-		UserGroupLocalServiceUtil.deleteUserGroup(userGroup);
+		_userGroupLocalService.deleteUserGroup(userGroup);
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class UserGroupStagedModelDataHandler
 		List<UserGroup> userGroups = new ArrayList<>();
 
 		userGroups.add(
-			UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
+			_userGroupLocalService.fetchUserGroupByUuidAndCompanyId(
 				uuid, companyId));
 
 		return userGroups;
@@ -110,7 +111,7 @@ public class UserGroupStagedModelDataHandler
 			userGroup.getUuid(), portletDataContext.getGroupId());
 
 		if (existingUserGroup == null) {
-			existingUserGroup = UserGroupLocalServiceUtil.fetchUserGroup(
+			existingUserGroup = _userGroupLocalService.fetchUserGroup(
 				portletDataContext.getCompanyId(), userGroup.getName());
 		}
 
@@ -119,12 +120,12 @@ public class UserGroupStagedModelDataHandler
 		if (existingUserGroup == null) {
 			serviceContext.setUuid(userGroup.getUuid());
 
-			importedUserGroup = UserGroupLocalServiceUtil.addUserGroup(
+			importedUserGroup = _userGroupLocalService.addUserGroup(
 				userId, portletDataContext.getCompanyId(), userGroup.getName(),
 				userGroup.getDescription(), serviceContext);
 		}
 		else {
-			importedUserGroup = UserGroupLocalServiceUtil.updateUserGroup(
+			importedUserGroup = _userGroupLocalService.updateUserGroup(
 				portletDataContext.getCompanyId(),
 				existingUserGroup.getUserGroupId(), userGroup.getName(),
 				userGroup.getDescription(), serviceContext);
@@ -132,5 +133,20 @@ public class UserGroupStagedModelDataHandler
 
 		portletDataContext.importClassedModel(userGroup, importedUserGroup);
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupLocalService(
+		UserGroupLocalService userGroupLocalService) {
+
+		_userGroupLocalService = userGroupLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private UserGroupLocalService _userGroupLocalService;
 
 }

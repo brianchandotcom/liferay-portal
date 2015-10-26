@@ -1,10 +1,5 @@
-@import "aui/bootstrap/variables";
-@import "aui/alloy-font-awesome/scss/variables";
-@import "bourbon";
-@import "mixins";
-
-@import "application/variables";
 @import "application/variables_custom";
+@import "application/variables";
 
 @import "application/autocomplete";
 @import "application/color_picker";
@@ -29,7 +24,6 @@
 @import "application/tabs";
 @import "application/tag_list";
 @import "application/tag_selector";
-@import "application/toggle_card";
 @import "application/tooltip";
 @import "application/tree";
 @import "application/underlay";

@@ -99,12 +99,17 @@
 		<execute function="Click" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Click" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
+
 		<execute function="Check" locator1="StagingPublishToLive#DATE_SCHEDULE_RADIO" />
 		<execute function="Type" locator1="StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD" value1="${scheduleTitleName}" />
 		<execute function="Check" locator1="StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO" />
 		<execute function="Check" locator1="StagingPublishToLive#DATE_SCHEDULE_REPEAT_DAILY_RADIO" />
 		<execute function="Check" locator1="StagingPublishToLive#CONTENT_ALL_CONTENT_RADIO" />
+
 		<execute function="AssertClick" locator1="StagingPublishToLive#ADD_EVENT_BUTTON" value1="Add Event" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<var name="key_scheduleTitleName" value="${scheduleTitleName}" />
@@ -151,7 +156,7 @@
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
 		<execute function="AssertClick" locator1="StagingManageVariations#ADD_SITE_PAGES_VARIATIONS_BUTTON" value1="Add Site Pages Variation" />
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${sitePagesVariationName}" />
 
@@ -417,16 +422,16 @@
 
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
-		<execute function="AssertClick" locator1="StagingManageVariations#SITE_PAGES_VARIATIONS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="StagingManageVariations#SITE_PAGES_VARIATIONS_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${sitePagesVariationName} Edit" />
 		<execute function="AssertClick" locator1="Button#UPDATE" value1="Update" />
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Site page variation was updated." />
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
@@ -473,10 +478,10 @@
 		<if>
 			<and>
 				<condition function="IsElementPresent" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" />
-				<condition function="IsElementPresent" locator1="SitePages#STAGING_BUTTON" />
+				<condition function="IsElementPresent" locator1="Staging#STAGING_BUTTON" />
 			</and>
 			<then>
-				<execute function="AssertClick" locator1="SitePages#STAGING_BUTTON" value1="Staging" />
+				<execute function="AssertClick" locator1="Staging#STAGING_BUTTON" value1="Staging" />
 			</then>
 		</if>
 
@@ -512,7 +517,7 @@
 		</if>
 
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
@@ -525,7 +530,7 @@
 		<execute function="AssertClickNoError" locator1="StagingManageVariations#MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK" value1="Select" />
 		<execute function="Confirm" value1="Are you sure you want to merge changes from ${sitePagesVariationMergeName}?" />
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Site page variation was merged." />
 	</command>
 
@@ -672,6 +677,7 @@
 		<execute function="Click" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="Click" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
 		<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
 		<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
@@ -760,17 +766,13 @@
 	</command>
 
 	<command name="submitForPublicationPageRevision">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			</then>
-		</if>
+		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />
+		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Draft" />
 
-		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="draft" />
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-		<execute function="AssertElementPresent" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION_DISABLED" />
+
+		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH_TO_LIVE" />
+		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" />
 
 		<if>
 			<condition function="IsTextEqual" locator1="Message#STATUS" value1="Pending (Created)" />

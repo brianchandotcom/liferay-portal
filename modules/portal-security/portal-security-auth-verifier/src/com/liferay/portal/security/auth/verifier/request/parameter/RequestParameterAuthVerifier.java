@@ -23,20 +23,9 @@ import com.liferay.portal.security.auto.login.request.parameter.RequestParameter
 
 import java.util.Properties;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Tomas Polesovsky
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.RequestParameterAuthVerifier.hosts.allowed=255.255.255.255",
-		"auth.verifier.RequestParameterAuthVerifier.urls.excludes=*",
-		"auth.verifier.RequestParameterAuthVerifier.urls.includes="
-	},
-	service = AuthVerifier.class
-)
 public class RequestParameterAuthVerifier
 	extends RequestParameterAutoLogin implements AuthVerifier {
 

@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 
+import java.util.List;
+
 /**
  * @author Shuyang Zhou
  */
 public class LogAssertionTestRule
-	extends BaseTestRule<CaptureAppender, CaptureAppender> {
+	extends BaseTestRule<List<CaptureAppender>, List<CaptureAppender>> {
 
 	public static final LogAssertionTestRule INSTANCE =
 		new LogAssertionTestRule();

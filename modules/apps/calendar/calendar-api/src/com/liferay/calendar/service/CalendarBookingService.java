@@ -79,6 +79,9 @@ public interface CalendarBookingService extends BaseService {
 		long calendarBookingId) throws PortalException;
 
 	public void deleteCalendarBookingInstance(long calendarBookingId,
+		int instanceIndex, boolean allFollowing) throws PortalException;
+
+	public void deleteCalendarBookingInstance(long calendarBookingId,
 		long startTime, boolean allFollowing) throws PortalException;
 
 	public java.lang.String exportCalendarBooking(long calendarBookingId,

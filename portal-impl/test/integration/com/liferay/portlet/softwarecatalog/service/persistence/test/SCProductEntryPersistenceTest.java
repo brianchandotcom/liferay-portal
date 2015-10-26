@@ -43,6 +43,7 @@ import com.liferay.portlet.softwarecatalog.service.persistence.SCProductEntryUti
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,8 +60,9 @@ import java.util.Set;
  * @generated
  */
 public class SCProductEntryPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -361,11 +363,9 @@ public class SCProductEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SCProductEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SCProductEntry>() {
 				@Override
-				public void performAction(Object object) {
-					SCProductEntry scProductEntry = (SCProductEntry)object;
-
+				public void performAction(SCProductEntry scProductEntry) {
 					Assert.assertNotNull(scProductEntry);
 
 					count.increment();

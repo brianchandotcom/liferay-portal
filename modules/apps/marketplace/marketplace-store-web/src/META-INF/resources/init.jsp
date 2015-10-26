@@ -27,7 +27,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.marketplace.store.web.constants.MarketplaceStoreWebKeys" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 

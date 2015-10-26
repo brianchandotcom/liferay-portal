@@ -101,15 +101,11 @@ public class DBBuilder {
 
 	private void _buildCreateFile(String sqlDir) throws IOException {
 		for (String databaseType : _databaseTypes) {
-			if (databaseType.equals(DB.TYPE_HYPERSONIC) ||
-				databaseType.equals(DB.TYPE_INTERBASE) ||
-				databaseType.equals(DB.TYPE_JDATASTORE) ||
-				databaseType.equals(DB.TYPE_SAP)) {
-
+			if (databaseType.equals(DB.TYPE_HYPERSONIC)) {
 				continue;
 			}
 
-			DB db = DBFactoryUtil.getDB(databaseType);
+			DB db = DBFactoryUtil.getDB(databaseType, null);
 
 			if (db != null) {
 				if (!sqlDir.endsWith("/WEB-INF/sql")) {
@@ -130,7 +126,7 @@ public class DBBuilder {
 		}
 
 		for (String _databaseType : _databaseTypes) {
-			DB db = DBFactoryUtil.getDB(_databaseType);
+			DB db = DBFactoryUtil.getDB(_databaseType, null);
 
 			if (db != null) {
 				db.buildSQLFile(sqlDir, fileName);

@@ -47,7 +47,17 @@ public class HtmlBBCodeTranslatorImplTest {
 		String expected =
 			"<strong>type</strong> some <u>text</u><li>this is a test</li>";
 		String actual = _htmlBBCodeTranslator.parse(
-			"[b]type[/b] some [u]text[/u]\n" + "[*]this is a test");
+			"[b]type[/b] some [u]text[/u]" + "[*]this is a test");
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testAsteriskInBold() {
+		String expected =
+			"<strong>asterisk</strong><li> is inside the bold</li>";
+		String actual = _htmlBBCodeTranslator.parse(
+			"[b]asterisk[*][/b] is inside the bold");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -65,9 +75,9 @@ public class HtmlBBCodeTranslatorImplTest {
 		String expected =
 			"<div class=\"lfr-code\"><table><tbody><tr>" +
 				"<td class=\"line-numbers\" data-line-number=\"1\"></td>" +
-					"<td class=\"lines\"><div class=\"line\">:)[code]</div>" +
+					"<td class=\"lines\"><div class=\"line\">:)</div>" +
 						"</td></tr></tbody></table></div>";
-		String actual = _htmlBBCodeTranslator.parse("[code]:)[code]");
+		String actual = _htmlBBCodeTranslator.parse("[code]:)[/code]");
 
 		Assert.assertEquals(expected, actual);
 	}

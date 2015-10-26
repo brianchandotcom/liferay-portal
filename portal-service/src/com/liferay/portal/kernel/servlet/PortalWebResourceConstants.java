@@ -21,7 +21,18 @@ public class PortalWebResourceConstants {
 
 	public static final String RESOURCE_TYPE_CSS = "css";
 
-	public static final String RESOURCE_TYPE_EDITORS = "editors";
+	public static final String RESOURCE_TYPE_EDITOR_ALLOYEDITOR = "alloyeditor";
+
+	public static final String RESOURCE_TYPE_EDITOR_BBCODEEDITOR =
+		"bbcodeeditor";
+
+	public static final String RESOURCE_TYPE_EDITOR_CKEDITOR = "ckeditor";
+
+	public static final String RESOURCE_TYPE_EDITOR_SIMPLEEDITOR =
+		"simpleeditor";
+
+	public static final String RESOURCE_TYPE_EDITOR_TINYMCEEDITOR =
+		"tinymceeditor";
 
 	public static final String RESOURCE_TYPE_JS = "js";
 

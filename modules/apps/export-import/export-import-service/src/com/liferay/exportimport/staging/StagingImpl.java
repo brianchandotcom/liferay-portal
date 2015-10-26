@@ -90,11 +90,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.SessionClicks;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -103,9 +102,7 @@ import com.liferay.portlet.exportimport.LARFileSizeException;
 import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.MissingReferenceException;
 import com.liferay.portlet.exportimport.RemoteExportException;
-import com.liferay.portlet.exportimport.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor;
-import com.liferay.portlet.exportimport.backgroundtask.LayoutStagingBackgroundTaskExecutor;
-import com.liferay.portlet.exportimport.backgroundtask.PortletStagingBackgroundTaskExecutor;
+import com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
@@ -122,6 +119,7 @@ import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
+import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.Staging;
 import com.liferay.portlet.exportimport.staging.StagingConstants;
 
@@ -677,7 +675,7 @@ public class StagingImpl implements Staging {
 		int errorType = 0;
 		JSONArray warningMessagesJSONArray = null;
 
-		if (e instanceof DuplicateFileException) {
+		if (e instanceof DuplicateFileEntryException) {
 			errorMessage = LanguageUtil.get(
 				locale, "please-enter-a-unique-document-name");
 			errorType = ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
@@ -1026,10 +1024,23 @@ public class StagingImpl implements Staging {
 	public long getRecentLayoutSetBranchId(
 		HttpServletRequest request, long layoutSetId) {
 
-		return GetterUtil.getLong(
-			SessionClicks.get(
-				request, Staging.class.getName(),
-				getRecentLayoutSetBranchIdKey(layoutSetId)));
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		try {
+			return getRecentLayoutAttribute(
+				portalPreferences, getRecentLayoutSetBranchIdKey(layoutSetId));
+		}
+		catch (JSONException jsone) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get recent layout set branch ID with layout " +
+						"set " + layoutSetId,
+					jsone);
+			}
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -1309,7 +1320,8 @@ public class StagingImpl implements Staging {
 
 		BackgroundTaskManagerUtil.addBackgroundTask(
 			userId, exportImportConfiguration.getGroupId(), StringPool.BLANK,
-			null, LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
+			BackgroundTaskExecutorNames.
+				LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR, taskContextMap,
 			new ServiceContext());
 	}
 
@@ -1433,9 +1445,10 @@ public class StagingImpl implements Staging {
 
 		BackgroundTaskManagerUtil.addBackgroundTask(
 			userId, exportImportConfiguration.getGroupId(),
-			exportImportConfiguration.getName(), null,
-			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
-			new ServiceContext());
+			exportImportConfiguration.getName(),
+			BackgroundTaskExecutorNames.
+				PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR,
+			taskContextMap, new ServiceContext());
 	}
 
 	@Override
@@ -1646,10 +1659,25 @@ public class StagingImpl implements Staging {
 	public void setRecentLayoutSetBranchId(
 		HttpServletRequest request, long layoutSetId, long layoutSetBranchId) {
 
-		SessionClicks.put(
-			request, Staging.class.getName(),
-			getRecentLayoutSetBranchIdKey(layoutSetId),
-			String.valueOf(layoutSetBranchId));
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		try {
+			setRecentLayoutAttribute(
+				portalPreferences, getRecentLayoutSetBranchIdKey(layoutSetId),
+				layoutSetBranchId);
+
+			ProxiedLayoutsThreadLocal.clearProxiedLayouts();
+		}
+		catch (JSONException jsone) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to set recent layout set branch ID with layout " +
+						"set " + layoutSetId + " and layout set branch " +
+							layoutSetBranchId,
+					jsone);
+			}
+		}
 	}
 
 	@Override
@@ -1662,6 +1690,8 @@ public class StagingImpl implements Staging {
 			setRecentLayoutAttribute(
 				portalPreferences, getRecentLayoutSetBranchIdKey(layoutSetId),
 				layoutSetBranchId);
+
+			ProxiedLayoutsThreadLocal.clearProxiedLayouts();
 		}
 		catch (JSONException jsone) {
 			if (_log.isWarnEnabled()) {
@@ -2037,9 +2067,10 @@ public class StagingImpl implements Staging {
 
 		BackgroundTaskManagerUtil.addBackgroundTask(
 			user.getUserId(), exportImportConfiguration.getGroupId(),
-			StringPool.BLANK, null,
-			LayoutRemoteStagingBackgroundTaskExecutor.class, taskContextMap,
-			new ServiceContext());
+			StringPool.BLANK,
+			BackgroundTaskExecutorNames.
+				LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR,
+			taskContextMap, new ServiceContext());
 	}
 
 	protected boolean getBoolean(
@@ -2389,6 +2420,8 @@ public class StagingImpl implements Staging {
 				portalPreferences,
 				getRecentLayoutBranchIdKey(layoutSetBranchId, plid),
 				layoutBranchId);
+
+			ProxiedLayoutsThreadLocal.clearProxiedLayouts();
 		}
 		catch (JSONException jsone) {
 			if (_log.isWarnEnabled()) {

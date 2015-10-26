@@ -213,6 +213,13 @@ public class DLUtil {
 			orderByCol, orderByType);
 	}
 
+	public static <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
+		String orderByCol, String orderByType, boolean orderByModel) {
+
+		return getDL().getRepositoryModelOrderByComparator(
+			orderByCol, orderByType, orderByModel);
+	}
+
 	public static String getSanitizedFileName(String title, String extension) {
 		return getDL().getSanitizedFileName(title, extension);
 	}

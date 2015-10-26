@@ -34,7 +34,7 @@ import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationC
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationHelper;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.io.Serializable;
@@ -45,6 +45,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -165,10 +166,8 @@ public class EditPublishConfigurationMVCActionCommand
 			backgroundTask.getTaskContextMap();
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(
-					MapUtil.getLong(
-						taskContextMap, "exportImportConfigurationId"));
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				MapUtil.getLong(taskContextMap, "exportImportConfigurationId"));
 
 		if (exportImportConfiguration.getType() ==
 				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL) {
@@ -181,6 +180,15 @@ public class EditPublishConfigurationMVCActionCommand
 
 			StagingUtil.copyRemoteLayouts(exportImportConfiguration);
 		}
+	}
+
+	@Reference
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
 	}
 
 	protected ExportImportConfiguration updatePublishConfiguration(
@@ -221,5 +229,8 @@ public class EditPublishConfigurationMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditPublishConfigurationMVCActionCommand.class);
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
 
 }

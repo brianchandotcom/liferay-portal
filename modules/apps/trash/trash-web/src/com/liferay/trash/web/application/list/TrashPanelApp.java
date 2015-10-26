@@ -17,7 +17,7 @@ package com.liferay.trash.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.model.Portlet;
 import com.liferay.trash.web.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
-		"service.ranking:Integer=1300"
+		"service.ranking:Integer=1400"
 	},
 	service = PanelApp.class
 )
@@ -41,11 +41,12 @@ public class TrashPanelApp extends BaseControlPanelEntryPanelApp {
 		return TrashPortletKeys.TRASH;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		this.portletLocalService = portletLocalService;
+	@Reference(
+		target = "(javax.portlet.name=" + TrashPortletKeys.TRASH + ")",
+		unbind = "-"
+	)
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
@@ -38,39 +39,38 @@ public class CachelessTableMapperImpl
 	extends TableMapperImpl<L, R> {
 
 	public CachelessTableMapperImpl(
-		String tableName, String leftColumnName, String rightColumnName,
-		BasePersistence<L> leftBasePersistence,
+		String tableName, String companyColumnName, String leftColumnName,
+		String rightColumnName, BasePersistence<L> leftBasePersistence,
 		BasePersistence<R> rightBasePersistence) {
 
 		super(
-			tableName, leftColumnName, rightColumnName, leftBasePersistence,
-			rightBasePersistence);
+			tableName, companyColumnName, leftColumnName, rightColumnName,
+			leftBasePersistence, rightBasePersistence);
 
 		getTableMappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 			leftBasePersistence.getDataSource(),
-			"SELECT * FROM " + tableName + " WHERE " + leftColumnName +
-				" = ? AND " + rightColumnName + " = ?",
-			new int[] {Types.BIGINT, Types.BIGINT}, RowMapper.COUNT);
+			"SELECT * FROM " + tableName + " WHERE " + companyColumnName +
+				" = ? AND " + leftColumnName + " = ? AND " + rightColumnName +
+					" = ?",
+			new int[] {Types.BIGINT, Types.BIGINT, Types.BIGINT},
+			RowMapper.COUNT);
 
-		leftToRightPortalCache = new DummyPortalCache(
-			leftToRightPortalCache.getPortalCacheName(),
-			leftToRightPortalCache.getPortalCacheManager());
-		rightToLeftPortalCache = new DummyPortalCache(
-			rightToLeftPortalCache.getPortalCacheName(),
-			rightToLeftPortalCache.getPortalCacheManager());
-
-		destroy();
+		_leftToRightportalCacheNamePrefix =
+			TableMapper.class.getName() + "-" + tableName + "-LeftToRight-";
+		_rightToLeftportalCacheNamePrefix =
+			TableMapper.class.getName() + "-" + tableName + "-RightToLeft-";
 	}
 
 	@Override
 	protected boolean containsTableMapping(
-		long leftPrimaryKey, long rightPrimaryKey, boolean updateCache) {
+		long companyId, long leftPrimaryKey, long rightPrimaryKey,
+		boolean updateCache) {
 
 		List<Integer> counts = null;
 
 		try {
 			counts = getTableMappingSqlQuery.execute(
-				leftPrimaryKey, rightPrimaryKey);
+				companyId, leftPrimaryKey, rightPrimaryKey);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -87,6 +87,24 @@ public class CachelessTableMapperImpl
 		}
 
 		return true;
+	}
+
+	@Override
+	protected PortalCache<Long, long[]> getLeftToRightPortalCache(
+		long companyId) {
+
+		return new DummyPortalCache(
+			_leftToRightportalCacheNamePrefix.concat(
+				String.valueOf(companyId)));
+	}
+
+	@Override
+	protected PortalCache<Long, long[]> getRightToLeftPortalCache(
+		long companyId) {
+
+		return new DummyPortalCache(
+			_rightToLeftportalCacheNamePrefix.concat(
+				String.valueOf(companyId)));
 	}
 
 	protected final MappingSqlQuery<Integer> getTableMappingSqlQuery;
@@ -159,17 +177,17 @@ public class CachelessTableMapperImpl
 		public void unregisterPortalCacheListeners() {
 		}
 
-		protected DummyPortalCache(
-			String portalCacheName,
-			PortalCacheManager<Long, long[]> portalCacheManager) {
-
+		protected DummyPortalCache(String portalCacheName) {
 			this.portalCacheName = portalCacheName;
-			this.portalCacheManager = portalCacheManager;
 		}
 
-		protected final PortalCacheManager<Long, long[]> portalCacheManager;
+		protected final PortalCacheManager<Long, long[]> portalCacheManager =
+			MultiVMPoolUtil.getPortalCacheManager();
 		protected final String portalCacheName;
 
 	}
+
+	private final String _leftToRightportalCacheNamePrefix;
+	private final String _rightToLeftportalCacheNamePrefix;
 
 }

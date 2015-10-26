@@ -50,8 +50,9 @@ public class JournalArticleServiceUtil {
 	* @param folderId the primary key of the web content article folder
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param classPK the primary key of the DDM structure, if the primary key
 	of the DDMStructure class is given as the
 	<code>classNameId</code> parameter, the primary key of the class
@@ -148,8 +149,9 @@ public class JournalArticleServiceUtil {
 	* @param folderId the primary key of the web content article folder
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param classPK the primary key of the DDM structure, if the primary key
 	of the DDMStructure class is given as the
 	<code>classNameId</code> parameter, the primary key of the class
@@ -428,12 +430,13 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param className the DDMStructure class name if the web content article
 	is related to a DDM structure, the primary key of the class name
-	associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	* @param classPK the primary key of the DDM structure, if the the
-	DDMStructure class name is given as the <code>className</code>
-	parameter, the primary key of the class associated with the web
-	content article, or <code>0</code> otherwise
+	associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
+	* @param classPK the primary key of the DDM structure, if the DDMStructure
+	class name is given as the <code>className</code> parameter, the
+	primary key of the class associated with the web content article,
+	or <code>0</code> otherwise
 	* @return the matching web content article
 	* @throws PortalException if a matching web content article could not be
 	found or if the user did not have permission to view the web
@@ -682,8 +685,9 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure
 	* @param status the web content article's workflow status. For more
@@ -785,8 +789,9 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure
 	* @param status the web content article's workflow status. For more
@@ -1063,8 +1068,8 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param className the DDMStructure class name if the web content article
 	is related to a DDM structure, the class name associated with the
-	article, or {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	otherwise
+	article, or JournalArticleConstants.CLASSNAME_ID_DEFAULT in the
+	journal-api module otherwise
 	* @param classPK the primary key of the DDM structure, if the DDMStructure
 	class name is given as the <code>className</code> parameter, the
 	primary key of the class associated with the web content article,
@@ -1098,7 +1103,7 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Moves all versions of the the web content article matching the group and
+	* Moves all versions of the web content article matching the group and
 	* article ID to the folder.
 	*
 	* @param groupId the primary key of the web content article's group
@@ -1120,7 +1125,7 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Moves all versions of the the web content article matching the group and
+	* Moves all versions of the web content article matching the group and
 	* article ID to the folder.
 	*
 	* @param groupId the primary key of the web content article's group
@@ -1232,8 +1237,8 @@ public class JournalArticleServiceUtil {
 	* @param companyId the primary key of the web content article's company
 	* @param languageId the primary key of the language locale to remove
 	* @throws PortalException if the user did not have permission to update any
-	one of the the web content articles or if web content matching
-	the language could not be found for any one of the articles
+	one of the web content articles or if web content matching the
+	language could not be found for any one of the articles
 	*/
 	public static void removeArticleLocale(long companyId,
 		java.lang.String languageId)
@@ -1314,8 +1319,9 @@ public class JournalArticleServiceUtil {
 	(optionally {@link java.util.Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param version the web content article's version (optionally
@@ -1391,8 +1397,9 @@ public class JournalArticleServiceUtil {
 	(optionally {@link java.util.Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param version the web content article's version (optionally
@@ -1470,8 +1477,9 @@ public class JournalArticleServiceUtil {
 	(optionally {@link java.util.Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param keywords the keywords (space separated), which may occur in the
 	web content article ID, title, description, or content
 	(optionally <code>null</code>). If the keywords value is not
@@ -1563,8 +1571,9 @@ public class JournalArticleServiceUtil {
 	(optionally {@link java.util.Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param version the web content article's version (optionally
@@ -1623,8 +1632,9 @@ public class JournalArticleServiceUtil {
 	(optionally {@link java.util.Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param articleId the article ID keywords (space separated, optionally
 	<code>null</code>)
 	* @param version the web content article's version (optionally
@@ -1685,8 +1695,9 @@ public class JournalArticleServiceUtil {
 	(optionally {@link java.util.Collections#EMPTY_LIST})
 	* @param classNameId the primary key of the DDMStructure class if the web
 	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	the class name associated with the article, or
+	JournalArticleConstants.CLASSNAME_ID_DEFAULT in the journal-api
+	module otherwise
 	* @param keywords the keywords (space separated), which may occur in the
 	web content article ID, title, description, or content
 	(optionally <code>null</code>). If the keywords value is not
@@ -1974,9 +1985,8 @@ public class JournalArticleServiceUtil {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
-	#updateArticleTranslation(long, String, double,
-	java.util.Locale, String, String, String, java.util.Map,
-	ServiceContext)}
+	#updateArticleTranslation(long, String, double, Locale,
+	String, String, String, Map, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.journal.model.JournalArticle updateArticleTranslation(

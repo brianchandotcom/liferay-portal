@@ -27,7 +27,12 @@
 <#assign selected = paramUtil.getParameterValues(request, namespacedParentFieldName, parentFieldRawValues)?seq_contains(fieldStructure.value)>
 
 <#if parentType == "select">
-	<@aui.option cssClass=cssClass label=escapeAttribute(fieldStructure.label) selected=selected value=escape(fieldStructure.value) />
+	<@aui.option
+		cssClass=cssClass
+		label=escapeAttribute(fieldStructure.label)
+		selected=selected
+		value=escape(fieldStructure.value)
+	/>
 <#else>
 	<@aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name="${namespacedParentFieldName}" type="radio" value=fieldStructure.value>
 		<#if parentFieldStructure.required?? && (parentFieldStructure.required == "true")>

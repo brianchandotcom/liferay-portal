@@ -250,7 +250,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="Text_Name" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -280,7 +280,7 @@
 			<var name="ddlRecordFieldData" value="DDL Definition Record" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="Text_Name" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />
@@ -325,7 +325,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportDMRootFolder" priority="4">
+	<command name="ExportImportDMRootFolder" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -416,9 +416,9 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportPortletWithADT" priority="4">
+	<command name="ExportImportPortletWithADT" priority="3">
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Application Display Template" />
+			<var name="portletName" value="Application Display Templates" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addCP">
@@ -618,7 +618,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportSmoke" priority="4">
+	<command name="ExportImportSmoke" priority="5">
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -679,7 +679,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoEditCP">
+		<execute macro="BlogsNavigator#gotoEditCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
@@ -778,9 +778,11 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWSRPUnitConverter" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+	<command name="ExportImportWSRPUnitConverter" priority="3">
+		<property name="portlet.plugins.includes" value="wsrp-portlet" />
+
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addProducerCP">
@@ -788,8 +790,8 @@
 			<var name="producerName" value="Producer Demo" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addConsumerCP">
@@ -797,8 +799,8 @@
 			<var name="producerName" value="Producer Demo" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addConsumerPortletCP">
@@ -853,8 +855,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -866,10 +868,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="WSRP Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WSRP#wsrpUnitConverterConvertPG">
@@ -890,6 +891,39 @@
 			<var name="cannotImport" value="true" />
 			<var name="larFileName" value="bookmarks-corrupted.portlet.lar" />
 			<var name="uploadFrom" value="dependencies" />
+		</execute>
+	</command>
+
+	<command name="SearchExportTemplate" priority="4">
+		<execute macro="Page#gotoPublishingTools">
+			<var name="portletName" value="Export/Import" />
+		</execute>
+
+		<execute macro="LAR#gotoExportTemplateCP" />
+
+		<execute macro="LAR#addExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportTemplateCP">
+			<var name="uncheckContentNameList" value="Blogs" />
+		</execute>
+
+		<execute macro="LAR#saveExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoPublishingTools">
+			<var name="portletName" value="Export/Import" />
+		</execute>
+
+		<execute macro="LAR#gotoExportTemplateCP" />
+
+		<execute macro="LAR#searchTemplate">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 	</command>
 </definition>

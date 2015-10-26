@@ -20,7 +20,7 @@ import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.exception.ActionTypeException;
 import com.liferay.mobile.device.rules.exception.NoSuchActionException;
 import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
-import com.liferay.mobile.device.rules.service.MDRActionServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRActionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -40,6 +40,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward Han
@@ -69,7 +70,7 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long deleteActionId : deleteActionIds) {
-			MDRActionServiceUtil.deleteAction(deleteActionId);
+			_mdrActionService.deleteAction(deleteActionId);
 		}
 	}
 
@@ -106,6 +107,11 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setMDRActionService(MDRActionService mdrActionService) {
+		_mdrActionService = mdrActionService;
+	}
+
 	protected void updateAction(ActionRequest actionRequest) throws Exception {
 		long actionId = ParamUtil.getLong(actionRequest, "actionId");
 
@@ -132,15 +138,17 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		if (actionId <= 0) {
-			MDRActionServiceUtil.addAction(
+			_mdrActionService.addAction(
 				ruleGroupInstanceId, nameMap, descriptionMap, type,
 				typeSettingsProperties, serviceContext);
 		}
 		else {
-			MDRActionServiceUtil.updateAction(
+			_mdrActionService.updateAction(
 				actionId, nameMap, descriptionMap, type, typeSettingsProperties,
 				serviceContext);
 		}
 	}
+
+	private MDRActionService _mdrActionService;
 
 }

@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -62,7 +61,6 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID);
-		setIndexerEnabled(PropsValues.ORGANIZATIONS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);
 	}
@@ -238,12 +236,10 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Organization>() {
 
 				@Override
-				public void performAction(Object object) {
-					Organization organization = (Organization)object;
-
+				public void performAction(Organization organization) {
 					try {
 						Document document = getDocument(organization);
 

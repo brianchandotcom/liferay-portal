@@ -4,4 +4,6 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	.,\
 	../../classes,\
-	../../test-classes/integration
+	../../test-classes/integration,\
+	@../../lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
+	@../../lib/org.osgi.compendium.jar!/org/osgi/service/log/*

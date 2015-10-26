@@ -21,37 +21,70 @@
 
 <#assign redirectURL = renderResponse.createRenderURL() />
 
-<@portlet["actionURL"] name="bindConfiguration" varImpl="bindConfigActionURL"/>
-<@portlet["actionURL"] name="deleteConfiguration" varImpl="deleteConfigActionURL"/>
-
-<@liferay_ui["header"]
-	backURL="${redirectURL}"
-	title='${configurationModel.getName()}'
+<@portlet["actionURL"]
+	name="bindConfiguration"
+	varImpl="bindConfigActionURL"
+/>
+<@portlet["actionURL"]
+	name="deleteConfiguration"
+	varImpl="deleteConfigActionURL"
 />
 
-<@aui["form"] action="${bindConfigActionURL}" method="post" name="fm">
-	<@aui["input"] name="redirect" type="hidden" value="${redirectURL}" />
-	<@aui["input"] name="pid" type="hidden" value="${configurationModel.getID()}" />
-	<@aui["input"] name="factoryPid" type="hidden" value="${configurationModel.getFactoryPid()}" />
+<#assign void = portletDisplay.setShowBackIcon(true) />
+<#assign void = portletDisplay.setURLBack(redirectURL) />
 
-	<div class="lfr-ddm-container" id="lfr-ddm-container">
-		${ddmFormHTML}
-	</div>
+<#assign void = renderResponse.setTitle(configurationModel.getName()) />
 
-	<@aui["button-row"]>
-		<#if configurationModel.getConfiguration()??>
-			<@aui["button"] value="update" type="submit" />
+<div class="container-fluid-1280">
+	<@aui["form"] action="${bindConfigActionURL}" method="post" name="fm">
+		<@aui["input"]
+			name="redirect"
+			type="hidden"
+			value="${redirectURL}"
+		/>
+		<@aui["input"]
+			name="pid"
+			type="hidden"
+			value="${configurationModel.getID()}"
+		/>
+		<@aui["input"]
+			name="factoryPid"
+			type="hidden"
+			value="${configurationModel.getFactoryPid()}"
+		/>
 
-			<#assign deleteAttributesOnClickValue = renderResponse.getNamespace() + "deleteConfig();">
+		<div class="lfr-ddm-container" id="lfr-ddm-container">
+			${ddmFormHTML}
+		</div>
 
-			<@aui["button"] onClick=deleteAttributesOnClickValue value="delete" type="button" />
-		<#else>
-			<@aui["button"] value="save" type="submit" />
-		</#if>
+		<@aui["button-row"]>
+			<#if configurationModel.getConfiguration()??>
+				<@aui["button"]
+					value="update"
+					type="submit"
+				/>
 
-		<@aui["button"] href="${redirectURL}" type="cancel" />
+				<#assign deleteAttributesOnClickValue = renderResponse.getNamespace() + "deleteConfig();">
+
+				<@aui["button"]
+					onClick=deleteAttributesOnClickValue
+					value="delete"
+					type="button"
+				/>
+			<#else>
+				<@aui["button"]
+					value="save"
+					type="submit"
+				/>
+			</#if>
+
+			<@aui["button"]
+				href="${redirectURL}"
+				type="cancel"
+			/>
+		</@>
 	</@>
-</@>
+</div>
 
 <@aui["script"]>
 	function <@portlet["namespace"] />setDDMFieldNamespaceAndSubmit(actionURL) {

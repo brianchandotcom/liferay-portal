@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ENTRY_TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
+	<td>//div[@class='entry-title']</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT</td>
-	<td>//div[@class='entry-body']</td>
+	<td>//div[@class='entry-content']</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ENTRY_AUTHOR</td>
-	<td>//div[contains(@class,'entry-author')]</td>
+	<td>//div[@class='heading4']</td>
 	<td></td>
 </tr>
 <tr>

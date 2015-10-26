@@ -16,6 +16,7 @@ package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,21 @@ public interface JournalArticleImage extends JournalArticleImageModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.journal.model.impl.JournalArticleImageImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<JournalArticleImage, Long> ARTICLE_IMAGE_ID_ACCESSOR =
+		new Accessor<JournalArticleImage, Long>() {
+			@Override
+			public Long get(JournalArticleImage journalArticleImage) {
+				return journalArticleImage.getArticleImageId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<JournalArticleImage> getTypeClass() {
+				return JournalArticleImage.class;
+			}
+		};
 }

@@ -38,7 +38,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import java.util.List;
 import java.util.Map;
@@ -134,11 +133,6 @@ public class JournalPortletDataHandlerTest
 			stagingGroup.getGroupId(), layout.getPlid(),
 			RandomTestUtil.randomString(), ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey(), rendererDDMTemplate.getTemplateKey());
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new JournalPortletDataHandler();
 	}
 
 	@Override

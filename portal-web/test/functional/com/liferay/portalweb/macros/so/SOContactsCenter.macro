@@ -959,7 +959,6 @@
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
-		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_MSN_CONTENT" value1="msn ${userInstantMessengerWindowsLiveMessenger}" />
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>

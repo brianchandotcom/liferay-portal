@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -74,11 +75,10 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eduardo Lundgren
@@ -165,7 +165,7 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		calendarBooking.setVEventUid(vEventUid);
-		calendarBooking.setTitleMap(titleMap);
+		calendarBooking.setTitleMap(titleMap, serviceContext.getLocale());
 		calendarBooking.setDescriptionMap(descriptionMap);
 		calendarBooking.setLocation(location);
 		calendarBooking.setStartTime(startTimeJCalendar.getTimeInMillis());
@@ -810,8 +810,21 @@ public class CalendarBookingLocalServiceImpl
 		calendarBooking.setGroupId(calendar.getGroupId());
 		calendarBooking.setModifiedDate(serviceContext.getModifiedDate(null));
 		calendarBooking.setCalendarId(calendarId);
-		calendarBooking.setTitleMap(titleMap);
-		calendarBooking.setDescriptionMap(descriptionMap);
+
+		Map<Locale, String> updatedTitleMap = calendarBooking.getTitleMap();
+
+		updatedTitleMap.putAll(titleMap);
+
+		calendarBooking.setTitleMap(
+			updatedTitleMap, serviceContext.getLocale());
+
+		Map<Locale, String> updatedDescriptionMap =
+			calendarBooking.getDescriptionMap();
+
+		updatedDescriptionMap.putAll(descriptionMap);
+
+		calendarBooking.setDescriptionMap(updatedDescriptionMap);
+
 		calendarBooking.setLocation(location);
 		calendarBooking.setStartTime(startTimeJCalendar.getTimeInMillis());
 		calendarBooking.setEndTime(endTimeJCalendar.getTimeInMillis());
@@ -930,12 +943,21 @@ public class CalendarBookingLocalServiceImpl
 			recurrence = StringPool.BLANK;
 		}
 
+		Map<Locale, String> updatedTitleMap = calendarBooking.getTitleMap();
+
+		updatedTitleMap.putAll(titleMap);
+
+		Map<Locale, String> updatedDescriptionMap =
+			calendarBooking.getDescriptionMap();
+
+		updatedDescriptionMap.putAll(descriptionMap);
+
 		return addCalendarBooking(
 			userId, calendarId, childCalendarIds,
 			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-			titleMap, descriptionMap, location, startTime, endTime, allDay,
-			recurrence, firstReminder, firstReminderType, secondReminder,
-			secondReminderType, serviceContext);
+			updatedTitleMap, updatedDescriptionMap, location, startTime,
+			endTime, allDay, recurrence, firstReminder, firstReminderType,
+			secondReminder, secondReminderType, serviceContext);
 	}
 
 	@Override
@@ -1025,10 +1047,15 @@ public class CalendarBookingLocalServiceImpl
 					continue;
 				}
 
-				updateStatus(
-					userId, childCalendarBooking,
-					CalendarBookingWorkflowConstants.STATUS_PENDING,
-					serviceContext);
+				if (childCalendarBooking.getStatus() ==
+						CalendarBookingWorkflowConstants.
+							STATUS_MASTER_PENDING) {
+
+					updateStatus(
+						userId, childCalendarBooking,
+						CalendarBookingWorkflowConstants.STATUS_PENDING,
+						serviceContext);
+				}
 			}
 		}
 		else {
@@ -1116,12 +1143,11 @@ public class CalendarBookingLocalServiceImpl
 			return;
 		}
 
+		Map<Long, CalendarBooking> childCalendarBookingMap = new HashMap<>();
+
 		List<CalendarBooking> childCalendarBookings =
 			calendarBookingPersistence.findByParentCalendarBookingId(
 				calendarBooking.getCalendarBookingId());
-
-		Set<Long> existingCalendarBookingIds = new HashSet<>(
-			childCalendarIds.length);
 
 		for (CalendarBooking childCalendarBooking : childCalendarBookings) {
 			if (childCalendarBooking.isMasterBooking() ||
@@ -1134,8 +1160,8 @@ public class CalendarBookingLocalServiceImpl
 
 			deleteCalendarBooking(childCalendarBooking.getCalendarBookingId());
 
-			existingCalendarBookingIds.add(
-				childCalendarBooking.getCalendarId());
+			childCalendarBookingMap.put(
+				childCalendarBooking.getCalendarId(), childCalendarBooking);
 		}
 
 		for (long calendarId : childCalendarIds) {
@@ -1163,10 +1189,29 @@ public class CalendarBookingLocalServiceImpl
 
 			serviceContext.setAttribute("sendNotification", true);
 
+			int workflowAction = GetterUtil.getInteger(
+				serviceContext.getAttribute("workflowAction"));
+
+			if (childCalendarBookingMap.containsKey(calendarId)) {
+				CalendarBooking oldChildCalendarBooking =
+					childCalendarBookingMap.get(calendarId);
+
+				if ((calendarBooking.getStartTime() ==
+						oldChildCalendarBooking.getStartTime()) &&
+					(calendarBooking.getEndTime() ==
+						oldChildCalendarBooking.getEndTime()) &&
+					(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+					updateStatus(
+						childCalendarBooking.getUserId(), childCalendarBooking,
+						oldChildCalendarBooking.getStatus(), serviceContext);
+				}
+			}
+
 			NotificationTemplateType notificationTemplateType =
 				NotificationTemplateType.INVITE;
 
-			if (existingCalendarBookingIds.contains(
+			if (childCalendarBookingMap.containsKey(
 					childCalendarBooking.getCalendarId())) {
 
 				notificationTemplateType = NotificationTemplateType.UPDATE;

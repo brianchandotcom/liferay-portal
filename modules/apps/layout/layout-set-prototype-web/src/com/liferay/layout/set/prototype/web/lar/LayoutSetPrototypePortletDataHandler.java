@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.impl.LayoutSetPrototypeImpl;
-import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -85,7 +85,7 @@ public class LayoutSetPrototypePortletDataHandler
 			return portletPreferences;
 		}
 
-		LayoutSetPrototypeLocalServiceUtil.deleteNondefaultLayoutSetPrototypes(
+		_layoutSetPrototypeLocalService.deleteNondefaultLayoutSetPrototypes(
 			portletDataContext.getCompanyId());
 
 		return portletPreferences;
@@ -105,7 +105,7 @@ public class LayoutSetPrototypePortletDataHandler
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			LayoutSetPrototypeLocalServiceUtil.getExportActionableDynamicQuery(
+			_layoutSetPrototypeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -143,15 +143,24 @@ public class LayoutSetPrototypePortletDataHandler
 		throws Exception {
 
 		ActionableDynamicQuery layoutSetPrototypeExportActionableDynamicQuery =
-			LayoutSetPrototypeLocalServiceUtil.getExportActionableDynamicQuery(
+			_layoutSetPrototypeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		layoutSetPrototypeExportActionableDynamicQuery.performCount();
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+
+		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 }

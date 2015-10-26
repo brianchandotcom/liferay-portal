@@ -15,12 +15,10 @@
 package com.liferay.site.navigation.directory.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.site.navigation.directory.web.upgrade.SitesDirectoryWebUpgrade;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -49,10 +47,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class SitesDirectoryPortlet extends MVCPortlet {
-
-	@Reference(unbind = "-")
-	protected void setSitesDirectoryWebUpgrade(
-		SitesDirectoryWebUpgrade sitesDirectoryWebUpgrade) {
-	}
-
 }

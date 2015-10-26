@@ -28,16 +28,16 @@ import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Website;
-import com.liferay.portal.service.AddressLocalServiceUtil;
-import com.liferay.portal.service.EmailAddressLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.OrgLaborLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
-import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
-import com.liferay.portal.service.PhoneLocalServiceUtil;
+import com.liferay.portal.service.AddressLocalService;
+import com.liferay.portal.service.EmailAddressLocalService;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.OrgLaborLocalService;
+import com.liferay.portal.service.OrganizationLocalService;
+import com.liferay.portal.service.PasswordPolicyLocalService;
+import com.liferay.portal.service.PasswordPolicyRelLocalService;
+import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.WebsiteLocalServiceUtil;
+import com.liferay.portal.service.WebsiteLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -51,6 +51,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Mendez Gonzalez
@@ -65,7 +66,7 @@ public class OrganizationStagedModelDataHandler
 	public void deleteStagedModel(Organization organization)
 		throws PortalException {
 
-		OrganizationLocalServiceUtil.deleteOrganization(organization);
+		_organizationLocalService.deleteOrganization(organization);
 	}
 
 	@Override
@@ -73,10 +74,10 @@ public class OrganizationStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		Organization organization =
-			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
 				uuid, group.getCompanyId());
 
 		if (organization != null) {
@@ -91,7 +92,7 @@ public class OrganizationStagedModelDataHandler
 		List<Organization> organizations = new ArrayList<>();
 
 		organizations.add(
-			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
 				uuid, companyId));
 
 		return organizations;
@@ -168,13 +169,12 @@ public class OrganizationStagedModelDataHandler
 		serviceContext.setUserId(userId);
 
 		Organization existingOrganization =
-			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
 				organization.getUuid(), portletDataContext.getGroupId());
 
 		if (existingOrganization == null) {
-			existingOrganization =
-				OrganizationLocalServiceUtil.fetchOrganization(
-					portletDataContext.getCompanyId(), organization.getName());
+			existingOrganization = _organizationLocalService.fetchOrganization(
+				portletDataContext.getCompanyId(), organization.getName());
 		}
 
 		Organization importedOrganization = null;
@@ -182,22 +182,20 @@ public class OrganizationStagedModelDataHandler
 		if (existingOrganization == null) {
 			serviceContext.setUuid(organization.getUuid());
 
-			importedOrganization = OrganizationLocalServiceUtil.addOrganization(
+			importedOrganization = _organizationLocalService.addOrganization(
 				userId, parentOrganizationId, organization.getName(),
 				organization.getType(), organization.getRegionId(),
 				organization.getCountryId(), organization.getStatusId(),
 				organization.getComments(), false, serviceContext);
 		}
 		else {
-			importedOrganization =
-				OrganizationLocalServiceUtil.updateOrganization(
-					portletDataContext.getCompanyId(),
-					existingOrganization.getOrganizationId(),
-					parentOrganizationId, organization.getName(),
-					organization.getType(), organization.getRegionId(),
-					organization.getCountryId(), organization.getStatusId(),
-					organization.getComments(), true, null, false,
-					serviceContext);
+			importedOrganization = _organizationLocalService.updateOrganization(
+				portletDataContext.getCompanyId(),
+				existingOrganization.getOrganizationId(), parentOrganizationId,
+				organization.getName(), organization.getType(),
+				organization.getRegionId(), organization.getCountryId(),
+				organization.getStatusId(), organization.getComments(), true,
+				null, false, serviceContext);
 		}
 
 		importAddresses(portletDataContext, organization, importedOrganization);
@@ -217,7 +215,7 @@ public class OrganizationStagedModelDataHandler
 			PortletDataContext portletDataContext, Organization organization)
 		throws PortalException {
 
-		List<Address> addresses = AddressLocalServiceUtil.getAddresses(
+		List<Address> addresses = _addressLocalService.getAddresses(
 			organization.getCompanyId(), organization.getModelClassName(),
 			organization.getOrganizationId());
 
@@ -233,7 +231,7 @@ public class OrganizationStagedModelDataHandler
 		throws PortalException {
 
 		List<EmailAddress> emailAddresses =
-			EmailAddressLocalServiceUtil.getEmailAddresses(
+			_emailAddressLocalService.getEmailAddresses(
 				organization.getCompanyId(), organization.getModelClassName(),
 				organization.getOrganizationId());
 
@@ -247,7 +245,7 @@ public class OrganizationStagedModelDataHandler
 	protected void exportOrgLabors(
 		PortletDataContext portletDataContext, Organization organization) {
 
-		List<OrgLabor> orgLabors = OrgLaborLocalServiceUtil.getOrgLabors(
+		List<OrgLabor> orgLabors = _orgLaborLocalService.getOrgLabors(
 			organization.getOrganizationId());
 
 		String path = ExportImportPathUtil.getModelPath(
@@ -261,7 +259,7 @@ public class OrganizationStagedModelDataHandler
 		throws PortalException {
 
 		PasswordPolicyRel passwordPolicyRel =
-			PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(
+			_passwordPolicyRelLocalService.fetchPasswordPolicyRel(
 				Organization.class.getName(), organization.getOrganizationId());
 
 		if (passwordPolicyRel == null) {
@@ -269,7 +267,7 @@ public class OrganizationStagedModelDataHandler
 		}
 
 		PasswordPolicy passwordPolicy =
-			PasswordPolicyLocalServiceUtil.getPasswordPolicy(
+			_passwordPolicyLocalService.getPasswordPolicy(
 				passwordPolicyRel.getPasswordPolicyId());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -281,7 +279,7 @@ public class OrganizationStagedModelDataHandler
 			PortletDataContext portletDataContext, Organization organization)
 		throws PortalException {
 
-		List<Phone> phones = PhoneLocalServiceUtil.getPhones(
+		List<Phone> phones = _phoneLocalService.getPhones(
 			organization.getCompanyId(), organization.getModelClassName(),
 			organization.getOrganizationId());
 
@@ -296,7 +294,7 @@ public class OrganizationStagedModelDataHandler
 			PortletDataContext portletDataContext, Organization organization)
 		throws PortalException {
 
-		List<Website> websites = WebsiteLocalServiceUtil.getWebsites(
+		List<Website> websites = _websiteLocalService.getWebsites(
 			organization.getCompanyId(), organization.getModelClassName(),
 			organization.getOrganizationId());
 
@@ -438,7 +436,7 @@ public class OrganizationStagedModelDataHandler
 		long passwordPolicyId = passwordPolicyIds.get(
 			passwordPolicy.getPrimaryKey());
 
-		OrganizationLocalServiceUtil.addPasswordPolicyOrganizations(
+		_organizationLocalService.addPasswordPolicyOrganizations(
 			passwordPolicyId,
 			new long[] {importedOrganization.getOrganizationId()});
 	}
@@ -523,5 +521,74 @@ public class OrganizationStagedModelDataHandler
 			Organization.class.getName(),
 			importedOrganization.getOrganizationId(), websites);
 	}
+
+	@Reference(unbind = "-")
+	protected void setAddressLocalService(
+		AddressLocalService addressLocalService) {
+
+		_addressLocalService = addressLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setEmailAddressLocalService(
+		EmailAddressLocalService emailAddressLocalService) {
+
+		_emailAddressLocalService = emailAddressLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setOrgLaborLocalService(
+		OrgLaborLocalService orgLaborLocalService) {
+
+		_orgLaborLocalService = orgLaborLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPasswordPolicyLocalService(
+		PasswordPolicyLocalService passwordPolicyLocalService) {
+
+		_passwordPolicyLocalService = passwordPolicyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPasswordPolicyRelLocalService(
+		PasswordPolicyRelLocalService passwordPolicyRelLocalService) {
+
+		_passwordPolicyRelLocalService = passwordPolicyRelLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPhoneLocalService(PhoneLocalService phoneLocalService) {
+		_phoneLocalService = phoneLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWebsiteLocalService(
+		WebsiteLocalService websiteLocalService) {
+
+		_websiteLocalService = websiteLocalService;
+	}
+
+	private AddressLocalService _addressLocalService;
+	private EmailAddressLocalService _emailAddressLocalService;
+	private GroupLocalService _groupLocalService;
+	private OrganizationLocalService _organizationLocalService;
+	private OrgLaborLocalService _orgLaborLocalService;
+	private PasswordPolicyLocalService _passwordPolicyLocalService;
+	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+	private PhoneLocalService _phoneLocalService;
+	private WebsiteLocalService _websiteLocalService;
 
 }

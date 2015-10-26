@@ -123,6 +123,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MY_CALENDARS_CALENDAR</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'My Calendars')]/following-sibling::div[contains(.,'${key_userCalendarName}')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MY_CALENDARS_MENULIST_ARROW</td>
 	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'My Calendars')]/span[@class='calendar-list-item-arrow']</td>
 	<td></td>
@@ -208,6 +213,11 @@
 <tr>
 	<td>CURRENT_SITE_CALENDARS_HEADER</td>
 	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Current Site Calendars')]/span[@class='calendar-portlet-list-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_SITE_CALENDARS_CALENDAR</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Current Site Calendars')]/following-sibling::div[contains(.,'${key_siteCalendarName}')]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -507,6 +517,11 @@
 <tr>
 	<td>SCHEDULER_EVENT_ALL_DAY_TITLE_WITH_REMINDER</td>
 	<td>//div[contains(@class,'scheduler-event-all-day scheduler-event-reminder') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_ATTENDING_ROW_OPTIONS</td>
+	<td>//tr[@class='calendar-portlet-event-recorder-status-row']</td>
 	<td></td>
 </tr>
 <tr>

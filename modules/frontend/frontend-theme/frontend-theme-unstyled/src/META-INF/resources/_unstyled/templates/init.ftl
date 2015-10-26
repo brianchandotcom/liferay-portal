@@ -90,16 +90,6 @@
 
 <#-- ---------- URLs ---------- -->
 
-<#assign show_add_content = theme_display.isShowAddContentIcon() />
-
-<#if show_add_content>
-	<#assign add_content_text = languageUtil.get(locale, "add-application") />
-	<#assign add_content_url = theme_display.getURLAddContent() />
-
-	<#assign layout_text = languageUtil.get(locale, "layout-template") />
-	<#assign layout_url = theme_display.getURLLayoutTemplates() />
-</#if>
-
 <#assign show_control_panel = theme_display.isShowControlPanelIcon() />
 
 <#if show_control_panel>

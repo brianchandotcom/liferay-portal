@@ -305,14 +305,12 @@ public abstract class JournalFeedLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalFeed>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(JournalFeed journalFeed)
 					throws PortalException {
-					JournalFeed stagedModel = (JournalFeed)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						journalFeed);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

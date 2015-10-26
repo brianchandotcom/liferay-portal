@@ -6,5 +6,4 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	test-classes/integration,\
-	../../../../portal-impl/test/test-portal-impl.properties
+	test-classes/integration

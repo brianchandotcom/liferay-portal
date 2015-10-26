@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the OrgGroupRole service. Represents a row in the &quot;OrgGroupRole&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,57 @@ public interface OrgGroupRole extends OrgGroupRoleModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.OrgGroupRoleImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<OrgGroupRole, Long> ORGANIZATION_ID_ACCESSOR = new Accessor<OrgGroupRole, Long>() {
+			@Override
+			public Long get(OrgGroupRole orgGroupRole) {
+				return orgGroupRole.getOrganizationId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<OrgGroupRole> getTypeClass() {
+				return OrgGroupRole.class;
+			}
+		};
+
+	public static final Accessor<OrgGroupRole, Long> GROUP_ID_ACCESSOR = new Accessor<OrgGroupRole, Long>() {
+			@Override
+			public Long get(OrgGroupRole orgGroupRole) {
+				return orgGroupRole.getGroupId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<OrgGroupRole> getTypeClass() {
+				return OrgGroupRole.class;
+			}
+		};
+
+	public static final Accessor<OrgGroupRole, Long> ROLE_ID_ACCESSOR = new Accessor<OrgGroupRole, Long>() {
+			@Override
+			public Long get(OrgGroupRole orgGroupRole) {
+				return orgGroupRole.getRoleId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<OrgGroupRole> getTypeClass() {
+				return OrgGroupRole.class;
+			}
+		};
+
 	public boolean containsGroup(
 		java.util.List<com.liferay.portal.model.Group> groups);
 

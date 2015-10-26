@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.db;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,8 +28,8 @@ import java.io.IOException;
  */
 public class HypersonicDB extends BaseDB {
 
-	public static DB getInstance() {
-		return _instance;
+	public HypersonicDB(int majorVersion, int minorVersion) {
+		super(TYPE_HYPERSONIC, majorVersion, minorVersion);
 	}
 
 	@Override
@@ -42,10 +41,6 @@ public class HypersonicDB extends BaseDB {
 		template = StringUtil.replace(template, "\\'", "''");
 
 		return template;
-	}
-
-	protected HypersonicDB() {
-		super(TYPE_HYPERSONIC);
 	}
 
 	@Override
@@ -118,7 +113,5 @@ public class HypersonicDB extends BaseDB {
 		" blob", " bit", " timestamp", " double", " int", " bigint",
 		" longvarchar", " longvarchar", " varchar", "", "commit"
 	};
-
-	private static final HypersonicDB _instance = new HypersonicDB();
 
 }

@@ -57,12 +57,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	template's resource model
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
-	* @param type the template's type. For more information, see {@link
-	DDMTemplateConstants}.
-	* @param mode the template's mode. For more information, see {@link
-	DDMTemplateConstants}.
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param mode the template's mode. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param language the template's script language. For more information,
-	see {@link DDMTemplateConstants}.
+	see DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param script the template's script
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, guest permissions, and
@@ -99,12 +99,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	(optionally <code>null</code>)
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
-	* @param type the template's type. For more information, see {@link
-	DDMTemplateConstants}.
-	* @param mode the template's mode. For more information, see {@link
-	DDMTemplateConstants}.
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param mode the template's mode. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param language the template's script language. For more information,
-	see {@link DDMTemplateConstants}.
+	see DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param script the template's script
 	* @param cacheable whether the template is cacheable
 	* @param smallImage whether the template has a small image
@@ -214,8 +214,8 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	related model
 	* @param oldClassPK the primary key of the old template's related entity
 	* @param newClassPK the primary key of the new template's related entity
-	* @param type the template's type. For more information, see {@link
-	DDMTemplateConstants}.
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param serviceContext the service context to be applied. Can set the
 	creation date, modification date, guest permissions, and group
 	permissions for the new templates.
@@ -724,8 +724,8 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param classPK the primary key of the template's related entity
-	* @param type the template's type. For more information, see {@link
-	DDMTemplateConstants}.
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @return the matching templates
 	*/
 	@Override
@@ -743,10 +743,10 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param classPK the primary key of the template's related entity
-	* @param type the template's type. For more information, see {@link
-	DDMTemplateConstants}.
-	* @param mode the template's mode. For more information, see {@link
-	DDMTemplateConstants}.
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param mode the template's mode. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @return the matching templates
 	*/
 	@Override
@@ -822,10 +822,11 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
-		long groupId, long structureClassNameId, int start, int end,
+		long groupId, long structureClassNameId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateLocalService.getTemplatesByStructureClassNameId(groupId,
-			structureClassNameId, start, end, orderByComparator);
+			structureClassNameId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -839,9 +840,9 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	*/
 	@Override
 	public int getTemplatesByStructureClassNameIdCount(long groupId,
-		long structureClassNameId) {
+		long structureClassNameId, int status) {
 		return _ddmTemplateLocalService.getTemplatesByStructureClassNameIdCount(groupId,
-			structureClassNameId);
+			structureClassNameId, status);
 	}
 
 	/**
@@ -918,9 +919,11 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param start the lower bound of the range of templates to return
 	* @param end the upper bound of the range of templates to return (not
 	inclusive)
@@ -932,11 +935,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateLocalService.search(companyId, groupId, classNameId,
-			classPK, resourceClassNameId, keywords, type, mode, start, end,
-			orderByComparator);
+			classPK, resourceClassNameId, keywords, type, mode, status, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -965,12 +969,14 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param description the description keywords (optionally
 	<code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param language the template's script language (optionally
-	<code>null</code>). For more information, see {@link
-	DDMTemplateConstants}.
+	<code>null</code>). For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @param start the lower bound of the range of templates to return
@@ -985,12 +991,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateLocalService.search(companyId, groupId, classNameId,
 			classPK, resourceClassNameId, name, description, type, mode,
-			language, andOperator, start, end, orderByComparator);
+			language, status, andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -1018,9 +1024,11 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param start the lower bound of the range of templates to return
 	* @param end the upper bound of the range of templates to return (not
 	inclusive)
@@ -1032,11 +1040,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateLocalService.search(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, keywords, type, mode,
-			start, end, orderByComparator);
+			status, start, end, orderByComparator);
 	}
 
 	/**
@@ -1065,12 +1074,14 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param description the description keywords (optionally
 	<code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param language the template's script language (optionally
-	<code>null</code>). For more information, see {@link
-	DDMTemplateConstants}.
+	<code>null</code>). For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param andOperator whether every field must match its keywords, or just
 	one field.
 	* @param start the lower bound of the range of templates to return
@@ -1085,12 +1096,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateLocalService.search(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, name, description,
-			type, mode, language, andOperator, start, end, orderByComparator);
+			type, mode, language, status, andOperator, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1108,17 +1120,20 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @return the number of matching templates
 	*/
 	@Override
 	public int searchCount(long companyId, long groupId, long classNameId,
 		long classPK, long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode) {
+		java.lang.String type, java.lang.String mode, int status) {
 		return _ddmTemplateLocalService.searchCount(companyId, groupId,
-			classNameId, classPK, resourceClassNameId, keywords, type, mode);
+			classNameId, classPK, resourceClassNameId, keywords, type, mode,
+			status);
 	}
 
 	/**
@@ -1136,12 +1151,14 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param description the description keywords (optionally
 	<code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param language the template's script language (optionally
-	<code>null</code>). For more information, see {@link
-	DDMTemplateConstants}.
+	<code>null</code>). For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param andOperator whether every field must match its keywords, or just
 	one field.
 	* @return the number of matching templates
@@ -1150,10 +1167,11 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	public int searchCount(long companyId, long groupId, long classNameId,
 		long classPK, long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator) {
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator) {
 		return _ddmTemplateLocalService.searchCount(companyId, groupId,
 			classNameId, classPK, resourceClassNameId, name, description, type,
-			mode, language, andOperator);
+			mode, language, status, andOperator);
 	}
 
 	/**
@@ -1171,17 +1189,21 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @return the number of matching templates
 	*/
 	@Override
 	public int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode) {
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status) {
 		return _ddmTemplateLocalService.searchCount(companyId, groupIds,
-			classNameIds, classPKs, resourceClassNameId, keywords, type, mode);
+			classNameIds, classPKs, resourceClassNameId, keywords, type, mode,
+			status);
 	}
 
 	/**
@@ -1199,12 +1221,14 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param description the description keywords (optionally
 	<code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link DDMTemplateConstants}.
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
 	* @param language the template's script language (optionally
-	<code>null</code>). For more information, see {@link
-	DDMTemplateConstants}.
+	<code>null</code>). For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param andOperator whether every field must match its keywords, or just
 	one field.
 	* @return the number of matching templates
@@ -1214,10 +1238,10 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator) {
+		java.lang.String language, int status, boolean andOperator) {
 		return _ddmTemplateLocalService.searchCount(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, name, description,
-			type, mode, language, andOperator);
+			type, mode, language, status, andOperator);
 	}
 
 	/**
@@ -1251,12 +1275,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param nameMap the template's new locales and localized names
 	* @param descriptionMap the template's new locales and localized
 	description
-	* @param type the template's type. For more information, see {@link
-	DDMTemplateConstants}.
-	* @param mode the template's mode. For more information, see {@link
-	DDMTemplateConstants}.
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param mode the template's mode. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param language the template's script language. For more information,
-	see {@link DDMTemplateConstants}.
+	see DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param script the template's script
 	* @param cacheable whether the template is cacheable
 	* @param serviceContext the service context to be applied. Can set the
@@ -1287,12 +1311,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @param nameMap the template's new locales and localized names
 	* @param descriptionMap the template's new locales and localized
 	description
-	* @param type the template's type. For more information, see {@link
-	DDMTemplateConstants}.
-	* @param mode the template's mode. For more information, see {@link
-	DDMTemplateConstants}.
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param mode the template's mode. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param language the template's script language. For more information,
-	see {@link DDMTemplateConstants}.
+	see DDMTemplateConstants in the dynamic-data-mapping-api module.
 	* @param script the template's script
 	* @param cacheable whether the template is cacheable
 	* @param smallImage whether the template has a small image

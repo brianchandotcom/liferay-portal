@@ -17,7 +17,7 @@
 	        <inputType>boolean</inputType>
 	        <outputType>boolean</outputType>
 	        <defaultValue>false</defaultValue>
-	        <description><![CDATA[Whether to track the active state of the button.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	        <description><![CDATA[Whether to track the active state of the button<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>boundingBox</name>
@@ -26,14 +26,14 @@
 	        <defaultValue></defaultValue>
 	        <description><![CDATA[The outermost DOM node for the Widget, used for sizing and positioning 
 	of a Widget as well as a containing element for any decorator elements used 
-	for skinning.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	for skinning<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>classNames</name>
 	        <inputType>java.lang.Object</inputType>
 	        <outputType>java.util.HashMap</outputType>
 	        <defaultValue></defaultValue>
-	        <description><![CDATA[An object map of the CSS class names to use for the different interaction states.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
+	        <description><![CDATA[An object map of the CSS class names to use for the different interaction states<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>contentBox</name>
@@ -41,14 +41,14 @@
 	        <outputType>java.lang.String</outputType>
 	        <defaultValue></defaultValue>
 	        <description><![CDATA[A DOM node that is a direct descendant of a Widget's bounding box that 
-	houses its content.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	houses its content<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>cssClass</name>
 	        <inputType>java.lang.String</inputType>
 	        <outputType>java.lang.String</outputType>
 	        <defaultValue></defaultValue>
-	        <description><![CDATA[CSS class to be automatically added to the <code>boundingBox</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	        <description><![CDATA[CSS class to be automatically added to the <code>boundingBox</code><!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>defaultState</name>
@@ -63,7 +63,7 @@
 	        <outputType>java.lang.Number</outputType>
 	        <defaultValue>-1</defaultValue>
 	        <description><![CDATA[Number representing the depth of this Widget relative to 
-	the root Widget in the object heirarchy.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"-1"}-->]]></description>
+	the root Widget in the object heirarchy<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"-1"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>destroyed</name>
@@ -71,7 +71,7 @@
 	        <outputType>boolean</outputType>
 	        <defaultValue>false</defaultValue>
 	        <description><![CDATA[Flag indicating whether or not this object
-	has been through the destroy lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	has been through the destroy lifecycle phase<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>disabled</name>
@@ -87,7 +87,7 @@
 	        <outputType>boolean</outputType>
 	        <defaultValue>false</defaultValue>
 	        <description><![CDATA[Boolean indicating if the Widget, or one of its descendants, 
-	has focus.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	has focus<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>handler</name>
@@ -117,14 +117,14 @@
 	        <defaultValue>aui-hide</defaultValue>
 	        <description><![CDATA[css class added to hide the <code>boundingBox</code> when
 	<a href="Component.html#config_visible">visible</a> is set to
-	<code>false</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"aui-hide"}-->]]></description>
+	<code>false</code><!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"aui-hide"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>hoverState</name>
 	        <inputType>boolean</inputType>
 	        <outputType>boolean</outputType>
 	        <defaultValue>true</defaultValue>
-	        <description><![CDATA[Whether to track the hover interaction state of the button.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+	        <description><![CDATA[Whether to track the hover interaction state of the button<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>icon</name>
@@ -155,7 +155,7 @@
 	        <outputType>java.lang.Number</outputType>
 	        <defaultValue>0</defaultValue>
 	        <description><![CDATA[Number representing the Widget's ordinal position in its 
-	parent Widget.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"0"}-->]]></description>
+	parent Widget<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"0"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>initialized</name>
@@ -163,14 +163,14 @@
 	        <outputType>boolean</outputType>
 	        <defaultValue>false</defaultValue>
 	        <description><![CDATA[Flag indicating whether or not this object
-	has been through the init lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	has been through the init lifecycle phase<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>label</name>
 	        <inputType>java.lang.String</inputType>
 	        <outputType>java.lang.String</outputType>
 	        <defaultValue></defaultValue>
-	        <description><![CDATA[Text to use inside of the button.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	        <description><![CDATA[Text to use inside of the button<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>labelNode</name>
@@ -186,7 +186,7 @@
 	        <inputType>java.lang.Object</inputType>
 	        <outputType>java.lang.Object</outputType>
 	        <defaultValue></defaultValue>
-	        <description><![CDATA[Retrieves the parent of the Widget in the object hierarchy.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	        <description><![CDATA[Retrieves the parent of the Widget in the object hierarchy<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>render</name>
@@ -194,7 +194,7 @@
 	        <outputType>java.lang.Object</outputType>
 	        <defaultValue>false</defaultValue>
 	        <description><![CDATA[If <code>true</code> the render phase will be autimatically invoked
-	preventing the <code>.render()</code> manual call.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false,"defaultValue":"false"}-->]]></description>
+	preventing the <code>.render()</code> manual call<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false,"defaultValue":"false"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>rendered</name>
@@ -202,7 +202,7 @@
 	        <outputType>boolean</outputType>
 	        <defaultValue>false</defaultValue>
 	        <description><![CDATA[Flag indicating whether or not this Widget
-	has been through the render lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	has been through the render lifecycle phase<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>root</name>
@@ -238,7 +238,7 @@
 	        <inputType>java.lang.Object</inputType>
 	        <outputType>java.util.HashMap</outputType>
 	        <defaultValue></defaultValue>
-	        <description><![CDATA[Collection of strings used to label elements of the Widget's UI.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
+	        <description><![CDATA[Collection of strings used to label elements of the Widget's UI<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>tabIndex</name>
@@ -257,14 +257,14 @@
 	        <inputType>java.lang.String</inputType>
 	        <outputType>java.lang.String</outputType>
 	        <defaultValue></defaultValue>
-	        <description><![CDATA[Text to use as the title attribute of the button.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	        <description><![CDATA[Text to use as the title attribute of the button<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>type</name>
 	        <inputType>java.lang.String</inputType>
 	        <outputType>java.lang.String</outputType>
 	        <defaultValue>button</defaultValue>
-	        <description><![CDATA[Button type.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"button"}-->]]></description>
+	        <description><![CDATA[Button type<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"button"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>useARIA</name>
@@ -272,14 +272,14 @@
 	        <outputType>boolean</outputType>
 	        <defaultValue>true</defaultValue>
 	        <description><![CDATA[Boolean indicating if use of the WAI-ARIA Roles and States should be
-	enabled for the Widget.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+	enabled for the Widget<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>visible</name>
 	        <inputType>boolean</inputType>
 	        <outputType>boolean</outputType>
 	        <defaultValue>true</defaultValue>
-	        <description><![CDATA[Boolean indicating weather or not the Widget is visible.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+	        <description><![CDATA[Boolean indicating weather or not the Widget is visible<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
 	      </attribute>
 	      <attribute>
 	        <name>width</name>

@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the PasswordPolicyRel service. Represents a row in the &quot;PasswordPolicyRel&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,4 +34,21 @@ public interface PasswordPolicyRel extends PasswordPolicyRelModel, PersistedMode
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.PasswordPolicyRelImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<PasswordPolicyRel, Long> PASSWORD_POLICY_REL_ID_ACCESSOR =
+		new Accessor<PasswordPolicyRel, Long>() {
+			@Override
+			public Long get(PasswordPolicyRel passwordPolicyRel) {
+				return passwordPolicyRel.getPasswordPolicyRelId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<PasswordPolicyRel> getTypeClass() {
+				return PasswordPolicyRel.class;
+			}
+		};
 }

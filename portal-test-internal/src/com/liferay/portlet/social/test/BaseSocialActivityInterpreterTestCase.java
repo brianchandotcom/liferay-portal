@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -30,8 +31,11 @@ import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -183,6 +187,35 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	}
 
 	protected abstract SocialActivityInterpreter getActivityInterpreter();
+
+	protected SocialActivityInterpreter getActivityInterpreter(
+		String portletId, String className) {
+
+		try {
+			Registry registry = RegistryUtil.getRegistry();
+
+			Collection<SocialActivityInterpreter> socialActivityInterpreters =
+				registry.getServices(
+					SocialActivityInterpreter.class,
+					"(javax.portlet.name=" + portletId + ")");
+
+			for (SocialActivityInterpreter socialActivityInterpreter :
+					socialActivityInterpreters) {
+
+				if (ArrayUtil.contains(
+						socialActivityInterpreter.getClassNames(), className)) {
+
+					return socialActivityInterpreter;
+				}
+			}
+
+			throw new IllegalStateException(
+				"No activity interpreter found for class " + className);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	protected abstract int[] getActivityTypes();
 

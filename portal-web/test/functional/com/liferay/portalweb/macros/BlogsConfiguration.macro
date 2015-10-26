@@ -8,60 +8,11 @@
 	</command>
 
 	<command name="checkRSSSubscriptionCheckbox">
-		<execute function="Check" locator1="Configuration#SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" />
+		<execute function="Check" locator1="Checkbox#ENABLE_RSS_SUBSCRIPTION" />
 	</command>
 
 	<command name="checkSocialBookmarks">
 		<execute function="Check" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
-	</command>
-
-	<command name="configureRSSPG">
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-			<then>
-				<execute function="AssertClick" locator1="PGBlogsConfigurationSetupRSS#NAVIGATION_SETUP_RSS" value1="RSS" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${enableRSSSubscriptionCheckbox}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableRSSSubscriptionCheckbox}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<isset var="maximumItemsToDisplay" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfigurationSetupRSS#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="displayStyle" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfigurationSetupRSS#RSS_DISPLAY_STYLE_SELECT" value1="${displayStyle}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="format" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfigurationSetupRSS#FORMAT_SELECT" value1="${format}" />
-			</then>
-		</if>
-
-		<execute function="AssertClick" locator1="PGBlogsConfigurationSetupRSS#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationSetupRSS#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureScopePG">
@@ -104,6 +55,10 @@
 		<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
 
 		<execute function="Check" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX" />
+	</command>
+
+	<command name="gotoRSS">
+		<execute function="AssertClick" locator1="Configuration#NAVIGATION_RSS" value1="RSS" />
 	</command>
 
 	<command name="saveConfigurationIFrame">
@@ -167,7 +122,7 @@
 	</command>
 
 	<command name="uncheckRSSSubscriptionCheckbox">
-		<execute function="Uncheck" locator1="Configuration#SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" />
+		<execute function="Uncheck" locator1="Checkbox#ENABLE_RSS_SUBSCRIPTION" />
 	</command>
 
 	<command name="uncheckSocialBookmarks">
@@ -184,15 +139,15 @@
 
 	<command name="viewDefaultConfiguration">
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
-		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="full-content" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="abstract" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_FLAGS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RATINGS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENTS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
-		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT" value1="Menu" />
-		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT" value1="Bottom" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT" value1="menu" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT" value1="bottom" />
 		<execute function="AssertChecked" locator1="Checkbox#TWITTER" />
 		<execute function="AssertChecked" locator1="Checkbox#FACEBOOK" />
 		<execute function="AssertChecked" locator1="Checkbox#GOOGLE_PLUS" />

@@ -11,7 +11,7 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_COMMENTS_SELECT" />
 		</execute>

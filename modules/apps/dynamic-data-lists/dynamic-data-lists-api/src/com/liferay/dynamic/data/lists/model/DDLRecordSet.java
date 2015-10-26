@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DDLRecordSet, Long> RECORD_SET_ID_ACCESSOR = new Accessor<DDLRecordSet, Long>() {
+			@Override
+			public Long get(DDLRecordSet ddlRecordSet) {
+				return ddlRecordSet.getRecordSetId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DDLRecordSet> getTypeClass() {
+				return DDLRecordSet.class;
+			}
+		};
+
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

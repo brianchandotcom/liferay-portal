@@ -21,7 +21,7 @@ PortletURL displayStyleURL = renderResponse.createRenderURL();
 %>
 
 <liferay-frontend:management-bar-display-buttons
-	displayStyleURL="<%= displayStyleURL %>"
 	displayViews="<%= ddlFormAdminDisplayContext.getDisplayViews() %>"
+	portletURL="<%= displayStyleURL %>"
 	selectedDisplayStyle="<%= ddlFormAdminDisplayContext.getDisplayStyle() %>"
 />

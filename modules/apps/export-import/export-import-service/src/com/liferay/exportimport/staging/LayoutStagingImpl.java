@@ -26,12 +26,13 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.model.LayoutStagingHandler;
-import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetBranchLocalService;
 import com.liferay.portlet.exportimport.staging.LayoutStaging;
 
 import java.lang.reflect.InvocationHandler;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -150,7 +151,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 
 		try {
-			LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
+			_layoutSetBranchLocalService.getMasterLayoutSetBranch(
 				stagingGroup.getGroupId(), privateLayout);
 
 			return true;
@@ -159,5 +160,14 @@ public class LayoutStagingImpl implements LayoutStaging {
 			return false;
 		}
 	}
+
+	@Reference
+	protected void setLayoutSetBranchLocalService(
+		LayoutSetBranchLocalService layoutSetBranchLocalService) {
+
+		_layoutSetBranchLocalService = layoutSetBranchLocalService;
+	}
+
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 }

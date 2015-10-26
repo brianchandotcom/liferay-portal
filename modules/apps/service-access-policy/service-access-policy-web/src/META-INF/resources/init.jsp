@@ -31,7 +31,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.service.access.policy.constants.SAPActionKeys" %><%@
 page import="com.liferay.service.access.policy.constants.SAPConstants" %><%@
 page import="com.liferay.service.access.policy.exception.DuplicateSAPEntryNameException" %><%@
@@ -50,5 +50,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <liferay-theme:defineObjects />
 
 <%
-String currentURL = PortalUtil.getCurrentURL(request);
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
 %>

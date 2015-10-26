@@ -4,6 +4,8 @@
 <project name="build-module">
 	<dirname file="${ant.file.build-module}" property="modules.dir" />
 
+	<taskdef classpath="${modules.dir}/../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
+
 	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew" />
 
 	<macrodef name="print-gradle-alternative">
@@ -143,7 +145,36 @@
 	</target>
 
 	<target name="test-class">
-		<print-gradle-alternative args="test (or testIntegration) --tests com.liferay.some.package.SomeClass" />
+		<if>
+			<not>
+				<isset property="test.class" />
+			</not>
+			<then>
+				<fail>Use "ant test-class -Dtest.class=StringUtilTest".</fail>
+			</then>
+		</if>
+
+		<if>
+			<resourcecount count="1">
+				<fileset dir="test/integration" erroronmissingdir="false" includes="**/${test.class}.java" />
+			</resourcecount>
+			<then>
+				<var name="test.task" value="testIntegration" />
+			</then>
+			<elseif>
+				<resourcecount count="1">
+					<fileset dir="test/unit" erroronmissingdir="false" includes="**/${test.class}.java" />
+				</resourcecount>
+				<then>
+					<var name="test.task" value="test" />
+				</then>
+			</elseif>
+			<else>
+				<fail>Test class ${test.class} cannot be found.</fail>
+			</else>
+		</if>
+
+		<print-gradle-alternative args="${test.task} --tests *.${test.class}" />
 	</target>
 
 	<target name="test-integration">
@@ -151,7 +182,36 @@
 	</target>
 
 	<target name="test-package">
-		<print-gradle-alternative args="test (or testIntegration) --tests com.liferay.some.package.*" />
+		<if>
+			<not>
+				<isset property="test.package" />
+			</not>
+			<then>
+				<fail>Use "ant test-package -Dtest.package=com.liferay.portal.kernel.util".</fail>
+			</then>
+		</if>
+
+		<propertyregex
+			global="true"
+			input="${test.package}"
+			property="test.package.dir"
+			regexp="\."
+			replace="/"
+		/>
+
+		<if>
+			<available file="test/integration/${test.package.dir}" type="dir" />
+			<then>
+				<print-gradle-alternative args="testIntegration --tests ${test.package}.*" />
+			</then>
+		</if>
+
+		<if>
+			<available file="test/unit/${test.package.dir}" type="dir" />
+			<then>
+				<print-gradle-alternative args="test --tests ${test.package}.*" />
+			</then>
+		</if>
 	</target>
 
 	<target name="test-unit">

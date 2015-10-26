@@ -87,7 +87,7 @@
 			<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && (themeDisplay.getURLMyAccount() != null) %>">
 
 				<%
-				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);
+				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, QueryUtil.ALL_POS);
 
 				for (Group mySiteGroup : mySiteGroups) {
 				%>

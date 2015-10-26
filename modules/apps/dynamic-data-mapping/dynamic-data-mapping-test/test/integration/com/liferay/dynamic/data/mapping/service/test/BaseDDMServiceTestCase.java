@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
@@ -60,7 +61,7 @@ public class BaseDDMServiceTestCase {
 
 	protected DDMTemplate addDisplayTemplate(
 			long classNameId, long classPK, long resourceClassNameId,
-			String name, String description)
+			String name, String description, int status)
 		throws Exception {
 
 		String language = TemplateConstants.LANG_TYPE_VM;
@@ -68,11 +69,12 @@ public class BaseDDMServiceTestCase {
 		return addTemplate(
 			classNameId, classPK, resourceClassNameId, StringPool.BLANK, name,
 			description, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
-			StringPool.BLANK, language, getTestTemplateScript(language));
+			StringPool.BLANK, language, getTestTemplateScript(language),
+			status);
 	}
 
 	protected DDMTemplate addDisplayTemplate(
-			long classNameId, long classPK, String name)
+			long classNameId, long classPK, String name, int status)
 		throws Exception {
 
 		String language = TemplateConstants.LANG_TYPE_VM;
@@ -80,30 +82,34 @@ public class BaseDDMServiceTestCase {
 		return addTemplate(
 			classNameId, classPK, name,
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
-			language, getTestTemplateScript(language));
+			language, getTestTemplateScript(language), status);
 	}
 
-	protected DDMTemplate addDisplayTemplate(long classPK, String name)
+	protected DDMTemplate addDisplayTemplate(
+			long classPK, String name, int status)
 		throws Exception {
 
 		return addDisplayTemplate(
-			PortalUtil.getClassNameId(DDMStructure.class), classPK, name);
+			PortalUtil.getClassNameId(DDMStructure.class), classPK, name,
+			status);
 	}
 
-	protected DDMTemplate addFormTemplate(long classPK, String name)
+	protected DDMTemplate addFormTemplate(long classPK, String name, int status)
 		throws Exception {
 
-		return addFormTemplate(classPK, name, getTestTemplateScript("xsd"));
+		return addFormTemplate(
+			classPK, name, getTestTemplateScript("xsd"), status);
 	}
 
 	protected DDMTemplate addFormTemplate(
-			long classPK, String name, String definition)
+			long classPK, String name, String definition, int status)
 		throws Exception {
 
 		return addTemplate(
 			PortalUtil.getClassNameId(DDMStructure.class), classPK, name,
 			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
-			DDMTemplateConstants.TEMPLATE_MODE_CREATE, "xsd", definition);
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE, "xsd", definition,
+			status);
 	}
 
 	protected DDMStructure addStructure(
@@ -171,35 +177,41 @@ public class BaseDDMServiceTestCase {
 	protected DDMTemplate addTemplate(
 			long classNameId, long classPK, long resourceClassNameId,
 			String templateKey, String name, String description, String type,
-			String mode, String language, String script)
+			String mode, String language, String script, int status)
 		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setAttribute("status", status);
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
 			classPK, resourceClassNameId, templateKey,
 			getDefaultLocaleMap(name), getDefaultLocaleMap(description), type,
-			mode, language, script, false, false, null, null,
-			ServiceContextTestUtil.getServiceContext());
+			mode, language, script, false, false, null, null, serviceContext);
 	}
 
 	protected DDMTemplate addTemplate(
 			long classNameId, long classPK, String name, String type,
-			String mode, String language, String script)
+			String mode, String language, String script, int status)
 		throws Exception {
 
 		return addTemplate(
-			classNameId, classPK, null, name, type, mode, language, script);
+			classNameId, classPK, null, name, type, mode, language, script,
+			status);
 	}
 
 	protected DDMTemplate addTemplate(
 			long classNameId, long classPK, String templateKey, String name,
-			String type, String mode, String language, String script)
+			String type, String mode, String language, String script,
+			int status)
 		throws Exception {
 
 		return addTemplate(
 			classNameId, classPK,
 			PortalUtil.getClassNameId(DDL_RECORD_SET_CLASS_NAME), templateKey,
-			name, StringPool.BLANK, type, mode, language, script);
+			name, StringPool.BLANK, type, mode, language, script, status);
 	}
 
 	protected String getBasePath() {

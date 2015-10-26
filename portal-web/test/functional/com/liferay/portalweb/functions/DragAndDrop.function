@@ -8,9 +8,11 @@
 	</command>
 
 	<command name="dragAndDropPortletToObject">
-		<execute argument1="${locator1}" selenium="waitForVisible" />
+		<execute argument1="${locator1}" selenium="waitForElementPresent" />
 
 		<execute argument1="${locator1}" selenium="mouseOver" />
+
+		<execute argument1="${locator1}" selenium="waitForVisible" />
 
 		<execute argument1="${locator1}" argument2="${value1}" selenium="waitForText" />
 
@@ -45,6 +47,20 @@
 		<execute argument1="${locator2}" selenium="waitForVisible" />
 
 		<execute argument1="${locator2}" selenium="mouseOver" />
+
+		<execute argument1="${locator1}" argument2="${locator2}" selenium="dragAndDropToObject" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="dragAndDropToObjectNotVisible">
+		<execute argument1="${locator1}" selenium="waitForVisible" />
+
+		<execute argument1="${locator1}" selenium="mouseOver" />
+
+		<execute argument1="${locator1}" argument2="${value1}" selenium="waitForText" />
 
 		<execute argument1="${locator1}" argument2="${locator2}" selenium="dragAndDropToObject" />
 

@@ -41,6 +41,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class UserIdMapperPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -302,11 +304,9 @@ public class UserIdMapperPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserIdMapperLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserIdMapper>() {
 				@Override
-				public void performAction(Object object) {
-					UserIdMapper userIdMapper = (UserIdMapper)object;
-
+				public void performAction(UserIdMapper userIdMapper) {
 					Assert.assertNotNull(userIdMapper);
 
 					count.increment();

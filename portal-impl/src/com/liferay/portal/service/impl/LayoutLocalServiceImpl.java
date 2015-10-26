@@ -265,7 +265,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
-			hidden, friendlyURLMap);
+			hidden, friendlyURLMap, serviceContext);
 
 		Date now = new Date();
 
@@ -1546,6 +1546,47 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public boolean hasLayouts(Group group) throws PortalException {
+		List<LayoutSet> groupLayoutSets = layoutSetPersistence.findByGroupId(
+			group.getGroupId());
+
+		for (LayoutSet layoutSet : groupLayoutSets) {
+			if (layoutSet.getPageCount() > 0) {
+				return true;
+			}
+		}
+
+		if (!group.isUser()) {
+			return false;
+		}
+
+		long[] userGroupIds = userPersistence.getUserGroupPrimaryKeys(
+			group.getClassPK());
+
+		if (userGroupIds.length != 0) {
+			long userGroupClassNameId = classNameLocalService.getClassNameId(
+				UserGroup.class);
+
+			for (long userGroupId : userGroupIds) {
+				Group userGroupGroup = groupPersistence.findByC_C_C(
+					group.getCompanyId(), userGroupClassNameId, userGroupId);
+
+				List<LayoutSet> userGroupGroupLayoutSets =
+					layoutSetPersistence.findByGroupId(
+						userGroupGroup.getGroupId());
+
+				for (LayoutSet layoutSet : userGroupGroupLayoutSets) {
+					if (layoutSet.getPageCount() > 0) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean hasLayouts(Group group, boolean privateLayout)
 		throws PortalException {
 
@@ -2294,7 +2335,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
-			hidden, friendlyURLMap);
+			hidden, friendlyURLMap, serviceContext);
 
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);

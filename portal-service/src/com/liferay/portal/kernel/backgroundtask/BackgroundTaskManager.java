@@ -31,9 +31,18 @@ import java.util.Map;
 public interface BackgroundTaskManager {
 
 	public BackgroundTask addBackgroundTask(
-		long userId, long groupId, String name, String[] servletContextNames,
-		Class<?> taskExecutorClass, Map<String, Serializable> taskContextMap,
-		ServiceContext serviceContext) throws PortalException;
+			long userId, long groupId, String name,
+			String taskExecutorClassName,
+			Map<String, Serializable> taskContextMap,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public BackgroundTask addBackgroundTask(
+			long userId, long groupId, String name,
+			String[] servletContextNames, Class<?> taskExecutorClass,
+			Map<String, Serializable> taskContextMap,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public void addBackgroundTaskAttachment(
 			long userId, long backgroundTaskId, String fileName, File file)

@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface SCLicense extends SCLicenseModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<SCLicense, Long> LICENSE_ID_ACCESSOR = new Accessor<SCLicense, Long>() {
+			@Override
+			public Long get(SCLicense scLicense) {
+				return scLicense.getLicenseId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<SCLicense> getTypeClass() {
+				return SCLicense.class;
+			}
+		};
 }

@@ -22,8 +22,8 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalService;
+import com.liferay.portal.service.UserGroupRoleLocalService;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portlet.BaseControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
@@ -32,6 +32,7 @@ import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -49,7 +50,7 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 		throws Exception {
 
 		List<UserGroupRole> userGroupRoles =
-			UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+			_userGroupRoleLocalService.getUserGroupRoles(
 				permissionChecker.getUserId());
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
@@ -65,7 +66,7 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 		}
 
 		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getUserOrganizations(
+			_organizationLocalService.getUserOrganizations(
 				permissionChecker.getUserId());
 
 		for (Organization organization : organizations) {
@@ -92,5 +93,22 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
+	private OrganizationLocalService _organizationLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

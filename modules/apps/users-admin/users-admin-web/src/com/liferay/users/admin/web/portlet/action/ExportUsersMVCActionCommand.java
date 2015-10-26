@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -33,7 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -58,6 +60,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -206,14 +209,14 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 			params.put("usersUserGroups", Long.valueOf(userGroupId));
 		}
 
-		if (PropsValues.USERS_INDEXER_ENABLED &&
-			PropsValues.USERS_SEARCH_WITH_INDEX) {
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 
+		if (indexer.isIndexerEnabled() && PropsValues.USERS_SEARCH_WITH_INDEX) {
 			params.put("expandoAttributes", searchTerms.getKeywords());
 		}
 
 		if (searchTerms.isAdvancedSearch()) {
-			return UserLocalServiceUtil.search(
+			return _userLocalService.search(
 				themeDisplay.getCompanyId(), searchTerms.getFirstName(),
 				searchTerms.getMiddleName(), searchTerms.getLastName(),
 				searchTerms.getScreenName(), searchTerms.getEmailAddress(),
@@ -222,7 +225,7 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 				(OrderByComparator<User>)null);
 		}
 		else {
-			return UserLocalServiceUtil.search(
+			return _userLocalService.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), params, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, (OrderByComparator<User>)null);
@@ -267,5 +270,12 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 
 		return sb.toString();
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private UserLocalService _userLocalService;
 
 }

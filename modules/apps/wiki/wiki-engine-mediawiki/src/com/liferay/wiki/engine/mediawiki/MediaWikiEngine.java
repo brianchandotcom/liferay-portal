@@ -30,7 +30,7 @@ import com.liferay.wiki.engine.mediawiki.matchers.ImageURLMatcher;
 import com.liferay.wiki.engine.mediawiki.matchers.ViewURLMatcher;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,7 +98,7 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 				int pagesCount = 0;
 
 				try {
-					pagesCount = WikiPageLocalServiceUtil.getPagesCount(
+					pagesCount = _wikiPageLocalService.getPagesCount(
 						page.getNodeId(), title, true);
 				}
 				catch (SystemException se) {
@@ -281,6 +281,13 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	protected void unsetWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
@@ -289,5 +296,6 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 
 	private ServletContext _servletContext;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

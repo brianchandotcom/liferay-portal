@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the LayoutRevision service. Represents a row in the &quot;LayoutRevision&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,24 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutRevisionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<LayoutRevision, Long> LAYOUT_REVISION_ID_ACCESSOR =
+		new Accessor<LayoutRevision, Long>() {
+			@Override
+			public Long get(LayoutRevision layoutRevision) {
+				return layoutRevision.getLayoutRevisionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<LayoutRevision> getTypeClass() {
+				return LayoutRevision.class;
+			}
+		};
+
 	public java.util.List<com.liferay.portal.model.LayoutRevision> getChildren();
 
 	public com.liferay.portal.model.ColorScheme getColorScheme()

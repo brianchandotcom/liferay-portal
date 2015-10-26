@@ -11,8 +11,8 @@
 		</execute>
 
 		<execute macro="Marketplace#signIn">
-			<var name="userEmailAddress" property-value="email.address.5" />
-			<var name="userEmailPassword" property-value="email.password.5" />
+			<var method="TestPropsUtil#get('email.address.5')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.5')" name="userEmailPassword" />
 		</execute>
 
 		<execute macro="Portlet#shutdownServer" />

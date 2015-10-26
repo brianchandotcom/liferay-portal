@@ -30,10 +30,10 @@ String emailMessageSubject = portletPreferences.getValue("emailMessageSubject", 
 	<liferay-ui:error key="emailMessageSubject" message="please-enter-a-valid-subject" />
 
 	<liferay-ui:email-notification-settings
-		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailMessageBody", "preferences", ContentUtil.get(emailMessageBody)) %>'
+		emailBody='<%= InvitationUtil.getEmailMessageBodyXml(portletPreferences, renderRequest, "preferences") %>'
 		emailDefinitionTerms="<%= InvitationUtil.getEmailDefinitionTerms(renderRequest) %>"
 		emailParam="emailMessage"
-		emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailMessageSubject", "preferences", ContentUtil.get(emailMessageSubject)) %>'
+		emailSubject='<%= InvitationUtil.getEmailMessageSubjectXml(portletPreferences, renderRequest, "preferences") %>'
 		showEmailEnabled="<%= false %>"
 	/>
 

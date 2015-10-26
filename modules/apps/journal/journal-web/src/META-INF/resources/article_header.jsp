@@ -19,11 +19,23 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String backURL = ParamUtil.getString(request, "backURL");
-
 JournalArticle article = ActionUtil.getArticle(request);
 
 long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
+
+portletDisplay.setShowBackIcon(true);
+
+if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) && (article != null)) {
+	PortletURL backURL = liferayPortletResponse.createRenderURL();
+
+	backURL.setParameter("groupId", String.valueOf(article.getGroupId()));
+	backURL.setParameter("folderId", String.valueOf(article.getFolderId()));
+
+	portletDisplay.setURLBack(backURL.toString());
+}
+else {
+	portletDisplay.setURLBack(redirect);
+}
 
 String title = StringPool.BLANK;
 
@@ -36,9 +48,6 @@ else if ((article != null) && !article.isNew()) {
 else {
 	title = LanguageUtil.get(request, "new-web-content");
 }
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack((article == null) ? redirect : backURL);
 
 renderResponse.setTitle(title);
 %>

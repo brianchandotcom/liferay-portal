@@ -33,17 +33,38 @@
 		</#if>
 	</@aui.input>
 
-	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+	<@aui.input
+		name=namespacedFieldName
+		type="hidden"
+		value=fieldRawValue
+	/>
 
 	<@aui["button-row"]>
-		<@aui.button cssClass="select-button" id="${namespacedFieldName}SelectButton" value="choose-from-document-library" />
+		<@aui.button
+			cssClass="select-button"
+			id="${namespacedFieldName}SelectButton"
+			value="choose-from-document-library"
+		/>
 
-		<@aui.button cssClass="clear-button ${(imageData?has_content)?string('', 'hide')}" id="${namespacedFieldName}ClearButton" value="clear" />
+		<@aui.button
+			cssClass="clear-button ${(imageData?has_content)?string('', 'hide')}"
+			id="${namespacedFieldName}ClearButton"
+			value="clear"
+		/>
 
-		<@aui.button cssClass="preview-button ${(imageData?has_content)?string('', 'hide')}" id="${namespacedFieldName}PreviewButton" value="preview" />
+		<@aui.button
+			cssClass="preview-button ${(imageData?has_content)?string('', 'hide')}"
+			id="${namespacedFieldName}PreviewButton"
+			value="preview"
+		/>
 	</@>
 
-	<@aui.input label="image-description" name="${namespacedFieldName}Alt" type="text" value="${alt}" />
+	<@aui.input
+		label="image-description"
+		name="${namespacedFieldName}Alt"
+		type="text"
+		value="${alt}"
+	/>
 
 	${fieldStructure.children}
 </@>

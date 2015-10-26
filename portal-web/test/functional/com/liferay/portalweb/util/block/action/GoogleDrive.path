@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>GoogleDrive</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">GoogleDrive</td></tr>
+</thead>
+<tbody>
+<tr>`
+	<td>GOOGLE_DRIVE_IFRAME</td>
+	<td>//div[contains(@class,'picker-dialog')]//iframe[contains(@src,'https://docs.google.com/picker')]</td>
+	<td></td>
+</tr>
+<tr>`
+	<td>SELECT_BUTTON</td>
+	<td>//div[contains(@role,'button') and contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[contains(@role,'button') and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_VIEW_BUTTON</td>
+	<td>//div[contains(@role,'button') and contains(@aria-label,'Grid view') and contains(@aria-hidden,'false')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_VIEW_BUTTON</td>
+	<td>//div[contains(@role,'button') and contains(@aria-label,'List view') and contains(@aria-hidden,'false')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GRID_VIEW-->
+<tr>
+	<td>GRID_VIEW_DOCUMENT</td>
+	<td>//div[contains(@aria-label,'Files and folders grid view.')]//span[contains(.,'${key_googleDocName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_VIEW_DOCUMENT_1</td>
+	<td>xpath=(//div[contains(@aria-label,'Files and folders grid view.')]//span[contains(.,'${key_googleDocName}')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_VIEW_DOCUMENT_2</td>
+	<td>xpath=(//div[contains(@aria-label,'Files and folders grid view.')]//span[contains(.,'${key_googleDocName}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_VIEW-->
+<tr>
+	<td>LIST_VIEW_DOCUMENT</td>
+	<td>//div[contains(@aria-label,'Files and folders list view.')]//span[contains(.,'${key_googleDocName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_VIEW_DOCUMENT_1</td>
+	<td>xpath=(//div[contains(@aria-label,'Files and folders list view.')]//span[contains(.,'${key_googleDocName}')])[1]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -6,13 +6,15 @@ buildService {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
-	compile group: "com.liferay", name: "net.fortuna.ical4j", version: "1.0"
 	compile group: "javax.mail", name: "mail", version: "1.4"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:calendar:calendar-api")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
+
+	provided group: "com.liferay", name: "com.google.ical", version: "20110304"
+	provided group: "com.liferay", name: "net.fortuna.ical4j", version: "1.0"
+	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }
 
 liferay {

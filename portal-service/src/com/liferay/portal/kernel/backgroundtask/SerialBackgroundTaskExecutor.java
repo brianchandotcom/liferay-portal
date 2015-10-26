@@ -33,6 +33,14 @@ public class SerialBackgroundTaskExecutor
 	}
 
 	@Override
+	public BackgroundTaskExecutor clone() {
+		BackgroundTaskExecutor backgroundTaskExecutor =
+			new SerialBackgroundTaskExecutor(getBackgroundTaskExecutor());
+
+		return backgroundTaskExecutor;
+	}
+
+	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 

@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.web.lar.DDLPortletDataHandler;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -61,11 +59,6 @@ public class DDLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			stagingGroup, recordSet);
 
 		recordTestHelper.addRecord();
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new DDLPortletDataHandler();
 	}
 
 	@Override

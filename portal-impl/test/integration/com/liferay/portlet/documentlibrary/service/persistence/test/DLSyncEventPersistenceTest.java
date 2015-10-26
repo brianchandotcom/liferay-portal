@@ -40,6 +40,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,8 +57,9 @@ import java.util.Set;
  * @generated
  */
 public class DLSyncEventPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -286,11 +288,9 @@ public class DLSyncEventPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLSyncEventLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLSyncEvent>() {
 				@Override
-				public void performAction(Object object) {
-					DLSyncEvent dlSyncEvent = (DLSyncEvent)object;
-
+				public void performAction(DLSyncEvent dlSyncEvent) {
 					Assert.assertNotNull(dlSyncEvent);
 
 					count.increment();

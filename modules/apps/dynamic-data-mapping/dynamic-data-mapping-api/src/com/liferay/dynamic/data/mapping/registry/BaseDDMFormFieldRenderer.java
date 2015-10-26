@@ -83,6 +83,7 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		template.put("dir", LanguageUtil.get(locale, "lang.dir"));
 		template.put("label", ddmFormFieldRenderingContext.getLabel());
 		template.put("name", ddmFormFieldRenderingContext.getName());
+		template.put("required", ddmFormFieldRenderingContext.isRequired());
 		template.put("value", ddmFormFieldRenderingContext.getValue());
 		template.put("visible", ddmFormFieldRenderingContext.isVisible());
 	}

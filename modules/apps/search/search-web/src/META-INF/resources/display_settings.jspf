@@ -26,7 +26,7 @@
 	List<SearchFacet> searchFacets = ListUtil.copy(SearchFacetTracker.getSearchFacets());
 
 	for (SearchFacet searchFacet : searchFacets) {
-		searchFacet.init(searchDisplayContext.getSearchConfiguration());
+		searchFacet.init(company.getCompanyId(), searchDisplayContext.getSearchConfiguration());
 	}
 
 	searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("weight", false, false));

@@ -312,14 +312,12 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserGroup>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(UserGroup userGroup)
 					throws PortalException {
-					UserGroup stagedModel = (UserGroup)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						userGroup);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

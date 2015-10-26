@@ -81,5 +81,5 @@ List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.get
 </c:choose>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.journal_content_search.article_content_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_journal_content_search_web.article_content_jsp");
 %>

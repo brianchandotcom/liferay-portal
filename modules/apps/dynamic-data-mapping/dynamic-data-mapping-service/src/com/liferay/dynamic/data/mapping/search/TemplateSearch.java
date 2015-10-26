@@ -57,4 +57,14 @@ public class TemplateSearch extends SearchContainer<DDMTemplate> {
 			TemplateDisplayTerms.NAME, displayTerms.getName());
 	}
 
+	public TemplateSearch(
+		PortletRequest portletRequest, PortletURL iteratorURL, int status) {
+
+		this(portletRequest, iteratorURL);
+
+		TemplateSearchTerms searchTerms = (TemplateSearchTerms)getSearchTerms();
+
+		searchTerms.setStatus(status);
+	}
+
 }

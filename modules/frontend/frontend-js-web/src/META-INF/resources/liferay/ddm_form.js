@@ -177,7 +177,6 @@ AUI.add(
 				var portletURL = Liferay.PortletURL.createResourceURL();
 
 				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
-				portletURL.setParameter('controlPanelCategory', 'portlet');
 				portletURL.setParameter('definition', JSON.stringify(instance.get('definition')));
 				portletURL.setParameter('fieldName', instance.get('name'));
 				portletURL.setParameter('mode', instance.get('mode'));
@@ -243,6 +242,9 @@ AUI.add(
 					parent: {
 					},
 
+					readOnly: {
+					},
+
 					repeatable: {
 						getter: '_getRepeatable',
 						readOnly: true
@@ -259,14 +261,12 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						if (instance.get('localizable')) {
-							instance.after(
-								{
-									'translationmanager:deleteAvailableLocale': instance._afterDeleteAvailableLocale,
-									'translationmanager:editingLocaleChange': instance._afterEditingLocaleChange
-								}
-							);
-						}
+						instance.after(
+							{
+								'translationmanager:deleteAvailableLocale': instance._afterDeleteAvailableLocale,
+								'translationmanager:editingLocaleChange': instance._afterEditingLocaleChange
+							}
+						);
 					},
 
 					renderUI: function() {
@@ -404,7 +404,7 @@ AUI.add(
 							function(fieldTemplate) {
 								var fieldNode = A.Node.create(fieldTemplate);
 
-								instance.get('container').insert(fieldNode, 'after');
+								instance.get('container').placeAfter(fieldNode);
 
 								var parent = instance.get('parent');
 
@@ -430,7 +430,7 @@ AUI.add(
 
 						var labelNode = instance.getLabelNode();
 
-						if (Lang.isValue(label)) {
+						if (Lang.isValue(label) && Lang.isNode(labelNode)) {
 							labelNode.html(A.Escape.html(label));
 						}
 					},
@@ -453,6 +453,16 @@ AUI.add(
 						var labelsMap = fieldDefinition.label;
 
 						instance.setLabel(labelsMap[instance.get('displayLocale')]);
+					},
+
+					syncReadOnlyUI: function() {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						if (inputNode) {
+							inputNode.attr('disabled', instance.get('readOnly'));
+						}
 					},
 
 					syncRepeatablelUI: function() {
@@ -594,18 +604,24 @@ AUI.add(
 
 						var translationManager = event.target;
 
-						var defaultLocale = translationManager.get('defaultLocale');
-
 						var availableLocales = translationManager.get('availableLocales');
 
-						if ([defaultLocale].concat(availableLocales).indexOf(event.prevVal) > -1) {
+						var defaultLocale = translationManager.get('defaultLocale');
+
+						var localizable = instance.get('localizable');
+
+						var locales = [defaultLocale].concat(availableLocales);
+
+						if (localizable && locales.indexOf(event.prevVal) > -1) {
 							instance.updateLocalizationMap(event.prevVal);
 						}
 
 						instance.set('displayLocale', event.newVal);
+						instance.set('readOnly', defaultLocale !== event.newVal && !localizable);
 
 						instance.syncLabelUI();
 						instance.syncValueUI();
+						instance.syncReadOnlyUI();
 					},
 
 					_getLocalizable: function() {
@@ -700,7 +716,7 @@ AUI.add(
 
 						var inputNode = instance.getInputNode();
 
-						if (Lang.isValue(label)) {
+						if (Lang.isValue(label) && Lang.isNode(labelNode)) {
 							labelNode.html('&nbsp;' + A.Escape.html(label));
 
 							labelNode.prepend(inputNode);
@@ -806,7 +822,7 @@ AUI.add(
 
 						var portletNamespace = instance.get('portletNamespace');
 
-						var portletURL = Liferay.PortletURL.createRenderURL();
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
 						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
 						portletURL.setParameter('criteria', criteria);
@@ -896,16 +912,28 @@ AUI.add(
 						instance.notice.show();
 					},
 
+					syncReadOnlyUI: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
+
+						selectButtonNode.attr('disabled', instance.get('readOnly'));
+					},
+
 					_handleButtonsClick: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
+						if (!instance.get('readOnly')) {
+							var currentTarget = event.currentTarget;
 
-						if (currentTarget.test('.select-button')) {
-							instance._handleSelectButtonClick(event);
-						}
-						else if (currentTarget.test('.clear-button')) {
-							instance._handleClearButtonClick(event);
+							if (currentTarget.test('.select-button')) {
+								instance._handleSelectButtonClick(event);
+							}
+							else if (currentTarget.test('.clear-button')) {
+								instance._handleClearButtonClick(event);
+							}
 						}
 					},
 
@@ -1165,6 +1193,19 @@ AUI.add(
 				EXTENDS: Field,
 
 				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						instance.readOnlyLabel = A.Node.create('<label class="control-label hide"></label>');
+						instance.readOnlyText = A.Node.create('<div class="hide"></div>');
+
+						instance.after(
+							{
+								'render': instance._afterRenderTextHTMLField
+							}
+						);
+					},
+
 					getEditor: function() {
 						var instance = this;
 
@@ -1190,6 +1231,29 @@ AUI.add(
 						else {
 							editor.setHTML(value);
 						}
+					},
+
+					syncReadOnlyUI: function() {
+						var instance = this;
+
+						instance.readOnlyLabel.html(instance.getLabelNode().getHTML());
+						instance.readOnlyText.html('<p>' + instance.getValue() + '</p>');
+
+						var readOnly = instance.get('readOnly');
+
+						instance.readOnlyLabel.toggle(readOnly);
+						instance.readOnlyText.toggle(readOnly);
+
+						instance.get('container').toggle(!readOnly);
+					},
+
+					_afterRenderTextHTMLField: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						container.placeAfter(instance.readOnlyText);
+						container.placeAfter(instance.readOnlyLabel);
 					}
 				}
 			}
@@ -1208,6 +1272,14 @@ AUI.add(
 						var container = instance.get('container');
 
 						return container.one('[name=' + instance.getInputName() + ']:checked');
+					},
+
+					getRadioNodes: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						return container.all('[name=' + instance.getInputName() + ']');
 					},
 
 					getValue: function() {
@@ -1251,9 +1323,7 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var container = instance.get('container');
-
-						var radioNodes = container.all('[name=' + instance.getInputName() + ']');
+						var radioNodes = instance.getRadioNodes();
 
 						radioNodes.set('checked', false);
 
@@ -1266,6 +1336,14 @@ AUI.add(
 						}
 
 						radioNodes.filter('[value=' + value + ']').set('checked', true);
+					},
+
+					syncReadOnlyUI: function() {
+						var instance = this;
+
+						var radioNodes = instance.getRadioNodes();
+
+						radioNodes.attr('disabled', instance.get('readOnly'));
 					}
 				}
 			}

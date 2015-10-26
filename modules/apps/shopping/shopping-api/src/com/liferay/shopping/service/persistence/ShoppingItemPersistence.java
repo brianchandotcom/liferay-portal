@@ -62,7 +62,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns the shopping item where smallImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param smallImageId the small image ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	*/
 	public ShoppingItem fetchBySmallImageId(long smallImageId,
@@ -107,7 +107,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns the shopping item where mediumImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param mediumImageId the medium image ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	*/
 	public ShoppingItem fetchByMediumImageId(long mediumImageId,
@@ -152,7 +152,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns the shopping item where largeImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param largeImageId the large image ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	*/
 	public ShoppingItem fetchByLargeImageId(long largeImageId,
@@ -217,6 +217,26 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	public java.util.List<ShoppingItem> findByG_C(long groupId,
 		long categoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItem> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the shopping items where groupId = &#63; and categoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param start the lower bound of the range of shopping items
+	* @param end the upper bound of the range of shopping items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching shopping items
+	*/
+	public java.util.List<ShoppingItem> findByG_C(long groupId,
+		long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItem> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -391,7 +411,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*
 	* @param companyId the company ID
 	* @param sku the sku
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	*/
 	public ShoppingItem fetchByC_S(long companyId, java.lang.String sku,
@@ -506,6 +526,23 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public java.util.List<ShoppingItem> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItem> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the shopping items.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping items
+	* @param end the upper bound of the range of shopping items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of shopping items
+	*/
+	public java.util.List<ShoppingItem> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItem> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the shopping items from the database.

@@ -28,7 +28,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
 import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
 
 import java.util.List;
@@ -37,6 +37,7 @@ import java.util.concurrent.Callable;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gergely Mathe
@@ -114,7 +115,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ExportActionableDynamicQuery actionableDynamicQuery =
-			RatingsEntryLocalServiceUtil.getExportActionableDynamicQuery(
+			_ratingsEntryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.setStagedModelType(
@@ -124,6 +125,15 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 		return actionableDynamicQuery;
 	}
+
+	@Reference(unbind = "-")
+	protected void setRatingsEntryLocalService(
+		RatingsEntryLocalService ratingsEntryLocalService) {
+
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
+	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 	private class ImportRatingsCallable implements Callable<Void> {
 

@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface SocialRelation extends SocialRelationModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.social.model.impl.SocialRelationImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<SocialRelation, Long> RELATION_ID_ACCESSOR = new Accessor<SocialRelation, Long>() {
+			@Override
+			public Long get(SocialRelation socialRelation) {
+				return socialRelation.getRelationId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<SocialRelation> getTypeClass() {
+				return SocialRelation.class;
+			}
+		};
 }

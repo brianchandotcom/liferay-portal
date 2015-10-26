@@ -138,8 +138,6 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 										<portlet:param name="classNameId" value="<%= String.valueOf(entry.getClassNameId()) %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
 										<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandlerEntryContainerModelClassName)) %>" />
-										<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getRootContainerModelId(entry.getClassPK())) %>" />
-										<portlet:param name="rootContainerModelMovable" value="<%= String.valueOf(trashHandler.isRootContainerModelMovable()) %>" />
 									</portlet:renderURL>
 
 									<%

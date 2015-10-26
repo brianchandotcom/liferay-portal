@@ -377,5 +377,5 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 </div>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.search_resources_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_document_library_web.document_library.search_resources_jsp");
 %>

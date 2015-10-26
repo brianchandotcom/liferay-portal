@@ -16,6 +16,7 @@ package com.liferay.journal.verify;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleImage;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -63,6 +65,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -90,6 +93,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();
 		verifyArticleContents();
+		verifyArticleExpirationDate();
 		verifyArticleLayouts();
 		verifyArticleStructures();
 		verifyContentSearch();
@@ -218,12 +222,12 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.
+				PerformActionMethod<JournalArticleResource>() {
 
 				@Override
-				public void performAction(Object object) {
-					JournalArticleResource articleResource =
-						(JournalArticleResource)object;
+				public void performAction(
+					JournalArticleResource articleResource) {
 
 					updateCreateDate(articleResource);
 					updateModifiedDate(articleResource);
@@ -344,6 +348,32 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
+	protected void updateExpirationDate(
+			long groupId, long articleId, Timestamp expirationDate, int status)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update JournalArticle set expirationDate = ? where " +
+					"groupId = ? and articleId = ? and status = ?");
+
+			ps.setTimestamp(1, expirationDate);
+			ps.setLong(2, groupId);
+			ps.setLong(3, articleId);
+			ps.setInt(4, status);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
 	protected void updateImageElement(Element element, String name, int index) {
 		Element dynamicContentElement = element.element("dynamic-content");
 
@@ -432,13 +462,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(JournalArticle article)
 					throws PortalException {
-
-					JournalArticle article = (JournalArticle)object;
 
 					long groupId = article.getGroupId();
 					String articleId = article.getArticleId();
@@ -544,13 +572,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(JournalArticle article)
 					throws PortalException {
-
-					JournalArticle article = (JournalArticle)object;
 
 					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 						JournalArticle.class.getName(),
@@ -621,6 +647,57 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
+	protected void verifyArticleExpirationDate() throws Exception {
+		if (!JournalServiceConfigurationValues.
+				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
+
+			return;
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(15);
+
+			sb.append("select JournalArticle.* from JournalArticle left ");
+			sb.append("join JournalArticle tempJournalArticle on ");
+			sb.append("(JournalArticle.groupId = tempJournalArticle.groupId) ");
+			sb.append("and (JournalArticle.articleId = ");
+			sb.append("tempJournalArticle.articleId) and ");
+			sb.append("(JournalArticle.version < tempJournalArticle.version) ");
+			sb.append("and (JournalArticle.status = ");
+			sb.append("tempJournalArticle.status) where ");
+			sb.append("(JournalArticle.classNameId = ");
+			sb.append(JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+			sb.append(") and (tempJournalArticle.version is null) and ");
+			sb.append("(JournalArticle.expirationDate is not null) and ");
+			sb.append("(JournalArticle.status = ");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(")");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long articleId = rs.getLong("articleId");
+				Timestamp expirationDate = rs.getTimestamp("expirationDate");
+				int status = rs.getInt("status");
+
+				updateExpirationDate(
+					groupId, articleId, expirationDate, status);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void verifyArticleLayouts() throws Exception {
 		verifyUuid("JournalArticle");
 	}
@@ -638,12 +715,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 
 				@Override
-				public void performAction(Object object) {
-					JournalArticle article = (JournalArticle)object;
-
+				public void performAction(JournalArticle article) {
 					try {
 						_journalArticleLocalService.checkStructure(
 							article.getGroupId(), article.getArticleId(),

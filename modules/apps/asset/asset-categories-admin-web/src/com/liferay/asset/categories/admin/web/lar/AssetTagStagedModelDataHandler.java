@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -27,6 +27,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -41,7 +42,7 @@ public class AssetTagStagedModelDataHandler
 	public void deleteStagedModel(AssetTag stagedAssetTag)
 		throws PortalException {
 
-		AssetTagLocalServiceUtil.deleteTag(stagedAssetTag);
+		_assetTagLocalService.deleteTag(stagedAssetTag);
 	}
 
 	@Override
@@ -60,9 +61,8 @@ public class AssetTagStagedModelDataHandler
 	public AssetTag fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		AssetTag assetTag =
-			AssetTagLocalServiceUtil.fetchAssetTagByUuidAndGroupId(
-				uuid, groupId);
+		AssetTag assetTag = _assetTagLocalService.fetchAssetTagByUuidAndGroupId(
+			uuid, groupId);
 
 		if (assetTag == null) {
 			return null;
@@ -75,7 +75,7 @@ public class AssetTagStagedModelDataHandler
 	public List<AssetTag> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return AssetTagLocalServiceUtil.getAssetTagsByUuidAndCompanyId(
+		return _assetTagLocalService.getAssetTagsByUuidAndCompanyId(
 			uuid, companyId);
 	}
 
@@ -134,17 +134,26 @@ public class AssetTagStagedModelDataHandler
 		if (existingAssetTag == null) {
 			serviceContext.setUuid(assetTag.getUuid());
 
-			importedAssetTag = AssetTagLocalServiceUtil.addTag(
+			importedAssetTag = _assetTagLocalService.addTag(
 				userId, portletDataContext.getScopeGroupId(),
 				assetTag.getName(), serviceContext);
 		}
 		else {
-			importedAssetTag = AssetTagLocalServiceUtil.updateTag(
+			importedAssetTag = _assetTagLocalService.updateTag(
 				userId, existingAssetTag.getTagId(), assetTag.getName(),
 				serviceContext);
 		}
 
 		portletDataContext.importClassedModel(assetTag, importedAssetTag);
 	}
+
+	@Reference(unbind = "-")
+	protected void setAssetTagLocalService(
+		AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
+	}
+
+	private AssetTagLocalService _assetTagLocalService;
 
 }

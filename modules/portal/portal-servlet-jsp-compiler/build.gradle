@@ -2,14 +2,17 @@ import com.liferay.gradle.util.FileUtil
 
 dependencies {
 	compile group: "com.github.rotty3000", name: "phidias", version: "0.3.2"
-	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
-	compile group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", transitive: false, version: "1.2.1"
-	compile group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
+	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "org.glassfish", name: "javax.el", transitive: false, version: "3.0.1-b05"
 	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
 	compile group: "org.glassfish.web", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02"
 	compile group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", transitive: false, version: "1.2.3"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
+	provided group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", transitive: false, version: "1.2.1"
+	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 }
 
 ext {

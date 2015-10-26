@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Configuration Admin Annotations
+Bundle-SymbolicName: com.liferay.configuration.admin.annotations
+Bundle-Version: 1.0.0
+Include-Resource: classes

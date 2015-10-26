@@ -328,14 +328,12 @@ public abstract class OrganizationLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Organization>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(Organization organization)
 					throws PortalException {
-					Organization stagedModel = (Organization)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						organization);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.EmailAddressLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.EmailAddressLocalService;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Mendez Gonzalez
@@ -42,7 +43,7 @@ public class EmailAddressStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(EmailAddress emailAddress) {
-		EmailAddressLocalServiceUtil.deleteEmailAddress(emailAddress);
+		_emailAddressLocalService.deleteEmailAddress(emailAddress);
 	}
 
 	@Override
@@ -50,10 +51,10 @@ public class EmailAddressStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		EmailAddress emailAddress =
-			EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(
+			_emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(
 				uuid, group.getCompanyId());
 
 		deleteStagedModel(emailAddress);
@@ -66,7 +67,7 @@ public class EmailAddressStagedModelDataHandler
 		List<EmailAddress> emailAddresses = new ArrayList<>();
 
 		emailAddresses.add(
-			EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(
+			_emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(
 				uuid, companyId));
 
 		return emailAddresses;
@@ -101,7 +102,7 @@ public class EmailAddressStagedModelDataHandler
 			emailAddress);
 
 		EmailAddress existingEmailAddress =
-			EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(
+			_emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(
 				emailAddress.getUuid(), portletDataContext.getCompanyId());
 
 		EmailAddress importedEmailAddress = null;
@@ -109,21 +110,35 @@ public class EmailAddressStagedModelDataHandler
 		if (existingEmailAddress == null) {
 			serviceContext.setUuid(emailAddress.getUuid());
 
-			importedEmailAddress = EmailAddressLocalServiceUtil.addEmailAddress(
+			importedEmailAddress = _emailAddressLocalService.addEmailAddress(
 				userId, emailAddress.getClassName(), emailAddress.getClassPK(),
 				emailAddress.getAddress(), emailAddress.getTypeId(),
 				emailAddress.isPrimary(), serviceContext);
 		}
 		else {
-			importedEmailAddress =
-				EmailAddressLocalServiceUtil.updateEmailAddress(
-					existingEmailAddress.getEmailAddressId(),
-					emailAddress.getAddress(), emailAddress.getTypeId(),
-					emailAddress.isPrimary());
+			importedEmailAddress = _emailAddressLocalService.updateEmailAddress(
+				existingEmailAddress.getEmailAddressId(),
+				emailAddress.getAddress(), emailAddress.getTypeId(),
+				emailAddress.isPrimary());
 		}
 
 		portletDataContext.importClassedModel(
 			emailAddress, importedEmailAddress);
 	}
+
+	@Reference(unbind = "-")
+	protected void setEmailAddressLocalService(
+		EmailAddressLocalService emailAddressLocalService) {
+
+		_emailAddressLocalService = emailAddressLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	private EmailAddressLocalService _emailAddressLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

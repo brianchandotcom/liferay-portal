@@ -37,6 +37,7 @@ import com.liferay.portlet.announcements.model.AnnouncementsEntryModel;
 import com.liferay.portlet.announcements.model.AnnouncementsEntrySoap;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -695,6 +696,12 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public boolean getOriginalAlert() {
 		return _originalAlert;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				AnnouncementsEntry.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,24 @@ public interface DDMStructureLink extends DDMStructureLinkModel, PersistedModel 
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DDMStructureLink, Long> STRUCTURE_LINK_ID_ACCESSOR =
+		new Accessor<DDMStructureLink, Long>() {
+			@Override
+			public Long get(DDMStructureLink ddmStructureLink) {
+				return ddmStructureLink.getStructureLinkId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DDMStructureLink> getTypeClass() {
+				return DDMStructureLink.class;
+			}
+		};
+
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

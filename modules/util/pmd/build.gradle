@@ -1,5 +1,6 @@
 dependencies {
 	compile group: "net.sourceforge.pmd", name: "pmd-java", version: "5.2.3"
 
+	testCompile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	testCompile group: "net.sourceforge.pmd", name: "pmd-test", version: "5.2.3"
 }

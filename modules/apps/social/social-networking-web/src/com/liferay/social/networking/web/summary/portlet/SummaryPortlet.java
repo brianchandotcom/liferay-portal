@@ -45,6 +45,9 @@ import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.portlet.social.service.SocialRequestLocalService;
 import com.liferay.social.networking.friends.social.FriendsRequestKeys;
 import com.liferay.social.networking.members.social.MembersRequestKeys;
+import com.liferay.social.networking.model.MeetupsRegistration;
+import com.liferay.social.networking.service.MeetupsEntryLocalService;
+import com.liferay.social.networking.service.WallEntryLocalService;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -322,6 +325,16 @@ public class SummaryPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMeetupsEntryLocalService(
+		MeetupsEntryLocalService meetupsEntryLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setMeetupsRegistrationLocalService(
+		MeetupsRegistration meetupsRegistrationLocalService) {
+	}
+
+	@Reference(unbind = "-")
 	protected void setOrganizationLocalService(
 		OrganizationLocalService organizationLocalService) {
 
@@ -350,6 +363,11 @@ public class SummaryPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWallEntryLocalService(
+		WallEntryLocalService wallEntryLocalService) {
 	}
 
 	private ExpandoValueLocalService _expandoValueLocalService;

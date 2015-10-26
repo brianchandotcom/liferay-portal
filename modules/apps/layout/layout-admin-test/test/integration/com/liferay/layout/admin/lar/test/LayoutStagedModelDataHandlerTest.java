@@ -234,7 +234,7 @@ public class LayoutStagedModelDataHandlerTest
 				importedStagedModel.getCreateDate(),
 			DateUtil.equals(
 				stagedModel.getCreateDate(),
-				importedStagedModel.getCreateDate(), true));
+				importedStagedModel.getCreateDate()));
 		Assert.assertEquals(
 			stagedModel.getUuid(), importedStagedModel.getUuid());
 

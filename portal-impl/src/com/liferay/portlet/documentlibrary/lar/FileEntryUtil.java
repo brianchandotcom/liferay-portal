@@ -45,6 +45,19 @@ public class FileEntryUtil {
 		return new LiferayFileEntry(dlFileEntry);
 	}
 
+	public static FileEntry fetchByR_F_FN(
+		long repositoryId, long folderId, String fileName) {
+
+		DLFileEntry dlFileEntry = DLFileEntryUtil.fetchByG_F_FN(
+			repositoryId, folderId, fileName);
+
+		if (dlFileEntry == null) {
+			return null;
+		}
+
+		return new LiferayFileEntry(dlFileEntry);
+	}
+
 	public static FileEntry fetchByR_F_T(
 		long repositoryId, long folderId, String title) {
 

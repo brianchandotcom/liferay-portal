@@ -17,30 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation");
 String browseBy = ParamUtil.getString(request, "browseBy");
-
-JournalFolder folder = ActionUtil.getFolder(request);
-
-long folderId = BeanParamUtil.getLong(folder, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-if ((folder == null) && (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-	folder = JournalFolderLocalServiceUtil.fetchFolder(folderId);
-
-	if (folder == null) {
-		folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-	}
-}
 
 String keywords = ParamUtil.getString(request, "keywords");
 
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
 
 boolean search = Validator.isNotNull(keywords) || advancedSearch;
-
-request.setAttribute("view.jsp-folder", folder);
-
-request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 %>
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
@@ -63,15 +46,13 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 		<div class="sidenav-content">
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
+				<c:if test="<%= !journalDisplayContext.isNavigationRecent() && !journalDisplayContext.isNavigationMine() && Validator.isNull(browseBy) %>">
 					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
 				</c:if>
 			</div>
 
 			<%
-			PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-			portletURL.setParameter("folderId", String.valueOf(folderId));
+			PortletURL portletURL = journalDisplayContext.getPortletURL();
 			%>
 
 			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">

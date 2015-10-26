@@ -332,14 +332,12 @@ public abstract class CalendarResourceLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CalendarResource>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(CalendarResource calendarResource)
 					throws PortalException {
-					CalendarResource stagedModel = (CalendarResource)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						calendarResource);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

@@ -20,41 +20,22 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class VerifyMySQL extends VerifyProcess {
-
-	protected void alterTableEngine(String tableName) throws Exception {
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Updating table " + tableName + " to use engine " +
-					PropsValues.DATABASE_MYSQL_ENGINE);
-		}
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"alter table " + tableName + " engine " +
-					PropsValues.DATABASE_MYSQL_ENGINE);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
-	}
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -66,17 +47,102 @@ public class VerifyMySQL extends VerifyProcess {
 			return;
 		}
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
+			Statement statement = connection.createStatement()) {
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+			verifyTableEngine(statement);
 
-			ps = con.prepareStatement("show table status");
+			if (GetterUtil.getFloat(db.getVersionString()) < 5.6F) {
+				return;
+			}
 
-			rs = ps.executeQuery();
+			verifyDatetimePrecision(connection.getMetaData(), statement);
+		}
+	}
 
+	protected String getActualColumnType(
+			Statement statement, String tableName, String columnName)
+		throws SQLException {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("show columns from ");
+		sb.append(tableName);
+		sb.append(" like \"");
+		sb.append(columnName);
+		sb.append("\"");
+
+		try (ResultSet rs = statement.executeQuery(sb.toString())) {
+			if (!rs.next()) {
+				throw new IllegalStateException(
+					"Table " + tableName + " does not have column " +
+						columnName);
+			}
+
+			return rs.getString("Type");
+		}
+	}
+
+	protected void verifyDatetimePrecision(
+			DatabaseMetaData databaseMetaData, Statement statement)
+		throws Exception {
+
+		try (ResultSet rs = databaseMetaData.getTables(
+			null, null, null, null)) {
+
+			while (rs.next()) {
+				verifyDatetimePrecisionForTable(
+					databaseMetaData, statement, rs.getString("TABLE_CAT"),
+					rs.getString("TABLE_SCHEM"), rs.getString("TABLE_NAME"));
+			}
+		}
+	}
+
+	protected void verifyDatetimePrecisionForTable(
+			DatabaseMetaData databaseMetaData, Statement statement,
+			String catalog, String schemaPattern, String tableName)
+		throws SQLException {
+
+		try (ResultSet rs = databaseMetaData.getColumns(
+				catalog, schemaPattern, tableName, null)) {
+
+			while (rs.next()) {
+				if (Types.TIMESTAMP != rs.getInt("DATA_TYPE")) {
+					continue;
+				}
+
+				String columnName = rs.getString("COLUMN_NAME");
+
+				String actualColumnType = getActualColumnType(
+					statement, tableName, columnName);
+
+				if (actualColumnType.equals("datetime(6)")) {
+					continue;
+				}
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("ALTER TABLE ");
+				sb.append(tableName);
+				sb.append(" MODIFY ");
+				sb.append(columnName);
+				sb.append(" datetime(6)");
+
+				String sql = sb.toString();
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Updating table " + tableName + " column " +
+							columnName + " to datetime(6)");
+				}
+
+				statement.executeUpdate(sql);
+			}
+		}
+	}
+
+	protected void verifyTableEngine(Statement statement) throws Exception {
+		try (ResultSet rs = statement.executeQuery("show table status")) {
 			while (rs.next()) {
 				String tableName = rs.getString("Name");
 
@@ -97,11 +163,16 @@ public class VerifyMySQL extends VerifyProcess {
 					continue;
 				}
 
-				alterTableEngine(tableName);
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Updating table " + tableName + " to use engine " +
+							PropsValues.DATABASE_MYSQL_ENGINE);
+				}
+
+				statement.executeUpdate(
+					"alter table " + tableName + " engine " +
+						PropsValues.DATABASE_MYSQL_ENGINE);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

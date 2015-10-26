@@ -66,8 +66,8 @@ public class ConfigurationFactoryImpl implements ConfigurationFactory {
 			return configurationInvocationHandler.createProxy();
 		}
 		catch (NoSuchMethodException | InvocationTargetException |
-			InstantiationException | IllegalAccessException |
-			SettingsException e) {
+			   InstantiationException | IllegalAccessException |
+			   SettingsException e) {
 
 			throw new ConfigurationException(
 				"Unable to load configuration of type " + clazz.getName(), e);

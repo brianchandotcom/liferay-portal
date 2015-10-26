@@ -1,10 +1,11 @@
 dependencies {
-	compile project(":apps:bookmarks:bookmarks-test")
-	compile project(":apps:export-import:export-import-service")
-	compile project(":apps:journal:journal-content-web")
-	compile project(":apps:journal:journal-test")
-	compile project(":portal:portal-background-task-service")
+	provided project(":apps:bookmarks:bookmarks-test")
+	provided project(":apps:journal:journal-test")
 
-	testCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
+	testIntegrationCompile project(":apps:bookmarks:bookmarks-api")
+	testIntegrationCompile project(":apps:export-import:export-import-service")
+	testIntegrationCompile project(":apps:journal:journal-content-web")
+	testIntegrationCompile project(":portal:portal-background-task-service")
 }

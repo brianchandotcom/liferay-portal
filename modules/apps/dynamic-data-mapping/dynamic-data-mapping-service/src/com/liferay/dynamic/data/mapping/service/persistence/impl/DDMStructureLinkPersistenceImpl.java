@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -153,6 +154,29 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	public List<DDMStructureLink> findByClassNameId(long classNameId,
 		int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
+		return findByClassNameId(classNameId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m structure links where classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of d d m structure links
+	 * @param end the upper bound of the range of d d m structure links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching d d m structure links
+	 */
+	@Override
+	public List<DDMStructureLink> findByClassNameId(long classNameId,
+		int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -168,15 +192,19 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			finderArgs = new Object[] { classNameId, start, end, orderByComparator };
 		}
 
-		List<DDMStructureLink> list = (List<DDMStructureLink>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<DDMStructureLink> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructureLink ddmStructureLink : list) {
-				if ((classNameId != ddmStructureLink.getClassNameId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<DDMStructureLink>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructureLink ddmStructureLink : list) {
+					if ((classNameId != ddmStructureLink.getClassNameId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -233,10 +261,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -527,8 +555,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		Object[] finderArgs = new Object[] { classNameId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -552,10 +579,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -638,6 +665,29 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	public List<DDMStructureLink> findByStructureId(long structureId,
 		int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
+		return findByStructureId(structureId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m structure links where structureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureId the structure ID
+	 * @param start the lower bound of the range of d d m structure links
+	 * @param end the upper bound of the range of d d m structure links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching d d m structure links
+	 */
+	@Override
+	public List<DDMStructureLink> findByStructureId(long structureId,
+		int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -653,15 +703,19 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			finderArgs = new Object[] { structureId, start, end, orderByComparator };
 		}
 
-		List<DDMStructureLink> list = (List<DDMStructureLink>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<DDMStructureLink> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructureLink ddmStructureLink : list) {
-				if ((structureId != ddmStructureLink.getStructureId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<DDMStructureLink>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructureLink ddmStructureLink : list) {
+					if ((structureId != ddmStructureLink.getStructureId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -718,10 +772,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1012,8 +1066,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		Object[] finderArgs = new Object[] { structureId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1037,10 +1090,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1125,6 +1178,30 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	public List<DDMStructureLink> findByC_C(long classNameId, long classPK,
 		int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
+		return findByC_C(classNameId, classPK, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m structure links where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of d d m structure links
+	 * @param end the upper bound of the range of d d m structure links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching d d m structure links
+	 */
+	@Override
+	public List<DDMStructureLink> findByC_C(long classNameId, long classPK,
+		int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1144,16 +1221,20 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				};
 		}
 
-		List<DDMStructureLink> list = (List<DDMStructureLink>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<DDMStructureLink> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructureLink ddmStructureLink : list) {
-				if ((classNameId != ddmStructureLink.getClassNameId()) ||
-						(classPK != ddmStructureLink.getClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<DDMStructureLink>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructureLink ddmStructureLink : list) {
+					if ((classNameId != ddmStructureLink.getClassNameId()) ||
+							(classPK != ddmStructureLink.getClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1214,10 +1295,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1525,8 +1606,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		Object[] finderArgs = new Object[] { classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1554,10 +1634,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1649,7 +1729,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param structureId the structure ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	 */
 	@Override
@@ -1660,7 +1740,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_C_S,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C_S,
 					finderArgs, this);
 		}
 
@@ -1705,7 +1785,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				List<DDMStructureLink> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_S,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S,
 						finderArgs, list);
 				}
 				else {
@@ -1718,14 +1798,13 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 					if ((ddmStructureLink.getClassNameId() != classNameId) ||
 							(ddmStructureLink.getClassPK() != classPK) ||
 							(ddmStructureLink.getStructureId() != structureId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_S,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S,
 							finderArgs, ddmStructureLink);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_S,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -1773,8 +1852,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		Object[] finderArgs = new Object[] { classNameId, classPK, structureId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -1806,10 +1884,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1836,11 +1914,11 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public void cacheResult(DDMStructureLink ddmStructureLink) {
-		EntityCacheUtil.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
 			ddmStructureLink);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_S,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S,
 			new Object[] {
 				ddmStructureLink.getClassNameId(), ddmStructureLink.getClassPK(),
 				ddmStructureLink.getStructureId()
@@ -1857,7 +1935,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	@Override
 	public void cacheResult(List<DDMStructureLink> ddmStructureLinks) {
 		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 						DDMStructureLinkImpl.class,
 						ddmStructureLink.getPrimaryKey()) == null) {
@@ -1873,43 +1951,43 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 * Clears the cache for all d d m structure links.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(DDMStructureLinkImpl.class);
+		entityCache.clearCache(DDMStructureLinkImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the d d m structure link.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(DDMStructureLink ddmStructureLink) {
-		EntityCacheUtil.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((DDMStructureLinkModelImpl)ddmStructureLink);
 	}
 
 	@Override
 	public void clearCache(List<DDMStructureLink> ddmStructureLinks) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			EntityCacheUtil.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey());
 
 			clearUniqueFindersCache((DDMStructureLinkModelImpl)ddmStructureLink);
@@ -1925,9 +2003,9 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 					ddmStructureLinkModelImpl.getStructureId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
 				ddmStructureLinkModelImpl);
 		}
 		else {
@@ -1939,9 +2017,9 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 						ddmStructureLinkModelImpl.getStructureId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
 					ddmStructureLinkModelImpl);
 			}
 		}
@@ -1955,8 +2033,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				ddmStructureLinkModelImpl.getStructureId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_S, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_S, args);
 
 		if ((ddmStructureLinkModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_S.getColumnBitmask()) != 0) {
@@ -1966,8 +2044,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 					ddmStructureLinkModelImpl.getOriginalStructureId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_S, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_S, args);
 		}
 	}
 
@@ -2101,10 +2179,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !DDMStructureLinkModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2114,16 +2192,14 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 						ddmStructureLinkModelImpl.getOriginalClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
 
 				args = new Object[] { ddmStructureLinkModelImpl.getClassNameId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
 			}
 
@@ -2133,16 +2209,14 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 						ddmStructureLinkModelImpl.getOriginalStructureId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
 					args);
 
 				args = new Object[] { ddmStructureLinkModelImpl.getStructureId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
 					args);
 			}
 
@@ -2153,8 +2227,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 						ddmStructureLinkModelImpl.getOriginalClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 
 				args = new Object[] {
@@ -2162,13 +2236,13 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 						ddmStructureLinkModelImpl.getClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
 			ddmStructureLink, false);
 
@@ -2244,7 +2318,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink fetchByPrimaryKey(Serializable primaryKey) {
-		DDMStructureLink ddmStructureLink = (DDMStructureLink)EntityCacheUtil.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+		DDMStructureLink ddmStructureLink = (DDMStructureLink)entityCache.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureLinkImpl.class, primaryKey);
 
 		if (ddmStructureLink == _nullDDMStructureLink) {
@@ -2264,13 +2338,13 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 					cacheResult(ddmStructureLink);
 				}
 				else {
-					EntityCacheUtil.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 						DDMStructureLinkImpl.class, primaryKey,
 						_nullDDMStructureLink);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureLinkImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2320,7 +2394,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDMStructureLink ddmStructureLink = (DDMStructureLink)EntityCacheUtil.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureLink ddmStructureLink = (DDMStructureLink)entityCache.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureLinkImpl.class, primaryKey);
 
 			if (ddmStructureLink == null) {
@@ -2372,7 +2446,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureLinkImpl.class, primaryKey,
 					_nullDDMStructureLink);
 			}
@@ -2428,6 +2502,26 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	@Override
 	public List<DDMStructureLink> findAll(int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m structure links.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of d d m structure links
+	 * @param end the upper bound of the range of d d m structure links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of d d m structure links
+	 */
+	@Override
+	public List<DDMStructureLink> findAll(int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2443,8 +2537,12 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<DDMStructureLink> list = (List<DDMStructureLink>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<DDMStructureLink> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DDMStructureLink>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2491,10 +2589,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2524,7 +2622,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2537,11 +2635,11 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2566,12 +2664,16 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(DDMStructureLinkImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(DDMStructureLinkImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink";
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK_WHERE_PKS_IN = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink WHERE structureLinkId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK_WHERE = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink WHERE ";

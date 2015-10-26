@@ -14,8 +14,11 @@
 
 package com.liferay.layout.set.prototype.web.portlet;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.layout.set.prototype.web.upgrade.LayoutSetPrototypeWebUpgrade;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.RequiredLayoutSetPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -28,7 +31,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
@@ -57,9 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=sites",
-		"com.liferay.portlet.control-panel-entry-weight=2.0",
-		"com.liferay.portlet.css-class-wrapper=portlet-users-admin",
+		"com.liferay.portlet.css-class-wrapper=portlet-layout-set-prototype",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.icon=/icons/layout_set_prototypes.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -89,7 +90,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "layoutSetPrototypeIds"), 0L);
 
 		for (long layoutSetPrototypeId : layoutSetPrototypeIds) {
-			LayoutSetPrototypeServiceUtil.deleteLayoutSetPrototype(
+			layoutSetPrototypeService.deleteLayoutSetPrototype(
 				layoutSetPrototypeId);
 		}
 	}
@@ -102,7 +103,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			actionRequest, "layoutSetPrototypeId");
 
 		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+			layoutSetPrototypeService.getLayoutSetPrototype(
 				layoutSetPrototypeId);
 
 		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
@@ -133,7 +134,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			// Add layout prototoype
 
 			layoutSetPrototype =
-				LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(
+				layoutSetPrototypeService.addLayoutSetPrototype(
 					nameMap, descriptionMap, active, layoutsUpdateable,
 					serviceContext);
 
@@ -147,7 +148,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			// Update layout prototoype
 
 			layoutSetPrototype =
-				LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
+				layoutSetPrototypeService.updateLayoutSetPrototype(
 					layoutSetPrototypeId, nameMap, descriptionMap, active,
 					layoutsUpdateable, serviceContext);
 		}
@@ -163,10 +164,9 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		settingsProperties.setProperty(
 			"customJspServletContextName", customJspServletContextName);
 
-		layoutSetPrototype =
-			LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
-				layoutSetPrototype.getLayoutSetPrototypeId(),
-				settingsProperties.toString());
+		layoutSetPrototype = layoutSetPrototypeService.updateLayoutSetPrototype(
+			layoutSetPrototype.getLayoutSetPrototypeId(),
+			settingsProperties.toString());
 
 		PortletURL siteAdministrationURL = PortalUtil.getControlPanelPortletURL(
 			actionRequest, layoutSetPrototype.getGroup(),
@@ -183,6 +183,12 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		renderRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
 
 		if (SessionErrors.contains(
 				renderRequest, PrincipalException.getNestedClasses())) {
@@ -207,8 +213,27 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeWebUpgrade(
-		LayoutSetPrototypeWebUpgrade layoutSetPrototypeWebUpgrade) {
+	protected void setLayoutSetPrototypeService(
+		LayoutSetPrototypeService layoutSetPrototypeService) {
+
+		this.layoutSetPrototypeService = layoutSetPrototypeService;
 	}
+
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		_panelAppRegistry = panelAppRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		_panelCategoryRegistry = panelCategoryRegistry;
+	}
+
+	protected LayoutSetPrototypeService layoutSetPrototypeService;
+
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

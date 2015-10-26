@@ -5,4 +5,5 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/PKParser.class
+Require-SchemaVersion: 1.0.0
 Web-ContextPath: /sites-admin-web

@@ -32,7 +32,7 @@ import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.CASWebKeys;
 import com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -146,11 +146,10 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 		if (user == null) {
 			if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				user = UserLocalServiceUtil.getUserByScreenName(
-					companyId, login);
+				user = _userLocalService.getUserByScreenName(companyId, login);
 			}
 			else {
-				user = UserLocalServiceUtil.getUserByEmailAddress(
+				user = _userLocalService.getUserByEmailAddress(
 					companyId, login);
 			}
 		}
@@ -173,8 +172,14 @@ public class CASAutoLogin extends BaseAutoLogin {
 		_configurationFactory = configurationFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
 
 	private volatile ConfigurationFactory _configurationFactory;
+	private UserLocalService _userLocalService;
 
 }

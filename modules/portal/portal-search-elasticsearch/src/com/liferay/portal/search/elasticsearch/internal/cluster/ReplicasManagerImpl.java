@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
-import java.util.concurrent.Future;
-
 import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequestBuilder;
 import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsResponse;
 import org.elasticsearch.client.IndicesAdminClient;
@@ -48,11 +46,9 @@ public class ReplicasManagerImpl implements ReplicasManager {
 
 		updateSettingsRequestBuilder.setSettings(builder);
 
-		Future<UpdateSettingsResponse> future =
-			updateSettingsRequestBuilder.execute();
-
 		try {
-			UpdateSettingsResponse updateSettingsResponse = future.get();
+			UpdateSettingsResponse updateSettingsResponse =
+				updateSettingsRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, updateSettingsResponse);
 		}

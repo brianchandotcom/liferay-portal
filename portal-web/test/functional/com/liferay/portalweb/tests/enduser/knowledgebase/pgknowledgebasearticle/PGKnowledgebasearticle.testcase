@@ -27,7 +27,7 @@
 		<execute macro="KBArticle#tearDownCP" />
 	</tear-down>
 
-	<command name="DeleteKBArticleViaKBArticle" priority="4">
+	<command name="DeleteKBArticleViaKBArticle" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>

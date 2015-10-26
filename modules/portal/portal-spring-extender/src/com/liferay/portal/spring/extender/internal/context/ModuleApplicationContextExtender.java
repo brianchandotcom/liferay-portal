@@ -14,13 +14,24 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBContext;
+import com.liferay.portal.kernel.dao.db.DBFactory;
+import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistratorTracker;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -38,9 +49,11 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -61,6 +74,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		start(bundleContext);
 	}
 
+	@Deactivate
 	protected void deactivate() throws Exception {
 		stop(_bundleContext);
 
@@ -131,8 +145,34 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 		@Override
 		public void destroy() throws Exception {
+			for (ServiceRegistration<UpgradeStep>
+					upgradeStepServiceRegistration :
+						_upgradeStepServiceRegistrations) {
+
+				upgradeStepServiceRegistration.unregister();
+			}
+
 			if (_component != null) {
 				_dependencyManager.remove(_component);
+			}
+		}
+
+		public String getSQLTemplateString(String templateName)
+			throws UpgradeException {
+
+			URL resource = _bundle.getResource("/META-INF/sql/" + templateName);
+
+			if (resource == null) {
+				throw new UpgradeException(
+					"Unable to locate SQL template " + templateName);
+			}
+
+			try (InputStream inputStream = resource.openStream()) {
+				return StringUtil.read(inputStream);
+			}
+			catch (IOException ioe) {
+				throw new UpgradeException(
+					"Unable to read SQL template " + templateName, ioe);
 			}
 		}
 
@@ -167,7 +207,72 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				_component.add(serviceDependency);
 			}
 
+			Dictionary<String, String> headers = _bundle.getHeaders();
+
+			String requireSchemaVersion = headers.get("Require-SchemaVersion");
+
+			if (Validator.isNull(requireSchemaVersion)) {
+				_generateReleaseInfo();
+			}
+
 			_dependencyManager.add(_component);
+
+			_upgradeStepServiceRegistrations = _processInitialUpgrade();
+		}
+
+		private void _generateReleaseInfo() {
+			ServiceDependency serviceDependency =
+				_dependencyManager.createServiceDependency();
+
+			serviceDependency.setRequired(true);
+
+			serviceDependency.setService(
+				Release.class,
+				"(&(release.bundle.symbolic.name=" +
+					_bundle.getSymbolicName()+ ")(release.schema.version=" +
+						_bundle.getVersion() + "))");
+
+			_component.add(serviceDependency);
+		}
+
+		private List<ServiceRegistration<UpgradeStep>>
+			_processInitialUpgrade() {
+
+			Dictionary<String, String> headers = _bundle.getHeaders();
+
+			String upgradeToSchemaVersion = GetterUtil.getString(
+				headers.get("Require-SchemaVersion"),
+				headers.get("Bundle-Version"));
+
+			return UpgradeStepRegistratorTracker.register(
+				_bundleContext, _bundle.getSymbolicName(), "0.0.0",
+				upgradeToSchemaVersion,
+				new UpgradeStep() {
+
+					@Override
+					public void upgrade(DBProcessContext dbProcessContext) {
+						DBContext dbContext = dbProcessContext.getDBContext();
+
+						DBFactory dbFactory = dbContext.getDBFactory();
+
+						DB db = dbFactory.getDB();
+
+						try {
+							db.runSQLTemplateString(
+								getSQLTemplateString("tables.sql"), true, true);
+							db.runSQLTemplateString(
+								getSQLTemplateString("sequences.sql"), true,
+								true);
+							db.runSQLTemplateString(
+								getSQLTemplateString("indexes.sql"), true,
+								true);
+						}
+						catch (Exception e) {
+							new UpgradeException(e);
+						}
+					}
+
+				});
 		}
 
 		private List<ContextDependency> _processServiceReferences(Bundle bundle)
@@ -186,6 +291,10 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			StringUtil.readLines(url.openStream(), lines);
 
 			for (String line : lines) {
+				if (Validator.isNull(line)) {
+					continue;
+				}
+
 				line = line.trim();
 
 				String[] array = line.split(" ");
@@ -205,6 +314,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 		private final Bundle _bundle;
 		private org.apache.felix.dm.Component _component;
+		private List<ServiceRegistration<UpgradeStep>>
+			_upgradeStepServiceRegistrations;
 
 		private class ContextDependency {
 

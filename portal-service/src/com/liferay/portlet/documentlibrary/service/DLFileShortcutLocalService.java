@@ -365,6 +365,8 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 
 	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId);
 
+	public void updateFileShortcutsActive(long toFileEntryId, boolean active);
+
 	public void updateStatus(long userId, long fileShortcutId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;

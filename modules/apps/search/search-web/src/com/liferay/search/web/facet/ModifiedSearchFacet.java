@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.search.facet.ModifiedFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.search.web.util.SearchFacet;
+import com.liferay.search.facet.BaseJSPSearchFacet;
+import com.liferay.search.facet.SearchFacet;
 
 import javax.portlet.ActionRequest;
 
@@ -43,7 +44,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
-	public FacetConfiguration getDefaultConfiguration() {
+	public FacetConfiguration getDefaultConfiguration(long companyId) {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
 		facetConfiguration.setClassName(getFacetClassName());

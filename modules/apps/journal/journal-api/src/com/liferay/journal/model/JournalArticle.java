@@ -37,6 +37,23 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.journal.model.impl.JournalArticleImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<JournalArticle, Long> ID_ACCESSOR = new Accessor<JournalArticle, Long>() {
+			@Override
+			public Long get(JournalArticle journalArticle) {
+				return journalArticle.getId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<JournalArticle> getTypeClass() {
+				return JournalArticle.class;
+			}
+		};
+
 	public static final Accessor<JournalArticle, String> ARTICLE_ID_ACCESSOR = new Accessor<JournalArticle, String>() {
 			@Override
 			public String get(JournalArticle journalArticle) {

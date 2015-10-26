@@ -65,7 +65,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleContentNull" priority="4">
+	<command name="AddKBArticleContentNull" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -126,7 +126,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleTitleNull" priority="4">
+	<command name="AddKBArticleTitleNull" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -217,7 +217,7 @@
 		</execute>
 	</command>
 
-	<command name="CannotViewDuplicateBreadcrumbsWhenAddingParentArticle" priority="4" >
+	<command name="CannotViewDuplicateBreadcrumbsWhenAddingParentArticle" priority="3" >
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -250,7 +250,7 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseSelectParent#BREADCRUMB_HOME" />
-		<execute function="AssertElementNotPresent" locator1="//div[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
+		<execute function="AssertElementNotPresent" locator1="//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
 	</command>
 
 	<command name="ChangeSocialBookmarkSitesForKBArticle" priority="4">
@@ -717,7 +717,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleViaNavigationLinks" priority="4">
+	<command name="ViewKBArticleViaNavigationLinks" priority="3">
 		<var name="kbArticleCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoContentCP">
@@ -828,7 +828,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="4">
+	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="3">
 		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
 
 		<var name="socialBookmarkSites" value="twitter,facebook,plusone,addthis,blinklist,delicious,digg,evernote,linkedin,newsvine,reddit,slashdot,stumbleupon,technorati,tuenti" />
@@ -866,7 +866,7 @@
 		</for>
 	</command>
 
-	<command name="ViewKBArticleWithBlogsEntryRelatedAsset" priority="4">
+	<command name="ViewKBArticleWithBlogsEntryRelatedAsset" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -901,15 +901,13 @@
 			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="KBArticle#viewRelatedAssetViaKBDisplayPG">
-			<var name="kbArticleRelatedAssetTitle" value="Knowledge Base Article Title" />
+		<execute macro="KBArticle#viewBlogsEntryRelatedAssetViaKBDisplayPG">
 			<var name="RelatedAssetContent" value="Blogs Entry Content" />
 			<var name="RelatedAssetTitle" value="Blogs Entry Title" />
-			<var name="RelatedAssetType" value="Blogs Entry" />
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithEditedStarRatings" priority="4">
+	<command name="ViewKBArticleWithEditedStarRatings" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -1104,7 +1102,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithXSSCodeInjectedTitle" priority="4">
+	<command name="ViewKBArticleWithXSSCodeInjectedTitle" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -1165,7 +1163,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoDuplicateKBSuggestionAfterRefresh" priority="4">
+	<command name="ViewNoDuplicateKBSuggestionAfterRefresh" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>

@@ -22,6 +22,9 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface UserFinder {
+	public java.util.Map<java.lang.Long, java.lang.Integer> countByGroups(
+		long companyId, int status, long[] groupIds);
+
 	public int countBySocialUsers(long companyId, long userId,
 		int socialRelationType, java.lang.String socialRelationTypeComparator,
 		int status);

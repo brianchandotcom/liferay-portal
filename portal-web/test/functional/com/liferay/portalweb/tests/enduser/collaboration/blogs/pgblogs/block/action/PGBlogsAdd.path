@@ -94,11 +94,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TRACKBACKS_TO_SEND_FIELD</td>
-	<td>//input[contains(@id,'trackbacks')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ABSTRACT_DROPDOWN</td>
 	<td>//div[@id='blogsEntryAbstractPanel']/div</td>
 	<td></td>

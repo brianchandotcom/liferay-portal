@@ -20,7 +20,10 @@
 page import="com.liferay.portal.kernel.search.RelatedSearchResult" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.taglib.util.InlineUtil" %>
+page import="com.liferay.taglib.util.InlineUtil" %><%@
+page import="com.liferay.taglib.util.PortalIncludeUtil" %>
+
+<%@ page import="java.io.IOException" %>
 
 <%
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);

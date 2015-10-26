@@ -15,48 +15,61 @@
 package com.liferay.marketplace.upgrade;
 
 import com.liferay.marketplace.upgrade.v1_0_0.UpgradeExpando;
-import com.liferay.marketplace.upgrade.v1_0_1.UpgradeModule;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.marketplace.upgrade.v1_0_0.UpgradeModule;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
+import com.liferay.portlet.expando.service.ExpandoTableLocalService;
+import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Joan Kim
+ * @author Ryan Park
  */
-@Component(immediate = true, service = MarketplaceServiceUpgrade.class)
-public class MarketplaceServiceUpgrade {
+@Component(immediate = true)
+public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.marketplace.service", "0.0.1", "1.0.0",
+			new UpgradeExpando(
+				_expandoColumnLocalService, _expandoTableLocalService,
+				_expandoValueLocalService),
+			new UpgradeModule());
+	}
+
+	@Reference(unbind = "-")
+	protected void setExpandoColumnLocalService(
+		ExpandoColumnLocalService expandoColumnLocalService) {
+
+		_expandoColumnLocalService = expandoColumnLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExpandoTableLocalService(
+		ExpandoTableLocalService expandoTableLocalService) {
+
+		_expandoTableLocalService = expandoTableLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExpandoValueLocalService(
+		ExpandoValueLocalService expandoValueLocalService) {
+
+		_expandoValueLocalService = expandoValueLocalService;
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradeExpando());
-		upgradeProcesses.add(new UpgradeModule());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.marketplace.service", upgradeProcesses, 1, 1, false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+	private ExpandoTableLocalService _expandoTableLocalService;
+	private ExpandoValueLocalService _expandoValueLocalService;
 
 }

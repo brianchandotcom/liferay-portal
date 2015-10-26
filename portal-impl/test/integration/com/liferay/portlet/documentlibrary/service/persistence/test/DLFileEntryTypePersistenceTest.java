@@ -43,6 +43,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUt
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,8 +60,9 @@ import java.util.Set;
  * @generated
  */
 public class DLFileEntryTypePersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -362,11 +364,9 @@ public class DLFileEntryTypePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLFileEntryTypeLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileEntryType>() {
 				@Override
-				public void performAction(Object object) {
-					DLFileEntryType dlFileEntryType = (DLFileEntryType)object;
-
+				public void performAction(DLFileEntryType dlFileEntryType) {
 					Assert.assertNotNull(dlFileEntryType);
 
 					count.increment();

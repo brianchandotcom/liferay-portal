@@ -40,6 +40,7 @@ import com.liferay.portlet.exportimport.service.persistence.ExportImportConfigur
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,8 +57,9 @@ import java.util.Set;
  * @generated
  */
 public class ExportImportConfigurationPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -368,11 +370,10 @@ public class ExportImportConfigurationPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ExportImportConfigurationLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ExportImportConfiguration>() {
 				@Override
-				public void performAction(Object object) {
-					ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)object;
-
+				public void performAction(
+					ExportImportConfiguration exportImportConfiguration) {
 					Assert.assertNotNull(exportImportConfiguration);
 
 					count.increment();

@@ -14,16 +14,10 @@
 
 package com.liferay.password.policies.admin.web.upgrade;
 
-import com.liferay.password.policies.admin.web.constants.PasswordPoliciesAdminPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.password.policies.admin.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.util.Collections;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -31,43 +25,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Drew Brokke
  */
-@Component(immediate = true, service = PasswordPoliciesAdminWebUpgrade.class)
-public class PasswordPoliciesAdminWebUpgrade {
+@Component(immediate = true)
+public class PasswordPoliciesAdminWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.password.policies.admin.web", "0.0.1", "1.0.0",
+			new UpgradePortletId());
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"129",
-						PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN
-					}
-				};
-			}
-
-		};
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.password.policies.admin.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

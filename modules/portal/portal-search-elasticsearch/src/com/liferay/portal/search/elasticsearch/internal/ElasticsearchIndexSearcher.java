@@ -66,8 +66,6 @@ import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.elasticsearch.action.ActionFuture;
-import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -489,8 +487,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		searchRequestBuilder.setQuery(queryBuilder);
 
-		SearchResponse searchResponse = executeSearchRequest(
-			client, searchRequestBuilder);
+		SearchResponse searchResponse = searchRequestBuilder.get();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -521,16 +518,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchContext, query, start, end, false);
 
 		return processResponse(searchResponse, searchContext, query);
-	}
-
-	protected SearchResponse executeSearchRequest(
-		Client client, SearchRequestBuilder searchRequestBuilder) {
-
-		SearchRequest searchRequest = searchRequestBuilder.request();
-
-		ActionFuture<SearchResponse> future = client.search(searchRequest);
-
-		return future.actionGet();
 	}
 
 	protected String[] getSelectedIndexNames(

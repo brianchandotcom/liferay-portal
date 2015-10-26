@@ -16,7 +16,15 @@ package com.liferay.site.navigation.breadcrumb.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.breadcrumb.web.constants.SiteNavigationBreadcrumbPortletKeys;
+
+import java.io.IOException;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -48,5 +56,25 @@ public class SiteNavigationBreadcrumbConfigurationAction
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_TEMPLATE, _portletDisplayTemplate);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference
+	protected void setPortletDisplayTemplate(
+		PortletDisplayTemplate portletDisplayTemplate) {
+
+		_portletDisplayTemplate = portletDisplayTemplate;
+	}
+
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

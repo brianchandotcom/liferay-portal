@@ -38,7 +38,7 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<execute macro="Workflow#configurePortalWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 		</execute>
@@ -215,7 +215,7 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 		</execute>
@@ -302,7 +302,7 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_WIKI_PAGE_SELECT" />
 		</execute>
@@ -533,14 +533,14 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57228" name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
+	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="3">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 		</execute>
@@ -590,7 +590,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
@@ -615,7 +615,7 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 		</execute>
@@ -672,7 +672,7 @@
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
 	</command>
 
-	<command name="ViewWebContentConfigurationCP" priority="4">
+	<command name="ViewWebContentConfigurationCP" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

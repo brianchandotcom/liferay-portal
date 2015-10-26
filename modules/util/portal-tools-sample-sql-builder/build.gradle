@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	compile group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 	compile project(":apps:blogs:blogs-web")
 	compile project(":apps:document-library:document-library-web")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")

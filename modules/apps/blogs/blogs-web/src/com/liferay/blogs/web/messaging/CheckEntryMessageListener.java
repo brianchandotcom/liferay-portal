@@ -23,7 +23,8 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.TriggerType;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -48,14 +49,13 @@ public class CheckEntryMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
-		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
-
 		_blogsConfiguration = Configurable.createConfigurable(
 			BlogsConfiguration.class, properties);
 
-		schedulerEntry.setTriggerValue(
-			_blogsConfiguration.entryCheckInterval());
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				_blogsConfiguration.entryCheckInterval(), TimeUnit.MINUTE));
 	}
 
 	@Override
@@ -70,6 +70,10 @@ public class CheckEntryMessageListener
 
 	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
 	protected void setPortlet(Portlet portlet) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
 	private volatile BlogsConfiguration _blogsConfiguration;

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.adapter.StagedGroup;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -143,7 +144,7 @@ public class StagedGroupStagedModelDataHandler
 	protected Group fetchExistingGroup(
 		PortletDataContext portletDataContext, long groupId, long liveGroupId) {
 
-		Group liveGroup = GroupLocalServiceUtil.fetchGroup(liveGroupId);
+		Group liveGroup = _groupLocalService.fetchGroup(liveGroupId);
 
 		if (liveGroup != null) {
 			return liveGroup;
@@ -162,7 +163,14 @@ public class StagedGroupStagedModelDataHandler
 		// group is properly staged. During local staging, valid mappings are
 		// found when the references do not change between staging and live.
 
-		return GroupLocalServiceUtil.fetchGroup(existingGroupId);
+		return _groupLocalService.fetchGroup(existingGroupId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
 
 }

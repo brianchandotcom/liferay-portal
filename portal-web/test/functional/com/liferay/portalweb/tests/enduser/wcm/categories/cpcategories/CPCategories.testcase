@@ -99,7 +99,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategoryProperties" priority="4">
+	<command name="AddCategoryProperties" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -407,7 +407,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeAllAssetTypes" priority="4">
+	<command name="AddVocabularyAssetTypeAllAssetTypes" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -423,7 +423,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeBlogsEntry" priority="4">
+	<command name="AddVocabularyAssetTypeBlogsEntry" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -439,7 +439,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeBookmarksEntry" priority="4">
+	<command name="AddVocabularyAssetTypeBookmarksEntry" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -455,7 +455,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeDocument" priority="4">
+	<command name="AddVocabularyAssetTypeDocument" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -471,7 +471,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypes" priority="4">
+	<command name="AddVocabularyAssetTypes" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -501,7 +501,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeUser" priority="4">
+	<command name="AddVocabularyAssetTypeUser" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -517,7 +517,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeWebContent" priority="4">
+	<command name="AddVocabularyAssetTypeWebContent" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -533,7 +533,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeWikiPage" priority="4">
+	<command name="AddVocabularyAssetTypeWikiPage" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -549,7 +549,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyDisallowMultipleCategories" priority="4" >
+	<command name="AddVocabularyDisallowMultipleCategories" priority="3" >
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -569,7 +569,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyViewableByGuest" priority="4">
+	<command name="AddVocabularyViewableByGuest" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -589,7 +589,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyViewableByOwner" priority="4">
+	<command name="AddVocabularyViewableByOwner" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -609,7 +609,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyViewableBySiteMembers" priority="4">
+	<command name="AddVocabularyViewableBySiteMembers" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -769,7 +769,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCategoryProperty2" priority="4">
+	<command name="DeleteCategoryProperty2" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1089,7 +1089,7 @@
 		</execute>
 	</command>
 
-	<command name="ValidateClickingCloseButtonDoesNotSaveVocabulary" priority="4">
+	<command name="ValidateClickingCloseButtonDoesNotSaveVocabulary" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

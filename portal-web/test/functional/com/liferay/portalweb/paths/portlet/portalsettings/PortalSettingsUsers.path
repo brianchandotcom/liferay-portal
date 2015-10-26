@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>APPLY_TO_EXISTING_USERS_CHECKBOX</td>
-	<td>//input[@id='_130_admin-sync-default-associations']</td>
+	<td>//input[contains(@id,'admin-sync-default-associations')]</td>
 	<td></td>
 </tr>
 <!--FIELDS-->

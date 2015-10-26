@@ -712,11 +712,19 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public boolean isAvailableLocale(Locale locale) {
+		if (locale == null) {
+			return false;
+		}
+
 		return isAvailableLocale(LocaleUtil.toLanguageId(locale));
 	}
 
 	@Override
 	public boolean isAvailableLocale(long groupId, Locale locale) {
+		if (locale == null) {
+			return false;
+		}
+
 		return isAvailableLocale(groupId, LocaleUtil.toLanguageId(locale));
 	}
 

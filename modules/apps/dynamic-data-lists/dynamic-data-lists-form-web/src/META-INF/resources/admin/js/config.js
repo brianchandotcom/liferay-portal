@@ -49,6 +49,13 @@
 								'aui-layout'
 							]
 						},
+						'liferay-ddl-form-builder-pages-manager': {
+							path: 'form_builder_pages_manager.js',
+							requires: [
+								'aui-form-builder-page-manager',
+								'liferay-ddm-form-renderer-wizard'
+							]
+						},
 						'liferay-ddl-form-builder-settings-form': {
 							path: 'form_builder_settings_form.js',
 							requires: [

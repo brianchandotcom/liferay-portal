@@ -90,16 +90,6 @@
 
 ## ---------- URLs ---------- ##
 
-#set ($show_add_content = $theme_display.isShowAddContentIcon())
-
-#if ($show_add_content)
-	#set ($add_content_text = $languageUtil.get($locale, "add-application"))
-	#set ($add_content_url = $theme_display.getURLAddContent())
-
-	#set ($layout_text = $languageUtil.get($locale, "layout-template"))
-	#set ($layout_url = $theme_display.getURLLayoutTemplates())
-#end
-
 #set ($show_control_panel = $theme_display.isShowControlPanelIcon())
 
 #if ($show_control_panel)

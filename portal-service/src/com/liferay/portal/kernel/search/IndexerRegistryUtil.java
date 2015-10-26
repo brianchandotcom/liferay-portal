@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.ProxyFactory;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Raymond Augé
@@ -35,7 +35,7 @@ public class IndexerRegistryUtil {
 		return _indexerRegistry;
 	}
 
-	public static List<Indexer<?>> getIndexers() {
+	public static Set<Indexer<?>> getIndexers() {
 		return getIndexerRegistry().getIndexers();
 	}
 

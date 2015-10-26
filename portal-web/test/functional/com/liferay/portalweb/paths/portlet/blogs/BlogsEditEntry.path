@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_TAB</td>
-	<td>//li[contains(@class,'tab')]/a[contains(.,'Settings')]</td>
+	<td>//button[contains(@id,'Blogs') and contains(@id,'_settingsIcon')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,191 @@
+<definition component-name="portal-workflow">
+	<property name="custom.properties" value="default.layout.template.id=1_column" />
+	<property name="testray.main.component.name" value="Workflow" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Calendar" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_CALENDAR_EVENT_SELECT" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+			<then>
+				<execute macro="CalendarEvent#tearDown" />
+			</then>
+		</if>
+
+		<execute macro="Calendar#tearDown" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
+	<command name="ApproveEventWithInvitedUser" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="specificOptionSetValue" value="Test Test" />
+			<var name="workflow" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteCalendarName" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteCalendarName" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="Calendar Event Title" />
+			<var name="workflowAssetType" value="Calendar Event" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="Calendar Event Title" />
+			<var name="workflowAssetType" value="Calendar Event" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSiteRSVPWithApprovedWorkflow">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="rsvp" value="Yes" />
+			<var name="userCalendarName" value="Test Test" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewInvitedUserRSVPWithApprovedWorkflow">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteCalendarName" value="Liferay" />
+			<var name="userCalendarName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="RejectEventWithInvitedUser" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="specificOptionSetValue" value="Test Test" />
+			<var name="workflow" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteCalendarName" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteCalendarName" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="Calendar Event Title" />
+			<var name="workflowAssetType" value="Calendar Event" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="Calendar Event Title" />
+			<var name="workflowAssetType" value="Calendar Event" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteCalendarName" value="Liferay" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteCalendarName" value="Liferay" />
+			<var name="userCalendarName" value="Test Test" />
+		</execute>
+	</command>
+</definition>

@@ -22,8 +22,8 @@ import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceModelImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupInstancePersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -43,6 +43,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -156,6 +157,27 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	public List<MDRRuleGroupInstance> findByUuid(String uuid, int start,
 		int end, OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule group instances where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of m d r rule group instances
+	 * @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching m d r rule group instances
+	 */
+	@Override
+	public List<MDRRuleGroupInstance> findByUuid(String uuid, int start,
+		int end, OrderByComparator<MDRRuleGroupInstance> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -171,15 +193,19 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<MDRRuleGroupInstance> list = (List<MDRRuleGroupInstance>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroupInstance> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
-				if (!Validator.equals(uuid, mdrRuleGroupInstance.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroupInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
+					if (!Validator.equals(uuid, mdrRuleGroupInstance.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -250,10 +276,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -559,8 +585,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -598,10 +623,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -681,7 +706,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching m d r rule group instance, or <code>null</code> if a matching m d r rule group instance could not be found
 	 */
 	@Override
@@ -692,7 +717,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -746,7 +771,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				List<MDRRuleGroupInstance> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -759,14 +784,13 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					if ((mdrRuleGroupInstance.getUuid() == null) ||
 							!mdrRuleGroupInstance.getUuid().equals(uuid) ||
 							(mdrRuleGroupInstance.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, mdrRuleGroupInstance);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -811,8 +835,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -854,10 +877,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -946,6 +969,29 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	public List<MDRRuleGroupInstance> findByUuid_C(String uuid, long companyId,
 		int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule group instances where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of m d r rule group instances
+	 * @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching m d r rule group instances
+	 */
+	@Override
+	public List<MDRRuleGroupInstance> findByUuid_C(String uuid, long companyId,
+		int start, int end,
+		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -965,16 +1011,20 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				};
 		}
 
-		List<MDRRuleGroupInstance> list = (List<MDRRuleGroupInstance>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroupInstance> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
-				if (!Validator.equals(uuid, mdrRuleGroupInstance.getUuid()) ||
-						(companyId != mdrRuleGroupInstance.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroupInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
+					if (!Validator.equals(uuid, mdrRuleGroupInstance.getUuid()) ||
+							(companyId != mdrRuleGroupInstance.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1049,10 +1099,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1376,8 +1426,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1419,10 +1468,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1505,6 +1554,27 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	public List<MDRRuleGroupInstance> findByGroupId(long groupId, int start,
 		int end, OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule group instances where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of m d r rule group instances
+	 * @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching m d r rule group instances
+	 */
+	@Override
+	public List<MDRRuleGroupInstance> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<MDRRuleGroupInstance> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1520,15 +1590,19 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<MDRRuleGroupInstance> list = (List<MDRRuleGroupInstance>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroupInstance> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
-				if ((groupId != mdrRuleGroupInstance.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroupInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
+					if ((groupId != mdrRuleGroupInstance.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1585,10 +1659,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2194,8 +2268,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2219,10 +2292,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2353,6 +2426,29 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	public List<MDRRuleGroupInstance> findByRuleGroupId(long ruleGroupId,
 		int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
+		return findByRuleGroupId(ruleGroupId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule group instances where ruleGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param ruleGroupId the rule group ID
+	 * @param start the lower bound of the range of m d r rule group instances
+	 * @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching m d r rule group instances
+	 */
+	@Override
+	public List<MDRRuleGroupInstance> findByRuleGroupId(long ruleGroupId,
+		int start, int end,
+		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2368,15 +2464,19 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			finderArgs = new Object[] { ruleGroupId, start, end, orderByComparator };
 		}
 
-		List<MDRRuleGroupInstance> list = (List<MDRRuleGroupInstance>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroupInstance> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
-				if ((ruleGroupId != mdrRuleGroupInstance.getRuleGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroupInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
+					if ((ruleGroupId != mdrRuleGroupInstance.getRuleGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2433,10 +2533,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2729,8 +2829,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] finderArgs = new Object[] { ruleGroupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2754,10 +2853,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2842,6 +2941,30 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	public List<MDRRuleGroupInstance> findByC_C(long classNameId, long classPK,
 		int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
+		return findByC_C(classNameId, classPK, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule group instances where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of m d r rule group instances
+	 * @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching m d r rule group instances
+	 */
+	@Override
+	public List<MDRRuleGroupInstance> findByC_C(long classNameId, long classPK,
+		int start, int end,
+		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2861,16 +2984,20 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				};
 		}
 
-		List<MDRRuleGroupInstance> list = (List<MDRRuleGroupInstance>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroupInstance> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
-				if ((classNameId != mdrRuleGroupInstance.getClassNameId()) ||
-						(classPK != mdrRuleGroupInstance.getClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroupInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
+					if ((classNameId != mdrRuleGroupInstance.getClassNameId()) ||
+							(classPK != mdrRuleGroupInstance.getClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2931,10 +3058,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3244,8 +3371,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] finderArgs = new Object[] { classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3273,10 +3399,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3371,6 +3497,31 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	public List<MDRRuleGroupInstance> findByG_C_C(long groupId,
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
+		return findByG_C_C(groupId, classNameId, classPK, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule group instances where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of m d r rule group instances
+	 * @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching m d r rule group instances
+	 */
+	@Override
+	public List<MDRRuleGroupInstance> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3390,17 +3541,21 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				};
 		}
 
-		List<MDRRuleGroupInstance> list = (List<MDRRuleGroupInstance>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroupInstance> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
-				if ((groupId != mdrRuleGroupInstance.getGroupId()) ||
-						(classNameId != mdrRuleGroupInstance.getClassNameId()) ||
-						(classPK != mdrRuleGroupInstance.getClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroupInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
+					if ((groupId != mdrRuleGroupInstance.getGroupId()) ||
+							(classNameId != mdrRuleGroupInstance.getClassNameId()) ||
+							(classPK != mdrRuleGroupInstance.getClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3465,10 +3620,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4141,8 +4296,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] finderArgs = new Object[] { groupId, classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -4174,10 +4328,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4328,7 +4482,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param ruleGroupId the rule group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching m d r rule group instance, or <code>null</code> if a matching m d r rule group instance could not be found
 	 */
 	@Override
@@ -4339,7 +4493,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_C_R,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C_R,
 					finderArgs, this);
 		}
 
@@ -4384,7 +4538,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				List<MDRRuleGroupInstance> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_R,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_R,
 						finderArgs, list);
 				}
 				else {
@@ -4397,14 +4551,13 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					if ((mdrRuleGroupInstance.getClassNameId() != classNameId) ||
 							(mdrRuleGroupInstance.getClassPK() != classPK) ||
 							(mdrRuleGroupInstance.getRuleGroupId() != ruleGroupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_R,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_R,
 							finderArgs, mdrRuleGroupInstance);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_R,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_R, finderArgs);
 
 				throw processException(e);
 			}
@@ -4452,8 +4605,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] finderArgs = new Object[] { classNameId, classPK, ruleGroupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -4485,10 +4637,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4515,17 +4667,17 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 */
 	@Override
 	public void cacheResult(MDRRuleGroupInstance mdrRuleGroupInstance) {
-		EntityCacheUtil.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			MDRRuleGroupInstanceImpl.class,
 			mdrRuleGroupInstance.getPrimaryKey(), mdrRuleGroupInstance);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				mdrRuleGroupInstance.getUuid(),
 				mdrRuleGroupInstance.getGroupId()
 			}, mdrRuleGroupInstance);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_R,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_R,
 			new Object[] {
 				mdrRuleGroupInstance.getClassNameId(),
 				mdrRuleGroupInstance.getClassPK(),
@@ -4543,7 +4695,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	public void cacheResult(List<MDRRuleGroupInstance> mdrRuleGroupInstances) {
 		for (MDRRuleGroupInstance mdrRuleGroupInstance : mdrRuleGroupInstances) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 						MDRRuleGroupInstanceImpl.class,
 						mdrRuleGroupInstance.getPrimaryKey()) == null) {
@@ -4559,43 +4711,43 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 * Clears the cache for all m d r rule group instances.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(MDRRuleGroupInstanceImpl.class);
+		entityCache.clearCache(MDRRuleGroupInstanceImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the m d r rule group instance.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(MDRRuleGroupInstance mdrRuleGroupInstance) {
-		EntityCacheUtil.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			MDRRuleGroupInstanceImpl.class, mdrRuleGroupInstance.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((MDRRuleGroupInstanceModelImpl)mdrRuleGroupInstance);
 	}
 
 	@Override
 	public void clearCache(List<MDRRuleGroupInstance> mdrRuleGroupInstances) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (MDRRuleGroupInstance mdrRuleGroupInstance : mdrRuleGroupInstances) {
-			EntityCacheUtil.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 				MDRRuleGroupInstanceImpl.class,
 				mdrRuleGroupInstance.getPrimaryKey());
 
@@ -4612,9 +4764,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					mdrRuleGroupInstanceModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				mdrRuleGroupInstanceModelImpl);
 
 			args = new Object[] {
@@ -4623,9 +4775,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					mdrRuleGroupInstanceModelImpl.getRuleGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_R, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_R, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_R, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_R, args,
 				mdrRuleGroupInstanceModelImpl);
 		}
 		else {
@@ -4636,9 +4788,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					mdrRuleGroupInstanceModelImpl);
 			}
 
@@ -4650,9 +4802,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getRuleGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_R, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_R, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_R, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_R, args,
 					mdrRuleGroupInstanceModelImpl);
 			}
 		}
@@ -4665,8 +4817,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				mdrRuleGroupInstanceModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -4675,8 +4827,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					mdrRuleGroupInstanceModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -4685,8 +4837,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				mdrRuleGroupInstanceModelImpl.getRuleGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_R, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_R, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_R, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_R, args);
 
 		if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_R.getColumnBitmask()) != 0) {
@@ -4696,8 +4848,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					mdrRuleGroupInstanceModelImpl.getOriginalRuleGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_R, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_R, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_R, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_R, args);
 		}
 	}
 
@@ -4867,10 +5019,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !MDRRuleGroupInstanceModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -4880,14 +5032,14 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { mdrRuleGroupInstanceModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -4898,8 +5050,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -4907,8 +5059,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -4918,14 +5070,14 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { mdrRuleGroupInstanceModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -4935,18 +5087,16 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getOriginalRuleGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPID,
 					args);
 
 				args = new Object[] {
 						mdrRuleGroupInstanceModelImpl.getRuleGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPID,
 					args);
 			}
 
@@ -4957,8 +5107,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getOriginalClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 
 				args = new Object[] {
@@ -4966,8 +5116,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
 			}
 
@@ -4979,8 +5129,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getOriginalClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
 					args);
 
 				args = new Object[] {
@@ -4989,13 +5139,13 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstanceModelImpl.getClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			MDRRuleGroupInstanceImpl.class,
 			mdrRuleGroupInstance.getPrimaryKey(), mdrRuleGroupInstance, false);
 
@@ -5080,7 +5230,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 */
 	@Override
 	public MDRRuleGroupInstance fetchByPrimaryKey(Serializable primaryKey) {
-		MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)EntityCacheUtil.getResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+		MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)entityCache.getResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 				MDRRuleGroupInstanceImpl.class, primaryKey);
 
 		if (mdrRuleGroupInstance == _nullMDRRuleGroupInstance) {
@@ -5100,13 +5250,13 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					cacheResult(mdrRuleGroupInstance);
 				}
 				else {
-					EntityCacheUtil.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 						MDRRuleGroupInstanceImpl.class, primaryKey,
 						_nullMDRRuleGroupInstance);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 					MDRRuleGroupInstanceImpl.class, primaryKey);
 
 				throw processException(e);
@@ -5156,7 +5306,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)EntityCacheUtil.getResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)entityCache.getResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 					MDRRuleGroupInstanceImpl.class, primaryKey);
 
 			if (mdrRuleGroupInstance == null) {
@@ -5209,7 +5359,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 					MDRRuleGroupInstanceImpl.class, primaryKey,
 					_nullMDRRuleGroupInstance);
 			}
@@ -5265,6 +5415,26 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	public List<MDRRuleGroupInstance> findAll(int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the m d r rule group instances.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of m d r rule group instances
+	 * @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of m d r rule group instances
+	 */
+	@Override
+	public List<MDRRuleGroupInstance> findAll(int start, int end,
+		OrderByComparator<MDRRuleGroupInstance> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5280,8 +5450,12 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<MDRRuleGroupInstance> list = (List<MDRRuleGroupInstance>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<MDRRuleGroupInstance> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<MDRRuleGroupInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -5328,10 +5502,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5361,7 +5535,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -5374,11 +5548,11 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -5408,12 +5582,16 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(MDRRuleGroupInstanceImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(MDRRuleGroupInstanceImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MDRRULEGROUPINSTANCE = "SELECT mdrRuleGroupInstance FROM MDRRuleGroupInstance mdrRuleGroupInstance";
 	private static final String _SQL_SELECT_MDRRULEGROUPINSTANCE_WHERE_PKS_IN = "SELECT mdrRuleGroupInstance FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ruleGroupInstanceId IN (";
 	private static final String _SQL_SELECT_MDRRULEGROUPINSTANCE_WHERE = "SELECT mdrRuleGroupInstance FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";

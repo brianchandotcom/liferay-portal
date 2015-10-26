@@ -19,11 +19,7 @@ package com.liferay.portal.util;
  */
 public class PortletKeys {
 
-	public static final String ADMIN = "9";
-
 	public static final String ADMIN_PLUGINS = "136";
-
-	public static final String ADMIN_SERVER = "137";
 
 	public static final String BACKGROUND_TASK = "189";
 
@@ -38,8 +34,6 @@ public class PortletKeys {
 	public static final String CHAT = "1_WAR_chatportlet";
 
 	public static final String DIRECTORY = "11";
-
-	public static final String DOCKBAR = "145";
 
 	public static final String DOCUMENT_LIBRARY =
 		"com_liferay_document_library_web_portlet_DLPortlet";
@@ -80,7 +74,9 @@ public class PortletKeys {
 	public static final String MOBILE_DEVICE_RULES =
 		"com_liferay_mobile_device_rules_web_portlet_MDRPortlet";
 
-	public static final String MONITORING = "131";
+	public static final String MONITORING_INVOKER =
+		"com_liferay_monitoring_web_portlet_" +
+			"MonitoringInvokerPortletFactoryImpl";
 
 	public static final String MY_ACCOUNT =
 		"com_liferay_my_account_web_portlet_MyAccountPortlet";
@@ -132,6 +128,9 @@ public class PortletKeys {
 	public static final String RECENT_DOCUMENTS = "64";
 
 	public static final String REQUESTS = "121";
+
+	public static final String SERVER_ADMIN =
+		"com_liferay_server_admin_web_portlet_ServerAdminPortlet";
 
 	public static final String SHOPPING = "34";
 

@@ -34,7 +34,7 @@ public class MySQLDBTest extends BaseDBTestCase {
 
 	@Override
 	protected DB getDB() {
-		return MySQLDB.getInstance();
+		return new MySQLDB(0, 0);
 	}
 
 }

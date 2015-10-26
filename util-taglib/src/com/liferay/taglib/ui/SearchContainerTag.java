@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SearchContainerReference;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -106,24 +107,40 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 			_searchContainer.setHover(_hover);
 			_searchContainer.setId(_id);
 
+			if (Validator.isNotNull(_orderByColParam)) {
+				_searchContainer.setOrderByColParam(_orderByColParam);
+			}
+
 			if (Validator.isNotNull(_orderByCol)) {
 				_searchContainer.setOrderByCol(_orderByCol);
 			}
+			else {
+				String orderByCol = ParamUtil.getString(
+					request, _searchContainer.getOrderByColParam(), null);
 
-			if (Validator.isNotNull(_orderByColParam)) {
-				_searchContainer.setOrderByColParam(_orderByColParam);
+				if (orderByCol != null) {
+					_searchContainer.setOrderByCol(orderByCol);
+				}
 			}
 
 			if (_orderByComparator != null) {
 				_searchContainer.setOrderByComparator(_orderByComparator);
 			}
 
+			if (Validator.isNotNull(_orderByTypeParam)) {
+				_searchContainer.setOrderByTypeParam(_orderByTypeParam);
+			}
+
 			if (Validator.isNotNull(_orderByType)) {
 				_searchContainer.setOrderByType(_orderByType);
 			}
+			else {
+				String orderByType = ParamUtil.getString(
+					request, _searchContainer.getOrderByTypeParam(), null);
 
-			if (Validator.isNotNull(_orderByTypeParam)) {
-				_searchContainer.setOrderByTypeParam(_orderByTypeParam);
+				if (orderByType != null) {
+					_searchContainer.setOrderByType(orderByType);
+				}
 			}
 
 			if (_rowChecker != null) {

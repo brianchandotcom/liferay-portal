@@ -1,0 +1,110 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<aui:script use="liferay-util-window">
+	Liferay.RecurrenceUtil.INTERVAL_UNITS = {
+		DAILY: 'days',
+		MONTHLY: 'months',
+		WEEKLY: 'weeks',
+		YEARLY: 'years'
+	};
+
+	Liferay.RecurrenceUtil.MONTH_LABELS = [
+		'<liferay-ui:message key="january" />',
+		'<liferay-ui:message key="february" />',
+		'<liferay-ui:message key="march" />',
+		'<liferay-ui:message key="april" />',
+		'<liferay-ui:message key="may" />',
+		'<liferay-ui:message key="june" />',
+		'<liferay-ui:message key="july" />',
+		'<liferay-ui:message key="august" />',
+		'<liferay-ui:message key="september" />',
+		'<liferay-ui:message key="october" />',
+		'<liferay-ui:message key="november" />',
+		'<liferay-ui:message key="december" />'
+	];
+
+	Liferay.RecurrenceUtil.POSITION_LABELS = {
+		'-1': '<liferay-ui:message key="position.last" />',
+		'1': '<liferay-ui:message key="position.first" />',
+		'2': '<liferay-ui:message key="position.second" />',
+		'3': '<liferay-ui:message key="position.third" />',
+		'4': '<liferay-ui:message key="position.fourth" />'
+	};
+
+	Liferay.RecurrenceUtil.RECURRENCE_SUMMARIES = {
+		'daily': '<liferay-ui:message key="daily" />',
+		'daily-until-x-x-x': '<liferay-ui:message key="daily-until-x-x-x" />',
+		'daily-x-times': '<liferay-ui:message key="daily-x-times" />',
+		'every-mon-wed-fri': '<liferay-ui:message key="every-mon-wed-fri" />',
+		'every-tues-thurs': '<liferay-ui:message key="every-tues-thurs" />',
+		'every-x-days': '<liferay-ui:message key="every-x-days" />',
+		'every-x-days-until-x-x-x': '<liferay-ui:message key="every-x-days-until-x-x-x" />',
+		'every-x-days-x-times': '<liferay-ui:message key="every-x-days-x-times" />',
+		'every-x-months': '<liferay-ui:message key="every-x-months" />',
+		'every-x-months-on-x-x': '<liferay-ui:message key="every-x-months-on-x-x" />',
+		'every-x-months-on-x-x-until-x-x-x': '<liferay-ui:message key="every-x-months-on-x-x-until-x-x-x" />',
+		'every-x-months-on-x-x-x-times': '<liferay-ui:message key="every-x-months-on-x-x-x-times" />',
+		'every-x-months-until-x-x-x': '<liferay-ui:message key="every-x-months-until-x-x-x" />',
+		'every-x-months-x-times': '<liferay-ui:message key="every-x-months-x-times" />',
+		'every-x-weeks': '<liferay-ui:message key="every-x-weeks" />',
+		'every-x-weeks-on-x': '<liferay-ui:message key="every-x-weeks-on-x" />',
+		'every-x-weeks-on-x-until-x-x-x': '<liferay-ui:message key="every-x-weeks-on-x-until-x-x-x" />',
+		'every-x-weeks-on-x-x-times': '<liferay-ui:message key="every-x-weeks-on-x-x-times" />',
+		'every-x-weeks-until-x-x-x': '<liferay-ui:message key="every-x-weeks-until-x-x-x" />',
+		'every-x-weeks-x-times': '<liferay-ui:message key="every-x-weeks-x-times" />',
+		'every-x-years': '<liferay-ui:message key="every-x-years" />',
+		'every-x-years-on-x-x-of-x': '<liferay-ui:message key="every-x-years-on-x-x-of-x" />',
+		'every-x-years-on-x-x-of-x-until-x-x-x': '<liferay-ui:message key="every-x-years-on-x-x-of-x-until-x-x-x" />',
+		'every-x-years-on-x-x-of-x-x-times': '<liferay-ui:message key="every-x-years-on-x-x-of-x-x-times" />',
+		'every-x-years-until-x-x-x': '<liferay-ui:message key="every-x-years-until-x-x-x" />',
+		'every-x-years-x-times': '<liferay-ui:message key="every-x-years-x-times" />',
+		'monthly': '<liferay-ui:message key="monthly" />',
+		'monthly-on-x-x': '<liferay-ui:message key="monthly-on-x-x" />',
+		'monthly-on-x-x-until-x-x-x': '<liferay-ui:message key="monthly-on-x-x-until-x-x-x" />',
+		'monthly-on-x-x-x-times': '<liferay-ui:message key="monthly-on-x-x-x-times" />',
+		'monthly-until-x-x-x': '<liferay-ui:message key="monthly-until-x-x-x" />',
+		'monthly-x-times': '<liferay-ui:message key="monthly-x-times" />',
+		'position.first': '<liferay-ui:message key="position.first" />',
+		'position.fourth': '<liferay-ui:message key="position.fourth" />',
+		'position.last': '<liferay-ui:message key="position.last" />',
+		'position.second': '<liferay-ui:message key="position.second" />',
+		'position.third': '<liferay-ui:message key="position.third" />',
+		'weekly': '<liferay-ui:message key="weekly" />',
+		'weekly-on-x': '<liferay-ui:message key="weekly-on-x" />',
+		'weekly-on-x-until-x-x-x': '<liferay-ui:message key="weekly-on-x-until-x-x-x" />',
+		'weekly-on-x-x-times': '<liferay-ui:message key="weekly-on-x-x-times" />',
+		'weekly-until-x-x-x': '<liferay-ui:message key="weekly-until-x-x-x" />',
+		'weekly-x-times': '<liferay-ui:message key="weekly-x-times" />',
+		'yearly': '<liferay-ui:message key="yearly" />',
+		'yearly-on-x-x-of-x': '<liferay-ui:message key="yearly-on-x-x-of-x" />',
+		'yearly-on-x-x-of-x-until-x-x-x': '<liferay-ui:message key="yearly-on-x-x-of-x-until-x-x-x" />',
+		'yearly-on-x-x-of-x-x-times': '<liferay-ui:message key="yearly-on-x-x-of-x-x-times" />',
+		'yearly-until-x-x-x': '<liferay-ui:message key="yearly-until-x-x-x" />',
+		'yearly-x-times': '<liferay-ui:message key="yearly-x-times" />',
+		'you-are-about-to-make-changes-that-will-only-affect-your-calendar-x': '<liferay-ui:message key="you-are-about-to-make-changes-that-will-only-affect-your-calendar-x" />'
+	};
+
+	Liferay.RecurrenceUtil.WEEKDAY_LABELS = {
+		FR: '<liferay-ui:message key="weekday.FR" />',
+		MO: '<liferay-ui:message key="weekday.MO" />',
+		SA: '<liferay-ui:message key="weekday.SA" />',
+		SU: '<liferay-ui:message key="weekday.SU" />',
+		TH: '<liferay-ui:message key="weekday.TH" />',
+		TU: '<liferay-ui:message key="weekday.TU" />',
+		WE: '<liferay-ui:message key="weekday.WE" />'
+	};
+</aui:script>

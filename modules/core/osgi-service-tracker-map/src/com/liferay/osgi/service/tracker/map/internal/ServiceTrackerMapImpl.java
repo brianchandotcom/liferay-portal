@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.map.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerBucketFactory;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
@@ -46,12 +49,14 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 			ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer,
 			ServiceTrackerBucketFactory<SR, TS, R>
-				serviceTrackerMapBucketFactory)
+				serviceTrackerMapBucketFactory,
+			ServiceTrackerMapListener<K, TS, R> serviceTrackerMapListener)
 		throws InvalidSyntaxException {
 
 		_serviceReferenceMapper = serviceReferenceMapper;
 		_serviceTrackerCustomizer = serviceTrackerCustomizer;
 		_serviceTrackerMapBucketFactory = serviceTrackerMapBucketFactory;
+		_serviceTrackerMapListener = serviceTrackerMapListener;
 
 		if (filterString != null) {
 			Filter filter = bundleContext.createFilter(
@@ -66,6 +71,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 				bundleContext, clazz,
 				new ServiceReferenceServiceTrackerCustomizer());
 		}
+
+		_logger = new Logger(bundleContext);
 	}
 
 	@Override
@@ -164,6 +171,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		serviceReferenceServiceTuple.addEmittedKey(key);
 	}
 
+	private final Logger _logger;
 	private final ServiceReferenceMapper<K, ? super SR> _serviceReferenceMapper;
 	private final ServiceTracker<SR, ServiceReferenceServiceTuple<SR, TS, K>>
 		_serviceTracker;
@@ -172,6 +180,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	private final ServiceTrackerCustomizer<SR, TS> _serviceTrackerCustomizer;
 	private final ServiceTrackerBucketFactory<SR, TS, R>
 		_serviceTrackerMapBucketFactory;
+	private final ServiceTrackerMapListener<K, TS, R>
+		_serviceTrackerMapListener;
 
 	private class DefaultEmitter implements ServiceReferenceMapper.Emitter<K> {
 
@@ -199,6 +209,23 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			}
 
 			storeKey(key, _serviceReferenceServiceTuple);
+
+			if (_serviceTrackerMapListener != null) {
+				try {
+					ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
+						_serviceTrackerBuckets.get(key);
+
+					_serviceTrackerMapListener.keyEmitted(
+						ServiceTrackerMapImpl.this, key,
+						_serviceReferenceServiceTuple.getService(),
+						serviceTrackerBucket.getContent());
+				}
+				catch (Throwable t) {
+					_logger.log(
+						Logger.LOG_ERROR,
+						"Invocation to listener threw exception", t);
+				}
+			}
 		}
 
 		public ServiceReferenceServiceTuple<SR, TS, K>

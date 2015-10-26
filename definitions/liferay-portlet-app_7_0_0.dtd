@@ -24,7 +24,7 @@ pop-message-listener-class?, social-activity-interpreter-class*,
 social-request-interpreter-class?, social-interactions-configuration?,
 user-notification-definitions?, user-notification-handler-class*,
 webdav-storage-token?, webdav-storage-class?, xml-rpc-method-class?,
-control-panel-entry-category?, control-panel-entry-weight?,
+application-type*, control-panel-entry-category?, control-panel-entry-weight?,
 control-panel-entry-class?, asset-renderer-factory*, atom-collection-adapter*,
 custom-attributes-display*, permission-propagator?, trash-handler*,
 workflow-handler*, preferences-company-wide?, preferences-unique-per-layout?,
@@ -369,6 +369,11 @@ See:
 http://docs.liferay.com/portal/6.2/javadocs-all/com/liferay/portlet/blogs/util/PingbackMethodImpl.html
 -->
 <!ELEMENT xml-rpc-method-class (#PCDATA)>
+
+<!--
+The application-type value must be "full-page-application" or "widget".
+-->
+<!ELEMENT application-type (#PCDATA)>
 
 <!--
 Set the control-panel-entry-category value to "my" to make this portlet

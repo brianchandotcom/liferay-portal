@@ -38,7 +38,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${producerName}" />
 		<execute function="Select" locator1="Select#VERSION" value1="2.0" />
-		<execute function="Select" locator1="Select#PORTLETS_AVAILABLE" value1="${portletsAvailableSelect}" />
+		<execute function="Select" locator1="Select#AVAILABLE" value1="${portletsAvailableSelect}" />
 		<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
@@ -52,7 +52,7 @@
 
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP" />
+			<var name="portletName" value="WSRP Admin" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#PRODUCERS" value1="Producers" />
@@ -66,7 +66,7 @@
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="There are no producers." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no producers." />
 		<execute function="AssertClick" locator1="NavTab#CONSUMERS" value1="Consumers" />
 
 		<while>

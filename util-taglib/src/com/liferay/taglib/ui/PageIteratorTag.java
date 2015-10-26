@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -59,6 +60,10 @@ public class PageIteratorTag extends IncludeTag {
 		_jsCall = jsCall;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	public void setMaxPages(int maxPages) {
 		_maxPages = maxPages;
 	}
@@ -99,6 +104,7 @@ public class PageIteratorTag extends IncludeTag {
 		_formName = "fm";
 		_id = null;
 		_jsCall = null;
+		_markupView = null;
 		_maxPages = 10;
 		_pages = 0;
 		_target = "_self";
@@ -111,7 +117,12 @@ public class PageIteratorTag extends IncludeTag {
 	@Override
 	protected String getEndPage() {
 		if (_pages > 1) {
-			return _END_PAGE;
+			if (Validator.isNotNull(_markupView)) {
+				return "/html/taglib/ui/page_iterator/" + _markupView +
+					"/end.jsp";
+			}
+
+			return "/html/taglib/ui/page_iterator/end.jsp";
 		}
 		else {
 			return null;
@@ -120,7 +131,12 @@ public class PageIteratorTag extends IncludeTag {
 
 	@Override
 	protected String getStartPage() {
-		return _START_PAGE;
+		if (Validator.isNotNull(_markupView)) {
+			return "/html/taglib/ui/page_iterator/" + _markupView +
+				"/start.jsp";
+		}
+
+		return "/html/taglib/ui/page_iterator/start.jsp";
 	}
 
 	@Override
@@ -152,12 +168,6 @@ public class PageIteratorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:page-iterator:urlAnchor", _urlAnchor);
 	}
 
-	private static final String _END_PAGE =
-		"/html/taglib/ui/page_iterator/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/ui/page_iterator/start.jsp";
-
 	private int _cur;
 	private String _curParam;
 	private int _delta = SearchContainer.DEFAULT_DELTA;
@@ -167,6 +177,7 @@ public class PageIteratorTag extends IncludeTag {
 	private String _formName = "fm";
 	private String _id;
 	private String _jsCall;
+	private String _markupView;
 	private int _maxPages = 10;
 	private int _pages;
 	private String _target = "_self";

@@ -826,16 +826,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			catch (NoSuchLayoutSetException nslse) {
 			}
 
-			// Group roles
-
-			userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
-				group.getGroupId());
-
-			// User group roles
-
-			userGroupGroupRoleLocalService.deleteUserGroupGroupRolesByGroupId(
-				group.getGroupId());
-
 			// Membership requests
 
 			membershipRequestLocalService.deleteMembershipRequests(
@@ -981,9 +971,29 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				group.setSite(false);
 
 				groupPersistence.update(group);
+
+				// Group roles
+
+				userGroupRoleLocalService.deleteUserGroupRoles(
+					group.getGroupId(), RoleConstants.TYPE_SITE);
+
+				// User group roles
+
+				userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(
+					group.getGroupId(), RoleConstants.TYPE_SITE);
 			}
 			else {
 				groupPersistence.remove(group);
+
+				// Group roles
+
+				userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
+					group.getGroupId());
+
+				// User group roles
+
+				userGroupGroupRoleLocalService.
+					deleteUserGroupGroupRolesByGroupId(group.getGroupId());
 			}
 
 			// Permission cache
@@ -3471,6 +3481,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
 		layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -3919,6 +3932,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
+		// Join by Groups_Roles
+
+		Long roleId = (Long)params.remove("groupsRoles");
+
+		if (roleId != null) {
+			groups.retainAll(rolePersistence.getGroups(roleId));
+		}
+
 		if (userId == null) {
 			return groups;
 		}
@@ -3965,14 +3986,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if (_log.isDebugEnabled() && !params.isEmpty()) {
 			_log.debug("Unprocessed parameters " + MapUtil.toString(params));
-		}
-
-		// Join by Groups_Roles
-
-		Long roleId = (Long)params.remove("groupsRoles");
-
-		if (roleId != null) {
-			joinedGroups.retainAll(rolePersistence.getGroups(roleId));
 		}
 
 		if (joinedGroups.size() > groups.size()) {

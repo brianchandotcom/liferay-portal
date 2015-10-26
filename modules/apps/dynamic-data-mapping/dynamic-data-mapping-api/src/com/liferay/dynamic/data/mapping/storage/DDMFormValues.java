@@ -89,17 +89,7 @@ public class DDMFormValues implements Serializable {
 			new LinkedHashMap<>();
 
 		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
-			List<DDMFormFieldValue> ddmFormFieldValues =
-				ddmFormFieldValuesMap.get(ddmFormFieldValue.getName());
-
-			if (ddmFormFieldValues == null) {
-				ddmFormFieldValues = new ArrayList<>();
-
-				ddmFormFieldValuesMap.put(
-					ddmFormFieldValue.getName(), ddmFormFieldValues);
-			}
-
-			ddmFormFieldValues.add(ddmFormFieldValue);
+			loadDDMFormFieldValuesMap(ddmFormFieldValue, ddmFormFieldValuesMap);
 		}
 
 		return ddmFormFieldValuesMap;
@@ -134,6 +124,30 @@ public class DDMFormValues implements Serializable {
 
 	public void setDefaultLocale(Locale defaultLocale) {
 		_defaultLocale = defaultLocale;
+	}
+
+	protected void loadDDMFormFieldValuesMap(
+		DDMFormFieldValue ddmFormFieldValue,
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			ddmFormFieldValue.getName());
+
+		if (ddmFormFieldValues == null) {
+			ddmFormFieldValues = new ArrayList<>();
+
+			ddmFormFieldValuesMap.put(
+				ddmFormFieldValue.getName(), ddmFormFieldValues);
+		}
+
+		ddmFormFieldValues.add(ddmFormFieldValue);
+
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
+
+			loadDDMFormFieldValuesMap(
+				nestedDDMFormFieldValue, ddmFormFieldValuesMap);
+		}
 	}
 
 	private Set<Locale> _availableLocales = new LinkedHashSet<>();

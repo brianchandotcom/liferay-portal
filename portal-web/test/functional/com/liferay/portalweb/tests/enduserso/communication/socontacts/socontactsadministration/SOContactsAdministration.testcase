@@ -2062,7 +2062,6 @@
 			<var name="userInstantMessengerICQ" value="socialofficesn" />
 			<var name="userInstantMessengerJabber" value="socialofficesn" />
 			<var name="userInstantMessengerSkype" value="socialofficesn" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="socialofficesn" />
 			<var name="userInstantMessengerYM" value="socialofficesn" />
 		</execute>
 
@@ -2176,7 +2175,6 @@
 			<var name="userInstantMessengerICQ" value="socialofficesn" />
 			<var name="userInstantMessengerJabber" value="socialofficesn" />
 			<var name="userInstantMessengerSkype" value="socialofficesn" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="socialofficesn" />
 			<var name="userInstantMessengerYM" value="socialofficesn" />
 		</execute>
 
@@ -3635,7 +3633,6 @@
 		<var name="userInstantMessengerICQ" value="socialofficesn" />
 		<var name="userInstantMessengerJabber" value="socialofficesn" />
 		<var name="userInstantMessengerSkype" value="socialofficesn" />
-		<var name="userInstantMessengerWindowsLiveMessenger" value="socialofficesn" />
 		<var name="userInstantMessengerYM" value="socialofficesn" />
 		<var name="userIntroduction" value="Introduction Content" />
 		<var name="userLastName" value="User01" />
@@ -3691,7 +3688,6 @@
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
@@ -3767,7 +3763,6 @@
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userListName" value="${userListName}" />
@@ -3876,7 +3871,6 @@
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
@@ -3939,7 +3933,6 @@
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
@@ -4153,8 +4146,6 @@
 		<var name="userInstantMessengerJabberEdit" value="socialofficesnedit" />
 		<var name="userInstantMessengerSkype" value="socialofficesn" />
 		<var name="userInstantMessengerSkypeEdit" value="socialofficesnedit" />
-		<var name="userInstantMessengerWindowsLiveMessenger" value="socialofficesn" />
-		<var name="userInstantMessengerWindowsLiveMessengerEdit" value="socialofficesnedit" />
 		<var name="userInstantMessengerYM" value="socialofficesn" />
 		<var name="userInstantMessengerYMEdit" value="socialofficesnedit" />
 		<var name="userLastName" value="User01" />
@@ -4181,7 +4172,6 @@
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
@@ -4190,7 +4180,6 @@
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQEdit}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabberEdit}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkypeEdit}" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessengerEdit}" />
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYMEdit}" />
 		</execute>
 
@@ -4206,7 +4195,6 @@
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQEdit}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabberEdit}" />
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkypeEdit}" />
-			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessengerEdit}" />
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYMEdit}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userListName" value="${userListName}" />
@@ -4239,7 +4227,6 @@
 		<execute function="AssertTextNotPresent" value1="${userInstantMessengerICQEdit}" />
 		<execute function="AssertTextNotPresent" value1="${userInstantMessengerJabberEdit}" />
 		<execute function="AssertTextNotPresent" value1="${userInstantMessengerSkypeEdit}" />
-		<execute function="AssertTextNotPresent" value1="${userInstantMessengerWindowsLiveMessengerEdit}" />
 		<execute function="AssertTextNotPresent" value1="${userInstantMessengerYMEdit}" />
 	</command>
 

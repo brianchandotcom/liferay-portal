@@ -148,6 +148,11 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	@Override
+	public boolean isIndexerEnabled() {
+		return false;
+	}
+
+	@Override
 	public boolean isPermissionAware() {
 		return false;
 	}
@@ -241,6 +246,10 @@ public class DummyIndexer implements Indexer<Object> {
 	@Override
 	public long searchCount(SearchContext searchContext) {
 		return 0;
+	}
+
+	@Override
+	public void setIndexerEnabled(boolean indexerEnabled) {
 	}
 
 	@Override

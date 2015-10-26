@@ -43,6 +43,7 @@ public class SAPEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAllowedServiceSignatures(model.getAllowedServiceSignatures());
 		soapModel.setDefaultSAPEntry(model.getDefaultSAPEntry());
+		soapModel.setEnabled(model.getEnabled());
 		soapModel.setName(model.getName());
 		soapModel.setTitle(model.getTitle());
 
@@ -173,6 +174,18 @@ public class SAPEntrySoap implements Serializable {
 		_defaultSAPEntry = defaultSAPEntry;
 	}
 
+	public boolean getEnabled() {
+		return _enabled;
+	}
+
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -198,6 +211,7 @@ public class SAPEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private String _allowedServiceSignatures;
 	private boolean _defaultSAPEntry;
+	private boolean _enabled;
 	private String _name;
 	private String _title;
 }

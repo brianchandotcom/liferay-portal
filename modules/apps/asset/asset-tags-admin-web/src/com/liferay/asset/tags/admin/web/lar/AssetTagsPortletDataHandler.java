@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
@@ -77,7 +77,7 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		AssetTagLocalServiceUtil.deleteGroupTags(
+		_assetTagLocalService.deleteGroupTags(
 			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
@@ -99,7 +99,7 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			AssetTagLocalServiceUtil.getExportActionableDynamicQuery(
+			_assetTagLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -137,15 +137,24 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			AssetTagLocalServiceUtil.getExportActionableDynamicQuery(
+			_assetTagLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performCount();
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetTagLocalService(
+		AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private AssetTagLocalService _assetTagLocalService;
 
 }

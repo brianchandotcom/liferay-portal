@@ -15,7 +15,9 @@
 package com.liferay.portal.upgrade.internal;
 
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Miguel Pastor
@@ -32,6 +34,31 @@ public class UpgradeInfo {
 		_upgradeStep = upgradeStep;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof UpgradeInfo)) {
+			return false;
+		}
+
+		UpgradeInfo upgradeInfo = (UpgradeInfo)object;
+
+		if (Validator.equals(
+				_fromSchemaVersionString,
+				upgradeInfo._fromSchemaVersionString) &&
+			Validator.equals(
+				_toSchemaVersionString, upgradeInfo._toSchemaVersionString) &&
+			Validator.equals( _upgradeStep, upgradeInfo._upgradeStep)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getFromSchemaVersionString() {
 		return _fromSchemaVersionString;
 	}
@@ -42,6 +69,16 @@ public class UpgradeInfo {
 
 	public UpgradeStep getUpgradeStep() {
 		return _upgradeStep;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _fromSchemaVersionString);
+
+		hash = HashUtil.hash(hash, _toSchemaVersionString);
+		hash = HashUtil.hash(hash, _upgradeStep);
+
+		return hash;
 	}
 
 	@Override

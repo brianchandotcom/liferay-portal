@@ -3,6 +3,7 @@ Bundle-SymbolicName: portal-test-internal
 Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.portal.lar.test,\
+	com.liferay.portal.module.framework.test,\
 	com.liferay.portal.search.test,\
 	com.liferay.portal.service.permission.test,\
 	com.liferay.portal.service.test,\
@@ -24,6 +25,7 @@ Import-Package: *;resolution:=optional
 Include-Resource:\
 	classes,\
 	@${project.dir}/../lib/development/dumbster.jar,\
+	@${project.dir}/../lib/portal/commons-compress.jar,\
 	@${project.dir}/../lib/portal/juniversalchardet.jar,\
 	@${project.dir}/../lib/portal/poi.jar,\
 	@${project.dir}/../lib/portal/tika-core.jar,\

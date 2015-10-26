@@ -27,9 +27,9 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Jorge Ferrer
@@ -107,7 +107,7 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
 
-		List<String> fieldNames = ddmStructure.getRootFieldNames();
+		Set<String> fieldNames = ddmStructure.getFieldNames();
 
 		for (String fieldName : fieldNames) {
 			String label = ddmStructure.getFieldLabel(fieldName, locale);

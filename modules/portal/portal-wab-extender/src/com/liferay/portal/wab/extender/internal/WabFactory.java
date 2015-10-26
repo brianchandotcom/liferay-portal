@@ -74,7 +74,7 @@ public class WabFactory extends AbstractExtender {
 			_saxParserFactory.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, false);
 		}
 		catch (ParserConfigurationException | SAXNotRecognizedException |
-			SAXNotSupportedException e) {
+			   SAXNotSupportedException e) {
 
 			ReflectionUtil.throwException(e);
 		}

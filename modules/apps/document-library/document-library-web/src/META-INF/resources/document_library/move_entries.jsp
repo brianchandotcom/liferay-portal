@@ -85,276 +85,280 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 }
 %>
 
-<c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
-</c:if>
-
-<portlet:actionURL name="/document_library/move_entry" var="moveFileEntryURL" />
-
-<aui:form action="<%= moveFileEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(false);" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="move-files"
-	/>
-
-	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
-	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
-
-	<liferay-ui:error exception="<%= InvalidFolderException.class %>">
-
-		<%
-		InvalidFolderException ife = (InvalidFolderException)errorException;
-		%>
-
-		<liferay-ui:message arguments="<%= ife.getMessageArgument(locale) %>" key="<%= ife.getMessageKey() %>" translateArguments="<%= false %>" />
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
-
-	<c:if test="<%= !validMoveFolders.isEmpty() %>">
-		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(request, "x-folders-ready-to-be-moved", validMoveFolders.size(), false) %></h4>
-		</div>
-
-		<div class="move-list">
-			<ul class="list-unstyled">
-
-				<%
-				for (Folder folder : validMoveFolders) {
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
-
-					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
-				%>
-
-					<li class="move-folder">
-						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
-
-						<span class="folder-title">
-							<%= HtmlUtil.escape(folder.getName()) %>
-						</span>
-					</li>
-
-				<%
-				}
-				%>
-
-			</ul>
-		</div>
+<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<c:if test="<%= Validator.isNull(referringPortletResource) %>">
+		<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
-		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(request, "x-folders-cannot-be-moved", invalidMoveFolders.size(), false) %></h4>
-		</div>
+	<portlet:actionURL name="/document_library/move_entry" var="moveFileEntryURL">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
+	</portlet:actionURL>
 
-		<div class="move-list">
-			<ul class="list-unstyled">
+	<aui:form action="<%= moveFileEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(false);" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
 
-				<%
-				for (Folder folder : invalidMoveFolders) {
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			title="move-files"
+		/>
 
-					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
-				%>
+		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
+		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 
-					<li class="icon-warning-sign move-error move-folder">
-						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+		<liferay-ui:error exception="<%= InvalidFolderException.class %>">
 
-						<span class="folder-title">
-							<%= HtmlUtil.escape(folder.getName()) %>
-						</span>
+			<%
+			InvalidFolderException ife = (InvalidFolderException)errorException;
+			%>
 
-						<span class="error-message">
-							<c:choose>
-								<c:when test="<%= folder.isLocked() && !folder.hasLock() %>">
-									<%= LanguageUtil.get(request, "you-cannot-modify-this-folder-because-it-was-locked") %>
-								</c:when>
-								<c:otherwise>
-									<%= LanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>
-								</c:otherwise>
-							</c:choose>
-						</span>
-					</li>
+			<liferay-ui:message arguments="<%= ife.getMessageArgument(locale) %>" key="<%= ife.getMessageKey() %>" translateArguments="<%= false %>" />
+		</liferay-ui:error>
 
-				<%
-				}
-				%>
+		<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
-			</ul>
-		</div>
-	</c:if>
+		<c:if test="<%= !validMoveFolders.isEmpty() %>">
+			<div class="move-list-info">
+				<h4><%= LanguageUtil.format(request, "x-folders-ready-to-be-moved", validMoveFolders.size(), false) %></h4>
+			</div>
 
-	<aui:input name="folderIds" type="hidden" value="<%= ListUtil.toString(validMoveFolders, Folder.FOLDER_ID_ACCESSOR) %>" />
+			<div class="move-list">
+				<ul class="list-unstyled">
 
-	<c:if test="<%= !validMoveFileEntries.isEmpty() %>">
-		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(request, "x-files-ready-to-be-moved", validMoveFileEntries.size(), false) %></h4>
-		</div>
+					<%
+					for (Folder folder : validMoveFolders) {
+						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-		<div class="move-list">
-			<ul class="list-unstyled">
+						AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+					%>
 
-				<%
-				for (FileEntry validMoveFileEntry : validMoveFileEntries) {
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+						<li class="move-folder">
+							<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 
-					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(validMoveFileEntry.getFileEntryId());
-				%>
+							<span class="folder-title">
+								<%= HtmlUtil.escape(folder.getName()) %>
+							</span>
+						</li>
 
-					<li class="move-file">
-						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+					<%
+					}
+					%>
 
-						<span class="file-title" title="<%= HtmlUtil.escapeAttribute(validMoveFileEntry.getTitle()) %>">
-							<%= HtmlUtil.escape(validMoveFileEntry.getTitle()) %>
-						</span>
-					</li>
+				</ul>
+			</div>
+		</c:if>
 
-				<%
-				}
-				%>
+		<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
+			<div class="move-list-info">
+				<h4><%= LanguageUtil.format(request, "x-folders-cannot-be-moved", invalidMoveFolders.size(), false) %></h4>
+			</div>
 
-			</ul>
-		</div>
-	</c:if>
+			<div class="move-list">
+				<ul class="list-unstyled">
 
-	<c:if test="<%= !invalidMoveFileEntries.isEmpty() %>">
-		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(request, "x-files-cannot-be-moved", invalidMoveFileEntries.size(), false) %></h4>
-		</div>
+					<%
+					for (Folder folder : invalidMoveFolders) {
+						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-		<div class="move-list">
-			<ul class="list-unstyled">
+						AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+					%>
 
-				<%
-				for (FileEntry invalidMoveFileEntry : invalidMoveFileEntries) {
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+						<li class="icon-warning-sign move-error move-folder">
+							<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 
-					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(invalidMoveFileEntry.getFileEntryId());
+							<span class="folder-title">
+								<%= HtmlUtil.escape(folder.getName()) %>
+							</span>
 
-					com.liferay.portal.kernel.lock.Lock lock = invalidMoveFileEntry.getLock();
-				%>
+							<span class="error-message">
+								<c:choose>
+									<c:when test="<%= folder.isLocked() && !folder.hasLock() %>">
+										<%= LanguageUtil.get(request, "you-cannot-modify-this-folder-because-it-was-locked") %>
+									</c:when>
+									<c:otherwise>
+										<%= LanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>
+									</c:otherwise>
+								</c:choose>
+							</span>
+						</li>
 
-					<li class="icon-warning-sign move-error move-file">
-						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+					<%
+					}
+					%>
 
-						<span class="file-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveFileEntry.getTitle()) %>">
-							<%= HtmlUtil.escape(invalidMoveFileEntry.getTitle()) %>
-						</span>
+				</ul>
+			</div>
+		</c:if>
 
-						<span class="error-message">
-							<c:choose>
-								<c:when test="<%= invalidMoveFileEntry.isCheckedOut() && !invalidMoveFileEntry.hasLock() %>">
-									<%= LanguageUtil.format(request, "you-cannot-modify-this-document-because-it-was-checked-out-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
-								</c:when>
-								<c:otherwise>
-									<%= LanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>
-								</c:otherwise>
-							</c:choose>
-						</span>
-					</li>
+		<aui:input name="folderIds" type="hidden" value="<%= ListUtil.toString(validMoveFolders, Folder.FOLDER_ID_ACCESSOR) %>" />
 
-				<%
-				}
-				%>
+		<c:if test="<%= !validMoveFileEntries.isEmpty() %>">
+			<div class="move-list-info">
+				<h4><%= LanguageUtil.format(request, "x-files-ready-to-be-moved", validMoveFileEntries.size(), false) %></h4>
+			</div>
 
-			</ul>
-		</div>
-	</c:if>
+			<div class="move-list">
+				<ul class="list-unstyled">
 
-	<aui:input name="fileEntryIds" type="hidden" value="<%= ListUtil.toString(validMoveFileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>" />
+					<%
+					for (FileEntry validMoveFileEntry : validMoveFileEntries) {
+						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
-	<c:if test="<%= !validShortcutEntries.isEmpty() %>">
-		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(request, "x-shortcuts-ready-to-be-moved", validShortcutEntries.size(), false) %></h4>
-		</div>
+						AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(validMoveFileEntry.getFileEntryId());
+					%>
 
-		<div class="move-list">
-			<ul class="list-unstyled">
+						<li class="move-file">
+							<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 
-				<%
-				for (FileShortcut fileShortcut : validShortcutEntries) {
-				%>
+							<span class="file-title" title="<%= HtmlUtil.escapeAttribute(validMoveFileEntry.getTitle()) %>">
+								<%= HtmlUtil.escape(validMoveFileEntry.getTitle()) %>
+							</span>
+						</li>
 
-					<li class="move-file">
-						<span class="file-title">
-							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
-						</span>
-					</li>
+					<%
+					}
+					%>
 
-				<%
-				}
-				%>
+				</ul>
+			</div>
+		</c:if>
 
-			</ul>
-		</div>
-	</c:if>
+		<c:if test="<%= !invalidMoveFileEntries.isEmpty() %>">
+			<div class="move-list-info">
+				<h4><%= LanguageUtil.format(request, "x-files-cannot-be-moved", invalidMoveFileEntries.size(), false) %></h4>
+			</div>
 
-	<c:if test="<%= !invalidShortcutEntries.isEmpty() %>">
-		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(request, "x-shortcuts-cannot-be-moved", invalidShortcutEntries.size(), false) %></h4>
-		</div>
+			<div class="move-list">
+				<ul class="list-unstyled">
 
-		<div class="move-list">
-			<ul class="list-unstyled">
+					<%
+					for (FileEntry invalidMoveFileEntry : invalidMoveFileEntries) {
+						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
-				<%
-				for (FileShortcut fileShortcut : invalidShortcutEntries) {
-				%>
+						AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(invalidMoveFileEntry.getFileEntryId());
 
-					<li class="move-error move-file">
-						<span class="file-title">
-							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
-						</span>
+						com.liferay.portal.kernel.lock.Lock lock = invalidMoveFileEntry.getLock();
+					%>
 
-						<span class="error-message">
-							<%= LanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>
-						</span>
-					</li>
+						<li class="icon-warning-sign move-error move-file">
+							<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 
-				<%
-				}
-				%>
+							<span class="file-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveFileEntry.getTitle()) %>">
+								<%= HtmlUtil.escape(invalidMoveFileEntry.getTitle()) %>
+							</span>
 
-			</ul>
-		</div>
-	</c:if>
+							<span class="error-message">
+								<c:choose>
+									<c:when test="<%= invalidMoveFileEntry.isCheckedOut() && !invalidMoveFileEntry.hasLock() %>">
+										<%= LanguageUtil.format(request, "you-cannot-modify-this-document-because-it-was-checked-out-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
+									</c:when>
+									<c:otherwise>
+										<%= LanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>
+									</c:otherwise>
+								</c:choose>
+							</span>
+						</li>
 
-	<aui:input name="fileShortcutIds" type="hidden" value="<%= fileShortcutIds %>" />
+					<%
+					}
+					%>
 
-	<aui:fieldset>
+				</ul>
+			</div>
+		</c:if>
 
-		<%
-		String folderName = StringPool.BLANK;
+		<aui:input name="fileEntryIds" type="hidden" value="<%= ListUtil.toString(validMoveFileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>" />
 
-		if (newFolderId > 0) {
-			Folder folder = DLAppLocalServiceUtil.getFolder(newFolderId);
+		<c:if test="<%= !validShortcutEntries.isEmpty() %>">
+			<div class="move-list-info">
+				<h4><%= LanguageUtil.format(request, "x-shortcuts-ready-to-be-moved", validShortcutEntries.size(), false) %></h4>
+			</div>
 
-			folder = folder.toEscapedModel();
+			<div class="move-list">
+				<ul class="list-unstyled">
 
-			folderName = folder.getName();
-		}
-		else {
-			folderName = LanguageUtil.get(request, "home");
-		}
-		%>
+					<%
+					for (FileShortcut fileShortcut : validShortcutEntries) {
+					%>
 
-		<div class="form-group">
-			<aui:input label="new-folder" name="folderName" type="resource" value="<%= folderName %>" />
+						<li class="move-file">
+							<span class="file-title">
+								<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
+							</span>
+						</li>
 
-			<aui:button name="selectFolderButton" value="select" />
-		</div>
+					<%
+					}
+					%>
 
-		<aui:button-row>
-			<aui:button type="submit" value="move" />
+				</ul>
+			</div>
+		</c:if>
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
-</aui:form>
+		<c:if test="<%= !invalidShortcutEntries.isEmpty() %>">
+			<div class="move-list-info">
+				<h4><%= LanguageUtil.format(request, "x-shortcuts-cannot-be-moved", invalidShortcutEntries.size(), false) %></h4>
+			</div>
+
+			<div class="move-list">
+				<ul class="list-unstyled">
+
+					<%
+					for (FileShortcut fileShortcut : invalidShortcutEntries) {
+					%>
+
+						<li class="move-error move-file">
+							<span class="file-title">
+								<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
+							</span>
+
+							<span class="error-message">
+								<%= LanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>
+							</span>
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</div>
+		</c:if>
+
+		<aui:input name="fileShortcutIds" type="hidden" value="<%= fileShortcutIds %>" />
+
+		<aui:fieldset>
+
+			<%
+			String folderName = StringPool.BLANK;
+
+			if (newFolderId > 0) {
+				Folder folder = DLAppLocalServiceUtil.getFolder(newFolderId);
+
+				folder = folder.toEscapedModel();
+
+				folderName = folder.getName();
+			}
+			else {
+				folderName = LanguageUtil.get(request, "home");
+			}
+			%>
+
+			<div class="form-group">
+				<aui:input label="new-folder" name="folderName" type="resource" value="<%= folderName %>" />
+
+				<aui:button name="selectFolderButton" value="select" />
+			</div>
+
+			<aui:button-row>
+				<aui:button type="submit" value="move" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</aui:button-row>
+		</aui:fieldset>
+	</aui:form>
+</div>
 
 <aui:script>
 	AUI.$('#<portlet:namespace />selectFolderButton').on(

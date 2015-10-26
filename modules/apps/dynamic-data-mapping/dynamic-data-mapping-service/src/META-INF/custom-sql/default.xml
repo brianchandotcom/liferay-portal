@@ -41,7 +41,7 @@
 				DDMStructure.structureId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.countByG_C_SC">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.countByG_C_SC_S">
 		<![CDATA[
 			SELECT
 				COUNT(DDMTemplate.templateId) AS COUNT_VALUE
@@ -61,9 +61,10 @@
 							(DDMStructure.classNameId = ?)
 					))
 				)
+				[$STATUS$]
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_R_N_D_T_M_L">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_R_N_D_T_M_L_S">
 		<![CDATA[
 			SELECT
 				COUNT(DDMTemplate.templateId) AS COUNT_VALUE
@@ -82,9 +83,10 @@
 					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(language LIKE ? [$AND_OR_NULL_CHECK$])
 				)
+				[$STATUS$]
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.findByG_C_SC">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.findByG_C_SC_S">
 		<![CDATA[
 			SELECT
 				{DDMTemplate.*}
@@ -104,11 +106,12 @@
 							(DDMStructure.classNameId = ?)
 					))
 				)
+				[$STATUS$]
 			ORDER BY
 				DDMTemplate.templateId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_R_N_D_T_M_L">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_R_N_D_T_M_L_S">
 		<![CDATA[
 			SELECT
 				{DDMTemplate.*}
@@ -127,6 +130,7 @@
 					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(language LIKE ? [$AND_OR_NULL_CHECK$])
 				)
+				[$STATUS$]
 			ORDER BY
 				DDMTemplate.templateId DESC
 		]]>

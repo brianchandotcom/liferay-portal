@@ -1,5 +1,5 @@
 <definition component-name="portal-wcm">
-	<property name="testray.main.component.name" value="Sites Administration" />
+	<property name="testray.main.component.name" value="Site Administration" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -206,7 +206,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54205" name="ApplicationAdapter" priority="4">
+	<command name="ApplicationAdapter" priority="3">
 		<property name="hook.plugins.includes" value="sample-application-adapter-hook" />
 
 		<execute macro="Page#gotoCP">
@@ -318,7 +318,7 @@
 		<execute function="AssertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 	</command>
 
-	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="4">
+	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">
 		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount" >
 
 			<execute macro="Page#gotoCP">
@@ -364,7 +364,7 @@
 		</execute>
 	</command>
 
-	<command name="OnlySiteOwnersCanAssignSiteRolesToUserGroups" priority="4">
+	<command name="OnlySiteOwnersCanAssignSiteRolesToUserGroups" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -598,7 +598,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51074" name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="4">
+	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="3">
 		<property name="custom.properties" value="layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true" />
 
 		<execute macro="Page#gotoCP">
@@ -657,13 +657,13 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.password.1" />
+			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -679,15 +679,15 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#addCreateAccountPG">
-			<var name="userEmailAddress" property-value="email.address.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Gmail#login">
-			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.password.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -716,7 +716,7 @@
 		<execute macro="User#signInPG">
 			<var name="emailPassword" value="${emailPassword}" />
 			<var name="emailVerification" value="${emailVerification}" />
-			<var name="userEmailAddress" property-value="email.address.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -738,12 +738,12 @@
 		</execute>
 
 		<execute macro="User#editEmailViaMyAccount">
-			<var name="userEmailAddress" property-value="email.address.3" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
 		</execute>
 
 		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" property-value="email.address.3" />
-			<var name="userPassword" property-value="email.password.3" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -957,7 +957,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51074" name="SitesDemoSiteManagement" priority="4">
+	<command name="SitesDemoSiteManagement" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1296,6 +1296,7 @@
 		</execute>
 
 		<execute macro="Team#assignUserGroups">
+			<var name="teamName" value="Site Team Name" />
 			<var name="userGroupName" value="UG UserGroup2 Name" />
 			<var name="userGroupsNameIsNotAvailable" value="true" />
 		</execute>
@@ -1463,6 +1464,7 @@
 
 		<execute macro="PageTemplate#viewDefaultPortletPG">
 			<var name="pageTemplateName" value="Blog" />
+			<var name="portletTitleList" value="Blogs,Tag Cloud,Recent Bloggers" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -1501,9 +1503,8 @@
 			<var name="teamName"><![CDATA[<script>alert(123)</script>]]></var>
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
 		</execute>
 
 		<execute macro="Site#assignDefaultSiteTeam">

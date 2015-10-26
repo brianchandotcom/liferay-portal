@@ -809,6 +809,46 @@ public class JournalUtil {
 			JournalArticle.class.getName(), "urlTitle", title);
 	}
 
+	public static boolean isHead(JournalArticle article) {
+		JournalArticle latestArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				article.getResourcePrimKey(),
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				});
+
+		if ((latestArticle != null) && !latestArticle.isIndexable()) {
+			return false;
+		}
+		else if ((latestArticle != null) &&
+				 (article.getId() == latestArticle.getId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isHeadListable(JournalArticle article) {
+		JournalArticle latestArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				article.getResourcePrimKey(),
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH,
+					WorkflowConstants.STATUS_SCHEDULED
+				});
+
+		if ((latestArticle != null) &&
+			(article.getId() == latestArticle.getId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isSubscribedToFolder(
 			long companyId, long groupId, long userId, long folderId)
 		throws PortalException {

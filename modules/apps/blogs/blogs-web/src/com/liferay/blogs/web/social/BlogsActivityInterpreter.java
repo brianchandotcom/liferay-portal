@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
@@ -33,6 +33,7 @@ import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import java.text.Format;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -68,7 +69,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 		String receiverUserName = getUserName(
 			activity.getReceiverUserId(), serviceContext);
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(
 			activity.getClassPK());
 
 		String displayDate = StringPool.BLANK;
@@ -109,7 +110,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 			}
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {
-			BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
+			BlogsEntry entry = _blogsEntryLocalService.getEntry(
 				activity.getClassPK());
 
 			if (entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
@@ -169,6 +170,15 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {BlogsEntry.class.getName()};
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

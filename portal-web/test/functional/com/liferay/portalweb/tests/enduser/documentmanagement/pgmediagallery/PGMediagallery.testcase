@@ -34,7 +34,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddFolder" priority="4">
+	<command name="AddFolder" priority="5">
 		<var name="mgFolderDescription" value="DM Folder Description" />
 		<var name="mgFolderName" value="DM Folder Name" />
 
@@ -52,7 +52,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolderDocument" priority="4">
+	<command name="AddFolderDocument" priority="5">
 		<var name="mgDocumentDescription" value="DM Document Description" />
 		<var name="mgDocumentFile" value="Document_1.jpg" />
 		<var name="mgDocumentTitle" value="DM Document Title" />
@@ -240,7 +240,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFolderDocument" priority="4">
+	<command name="DeleteFolderDocument" priority="5">
 		<var name="mgDocumentDescription" value="DM Document Description" />
 		<var name="mgDocumentFile" value="Document_1.jpg" />
 		<var name="mgDocumentTitle" value="DM Document Title" />
@@ -279,7 +279,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolder" priority="4">
+	<command name="EditFolder" priority="5">
 		<var name="mgFolderDescription" value="DM Folder Description" />
 		<var name="mgFolderDescriptionEdit" value="DM Folder Description Edit" />
 		<var name="mgFolderName" value="DM Folder Name" />
@@ -314,7 +314,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolderDocument" priority="4">
+	<command name="EditFolderDocument" priority="5">
 		<var name="mgDocumentDescription" value="DM Document Description" />
 		<var name="mgDocumentDescriptionEdit" value="DM Document Description Edit" />
 		<var name="mgDocumentFile" value="Document_1.jpg" />

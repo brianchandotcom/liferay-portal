@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface MBMailingListModel extends BaseModel<MBMailingList>,
-	GroupedModel {
+	GroupedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -70,6 +71,7 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	 * @return the uuid of this message boards mailing list
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -77,6 +79,7 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	 *
 	 * @param uuid the uuid of this message boards mailing list
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**

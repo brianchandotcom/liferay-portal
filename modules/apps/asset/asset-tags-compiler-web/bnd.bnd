@@ -2,3 +2,4 @@ Bundle-Name: Liferay Asset Tags Compiler Web
 Bundle-SymbolicName: com.liferay.asset.tags.compiler.web
 Bundle-Version: 1.0.0
 Include-Resource: classes
+Require-SchemaVersion: 1.0.0

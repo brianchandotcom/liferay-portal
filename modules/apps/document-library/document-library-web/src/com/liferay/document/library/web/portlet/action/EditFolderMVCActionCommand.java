@@ -51,7 +51,7 @@ import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
@@ -68,6 +68,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -127,15 +128,14 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
-				Folder folder = DLAppServiceUtil.moveFolderToTrash(
-					deleteFolderId);
+				Folder folder = _dlAppService.moveFolderToTrash(deleteFolderId);
 
 				if (folder.getModel() instanceof DLFolder) {
 					trashedModels.add((DLFolder)folder.getModel());
 				}
 			}
 			else {
-				DLAppServiceUtil.deleteFolder(deleteFolderId);
+				_dlAppService.deleteFolder(deleteFolderId);
 			}
 		}
 
@@ -176,25 +176,19 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 				updateWorkflowDefinitions(actionRequest);
 			}
 		}
+		catch (NoSuchFolderException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (DuplicateFileException | DuplicateFolderNameException |
+			   FolderNameException | RequiredFileEntryTypeException e) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof FolderNameException ||
-					 e instanceof RequiredFileEntryTypeException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw new PortletException(e);
-			}
+			throw new PortletException(e);
 		}
 	}
 
@@ -216,7 +210,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getLocale(), "documents-and-media");
 
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				Folder folder = DLAppServiceUtil.getFolder(folderId);
+				Folder folder = _dlAppService.getFolder(folderId);
 
 				zipFileName = folder.getName();
 			}
@@ -242,6 +236,11 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
 	protected void subscribeFolder(ActionRequest actionRequest)
 		throws Exception {
 
@@ -250,8 +249,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		DLAppServiceUtil.subscribeFolder(
-			themeDisplay.getScopeGroupId(), folderId);
+		_dlAppService.subscribeFolder(themeDisplay.getScopeGroupId(), folderId);
 	}
 
 	protected void unsubscribeFolder(ActionRequest actionRequest)
@@ -262,7 +260,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		DLAppServiceUtil.unsubscribeFolder(
+		_dlAppService.unsubscribeFolder(
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
@@ -282,7 +280,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add folder
 
-			DLAppServiceUtil.addFolder(
+			_dlAppService.addFolder(
 				repositoryId, parentFolderId, name, description,
 				serviceContext);
 		}
@@ -290,7 +288,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update folder
 
-			DLAppServiceUtil.updateFolder(
+			_dlAppService.updateFolder(
 				folderId, name, description, serviceContext);
 		}
 	}
@@ -301,7 +299,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
-		DLAppServiceUtil.updateFolder(
+		_dlAppService.updateFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
 			serviceContext);
 	}
@@ -311,7 +309,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
 				repositoryId, folderId, WorkflowConstants.STATUS_APPROVED,
 				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -334,5 +332,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	private DLAppService _dlAppService;
 
 }

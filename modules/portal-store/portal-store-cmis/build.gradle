@@ -1,11 +1,14 @@
 dependencies {
-	compile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.13.0"
-	compile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-bindings", version: "0.13.0"
-	compile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-impl", version: "0.13.0"
-	compile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-api", version: "0.13.0"
-	compile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-impl", version: "0.13.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	provided group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.13.0"
+	provided group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-bindings", version: "0.13.0"
+	provided group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-impl", version: "0.13.0"
+	provided group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-api", version: "0.13.0"
+	provided group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-impl", version: "0.13.0"
 }
 
 liferay {

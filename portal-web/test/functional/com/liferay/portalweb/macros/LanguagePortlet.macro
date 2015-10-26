@@ -2,8 +2,8 @@
 	<command name="configureViewAvailableLanguages">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<for list="${currentLanguages}" param="currentLanguage">
-			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_CURRENT" value1="${currentLanguage}" />
+		<for list="${availableLanguages}" param="availableLanguage">
+			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${availableLanguage}" />
 		</for>
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -12,8 +12,8 @@
 	<command name="configureViewCurrentLanguages">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<for list="${availableLanguages}" param="availableLanguage">
-			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${availableLanguage}" />
+		<for list="${currentLanguages}" param="currentLanguage">
+			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_CURRENT" value1="${currentLanguage}" />
 		</for>
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -72,6 +72,12 @@
 				<equals arg1="${language}" arg2="French (France)" />
 				<then>
 					<execute function="Click" locator1="Language#LANGUAGE_MENU_FRENCH" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Finnish (Finland)" />
+				<then>
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_FINNISH" />
 				</then>
 			</elseif>
 			<elseif>

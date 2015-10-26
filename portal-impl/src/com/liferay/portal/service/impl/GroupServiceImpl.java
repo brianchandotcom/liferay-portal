@@ -34,7 +34,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.UserBag;
+import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.GroupServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -544,7 +545,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
-	 *             String[], boolean, int)}
+	 *             String[], int)}
 	 */
 	@Deprecated
 	@Override
@@ -553,7 +554,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			int max)
 		throws PortalException {
 
-		return getUserSitesGroups(userId, classNames, includeControlPanel, max);
+		return getUserSitesGroups(userId, classNames, max);
 	}
 
 	/**
@@ -677,135 +678,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return getUserSitesGroups(null, QueryUtil.ALL_POS);
 	}
 
-	@Override
-	public List<Group> getUserSitesGroups(
-			long userId, String[] classNames, boolean includeControlPanel,
-			int max)
-		throws PortalException {
-
-		User user = userPersistence.fetchByPrimaryKey(userId);
-
-		if (user.isDefaultUser()) {
-			return Collections.emptyList();
-		}
-
-		List<Group> userSiteGroups = new ArrayList<>();
-
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (max != QueryUtil.ALL_POS) {
-			start = 0;
-			end = max;
-		}
-
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, Company.class.getName())) {
-
-			userSiteGroups.addAll(
-				groupLocalService.search(
-					user.getCompanyId(),
-					new long[] {
-						classNameLocalService.getClassNameId(Company.class)
-					},
-					null, new LinkedHashMap<String, Object>(), start, end));
-		}
-
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, Group.class.getName())) {
-
-			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-			groupParams.put("active", true);
-			groupParams.put("usersGroups", userId);
-
-			userSiteGroups.addAll(
-				groupLocalService.search(
-					user.getCompanyId(), null, groupParams, start, end));
-		}
-
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, Organization.class.getName())) {
-
-			int filteredUserSiteGroupsCount = 0;
-
-			List<Organization> userOrgs =
-				organizationLocalService.getOrganizations(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			for (Organization organization : userOrgs) {
-				if (filteredUserSiteGroupsCount == max) {
-					break;
-				}
-
-				if (!organization.hasPrivateLayouts() &&
-					!organization.hasPublicLayouts()) {
-
-					userSiteGroups.remove(organization.getGroup());
-
-					filteredUserSiteGroupsCount--;
-				}
-				else {
-					userSiteGroups.add(organization.getGroup());
-
-					filteredUserSiteGroupsCount++;
-				}
-
-				if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-					for (Organization ancestorOrganization :
-							organization.getAncestors()) {
-
-						if (!ancestorOrganization.hasPrivateLayouts() &&
-							!ancestorOrganization.hasPublicLayouts()) {
-
-							continue;
-						}
-
-						userSiteGroups.add(ancestorOrganization.getGroup());
-
-						filteredUserSiteGroupsCount++;
-					}
-				}
-			}
-		}
-
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, User.class.getName())) {
-
-			if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
-				PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
-
-				Group userGroup = user.getGroup();
-
-				userSiteGroups.add(0, userGroup);
-			}
-		}
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (permissionChecker.getUserId() != userId) {
-			try {
-				permissionChecker = PermissionCheckerFactoryUtil.create(user);
-			}
-			catch (Exception e) {
-				throw new PrincipalException(e);
-			}
-		}
-
-		if (includeControlPanel &&
-			PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
-
-			Group controlPanelGroup = groupLocalService.getGroup(
-				user.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-			userSiteGroups.add(0, controlPanelGroup);
-		}
-
-		return Collections.unmodifiableList(
-			ListUtil.subList(ListUtil.unique(userSiteGroups), start, end));
-	}
-
 	/**
 	 * Returns the user's groups &quot;sites&quot; associated with the group
 	 * entity class names, including the Control Panel group if the user is
@@ -834,7 +706,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  classNames the group entity class names (optionally
 	 *         <code>null</code>). For more information see {@link
-	 *         #getUserSitesGroups(long, String[], boolean, int)}.
+	 *         #getUserSitesGroups(long, String[], int)}.
 	 * @param  max the maximum number of groups to return
 	 * @return the user's groups &quot;sites&quot;
 	 * @throws PortalException if a portal exception occurred
@@ -844,7 +716,73 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long userId, String[] classNames, int max)
 		throws PortalException {
 
-		return getUserSitesGroups(userId, classNames, false, max);
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		if (user.isDefaultUser()) {
+			return Collections.emptyList();
+		}
+
+		Set<Group> userSiteGroups = new LinkedHashSet<>();
+
+		if (classNames == null) {
+			classNames = new String[] {
+				Company.class.getName(), Group.class.getName(),
+				Organization.class.getName(), User.class.getName()
+			};
+		}
+
+		if (ArrayUtil.contains(classNames, User.class.getName())) {
+			if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
+				PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
+
+				userSiteGroups.add(user.getGroup());
+
+				if (userSiteGroups.size() == max) {
+					return new ArrayList<>(userSiteGroups);
+				}
+			}
+		}
+
+		if (ArrayUtil.contains(classNames, Company.class.getName())) {
+			userSiteGroups.add(
+				groupLocalService.getCompanyGroup(user.getCompanyId()));
+
+			if (userSiteGroups.size() == max) {
+				return new ArrayList<>(userSiteGroups);
+			}
+		}
+
+		if (ArrayUtil.contains(classNames, Group.class.getName()) ||
+			ArrayUtil.contains(classNames, Organization.class.getName())) {
+
+			UserBag userBag = UserBagFactoryUtil.create(userId);
+
+			if (ArrayUtil.contains(classNames, Group.class.getName())) {
+				for (Group group : userBag.getUserGroups()) {
+					if (group.isActive() && group.isSite()) {
+						if (userSiteGroups.add(group) &&
+							(userSiteGroups.size() == max)) {
+
+							return new ArrayList<>(userSiteGroups);
+						}
+					}
+				}
+			}
+
+			if (ArrayUtil.contains(classNames, Organization.class.getName())) {
+				for (Group group : userBag.getUserOrgGroups()) {
+					if (group.isActive() && group.isSite()) {
+						if (userSiteGroups.add(group) &&
+							(userSiteGroups.size() == max)) {
+
+							return new ArrayList<>(userSiteGroups);
+						}
+					}
+				}
+			}
+		}
+
+		return new ArrayList<>(userSiteGroups);
 	}
 
 	/**
@@ -874,7 +812,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  classNames the group entity class names (optionally
 	 *         <code>null</code>). For more information see {@link
-	 *         #getUserSitesGroups(long, String[], boolean, int)}.
+	 *         #getUserSitesGroups(long, String[], int)}.
 	 * @param  max the maximum number of groups to return
 	 * @return the user's groups &quot;sites&quot;
 	 * @throws PortalException if a portal exception occurred
@@ -883,7 +821,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public List<Group> getUserSitesGroups(String[] classNames, int max)
 		throws PortalException {
 
-		return getUserSitesGroups(getGuestOrUserId(), classNames, false, max);
+		return getUserSitesGroups(getGuestOrUserId(), classNames, max);
 	}
 
 	/**
@@ -898,7 +836,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Override
 	public int getUserSitesGroupsCount() throws PortalException {
 		List<Group> userSitesGroups = getUserSitesGroups(
-			getGuestOrUserId(), null, true, QueryUtil.ALL_POS);
+			getGuestOrUserId(), null, QueryUtil.ALL_POS);
 
 		return userSitesGroups.size();
 	}

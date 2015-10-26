@@ -31,7 +31,6 @@ page import="com.liferay.portal.UserGroupNameException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayPortletURL" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
@@ -61,6 +60,7 @@ page import="com.liferay.portal.service.permission.UserGroupPermissionUtil" %><%
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.admin.util.PortalMyAccountApplicationType" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
@@ -83,7 +83,9 @@ page import="javax.portlet.WindowState" %>
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
 
-String currentURL = PortalUtil.getCurrentURL(request);
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
 
 boolean filterManageableOrganizations = true;
 

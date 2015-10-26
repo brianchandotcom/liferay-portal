@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -26,6 +27,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil" %><%@
+page import="com.liferay.item.selector.taglib.dao.search.RepositoryEntryResultRowSplitter" %><%@
 page import="com.liferay.item.selector.taglib.servlet.ServletContextUtil" %><%@
 page import="com.liferay.item.selector.taglib.servlet.taglib.BrowserTag" %><%@
 page import="com.liferay.item.selector.taglib.util.ItemSelectorBrowserUtil" %><%@
@@ -48,13 +50,14 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

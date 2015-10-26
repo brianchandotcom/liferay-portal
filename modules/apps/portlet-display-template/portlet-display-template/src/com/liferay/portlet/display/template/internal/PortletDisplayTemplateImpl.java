@@ -210,7 +210,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 							portletDisplayDDMTemplateGroupId, classNameId,
 							ddmTemplateKey, true);
 				}
-				catch (PortalException e) {
+				catch (PortalException pe) {
 				}
 			}
 		}

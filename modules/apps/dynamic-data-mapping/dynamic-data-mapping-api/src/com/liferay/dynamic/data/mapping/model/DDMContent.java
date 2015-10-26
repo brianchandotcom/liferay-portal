@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface DDMContent extends DDMContentModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DDMContent, Long> CONTENT_ID_ACCESSOR = new Accessor<DDMContent, Long>() {
+			@Override
+			public Long get(DDMContent ddmContent) {
+				return ddmContent.getContentId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DDMContent> getTypeClass() {
+				return DDMContent.class;
+			}
+		};
 }

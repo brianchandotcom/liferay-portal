@@ -30,6 +30,10 @@ import java.io.InputStream;
  */
 public class DLValidatorUtil {
 
+	public static String fixName(String name) {
+		return getDLValidator().fixName(name);
+	}
+
 	public static DLValidator getDLValidator() {
 		PortalRuntimePermission.checkGetBeanProperty(DLValidatorUtil.class);
 

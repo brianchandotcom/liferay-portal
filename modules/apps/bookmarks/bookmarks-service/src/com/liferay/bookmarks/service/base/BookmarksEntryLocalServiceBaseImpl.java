@@ -352,14 +352,12 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(BookmarksEntry bookmarksEntry)
 					throws PortalException {
-					BookmarksEntry stagedModel = (BookmarksEntry)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						bookmarksEntry);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

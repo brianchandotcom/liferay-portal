@@ -374,14 +374,12 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MBMessage mbMessage)
 					throws PortalException {
-					MBMessage stagedModel = (MBMessage)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						mbMessage);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

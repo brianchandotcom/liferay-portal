@@ -31,8 +31,12 @@ import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -49,8 +53,9 @@ public abstract class BasePortletDataHandlerTestCase {
 	public void setUp() throws Exception {
 		stagingGroup = GroupTestUtil.addGroup();
 
-		portletDataHandler = createPortletDataHandler();
 		portletId = getPortletId();
+
+		portletDataHandler = getPortletDataHandler(portletId);
 	}
 
 	@Test
@@ -140,10 +145,27 @@ public abstract class BasePortletDataHandlerTestCase {
 		}
 	}
 
-	protected abstract PortletDataHandler createPortletDataHandler();
-
 	protected Date getEndDate() {
 		return new Date();
+	}
+
+	protected PortletDataHandler getPortletDataHandler(String portletId) {
+		try {
+			Registry registry = RegistryUtil.getRegistry();
+
+			Collection<PortletDataHandler> portletDataHandlers =
+				registry.getServices(
+					PortletDataHandler.class,
+					"(javax.portlet.name=" + portletId + ")");
+
+			Iterator<PortletDataHandler> iterator =
+				portletDataHandlers.iterator();
+
+			return iterator.next();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	protected abstract String getPortletId();

@@ -302,7 +302,6 @@ public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
 	 *
 	 * @return the last publish date of this website
 	 */
-	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -310,7 +309,6 @@ public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
 	 *
 	 * @param lastPublishDate the last publish date of this website
 	 */
-	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

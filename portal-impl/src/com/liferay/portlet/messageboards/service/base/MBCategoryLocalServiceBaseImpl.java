@@ -354,14 +354,12 @@ public abstract class MBCategoryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBCategory>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MBCategory mbCategory)
 					throws PortalException {
-					MBCategory stagedModel = (MBCategory)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						mbCategory);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

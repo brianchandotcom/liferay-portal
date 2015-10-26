@@ -326,7 +326,6 @@
 		<exception>DuplicateNodeName</exception>
 		<exception>DuplicatePage</exception>
 		<exception>ImportFiles</exception>
-		<exception>NodeChange</exception>
 		<exception>NodeName</exception>
 		<exception>NoSuchNode</exception>
 		<exception>NoSuchPage</exception>

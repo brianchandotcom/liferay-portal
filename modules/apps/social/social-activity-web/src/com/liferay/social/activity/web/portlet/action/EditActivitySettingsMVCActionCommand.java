@@ -28,7 +28,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
-import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
+import com.liferay.portlet.social.service.SocialActivitySettingService;
 import com.liferay.social.activity.web.constants.SocialActivityPortletKeys;
 
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -72,6 +73,13 @@ public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivitySettingService(
+		SocialActivitySettingService socialActivitySettingService) {
+
+		_socialActivitySettingService = socialActivitySettingService;
 	}
 
 	protected SocialActivityCounterDefinition updateActivityCounterDefinition(
@@ -148,7 +156,7 @@ public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 			int activityType = actionJSONObject.getInt("activityType");
 
 			SocialActivityDefinition activityDefinition =
-				SocialActivitySettingServiceUtil.getActivityDefinition(
+				_socialActivitySettingService.getActivityDefinition(
 					themeDisplay.getSiteGroupIdOrLiveGroupId(), modelName,
 					activityType);
 
@@ -174,10 +182,12 @@ public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 					actionJSONObject, activityDefinition,
 					SocialActivityCounterConstants.NAME_POPULARITY));
 
-			SocialActivitySettingServiceUtil.updateActivitySettings(
+			_socialActivitySettingService.updateActivitySettings(
 				themeDisplay.getSiteGroupIdOrLiveGroupId(), modelName,
 				activityType, activityCounterDefinitions);
 		}
 	}
+
+	private SocialActivitySettingService _socialActivitySettingService;
 
 }

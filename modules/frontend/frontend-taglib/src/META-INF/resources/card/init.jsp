@@ -28,16 +28,10 @@ String checkboxName = (String)request.getAttribute("liferay-frontend:card:checkb
 String checkboxValue = (String)request.getAttribute("liferay-frontend:card:checkboxValue");
 String cssClass = (String)request.getAttribute("liferay-frontend:card:cssClass");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-frontend:card:data");
-String footer = (String)request.getAttribute("liferay-frontend:card:footer");
-String header = (String)request.getAttribute("liferay-frontend:card:header");
 String imageCSSClass = (String)request.getAttribute("liferay-frontend:card:imageCSSClass");
 String imageUrl = (String)request.getAttribute("liferay-frontend:card:imageUrl");
 ResultRow resultRow = (ResultRow)request.getAttribute("liferay-frontend:card:resultRow");
 RowChecker rowChecker = (RowChecker)request.getAttribute("liferay-frontend:card:rowChecker");
 boolean showCheckbox = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:showCheckbox"));
-String smallImageCSSClass = GetterUtil.getString(request.getAttribute("liferay-frontend:card:smallImageCSSClass"));
-String smallImageUrl = GetterUtil.getString(request.getAttribute("liferay-frontend:card:smallImageUrl"));
-String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");
-String title = (String)request.getAttribute("liferay-frontend:card:title");
 String url = (String)request.getAttribute("liferay-frontend:card:url");
 %>

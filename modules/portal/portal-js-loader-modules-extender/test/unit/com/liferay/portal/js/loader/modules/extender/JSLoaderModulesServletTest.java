@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -481,6 +482,12 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		).when(
 			bundle
 		).getEntry(Details.CONFIG_JSON);
+
+		doReturn(
+			new Hashtable<String, String>()
+		).when(
+			bundle
+		).getHeaders();
 
 		doReturn(
 			bsn

@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.web.portlet;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
-import com.liferay.mobile.device.rules.web.upgrade.MobileDeviceRulesWebUpgrade;
+import com.liferay.mobile.device.rules.web.upgrade.MDRWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -53,8 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MDRPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
-	protected void setMobileDeviceRulesWebUpgrade(
-		MobileDeviceRulesWebUpgrade mobileDeviceRulesWebUpgrade) {
+	protected void setMDRWebUpgrade(MDRWebUpgrade mdrWebUpgrade) {
 	}
 
 }

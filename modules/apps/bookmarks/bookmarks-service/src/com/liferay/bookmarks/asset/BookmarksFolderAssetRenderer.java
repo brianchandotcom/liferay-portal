@@ -114,7 +114,7 @@ public class BookmarksFolderAssetRenderer
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			return "/html/portlet/bookmarks/asset/folder_" + template + ".jsp";
+			return "/bookmarks/asset/folder_" + template + ".jsp";
 		}
 		else {
 			return null;
@@ -182,7 +182,8 @@ public class BookmarksFolderAssetRenderer
 			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/bookmarks/edit_folder");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/edit_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 
@@ -201,7 +202,7 @@ public class BookmarksFolderAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("struts_action", "/bookmarks/view");
+		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);

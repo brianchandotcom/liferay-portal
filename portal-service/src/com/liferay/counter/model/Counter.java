@@ -16,6 +16,7 @@ package com.liferay.counter.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface Counter extends CounterModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.counter.model.impl.CounterImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Counter, String> NAME_ACCESSOR = new Accessor<Counter, String>() {
+			@Override
+			public String get(Counter counter) {
+				return counter.getName();
+			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class<Counter> getTypeClass() {
+				return Counter.class;
+			}
+		};
 }

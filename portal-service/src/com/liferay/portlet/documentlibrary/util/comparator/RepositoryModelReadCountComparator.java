@@ -36,20 +36,54 @@ public class RepositoryModelReadCountComparator<T>
 
 	public static final String[] ORDER_BY_FIELDS = {"readCount"};
 
+	public static final String ORDER_BY_MODEL_ASC =
+		"modelFolder DESC, readCount ASC";
+
+	public static final String ORDER_BY_MODEL_DESC =
+		"modelFolder DESC, readCount DESC";
+
 	public RepositoryModelReadCountComparator() {
 		this(false);
 	}
 
 	public RepositoryModelReadCountComparator(boolean ascending) {
 		_ascending = ascending;
+		_orderByModel = false;
+	}
+
+	public RepositoryModelReadCountComparator(
+		boolean ascending, boolean orderByModel) {
+
+		_ascending = ascending;
+		_orderByModel = orderByModel;
 	}
 
 	@Override
 	public int compare(T t1, T t2) {
+		int value = 0;
+
 		Long readCount1 = getReadCount(t1);
 		Long readCount2 = getReadCount(t2);
 
-		int value = readCount1.compareTo(readCount2);
+		if (_orderByModel) {
+			if (((t1 instanceof DLFolder) || (t1 instanceof Folder)) &&
+				((t2 instanceof DLFolder) || (t2 instanceof Folder))) {
+
+				value = readCount1.compareTo(readCount2);
+			}
+			else if ((t1 instanceof DLFolder) || (t1 instanceof Folder)) {
+				value = -1;
+			}
+			else if ((t2 instanceof DLFolder) || (t2 instanceof Folder)) {
+				value = 1;
+			}
+			else {
+				value = readCount1.compareTo(readCount2);
+			}
+		}
+		else {
+			value = readCount1.compareTo(readCount2);
+		}
 
 		if (_ascending) {
 			return value;
@@ -61,11 +95,21 @@ public class RepositoryModelReadCountComparator<T>
 
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
+		if (_orderByModel) {
+			if (_ascending) {
+				return ORDER_BY_MODEL_ASC;
+			}
+			else {
+				return ORDER_BY_MODEL_DESC;
+			}
 		}
 		else {
-			return ORDER_BY_DESC;
+			if (_ascending) {
+				return ORDER_BY_ASC;
+			}
+			else {
+				return ORDER_BY_DESC;
+			}
 		}
 	}
 
@@ -126,5 +170,6 @@ public class RepositoryModelReadCountComparator<T>
 	}
 
 	private final boolean _ascending;
+	private final boolean _orderByModel;
 
 }

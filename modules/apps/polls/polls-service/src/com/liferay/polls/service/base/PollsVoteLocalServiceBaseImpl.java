@@ -301,14 +301,12 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PollsVote>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(PollsVote pollsVote)
 					throws PortalException {
-					PollsVote stagedModel = (PollsVote)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						pollsVote);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

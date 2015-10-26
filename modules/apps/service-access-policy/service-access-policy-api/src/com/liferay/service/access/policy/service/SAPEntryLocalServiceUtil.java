@@ -56,18 +56,18 @@ public class SAPEntryLocalServiceUtil {
 
 	public static com.liferay.service.access.policy.model.SAPEntry addSAPEntry(
 		long userId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, java.lang.String name,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSAPEntry(userId, allowedServiceSignatures,
-			defaultSAPEntry, name, titleMap, serviceContext);
+			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
-	public static void checkDefaultSAPEntry(long companyId)
+	public static void checkSystemSAPEntries(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkDefaultSAPEntry(companyId);
+		getService().checkSystemSAPEntries(companyId);
 	}
 
 	/**
@@ -239,6 +239,16 @@ public class SAPEntryLocalServiceUtil {
 		return getService().getCompanySAPEntriesCount(companyId);
 	}
 
+	public static java.util.List<com.liferay.service.access.policy.model.SAPEntry> getDefaultSAPEntries(
+		long companyId, boolean defaultSAPEntry) {
+		return getService().getDefaultSAPEntries(companyId, defaultSAPEntry);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -325,13 +335,13 @@ public class SAPEntryLocalServiceUtil {
 
 	public static com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
-		java.lang.String name,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateSAPEntry(sapEntryId, allowedServiceSignatures, name,
-			titleMap, serviceContext);
+				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,
+			defaultSAPEntry, enabled, name, titleMap, serviceContext);
 	}
 
 	public static SAPEntryLocalService getService() {

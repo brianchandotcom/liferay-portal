@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+
+<configuration>
+	<property resource="sync.properties" />
+
+	<property name="sync.logs.directory" value="${sync.configuration.directory}/logs" />
+
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
+		<encoder>
+			<charset>UTF-8</charset>
+
+			<pattern>%d{HH:mm:ss.SSS} %p [%t] [%logger{0}:%L] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="SYNC_LOG_FILE">
+		<file>${sync.logs.directory}/sync.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${sync.logs.directory}/archive/sync-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<charset>UTF-8</charset>
+
+			<pattern>%d{HH:mm:ss.SSS} %p [%t] [%logger{0}:%L] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="WATCHER_EVENTS_LOG_FILE">
+		<file>${sync.logs.directory}/watcher-events.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${sync.logs.directory}/archive/watcher-events-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<charset>UTF-8</charset>
+
+			<pattern>%d{HH:mm:ss.SSS} %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger additivity="false" name="WATCHER_EVENTS_LOGGER">
+		<appender-ref ref="WATCHER_EVENTS_LOG_FILE" />
+	</logger>
+
+	<logger level="ERROR" name="com.liferay.nativity" />
+
+	<logger level="ERROR" name="io.netty" />
+
+	<logger level="ERROR" name="org.apache" />
+
+	<logger level="INFO" name="com.j256.ormlite" />
+
+	<root level="TRACE">
+		<appender-ref ref="SYNC_LOG_FILE" />
+	</root>
+</configuration>

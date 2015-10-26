@@ -88,18 +88,22 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public String appendParentheticalSuffix(String fileName, String suffix) {
-		StringBundler sb = new StringBundler(3);
-
 		String fileNameWithoutExtension = stripExtension(fileName);
 
-		sb.append(
+		String fileNameWithParentheticalSuffix =
 			StringUtil.appendParentheticalSuffix(
-				fileNameWithoutExtension, suffix));
-
-		sb.append(StringPool.PERIOD);
+				fileNameWithoutExtension, suffix);
 
 		String extension = getExtension(fileName);
 
+		if (Validator.isNull(extension)) {
+			return fileNameWithParentheticalSuffix;
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(fileNameWithParentheticalSuffix);
+		sb.append(StringPool.PERIOD);
 		sb.append(extension);
 
 		return sb.toString();

@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_SELECTED</td>
-	<td>//div[contains(@class,'nav-menu')]/ul/li[@class='selected ']/a</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[@class='selected ']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_ENTRY</td>
-	<td>//div[contains(@class,'portlet-body')]/div/div/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>//section[contains(@id,'content')]//div[contains(@class,'portlet-body')]//ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_HEADER2_ENTRY</td>
-	<td>//div[contains(@class,'nav-menu')]/h2/a[contains(.,'${key_pageName}')]</td>
+	<td>//section[contains(@id,'content')]//div[contains(@class,'nav-menu')]/h2/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 </tbody>

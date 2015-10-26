@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIVE_BUTTON</td>
-	<td>//li[contains(@class,'live-link') and contains(@class,'staging-toggle')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>STAGING_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-block')]</td>
 	<td></td>

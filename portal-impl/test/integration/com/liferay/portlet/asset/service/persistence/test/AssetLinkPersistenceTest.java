@@ -41,6 +41,7 @@ import com.liferay.portlet.asset.service.persistence.AssetLinkUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class AssetLinkPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -336,11 +338,9 @@ public class AssetLinkPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AssetLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetLink>() {
 				@Override
-				public void performAction(Object object) {
-					AssetLink assetLink = (AssetLink)object;
-
+				public void performAction(AssetLink assetLink) {
 					Assert.assertNotNull(assetLink);
 
 					count.increment();

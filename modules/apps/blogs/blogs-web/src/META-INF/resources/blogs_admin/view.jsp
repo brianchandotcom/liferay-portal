@@ -17,85 +17,52 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-long assetCategoryId = ParamUtil.getLong(request, "categoryId");
-String assetTagName = ParamUtil.getString(request, "tag");
+String navigation = ParamUtil.getString(request, "navigation", "entries");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+portletURL.setParameter("navigation", navigation);
 %>
 
-<portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-</portlet:actionURL>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<portlet:renderURL var="viewEntriesURL" />
 
-<liferay-ui:trash-undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+		<aui:nav-item
+			href="<%= viewEntriesURL %>"
+			label="entries"
+			selected='<%= navigation.equals("entries") %>'
+		/>
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/blogs/search.jsp" />
-</liferay-portlet:renderURL>
+		<portlet:renderURL var="viewImagesURL">
+			<portlet:param name="navigation" value="images" />
+		</portlet:renderURL>
 
-<aui:form action="<%= searchURL.toString() %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="deleteEntryIds" type="hidden" />
+		<aui:nav-item
+			href="<%= viewImagesURL %>"
+			label="images"
+			selected='<%= navigation.equals("images") %>'
+		/>
+	</aui:nav>
 
-	<liferay-util:include page="/blogs_admin/toolbar.jsp" servletContext="<%= application %>" />
+	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+		<aui:nav-bar-search>
+			<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
+		</aui:nav-bar-search>
+	</aui:form>
+</aui:nav-bar>
 
-	<liferay-ui:categorization-filter
-		assetType="entries"
-		portletURL="<%= portletURL %>"
-	/>
+<c:choose>
+	<c:when test='<%= navigation.equals("entries") %>'>
+		<liferay-util:include page="/blogs_admin/view_entries.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/blogs_admin/view_images.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>
 
-	<liferay-ui:search-container
-		rowChecker="<%= new RowChecker(renderResponse) %>"
-		searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
-	>
-
-		<%
-		EntrySearchTerms searchTerms = (EntrySearchTerms)searchContainer.getSearchTerms();
-		%>
-
-		<liferay-ui:search-container-results>
-			<%@ include file="/blogs_admin/entry_search_results.jspf" %>
-		</liferay-ui:search-container-results>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.portlet.blogs.model.BlogsEntry"
-			escapedModel="<%= true %>"
-			keyProperty="entryId"
-			modelVar="entry"
-			rowIdProperty="urlTitle"
-		>
-			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
-				<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-			</liferay-portlet:renderURL>
-
-			<%@ include file="/blogs_admin/search_columns.jspf" %>
-
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
-				path="/blogs_admin/entry_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<c:if test="<%= total > 0 %>">
-			<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
-
-			<div class="separator"><!-- --></div>
-		</c:if>
-
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
-</aui:form>
-
-<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+<c:if test='<%= navigation.equals("entries") && BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>'>
 	<portlet:renderURL var="viewEntriesURL">
 		<portlet:param name="mvcRenderCommandName" value="/blogs_admin/view" />
 	</portlet:renderURL>
@@ -110,19 +77,3 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-blog-entry") %>' url="<%= addEntryURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
-
-<aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
-	function <portlet:namespace />deleteEntries() {
-		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH :Constants.DELETE %>');
-			form.fm('deleteEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="/blogs/edit_entry" />');
-		}
-	}
-</aui:script>

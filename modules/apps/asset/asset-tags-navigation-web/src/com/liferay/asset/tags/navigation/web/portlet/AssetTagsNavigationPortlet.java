@@ -14,13 +14,11 @@
 
 package com.liferay.asset.tags.navigation.web.portlet;
 
-import com.liferay.asset.tags.navigation.web.upgrade.AssetTagsNavigationWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -51,10 +49,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AssetTagsNavigationPortlet extends MVCPortlet {
-
-	@Reference(unbind = "-")
-	protected void setAssetTagsNavigationWebUpgrade(
-		AssetTagsNavigationWebUpgrade assetTagsNavigationWebUpgrade) {
-	}
-
 }

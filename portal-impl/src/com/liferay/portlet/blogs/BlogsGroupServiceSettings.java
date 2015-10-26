@@ -108,6 +108,10 @@ public class BlogsGroupServiceSettings {
 		return _typedSettings.getValue("emailFromName");
 	}
 
+	public int getSmallImageWidth() {
+		return _typedSettings.getIntegerValue("smallImageWidth");
+	}
+
 	public boolean isEmailEntryAddedEnabled() {
 		return _typedSettings.getBooleanValue("emailEntryAddedEnabled");
 	}

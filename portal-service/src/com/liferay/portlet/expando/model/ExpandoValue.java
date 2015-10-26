@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface ExpandoValue extends ExpandoValueModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.expando.model.impl.ExpandoValueImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ExpandoValue, Long> VALUE_ID_ACCESSOR = new Accessor<ExpandoValue, Long>() {
+			@Override
+			public Long get(ExpandoValue expandoValue) {
+				return expandoValue.getValueId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ExpandoValue> getTypeClass() {
+				return ExpandoValue.class;
+			}
+		};
+
 	public java.util.List<java.util.Locale> getAvailableLocales()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

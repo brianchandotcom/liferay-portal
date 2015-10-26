@@ -15,7 +15,9 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Collections;
@@ -45,28 +47,27 @@ public class TestPropsUtil {
 	}
 
 	private TestPropsUtil() {
-		try {
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader classLoader = currentThread.getContextClassLoader();
-
-			InputStream is = classLoader.getResourceAsStream(
-				"test-portal-impl.properties");
+		try (InputStream is = TestPropsUtil.class.getResourceAsStream(
+				"/test-portal-impl.properties")) {
 
 			_props.load(is);
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
+		}
 
-			is = classLoader.getResourceAsStream(
-				"test-portal-impl-ext.properties");
+		try (InputStream is = TestPropsUtil.class.getResourceAsStream(
+			"/test-portal-impl-ext.properties")) {
 
 			if (is != null) {
 				_props.load(is);
 			}
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
+		}
 
-			_printProperties(false);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		_printProperties(false);
 	}
 
 	private String _get(String key) {

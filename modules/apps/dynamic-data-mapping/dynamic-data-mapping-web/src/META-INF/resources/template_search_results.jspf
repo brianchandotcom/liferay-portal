@@ -22,18 +22,18 @@ long[] classNameIds = ddmDisplay.getTemplateClassNameIds(classNameId);
 long[] classPKs = ddmDisplay.getTemplateClassPKs(company.getCompanyId(), classNameId, classPK);
 
 if (searchTerms.isAdvancedSearch()) {
-	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, classPKs, resourceClassNameId, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getType(), null, null, searchTerms.isAndOperator());
+	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, classPKs, resourceClassNameId, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getType(), null, null, searchTerms.getStatus(), searchTerms.isAndOperator());
 
 	searchContainer.setTotal(total);
 
-	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, classPKs, resourceClassNameId, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getType(), ddmDisplay.getTemplateMode(), null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, classPKs, resourceClassNameId, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getType(), ddmDisplay.getTemplateMode(), null, searchTerms.getStatus(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 else {
-	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, classPKs, resourceClassNameId, searchTerms.getKeywords(), searchTerms.getType(), ddmDisplay.getTemplateMode());
+	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, classPKs, resourceClassNameId, searchTerms.getKeywords(), searchTerms.getType(), ddmDisplay.getTemplateMode(), searchTerms.getStatus());
 
 	searchContainer.setTotal(total);
 
-	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, classPKs, resourceClassNameId, searchTerms.getKeywords(), searchTerms.getType(), ddmDisplay.getTemplateMode(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, classPKs, resourceClassNameId, searchTerms.getKeywords(), searchTerms.getType(), ddmDisplay.getTemplateMode(), searchTerms.getStatus(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
 searchContainer.setResults(results);

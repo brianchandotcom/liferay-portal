@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,21 @@ public interface AnnouncementsDelivery extends AnnouncementsDeliveryModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<AnnouncementsDelivery, Long> DELIVERY_ID_ACCESSOR =
+		new Accessor<AnnouncementsDelivery, Long>() {
+			@Override
+			public Long get(AnnouncementsDelivery announcementsDelivery) {
+				return announcementsDelivery.getDeliveryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<AnnouncementsDelivery> getTypeClass() {
+				return AnnouncementsDelivery.class;
+			}
+		};
 }

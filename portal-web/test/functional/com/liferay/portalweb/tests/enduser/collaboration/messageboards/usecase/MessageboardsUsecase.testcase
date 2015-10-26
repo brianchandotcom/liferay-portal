@@ -193,19 +193,19 @@
 		</execute>
 
 		<execute macro="MessageboardsPortlet#searchPG">
-			<var name="searchTerm"><![CDATA["This is a *.docx file."]]></var>
+			<var name="searchTerm" value="This is a *.docx file." />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewSearchResultPG">
 			<var name="mbThreadAttachment" value="Document_1.docx" />
-			<var name="searchTerm"><![CDATA[This is a *.docx file.]]></var>
+			<var name="searchTerm" value="This is a *.doc x file." />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 
-	<command name="SplitMBThread" priority="4">
+	<command name="SplitMBThread" priority="3">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body" />
 		<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
@@ -787,7 +787,7 @@
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewSearchResultPG">
-			<var name="threadBody" value="MB Thread1 Reply Body" />
+			<var name="threadBody" value="MB Thread3 Message Body" />
 			<var name="threadSubject" value="MB Thread3 Message Subject" />
 			<var name="userName" value="Test Test" />
 		</execute>
@@ -883,7 +883,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite" priority="4">
+	<command name="ViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

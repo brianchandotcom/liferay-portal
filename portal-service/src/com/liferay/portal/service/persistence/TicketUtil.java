@@ -131,7 +131,7 @@ public class TicketUtil {
 	* Returns the ticket where key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param key the key
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ticket, or <code>null</code> if a matching ticket could not be found
 	*/
 	public static Ticket fetchByKey(java.lang.String key,
@@ -214,6 +214,30 @@ public class TicketUtil {
 		return getPersistence()
 				   .findByC_C_T(classNameId, classPK, type, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param start the lower bound of the range of tickets
+	* @param end the upper bound of the range of tickets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching tickets
+	*/
+	public static List<Ticket> findByC_C_T(long classNameId, long classPK,
+		int type, int start, int end,
+		OrderByComparator<Ticket> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_C_T(classNameId, classPK, type, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -437,6 +461,25 @@ public class TicketUtil {
 	public static List<Ticket> findAll(int start, int end,
 		OrderByComparator<Ticket> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the tickets.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of tickets
+	* @param end the upper bound of the range of tickets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of tickets
+	*/
+	public static List<Ticket> findAll(int start, int end,
+		OrderByComparator<Ticket> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**

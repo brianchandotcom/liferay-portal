@@ -22,8 +22,8 @@ import com.liferay.polls.model.impl.PollsVoteImpl;
 import com.liferay.polls.model.impl.PollsVoteModelImpl;
 import com.liferay.polls.service.persistence.PollsVotePersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -41,6 +41,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -150,6 +151,27 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findByUuid(String uuid, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByUuid(String uuid, int start, int end,
+		OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -165,15 +187,19 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PollsVote pollsVote : list) {
-				if (!Validator.equals(uuid, pollsVote.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if (!Validator.equals(uuid, pollsVote.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -244,10 +270,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -548,8 +574,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -587,10 +612,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -669,7 +694,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
 	 */
 	@Override
@@ -680,7 +705,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -734,7 +759,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				List<PollsVote> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -747,14 +772,13 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 					if ((pollsVote.getUuid() == null) ||
 							!pollsVote.getUuid().equals(uuid) ||
 							(pollsVote.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, pollsVote);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -799,8 +823,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -842,10 +865,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -931,6 +954,28 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<PollsVote> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -950,16 +995,20 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				};
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PollsVote pollsVote : list) {
-				if (!Validator.equals(uuid, pollsVote.getUuid()) ||
-						(companyId != pollsVote.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if (!Validator.equals(uuid, pollsVote.getUuid()) ||
+							(companyId != pollsVote.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1034,10 +1083,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1358,8 +1407,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1401,10 +1449,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1486,6 +1534,27 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findByQuestionId(long questionId, int start,
 		int end, OrderByComparator<PollsVote> orderByComparator) {
+		return findByQuestionId(questionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes where questionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param questionId the question ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByQuestionId(long questionId, int start,
+		int end, OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1501,15 +1570,19 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			finderArgs = new Object[] { questionId, start, end, orderByComparator };
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PollsVote pollsVote : list) {
-				if ((questionId != pollsVote.getQuestionId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if ((questionId != pollsVote.getQuestionId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1566,10 +1639,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1859,8 +1932,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		Object[] finderArgs = new Object[] { questionId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1884,10 +1956,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1965,6 +2037,27 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findByChoiceId(long choiceId, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator) {
+		return findByChoiceId(choiceId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes where choiceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param choiceId the choice ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByChoiceId(long choiceId, int start, int end,
+		OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1980,15 +2073,19 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			finderArgs = new Object[] { choiceId, start, end, orderByComparator };
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PollsVote pollsVote : list) {
-				if ((choiceId != pollsVote.getChoiceId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if ((choiceId != pollsVote.getChoiceId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2045,10 +2142,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2335,8 +2432,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		Object[] finderArgs = new Object[] { choiceId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2360,10 +2456,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2440,7 +2536,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 *
 	 * @param questionId the question ID
 	 * @param userId the user ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
 	 */
 	@Override
@@ -2451,7 +2547,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_Q_U,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_Q_U,
 					finderArgs, this);
 		}
 
@@ -2491,8 +2587,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				List<PollsVote> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U, finderArgs,
+						list);
 				}
 				else {
 					PollsVote pollsVote = list.get(0);
@@ -2503,14 +2599,13 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 					if ((pollsVote.getQuestionId() != questionId) ||
 							(pollsVote.getUserId() != userId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U,
 							finderArgs, pollsVote);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_Q_U, finderArgs);
 
 				throw processException(e);
 			}
@@ -2555,8 +2650,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		Object[] finderArgs = new Object[] { questionId, userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2584,10 +2678,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2613,14 +2707,14 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 */
 	@Override
 	public void cacheResult(PollsVote pollsVote) {
-		EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteImpl.class, pollsVote.getPrimaryKey(), pollsVote);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { pollsVote.getUuid(), pollsVote.getGroupId() },
 			pollsVote);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U,
 			new Object[] { pollsVote.getQuestionId(), pollsVote.getUserId() },
 			pollsVote);
 
@@ -2635,8 +2729,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public void cacheResult(List<PollsVote> pollsVotes) {
 		for (PollsVote pollsVote : pollsVotes) {
-			if (EntityCacheUtil.getResult(
-						PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 						PollsVoteImpl.class, pollsVote.getPrimaryKey()) == null) {
 				cacheResult(pollsVote);
 			}
@@ -2650,43 +2743,43 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 * Clears the cache for all polls votes.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(PollsVoteImpl.class);
+		entityCache.clearCache(PollsVoteImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the polls vote.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(PollsVote pollsVote) {
-		EntityCacheUtil.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteImpl.class, pollsVote.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((PollsVoteModelImpl)pollsVote);
 	}
 
 	@Override
 	public void clearCache(List<PollsVote> pollsVotes) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (PollsVote pollsVote : pollsVotes) {
-			EntityCacheUtil.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 				PollsVoteImpl.class, pollsVote.getPrimaryKey());
 
 			clearUniqueFindersCache((PollsVoteModelImpl)pollsVote);
@@ -2701,9 +2794,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 					pollsVoteModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				pollsVoteModelImpl);
 
 			args = new Object[] {
@@ -2711,9 +2804,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 					pollsVoteModelImpl.getUserId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U, args,
 				pollsVoteModelImpl);
 		}
 		else {
@@ -2724,9 +2817,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						pollsVoteModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					pollsVoteModelImpl);
 			}
 
@@ -2737,9 +2830,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						pollsVoteModelImpl.getUserId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U, args,
 					pollsVoteModelImpl);
 			}
 		}
@@ -2751,8 +2844,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				pollsVoteModelImpl.getUuid(), pollsVoteModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((pollsVoteModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -2761,8 +2854,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 					pollsVoteModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -2770,8 +2863,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				pollsVoteModelImpl.getUserId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
 
 		if ((pollsVoteModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_Q_U.getColumnBitmask()) != 0) {
@@ -2780,8 +2873,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 					pollsVoteModelImpl.getOriginalUserId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
 		}
 	}
 
@@ -2945,10 +3038,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !PollsVoteModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2958,14 +3051,14 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						pollsVoteModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { pollsVoteModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -2976,8 +3069,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						pollsVoteModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -2985,8 +3078,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						pollsVoteModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -2996,16 +3089,14 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						pollsVoteModelImpl.getOriginalQuestionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_QUESTIONID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_QUESTIONID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID,
 					args);
 
 				args = new Object[] { pollsVoteModelImpl.getQuestionId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_QUESTIONID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_QUESTIONID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID,
 					args);
 			}
 
@@ -3015,19 +3106,19 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						pollsVoteModelImpl.getOriginalChoiceId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHOICEID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CHOICEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID,
 					args);
 
 				args = new Object[] { pollsVoteModelImpl.getChoiceId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHOICEID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CHOICEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteImpl.class, pollsVote.getPrimaryKey(), pollsVote, false);
 
 		clearUniqueFindersCache(pollsVoteModelImpl);
@@ -3108,7 +3199,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 */
 	@Override
 	public PollsVote fetchByPrimaryKey(Serializable primaryKey) {
-		PollsVote pollsVote = (PollsVote)EntityCacheUtil.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+		PollsVote pollsVote = (PollsVote)entityCache.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 				PollsVoteImpl.class, primaryKey);
 
 		if (pollsVote == _nullPollsVote) {
@@ -3128,12 +3219,12 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 					cacheResult(pollsVote);
 				}
 				else {
-					EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 						PollsVoteImpl.class, primaryKey, _nullPollsVote);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 					PollsVoteImpl.class, primaryKey);
 
 				throw processException(e);
@@ -3183,7 +3274,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			PollsVote pollsVote = (PollsVote)EntityCacheUtil.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+			PollsVote pollsVote = (PollsVote)entityCache.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 					PollsVoteImpl.class, primaryKey);
 
 			if (pollsVote == null) {
@@ -3235,7 +3326,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 					PollsVoteImpl.class, primaryKey, _nullPollsVote);
 			}
 		}
@@ -3290,6 +3381,26 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public List<PollsVote> findAll(int start, int end,
 		OrderByComparator<PollsVote> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the polls votes.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of polls votes
+	 */
+	@Override
+	public List<PollsVote> findAll(int start, int end,
+		OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3305,8 +3416,12 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<PollsVote> list = (List<PollsVote>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PollsVote> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<PollsVote>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3353,10 +3468,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3386,7 +3501,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -3399,11 +3514,11 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -3433,12 +3548,16 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(PollsVoteImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(PollsVoteImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_POLLSVOTE = "SELECT pollsVote FROM PollsVote pollsVote";
 	private static final String _SQL_SELECT_POLLSVOTE_WHERE_PKS_IN = "SELECT pollsVote FROM PollsVote pollsVote WHERE voteId IN (";
 	private static final String _SQL_SELECT_POLLSVOTE_WHERE = "SELECT pollsVote FROM PollsVote pollsVote WHERE ";

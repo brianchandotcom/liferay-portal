@@ -16,6 +16,7 @@ package com.liferay.portal.lock.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface Lock extends LockModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.lock.model.impl.LockImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Lock, Long> LOCK_ID_ACCESSOR = new Accessor<Lock, Long>() {
+			@Override
+			public Long get(Lock lock) {
+				return lock.getLockId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Lock> getTypeClass() {
+				return Lock.class;
+			}
+		};
+
 	public long getExpirationTime();
 
 	public boolean isExpired();

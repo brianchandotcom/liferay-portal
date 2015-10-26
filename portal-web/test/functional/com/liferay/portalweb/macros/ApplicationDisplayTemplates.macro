@@ -1,9 +1,11 @@
 <definition>
 	<command name="addADTviaPortletPG">
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
-		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" />
@@ -12,20 +14,19 @@
 			</then>
 		</if>
 
-		<execute function="Select" locator1="ApplicationDisplayTemplatesConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${adtType} Test ADT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
-		<execute function="SelectFrameTop" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="addCP">
 		<var name="key_adtType" value="${adtType}" />
-
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no templates." />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="${adtType} Template" />
 
-		<execute function="AssertTextEquals" locator1="DDMEditTemplate#HEADER_TITLE" value1="New ${adtType} Template" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="New ${adtType} Template" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -54,9 +55,7 @@
 
 		<execute function="SelectFrame" locator1="ApplicationDisplayTemplates#ADT_IFRAME" />
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#ADD" value1="Add" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="RSS Template" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="RSS Test ADT" />
 
@@ -68,10 +67,12 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
-		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="Pause" locator1="5000" />
 
@@ -86,13 +87,11 @@
 
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="ApplicationDisplayTemplates#ADT_IFRAME" />
-		<execute function="AssertClick#assertTextClick" locator1="Button#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<var name="key_adtType" value="${adtType}" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="${adtType} Template" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
@@ -107,10 +106,12 @@
 		<if>
 			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
 			<then>
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletName" value="${portletName}" />
+					<var name="portletOption" value="Configuration" />
+				</execute>
 
-				<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 				<if>
 					<condition function="IsElementPresent" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" />
@@ -128,9 +129,12 @@
 	</command>
 
 	<command name="tearDownPG">
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" />
@@ -154,17 +158,19 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="There are no templates." />
 	</command>
 
 	<command name="viewADTviaPortletPG">
 		<if>
 			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
 			<then>
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletName" value="${portletName}" />
+					<var name="portletOption" value="Configuration" />
+				</execute>
 
-				<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 				<if>
 					<condition function="IsElementPresent" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" />

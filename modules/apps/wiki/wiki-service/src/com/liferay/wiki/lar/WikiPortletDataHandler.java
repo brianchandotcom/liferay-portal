@@ -16,7 +16,6 @@ package com.liferay.wiki.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -33,8 +32,8 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.impl.WikiNodeImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
@@ -122,8 +121,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		WikiNodeLocalServiceUtil.deleteNodes(
-			portletDataContext.getScopeGroupId());
+		_wikiNodeLocalService.deleteNodes(portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -147,13 +145,13 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery nodeActionableDynamicQuery =
-			WikiNodeLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiNodeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		nodeActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery pageActionableDynamicQuery =
-			WikiPageLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiPageLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		pageActionableDynamicQuery.performActions();
@@ -212,64 +210,38 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery nodeActionableDynamicQuery =
-			WikiNodeLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiNodeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		nodeActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery pageExportActionableDynamicQuery =
-			WikiPageLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiPageLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		pageExportActionableDynamicQuery.performCount();
-	}
-
-	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		String hiddenNodeNames = portletPreferences.getValue(
-			"hiddenNodes", null);
-
-		for (String hiddenNodeName : StringUtil.split(hiddenNodeNames)) {
-			WikiNode wikiNode = WikiNodeLocalServiceUtil.getNode(
-				portletDataContext.getScopeGroupId(), hiddenNodeName);
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, wikiNode);
-		}
-
-		String visibleNodeNames = portletPreferences.getValue(
-			"visibleNodes", null);
-
-		for (String visibleNodeName : StringUtil.split(visibleNodeNames)) {
-			WikiNode wikiNode = WikiNodeLocalServiceUtil.getNode(
-				portletDataContext.getScopeGroupId(), visibleNodeName);
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, wikiNode);
-		}
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, WikiNode.class);
-
-		return portletPreferences;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	private WikiNodeLocalService _wikiNodeLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

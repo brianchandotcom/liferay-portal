@@ -25,6 +25,10 @@ AUI.add(
 						value: ''
 					},
 
+					indexType: {
+						value: 'keyword'
+					},
+
 					instanceId: {
 						valueFn: '_valueInstanceId'
 					},

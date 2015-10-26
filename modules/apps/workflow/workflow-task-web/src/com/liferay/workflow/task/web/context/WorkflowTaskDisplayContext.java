@@ -445,8 +445,6 @@ public class WorkflowTaskDisplayContext {
 			_workflowTaskRequestHelper.getThemeDisplay();
 
 		editPortletURL.setParameter(
-			"doAsGroupId", String.valueOf(assetRenderer.getGroupId()));
-		editPortletURL.setParameter(
 			"refererPlid", String.valueOf(themeDisplay.getPlid()));
 
 		editPortletURL.setPortletMode(PortletMode.VIEW);

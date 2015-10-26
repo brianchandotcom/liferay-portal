@@ -55,7 +55,7 @@ SAPEntry sapEntry = (SAPEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= !sapEntry.isDefaultSAPEntry() && SAPEntryPermission.contains(permissionChecker, sapEntry, ActionKeys.DELETE) %>">
+	<c:if test="<%= !sapEntry.isSystem() && SAPEntryPermission.contains(permissionChecker, sapEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteSAPEntry" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sapEntryId" value="<%= String.valueOf(sapEntry.getSapEntryId()) %>" />

@@ -41,6 +41,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class PluginSettingPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -298,11 +300,9 @@ public class PluginSettingPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PluginSettingLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PluginSetting>() {
 				@Override
-				public void performAction(Object object) {
-					PluginSetting pluginSetting = (PluginSetting)object;
-
+				public void performAction(PluginSetting pluginSetting) {
 					Assert.assertNotNull(pluginSetting);
 
 					count.increment();

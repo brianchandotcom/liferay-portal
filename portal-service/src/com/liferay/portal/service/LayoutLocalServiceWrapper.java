@@ -1260,6 +1260,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	@Override
+	public boolean hasLayouts(com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.hasLayouts(group);
+	}
+
+	@Override
 	public boolean hasLayouts(com.liferay.portal.model.Group group,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -46,6 +46,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -65,8 +66,9 @@ import java.util.Set;
  */
 @RunWith(Arquillian.class)
 public class JournalArticlePersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -776,11 +778,9 @@ public class JournalArticlePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 				@Override
-				public void performAction(Object object) {
-					JournalArticle journalArticle = (JournalArticle)object;
-
+				public void performAction(JournalArticle journalArticle) {
 					Assert.assertNotNull(journalArticle);
 
 					count.increment();

@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the ResourceTypePermission service. Represents a row in the &quot;ResourceTypePermission&quot; database table, with each column mapped to a property of this class.
  *
@@ -33,6 +35,24 @@ public interface ResourceTypePermission extends ResourceTypePermissionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ResourceTypePermissionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ResourceTypePermission, Long> RESOURCE_TYPE_PERMISSION_ID_ACCESSOR =
+		new Accessor<ResourceTypePermission, Long>() {
+			@Override
+			public Long get(ResourceTypePermission resourceTypePermission) {
+				return resourceTypePermission.getResourceTypePermissionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ResourceTypePermission> getTypeClass() {
+				return ResourceTypePermission.class;
+			}
+		};
+
 	public boolean hasAction(
 		com.liferay.portal.model.ResourceAction resourceAction);
 

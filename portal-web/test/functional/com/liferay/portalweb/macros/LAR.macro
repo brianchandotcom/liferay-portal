@@ -360,9 +360,17 @@
 	</command>
 
 	<command name="gotoImportSiteCmd">
-		<execute macro="Page#gotoPublishingTools">
-			<var name="portletCategoryName" value="Publishing Tools" />
-			<var name="portletName" value="Export/Import" />
+		<if>
+			<isset var="siteName" />
+			<then>
+				<execute macro="ProductMenu#gotoSite">
+					<var name="site" value="${siteName}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Export/Import" />
 		</execute>
 
 		<execute function="AssertClick" locator1="SitePages#TOOLBAR_IMPORT" value1="Import" />
@@ -434,7 +442,9 @@
 	</command>
 
 	<command name="importSiteCP">
-		<execute macro="LAR#gotoImportSiteCmd" />
+		<execute macro="LAR#gotoImportSiteCmd">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="LAR#selectImportFileSiteCmd">
 			<var name="importCampaignValidationError" value="${importCampaignValidationError}" />
@@ -472,6 +482,16 @@
 
 	<command name="saveExportTemplateCP">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<var name="key_exportTemplateName" value="${exportTemplateName}" />
+
+		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
+	</command>
+
+	<command name="searchTemplate">
+		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${exportTemplateName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 

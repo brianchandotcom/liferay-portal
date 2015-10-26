@@ -200,7 +200,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithContactsPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithContactsPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Contacts" />
 
 		<execute macro="Page#gotoContentCP">
@@ -298,7 +298,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithEventsPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithEventsPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Events" />
 
 		<execute macro="Page#gotoContentCP">
@@ -378,7 +378,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithInventoryPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithInventoryPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Inventory" />
 
 		<execute macro="Page#gotoContentCP">
@@ -452,7 +452,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithIssuesTrackingPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithIssuesTrackingPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Issues Tracking" />
 
 		<execute macro="Page#gotoContentCP">
@@ -544,7 +544,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithMeetingMinutesPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithMeetingMinutesPredefinedDataDefinition" priority="3">
 		<var name="ddlDataDefinitionName" value="Meeting Minutes" />
 
 		<execute macro="Page#gotoContentCP">
@@ -984,7 +984,7 @@
 		<var name="document" value="Document_1.txt" />
 		<var name="field" value="Documents and Media" />
 		<var name="fieldFieldLabel" value="Documents and Media" />
-		<var name="fieldName" value="Documents_and_Media" />
+		<var name="fieldName" value="DocumentsAndMedia" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -1063,7 +1063,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-13522" name="AddListRecordWithGeolocationField" priority="4">
+	<command name="AddListRecordWithGeolocationField" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -1324,7 +1324,7 @@
 		<var name="ddlRecordFieldData" value="Test Page" />
 		<var name="field" value="Link to Page" />
 		<var name="fieldFieldLabel" value="Link to Page" />
-		<var name="fieldName" value="Link_to_Page" />
+		<var name="fieldName" value="LinkToPage" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${ddlRecordFieldData}" />
@@ -1668,7 +1668,7 @@
 		<var name="ddlRecordFieldData" value="Text Box Data" />
 		<var name="field" value="Text Box" />
 		<var name="fieldFieldLabel" value="Text Box" />
-		<var name="fieldName" value="Text_Box" />
+		<var name="fieldName" value="TextBox" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -1832,7 +1832,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinition" priority="4">
+	<command name="CopyDataDefinition" priority="3">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -1911,7 +1911,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinitionWithCopyDisplayTemplates" priority="4">
+	<command name="CopyDataDefinitionWithCopyDisplayTemplates" priority="3">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2001,7 +2001,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinitionWithCopyFormTemplates" priority="4">
+	<command name="CopyDataDefinitionWithCopyFormTemplates" priority="3">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2491,7 +2491,7 @@
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldFieldLabelEdit" value="Boolean Edit" />
 		<var name="fieldName" value="Boolean" />
-		<var name="fieldNameEdit" value="Boolean_Edit" />
+		<var name="fieldNameEdit" value="BooleanEdit" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -2596,7 +2596,7 @@
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
-		<var name="fieldNameEdit" value="Boolean_Edit" />
+		<var name="fieldNameEdit" value="BooleanEdit" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -3397,7 +3397,7 @@
 		</execute>
 	</command>
 
-	<command name="EditRadioFieldOptionsWithUTF8Characters" priority="4">
+	<command name="EditRadioFieldOptionsWithUTF8Characters" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Radio" />
 		<var name="fieldFieldLabel" value="Radio" />
@@ -3499,7 +3499,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSelectFieldOptionsWithUTF8Characters" priority="4">
+	<command name="EditSelectFieldOptionsWithUTF8Characters" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Select" />
 		<var name="fieldFieldLabel" value="Select" />
@@ -3550,7 +3550,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51926" name="ImportLAR" priority="4">
+	<command name="ImportLAR" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -3665,7 +3665,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBooleanFieldPredefinedValue" priority="4">
+	<command name="ViewBooleanFieldPredefinedValue" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="No" />
@@ -3784,14 +3784,14 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#viewFirstFieldCP">
+		<execute macro="DDLRecord#viewFieldCP">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52567" name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="4">
+	<command name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="3">
 		<var name="character1"><![CDATA[`]]></var>
 		<var name="character2"><![CDATA[~]]></var>
 		<var name="character3"><![CDATA[!]]></var>
@@ -3823,7 +3823,6 @@
 		<var name="character29"><![CDATA[?]]></var>
 		<var name="character30"><![CDATA[_]]></var>
 		<var name="character31" value="test space" />
-		<var name="character32" value=" frontSpace" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -3840,7 +3839,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<for list="${character1},${character2},${character3},${character4},${character5},${character6},${character7},${character8},${character9},${character10},${character11},${character12},${character13},${character14},${character15},${character16},${character17}.${character18},${character19},${character20},${character21},${character22},${character23},${character24},${character25},${character26},${character27},${character28},${character29},${character30},${character31},${character32}" param="fieldName">
+		<for list="${character1},${character2},${character3},${character4},${character5},${character6},${character7},${character8},${character9},${character10},${character11},${character12},${character13},${character14},${character15},${character16},${character17}.${character18},${character19},${character20},${character21},${character22},${character23},${character24},${character25},${character26},${character27},${character28},${character29},${character30},${character31}" param="fieldName">
 			<execute macro="DynamicDataMapping#editFieldNameInvalidCharacter">
 				<var name="field" value="Text" />
 				<var name="fieldFieldLabel" value="Text" />
@@ -3855,7 +3854,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewFormTemplateFieldReadOnlyWithEditMode" priority="4">
+	<command name="ViewFormTemplateFieldReadOnlyWithEditMode" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -3921,7 +3920,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewFormTemplateFields" priority="4">
+	<command name="ViewFormTemplateFields" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -3990,7 +3989,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewFormTemplateFieldsAfterSaveAndContinue" priority="4">
+	<command name="ViewFormTemplateFieldsAfterSaveAndContinue" priority="3">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -4129,7 +4128,7 @@
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
-	<command name="ViewNoDuplicatesInOriginalAfterCopy" priority="4">
+	<command name="ViewNoDuplicatesInOriginalAfterCopy" priority="3">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />

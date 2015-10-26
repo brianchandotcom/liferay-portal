@@ -29,13 +29,14 @@ import com.liferay.portlet.documentlibrary.FileShortcutPermissionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -61,8 +62,8 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "fileShortcutId");
 
 		if (moveToTrash) {
-			FileShortcut fileShortcut =
-				DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
+			FileShortcut fileShortcut = _dlAppService.moveFileShortcutToTrash(
+				fileShortcutId);
 
 			if (fileShortcut.getModel() instanceof TrashedModel) {
 				TrashUtil.addTrashSessionMessages(
@@ -72,7 +73,7 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 			hideDefaultSuccessMessage(actionRequest);
 		}
 		else {
-			DLAppServiceUtil.deleteFileShortcut(fileShortcutId);
+			_dlAppService.deleteFileShortcut(fileShortcutId);
 		}
 	}
 
@@ -114,6 +115,11 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
 	protected void updateFileShortcut(ActionRequest actionRequest)
 		throws Exception {
 
@@ -131,16 +137,18 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add file shortcut
 
-			DLAppServiceUtil.addFileShortcut(
+			_dlAppService.addFileShortcut(
 				repositoryId, folderId, toFileEntryId, serviceContext);
 		}
 		else {
 
 			// Update file shortcut
 
-			DLAppServiceUtil.updateFileShortcut(
+			_dlAppService.updateFileShortcut(
 				fileShortcutId, folderId, toFileEntryId, serviceContext);
 		}
 	}
+
+	private DLAppService _dlAppService;
 
 }

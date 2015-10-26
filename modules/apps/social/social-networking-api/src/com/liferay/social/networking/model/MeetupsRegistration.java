@@ -16,6 +16,7 @@ package com.liferay.social.networking.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,21 @@ public interface MeetupsRegistration extends MeetupsRegistrationModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.social.networking.model.impl.MeetupsRegistrationImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<MeetupsRegistration, Long> MEETUPS_REGISTRATION_ID_ACCESSOR =
+		new Accessor<MeetupsRegistration, Long>() {
+			@Override
+			public Long get(MeetupsRegistration meetupsRegistration) {
+				return meetupsRegistration.getMeetupsRegistrationId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<MeetupsRegistration> getTypeClass() {
+				return MeetupsRegistration.class;
+			}
+		};
 }

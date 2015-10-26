@@ -42,6 +42,7 @@ import com.liferay.portlet.expando.service.persistence.ExpandoColumnUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,8 +59,9 @@ import java.util.Set;
  * @generated
  */
 public class ExpandoColumnPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -306,11 +308,9 @@ public class ExpandoColumnPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ExpandoColumnLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ExpandoColumn>() {
 				@Override
-				public void performAction(Object object) {
-					ExpandoColumn expandoColumn = (ExpandoColumn)object;
-
+				public void performAction(ExpandoColumn expandoColumn) {
 					Assert.assertNotNull(expandoColumn);
 
 					count.increment();

@@ -22,22 +22,17 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
-import com.liferay.wiki.exception.NodeChangeException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.PageTitleException;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -65,11 +60,6 @@ public class MovePageAction extends PortletAction {
 			if (cmd.equals(Constants.CHANGE_PARENT)) {
 				changeParentPage(actionRequest);
 			}
-			else if (cmd.equals(Constants.MOVE)) {
-				changeNode(actionRequest);
-
-				redirect = getChangeNodeRedirect(actionRequest, actionResponse);
-			}
 			else if (cmd.equals(Constants.RENAME)) {
 				renamePage(actionRequest);
 			}
@@ -92,9 +82,6 @@ public class MovePageAction extends PortletAction {
 					 e instanceof PageTitleException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof NodeChangeException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
 				throw e;
@@ -132,18 +119,6 @@ public class MovePageAction extends PortletAction {
 			getForward(renderRequest, "portlet.wiki.move_page"));
 	}
 
-	protected void changeNode(ActionRequest actionRequest) throws Exception {
-		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
-		String title = ParamUtil.getString(actionRequest, "title");
-		long newNodeId = ParamUtil.getLong(actionRequest, "newNodeId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			WikiPage.class.getName(), actionRequest);
-
-		WikiPageServiceUtil.changeNode(
-			nodeId, title, newNodeId, serviceContext);
-	}
-
 	protected void changeParentPage(ActionRequest actionRequest)
 		throws Exception {
 
@@ -157,27 +132,6 @@ public class MovePageAction extends PortletAction {
 
 		WikiPageServiceUtil.changeParent(
 			nodeId, title, newParentTitle, serviceContext);
-	}
-
-	protected String getChangeNodeRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long newNodeId = ParamUtil.getLong(actionRequest, "newNodeId");
-
-		WikiNode node = WikiNodeServiceUtil.getNode(newNodeId);
-
-		ActionResponseImpl actionResponseImpl =
-			(ActionResponseImpl)actionResponse;
-
-		PortletURL portletURL = actionResponseImpl.createRenderURL();
-
-		portletURL.setParameter("struts_action", "/wiki/view");
-		portletURL.setParameter("nodeName", node.getName());
-		portletURL.setParameter(
-			"title", ParamUtil.getString(actionRequest, "title"));
-
-		return portletURL.toString();
 	}
 
 	@Override

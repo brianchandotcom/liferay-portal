@@ -275,7 +275,6 @@ public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
 	 *
 	 * @return the last publish date of this user group
 	 */
-	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -283,7 +282,6 @@ public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
 	 *
 	 * @param lastPublishDate the last publish date of this user group
 	 */
-	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

@@ -17,7 +17,7 @@ package com.liferay.osgi.service.tracker.map;
 import org.osgi.framework.ServiceReference;
 
 /**
- * @author Carlos Sierra Andr�s
+ * @author Carlos Sierra Andrés
  */
 public class PropertyServiceReferenceMapper<T, S>
 	implements ServiceReferenceMapper<T, S> {

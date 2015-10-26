@@ -21,8 +21,8 @@ import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.model.impl.BackgroundTaskImpl;
 import com.liferay.portal.background.task.model.impl.BackgroundTaskModelImpl;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskPersistence;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -41,9 +41,11 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -156,6 +158,27 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	@Override
 	public List<BackgroundTask> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -171,15 +194,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -236,10 +263,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -529,8 +556,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -554,10 +580,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -640,6 +666,27 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	@Override
 	public List<BackgroundTask> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -655,15 +702,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((companyId != backgroundTask.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((companyId != backgroundTask.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -720,10 +771,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1013,8 +1064,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1038,10 +1088,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1121,6 +1171,27 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	@Override
 	public List<BackgroundTask> findByStatus(int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByStatus(status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByStatus(int status, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1136,15 +1207,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			finderArgs = new Object[] { status, start, end, orderByComparator };
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((status != backgroundTask.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((status != backgroundTask.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1201,10 +1276,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1493,8 +1568,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 		Object[] finderArgs = new Object[] { status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1518,10 +1592,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1612,6 +1686,30 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByG_T(long groupId,
 		String taskExecutorClassName, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_T(groupId, taskExecutorClassName, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param taskExecutorClassName the task executor class name
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_T(long groupId,
+		String taskExecutorClassName, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1631,17 +1729,21 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						!Validator.equals(taskExecutorClassName,
-							backgroundTask.getTaskExecutorClassName())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							!Validator.equals(taskExecutorClassName,
+								backgroundTask.getTaskExecutorClassName())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1716,10 +1818,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2074,12 +2176,38 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByG_T(long groupId,
 		String[] taskExecutorClassNames, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_T(groupId, taskExecutorClassNames, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param taskExecutorClassName the task executor class name
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_T(long groupId,
+		String[] taskExecutorClassNames, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -2105,17 +2233,21 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						!ArrayUtil.contains(taskExecutorClassNames,
-							backgroundTask.getTaskExecutorClassName())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							!ArrayUtil.contains(taskExecutorClassNames,
+								backgroundTask.getTaskExecutorClassName())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2198,11 +2330,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
 					finderArgs);
 
 				throw processException(e);
@@ -2243,8 +2375,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 		Object[] finderArgs = new Object[] { groupId, taskExecutorClassName };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2286,10 +2417,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2313,16 +2444,18 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(taskExecutorClassNames)
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
 				finderArgs, this);
 
 		if (count == null) {
@@ -2381,11 +2514,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
 					finderArgs);
 
 				throw processException(e);
@@ -2474,6 +2607,28 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	@Override
 	public List<BackgroundTask> findByG_S(long groupId, int status, int start,
 		int end, OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_S(groupId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_S(long groupId, int status, int start,
+		int end, OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2493,16 +2648,20 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						(status != backgroundTask.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							(status != backgroundTask.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2563,10 +2722,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2874,8 +3033,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 		Object[] finderArgs = new Object[] { groupId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2903,10 +3061,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2998,6 +3156,30 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByT_S(String taskExecutorClassName,
 		int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByT_S(taskExecutorClassName, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where taskExecutorClassName = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param taskExecutorClassName the task executor class name
+	 * @param status the status
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByT_S(String taskExecutorClassName,
+		int status, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3017,17 +3199,21 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if (!Validator.equals(taskExecutorClassName,
-							backgroundTask.getTaskExecutorClassName()) ||
-						(status != backgroundTask.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if (!Validator.equals(taskExecutorClassName,
+								backgroundTask.getTaskExecutorClassName()) ||
+							(status != backgroundTask.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3102,10 +3288,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3456,12 +3642,38 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByT_S(String[] taskExecutorClassNames,
 		int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByT_S(taskExecutorClassNames, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where taskExecutorClassName = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param taskExecutorClassName the task executor class name
+	 * @param status the status
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByT_S(String[] taskExecutorClassNames,
+		int status, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -3487,17 +3699,21 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if (!ArrayUtil.contains(taskExecutorClassNames,
-							backgroundTask.getTaskExecutorClassName()) ||
-						(status != backgroundTask.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if (!ArrayUtil.contains(taskExecutorClassNames,
+								backgroundTask.getTaskExecutorClassName()) ||
+							(status != backgroundTask.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3582,11 +3798,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S,
 					finderArgs);
 
 				throw processException(e);
@@ -3626,8 +3842,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 		Object[] finderArgs = new Object[] { taskExecutorClassName, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3669,10 +3884,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3696,16 +3911,18 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
 				StringUtil.merge(taskExecutorClassNames), status
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_T_S,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_T_S,
 				finderArgs, this);
 
 		if (count == null) {
@@ -3766,11 +3983,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_T_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_T_S,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_T_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_T_S,
 					finderArgs);
 
 				throw processException(e);
@@ -3879,6 +4096,31 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByG_N_T(long groupId, String name,
 		String taskExecutorClassName, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_N_T(groupId, name, taskExecutorClassName, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param taskExecutorClassName the task executor class name
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_N_T(long groupId, String name,
+		String taskExecutorClassName, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3898,18 +4140,22 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						!Validator.equals(name, backgroundTask.getName()) ||
-						!Validator.equals(taskExecutorClassName,
-							backgroundTask.getTaskExecutorClassName())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							!Validator.equals(name, backgroundTask.getName()) ||
+							!Validator.equals(taskExecutorClassName,
+								backgroundTask.getTaskExecutorClassName())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4002,10 +4248,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4366,8 +4612,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 		Object[] finderArgs = new Object[] { groupId, name, taskExecutorClassName };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -4427,10 +4672,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4542,6 +4787,31 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByG_T_C(long groupId,
 		String taskExecutorClassName, boolean completed, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_T_C(groupId, taskExecutorClassName, completed, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param taskExecutorClassName the task executor class name
+	 * @param completed the completed
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_T_C(long groupId,
+		String taskExecutorClassName, boolean completed, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4561,18 +4831,22 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						!Validator.equals(taskExecutorClassName,
-							backgroundTask.getTaskExecutorClassName()) ||
-						(completed != backgroundTask.getCompleted())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							!Validator.equals(taskExecutorClassName,
+								backgroundTask.getTaskExecutorClassName()) ||
+							(completed != backgroundTask.getCompleted())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4651,10 +4925,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5028,12 +5302,39 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByG_T_C(long groupId,
 		String[] taskExecutorClassNames, boolean completed, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_T_C(groupId, taskExecutorClassNames, completed, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param taskExecutorClassName the task executor class name
+	 * @param completed the completed
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_T_C(long groupId,
+		String[] taskExecutorClassNames, boolean completed, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -5059,18 +5360,22 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_C,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						!ArrayUtil.contains(taskExecutorClassNames,
-							backgroundTask.getTaskExecutorClassName()) ||
-						(completed != backgroundTask.getCompleted())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_C,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							!ArrayUtil.contains(taskExecutorClassNames,
+								backgroundTask.getTaskExecutorClassName()) ||
+							(completed != backgroundTask.getCompleted())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5159,11 +5464,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_C,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_C,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_C,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_C,
 					finderArgs);
 
 				throw processException(e);
@@ -5210,8 +5515,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				groupId, taskExecutorClassName, completed
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -5257,10 +5561,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5286,16 +5590,18 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(taskExecutorClassNames), completed
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_C,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_C,
 				finderArgs, this);
 
 		if (count == null) {
@@ -5360,11 +5666,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_C,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_C,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_C,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_C,
 					finderArgs);
 
 				throw processException(e);
@@ -5481,6 +5787,31 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByG_T_S(long groupId,
 		String taskExecutorClassName, int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_T_S(groupId, taskExecutorClassName, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param taskExecutorClassName the task executor class name
+	 * @param status the status
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_T_S(long groupId,
+		String taskExecutorClassName, int status, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5500,18 +5831,22 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						!Validator.equals(taskExecutorClassName,
-							backgroundTask.getTaskExecutorClassName()) ||
-						(status != backgroundTask.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							!Validator.equals(taskExecutorClassName,
+								backgroundTask.getTaskExecutorClassName()) ||
+							(status != backgroundTask.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5590,10 +5925,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5967,12 +6302,39 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByG_T_S(long groupId,
 		String[] taskExecutorClassNames, int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_T_S(groupId, taskExecutorClassNames, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param taskExecutorClassName the task executor class name
+	 * @param status the status
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_T_S(long groupId,
+		String[] taskExecutorClassNames, int status, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -5998,18 +6360,22 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						!ArrayUtil.contains(taskExecutorClassNames,
-							backgroundTask.getTaskExecutorClassName()) ||
-						(status != backgroundTask.getStatus())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							!ArrayUtil.contains(taskExecutorClassNames,
+								backgroundTask.getTaskExecutorClassName()) ||
+							(status != backgroundTask.getStatus())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6098,11 +6464,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S,
 					finderArgs);
 
 				throw processException(e);
@@ -6149,8 +6515,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				groupId, taskExecutorClassName, status
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -6196,10 +6561,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6225,16 +6590,18 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
-		else {
+		else if (taskExecutorClassNames.length > 1) {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
 					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(taskExecutorClassNames), status
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_S,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_S,
 				finderArgs, this);
 
 		if (count == null) {
@@ -6299,11 +6666,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_S,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_S,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_S,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_S,
 					finderArgs);
 
 				throw processException(e);
@@ -6418,6 +6785,32 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public List<BackgroundTask> findByG_N_T_C(long groupId, String name,
 		String taskExecutorClassName, boolean completed, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findByG_N_T_C(groupId, name, taskExecutorClassName, completed,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param taskExecutorClassName the task executor class name
+	 * @param completed the completed
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findByG_N_T_C(long groupId, String name,
+		String taskExecutorClassName, boolean completed, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6439,19 +6832,23 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				};
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (BackgroundTask backgroundTask : list) {
-				if ((groupId != backgroundTask.getGroupId()) ||
-						!Validator.equals(name, backgroundTask.getName()) ||
-						!Validator.equals(taskExecutorClassName,
-							backgroundTask.getTaskExecutorClassName()) ||
-						(completed != backgroundTask.getCompleted())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (BackgroundTask backgroundTask : list) {
+					if ((groupId != backgroundTask.getGroupId()) ||
+							!Validator.equals(name, backgroundTask.getName()) ||
+							!Validator.equals(taskExecutorClassName,
+								backgroundTask.getTaskExecutorClassName()) ||
+							(completed != backgroundTask.getCompleted())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6548,10 +6945,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6935,8 +7332,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				groupId, name, taskExecutorClassName, completed
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -7000,10 +7396,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7035,7 +7431,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 */
 	@Override
 	public void cacheResult(BackgroundTask backgroundTask) {
-		EntityCacheUtil.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 			BackgroundTaskImpl.class, backgroundTask.getPrimaryKey(),
 			backgroundTask);
 
@@ -7050,7 +7446,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	@Override
 	public void cacheResult(List<BackgroundTask> backgroundTasks) {
 		for (BackgroundTask backgroundTask : backgroundTasks) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 						BackgroundTaskImpl.class, backgroundTask.getPrimaryKey()) == null) {
 				cacheResult(backgroundTask);
@@ -7065,41 +7461,41 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 * Clears the cache for all background tasks.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(BackgroundTaskImpl.class);
+		entityCache.clearCache(BackgroundTaskImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the background task.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(BackgroundTask backgroundTask) {
-		EntityCacheUtil.removeResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 			BackgroundTaskImpl.class, backgroundTask.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<BackgroundTask> backgroundTasks) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (BackgroundTask backgroundTask : backgroundTasks) {
-			EntityCacheUtil.removeResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 				BackgroundTaskImpl.class, backgroundTask.getPrimaryKey());
 		}
 	}
@@ -7257,10 +7653,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !BackgroundTaskModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -7270,14 +7666,14 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { backgroundTaskModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -7287,16 +7683,14 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { backgroundTaskModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -7306,14 +7700,14 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
 					args);
 
 				args = new Object[] { backgroundTaskModelImpl.getStatus() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
 					args);
 			}
 
@@ -7324,8 +7718,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalTaskExecutorClassName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
 					args);
 
 				args = new Object[] {
@@ -7333,8 +7727,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getTaskExecutorClassName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
 					args);
 			}
 
@@ -7345,8 +7739,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
 
 				args = new Object[] {
@@ -7354,8 +7748,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
 			}
 
@@ -7366,8 +7760,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
 					args);
 
 				args = new Object[] {
@@ -7375,8 +7769,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
 					args);
 			}
 
@@ -7388,8 +7782,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalTaskExecutorClassName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T,
 					args);
 
 				args = new Object[] {
@@ -7398,8 +7792,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getTaskExecutorClassName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T,
 					args);
 			}
 
@@ -7411,8 +7805,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalCompleted()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_C,
 					args);
 
 				args = new Object[] {
@@ -7421,8 +7815,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getCompleted()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_C,
 					args);
 			}
 
@@ -7434,8 +7828,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
 					args);
 
 				args = new Object[] {
@@ -7444,8 +7838,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
 					args);
 			}
 
@@ -7458,8 +7852,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getOriginalCompleted()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_T_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_T_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T_C,
 					args);
 
 				args = new Object[] {
@@ -7469,13 +7863,13 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 						backgroundTaskModelImpl.getCompleted()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_T_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_T_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T_C,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 			BackgroundTaskImpl.class, backgroundTask.getPrimaryKey(),
 			backgroundTask, false);
 
@@ -7559,7 +7953,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 */
 	@Override
 	public BackgroundTask fetchByPrimaryKey(Serializable primaryKey) {
-		BackgroundTask backgroundTask = (BackgroundTask)EntityCacheUtil.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+		BackgroundTask backgroundTask = (BackgroundTask)entityCache.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 				BackgroundTaskImpl.class, primaryKey);
 
 		if (backgroundTask == _nullBackgroundTask) {
@@ -7579,13 +7973,13 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 					cacheResult(backgroundTask);
 				}
 				else {
-					EntityCacheUtil.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 						BackgroundTaskImpl.class, primaryKey,
 						_nullBackgroundTask);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 					BackgroundTaskImpl.class, primaryKey);
 
 				throw processException(e);
@@ -7635,7 +8029,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			BackgroundTask backgroundTask = (BackgroundTask)EntityCacheUtil.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+			BackgroundTask backgroundTask = (BackgroundTask)entityCache.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 					BackgroundTaskImpl.class, primaryKey);
 
 			if (backgroundTask == null) {
@@ -7687,7 +8081,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 					BackgroundTaskImpl.class, primaryKey, _nullBackgroundTask);
 			}
 		}
@@ -7742,6 +8136,26 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	@Override
 	public List<BackgroundTask> findAll(int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the background tasks.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of background tasks
+	 * @param end the upper bound of the range of background tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of background tasks
+	 */
+	@Override
+	public List<BackgroundTask> findAll(int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7757,8 +8171,12 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<BackgroundTask> list = (List<BackgroundTask>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<BackgroundTask> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<BackgroundTask>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -7805,10 +8223,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7838,7 +8256,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -7851,11 +8269,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -7880,12 +8298,16 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(BackgroundTaskImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(BackgroundTaskImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_BACKGROUNDTASK = "SELECT backgroundTask FROM BackgroundTask backgroundTask";
 	private static final String _SQL_SELECT_BACKGROUNDTASK_WHERE_PKS_IN = "SELECT backgroundTask FROM BackgroundTask backgroundTask WHERE backgroundTaskId IN (";
 	private static final String _SQL_SELECT_BACKGROUNDTASK_WHERE = "SELECT backgroundTask FROM BackgroundTask backgroundTask WHERE ";

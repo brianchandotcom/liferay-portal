@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -70,7 +71,8 @@ public class AddRecordSetMVCActionCommand
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String structureKey = ParamUtil.getString(
 			actionRequest, "structureKey");
-		String storageType = ParamUtil.getString(actionRequest, "storageType");
+		String storageType = ParamUtil.getString(
+			actionRequest, "storageType", StorageType.JSON.toString());
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		DDMForm ddmForm = getDDMForm(actionRequest);
@@ -84,7 +86,7 @@ public class AddRecordSetMVCActionCommand
 			PortalUtil.getClassNameId(DDLRecordSet.class), structureKey,
 			getLocalizedMap(themeDisplay.getLocale(), name),
 			getLocalizedMap(themeDisplay.getLocale(), description), ddmForm,
-			ddmFormLayout, storageType, DDMStructureConstants.TYPE_DEFAULT,
+			ddmFormLayout, storageType, DDMStructureConstants.TYPE_AUTO,
 			serviceContext);
 	}
 
@@ -100,7 +102,6 @@ public class AddRecordSetMVCActionCommand
 			actionRequest, "recordSetKey");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		int scope = ParamUtil.getInteger(actionRequest, "scope");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
@@ -109,8 +110,8 @@ public class AddRecordSetMVCActionCommand
 			groupId, ddmStructureId, recordSetKey,
 			getLocalizedMap(themeDisplay.getLocale(), name),
 			getLocalizedMap(themeDisplay.getLocale(), description),
-			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
-			serviceContext);
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
+			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
 	}
 
 	@Override

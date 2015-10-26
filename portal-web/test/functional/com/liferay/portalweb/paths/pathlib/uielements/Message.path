@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>CUSTOMIZED_PAGE_INFO</td>
-	<td>//div[@class='linked-layout']/span[contains(@class,'message-info')]</td>
+	<td>//div[contains(@class,'layout')]/span[contains(@class,'message-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>ERROR_FIELD_REQUIRED</td>
-	<td>//div[@role='alert' and contains(.,'This field is required')] |//span[contains(@id,'title')]//div[contains(.,'This field is required.')]</td>
+	<td>//div[@role='alert' and contains(.,'This field is required')] | //span[contains(@id,'title')]//div[contains(.,'This field is required.')]</td>
 	<td></td>
 </tr>
 <tr>

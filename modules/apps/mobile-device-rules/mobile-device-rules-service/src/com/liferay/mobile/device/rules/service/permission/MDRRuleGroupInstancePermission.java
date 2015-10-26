@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.service.permission;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -24,6 +24,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -65,7 +66,7 @@ public class MDRRuleGroupInstancePermission
 		throws PortalException {
 
 		MDRRuleGroupInstance ruleGroupInstance =
-			MDRRuleGroupInstanceLocalServiceUtil.getMDRRuleGroupInstance(
+			_mdrRuleGroupInstanceLocalService.getMDRRuleGroupInstance(
 				ruleGroupInstanceId);
 
 		return contains(permissionChecker, ruleGroupInstance, actionId);
@@ -99,5 +100,15 @@ public class MDRRuleGroupInstancePermission
 
 		check(permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	private static MDRRuleGroupInstanceLocalService
+		_mdrRuleGroupInstanceLocalService;
 
 }

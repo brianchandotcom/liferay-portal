@@ -360,6 +360,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String TEAM = "TEAM";
 
+	public static final String TICKET = "TICKET";
+
 	public static final String TRANSLATOR_TRANSLATION = "TRANSLATOR_TRANSLATION";
 
 	public static final String TRASH_CONTAINER_MODEL = "TRASH_CONTAINER_MODEL";

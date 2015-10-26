@@ -50,6 +50,9 @@
 		<property name="nextMethodInterceptor" ref="serviceContextAdvice" />
 	</bean>
 	<bean id="serviceContextAdvice" class="com.liferay.portal.service.ServiceContextAdvice">
+		<property name="nextMethodInterceptor" ref="retryAdvice" />
+	</bean>
+	<bean id="retryAdvice" class="com.liferay.portal.spring.aop.RetryAdvice">
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
 	<bean id="transactionAdvice" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdviceFactoryUtil" factory-method="createDynamicDataSourceAdvice">

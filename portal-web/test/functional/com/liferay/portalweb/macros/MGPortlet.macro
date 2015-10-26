@@ -1,15 +1,19 @@
 <definition>
 	<command name="configureShowAllPG">
-		<execute function="AssertElementPresent" locator1="Icon#COG" />
-		<execute function="Click#pauseClickAt" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Media Gallery" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="Check" locator1="Checkbox#SHOW_ACTIONS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_FOLDER_MENU_CHECKBOX" />
 		<execute function="Check" locator1="PGMediagalleryConfiguration#DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
@@ -24,12 +28,12 @@
 	<command name="viewShowAllPG">
 		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_FIELD" />
 		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_BUTTON" />
-		<execute function="AssertElementPresent" locator1="MenuItem#PERMISSIONS" />
+		<execute function="AssertElementPresent" locator1="Link#PERMISSIONS" />
 		<execute function="AssertElementPresent" locator1="MenuItem#ADD_FOLDER" />
 		<execute function="AssertElementPresent" locator1="MenuItem#ADD_REPOSITORY" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_MULTIPLE_MEDIA" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ADD_MEDIA" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ADD_SHORTCUT" />
-		<execute function="AssertElementPresent" locator1="MenuItem#ACCESS_FROM_DESKTOP" />
+		<execute function="AssertElementPresent" locator1="Link#ACCESS_FROM_DESKTOP" />
 	</command>
 </definition>

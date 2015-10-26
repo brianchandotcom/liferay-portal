@@ -286,9 +286,7 @@ public class PortletContainerUtil {
 		}
 	}
 
-	private static final boolean _LAYOUT_PARALLEL_RENDER_ENABLE =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_PARALLEL_RENDER_ENABLE));
+	private static final boolean _LAYOUT_PARALLEL_RENDER_ENABLE = false;
 
 	private static final boolean _PORTLET_CONTAINER_RESTRICT =
 		GetterUtil.getBoolean(

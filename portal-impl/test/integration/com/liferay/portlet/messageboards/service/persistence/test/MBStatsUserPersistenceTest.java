@@ -41,6 +41,7 @@ import com.liferay.portlet.messageboards.service.persistence.MBStatsUserUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class MBStatsUserPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -304,11 +306,9 @@ public class MBStatsUserPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MBStatsUserLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBStatsUser>() {
 				@Override
-				public void performAction(Object object) {
-					MBStatsUser mbStatsUser = (MBStatsUser)object;
-
+				public void performAction(MBStatsUser mbStatsUser) {
 					Assert.assertNotNull(mbStatsUser);
 
 					count.increment();

@@ -53,7 +53,7 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 	protected void verifyDefaultSAPEntry() {
 		for (long companyId : PortalInstances.getCompanyIds()) {
 			try {
-				_sapEntryLocalService.checkDefaultSAPEntry(companyId);
+				_sapEntryLocalService.checkSystemSAPEntries(companyId);
 			}
 			catch (PortalException pe) {
 				_log.error(

@@ -75,7 +75,7 @@
 		</execute>
 	</command>
 
-	<command name="WithdrawTaskAssignedToMeByDetails" priority="4">
+	<command name="WithdrawTaskAssignedToMeByDetails" priority="3">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -171,7 +171,7 @@
 		</execute>
 	</command>
 
-	<command name="WithdrawTaskAssignedToMyRolesByDetails" priority="4">
+	<command name="WithdrawTaskAssignedToMyRolesByDetails" priority="3">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -261,7 +261,7 @@
 		</execute>
 	</command>
 
-	<command name="WithdrawTaskCompletedNoByDetails" priority="4">
+	<command name="WithdrawTaskCompletedNoByDetails" priority="3">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

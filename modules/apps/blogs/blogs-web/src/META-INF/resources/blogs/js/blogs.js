@@ -277,6 +277,8 @@ AUI.add(
 										'cmd': constants.ADD,
 										'content': content,
 										'coverImageCaption': coverImageCaption,
+										'coverImageFileEntryCropRegion': instance.one('#coverImageFileEntryCropRegion').val(),
+										'coverImageFileEntryId': instance.one('#coverImageFileEntryId').val(),
 										'displayDateAmPm': instance.one('#displayDateAmPm').val(),
 										'displayDateDay': instance.one('#displayDateDay').val(),
 										'displayDateHour': instance.one('#displayDateHour').val(),

@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,8 +57,9 @@ import java.util.Set;
  * @generated
  */
 public class LayoutSetPrototypePersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -136,8 +138,6 @@ public class LayoutSetPrototypePersistenceTest {
 
 		newLayoutSetPrototype.setActive(RandomTestUtil.randomBoolean());
 
-		newLayoutSetPrototype.setLastPublishDate(RandomTestUtil.nextDate());
-
 		_layoutSetPrototypes.add(_persistence.update(newLayoutSetPrototype));
 
 		LayoutSetPrototype existingLayoutSetPrototype = _persistence.findByPrimaryKey(newLayoutSetPrototype.getPrimaryKey());
@@ -168,9 +168,6 @@ public class LayoutSetPrototypePersistenceTest {
 			newLayoutSetPrototype.getSettings());
 		Assert.assertEquals(existingLayoutSetPrototype.getActive(),
 			newLayoutSetPrototype.getActive());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingLayoutSetPrototype.getLastPublishDate()),
-			Time.getShortTimestamp(newLayoutSetPrototype.getLastPublishDate()));
 	}
 
 	@Test
@@ -233,7 +230,7 @@ public class LayoutSetPrototypePersistenceTest {
 			"mvccVersion", true, "uuid", true, "layoutSetPrototypeId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "description", true,
-			"settings", true, "active", true, "lastPublishDate", true);
+			"settings", true, "active", true);
 	}
 
 	@Test
@@ -342,11 +339,9 @@ public class LayoutSetPrototypePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = LayoutSetPrototypeLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutSetPrototype>() {
 				@Override
-				public void performAction(Object object) {
-					LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)object;
-
+				public void performAction(LayoutSetPrototype layoutSetPrototype) {
 					Assert.assertNotNull(layoutSetPrototype);
 
 					count.increment();
@@ -460,8 +455,6 @@ public class LayoutSetPrototypePersistenceTest {
 		layoutSetPrototype.setSettings(RandomTestUtil.randomString());
 
 		layoutSetPrototype.setActive(RandomTestUtil.randomBoolean());
-
-		layoutSetPrototype.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_layoutSetPrototypes.add(_persistence.update(layoutSetPrototype));
 

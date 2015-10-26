@@ -356,14 +356,12 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CalendarBooking>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(CalendarBooking calendarBooking)
 					throws PortalException {
-					CalendarBooking stagedModel = (CalendarBooking)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						calendarBooking);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

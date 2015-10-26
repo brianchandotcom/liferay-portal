@@ -867,6 +867,14 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public java.lang.String getUniqueTitle(long groupId, long folderId,
+		long fileEntryId, java.lang.String title, java.lang.String extension)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryLocalService.getUniqueTitle(groupId, folderId,
+			fileEntryId, title, extension);
+	}
+
+	@Override
 	public boolean hasExtraSettings() {
 		return _dlFileEntryLocalService.hasExtraSettings();
 	}

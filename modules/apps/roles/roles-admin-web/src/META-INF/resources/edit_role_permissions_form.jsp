@@ -73,10 +73,12 @@ if (Validator.isNotNull(portletResource)) {
 
 	String applicationPermissionsLabel = "application-permissions";
 
+	PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
 	if (portletResource.equals(PortletKeys.PORTAL)) {
 		applicationPermissionsLabel = StringPool.BLANK;
 	}
-	else if ((portlet != null) && Validator.isNotNull(portlet.getControlPanelEntryCategory())) {
+	else if ((portlet != null) && panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.ROOT)) {
 		applicationPermissionsLabel = "general-permissions";
 	}
 	%>

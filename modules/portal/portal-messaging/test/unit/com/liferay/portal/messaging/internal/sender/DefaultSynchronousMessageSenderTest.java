@@ -16,9 +16,7 @@ package com.liferay.portal.messaging.internal.sender;
 
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -77,14 +75,6 @@ public class DefaultSynchronousMessageSenderTest {
 		RegistryUtil.setRegistry(null);
 		RegistryUtil.setRegistry(registry);
 
-		EntityCacheUtil entityCacheUtil = new EntityCacheUtil();
-
-		entityCacheUtil.setEntityCache(Mockito.mock(EntityCache.class));
-
-		FinderCacheUtil finderCacheUtil = new FinderCacheUtil();
-
-		finderCacheUtil.setFinderCache(Mockito.mock(FinderCache.class));
-
 		_messageBus = new DefaultMessageBus();
 
 		SynchronousDestination synchronousDestination =
@@ -98,6 +88,10 @@ public class DefaultSynchronousMessageSenderTest {
 		_defaultSynchronousMessageSender =
 			new DefaultSynchronousMessageSender();
 
+		_defaultSynchronousMessageSender.setEntityCache(
+			Mockito.mock(EntityCache.class));
+		_defaultSynchronousMessageSender.setFinderCache(
+			Mockito.mock(FinderCache.class));
 		_defaultSynchronousMessageSender.setMessageBus(_messageBus);
 		_defaultSynchronousMessageSender.setTimeout(10000);
 

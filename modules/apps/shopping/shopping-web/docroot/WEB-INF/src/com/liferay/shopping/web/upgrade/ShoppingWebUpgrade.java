@@ -14,47 +14,30 @@
 
 package com.liferay.shopping.web.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.shopping.web.upgrade.v1_0_0.UpgradeAdminPortlets;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Pastor
+ * @author Manuel de la Peña
  */
 @Component(immediate = true, service = ShoppingWebUpgrade.class)
-public class ShoppingWebUpgrade {
+public class ShoppingWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.shopping.web", "0.0.1", "1.0.0",
+			new UpgradeAdminPortlets());
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradeAdminPortlets());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.shopping.web", upgradeProcesses, 1, 1, false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

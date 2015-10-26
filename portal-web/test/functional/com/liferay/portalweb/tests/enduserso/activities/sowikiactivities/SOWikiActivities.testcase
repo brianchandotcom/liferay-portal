@@ -554,7 +554,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2268" name="DeleteWikiFrontPageComment" priority="4">
+	<command name="DeleteWikiFrontPageComment" priority="4">
 		<var name="commentContent" value="Wiki FrontPage Comment" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />

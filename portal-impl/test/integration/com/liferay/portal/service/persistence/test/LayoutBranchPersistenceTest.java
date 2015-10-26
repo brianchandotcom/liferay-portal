@@ -41,6 +41,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class LayoutBranchPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -332,11 +334,9 @@ public class LayoutBranchPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = LayoutBranchLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutBranch>() {
 				@Override
-				public void performAction(Object object) {
-					LayoutBranch layoutBranch = (LayoutBranch)object;
-
+				public void performAction(LayoutBranch layoutBranch) {
 					Assert.assertNotNull(layoutBranch);
 
 					count.increment();

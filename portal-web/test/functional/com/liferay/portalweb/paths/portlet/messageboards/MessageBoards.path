@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-danger') and contains(.,'You do not have the required permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -352,7 +357,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_LAST_POST</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[6]//span | //div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//span[contains (@class,'user-name')]</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[6]//span | //div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//span[contains(@class,'user-name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -408,7 +413,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_ADMIN_LAST_POST</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[7]//span | //div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//span[contains (@class,'user-name')]</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[7]//span | //div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//span[contains(@class,'user-name')]</td>
 	<td></td>
 </tr>
 </tbody>

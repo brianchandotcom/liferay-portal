@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface DLContent extends DLContentModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.documentlibrary.model.impl.DLContentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DLContent, Long> CONTENT_ID_ACCESSOR = new Accessor<DLContent, Long>() {
+			@Override
+			public Long get(DLContent dlContent) {
+				return dlContent.getContentId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DLContent> getTypeClass() {
+				return DLContent.class;
+			}
+		};
 }

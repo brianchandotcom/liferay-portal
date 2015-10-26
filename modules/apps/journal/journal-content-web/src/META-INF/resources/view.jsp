@@ -62,7 +62,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					<c:when test="<%= !article.isApproved() %>">
 
 						<%
-							AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
+						AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
 						%>
 
 						<c:choose>
@@ -81,12 +81,12 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 						</c:choose>
 					</c:when>
 					<c:when test="<%= (articleDisplay != null) %>">
-						<div class="user-tool-asset-addon-entries">
+						<div class="text-right user-tool-asset-addon-entries">
 							<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>" />
 						</div>
 
 						<div class="journal-content-article">
-							<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
+							<%= articleDisplay.getContent() %>
 						</div>
 
 						<c:if test="<%= articleDisplay.isPaginate() %>">
@@ -205,6 +205,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					addArticleURL.setParameter("redirect", redirectURL.toString());
 					addArticleURL.setParameter("showHeader", Boolean.FALSE.toString());
 					addArticleURL.setParameter("portletResource", portletDisplay.getId());
+					addArticleURL.setParameter("referringPlid", String.valueOf(plid));
 					addArticleURL.setParameter("groupId", String.valueOf(scopeGroupId));
 
 					addArticleURL.setWindowState(LiferayWindowState.POP_UP);

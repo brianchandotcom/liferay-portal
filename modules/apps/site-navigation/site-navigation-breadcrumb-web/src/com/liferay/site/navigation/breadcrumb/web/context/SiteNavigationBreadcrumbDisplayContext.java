@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbPortletInstanceConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +37,7 @@ public class SiteNavigationBreadcrumbDisplayContext {
 		_request = request;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -56,7 +54,11 @@ public class SiteNavigationBreadcrumbDisplayContext {
 		String displayStyle = getDisplayStyle();
 
 		if (displayStyle != null) {
-			_ddmTemplateKey = getPortletDisplayTemplate().getDDMTemplateKey(
+			PortletDisplayTemplate portletDisplayTemplate =
+				(PortletDisplayTemplate)_request.getAttribute(
+					WebKeys.PORTLET_DISPLAY_TEMPLATE);
+
+			_ddmTemplateKey = portletDisplayTemplate.getDDMTemplateKey(
 				displayStyle);
 		}
 
@@ -172,12 +174,6 @@ public class SiteNavigationBreadcrumbDisplayContext {
 				showPortletBreadcrumb());
 
 		return _showPortletBreadcrumb;
-	}
-
-	protected PortletDisplayTemplate getPortletDisplayTemplate() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(PortletDisplayTemplate.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

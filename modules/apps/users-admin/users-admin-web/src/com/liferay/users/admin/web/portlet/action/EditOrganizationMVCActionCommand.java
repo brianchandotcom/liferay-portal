@@ -49,14 +49,14 @@ import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.OrganizationServiceUtil;
+import com.liferay.portal.service.OrganizationService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
@@ -68,6 +68,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,7 +92,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "deleteOrganizationIds"), 0L);
 
 		for (long deleteOrganizationId : deleteOrganizationIds) {
-			OrganizationServiceUtil.deleteOrganization(deleteOrganizationId);
+			_organizationService.deleteOrganization(deleteOrganizationId);
 		}
 	}
 
@@ -123,12 +124,14 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
+			String mvcPath = "/edit_organization.jsp";
+
 			if (e instanceof NoSuchOrganizationException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				mvcPath = "/error.jsp";
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||
@@ -171,13 +174,29 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 					if (Validator.isNotNull(redirect)) {
 						sendRedirect(actionRequest, actionResponse, redirect);
+
+						return;
 					}
 				}
 			}
 			else {
 				throw e;
 			}
+
+			actionResponse.setRenderParameter("mvcPath", mvcPath);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationService(
+		OrganizationService organizationService) {
+
+		_organizationService = organizationService;
 	}
 
 	protected Organization updateOrganization(ActionRequest actionRequest)
@@ -205,8 +224,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		if (fileEntryId > 0) {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				fileEntryId);
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
@@ -228,7 +246,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add organization
 
-			organization = OrganizationServiceUtil.addOrganization(
+			organization = _organizationService.addOrganization(
 				parentOrganizationId, name, type, regionId, countryId, statusId,
 				comments, site, addresses, emailAddresses, orgLabors, phones,
 				websites, serviceContext);
@@ -237,7 +255,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update organization
 
-			organization = OrganizationServiceUtil.updateOrganization(
+			organization = _organizationService.updateOrganization(
 				organizationId, parentOrganizationId, name, type, regionId,
 				countryId, statusId, comments, !deleteLogo, logoBytes, site,
 				addresses, emailAddresses, orgLabors, phones, websites,
@@ -285,5 +303,8 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 		return organization;
 	}
+
+	private DLAppLocalService _dlAppLocalService;
+	private OrganizationService _organizationService;
 
 }

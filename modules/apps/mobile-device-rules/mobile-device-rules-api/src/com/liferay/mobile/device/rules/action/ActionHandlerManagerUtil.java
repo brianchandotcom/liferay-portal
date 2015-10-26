@@ -17,9 +17,6 @@ package com.liferay.mobile.device.rules.action;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,8 +24,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * @author Edward Han
+ * @author Mate Thurzo
  */
 public class ActionHandlerManagerUtil {
 
@@ -48,7 +53,7 @@ public class ActionHandlerManagerUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			ActionHandlerManagerUtil.class);
 
-		return _instance._serviceTracker.getService();
+		return _instance._getActionHandlerManager();
 	}
 
 	public static Collection<ActionHandler> getActionHandlers() {
@@ -67,18 +72,63 @@ public class ActionHandlerManagerUtil {
 		return getActionHandlerManager().unregisterActionHandler(actionType);
 	}
 
-	public ActionHandlerManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+	private ActionHandlerManagerUtil() {
+		Bundle bundle = FrameworkUtil.getBundle(ActionHandlerManagerUtil.class);
 
-		_serviceTracker = registry.trackServices(ActionHandlerManager.class);
+		_bundleContext = bundle.getBundleContext();
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, ActionHandlerManager.class,
+			new ActionHandlerManagerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
+	}
+
+	private ActionHandlerManager _getActionHandlerManager() {
+		return _actionHandlerManager;
 	}
 
 	private static final ActionHandlerManagerUtil _instance =
 		new ActionHandlerManagerUtil();
 
+	private ActionHandlerManager _actionHandlerManager;
+	private final BundleContext _bundleContext;
 	private final ServiceTracker<ActionHandlerManager, ActionHandlerManager>
 		_serviceTracker;
+
+	private class ActionHandlerManagerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ActionHandlerManager, ActionHandlerManager> {
+
+		@Override
+		public ActionHandlerManager addingService(
+			ServiceReference<ActionHandlerManager> serviceReference) {
+
+			_actionHandlerManager = _bundleContext.getService(serviceReference);
+
+			return _actionHandlerManager;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ActionHandlerManager> serviceReference,
+			ActionHandlerManager actionHandlerManager) {
+
+			removedService(serviceReference, actionHandlerManager);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ActionHandlerManager> serviceReference,
+			ActionHandlerManager actionHandlerManager) {
+
+			_bundleContext.ungetService(serviceReference);
+
+			_actionHandlerManager = null;
+		}
+
+	}
 
 }

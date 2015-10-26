@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -37,7 +39,19 @@ public class MBThreadTrashRendererFactory implements TrashRendererFactory {
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		return new MBThreadTrashRenderer(thread);
+		MBThreadTrashRenderer mbThreadTrashRenderer = new MBThreadTrashRenderer(
+			thread);
+
+		mbThreadTrashRenderer.setServletContext(_servletContext);
+
+		return mbThreadTrashRenderer;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.message.boards.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	@Reference(unbind = "-")
@@ -48,5 +62,6 @@ public class MBThreadTrashRendererFactory implements TrashRendererFactory {
 	}
 
 	private MBThreadLocalService _mbThreadLocalService;
+	private ServletContext _servletContext;
 
 }

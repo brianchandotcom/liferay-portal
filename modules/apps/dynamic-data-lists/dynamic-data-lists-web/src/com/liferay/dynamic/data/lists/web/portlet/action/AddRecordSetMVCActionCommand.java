@@ -67,15 +67,14 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		int scope = ParamUtil.getInteger(actionRequest, "scope");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
 
-		return _ddlRecordSetService.addRecordSet(
+		return ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, null, nameMap, descriptionMap,
-			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
-			serviceContext);
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
+			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, serviceContext);
 	}
 
 	@Override
@@ -126,14 +125,14 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
-		_ddlRecordSetService = ddlRecordSetService;
+		this.ddlRecordSetService = ddlRecordSetService;
 	}
 
 	@Reference
 	protected void setWorkflowDefinitionLinkLocalService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
-		_workflowDefinitionLinkLocalService =
+		this.workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 	}
 
@@ -170,14 +169,14 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		String workflowDefinition = ParamUtil.getString(
 			actionRequest, "workflowDefinition");
 
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0,
 			workflowDefinition);
 	}
 
-	private DDLRecordSetService _ddlRecordSetService;
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
+	protected DDLRecordSetService ddlRecordSetService;
+	protected WorkflowDefinitionLinkLocalService
+		workflowDefinitionLinkLocalService;
 
 }

@@ -41,6 +41,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,8 +58,9 @@ import java.util.Set;
  * @generated
  */
 public class WorkflowDefinitionLinkPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -351,11 +353,10 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = WorkflowDefinitionLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WorkflowDefinitionLink>() {
 				@Override
-				public void performAction(Object object) {
-					WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)object;
-
+				public void performAction(
+					WorkflowDefinitionLink workflowDefinitionLink) {
 					Assert.assertNotNull(workflowDefinitionLink);
 
 					count.increment();

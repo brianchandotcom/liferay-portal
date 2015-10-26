@@ -32,6 +32,18 @@ public class BackgroundTaskManagerUtil {
 
 	public static BackgroundTask addBackgroundTask(
 			long userId, long groupId, String name,
+			String taskExecutorClassName,
+			Map<String, Serializable> taskContextMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _backgroundTaskManager.addBackgroundTask(
+			userId, groupId, name, taskExecutorClassName, taskContextMap,
+			serviceContext);
+	}
+
+	public static BackgroundTask addBackgroundTask(
+			long userId, long groupId, String name,
 			String[] servletContextNames, Class<?> taskExecutorClass,
 			Map<String, Serializable> taskContextMap,
 			ServiceContext serviceContext)

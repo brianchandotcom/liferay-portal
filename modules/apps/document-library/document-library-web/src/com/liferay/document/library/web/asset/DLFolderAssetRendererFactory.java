@@ -25,7 +25,7 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import javax.portlet.PortletRequest;
@@ -34,16 +34,14 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
-		"search.asset.type=com.liferay.portlet.documentlibrary.model.DLFolder"
-	},
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
 	service = AssetRendererFactory.class
 )
 public class DLFolderAssetRendererFactory
@@ -54,13 +52,14 @@ public class DLFolderAssetRendererFactory
 	public DLFolderAssetRendererFactory() {
 		setCategorizable(false);
 		setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
+		setSearchable(true);
 	}
 
 	@Override
 	public AssetRenderer<Folder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
+		Folder folder = _dlAppLocalService.getFolder(classPK);
 
 		DLFolderAssetRenderer dlFolderAssetRenderer = new DLFolderAssetRenderer(
 			folder);
@@ -109,7 +108,7 @@ public class DLFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
+		Folder folder = _dlAppLocalService.getFolder(classPK);
 
 		return DLFolderPermission.contains(permissionChecker, folder, actionId);
 	}
@@ -118,5 +117,12 @@ public class DLFolderAssetRendererFactory
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	private DLAppLocalService _dlAppLocalService;
 
 }

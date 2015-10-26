@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import javax.sql.DataSource;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -25,12 +27,12 @@ public class DBFactoryUtil {
 		return getDBFactory().getDB();
 	}
 
-	public static DB getDB(Object dialect) {
-		return getDBFactory().getDB(dialect);
+	public static DB getDB(Object dialect, DataSource dataSource) {
+		return getDBFactory().getDB(dialect, dataSource);
 	}
 
-	public static DB getDB(String type) {
-		return getDBFactory().getDB(type);
+	public static DB getDB(String type, DataSource dataSource) {
+		return getDBFactory().getDB(type, dataSource);
 	}
 
 	public static DBFactory getDBFactory() {
@@ -43,12 +45,12 @@ public class DBFactoryUtil {
 		setDBFactory(null);
 	}
 
-	public static void setDB(Object dialect) {
-		getDBFactory().setDB(dialect);
+	public static void setDB(Object dialect, DataSource dataSource) {
+		getDBFactory().setDB(dialect, dataSource);
 	}
 
-	public static void setDB(String type) {
-		getDBFactory().setDB(type);
+	public static void setDB(String type, DataSource dataSource) {
+		getDBFactory().setDB(type, dataSource);
 	}
 
 	public static void setDBFactory(DBFactory dbFactory) {

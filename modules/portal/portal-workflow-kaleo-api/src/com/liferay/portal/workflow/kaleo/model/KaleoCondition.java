@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,21 @@ public interface KaleoCondition extends KaleoConditionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<KaleoCondition, Long> KALEO_CONDITION_ID_ACCESSOR =
+		new Accessor<KaleoCondition, Long>() {
+			@Override
+			public Long get(KaleoCondition kaleoCondition) {
+				return kaleoCondition.getKaleoConditionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoCondition> getTypeClass() {
+				return KaleoCondition.class;
+			}
+		};
 }

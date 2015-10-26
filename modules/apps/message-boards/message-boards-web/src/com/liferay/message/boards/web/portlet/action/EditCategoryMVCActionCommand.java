@@ -143,15 +143,15 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/message_boards/error.jsp");
 		}
 		catch (CaptchaConfigurationException | CaptchaMaxChallengesException |
-				CaptchaTextException | CategoryNameException |
-				MailingListEmailAddressException |
-				MailingListInServerNameException |
-				MailingListInUserNameException |
-				MailingListOutEmailAddressException |
-				MailingListOutServerNameException |
-				MailingListOutUserNameException e) {
+			   CaptchaTextException | CategoryNameException |
+			   MailingListEmailAddressException |
+			   MailingListInServerNameException |
+			   MailingListInUserNameException |
+			   MailingListOutEmailAddressException |
+			   MailingListOutServerNameException |
+			   MailingListOutUserNameException e) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, e.getClass());
 		}
 	}
 

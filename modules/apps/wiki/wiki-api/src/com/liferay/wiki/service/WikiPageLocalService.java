@@ -118,10 +118,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public com.liferay.wiki.model.WikiPage addWikiPage(
 		com.liferay.wiki.model.WikiPage wikiPage);
 
-	public void changeNode(long userId, long nodeId, java.lang.String title,
-		long newNodeId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
 	public com.liferay.wiki.model.WikiPage changeParent(long userId,
 		long nodeId, java.lang.String title, java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)

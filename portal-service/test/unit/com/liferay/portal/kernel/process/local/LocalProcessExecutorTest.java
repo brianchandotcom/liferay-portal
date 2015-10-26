@@ -1478,9 +1478,9 @@ public class LocalProcessExecutorTest {
 		arguments.add(
 			"-D" + SystemProperties.SYSTEM_PROPERTIES_QUIET + "=true");
 
-		if (Boolean.getBoolean("junit.debug")) {
+		if (Boolean.getBoolean("jvm.debug")) {
 			arguments.add(jpdaOptions);
-			arguments.add("-Djunit.debug=true");
+			arguments.add("-Djvm.debug=true");
 		}
 
 		String whipAgentLine = System.getProperty("whip.agent");

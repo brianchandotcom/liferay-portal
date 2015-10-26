@@ -24,7 +24,6 @@ import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
@@ -54,7 +53,7 @@ public class CalendarBookingRatingsTest extends BaseRatingsTestCase {
 
 		Calendar calendar = (Calendar)parentBaseModel;
 
-		long startTime = DateUtil.newTime();
+		long startTime = System.currentTimeMillis();
 
 		return CalendarBookingLocalServiceUtil.addCalendarBooking(
 			TestPropsValues.getUserId(), calendar.getCalendarId(), new long[0],

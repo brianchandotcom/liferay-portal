@@ -16,7 +16,7 @@ package com.liferay.invitation.web.portlet.action;
 
 import com.liferay.invitation.web.constants.InvitationPortletKeys;
 import com.liferay.invitation.web.util.InvitationUtil;
-import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.mail.service.MailService;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -46,6 +46,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Charles May
@@ -163,7 +164,7 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 					company.getMx(), InvitationUtil.MESSAGE_POP_PORTLET_PREFIX,
 					PortalUUIDUtil.generate()));
 
-			MailServiceUtil.sendEmail(message);
+			_mailService.sendEmail(message);
 		}
 
 		SessionMessages.add(actionRequest, "invitationSent");
@@ -177,5 +178,12 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 
 		actionResponse.setRenderParameter("mvcPath", "/view.jsp");
 	}
+
+	@Reference(unbind = "-")
+	protected void setMailService(MailService mailService) {
+		_mailService = mailService;
+	}
+
+	private MailService _mailService;
 
 }

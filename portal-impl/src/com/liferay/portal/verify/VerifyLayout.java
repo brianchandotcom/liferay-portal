@@ -63,12 +63,10 @@ public class VerifyLayout extends VerifyProcess {
 			LayoutLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Layout>() {
 
 				@Override
-				public void performAction(Object object) {
-					Layout layout = (Layout)object;
-
+				public void performAction(Layout layout) {
 					String friendlyURL = layout.getFriendlyURL();
 
 					friendlyURL = friendlyURL.substring(1);

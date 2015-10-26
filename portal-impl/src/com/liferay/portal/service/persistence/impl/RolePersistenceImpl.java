@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -50,6 +52,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -157,6 +160,26 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByUuid(String uuid, int start, int end,
+		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -172,15 +195,19 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if (!Validator.equals(uuid, role.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if (!Validator.equals(uuid, role.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -251,10 +278,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -880,8 +907,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -919,10 +945,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1072,6 +1098,28 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<Role> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator<Role> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1091,16 +1139,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				};
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if (!Validator.equals(uuid, role.getUuid()) ||
-						(companyId != role.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if (!Validator.equals(uuid, role.getUuid()) ||
+							(companyId != role.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1175,10 +1227,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1841,8 +1893,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1884,10 +1935,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2039,6 +2090,26 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByCompanyId(long companyId, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2054,15 +2125,19 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if ((companyId != role.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if ((companyId != role.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2119,10 +2194,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2712,8 +2787,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2737,10 +2811,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2863,6 +2937,26 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByName(String name, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
+		return findByName(name, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByName(String name, int start, int end,
+		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2878,15 +2972,19 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			finderArgs = new Object[] { name, start, end, orderByComparator };
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if (!Validator.equals(name, role.getName())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if (!Validator.equals(name, role.getName())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2957,10 +3055,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3586,8 +3684,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { name };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -3625,10 +3722,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3768,6 +3865,26 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByType(int type, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
+		return findByType(type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByType(int type, int start, int end,
+		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3783,15 +3900,19 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			finderArgs = new Object[] { type, start, end, orderByComparator };
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if ((type != role.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if ((type != role.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3848,10 +3969,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4435,8 +4556,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { type };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -4460,10 +4580,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4589,6 +4709,26 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findBySubtype(String subtype, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
+		return findBySubtype(subtype, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where subtype = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param subtype the subtype
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findBySubtype(String subtype, int start, int end,
+		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4604,15 +4744,19 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			finderArgs = new Object[] { subtype, start, end, orderByComparator };
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if (!Validator.equals(subtype, role.getSubtype())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if (!Validator.equals(subtype, role.getSubtype())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4683,10 +4827,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5316,8 +5460,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { subtype };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -5355,10 +5498,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5498,7 +5641,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching role, or <code>null</code> if a matching role could not be found
 	 */
 	@Override
@@ -5509,7 +5652,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_N,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_N,
 					finderArgs, this);
 		}
 
@@ -5563,8 +5706,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				List<Role> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, finderArgs,
+						list);
 				}
 				else {
 					Role role = list.get(0);
@@ -5576,14 +5719,13 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					if ((role.getCompanyId() != companyId) ||
 							(role.getName() == null) ||
 							!role.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
 							finderArgs, role);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, finderArgs);
 
 				throw processException(e);
 			}
@@ -5628,8 +5770,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { companyId, name };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5671,10 +5812,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5763,6 +5904,27 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByC_T(long companyId, int type, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
+		return findByC_T(companyId, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByC_T(long companyId, int type, int start, int end,
+		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5782,16 +5944,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				};
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if ((companyId != role.getCompanyId()) ||
-						(type != role.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if ((companyId != role.getCompanyId()) ||
+							(type != role.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5852,10 +6018,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6504,8 +6670,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types == null) {
 			types = new int[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.unique(types);
+
+			Arrays.sort(types);
 		}
 
 		StringBundler query = new StringBundler();
@@ -6640,11 +6808,35 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByC_T(long companyId, int[] types, int start,
 		int end, OrderByComparator<Role> orderByComparator) {
+		return findByC_T(companyId, types, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where companyId = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByC_T(long companyId, int[] types, int start,
+		int end, OrderByComparator<Role> orderByComparator,
+		boolean retrieveFromCache) {
 		if (types == null) {
 			types = new int[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.unique(types);
+
+			Arrays.sort(types);
 		}
 
 		if (types.length == 1) {
@@ -6667,16 +6859,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				};
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_T,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if ((companyId != role.getCompanyId()) ||
-						!ArrayUtil.contains(types, role.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_T,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if ((companyId != role.getCompanyId()) ||
+							!ArrayUtil.contains(types, role.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6740,11 +6936,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_T,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_T,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_T,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_T,
 					finderArgs);
 
 				throw processException(e);
@@ -6784,8 +6980,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { companyId, type };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -6813,10 +7008,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6840,13 +7035,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types == null) {
 			types = new int[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.unique(types);
+
+			Arrays.sort(types);
 		}
 
 		Object[] finderArgs = new Object[] { companyId, StringUtil.merge(types) };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_T,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_T,
 				finderArgs, this);
 
 		if (count == null) {
@@ -6886,11 +7083,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_T,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_T,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_T,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_T,
 					finderArgs);
 
 				throw processException(e);
@@ -6971,8 +7168,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types == null) {
 			types = new int[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.unique(types);
+
+			Arrays.sort(types);
 		}
 
 		StringBundler query = new StringBundler();
@@ -7099,6 +7298,27 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByT_S(int type, String subtype, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
+		return findByT_S(type, subtype, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles where type = &#63; and subtype = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param subtype the subtype
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching roles
+	 */
+	@Override
+	public List<Role> findByT_S(int type, String subtype, int start, int end,
+		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7118,16 +7338,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				};
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Role role : list) {
-				if ((type != role.getType()) ||
-						!Validator.equals(subtype, role.getSubtype())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Role role : list) {
+					if ((type != role.getType()) ||
+							!Validator.equals(subtype, role.getSubtype())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -7202,10 +7426,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7867,8 +8091,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { type, subtype };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -7910,10 +8133,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8071,7 +8294,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching role, or <code>null</code> if a matching role could not be found
 	 */
 	@Override
@@ -8082,7 +8305,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_C_C,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C_C,
 					finderArgs, this);
 		}
 
@@ -8127,7 +8350,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				List<Role> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C,
 						finderArgs, list);
 				}
 				else {
@@ -8140,14 +8363,13 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					if ((role.getCompanyId() != companyId) ||
 							(role.getClassNameId() != classNameId) ||
 							(role.getClassPK() != classPK)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C,
 							finderArgs, role);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -8194,8 +8416,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		Object[] finderArgs = new Object[] { companyId, classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -8227,10 +8448,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8257,13 +8478,13 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void cacheResult(Role role) {
-		EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 			RoleImpl.class, role.getPrimaryKey(), role);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] { role.getCompanyId(), role.getName() }, role);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C,
 			new Object[] {
 				role.getCompanyId(), role.getClassNameId(), role.getClassPK()
 			}, role);
@@ -8279,7 +8500,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void cacheResult(List<Role> roles) {
 		for (Role role : roles) {
-			if (EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 						RoleImpl.class, role.getPrimaryKey()) == null) {
 				cacheResult(role);
 			}
@@ -8293,43 +8514,43 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * Clears the cache for all roles.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(RoleImpl.class);
+		entityCache.clearCache(RoleImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the role.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(Role role) {
-		EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 			RoleImpl.class, role.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((RoleModelImpl)role);
 	}
 
 	@Override
 	public void clearCache(List<Role> roles) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Role role : roles) {
-			EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 				RoleImpl.class, role.getPrimaryKey());
 
 			clearUniqueFindersCache((RoleModelImpl)role);
@@ -8343,19 +8564,18 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					roleModelImpl.getCompanyId(), roleModelImpl.getName()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
-				roleModelImpl);
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args, roleModelImpl);
 
 			args = new Object[] {
 					roleModelImpl.getCompanyId(), roleModelImpl.getClassNameId(),
 					roleModelImpl.getClassPK()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C, args,
 				roleModelImpl);
 		}
 		else {
@@ -8365,9 +8585,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 						roleModelImpl.getCompanyId(), roleModelImpl.getName()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
 					roleModelImpl);
 			}
 
@@ -8379,9 +8599,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 						roleModelImpl.getClassPK()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C, args,
 					roleModelImpl);
 			}
 		}
@@ -8392,8 +8612,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				roleModelImpl.getCompanyId(), roleModelImpl.getName()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 
 		if ((roleModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
@@ -8402,8 +8622,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					roleModelImpl.getOriginalName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 		}
 
 		args = new Object[] {
@@ -8411,8 +8631,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				roleModelImpl.getClassPK()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C, args);
 
 		if ((roleModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_C.getColumnBitmask()) != 0) {
@@ -8422,8 +8642,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					roleModelImpl.getOriginalClassPK()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C, args);
 		}
 	}
 
@@ -8501,9 +8721,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected Role removeImpl(Role role) {
 		role = toUnwrappedModel(role);
 
-		roleToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(role.getPrimaryKey());
+		roleToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(0,
+			role.getPrimaryKey());
 
-		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(role.getPrimaryKey());
+		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(0,
+			role.getPrimaryKey());
 
 		Session session = null;
 
@@ -8589,10 +8811,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !RoleModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -8600,14 +8822,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { roleModelImpl.getOriginalUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { roleModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -8618,16 +8840,16 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 						roleModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
 						roleModelImpl.getUuid(), roleModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -8637,16 +8859,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 						roleModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { roleModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -8654,14 +8874,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { roleModelImpl.getOriginalName() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
 					args);
 
 				args = new Object[] { roleModelImpl.getName() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
 					args);
 			}
 
@@ -8669,14 +8889,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { roleModelImpl.getOriginalType() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
 					args);
 
 				args = new Object[] { roleModelImpl.getType() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
 					args);
 			}
 
@@ -8684,14 +8904,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SUBTYPE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { roleModelImpl.getOriginalSubtype() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SUBTYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SUBTYPE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_SUBTYPE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SUBTYPE,
 					args);
 
 				args = new Object[] { roleModelImpl.getSubtype() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SUBTYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SUBTYPE,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_SUBTYPE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SUBTYPE,
 					args);
 			}
 
@@ -8702,16 +8922,16 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 						roleModelImpl.getOriginalType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_T,
 					args);
 
 				args = new Object[] {
 						roleModelImpl.getCompanyId(), roleModelImpl.getType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_T,
 					args);
 			}
 
@@ -8722,21 +8942,21 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 						roleModelImpl.getOriginalSubtype()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
 					args);
 
 				args = new Object[] {
 						roleModelImpl.getType(), roleModelImpl.getSubtype()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 			RoleImpl.class, role.getPrimaryKey(), role, false);
 
 		clearUniqueFindersCache(roleModelImpl);
@@ -8772,7 +8992,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		roleImpl.setDescription(role.getDescription());
 		roleImpl.setType(role.getType());
 		roleImpl.setSubtype(role.getSubtype());
-		roleImpl.setLastPublishDate(role.getLastPublishDate());
 
 		return roleImpl;
 	}
@@ -8821,7 +9040,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByPrimaryKey(Serializable primaryKey) {
-		Role role = (Role)EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+		Role role = (Role)entityCache.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 				RoleImpl.class, primaryKey);
 
 		if (role == _nullRole) {
@@ -8840,12 +9059,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					cacheResult(role);
 				}
 				else {
-					EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 						RoleImpl.class, primaryKey, _nullRole);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 					RoleImpl.class, primaryKey);
 
 				throw processException(e);
@@ -8895,7 +9114,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Role role = (Role)EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+			Role role = (Role)entityCache.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 					RoleImpl.class, primaryKey);
 
 			if (role == null) {
@@ -8947,7 +9166,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 					RoleImpl.class, primaryKey, _nullRole);
 			}
 		}
@@ -9002,6 +9221,25 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findAll(int start, int end,
 		OrderByComparator<Role> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the roles.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of roles
+	 * @param end the upper bound of the range of roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of roles
+	 */
+	@Override
+	public List<Role> findAll(int start, int end,
+		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9017,8 +9255,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Role> list = (List<Role>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<Role> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<Role>)finderCache.getResult(finderPath, finderArgs,
+					this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -9065,10 +9307,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9098,7 +9340,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -9111,11 +9353,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -9136,7 +9378,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public long[] getGroupPrimaryKeys(long pk) {
-		long[] pks = roleToGroupTableMapper.getRightPrimaryKeys(pk);
+		long[] pks = roleToGroupTableMapper.getRightPrimaryKeys(0, pk);
 
 		return pks.clone();
 	}
@@ -9187,7 +9429,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
 		int end,
 		OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
-		return roleToGroupTableMapper.getRightBaseModels(pk, start, end,
+		return roleToGroupTableMapper.getRightBaseModels(0, pk, start, end,
 			orderByComparator);
 	}
 
@@ -9199,7 +9441,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int getGroupsSize(long pk) {
-		long[] pks = roleToGroupTableMapper.getRightPrimaryKeys(pk);
+		long[] pks = roleToGroupTableMapper.getRightPrimaryKeys(0, pk);
 
 		return pks.length;
 	}
@@ -9213,7 +9455,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public boolean containsGroup(long pk, long groupPK) {
-		return roleToGroupTableMapper.containsTableMapping(pk, groupPK);
+		return roleToGroupTableMapper.containsTableMapping(0, pk, groupPK);
 	}
 
 	/**
@@ -9240,7 +9482,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void addGroup(long pk, long groupPK) {
-		roleToGroupTableMapper.addTableMapping(pk, groupPK);
+		roleToGroupTableMapper.addTableMapping(0, pk, groupPK);
 	}
 
 	/**
@@ -9251,7 +9493,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void addGroup(long pk, com.liferay.portal.model.Group group) {
-		roleToGroupTableMapper.addTableMapping(pk, group.getPrimaryKey());
+		roleToGroupTableMapper.addTableMapping(0, pk, group.getPrimaryKey());
 	}
 
 	/**
@@ -9263,7 +9505,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void addGroups(long pk, long[] groupPKs) {
 		for (long groupPK : groupPKs) {
-			roleToGroupTableMapper.addTableMapping(pk, groupPK);
+			roleToGroupTableMapper.addTableMapping(0, pk, groupPK);
 		}
 	}
 
@@ -9276,7 +9518,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups) {
 		for (com.liferay.portal.model.Group group : groups) {
-			roleToGroupTableMapper.addTableMapping(pk, group.getPrimaryKey());
+			roleToGroupTableMapper.addTableMapping(0, pk, group.getPrimaryKey());
 		}
 	}
 
@@ -9287,7 +9529,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void clearGroups(long pk) {
-		roleToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		roleToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(0, pk);
 	}
 
 	/**
@@ -9298,7 +9540,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void removeGroup(long pk, long groupPK) {
-		roleToGroupTableMapper.deleteTableMapping(pk, groupPK);
+		roleToGroupTableMapper.deleteTableMapping(0, pk, groupPK);
 	}
 
 	/**
@@ -9309,7 +9551,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void removeGroup(long pk, com.liferay.portal.model.Group group) {
-		roleToGroupTableMapper.deleteTableMapping(pk, group.getPrimaryKey());
+		roleToGroupTableMapper.deleteTableMapping(0, pk, group.getPrimaryKey());
 	}
 
 	/**
@@ -9321,7 +9563,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void removeGroups(long pk, long[] groupPKs) {
 		for (long groupPK : groupPKs) {
-			roleToGroupTableMapper.deleteTableMapping(pk, groupPK);
+			roleToGroupTableMapper.deleteTableMapping(0, pk, groupPK);
 		}
 	}
 
@@ -9335,7 +9577,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void removeGroups(long pk,
 		List<com.liferay.portal.model.Group> groups) {
 		for (com.liferay.portal.model.Group group : groups) {
-			roleToGroupTableMapper.deleteTableMapping(pk, group.getPrimaryKey());
+			roleToGroupTableMapper.deleteTableMapping(0, pk,
+				group.getPrimaryKey());
 		}
 	}
 
@@ -9349,20 +9592,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void setGroups(long pk, long[] groupPKs) {
 		Set<Long> newGroupPKsSet = SetUtil.fromArray(groupPKs);
 		Set<Long> oldGroupPKsSet = SetUtil.fromArray(roleToGroupTableMapper.getRightPrimaryKeys(
-					pk));
+					0, pk));
 
 		Set<Long> removeGroupPKsSet = new HashSet<Long>(oldGroupPKsSet);
 
 		removeGroupPKsSet.removeAll(newGroupPKsSet);
 
 		for (long removeGroupPK : removeGroupPKsSet) {
-			roleToGroupTableMapper.deleteTableMapping(pk, removeGroupPK);
+			roleToGroupTableMapper.deleteTableMapping(0, pk, removeGroupPK);
 		}
 
 		newGroupPKsSet.removeAll(oldGroupPKsSet);
 
 		for (long newGroupPK : newGroupPKsSet) {
-			roleToGroupTableMapper.addTableMapping(pk, newGroupPK);
+			roleToGroupTableMapper.addTableMapping(0, pk, newGroupPK);
 		}
 	}
 
@@ -9398,7 +9641,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public long[] getUserPrimaryKeys(long pk) {
-		long[] pks = roleToUserTableMapper.getRightPrimaryKeys(pk);
+		long[] pks = roleToUserTableMapper.getRightPrimaryKeys(0, pk);
 
 		return pks.clone();
 	}
@@ -9449,7 +9692,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
 		int end,
 		OrderByComparator<com.liferay.portal.model.User> orderByComparator) {
-		return roleToUserTableMapper.getRightBaseModels(pk, start, end,
+		return roleToUserTableMapper.getRightBaseModels(0, pk, start, end,
 			orderByComparator);
 	}
 
@@ -9461,7 +9704,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int getUsersSize(long pk) {
-		long[] pks = roleToUserTableMapper.getRightPrimaryKeys(pk);
+		long[] pks = roleToUserTableMapper.getRightPrimaryKeys(0, pk);
 
 		return pks.length;
 	}
@@ -9475,7 +9718,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public boolean containsUser(long pk, long userPK) {
-		return roleToUserTableMapper.containsTableMapping(pk, userPK);
+		return roleToUserTableMapper.containsTableMapping(0, pk, userPK);
 	}
 
 	/**
@@ -9502,7 +9745,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void addUser(long pk, long userPK) {
-		roleToUserTableMapper.addTableMapping(pk, userPK);
+		roleToUserTableMapper.addTableMapping(0, pk, userPK);
 	}
 
 	/**
@@ -9513,7 +9756,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void addUser(long pk, com.liferay.portal.model.User user) {
-		roleToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
+		roleToUserTableMapper.addTableMapping(0, pk, user.getPrimaryKey());
 	}
 
 	/**
@@ -9525,7 +9768,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void addUsers(long pk, long[] userPKs) {
 		for (long userPK : userPKs) {
-			roleToUserTableMapper.addTableMapping(pk, userPK);
+			roleToUserTableMapper.addTableMapping(0, pk, userPK);
 		}
 	}
 
@@ -9538,7 +9781,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void addUsers(long pk, List<com.liferay.portal.model.User> users) {
 		for (com.liferay.portal.model.User user : users) {
-			roleToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
+			roleToUserTableMapper.addTableMapping(0, pk, user.getPrimaryKey());
 		}
 	}
 
@@ -9549,7 +9792,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void clearUsers(long pk) {
-		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(0, pk);
 	}
 
 	/**
@@ -9560,7 +9803,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void removeUser(long pk, long userPK) {
-		roleToUserTableMapper.deleteTableMapping(pk, userPK);
+		roleToUserTableMapper.deleteTableMapping(0, pk, userPK);
 	}
 
 	/**
@@ -9571,7 +9814,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void removeUser(long pk, com.liferay.portal.model.User user) {
-		roleToUserTableMapper.deleteTableMapping(pk, user.getPrimaryKey());
+		roleToUserTableMapper.deleteTableMapping(0, pk, user.getPrimaryKey());
 	}
 
 	/**
@@ -9583,7 +9826,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void removeUsers(long pk, long[] userPKs) {
 		for (long userPK : userPKs) {
-			roleToUserTableMapper.deleteTableMapping(pk, userPK);
+			roleToUserTableMapper.deleteTableMapping(0, pk, userPK);
 		}
 	}
 
@@ -9596,7 +9839,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void removeUsers(long pk, List<com.liferay.portal.model.User> users) {
 		for (com.liferay.portal.model.User user : users) {
-			roleToUserTableMapper.deleteTableMapping(pk, user.getPrimaryKey());
+			roleToUserTableMapper.deleteTableMapping(0, pk, user.getPrimaryKey());
 		}
 	}
 
@@ -9610,20 +9853,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void setUsers(long pk, long[] userPKs) {
 		Set<Long> newUserPKsSet = SetUtil.fromArray(userPKs);
 		Set<Long> oldUserPKsSet = SetUtil.fromArray(roleToUserTableMapper.getRightPrimaryKeys(
-					pk));
+					0, pk));
 
 		Set<Long> removeUserPKsSet = new HashSet<Long>(oldUserPKsSet);
 
 		removeUserPKsSet.removeAll(newUserPKsSet);
 
 		for (long removeUserPK : removeUserPKsSet) {
-			roleToUserTableMapper.deleteTableMapping(pk, removeUserPK);
+			roleToUserTableMapper.deleteTableMapping(0, pk, removeUserPK);
 		}
 
 		newUserPKsSet.removeAll(oldUserPKsSet);
 
 		for (long newUserPK : newUserPKsSet) {
-			roleToUserTableMapper.addTableMapping(pk, newUserPK);
+			roleToUserTableMapper.addTableMapping(0, pk, newUserPK);
 		}
 	}
 
@@ -9666,22 +9909,24 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public void afterPropertiesSet() {
 		roleToGroupTableMapper = TableMapperFactory.getTableMapper("Groups_Roles",
-				"roleId", "groupId", this, groupPersistence);
+				"companyId", "roleId", "groupId", this, groupPersistence);
 
 		roleToUserTableMapper = TableMapperFactory.getTableMapper("Users_Roles",
-				"roleId", "userId", this, userPersistence);
+				"companyId", "roleId", "userId", this, userPersistence);
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(RoleImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(RoleImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		TableMapperFactory.removeTableMapper("Groups_Roles");
 		TableMapperFactory.removeTableMapper("Users_Roles");
 	}
 
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
 	protected TableMapper<Role, com.liferay.portal.model.Group> roleToGroupTableMapper;

@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,24 @@ public interface SCProductEntry extends SCProductEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<SCProductEntry, Long> PRODUCT_ENTRY_ID_ACCESSOR =
+		new Accessor<SCProductEntry, Long>() {
+			@Override
+			public Long get(SCProductEntry scProductEntry) {
+				return scProductEntry.getProductEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<SCProductEntry> getTypeClass() {
+				return SCProductEntry.class;
+			}
+		};
+
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getLatestVersion();
 
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses();

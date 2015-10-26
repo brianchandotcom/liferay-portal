@@ -310,14 +310,12 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutPrototype>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(LayoutPrototype layoutPrototype)
 					throws PortalException {
-					LayoutPrototype stagedModel = (LayoutPrototype)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						layoutPrototype);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

@@ -34,7 +34,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	<liferay-ui:search-container
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 	>
-		<liferay-ui:group-search-form />
+		<liferay-ui:input-search />
 
 		<div class="separator"><!-- --></div>
 
@@ -52,7 +52,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			<%
 			int additionalSites = 0;
 
-			if (!searchTerms.hasSearchTerms() && PortalUtil.isCompanyControlPanelPortlet(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, themeDisplay)) {
+			if (!searchTerms.hasSearchTerms() && PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, themeDisplay.getCompanyGroupId(), DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 				if (searchContainer.getStart() == 0) {
 					results.add(company.getGroup());
 				}
@@ -68,12 +68,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				additionalSites++;
 			}
 
-			if (searchTerms.isAdvancedSearch()) {
-				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
-			}
-			else {
-				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams);
-			}
+			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams);
 
 			total += additionalSites;
 
@@ -87,14 +82,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 			int end = searchContainer.getEnd() - additionalSites;
 
-			List<Group> sites = null;
-
-			if (searchTerms.isAdvancedSearch()) {
-				sites = GroupServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), start, end, searchContainer.getOrderByComparator());
-			}
-			else {
-				sites = GroupServiceUtil.search(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams, start, end, searchContainer.getOrderByComparator());
-			}
+			List<Group> sites = GroupServiceUtil.search(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams, start, end, searchContainer.getOrderByComparator());
 
 			results.addAll(sites);
 

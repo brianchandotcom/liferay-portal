@@ -51,7 +51,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.RepositoryUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFolderException;
@@ -879,13 +879,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					throw new InvalidLockException("UUIDs do not match");
 				}
 			}
-			catch (PortalException pe) {
-				if (pe instanceof ExpiredLockException ||
-					pe instanceof NoSuchLockException) {
-				}
-				else {
-					throw pe;
-				}
+			catch (ExpiredLockException | NoSuchLockException e) {
 			}
 		}
 
@@ -1505,7 +1499,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, parentFolderId, name);
 
 		if (dlFileEntry != null) {
-			throw new DuplicateFileException(name);
+			throw new DuplicateFileEntryException(name);
 		}
 
 		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(

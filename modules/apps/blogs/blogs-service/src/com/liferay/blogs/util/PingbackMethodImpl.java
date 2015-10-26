@@ -38,9 +38,9 @@ import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.IdentityServiceContextFunction;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -48,7 +48,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.pingback.DisabledPingbackException;
 import com.liferay.portlet.blogs.pingback.InvalidSourceURIException;
 import com.liferay.portlet.blogs.pingback.UnavailableSourceURIException;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 
 import java.io.IOException;
 
@@ -64,6 +64,7 @@ import net.htmlparser.jericho.StartTag;
 import net.htmlparser.jericho.TextExtractor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -169,7 +170,7 @@ public class PingbackMethodImpl implements Method {
 			throw new DisabledPingbackException("Pingbacks are disabled");
 		}
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = _userLocalService.getDefaultUserId(companyId);
 		long groupId = entry.getGroupId();
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
@@ -213,7 +214,7 @@ public class PingbackMethodImpl implements Method {
 
 		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			companyId, portletId);
 
 		sb.append(portlet.getFriendlyURLMapping());
@@ -251,7 +252,7 @@ public class PingbackMethodImpl implements Method {
 		String portletId = PortletProviderUtil.getPortletId(
 			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		FriendlyURLMapper friendlyURLMapper =
 			portlet.getFriendlyURLMapperInstance();
@@ -274,12 +275,12 @@ public class PingbackMethodImpl implements Method {
 		if (Validator.isNotNull(param)) {
 			long entryId = GetterUtil.getLong(param);
 
-			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+			entry = _blogsEntryLocalService.getEntry(entryId);
 		}
 		else {
 			String urlTitle = getParam(params, "urlTitle");
 
-			entry = BlogsEntryLocalServiceUtil.getEntry(groupId, urlTitle);
+			entry = _blogsEntryLocalService.getEntry(groupId, urlTitle);
 		}
 
 		return entry;
@@ -343,6 +344,25 @@ public class PingbackMethodImpl implements Method {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void validateSource() throws Exception {
 		Source source = null;
 
@@ -378,8 +398,11 @@ public class PingbackMethodImpl implements Method {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PingbackMethodImpl.class);
 
+	private BlogsEntryLocalService _blogsEntryLocalService;
 	private final CommentManager _commentManager;
+	private PortletLocalService _portletLocalService;
 	private String _sourceURI;
 	private String _targetURI;
+	private UserLocalService _userLocalService;
 
 }

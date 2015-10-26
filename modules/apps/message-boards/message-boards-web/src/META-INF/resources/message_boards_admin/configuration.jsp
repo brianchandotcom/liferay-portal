@@ -66,7 +66,7 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					%>
 
 						<c:if test="<%= MBUtil.isValidMessageFormat(MBMessageConstants.FORMATS[i]) %>">
-							<aui:option label='<%= LanguageUtil.get(request,"message-boards.message-formats." + MBMessageConstants.FORMATS[i]) %>' selected="<%= messageFormat.equals(MBMessageConstants.FORMATS[i]) %>" value="<%= MBMessageConstants.FORMATS[i] %>" />
+							<aui:option label='<%= LanguageUtil.get(request, "message-boards.message-formats." + MBMessageConstants.FORMATS[i]) %>' selected="<%= messageFormat.equals(MBMessageConstants.FORMATS[i]) %>" value="<%= MBMessageConstants.FORMATS[i] %>" />
 						</c:if>
 
 					<%

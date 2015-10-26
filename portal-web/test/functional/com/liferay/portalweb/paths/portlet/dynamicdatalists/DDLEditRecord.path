@@ -136,7 +136,7 @@
 </tr>
 <tr>
 	<td>INTEGER_FIELD</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

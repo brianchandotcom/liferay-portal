@@ -1,6 +1,7 @@
 dependencies {
-	compile group: "javax.xml.ws", name: "jaxws-api", version: "2.2.11"
 	compile project(":core:registry-api")
+
+	provided group: "javax.xml.ws", name: "jaxws-api", version: "2.2.11"
 }
 
 liferay {

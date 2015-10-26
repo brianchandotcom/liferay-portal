@@ -36,7 +36,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 String defaultKeywords = LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD;
 
-String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
+String keywords = StringUtil.unquote(ParamUtil.getString(request, "keywords", defaultKeywords));
 %>
 
 <portlet:renderURL var="searchURL">
@@ -139,7 +139,7 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 </aui:form>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.journal_content_search.search_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_journal_content_search_web.search_jsp");
 %>
 
 <aui:script>

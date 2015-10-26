@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -46,6 +47,20 @@ public class PortletProviderUtil {
 	}
 
 	public static PortletURL getPortletURL(
+			HttpServletRequest request, Group group, String className,
+			PortletProvider.Action action)
+		throws PortalException {
+
+		PortletProvider portletProvider = getPortletProvider(className, action);
+
+		if (portletProvider != null) {
+			return portletProvider.getPortletURL(request, group);
+		}
+
+		return null;
+	}
+
+	public static PortletURL getPortletURL(
 			HttpServletRequest request, String className,
 			PortletProvider.Action action)
 		throws PortalException {
@@ -57,6 +72,16 @@ public class PortletProviderUtil {
 		}
 
 		return null;
+	}
+
+	public static PortletURL getPortletURL(
+			PortletRequest portletRequest, Group group, String className,
+			PortletProvider.Action action)
+		throws PortalException {
+
+		return getPortletURL(
+			PortalUtil.getHttpServletRequest(portletRequest), group, className,
+			action);
 	}
 
 	public static PortletURL getPortletURL(

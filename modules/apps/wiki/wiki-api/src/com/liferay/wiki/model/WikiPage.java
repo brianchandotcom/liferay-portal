@@ -16,6 +16,7 @@ package com.liferay.wiki.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.wiki.model.impl.WikiPageImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<WikiPage, Long> PAGE_ID_ACCESSOR = new Accessor<WikiPage, Long>() {
+			@Override
+			public Long get(WikiPage wikiPage) {
+				return wikiPage.getPageId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<WikiPage> getTypeClass() {
+				return WikiPage.class;
+			}
+		};
+
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -46,6 +64,10 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
 		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public int getAttachmentsFileEntriesCount()

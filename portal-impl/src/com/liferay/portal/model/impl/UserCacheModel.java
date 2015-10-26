@@ -79,7 +79,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -161,8 +161,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		sb.append(agreedToTermsOfUse);
 		sb.append(", emailAddressVerified=");
 		sb.append(emailAddressVerified);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -372,14 +370,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 
 		userImpl.setAgreedToTermsOfUse(agreedToTermsOfUse);
 		userImpl.setEmailAddressVerified(emailAddressVerified);
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			userImpl.setLastPublishDate(null);
-		}
-		else {
-			userImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
 		userImpl.setStatus(status);
 
 		userImpl.resetOriginalValues();
@@ -429,7 +419,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		lockoutDate = objectInput.readLong();
 		agreedToTermsOfUse = objectInput.readBoolean();
 		emailAddressVerified = objectInput.readBoolean();
-		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
 	}
 
@@ -592,7 +581,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		objectOutput.writeLong(lockoutDate);
 		objectOutput.writeBoolean(agreedToTermsOfUse);
 		objectOutput.writeBoolean(emailAddressVerified);
-		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
 	}
 
@@ -636,6 +624,5 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 	public long lockoutDate;
 	public boolean agreedToTermsOfUse;
 	public boolean emailAddressVerified;
-	public long lastPublishDate;
 	public int status;
 }

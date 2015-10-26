@@ -106,14 +106,6 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Category Page Name" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
@@ -308,6 +300,7 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="Categories" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -318,6 +311,7 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="Categories" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -333,7 +327,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSubcategoryProperty" priority="4">
+	<command name="AddSubcategoryProperty" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -549,16 +543,26 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
 
 		<execute macro="Category#addCP">
 			<var name="categoryName" value="Category Name 2" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Category#deletePartialCategoryCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Category#viewCP">
@@ -980,7 +984,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchCategoryWithNullResult" priority="4">
+	<command name="SearchCategoryWithNullResult" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1024,10 +1028,6 @@
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1150,7 +1150,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSubcategoryWithNullResult" priority="4">
+	<command name="SearchSubcategoryWithNullResult" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1250,7 +1250,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchVocabularyWithNullResult" priority="4">
+	<command name="SearchVocabularyWithNullResult" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1273,7 +1273,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCannotAddDuplicateSubCategory" priority="4">
+	<command name="ViewCannotAddDuplicateSubCategory" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

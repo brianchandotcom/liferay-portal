@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface MDRAction extends MDRActionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.mobile.device.rules.model.impl.MDRActionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<MDRAction, Long> ACTION_ID_ACCESSOR = new Accessor<MDRAction, Long>() {
+			@Override
+			public Long get(MDRAction mdrAction) {
+				return mdrAction.getActionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<MDRAction> getTypeClass() {
+				return MDRAction.class;
+			}
+		};
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
 	public void setTypeSettingsProperties(

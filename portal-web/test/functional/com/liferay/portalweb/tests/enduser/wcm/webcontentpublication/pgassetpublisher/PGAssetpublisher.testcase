@@ -373,7 +373,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -381,9 +381,9 @@
 			<var name="structureName" value="Advertisement WC Structure Name" />
 		</execute>
 
-		<var name="key_structureName" value="Advertisement WC Structure Name" />
+		<var name="key_ddlDataDefinitionName" value="Advertisement WC Structure Name" />
 
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
@@ -412,7 +412,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -420,9 +420,9 @@
 			<var name="structureName" value="Press Release Structure Name" />
 		</execute>
 
-		<var name="key_structureName" value="Press Release Structure Name" />
+		<var name="key_ddlDataDefinitionName" value="Press Release Structure Name" />
 
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
@@ -453,9 +453,9 @@
 			</var>
 		</execute>
 
-		<var name="key_templateName" value="Advertisement Template Name" />
+		<var name="key_ddlTemplateName" value="Advertisement Template Name" />
 
-		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
@@ -486,9 +486,9 @@
 			</var>
 		</execute>
 
-		<var name="key_templateName" value="Press Release Template Name" />
+		<var name="key_ddlTemplateName" value="Press Release Template Name" />
 
-		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
@@ -646,7 +646,7 @@
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
-		<var name="key_structureName" value="Press Release Structure Name" />
+		<var name="key_ddlDataDefinitionName" value="Press Release Structure Name" />
 
 		<execute function="AssertElementNotPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" />
 
@@ -672,7 +672,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
-		<var name="key_templateName" value="Press Release Template Name" />
+		<var name="key_ddlTemplateName" value="Press Release Template Name" />
 
 		<execute function="AssertElementNotPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" />
 
@@ -725,7 +725,7 @@
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
-		<var name="key_structureName" value="Advertisement WC Structure Name" />
+		<var name="key_ddlDataDefinitionName" value="Advertisement WC Structure Name" />
 
 		<execute function="AssertElementNotPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" />
 
@@ -751,7 +751,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
-		<var name="key_templateName" value="Advertisement Template Name" />
+		<var name="key_ddlTemplateName" value="Advertisement Template Name" />
 
 		<execute function="AssertElementNotPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" />
 
@@ -1142,8 +1142,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAPSelectMoreThanOnePG">
-			<var name="contentName" value="Bookmarks Entry" />
-			<var name="selectContent" value="${contentName}" />
+			<var name="selectContent" value="Bookmarks Entry" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1159,9 +1158,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAPSelectMoreThanOnePG" >
-			<var name="contentName" value="Bookmarks Entry" />
 			<var name="moveSelected" value="true" />
-			<var name="selectContent" value="${contentName}" />
+			<var name="selectContent" value="Bookmarks Entry" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

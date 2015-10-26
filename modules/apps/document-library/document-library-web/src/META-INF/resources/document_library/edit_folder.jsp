@@ -52,248 +52,251 @@ if (workflowEnabled) {
 }
 %>
 
-<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
+<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-util:buffer var="removeFileEntryTypeIcon">
-	<liferay-ui:icon
-		iconCssClass="icon-remove"
-		label="<%= true %>"
-		message="remove"
-	/>
-</liferay-util:buffer>
+	<liferay-util:buffer var="removeFileEntryTypeIcon">
+		<liferay-ui:icon
+			iconCssClass="icon-remove"
+			label="<%= true %>"
+			message="remove"
+		/>
+	</liferay-util:buffer>
 
-<portlet:actionURL name="/document_library/edit_folder" var="editFolderURL" />
+	<portlet:actionURL name="/document_library/edit_folder" var="editFolderURL">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
+	</portlet:actionURL>
 
-<aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-	<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
-	<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
+	<aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
+		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (folder == null) %>"
-		title='<%= (folder == null) ? (rootFolder ? "home" : "new-folder") : folder.getName() %>'
-	/>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= (folder == null) %>"
+			title='<%= (folder == null) ? (rootFolder ? "home" : "new-folder") : folder.getName() %>'
+		/>
 
-	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-folder-name" />
-	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
+		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
 
-	<liferay-ui:error exception="<%= FolderNameException.class %>">
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.NAME_LABEL, DLFolderConstants.NAME_GENERAL_RESTRICTIONS, DLFolderConstants.getNameReservedWords(PropsValues.DL_NAME_BLACKLIST)} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
-		</p>
+		<liferay-ui:error exception="<%= FolderNameException.class %>">
+			<p>
+				<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.NAME_LABEL, DLFolderConstants.NAME_GENERAL_RESTRICTIONS, DLFolderConstants.getNameReservedWords(PropsValues.DL_NAME_BLACKLIST)} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+			</p>
 
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.getNameInvalidEndCharacters(PropsValues.DL_CHAR_LAST_BLACKLIST)} %>" key="the-folder-name-cannot-end-with-the-following-characters-x" />
-		</p>
+			<p>
+				<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.getNameInvalidEndCharacters(PropsValues.DL_CHAR_LAST_BLACKLIST)} %>" key="the-folder-name-cannot-end-with-the-following-characters-x" />
+			</p>
 
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.NAME_LABEL, DLFolderConstants.getNameInvalidCharacters(PropsValues.DL_CHAR_BLACKLIST)} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
-		</p>
-	</liferay-ui:error>
+			<p>
+				<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.NAME_LABEL, DLFolderConstants.getNameInvalidCharacters(PropsValues.DL_CHAR_BLACKLIST)} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+			</p>
+		</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="please-select-a-document-type" />
+		<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="please-select-a-document-type" />
 
-	<aui:model-context bean="<%= folder %>" model="<%= DLFolder.class %>" />
+		<aui:model-context bean="<%= folder %>" model="<%= DLFolder.class %>" />
 
-	<aui:fieldset>
-		<c:if test="<%= !rootFolder %>">
-			<c:if test="<%= folder != null %>">
-				<aui:input name="parentFolder" type="resource" value="<%= parentFolderName %>" />
+		<aui:fieldset>
+			<c:if test="<%= !rootFolder %>">
+				<c:if test="<%= folder != null %>">
+					<aui:input name="parentFolder" type="resource" value="<%= parentFolderName %>" />
+				</c:if>
+
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+
+				<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
+					<aui:input name="description" />
+
+					<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= DLFolderConstants.getClassName() %>"
+							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+							editable="<%= true %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
+				</c:if>
 			</c:if>
 
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+			<c:if test="<%= rootFolder || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
 
-			<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
-				<aui:input name="description" />
+				<%
+				DLFolder dlFolder = null;
 
-				<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-					<liferay-ui:custom-attribute-list
-						className="<%= DLFolderConstants.getClassName() %>"
-						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</liferay-ui:custom-attributes-available>
-			</c:if>
-		</c:if>
+				long defaultFileEntryTypeId = 0;
 
-		<c:if test="<%= rootFolder || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
+				if (!rootFolder) {
+					dlFolder = (DLFolder)folder.getModel();
 
-			<%
-			DLFolder dlFolder = null;
+					defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
+				}
 
-			long defaultFileEntryTypeId = 0;
+				List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, false);
 
-			if (!rootFolder) {
-				dlFolder = (DLFolder)folder.getModel();
+				String headerNames = null;
 
-				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
-			}
+				if (workflowEnabled) {
+					headerNames = "name,workflow,null";
+				}
+				else {
+					headerNames = "name,null";
+				}
+				%>
 
-			List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, false);
+				<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
+					<c:if test="<%= !rootFolder %>">
+						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= workflowEnabled ? LanguageUtil.format(locale, "use-document-type-restrictions-and-workflow-of-the-parent-folder-x", parentFolderName, false) : LanguageUtil.format(locale, "use-document-type-restrictions-of-the-parent-folder-x", parentFolderName, false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
 
-			String headerNames = null;
+						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= workflowEnabled ? LanguageUtil.format(locale, "define-specific-document-type-restrictions-and-workflow-for-this-folder-x", folder.getName(), false) : LanguageUtil.format(locale, "define-specific-document-type-restrictions-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" />
 
-			if (workflowEnabled) {
-				headerNames = "name,workflow,null";
-			}
-			else {
-				headerNames = "name,null";
-			}
-			%>
-
-			<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
-				<c:if test="<%= !rootFolder %>">
-					<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= workflowEnabled ? LanguageUtil.format(locale, "use-document-type-restrictions-and-workflow-of-the-parent-folder-x", parentFolderName, false) : LanguageUtil.format(locale, "use-document-type-restrictions-of-the-parent-folder-x", parentFolderName, false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
-
-					<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= workflowEnabled ? LanguageUtil.format(locale, "define-specific-document-type-restrictions-and-workflow-for-this-folder-x", folder.getName(), false) : LanguageUtil.format(locale, "define-specific-document-type-restrictions-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" />
-
-					<div class='<%= (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />restrictionTypeDefinedDiv">
-						<liferay-ui:search-container
-							headerNames="<%= headerNames %>"
-							total="<%= fileEntryTypes.size() %>"
-						>
-							<liferay-ui:search-container-results
-								results="<%= fileEntryTypes %>"
-							/>
-
-							<liferay-ui:search-container-row
-								className="com.liferay.portlet.documentlibrary.model.DLFileEntryType"
-								escapedModel="<%= true %>"
-								keyProperty="fileEntryTypeId"
-								modelVar="dlFileEntryType"
+						<div class='<%= (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />restrictionTypeDefinedDiv">
+							<liferay-ui:search-container
+								headerNames="<%= headerNames %>"
+								total="<%= fileEntryTypes.size() %>"
 							>
-								<liferay-ui:search-container-column-text
-									name="name"
-									value="<%= dlFileEntryType.getName(locale) %>"
+								<liferay-ui:search-container-results
+									results="<%= fileEntryTypes %>"
 								/>
 
-								<c:if test="<%= workflowEnabled %>">
-									<liferay-ui:search-container-column-text name="workflow">
-										<aui:select label="" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>' title="workflow-definition">
-											<aui:option label="no-workflow" value="" />
+								<liferay-ui:search-container-row
+									className="com.liferay.portlet.documentlibrary.model.DLFileEntryType"
+									escapedModel="<%= true %>"
+									keyProperty="fileEntryTypeId"
+									modelVar="dlFileEntryType"
+								>
+									<liferay-ui:search-container-column-text
+										name="name"
+										value="<%= dlFileEntryType.getName(locale) %>"
+									/>
 
-											<%
-											WorkflowDefinitionLink workflowDefinitionLink = null;
+									<c:if test="<%= workflowEnabled %>">
+										<liferay-ui:search-container-column-text name="workflow">
+											<aui:select label="" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>' title="workflow-definition">
+												<aui:option label="no-workflow" value="" />
 
-											try {
-												workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, dlFileEntryType.getFileEntryTypeId(), true);
-											}
-											catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-											}
+												<%
+												WorkflowDefinitionLink workflowDefinitionLink = null;
 
-											for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-												boolean selected = false;
-
-												if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
-													selected = true;
+												try {
+													workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, dlFileEntryType.getFileEntryTypeId(), true);
 												}
-											%>
+												catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+												}
 
-												<aui:option label='<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+												for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+													boolean selected = false;
 
-											<%
-											}
-											%>
+													if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+														selected = true;
+													}
+												%>
 
-										</aui:select>
+													<aui:option label='<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+
+												<%
+												}
+												%>
+
+											</aui:select>
+										</liferay-ui:search-container-column-text>
+									</c:if>
+
+									<liferay-ui:search-container-column-text>
+										<a class="modify-link" data-rowId="<%= dlFileEntryType.getFileEntryTypeId() %>" href="javascript:;"><%= removeFileEntryTypeIcon %></a>
 									</liferay-ui:search-container-column-text>
-								</c:if>
+								</liferay-ui:search-container-row>
 
-								<liferay-ui:search-container-column-text>
-									<a class="modify-link" data-rowId="<%= dlFileEntryType.getFileEntryTypeId() %>" href="javascript:;"><%= removeFileEntryTypeIcon %></a>
-								</liferay-ui:search-container-column-text>
-							</liferay-ui:search-container-row>
+								<liferay-ui:search-iterator paginate="<%= false %>" />
+							</liferay-ui:search-container>
 
-							<liferay-ui:search-iterator paginate="<%= false %>" />
-						</liferay-ui:search-container>
+							<liferay-ui:icon
+								cssClass="modify-link select-file-entry-type"
+								iconCssClass="icon-search"
+								label="<%= true %>"
+								linkCssClass="btn btn-default"
+								message="select-document-type"
+								url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
+							/>
 
-						<liferay-ui:icon
-							cssClass="modify-link select-file-entry-type"
-							iconCssClass="icon-search"
-							label="<%= true %>"
-							linkCssClass="btn btn-default"
-							message="select-document-type"
-							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
-						/>
+							<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type hide" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
 
-						<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type hide" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
+								<%
+								for (DLFileEntryType fileEntryType : fileEntryTypes) {
+								%>
 
-							<%
-							for (DLFileEntryType fileEntryType : fileEntryTypes) {
-							%>
+									<aui:option id='<%= renderResponse.getNamespace() + "defaultFileEntryTypeId-" + fileEntryType.getFileEntryTypeId() %>' label="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>" selected="<%= (fileEntryType.getFileEntryTypeId() == defaultFileEntryTypeId) %>" value="<%= fileEntryType.getFileEntryTypeId() %>" />
 
-								<aui:option id='<%= renderResponse.getNamespace() + "defaultFileEntryTypeId-" + fileEntryType.getFileEntryTypeId() %>' label="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>" selected="<%= (fileEntryType.getFileEntryTypeId() == defaultFileEntryTypeId) %>" value="<%= fileEntryType.getFileEntryTypeId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</div>
-				</c:if>
-
-				<c:if test="<%= workflowEnabled %>">
-					<c:choose>
-						<c:when test="<%= !rootFolder %>">
-							<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(locale, "default-workflow-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
-						</c:when>
-						<c:otherwise>
-							<aui:input name="restrictionType" type="hidden" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
-						</c:otherwise>
-					</c:choose>
-
-					<div class='<%= (rootFolder || (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW)) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />restrictionTypeWorkflowDiv">
-						<aui:select label="default-workflow-for-all-document-types" name='<%= "workflowDefinition" + DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>'>
-							<aui:option label="no-workflow" value="" />
-
-							<%
-							WorkflowDefinitionLink workflowDefinitionLink = null;
-
-							try {
-								workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
-							}
-							catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-							}
-
-							for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-								boolean selected = false;
-
-								if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
-									selected = true;
+								<%
 								}
-							%>
+								%>
 
-								<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+							</aui:select>
+						</div>
+					</c:if>
 
-							<%
-							}
-							%>
+					<c:if test="<%= workflowEnabled %>">
+						<c:choose>
+							<c:when test="<%= !rootFolder %>">
+								<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(locale, "default-workflow-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+							</c:when>
+							<c:otherwise>
+								<aui:input name="restrictionType" type="hidden" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+							</c:otherwise>
+						</c:choose>
 
-						</aui:select>
-					</div>
-				</c:if>
-			</aui:field-wrapper>
-		</c:if>
+						<div class='<%= (rootFolder || (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW)) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />restrictionTypeWorkflowDiv">
+							<aui:select label="default-workflow-for-all-document-types" name='<%= "workflowDefinition" + DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>'>
+								<aui:option label="no-workflow" value="" />
 
-		<c:if test="<%= !rootFolder && (folder == null) %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= DLFolderConstants.getClassName() %>"
-				/>
-			</aui:field-wrapper>
-		</c:if>
+								<%
+								WorkflowDefinitionLink workflowDefinitionLink = null;
 
-		<aui:button-row>
-			<aui:button type="submit" />
+								try {
+									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+								}
+								catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+								}
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
-</aui:form>
+								for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+									boolean selected = false;
+
+									if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+										selected = true;
+									}
+								%>
+
+									<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+
+								<%
+								}
+								%>
+
+							</aui:select>
+						</div>
+					</c:if>
+				</aui:field-wrapper>
+			</c:if>
+
+			<c:if test="<%= !rootFolder && (folder == null) %>">
+				<aui:field-wrapper label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= DLFolderConstants.getClassName() %>"
+					/>
+				</aui:field-wrapper>
+			</c:if>
+
+			<aui:button-row>
+				<aui:button type="submit" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</aui:button-row>
+		</aui:fieldset>
+	</aui:form>
+</div>
 
 <liferay-util:buffer var="workflowDefinitionsBuffer">
 	<c:if test="<%= workflowEnabled %>">

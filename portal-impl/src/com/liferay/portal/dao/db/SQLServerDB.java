@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.db;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -41,8 +40,8 @@ import java.util.List;
  */
 public class SQLServerDB extends BaseDB {
 
-	public static DB getInstance() {
-		return _instance;
+	public SQLServerDB(int majorVersion, int minorVersion) {
+		super(TYPE_SQLSERVER, majorVersion, minorVersion);
 	}
 
 	@Override
@@ -109,10 +108,6 @@ public class SQLServerDB extends BaseDB {
 	@Override
 	public boolean isSupportsAlterColumnType() {
 		return _SUPPORTS_ALTER_COLUMN_TYPE;
-	}
-
-	protected SQLServerDB() {
-		super(TYPE_SQLSERVER);
 	}
 
 	@Override
@@ -222,7 +217,5 @@ public class SQLServerDB extends BaseDB {
 	private static final int _SQL_SERVER_2000 = 8;
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = false;
-
-	private static final SQLServerDB _instance = new SQLServerDB();
 
 }

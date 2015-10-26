@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -26,15 +27,15 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 public class FinderCacheUtil {
 
 	public static void clearCache() {
-		getFinderCache().clearCache();
+		_finderCache.clearCache();
 	}
 
 	public static void clearCache(String className) {
-		getFinderCache().clearCache(className);
+		_finderCache.clearCache(className);
 	}
 
 	public static void clearLocalCache() {
-		getFinderCache().clearLocalCache();
+		_finderCache.clearLocalCache();
 	}
 
 	public static FinderCache getFinderCache() {
@@ -47,8 +48,7 @@ public class FinderCacheUtil {
 		FinderPath finderPath, Object[] args,
 		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl) {
 
-		return getFinderCache().getResult(
-			finderPath, args, basePersistenceImpl);
+		return _finderCache.getResult(finderPath, args, basePersistenceImpl);
 	}
 
 	/**
@@ -86,32 +86,27 @@ public class FinderCacheUtil {
 	public static void putResult(
 		FinderPath finderPath, Object[] args, Object result) {
 
-		getFinderCache().putResult(finderPath, args, result);
+		_finderCache.putResult(finderPath, args, result);
 	}
 
 	public static void putResult(
 		FinderPath finderPath, Object[] args, Object result, boolean quiet) {
 
-		getFinderCache().putResult(finderPath, args, result, quiet);
+		_finderCache.putResult(finderPath, args, result, quiet);
 	}
 
 	public static void removeCache(String className) {
-		getFinderCache().removeCache(className);
+		_finderCache.removeCache(className);
 	}
 
 	public static void removeResult(FinderPath finderPath, Object[] args) {
-		getFinderCache().removeResult(finderPath, args);
-	}
-
-	public void setFinderCache(FinderCache finderCache) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_finderCache = finderCache;
+		_finderCache.removeResult(finderPath, args);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FinderCacheUtil.class);
 
-	private static FinderCache _finderCache;
+	private static final FinderCache _finderCache =
+		ProxyFactory.newServiceTrackedInstance(FinderCache.class);
 
 }

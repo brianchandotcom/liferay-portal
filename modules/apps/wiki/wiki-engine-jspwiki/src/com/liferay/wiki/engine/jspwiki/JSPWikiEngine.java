@@ -31,7 +31,7 @@ import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -134,7 +134,7 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 				Boolean existsObj = links.get(title);
 
 				if (existsObj == null) {
-					if (WikiPageLocalServiceUtil.getPagesCount(
+					if (_wikiPageLocalService.getPagesCount(
 							page.getNodeId(), title, true) > 0) {
 
 						existsObj = Boolean.TRUE;
@@ -258,6 +258,13 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	protected void unsetWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
@@ -360,5 +367,6 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	private Properties _properties = new Properties();
 	private ServletContext _servletContext;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

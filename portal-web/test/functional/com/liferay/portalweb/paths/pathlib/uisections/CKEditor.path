@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IFRAME_LOCALIZED</td>
-	<td>//iframe[contains(@title,'_editor')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BODY</td>
 	<td>//body[contains(@class,'cke_editable')]</td>
 	<td></td>
@@ -243,6 +238,12 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!-- CONTENT_AUDIO_LINK -->
+<tr>
+	<td>CONTENT_AUDIO_LINK_URL_FIELD</td>
+	<td>//input[@id='cke_99_textInput']</td>
 	<td></td>
 </tr>
 <!--CONTENT_IMAGE_LINK-->

@@ -1,7 +1,7 @@
 <definition>
 	<command name="clickRemoveIcon">
 		<if>
-			<condition function="IsVisible" locator1="Icon#REMOVE" />
+			<condition function="IsVisible#waitForVisible" locator1="Icon#REMOVE" />
 			<then>
 				<execute function="Click" locator1="Icon#REMOVE" />
 			</then>

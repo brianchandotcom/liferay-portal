@@ -17,6 +17,8 @@ package com.liferay.portal.template.freemarker;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import freemarker.core.Environment;
@@ -24,6 +26,7 @@ import freemarker.core.TemplateClassResolver;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.utility.Execute;
 import freemarker.template.utility.ObjectConstructor;
 
 import java.util.Map;
@@ -47,17 +50,37 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			String className, Environment environment, Template template)
 		throws TemplateException {
 
-		if (className.equals(ObjectConstructor.class.getName())) {
+		if (className.equals(Execute.class.getName()) ||
+			className.equals(ObjectConstructor.class.getName())) {
+
 			throw new TemplateException(
 				"Instantiating " + className + " is not allowed in the " +
 					"template for security reasons",
 				environment);
 		}
 
-		for (String restrictedClassName :
-				_freemarkerEngineConfiguration.restrictedClasses()) {
+		String[] restrictedClassNames = GetterUtil.getStringValues(
+			_freemarkerEngineConfiguration.restrictedClasses());
 
-			if (className.equals(restrictedClassName)) {
+		for (String restrictedClassName : restrictedClassNames) {
+			if (restrictedClassName.equals(StringPool.STAR)) {
+				throw new TemplateException(
+					"Instantiating " + className + " is not allowed in the " +
+						"template for security reasons",
+					environment);
+			}
+			else if (restrictedClassName.endsWith(StringPool.STAR)) {
+				restrictedClassName = restrictedClassName.substring(
+					0, restrictedClassName.length() -1);
+
+				if (className.startsWith(restrictedClassName)) {
+					throw new TemplateException(
+						"Instantiating " + className + " is not allowed in " +
+							"the template for security reasons",
+						environment);
+				}
+			}
+			else if (className.equals(restrictedClassName)) {
 				throw new TemplateException(
 					"Instantiating " + className + " is not allowed in the " +
 						"template for security reasons",
@@ -65,24 +88,45 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			}
 		}
 
-		for (String restrictedPackageName :
-				_freemarkerEngineConfiguration.restrictedPackages()) {
+		boolean allowed = false;
 
-			if (className.startsWith(restrictedPackageName)) {
-				throw new TemplateException(
-					"Instantiating " + className + " is not allowed in the " +
-						"template for security reasons",
-					environment);
+		String[] allowedClasseNames = GetterUtil.getStringValues(
+			_freemarkerEngineConfiguration.allowedClasses());
+
+		for (String allowedClassName : allowedClasseNames) {
+			if (allowedClassName.equals(StringPool.STAR)) {
+				allowed = true;
+				break;
+			}
+			else if (allowedClassName.endsWith(StringPool.STAR)) {
+				allowedClassName = allowedClassName.substring(
+					0, allowedClassName.length() - 1);
+
+				if (className.startsWith(allowedClassName)) {
+					allowed = true;
+					break;
+				}
+			}
+			else if (allowedClassName.equals(className)) {
+				allowed = true;
+				break;
 			}
 		}
 
-		try {
-			return Class.forName(
-				className, true, ClassLoaderUtil.getContextClassLoader());
+		if (allowed) {
+			try {
+				return Class.forName(
+					className, true, ClassLoaderUtil.getContextClassLoader());
+			}
+			catch (Exception e) {
+				throw new TemplateException(e, environment);
+			}
 		}
-		catch (Exception e) {
-			throw new TemplateException(e, environment);
-		}
+
+		throw new TemplateException(
+			"Instantiating " + className + " is not allowed in the template " +
+				"for security reasons",
+			environment);
 	}
 
 	@Activate

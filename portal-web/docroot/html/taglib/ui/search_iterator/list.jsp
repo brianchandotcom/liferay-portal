@@ -58,11 +58,9 @@ if (iteratorURL != null) {
 JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 %>
 
-<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
-	<div class="alert alert-info">
-		<%= LanguageUtil.get(request, emptyResultsMessage) %>
-	</div>
-</c:if>
+<div class="alert alert-info <%= resultRows.isEmpty() && (emptyResultsMessage != null) ? StringPool.BLANK : "hide" %>" id="<%= namespace + id %>EmptyResultsMessage">
+	<%= LanguageUtil.get(request, emptyResultsMessage) %>
+</div>
 
 <div class="lfr-search-container <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA) && paginate %>">
@@ -126,13 +124,13 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 						if (HtmlUtil.escapeAttribute(orderByType).equals("desc")) {
 							cssClass += " table-sorted-desc";
 						}
+					}
 
-						if (orderByType.equals("asc")) {
-							orderByType = "desc";
-						}
-						else {
-							orderByType = "asc";
-						}
+					if (Validator.equals(orderByType, "asc")) {
+						orderByType = "desc";
+					}
+					else {
+						orderByType = "asc";
 					}
 				%>
 
@@ -209,14 +207,6 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 		</c:if>
 
 		<tbody class="table-data">
-
-		<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
-			<tr>
-				<td class="table-cell">
-					<%= LanguageUtil.get(request, emptyResultsMessage) %>
-				</td>
-			</tr>
-		</c:if>
 
 		<%
 		boolean allRowsIsChecked = true;

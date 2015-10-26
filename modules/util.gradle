@@ -5,7 +5,7 @@ buildscript {
 		mavenLocal()
 
 		maven {
-			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+			url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
 	}
 
@@ -46,7 +46,7 @@ repositories {
 	mavenLocal()
 
 	maven {
-		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
 }
 
@@ -66,19 +66,19 @@ wrapper {
 
 	doLast {
 		ant.replace(file: new File(wrapperDir, "gradlew")) {
-			replacetoken "# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules"
-
-			replacevalue '''\
+			replacefilter token: '# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules', value: '''\
 # Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
 DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS -Dgradle.user.home=$APP_HOME/.gradle"'''
+
+			replacefilter token: 'org.gradle.wrapper.GradleWrapperMain "$@"', value: 'org.gradle.wrapper.GradleWrapperMain --init-script=$APP_HOME/modules/init.gradle "$@"'
 		}
 
 		ant.replace(file: new File(wrapperDir, "gradlew.bat")) {
-			replacetoken "@rem Setup the command line"
-
-			replacevalue """\
+			replacefilter token: '@rem Setup the command line', value: '''\
 @rem Setup the command line
-set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% -Dgradle.user.home=%APP_HOME%\\.gradle"""
+set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% -Dgradle.user.home=%APP_HOME%\\.gradle'''
+
+			replacefilter token: 'org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%', value: 'org.gradle.wrapper.GradleWrapperMain --init-script=%APP_HOME%\\modules\\init.gradle %CMD_LINE_ARGS%'
 		}
 	}
 

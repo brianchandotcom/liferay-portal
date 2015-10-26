@@ -232,6 +232,12 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _assetLinkEntryIds;
 	}
 
+	/**
+	 * Returns the priority of an asset entry if this service context is being
+	 * passed as a parameter to a method which manipulates the asset entry.
+	 *
+	 * @return the asset entry's priority
+	 */
 	public double getAssetPriority() {
 		return _assetPriority;
 	}
@@ -269,8 +275,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Returns the value of the {@link
-	 * com.liferay.portal.kernel.util.Constants#CMD} parameter used in most
+	 * Returns the value of the {@link Constants#CMD} parameter used in most
 	 * Liferay forms for internal portlets.
 	 *
 	 * @return the value of the command parameter
@@ -434,7 +439,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * context.
 	 *
 	 * @return the the map of request header name/value pairs
-	 * @see    com.liferay.portal.kernel.servlet.HttpHeaders
+	 * @see    HttpHeaders
 	 */
 	@JSON(include = false)
 	public Map<String, String> getHeaders() {
@@ -593,7 +598,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * passed as a parameter to a portlet.
 	 *
 	 * @return the ID of the current portlet
-	 * @see    com.liferay.portal.model.PortletPreferencesIds
+	 * @see    PortletPreferencesIds
 	 */
 	public String getPortletId() {
 		if (_portletPreferencesIds == null) {
@@ -608,12 +613,12 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * context is being passed as a parameter to a portlet.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.model.PortletPreferencesIds} can be used to
-	 * look up portlet preferences of the current portlet.
+	 * The {@link PortletPreferencesIds} can be used to look up portlet
+	 * preferences of the current portlet.
 	 * </p>
 	 *
 	 * @return the portlet preferences IDs of the current portlet
-	 * @see    com.liferay.portal.model.PortletPreferencesIds
+	 * @see    PortletPreferencesIds
 	 */
 	public PortletPreferencesIds getPortletPreferencesIds() {
 		return _portletPreferencesIds;
@@ -675,7 +680,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * this service context.
 	 *
 	 * @return the ID of the group corresponding to the current data scope
-	 * @see    com.liferay.portal.model.Group
+	 * @see    Group
 	 */
 	public long getScopeGroupId() {
 		return _scopeGroupId;
@@ -697,7 +702,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * Returns the user-agent request header of this service context.
 	 *
 	 * @return the user-agent request header
-	 * @see    com.liferay.portal.kernel.servlet.HttpHeaders
+	 * @see    HttpHeaders
 	 */
 	public String getUserAgent() {
 		if (_request == null) {
@@ -791,8 +796,7 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	/**
 	 * Returns <code>true</code> if this service context contains an add command
-	 * (i.e. has command value {@link
-	 * com.liferay.portal.kernel.util.Constants#ADD})
+	 * (i.e. has command value {@link Constants#ADD})
 	 *
 	 * @return <code>true</code> if this service context contains an add
 	 *         command; <code>false</code> otherwise
@@ -812,8 +816,7 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	/**
 	 * Returns <code>true</code> if this service context contains an update
-	 * command (i.e. has command value {@link
-	 * com.liferay.portal.kernel.util.Constants#UPDATE})
+	 * command (i.e. has command value {@link Constants#UPDATE})
 	 *
 	 * @return <code>true</code> if this service context contains an update
 	 *         command; <code>false</code> otherwise
@@ -1124,6 +1127,12 @@ public class ServiceContext implements Cloneable, Serializable {
 		_assetLinkEntryIds = assetLinkEntryIds;
 	}
 
+	/**
+	 * Sets the priority of an asset entry if this service context is being
+	 * passed as a parameter to a method which manipulates the asset entry.
+	 *
+	 * @param assetPriority the priority of an asset entry
+	 */
 	public void setAssetPriority(double assetPriority) {
 		_assetPriority = assetPriority;
 	}
@@ -1161,12 +1170,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Sets the value of the {@link
-	 * com.liferay.portal.kernel.util.Constants#CMD} parameter used in most
+	 * Sets the value of the {@link Constants#CMD} parameter used in most
 	 * Liferay forms for internal portlets.
 	 *
-	 * @param command the value of the {@link
-	 *        com.liferay.portal.kernel.util.Constants#CMD} parameter
+	 * @param command the value of the {@link Constants#CMD} parameter
 	 */
 	public void setCommand(String command) {
 		_command = command;
@@ -1309,7 +1316,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *
 	 * @param headers map of request header name/value pairs of this service
 	 *        context
-	 * @see   com.liferay.portal.kernel.servlet.HttpHeaders
+	 * @see   HttpHeaders
 	 */
 	public void setHeaders(Map<String, String> headers) {
 		_headers = headers;
@@ -1430,12 +1437,12 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * context is being passed as a parameter to a portlet.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.model.PortletPreferencesIds} can be used to
-	 * look up portlet preferences of the current portlet.
+	 * The {@link PortletPreferencesIds} can be used to look up portlet
+	 * preferences of the current portlet.
 	 * </p>
 	 *
 	 * @param portletPreferencesIds the portlet preferences
-	 * @see   com.liferay.portal.model.PortletPreferencesIds
+	 * @see   PortletPreferencesIds
 	 */
 	public void setPortletPreferencesIds(
 		PortletPreferencesIds portletPreferencesIds) {
@@ -1481,7 +1488,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *
 	 * @param scopeGroupId the ID of the group corresponding to the current data
 	 *        scope of this service context
-	 * @see   com.liferay.portal.model.Group
+	 * @see   Group
 	 */
 	public void setScopeGroupId(long scopeGroupId) {
 		_scopeGroupId = scopeGroupId;
@@ -1534,7 +1541,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * as parameter to a method that processes a workflow action.
 	 *
 	 * @param workflowAction workflow action to take (default is {@link
-	 *        com.liferay.portal.kernel.workflow.WorkflowConstants#ACTION_PUBLISH})
+	 *        WorkflowConstants#ACTION_PUBLISH})
 	 */
 	public void setWorkflowAction(int workflowAction) {
 		_workflowAction = workflowAction;

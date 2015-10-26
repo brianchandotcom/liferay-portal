@@ -59,7 +59,7 @@ public class SitesPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_SITES;
+		return PanelCategoryKeys.SITES;
 	}
 
 	@Override

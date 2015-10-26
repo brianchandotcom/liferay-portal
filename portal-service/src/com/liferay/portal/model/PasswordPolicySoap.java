@@ -69,7 +69,6 @@ public class PasswordPolicySoap implements Serializable {
 		soapModel.setRequireUnlock(model.getRequireUnlock());
 		soapModel.setResetFailureCount(model.getResetFailureCount());
 		soapModel.setResetTicketMaxAge(model.getResetTicketMaxAge());
-		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -438,14 +437,6 @@ public class PasswordPolicySoap implements Serializable {
 		_resetTicketMaxAge = resetTicketMaxAge;
 	}
 
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _passwordPolicyId;
@@ -481,5 +472,4 @@ public class PasswordPolicySoap implements Serializable {
 	private boolean _requireUnlock;
 	private long _resetFailureCount;
 	private long _resetTicketMaxAge;
-	private Date _lastPublishDate;
 }

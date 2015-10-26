@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -33,8 +33,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
-import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
-import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialActivityInterpreterLocalService;
+import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 import com.liferay.util.RSSUtil;
 
@@ -60,6 +60,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -138,7 +139,7 @@ public class RSSMVCResourceCommand implements MVCResourceCommand {
 
 		for (SocialActivity socialActivity : socialActivities) {
 			SocialActivityFeedEntry socialActivityFeedEntry =
-				SocialActivityInterpreterLocalServiceUtil.interpret(
+				_socialActivityInterpreterLocalService.interpret(
 					StringPool.BLANK, socialActivity, serviceContext);
 
 			if (socialActivityFeedEntry == null) {
@@ -247,25 +248,51 @@ public class RSSMVCResourceCommand implements MVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
 		int start = 0;
 
 		if (group.isOrganization()) {
-			return SocialActivityLocalServiceUtil.getOrganizationActivities(
+			return _socialActivityLocalService.getOrganizationActivities(
 				group.getOrganizationId(), start, max);
 		}
 		else if (group.isRegularSite()) {
-			return SocialActivityLocalServiceUtil.getGroupActivities(
+			return _socialActivityLocalService.getGroupActivities(
 				group.getGroupId(), start, max);
 		}
 		else if (group.isUser()) {
-			return SocialActivityLocalServiceUtil.getUserActivities(
+			return _socialActivityLocalService.getUserActivities(
 				group.getClassPK(), start, max);
 		}
 
 		return Collections.emptyList();
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivityInterpreterLocalService(
+		SocialActivityInterpreterLocalService
+			socialActivityInterpreterLocalService) {
+
+		_socialActivityInterpreterLocalService =
+			socialActivityInterpreterLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private SocialActivityInterpreterLocalService
+		_socialActivityInterpreterLocalService;
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

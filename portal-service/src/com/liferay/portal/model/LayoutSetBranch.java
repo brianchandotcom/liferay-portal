@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the LayoutSetBranch service. Represents a row in the &quot;LayoutSetBranch&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,24 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutSetBranchImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<LayoutSetBranch, Long> LAYOUT_SET_BRANCH_ID_ACCESSOR =
+		new Accessor<LayoutSetBranch, Long>() {
+			@Override
+			public Long get(LayoutSetBranch layoutSetBranch) {
+				return layoutSetBranch.getLayoutSetBranchId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<LayoutSetBranch> getTypeClass() {
+				return LayoutSetBranch.class;
+			}
+		};
+
 	public com.liferay.portal.model.ColorScheme getColorScheme();
 
 	public com.liferay.portal.model.Group getGroup()

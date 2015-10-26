@@ -18,6 +18,8 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Enumeration;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -34,6 +36,8 @@ public class WabServletContextHelper extends ServletContextHelper {
 
 	public WabServletContextHelper(Bundle bundle) {
 		super(bundle);
+
+		_bundle = bundle;
 
 		URL url = bundle.getEntry("WEB-INF/");
 
@@ -67,10 +71,11 @@ public class WabServletContextHelper extends ServletContextHelper {
 		}
 
 		if (!_wabShapedBundle && !name.startsWith("/META-INF/resources")) {
-			return super.getResource("/META-INF/resources" + name);
+			return _getResourceInBundleOrFragments(
+				"/META-INF/resources" + name);
 		}
 
-		return super.getResource(name);
+		return _getResourceInBundleOrFragments(name);
 	}
 
 	@Override
@@ -129,6 +134,28 @@ public class WabServletContextHelper extends ServletContextHelper {
 		return _string;
 	}
 
+	private URL _getResourceInBundleOrFragments(String name) {
+		String dirName = "/";
+		String fileName = name;
+
+		int index = name.lastIndexOf('/');
+
+		if (index > 0) {
+			dirName = name.substring(0, index);
+			fileName = name.substring(index + 1);
+		}
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			dirName, fileName, false);
+
+		if ((enumeration == null) || !enumeration.hasMoreElements()) {
+			return null;
+		}
+
+		return enumeration.nextElement();
+	}
+
+	private final Bundle _bundle;
 	private final String _string;
 	private final boolean _wabShapedBundle;
 

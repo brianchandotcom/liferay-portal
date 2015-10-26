@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.TreeModel;
 
@@ -35,6 +36,23 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DLFileEntry, Long> FILE_ENTRY_ID_ACCESSOR = new Accessor<DLFileEntry, Long>() {
+			@Override
+			public Long get(DLFileEntry dlFileEntry) {
+				return dlFileEntry.getFileEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DLFileEntry> getTypeClass() {
+				return DLFileEntry.class;
+			}
+		};
+
 	@Override
 	public java.lang.String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;

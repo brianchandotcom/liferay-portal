@@ -14,6 +14,8 @@ alter table BlogsEntry add coverImageFileEntryId LONG;
 alter table BlogsEntry add coverImageURL STRING null;
 alter table BlogsEntry add smallImageFileEntryId LONG;
 
+alter table Contact_ drop column msnSn;
+
 drop index IX_C803899D on DDMStructureLink;
 
 alter table DLFileEntryMetadata drop column fileEntryTypeId;

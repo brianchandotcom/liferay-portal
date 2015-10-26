@@ -1,6 +1,6 @@
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
-<#assign wikiPageClassName = "com.liferay.portlet.wiki.model.WikiPage" />
+<#assign wikiPageClassName = "com.liferay.wiki.model.WikiPage" />
 
 <#assign assetRenderer = assetEntry.getAssetRenderer() />
 
@@ -46,7 +46,10 @@
 
 	 <br />
 
-	<@getRatings cssClass="page-ratings" entry=entry />
+	<@getRatings
+		cssClass="page-ratings"
+		entry=entry
+	/>
 
 	<@getRelatedAssets />
 </div>
@@ -116,7 +119,10 @@
 						<a href="${viewPageURL}">${dateUtil.getDate(childPage.getModifiedDate(),"dd MMM yyyy - HH:mm:ss", locale)} <@liferay.language key="by" /> ${htmlUtil.escape(portalUtil.getUserName(childPage.getUserId(), childPage.getUserName()))}</a>
 					</td>
 					<td>
-						<@getRatings cssClass="child-ratings" entry=childPage />
+						<@getRatings
+							cssClass="child-ratings"
+							entry=childPage
+						/>
 					</td>
 				</tr>
 			</#list>
@@ -160,7 +166,7 @@
 </#macro>
 
 <#macro getDiscussion>
-	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && wikiPortletInstanceConfiguration.enableComments()>
+	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && wikiPortletInstanceOverriddenConfiguration.enableComments()>
 		<br />
 
 		<#assign discussionURL = renderResponse.createActionURL() />
@@ -172,7 +178,7 @@
 			classPK=entry.getResourcePrimKey()
 			formAction=discussionURL?string
 			formName="fm2"
-			ratingsEnabled=wikiPortletInstanceConfiguration.enableCommentRatings()
+			ratingsEnabled=wikiPortletInstanceOverriddenConfiguration.enableCommentRatings()
 			redirect=currentURL
 			subject=assetRenderer.getTitle(locale)
 			userId=assetRenderer.getUserId()
@@ -230,7 +236,7 @@
 	cssClass
 	entry
 >
-	<#if wikiPortletInstanceConfiguration.enablePageRatings()>
+	<#if wikiPortletInstanceOverriddenConfiguration.enablePageRatings()>
 		<div class="${cssClass}">
 			<@liferay_ui["ratings"]
 				className=wikiPageClassName
@@ -241,7 +247,7 @@
 </#macro>
 
 <#macro getRelatedAssets>
-	<#if assetEntry?? && wikiPortletInstanceConfiguration.enableRelatedAssets()>
+	<#if assetEntry?? && wikiPortletInstanceOverriddenConfiguration.enableRelatedAssets()>
 		<@liferay_ui["asset-links"]
 			assetEntryId=assetEntry.getEntryId()
 		/>

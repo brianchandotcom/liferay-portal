@@ -45,7 +45,7 @@ public class ServiceAccessPolicyManagerImpl
 		SAPConfiguration sapConfiguration = getSAPConfiguration(companyId);
 
 		if (sapConfiguration != null) {
-			return sapConfiguration.defaultApplicationSAPEntryName();
+			return sapConfiguration.systemDefaultSAPEntryName();
 		}
 
 		return null;
@@ -56,7 +56,7 @@ public class ServiceAccessPolicyManagerImpl
 		SAPConfiguration sapConfiguration = getSAPConfiguration(companyId);
 
 		if (sapConfiguration != null) {
-			return sapConfiguration.defaultUserSAPEntryName();
+			return sapConfiguration.systemUserPasswordSAPEntryName();
 		}
 
 		return null;
@@ -83,7 +83,7 @@ public class ServiceAccessPolicyManagerImpl
 			return toServiceAccessPolicy(
 				_sapEntryService.getSAPEntry(companyId, name));
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			return null;
 		}
 	}

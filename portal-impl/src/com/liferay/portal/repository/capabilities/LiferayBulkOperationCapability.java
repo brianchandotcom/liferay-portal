@@ -107,7 +107,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 	private final DocumentRepository _documentRepository;
 
 	private static class FileEntryPerformActionMethod
-		implements ActionableDynamicQuery.PerformActionMethod {
+		implements ActionableDynamicQuery.PerformActionMethod<DLFileEntry> {
 
 		public FileEntryPerformActionMethod(
 			RepositoryModelOperation repositoryModelOperation) {
@@ -116,8 +116,8 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		}
 
 		@Override
-		public void performAction(Object object) throws PortalException {
-			DLFileEntry dlFileEntry = (DLFileEntry)object;
+		public void performAction(DLFileEntry dlFileEntry)
+			throws PortalException {
 
 			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
 
@@ -129,7 +129,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 	}
 
 	private static class FolderPerformActionMethod
-		implements ActionableDynamicQuery.PerformActionMethod {
+		implements ActionableDynamicQuery.PerformActionMethod<DLFolder> {
 
 		public FolderPerformActionMethod(
 			RepositoryModelOperation repositoryModelOperation) {
@@ -138,9 +138,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		}
 
 		@Override
-		public void performAction(Object object) throws PortalException {
-			DLFolder dlFolder = (DLFolder)object;
-
+		public void performAction(DLFolder dlFolder) throws PortalException {
 			if (dlFolder.isMountPoint()) {
 				return;
 			}

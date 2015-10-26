@@ -7,7 +7,7 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	{META-INF/maven/plugin.xml=src/META-INF/maven/plugin.xml},\
+	{META-INF/maven/plugin.xml=src/main/resources/META-INF/maven/plugin.xml},\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\

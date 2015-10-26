@@ -1,32 +1,15 @@
 <#if entries?has_content>
-	<style>
-		.breadcrumb-vertical ul {
-			padding-left: 0;
-		}
+	<ul class="breadcrumb breadcrumb-vertical">
+		<#list entries as entry>
+			<li>
+				<a
 
-		.breadcrumb-vertical li {
-		    display: list-item;
-		    text-align: left;
-		}
+				<#if entry.isBrowsable()>
+					href="${entry.getURL()!""}"
+				</#if>
 
-		.breadcrumb-vertical li:last-child a {
-		    color: #676767;
-		}
-	</style>
-
-	<div class="breadcrumb breadcrumb-vertical">
-	    <ul class="breadcrumb">
-		    <#list entries as entry>
-				<li>
-					<a
-
-					<#if entry.isBrowsable()>
-						href="${entry.getURL()!""}"
-					</#if>
-
-					>${htmlUtil.escape(entry.getTitle())}</a>
-				</li>
-		    </#list>
-	    </ul>
-	</div>
+				>${htmlUtil.escape(entry.getTitle())}</a>
+			</li>
+		</#list>
+	</ul>
 </#if>

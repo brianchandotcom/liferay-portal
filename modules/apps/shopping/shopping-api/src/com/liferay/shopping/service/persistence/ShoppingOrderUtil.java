@@ -159,6 +159,28 @@ public class ShoppingOrderUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the shopping orders where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of shopping orders
+	* @param end the upper bound of the range of shopping orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching shopping orders
+	*/
+	public static List<ShoppingOrder> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<ShoppingOrder> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns the first shopping order in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -346,7 +368,7 @@ public class ShoppingOrderUtil {
 	* Returns the shopping order where number = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param number the number
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	*/
 	public static ShoppingOrder fetchByNumber(java.lang.String number,
@@ -401,7 +423,7 @@ public class ShoppingOrderUtil {
 	* Returns the shopping order where ppTxnId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param ppTxnId the pp txn ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching shopping order, or <code>null</code> if a matching shopping order could not be found
 	*/
 	public static ShoppingOrder fetchByPPTxnId(java.lang.String ppTxnId,
@@ -484,6 +506,31 @@ public class ShoppingOrderUtil {
 		return getPersistence()
 				   .findByG_U_PPPS(groupId, userId, ppPaymentStatus, start,
 			end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the shopping orders where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param ppPaymentStatus the pp payment status
+	* @param start the lower bound of the range of shopping orders
+	* @param end the upper bound of the range of shopping orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching shopping orders
+	*/
+	public static List<ShoppingOrder> findByG_U_PPPS(long groupId, long userId,
+		java.lang.String ppPaymentStatus, int start, int end,
+		OrderByComparator<ShoppingOrder> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_U_PPPS(groupId, userId, ppPaymentStatus, start,
+			end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -806,6 +853,26 @@ public class ShoppingOrderUtil {
 	public static List<ShoppingOrder> findAll(int start, int end,
 		OrderByComparator<ShoppingOrder> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the shopping orders.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping orders
+	* @param end the upper bound of the range of shopping orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of shopping orders
+	*/
+	public static List<ShoppingOrder> findAll(int start, int end,
+		OrderByComparator<ShoppingOrder> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**

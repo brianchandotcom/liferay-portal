@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_ADD</td>
+	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -95,6 +100,43 @@
 <tr>
 	<td>TEXT_LABEL</td>
 	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]/../label[contains(@class,'control-label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_LABEL_2</td>
+	<td>xpath=(//input[@type='text' and contains(@id,'${key_fieldName}')]/../label[contains(@class,'control-label')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT-->
+<tr>
+	<td>SELECT_OPTION</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_LABEL</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SWITCHER-->
+<tr>
+	<td>SWITCHER</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[@class='toggle-switch-bar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SWITCHER_LABEL</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>
 </tr>
 <tr>

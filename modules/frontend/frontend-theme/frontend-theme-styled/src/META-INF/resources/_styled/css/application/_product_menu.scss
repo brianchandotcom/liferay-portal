@@ -1,7 +1,10 @@
 .product-menu {
+	background-color: $product-menu-body-bg;
+
 	.company-details .company-logo {
 		max-height: 25px;
 		max-width: 25px;
+		vertical-align: text-top;
 	}
 
 	.sidebar-footer .user-icon img {
@@ -43,6 +46,10 @@
 	}
 
 	.nav-equal-height-heading {
+		&:focus, &:hover {
+			background-color: transparent;
+		}
+
 		.collapse-icon {
 			&:after, &.collapsed:after {
 				background-color: $product-menu-collapse-icon-bg;
@@ -80,6 +87,10 @@
 }
 
 .product-menu {
+	.sidebar-footer {
+		color: $product-menu-footer-color;
+	}
+
 	.user-heading {
 		font-size: 19px;
 		font-weight: 500;
@@ -93,11 +104,12 @@
 
 	.user-subheading {
 		a {
+			color: $product-menu-footer-link-color;
 			font-size: 14px;
 			font-weight: 500;
 
-			&, &:focus, &:hover {
-				color: $product-menu-header-color;
+			&:focus, &:hover {
+				color: $product-menu-footer-link-hover-color;
 			}
 		}
 	}
@@ -106,6 +118,7 @@
 .product-menu {
 	.sidebar-header {
 		background-color: $product-menu-header-bg;
+		color: $product-menu-header-color;
 
 		a {
 			color: $product-menu-header-link-color;
@@ -123,16 +136,26 @@
 }
 
 .product-menu {
+	a.list-group-heading, button.list-group-heading, .list-group-heading[data-toggle="collapse"] {
+		color: $product-menu-list-group-heading-color;
+	}
+
 	.list-group {
 		box-shadow: none;
 	}
 
 	.list-group-heading {
 		background-color: $product-menu-list-group-heading-bg;
+		border-color: transparent;
+		font-weight: 500;
 
 		&:after {
 			background-color: $product-menu-list-group-heading-border;
 			height: $product-menu-list-group-heading-border-width;
+		}
+
+		&.collapsed {
+			font-weight: 300;
 		}
 	}
 
@@ -156,9 +179,19 @@
 		}
 	}
 
+	.list-group-item {
+		border-width: $product-menu-list-group-item-border-width;
+	}
+
 	.collapse, .collapsing {
 		> .list-group-item {
 			background-color: $product-menu-list-group-item-bg;
+		}
+	}
+
+	.nav > li > a {
+		&:focus, &:hover {
+			background-color: transparent;
 		}
 	}
 }

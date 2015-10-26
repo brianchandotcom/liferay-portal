@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `c68e01c`.*
+*This document has been reviewed through commit `d6e41b2`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -78,6 +78,7 @@ in ascending chronological order.
 - **JIRA Ticket:** LPS-42645
 
 #### What changed?
+
 The Logo Selector tag now supports uploading an image, storing it as a temporary
 file, cropping it, and canceling edits. The tag no longer requires creating a UI
 to include the image. Consequently, the `editLogoURL` parameter is no longer
@@ -91,10 +92,12 @@ support the new features:
 upload
 
 #### Who is affected?
+
 Plugins or templates that are using the `liferay-ui:logo-selector` tag need
 to update their usage of the tag.
 
 #### How should I update my code?
+
 You should remove the parameter `editLogoURL` and include (if neccessary) the
 parameters `currentLogoURL`, `hasUpdateLogoPermission`, `maxFileSize`, and/or
 `tempImageFileName`.
@@ -117,7 +120,6 @@ Old way:
         logoDisplaySelector=".user-logo"
     />
 
-
 New way:
 
     <liferay-ui:logo-selector
@@ -131,6 +133,7 @@ New way:
     />
 
 #### Why was this change made?
+
 This change helps keep a unified UI and consistent experience for uploading
 logos in the portal. The logos can be customized from a single location and used
 throughout the portal. In addition, the change adds new features such as image
@@ -143,6 +146,7 @@ cropping and support for canceling image upload.
 - **JIRA Ticket:** LPS-44599
 
 #### What changed?
+
 The configuration for email signatures of notifications from Message Boards and
 Wiki has been removed. An automatic update process is available that appends
 existing signatures into respective email message bodies for Message Boards and
@@ -151,12 +155,14 @@ the database. In case you declared signatures in portal properties (e.g.,
 `portal-ext.properties`), you must make the manual changes explained below.
 
 #### Who is affected?
+
 Users and system administrators who have configured email signatures for Message
 Boards or Wiki notifications are affected. System administrators who have
 configured portal properties (e.g., `portal-ext.properties`) must make the
 manual changes described below.
 
 #### How should I update my code?
+
 You should modify your `portal-ext.properties` file to remove the properties
 `message.boards.email.message.added.signature`,
 `message.boards.email.message.updated.signature`,
@@ -176,6 +182,7 @@ New way:
     wiki.email.page.updated.body=A wiki page was updated.\n--\nFor any doubts email the system administrator
 
 #### Why was this change made?
+
 This change helps simplify the user interface. The signatures can still be set
 inside the message body. There was no real benefit in keeping the signature and
 body fields separate.
@@ -187,14 +194,17 @@ body fields separate.
 - **JIRA Ticket:** LPS-44342
 
 #### What changed?
+
 All the methods `get()` and `format()` which had the PortletConfig as a
 parameter have been removed.
 
 #### Who is affected?
+
 Any invocations from Java classes or JSPs to these methods in `LanguageUtil` and
 `UnicodeLanguageUtil` are affected.
 
 #### How should I update my code?
+
 Replace invocations to these methods with invocations to methods of the same
 name that take a `ResourceBundle` parameter, instead of taking a
 `PortletConfig` parameter.
@@ -210,6 +220,7 @@ New call:
     LanguageUtil.get(portletConfig.getResourceBundle(locale), key);
 
 #### Why was this change made?
+
 The removed methods didn't work properly and would never work properly, since
 they didn't have all the information they required. Since we expected the
 methods were rarely used, we thought it better to remove them without
@@ -222,21 +233,25 @@ deprecation than to leave them as buggy methods in the API.
 - **JIRA Ticket:** LPS-45107
 
 #### What changed?
+
 Web content is now required to use a structure and template. A default structure
 and template named *Basic Web Content* was added to the global scope, and can be
 modified or deleted.
 
 #### Who is affected?
+
 Applications that use the Journal API to create web content without a structure
 or template are affected.
 
 #### How should I update my code?
+
 You should always use a structure and template when creating web content. You
 can still use the *Basic Web Content* from the global scope (using the
 structure key `basic-web-content`), but you should keep in mind that users can
 modify or delete it.
 
 #### Why was this change made?
+
 This change gives users the flexibility to modify the default structure and
 template.
 
@@ -247,14 +262,17 @@ template.
 - **JIRA Ticket:** LPS-44639 and LPS-44894
 
 #### What changed?
+
 The `getSummary()` method in the AssetRenderer API and the `doGetSummary()`
 method in the Indexer API have changed and must include a `PortletRequest`
 and `PortletResponse` parameter as part of their signatures.
 
 #### Who is affected?
+
 These methods must be updated in all AssetRenderer and Indexer implementations.
 
 #### How should I update my code?
+
 Add a `PortletRequest` and `PortletResponse` parameter to the signatures of
 these methods.
 
@@ -279,6 +297,7 @@ New signature:
     public String getSummary(PortletRequest portletRequest, PortletResponse portletResponse)
 
 #### Why was this change made?
+
 Some content (such as web content) needs the `PortletRequest` and
 `PortletResponse` parameters in order to be rendered.
 
@@ -289,6 +308,7 @@ Some content (such as web content) needs the `PortletRequest` and
 - **JIRA Ticket:** LPS-43134
 
 #### What changed?
+
 Previously, some portlets allowed separate setups per portlet instance,
 regardless of whether the instances were in the same page or in different pages.
 For some of the portlet setup fields, however, it didn't make sense to allow
@@ -311,16 +331,19 @@ discouraged and notoriously problematic, we expect this change will
 inconvenience only a very low minority of portal users.
 
 #### Who is affected?
+
 Affected users are those who have specified varying configurations for multiple
 portlet instances of a portlet type, that stores configurations at the layout
 level.
 
 #### How should I update my code?
+
 The upgrade process chooses one portlet instance's configurations and stores it
 at the service level. After the upgrade, you should review the portlet's
 configuration and make any necessary modifications.
 
 #### Why was this change made?
+
 Unifying portlet and service configuration facilitates managing them.
 
 ---------------------------------------
@@ -330,6 +353,7 @@ Unifying portlet and service configuration facilitates managing them.
 - **JIRA Ticket:** LPS-47559
 
 #### What changed?
+
 The `updateXSDFieldMetadata()` operation was removed from the DDM Structure
 Local Service API.
 
@@ -338,14 +362,17 @@ representation; any call to modify a DDM structure's content should be done
 through the DDMForm model.
 
 #### Who is affected?
+
 Applications that use the DDM Structure Local Service API might be affected.
 
 #### How should I update my code?
+
 You should always use DDMForm to update the DDM Structure content. You can
 retrieve it by calling `ddmStructure.getDDMForm()`. Perform any changes to it and
 then call `DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure)`.
 
 #### Why was this change made?
+
 This change gives users the flexibility to modify the structure content without
 concerning themselves with the DDM Structure's internal content representation
 of data.
@@ -357,16 +384,19 @@ of data.
 - **JIRA Ticket:** LPS-44228
 
 #### What changed?
+
 Whenever the aui:input tag is used to generate an input of type checkbox,
 only an input tag will be generated, instead of the checkbox and hidden field it
 was generating before.
 
 #### Who is affected?
+
 Anyone trying to grab the previously generated fields is affected. The change
 mostly affects JavaScript code trying to add some additional actions when
 clicking on the checkboxes.
 
 #### How should I update my code?
+
 In your front-end JavaScript code, follow these steps:
 
 - Remove the `Checkbox` suffix when querying for the node in any of its forms,
@@ -375,6 +405,7 @@ like `A.one(...)`, `$(...)`, etc.
 previously generated hidden field.
 
 #### Why was this change made?
+
 This change makes generated forms more standard and interoperable since it falls
 back to the checkboxes default behavior. It allows the form to be submitted
 properly even when JavaScript is disabled.
@@ -386,6 +417,7 @@ properly even when JavaScript is disabled.
 - **JIRA Ticket:** LPS-47682
 
 #### What changed?
+
 Several APIs in `portal-service.jar` contained references to the
 `javax.servlet.jsp` package. This forced `util-taglib`, which depended on many
 of the package's features, to be bound to the same JSP implementation.
@@ -403,12 +435,18 @@ Due to this, the following APIs had breaking changes:
 - `ResourceActionsUtil`
 - `PortalUtil`
 
+#### Who is affected?
+
+This affects anyone calling the classes listed above.
+
 #### How should I update my code?
-Code invoking the APIs listed above should should be updated to use an
+
+Code invoking the APIs listed above should be updated to use an
 `HttpServletRequest` parameter instead of the formerly used `PageContext`
 parameter.
 
 #### Why was this change made?
+
 As stated previously, the use of the `javax.servlet.jsp` API in `portal-service`
 prevented the use of any other JSP impl within plugins (OSGi or otherwise). This
 limited what Liferay could change with respect to providing its own JSP
@@ -878,7 +916,7 @@ of reserved screen names.
 #### What changed?
 
 Previous to Liferay 7, several methods of `UserLocalService` and `UserService`
-could throw a `ReservedUserEmailAddressException` when a user set an email 
+could throw a `ReservedUserEmailAddressException` when a user set an email
 address that was not allowed. That exception has been deprecated and replaced
 with `UserEmailAddressException.MustNotUseCompanyMx`,
 `UserEmailAddressException.MustNotBePOP3User`, and
@@ -980,8 +1018,8 @@ All operations that used the `Fields` class have been removed from the
 
 #### Who is affected?
 
-This affects developers who have written code that directly calls these 
-operations. 
+This affects developers who have written code that directly calls these
+operations.
 
 #### How should I update my code?
 
@@ -990,7 +1028,7 @@ You should update your code to use the `DDMFormValues` class instead of the
 
 #### Why was this change made?
 
-This change has been made due to the deprecation of the `Fields` class. 
+This change has been made due to the deprecation of the `Fields` class.
 
 ---------------------------------------
 
@@ -1076,7 +1114,7 @@ called `resourceClassNameId`.
 
 #### Who is affected?
 
-This affects developers who have direct calls to the `DDMTemplateService` or 
+This affects developers who have direct calls to the `DDMTemplateService` or
 `DDMTemplateLocalService`.
 
 #### How should I update my code?
@@ -1211,7 +1249,7 @@ the `ScreenNameValidator` interface.
 
 You should implement the new methods introduced in the interface.
 
-- `getDescription(Locale)`: returns a description of what the screen name 
+- `getDescription(Locale)`: returns a description of what the screen name
 validator validates.
 
 - `getJSValidation()`: returns the JavaScript input validator on the client
@@ -1219,7 +1257,7 @@ side.
 
 #### Why was this change made?
 
-Previous to Liferay 7, validation for user screen name characters was hard-coded 
+Previous to Liferay 7, validation for user screen name characters was hard-coded
 in `UserLocalService`. A new portal property named
 `users.screen.name.special.characters` has been added to provide configurability
 of special characters allowed in screen names.
@@ -1270,7 +1308,7 @@ code.
 The API for adding tags, categories, and vocabularies now requires passing the
 `groupId` parameter. Previously, it had to be included in the `ServiceContext`
 parameter passed to the method.
- 
+
 #### Who is affected?
 
 This affects developers who have direct calls to the following methods:
@@ -1511,7 +1549,7 @@ their code.
 While the old classes remain for backwards-compatibility, they are being
 deprecated. You're encouraged to use the new pattern of inner classes for
 exceptions wherever possible. For example, instead of using
-`ContactFirstNameExeception`, use `ContactNameException.MustHaveFirstName`. 
+`ContactFirstNameExeception`, use `ContactNameException.MustHaveFirstName`.
 
 #### Why was this change made?
 
@@ -1550,7 +1588,7 @@ Portal property `USERS_LAST_NAME_REQUIRED` didn't support the multicultural user
 name configurations introduced in LPS-48406. Language property files (e.g.,
 `language.properties`) now support these configurations. Control of all user
 name configuration, except with regards to first name, is relegated to language
-property files. First name is required and always present. 
+property files. First name is required and always present.
 
 ---------------------------------------
 
@@ -1573,7 +1611,7 @@ This affects anyone who uses those methods.
 
 The removed methods were generic and had long signatures with optional
 parameters. They now have one specialized version per parameter and are
-in the `RepositoryProvider` service. 
+in the `RepositoryProvider` service.
 
 **Example**
 
@@ -1697,19 +1735,19 @@ bypass the permission system by providing customized `className`, `classPK`, or
 
 ---------------------------------------
 
-### Moved Indexer.addRelatedEntryFields and Indexer.reindexDDMStructures, and Removed Indexer.getQueryString 
+### Moved Indexer.addRelatedEntryFields and Indexer.reindexDDMStructures, and Removed Indexer.getQueryString
 - **Date:** 2015-May-27
 - **JIRA Ticket:** LPS-55928
 
 #### What changed?
 
-Method `Indexer.addRelatedEntryFields(Document, Object)` has been moved into 
+Method `Indexer.addRelatedEntryFields(Document, Object)` has been moved into
 `RelatedEntryIndexer`.
 
 `Indexer.reindexDDMStructures(List<Long>)` has been moved into
 `DDMStructureIndexer`.
 
-`Indexer.getQueryString(SearchContext, Query)` has been removed, in favor of 
+`Indexer.getQueryString(SearchContext, Query)` has been removed, in favor of
 calling `SearchEngineUtil.getQueryString(SearchContext, Query)`
 
 #### Who is affected?
@@ -1719,7 +1757,7 @@ that implements the interface methods.
 
 #### How should I update my code?
 
-Any code implementing `Indexer.addRelatedEntryFields(...)` should implement the 
+Any code implementing `Indexer.addRelatedEntryFields(...)` should implement the
 `RelatedEntryIndexer` interface.
 
 Any code calling `Indexer.addRelatedEntryFields(...)` should determine first if
@@ -1738,11 +1776,11 @@ New code:
         relatedEntryIndexer.addRelatedEntryFields(...);
     }
 
-Any code implementing `Indexer.reindexDDMStructures(...)` should implement the 
+Any code implementing `Indexer.reindexDDMStructures(...)` should implement the
 `DDMStructureIndexer` interface.
 
 Any code calling `Indexer.reindexDDMStructures(...)` should determine first if
-the `Indexer` is an instance of `DDMStructureIndexer`. 
+the `Indexer` is an instance of `DDMStructureIndexer`.
 
 Old code:
 
@@ -1757,7 +1795,7 @@ New code:
         ddmStructureIndexer.reindexDDMStructures(...);
     }
 
-Any code calling Indexer.getQueryString(...) should call 
+Any code calling Indexer.getQueryString(...) should call
 SearchEngineUtil.getQueryString(...)
 
 Old code:
@@ -2287,5 +2325,268 @@ To stay consistent with other taglibs provided by Liferay, the AUI `.tld` file
 was modified to start with the prefix `liferay-`. Due to this change, the XML
 files used to automatically generate the AUI taglib were modified, changing the
 AUI URI declaration.
+
+---------------------------------------
+
+### Removed Support for runtime-portlet Tag in Body of Web Content Articles
+- **Date:** 2015-Sep-17
+- **JIRA Ticket:** LPS-58736
+
+#### What changed?
+
+The tag `runtime-portlet` is no longer replaced by a portlet if it is found in
+the body of a web content article.
+
+#### Who is affected?
+
+This affects any web content in the database (`JournalArticle` table) that uses
+this tag.
+
+#### How should I update my code?
+
+Embedding another portlet is only supported from a template. You should embed
+the portlet by passing its name in a call to `theme.runtime`.
+
+**Example**
+
+In Velocity:
+
+    $theme.runtime("145")
+
+In FreeMarker:
+
+    ${theme.runtime("145")
+
+#### Why was this change made?
+
+This change improves the performance of web content articles while enforcing a
+single way to embed portlets into the page for better testing.
+
+---------------------------------------
+
+### Removed the liferay-ui:control-panel-site-selector Tag
+- **Date:** 2015-Sep-23
+- **JIRA Ticket:** LPS-58210
+
+#### What changed?
+
+The tag `liferay-ui:control-panel-site-selector` has been deleted.
+
+#### Who is affected?
+
+This affects developers who use this tag in their code.
+
+#### How should I update my code?
+
+You should consider using the tag `liferay-ui:my-sites`, or create your own
+markup using the `GroupService` API.
+
+#### Why was this change made?
+
+This tag is no longer used and will no longer be maintained properly.
+
+---------------------------------------
+
+### Removed Methods Related to Control Panel in PortalUtil
+- **Date:** 2015-Sep-23
+- **JIRA Ticket:** LPS-58210
+
+#### What changed?
+
+The following methods have been deleted:
+
+- `getControlPanelCategoriesMap`
+- `getControlPanelCategory`
+- `getControlPanelPortlets`
+- `getFirstMyAccountPortlet`
+- `getFirstSiteAdministrationPortlet`
+- `getSiteAdministrationCategoriesMap`
+- `getSiteAdministrationURL`
+- `isCompanyControlPanelVisible`
+
+#### Who is affected?
+
+This affects developers that use any of the methods listed above.
+
+#### How should I update my code?
+
+In order to work with applications displayed in the Product Menu, developers
+should call the `PanelCategoryRegistry` and `PanelAppRegistry` classes located
+in the `application-list-api` module. These classes allow developers to interact
+with categories and applications in the Control Panel.
+
+#### Why was this change made?
+
+These methods are no longer used and they will not work properly since they
+cannot call the `application-list-api` from the portal context.
+
+---------------------------------------
+
+### Removed ThemeDisplay Methods Related to Control Panel and Site Administration
+- **Date:** 2015-Sep-23
+- **JIRA Ticket:** LPS-58210
+
+#### What changed?
+
+The following methods have been deleted:
+
+- `getControlPanelCategory`
+- `getURLSiteAdministration`
+
+#### Who is affected?
+
+This affects developers that use either of the methods listed above.
+
+#### How should I update my code?
+
+Site Administration is not a site per se; some applications are displayed in
+that context. To create a link to an application that is displayed in Site
+Administration, developers should use the method
+`PortalUtil.getControlPanelURL`. In order to obtain the first application
+displayed in a section of the Product Menu, developers should use the
+`application-list-api` module to call the `PanelCategoryRegistry` and
+`PanelAppRegistry` classes.
+
+#### Why was this change made?
+
+These methods are no longer used and they will not work properly since they
+cannot call the `application-list-api` from the portal context.
+
+---------------------------------------
+
+### Removed Control Panel from List of Sites Returned by Methods Group.getUserSitesGroups and User.getMySiteGroups
+- **Date:** 2015-Sep-23
+- **JIRA Ticket:** LPS-58862
+
+#### What changed?
+
+The following methods had a boolean parameter to determine whether to include
+the Control Panel group:
+
+- `Group.getUserSitesGroups`
+- `User.getMySiteGroups`
+
+This boolean parameter should no longer be used.
+
+#### Who is affected?
+
+This affects developers that use either of the methods listed above passing the
+`includeControlPanel` parameter as `true`.
+
+#### How should I update my code?
+
+If you don't need the Control Panel, remove the `false` parameter. If you still
+want to obtain a link to the Control Panel, you should do it in a different way.
+
+The Control Panel is not a site per se; some applications are displayed in that
+context. To create a link to an application that is displayed in the Control
+Panel, developers should use the method `PortalUtil.getControlPanelURL`. In
+order to obtain the first application displayed in a section of the Product
+Menu, developers should use the `application-list-api` module to call the
+`PanelCategoryRegistry` and `PanelAppRegistry` classes.
+
+#### Why was this change made?
+
+The Control Panel is no longer a site per se, but just a context in which some
+applications are displayed. This concept conflicts with the idea of returning a
+site called Control Panel in the Sites API.
+
+---------------------------------------
+
+### Changed exception thrown by D&M services when duplicate files are found
+- **Date:** 2015-Sep-24
+- **JIRA Ticket:** LPS-53819
+
+#### What changed?
+
+When a duplicate file entry is found by D&M services, a
+`DuplicateFileEntryException` will be thrown. Previously, the
+exception `DuplicateFileException` was used.
+
+The `DuplicateFileException` is now raised only by `Store`
+implementations.
+
+#### Who is affected?
+
+Any caller of the `addFileEntry` methods in `DLApp` and `DLFileEntry`
+local and remote services.
+
+#### How should I update my code?
+
+Change the exception type from `DuplicateFileException` to
+`DuplicateFileEntryException` in `try-catch` blocks surrounding calls
+to D&M services.
+
+#### Why was this change made?
+
+The `DuplicateFileException` exception was used in two different
+contexts:
+- When creating a new file through D&M and a row in the database
+already existed for a file entry with the same title.
+- When the stores tried to save a file and the underlying storage unit
+(a file in the case of FileSystemStore) already existed.
+
+This made it impossible to detect and recover from store corruption
+issues, as they were undifferentiable from other errors.
+
+---------------------------------------
+
+### Removed All References to Windows Live Messenger
+- **Date:** 2015-Oct-15
+- **JIRA Ticket:** LPS-30883
+
+#### What changed?
+
+All references to the `msnSn` column in the Contacts table have been removed
+from portal. All references to Windows Live Messenger have been removed from
+properties, tests, classes, and the frontend. Also, the `getMsnSn` and
+`setMsnSn` methods have been removed from the `Contact` and `LDAPUser` models.
+
+The following classes have been removed:
+
+- `MSNConnector`
+- `MSNMessageAdapter`
+
+The following constants have been removed:
+
+- `CalEventConstants.REMIND_BY_MSN`
+- `ContactConverterKeys.MSN_SN`
+- `PropsKeys.MSN_LOGIN`
+- `PropsKeys.MSN_PASSWORD`
+
+The following methods have been removed:
+
+- `Contact.getMsnSn`
+- `Contact.setMsnSn`
+- `LDAPUser.getMsnSn`
+- `LDAPUser.setMsnSn`
+
+The following methods have been changed:
+
+- `AdminUtil.updateUser`
+- `ContactLocalServiceUtil.addContact`
+- `ContactLocalServiceUtil.updateContact`
+- `UserLocalServiceUtil.addContact`
+- `UserLocalServiceUtil.updateContact`
+- `UserLocalServiceUtil.updateUser`
+- `UserServiceUtil.updateUser`
+
+#### Who is affected?
+
+This affects developers who use any of the classes, constants, or methods listed
+above.
+
+#### How should I update my code?
+
+When updating or adding a user or contact using one of the changed methods
+above, remove the `msnSn` argument from the method call. If you are using one of
+the removed items above, you should remove all references to them from your code
+and look for alternatives, if necessary. Lastly, remove any references to the
+`msnSN` column in the Contacts table from your SQL queries.
+
+#### Why was this change made?
+
+Since Microsoft dropped support for Windows Live Messenger, Liferay will no
+longer continue to support it.
 
 ---------------------------------------

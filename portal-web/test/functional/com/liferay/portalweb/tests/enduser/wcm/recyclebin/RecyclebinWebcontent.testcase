@@ -32,6 +32,7 @@
 		</execute>
 
 		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
@@ -111,7 +112,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveFolderWithWebContentToRecycleBin" priority="4">
+	<command name="MoveFolderWithWebContentToRecycleBin" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Liferay" />
@@ -151,6 +152,7 @@
 		</execute>
 
 		<execute macro="WebContentFolder#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Folder" />
 			<var name="folderName" value="WC Folder Name" />
 		</execute>
 
@@ -245,6 +247,7 @@
 		</execute>
 
 		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
@@ -281,7 +284,53 @@
 		</execute>
 	</command>
 
-	<command name="ViewDuplicateAssetNamesInRecycleBin" priority="4">
+	<command name="UndoMoveToRecycleBin" priority="3">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Web Content Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="RecycleBin#undoMoveToRecycleBin" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command name="ViewDuplicateAssetNamesInRecycleBin" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Liferay" />
@@ -370,6 +419,7 @@
 		</execute>
 
 		<execute macro="WebContentFolder#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Folder" />
 			<var name="folderName" value="WC Folder Name" />
 		</execute>
 
@@ -400,6 +450,7 @@
 		</execute>
 
 		<execute macro="WebContentFolder#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Folder" />
 			<var name="folderName" value="WC Folder Name" />
 		</execute>
 
@@ -410,6 +461,43 @@
 
 		<execute macro="RecycleBin#viewDuplicateNames">
 			<var name="assetName" value="WC Folder Name" />
+		</execute>
+	</command>
+
+	<command name="ViewRecycleBinEntryViaSuccessMessageLink" priority="3">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Web Content Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="assetType" value="Web Content Article" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="RecycleBin#gotoEntryViaSuccessMessage">
+			<var name="assetName" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="RecycleBin#viewEntry">
+			<var name="assetContent" value="WC Web Content Content" />
+			<var name="assetName" value="WC WebContent Title" />
 		</execute>
 	</command>
 </definition>

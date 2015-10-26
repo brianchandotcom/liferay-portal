@@ -27,11 +27,11 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.TeamServiceUtil;
-import com.liferay.portal.service.UserGroupServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.TeamService;
+import com.liferay.portal.service.UserGroupService;
+import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.site.teams.web.upgrade.SiteTeamsWebUpgrade;
+import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 
 import java.io.IOException;
 
@@ -52,8 +52,6 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.control-panel-entry-category=site_administration.users",
-		"com.liferay.portlet.control-panel-entry-weight=2.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-communities",
 		"com.liferay.portlet.icon=/icons/site_teams.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -66,6 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
@@ -80,7 +79,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		TeamServiceUtil.deleteTeam(teamId);
+		_teamService.deleteTeam(teamId);
 	}
 
 	public void deleteTeams(
@@ -91,7 +90,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "teamIds"), 0L);
 
 		for (long teamId : teamIds) {
-			TeamServiceUtil.deleteTeam(teamId);
+			_teamService.deleteTeam(teamId);
 		}
 	}
 
@@ -114,7 +113,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Team.class.getName(), actionRequest);
 
-			TeamServiceUtil.addTeam(
+			_teamService.addTeam(
 				themeDisplay.getSiteGroupId(), name, description,
 				serviceContext);
 		}
@@ -122,7 +121,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 			// Update team
 
-			TeamServiceUtil.updateTeam(teamId, name, description);
+			_teamService.updateTeam(teamId, name, description);
 		}
 	}
 
@@ -137,8 +136,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		long[] removeUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
-		UserGroupServiceUtil.addTeamUserGroups(teamId, addUserGroupIds);
-		UserGroupServiceUtil.unsetTeamUserGroups(teamId, removeUserGroupIds);
+		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
+		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -157,8 +156,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		UserServiceUtil.addTeamUsers(teamId, addUserIds);
-		UserServiceUtil.unsetTeamUsers(teamId, removeUserIds);
+		_userService.addTeamUsers(teamId, addUserIds);
+		_userService.unsetTeamUsers(teamId, removeUserIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -197,8 +196,22 @@ public class SiteTeamsPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSiteTeamsWebUpgrade(
-		SiteTeamsWebUpgrade siteTeamsWebUpgrade) {
+	protected void setTeamService(TeamService teamService) {
+		_teamService = teamService;
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupService(UserGroupService userGroupService) {
+		_userGroupService = userGroupService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
+	}
+
+	private TeamService _teamService;
+	private UserGroupService _userGroupService;
+	private UserService _userService;
 
 }

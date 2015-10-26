@@ -16,9 +16,15 @@ package com.liferay.service.access.policy.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.service.access.policy.configuration.SAPConfiguration;
+import com.liferay.service.access.policy.constants.SAPConstants;
 
 import java.util.List;
 
@@ -34,6 +40,29 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 			getAllowedServiceSignatures(), StringPool.NEW_LINE);
 
 		return ListUtil.toList(allowedServiceSignatures);
+	}
+
+	@Override
+	public boolean isSystem() throws ConfigurationException {
+		SAPConfiguration sapConfiguration =
+			ConfigurationFactoryUtil.getConfiguration(
+				SAPConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					getCompanyId(), SAPConstants.SERVICE_NAME));
+
+		if (Validator.equals(
+				getName(), sapConfiguration.systemDefaultSAPEntryName())) {
+
+			return true;
+		}
+
+		if (Validator.equals(
+				getName(), sapConfiguration.systemUserPasswordSAPEntryName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

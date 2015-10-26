@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
+import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,7 +40,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.EventDefinition;
@@ -48,13 +49,13 @@ import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.PortletInfo;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PublicRenderParameter;
+import com.liferay.portal.model.impl.PublicRenderParameterImpl;
 import com.liferay.portal.security.permission.ResourceActions;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.util.WebKeys;
@@ -441,6 +442,36 @@ public class PortletTracker
 				bundleContext, contextName, classLoader));
 	}
 
+	protected void collectApplicationTypes(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.model.Portlet portletModel) {
+
+		Set<ApplicationType> applicationTypes = new HashSet<>();
+
+		List<String> applicationTypeValues = StringPlus.asList(
+			get(serviceReference, "application-type"));
+
+		for (String applicationTypeValue : applicationTypeValues) {
+			try {
+				ApplicationType applicationType = ApplicationType.parse(
+					applicationTypeValue);
+
+				applicationTypes.add(applicationType);
+			}
+			catch (IllegalArgumentException iae) {
+				_log.error("Application type " + applicationTypeValue);
+
+				continue;
+			}
+		}
+
+		if (applicationTypes.isEmpty()) {
+			applicationTypes.add(ApplicationType.WIDGET);
+		}
+
+		portletModel.setApplicationTypes(applicationTypes);
+	}
+
 	protected void collectCacheScope(
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.model.Portlet portletModel) {
@@ -483,6 +514,7 @@ public class PortletTracker
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.model.Portlet portletModel) {
 
+		collectApplicationTypes(serviceReference, portletModel);
 		collectCacheScope(serviceReference, portletModel);
 		collectExpirationCache(serviceReference, portletModel);
 		collectInitParams(serviceReference, portletModel);
@@ -526,15 +558,6 @@ public class PortletTracker
 
 		portletModel.setAutopropagatedParameters(autopropagatedParameters);
 
-		String controlPanelEntryCategory = GetterUtil.getString(
-			get(serviceReference, "control-panel-entry-category"),
-			portletModel.getControlPanelEntryCategory());
-
-		controlPanelEntryCategory = PortletCategoryUtil.getPortletCategoryKey(
-			controlPanelEntryCategory);
-
-		portletModel.setControlPanelEntryCategory(controlPanelEntryCategory);
-
 		portletModel.setControlPanelEntryWeight(
 			GetterUtil.getDouble(
 				get(serviceReference, "control-panel-entry-weight"),
@@ -565,10 +588,6 @@ public class PortletTracker
 			GetterUtil.getString(
 				get(serviceReference, "friendly-url-routes"),
 				portletModel.getFriendlyURLRoutes()));
-		portletModel.setFullPageDisplayable(
-			GetterUtil.getBoolean(
-				get(serviceReference, "full-page-displayable"),
-				portletModel.isFullPageDisplayable()));
 		portletModel.setHeaderPortalCss(
 			StringPlus.asList(get(serviceReference, "header-portal-css")));
 		portletModel.setHeaderPortalJavaScript(
@@ -880,17 +899,25 @@ public class PortletTracker
 			serviceReference.getProperty(
 				"javax.portlet.supported-public-render-parameter"));
 
-		for (String identifier : supportedPublicRenderParameters) {
-			PublicRenderParameter publicRenderParameter =
-				portletApp.getPublicRenderParameter(identifier);
+		for (String supportedPublicRenderParameter :
+				supportedPublicRenderParameters) {
 
-			if (publicRenderParameter == null) {
-				_log.error(
-					"Supported public render parameter references unknown " +
-						"identifier " + identifier);
+			String name = supportedPublicRenderParameter;
+			String qname = null;
 
-				continue;
+			String[] parts = StringUtil.split(
+				supportedPublicRenderParameter, StringPool.SEMICOLON);
+
+			if (parts.length == 2) {
+				name = parts[0];
+				qname = parts[1];
 			}
+
+			QName qName = getQName(
+				name, qname, portletApp.getDefaultNamespace());
+
+			PublicRenderParameter publicRenderParameter =
+				new PublicRenderParameterImpl(name, qName, portletApp);
 
 			publicRenderParameters.add(publicRenderParameter);
 		}
@@ -1220,12 +1247,11 @@ public class PortletTracker
 		}
 
 		if (Validator.isNull(uri)) {
-			return SAXReaderUtil.createQName(
-				name, SAXReaderUtil.createNamespace(defaultNamespace));
+			return _saxReader.createQName(
+				name, _saxReader.createNamespace(defaultNamespace));
 		}
 
-		return SAXReaderUtil.createQName(
-			name, SAXReaderUtil.createNamespace(uri));
+		return _saxReader.createQName(name, _saxReader.createNamespace(uri));
 	}
 
 	protected ServiceRegistrations getServiceRegistrations(Bundle bundle) {
@@ -1325,6 +1351,11 @@ public class PortletTracker
 		_resourceActions = resourceActions;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSAXReader(SAXReader saxReader) {
+		_saxReader = saxReader;
+	}
+
 	protected String toLowerCase(Object object) {
 		String string = String.valueOf(object);
 
@@ -1377,6 +1408,7 @@ public class PortletTracker
 		new PortletPropertyValidator();
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceActions _resourceActions;
+	private SAXReader _saxReader;
 	private final ConcurrentMap<Bundle, ServiceRegistrations>
 		_serviceRegistrations = new ConcurrentHashMap<>();
 	private ServiceTracker<Portlet, com.liferay.portal.model.Portlet>

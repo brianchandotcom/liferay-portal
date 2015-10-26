@@ -14,9 +14,6 @@
 
 package com.liferay.blogs.web.upload;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
-
 /**
  * @author Sergio González
  * @author Adolfo Pérez
@@ -25,7 +22,7 @@ public class SmallImageBlogsUploadHandler extends TempImageBlogsUploadHandler {
 
 	@Override
 	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
+		return 0;
 	}
 
 }

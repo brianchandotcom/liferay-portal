@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import com.liferay.portlet.exportimport.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +63,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
 		attributes.put("defaultSAPEntry", getDefaultSAPEntry());
+		attributes.put("enabled", getEnabled());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 
@@ -122,6 +125,12 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 
 		if (defaultSAPEntry != null) {
 			setDefaultSAPEntry(defaultSAPEntry);
+		}
+
+		Boolean enabled = (Boolean)attributes.get("enabled");
+
+		if (enabled != null) {
+			setEnabled(enabled);
 		}
 
 		String name = (String)attributes.get("name");
@@ -201,6 +210,16 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	@Override
 	public boolean getDefaultSAPEntry() {
 		return _sapEntry.getDefaultSAPEntry();
+	}
+
+	/**
+	* Returns the enabled of this s a p entry.
+	*
+	* @return the enabled of this s a p entry
+	*/
+	@Override
+	public boolean getEnabled() {
+		return _sapEntry.getEnabled();
 	}
 
 	@Override
@@ -390,6 +409,16 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 		return _sapEntry.isDefaultSAPEntry();
 	}
 
+	/**
+	* Returns <code>true</code> if this s a p entry is enabled.
+	*
+	* @return <code>true</code> if this s a p entry is enabled; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isEnabled() {
+		return _sapEntry.isEnabled();
+	}
+
 	@Override
 	public boolean isEscapedModel() {
 		return _sapEntry.isEscapedModel();
@@ -398,6 +427,12 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	@Override
 	public boolean isNew() {
 		return _sapEntry.isNew();
+	}
+
+	@Override
+	public boolean isSystem()
+		throws com.liferay.portal.kernel.module.configuration.ConfigurationException {
+		return _sapEntry.isSystem();
 	}
 
 	@Override
@@ -462,6 +497,16 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	@Override
 	public void setDefaultSAPEntry(boolean defaultSAPEntry) {
 		_sapEntry.setDefaultSAPEntry(defaultSAPEntry);
+	}
+
+	/**
+	* Sets whether this s a p entry is enabled.
+	*
+	* @param enabled the enabled of this s a p entry
+	*/
+	@Override
+	public void setEnabled(boolean enabled) {
+		_sapEntry.setEnabled(enabled);
 	}
 
 	@Override
@@ -675,6 +720,11 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _sapEntry.getStagedModelType();
 	}
 
 	/**

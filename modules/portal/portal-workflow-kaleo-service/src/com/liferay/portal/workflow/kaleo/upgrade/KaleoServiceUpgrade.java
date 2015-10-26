@@ -14,50 +14,38 @@
 
 package com.liferay.portal.workflow.kaleo.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.workflow.kaleo.upgrade.v1_0_0.UpgradeKaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.upgrade.v1_1_0.UpgradeWorkflowContext;
+import com.liferay.portal.workflow.kaleo.upgrade.v1_2_0.UpgradeKaleoLog;
+import com.liferay.portal.workflow.kaleo.upgrade.v1_2_0.UpgradeKaleoNotificationRecipient;
+import com.liferay.portal.workflow.kaleo.upgrade.v1_3_0.UpgradeKaleoInstance;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = KaleoServiceUpgrade.class)
-public class KaleoServiceUpgrade {
+@Component(immediate = true)
+public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Override
+	public void register(Registry registry) {
+		String bundleSymbolicName = "com.liferay.portal.workflow.kaleo.service";
+
+		registry.register(
+			bundleSymbolicName, "0.0.1", "1.0.0",
+			new UpgradeKaleoTaskInstanceToken());
+
+		registry.register(
+			bundleSymbolicName, "1.0.0", "1.1.0", new UpgradeWorkflowContext());
+
+		registry.register(
+			bundleSymbolicName, "1.1.0", "1.2.0", new UpgradeKaleoLog(),
+			new UpgradeKaleoNotificationRecipient());
+
+		registry.register(
+			bundleSymbolicName, "1.2.0", "1.3.0", new UpgradeKaleoInstance());
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new KaleoServiceUpgrade_1_0_0());
-		upgradeProcesses.add(new KaleoServiceUpgrade_1_1_0());
-		upgradeProcesses.add(new KaleoServiceUpgrade_1_2_0());
-		upgradeProcesses.add(new KaleoServiceUpgrade_1_3_0());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.portal.workflow.kaleo.service", upgradeProcesses, 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

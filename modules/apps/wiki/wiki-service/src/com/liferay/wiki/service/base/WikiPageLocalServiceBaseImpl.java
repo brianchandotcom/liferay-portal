@@ -357,14 +357,12 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WikiPage>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(WikiPage wikiPage)
 					throws PortalException {
-					WikiPage stagedModel = (WikiPage)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						stagedModel);
+						wikiPage);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(

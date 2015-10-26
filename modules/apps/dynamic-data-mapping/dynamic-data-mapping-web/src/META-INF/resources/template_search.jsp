@@ -24,6 +24,7 @@ TemplateDisplayTerms displayTerms = new TemplateDisplayTerms(renderRequest);
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_ddm_template_search"
+	markupView="lexicon"
 >
 	<aui:fieldset cssClass="lfr-ddm-search-form">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" name="<%= TemplateDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />

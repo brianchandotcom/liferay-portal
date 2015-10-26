@@ -6,6 +6,12 @@ AUI.add(
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
 		var Lang = A.Lang;
 
+		var CSS_FORM_BUILDER_TABS = A.getClassName('form', 'builder', 'tabs');
+
+		var CSS_PAGE_HEADER = A.getClassName('form', 'builder', 'pages', 'header');
+
+		var CSS_PAGES = A.getClassName('form', 'builder', 'pages', 'lexicon');
+
 		var FormBuilder = A.Component.create(
 			{
 				ATTRS: {
@@ -54,6 +60,8 @@ AUI.add(
 				NAME: 'liferay-ddl-form-builder',
 
 				prototype: {
+					TPL_PAGES: '<div class="' + CSS_PAGES + '" ></div>',
+
 					initializer: function() {
 						var instance = this;
 
@@ -140,6 +148,30 @@ AUI.add(
 						return fields;
 					},
 
+					_getPageManagerInstance: function(config) {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						if (!instance._pageManager) {
+							instance._pageManager = new Liferay.DDL.FormBuilderPagesManager(
+								A.merge(
+									{
+										builder: instance,
+										mode: 'wizard',
+										pageHeader: contentBox.one('.' + CSS_PAGE_HEADER),
+										pagesQuantity: instance.get('layouts').length,
+										paginationContainer: contentBox.one('.' + CSS_PAGES),
+										tabviewContainer: contentBox.one('.' + CSS_FORM_BUILDER_TABS)
+									},
+									config
+								)
+							);
+						}
+
+						return instance._pageManager;
+					},
+
 					_getVisitor: function(visitor) {
 						var instance = this;
 
@@ -165,6 +197,27 @@ AUI.add(
 						var instance = this;
 
 						event.halt();
+					},
+
+					_renderContentBox: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var strings = instance.get('strings');
+
+						var headerTemplate = A.Lang.sub(
+							instance.TPL_HEADER,
+							{
+								formTitle: strings.formTitle
+							}
+						);
+
+						contentBox.append(instance.TPL_TABVIEW);
+						contentBox.append(instance.TPL_PAGE_HEADER);
+						contentBox.append(headerTemplate);
+						contentBox.append(instance.TPL_LAYOUT);
+						contentBox.append(instance.TPL_PAGES);
 					},
 
 					_renderField: function(field) {
@@ -253,6 +306,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-form-builder-pages', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-layout-deserializer', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer']
+		requires: ['aui-form-builder', 'aui-form-builder-pages', 'liferay-ddl-form-builder-layout-deserializer', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddl-form-builder-pages-manager', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer']
 	}
 );

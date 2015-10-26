@@ -14,8 +14,6 @@
 
 package com.liferay.portal.monitoring.internal.statistics.portal;
 
-import aQute.bnd.annotation.component.Activate;
-
 import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.model.Company;
@@ -26,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

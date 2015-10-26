@@ -11,7 +11,6 @@ AUI.add(
 			instance.params = {};
 
 			instance.reservedParams = {
-				controlPanelCategory: null,
 				doAsGroupId: null,
 				doAsUserId: null,
 				doAsUserLanguageId: null,

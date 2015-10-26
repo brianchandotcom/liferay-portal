@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the ResourceBlockPermission service. Represents a row in the &quot;ResourceBlockPermission&quot; database table, with each column mapped to a property of this class.
  *
@@ -33,4 +35,21 @@ public interface ResourceBlockPermission extends ResourceBlockPermissionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ResourceBlockPermissionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ResourceBlockPermission, Long> RESOURCE_BLOCK_PERMISSION_ID_ACCESSOR =
+		new Accessor<ResourceBlockPermission, Long>() {
+			@Override
+			public Long get(ResourceBlockPermission resourceBlockPermission) {
+				return resourceBlockPermission.getResourceBlockPermissionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ResourceBlockPermission> getTypeClass() {
+				return ResourceBlockPermission.class;
+			}
+		};
 }

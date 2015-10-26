@@ -152,17 +152,15 @@ public class DDLFormAdminDisplayContext {
 				_ddlFormAdminRequestHelper.getCompanyId(),
 				_ddlFormAdminRequestHelper.getScopeGroupId(),
 				searchTerms.getName(), searchTerms.getDescription(),
-				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
-				searchTerms.isAndOperator(), searchContainer.getStart(),
-				searchContainer.getEnd(),
+				DDLRecordSetConstants.SCOPE_FORMS, searchTerms.isAndOperator(),
+				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
 		}
 		else {
 			return DDLRecordSetServiceUtil.search(
 				_ddlFormAdminRequestHelper.getCompanyId(),
 				_ddlFormAdminRequestHelper.getScopeGroupId(),
-				searchTerms.getKeywords(),
-				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
+				searchTerms.getKeywords(), DDLRecordSetConstants.SCOPE_FORMS,
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
 		}
@@ -180,15 +178,13 @@ public class DDLFormAdminDisplayContext {
 				_ddlFormAdminRequestHelper.getCompanyId(),
 				_ddlFormAdminRequestHelper.getScopeGroupId(),
 				searchTerms.getName(), searchTerms.getDescription(),
-				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
-				searchTerms.isAndOperator());
+				DDLRecordSetConstants.SCOPE_FORMS, searchTerms.isAndOperator());
 		}
 		else {
 			return DDLRecordSetServiceUtil.searchCount(
 				_ddlFormAdminRequestHelper.getCompanyId(),
 				_ddlFormAdminRequestHelper.getScopeGroupId(),
-				searchTerms.getKeywords(),
-				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+				searchTerms.getKeywords(), DDLRecordSetConstants.SCOPE_FORMS);
 		}
 	}
 

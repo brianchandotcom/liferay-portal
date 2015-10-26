@@ -50,5 +50,5 @@ finally {
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.nested_portlets.view_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_nested_portlets_web.view_jsp");
 %>

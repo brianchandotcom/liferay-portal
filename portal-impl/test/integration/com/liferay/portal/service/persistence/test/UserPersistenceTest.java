@@ -42,6 +42,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,8 +59,9 @@ import java.util.Set;
  * @generated
  */
 public class UserPersistenceTest {
+	@ClassRule
 	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
@@ -194,8 +196,6 @@ public class UserPersistenceTest {
 
 		newUser.setEmailAddressVerified(RandomTestUtil.randomBoolean());
 
-		newUser.setLastPublishDate(RandomTestUtil.nextDate());
-
 		newUser.setStatus(RandomTestUtil.nextInt());
 
 		_users.add(_persistence.update(newUser));
@@ -273,9 +273,6 @@ public class UserPersistenceTest {
 			newUser.getAgreedToTermsOfUse());
 		Assert.assertEquals(existingUser.getEmailAddressVerified(),
 			newUser.getEmailAddressVerified());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingUser.getLastPublishDate()),
-			Time.getShortTimestamp(newUser.getLastPublishDate()));
 		Assert.assertEquals(existingUser.getStatus(), newUser.getStatus());
 	}
 
@@ -456,8 +453,8 @@ public class UserPersistenceTest {
 			"loginDate", true, "loginIP", true, "lastLoginDate", true,
 			"lastLoginIP", true, "lastFailedLoginDate", true,
 			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
-			"agreedToTermsOfUse", true, "emailAddressVerified", true,
-			"lastPublishDate", true, "status", true);
+			"agreedToTermsOfUse", true, "emailAddressVerified", true, "status",
+			true);
 	}
 
 	@Test
@@ -562,11 +559,9 @@ public class UserPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<User>() {
 				@Override
-				public void performAction(Object object) {
-					User user = (User)object;
-
+				public void performAction(User user) {
 					Assert.assertNotNull(user);
 
 					count.increment();
@@ -791,8 +786,6 @@ public class UserPersistenceTest {
 		user.setAgreedToTermsOfUse(RandomTestUtil.randomBoolean());
 
 		user.setEmailAddressVerified(RandomTestUtil.randomBoolean());
-
-		user.setLastPublishDate(RandomTestUtil.nextDate());
 
 		user.setStatus(RandomTestUtil.nextInt());
 

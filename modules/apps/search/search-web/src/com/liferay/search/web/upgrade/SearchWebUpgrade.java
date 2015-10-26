@@ -14,50 +14,30 @@
 
 package com.liferay.search.web.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.search.web.upgrade.v1_0_0.UpgradePortletPreferences;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = SearchWebUpgrade.class)
-public class SearchWebUpgrade {
+@Component(immediate = true)
+public class SearchWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.search.web", "0.0.1", "1.0.0", new UpgradePortletId(),
+			new UpgradePortletPreferences());
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradePortletId());
-
-		upgradeProcesses.add(new UpgradePortletPreferences());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.search.web", upgradeProcesses, 1, 1, false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

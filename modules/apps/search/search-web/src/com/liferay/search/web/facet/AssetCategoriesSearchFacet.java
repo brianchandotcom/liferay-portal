@@ -20,7 +20,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.search.web.util.SearchFacet;
+import com.liferay.search.facet.BaseJSPSearchFacet;
+import com.liferay.search.facet.SearchFacet;
 
 import javax.portlet.ActionRequest;
 
@@ -41,7 +42,7 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
-	public FacetConfiguration getDefaultConfiguration() {
+	public FacetConfiguration getDefaultConfiguration(long companyId) {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
 		facetConfiguration.setClassName(getFacetClassName());

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,7 +94,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ps.setString(
 				14,
 				JournalConverterManagerUtil.getDDMXSD(
-					xsd, getDefaultLocale(name)));
+					xsd, getDefaultLocale(companyId)));
 			ps.setString(15, storageType);
 			ps.setInt(16, type);
 
@@ -309,10 +308,34 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		return getDDMStructureId(groupId, 0, structureId, warn);
 	}
 
-	protected Locale getDefaultLocale(String xml) {
-		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(xml);
+	protected Locale getDefaultLocale(long companyId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-		return LocaleUtil.fromLanguageId(defaultLanguageId);
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select languageId from User_ where companyId = ? and " +
+					"defaultUser = ?");
+
+			ps.setLong(1, companyId);
+			ps.setBoolean(2, true);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				String languageId = rs.getString("languageId");
+
+				return LocaleUtil.fromLanguageId(languageId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return LocaleUtil.getSiteDefault();
 	}
 
 	@Override

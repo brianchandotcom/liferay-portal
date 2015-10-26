@@ -9,5 +9,6 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
 Require-Capability:\
-	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0"
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0",\
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/frontend";version:Version="1.0.0"
 Web-ContextPath: /ddl-web

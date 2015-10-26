@@ -14,10 +14,13 @@
 
 package com.liferay.portal.upgrade.internal.release;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapListener;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -31,6 +34,7 @@ import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.internal.UpgradeInfo;
+import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 
 import java.io.IOException;
@@ -38,6 +42,7 @@ import java.io.OutputStream;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.felix.utils.log.Logger;
 
@@ -46,6 +51,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -55,7 +61,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"osgi.command.function=execute", "osgi.command.function=list",
 		"osgi.command.scope=upgrade"
@@ -70,9 +77,22 @@ public class ReleaseManager {
 
 		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
 
-		executeUpgradeInfos(
-			bundleSymbolicName,
-			releaseGraphManager.getUpgradeInfos(schemaVersionString));
+		List<List<UpgradeInfo>> upgradeInfosList =
+			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+
+		int size = upgradeInfosList.size();
+
+		if (size > 1) {
+			throw new IllegalStateException(
+				"There are " + size + " possible end nodes for " +
+					schemaVersionString);
+		}
+
+		if (size == 0) {
+			return;
+		}
+
+		executeUpgradeInfos(bundleSymbolicName, upgradeInfosList.get(0));
 	}
 
 	public void execute(String bundleSymbolicName, String toVersionString) {
@@ -116,12 +136,24 @@ public class ReleaseManager {
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext)
+	protected void activate(
+			final BundleContext bundleContext, Map<String, Object> properties)
 		throws InvalidSyntaxException {
 
 		_logger = new Logger(bundleContext);
 
 		DB db = DBFactoryUtil.getDB();
+
+		ServiceTrackerMapListener<String, UpgradeInfo, List<UpgradeInfo>>
+			serviceTrackerMapListener = null;
+
+		_releaseManagerConfiguration = Configurable.createConfigurable(
+			ReleaseManagerConfiguration.class, properties);
+
+		if (_releaseManagerConfiguration.autoUpgrade()) {
+			serviceTrackerMapListener =
+				new UpgradeInfoServiceTrackerMapListener();
+		}
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 			bundleContext, UpgradeStep.class,
@@ -132,7 +164,8 @@ public class ReleaseManager {
 			new UpgradeServiceTrackerCustomizer(bundleContext),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<UpgradeStep>(
-					"upgrade.from.version")));
+					"upgrade.from.schema.version")),
+			serviceTrackerMapListener);
 
 		_serviceTrackerMap.open();
 	}
@@ -201,8 +234,24 @@ public class ReleaseManager {
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
+	private ReleaseManagerConfiguration _releaseManagerConfiguration;
 	private ReleasePublisher _releasePublisher;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
+
+	private class UpgradeInfoServiceTrackerMapListener
+		implements ServiceTrackerMapListener
+			<String, UpgradeInfo, List<UpgradeInfo>> {
+
+		@Override
+		public void keyEmitted(
+			ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap,
+			final String key, UpgradeInfo upgradeInfo,
+			List<UpgradeInfo> upgradeInfos) {
+
+			execute(key);
+		}
+
+	}
 
 	private class UpgradeInfosRunnable implements Runnable {
 
@@ -264,10 +313,11 @@ public class ReleaseManager {
 		public UpgradeInfo addingService(
 			ServiceReference<UpgradeStep> serviceReference) {
 
-			String fromVersionString = (String)serviceReference.getProperty(
-				"upgrade.from.version");
-			String toVersionString = (String)serviceReference.getProperty(
-				"upgrade.to.version");
+			String fromSchemaVersionString =
+				(String)serviceReference.getProperty(
+					"upgrade.from.schema.version");
+			String toSchemaVersionString = (String)serviceReference.getProperty(
+				"upgrade.to.schema.version");
 
 			UpgradeStep upgradeStep = _bundleContext.getService(
 				serviceReference);
@@ -282,7 +332,7 @@ public class ReleaseManager {
 			}
 
 			return new UpgradeInfo(
-				fromVersionString, toVersionString, upgradeStep);
+				fromSchemaVersionString, toSchemaVersionString, upgradeStep);
 		}
 
 		@Override

@@ -30,10 +30,10 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutPrototypeLocalService;
+import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniela Zapata Riesco
@@ -65,7 +66,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 	public void deleteStagedModel(LayoutSetPrototype layoutSetPrototype)
 		throws PortalException {
 
-		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+		_layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
 			layoutSetPrototype);
 	}
 
@@ -74,7 +75,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		LayoutSetPrototype layoutSetPrototype =
 			fetchStagedModelByUuidAndGroupId(uuid, group.getCompanyId());
@@ -91,7 +92,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		List<LayoutSetPrototype> layoutSetPrototypes = new ArrayList<>();
 
 		layoutSetPrototypes.add(
-			LayoutSetPrototypeLocalServiceUtil.
+			_layoutSetPrototypeLocalService.
 				fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId));
 
 		return layoutSetPrototypes;
@@ -152,7 +153,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			LayoutSetPrototype existingLayoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.
+				_layoutSetPrototypeLocalService.
 					fetchLayoutSetPrototypeByUuidAndCompanyId(
 						layoutSetPrototype.getUuid(),
 						portletDataContext.getCompanyId());
@@ -161,7 +162,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 				serviceContext.setUuid(layoutSetPrototype.getUuid());
 
 				importedLayoutSetPrototype =
-					LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
+					_layoutSetPrototypeLocalService.addLayoutSetPrototype(
 						userId, portletDataContext.getCompanyId(),
 						layoutSetPrototype.getNameMap(),
 						layoutSetPrototype.getDescriptionMap(),
@@ -170,7 +171,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			}
 			else {
 				importedLayoutSetPrototype =
-					LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+					_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 						existingLayoutSetPrototype.getLayoutSetPrototypeId(),
 						layoutSetPrototype.getNameMap(),
 						layoutSetPrototype.getDescriptionMap(),
@@ -180,7 +181,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		}
 		else {
 			importedLayoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
+				_layoutSetPrototypeLocalService.addLayoutSetPrototype(
 					userId, portletDataContext.getCompanyId(),
 					layoutSetPrototype.getNameMap(),
 					layoutSetPrototype.getDescriptionMap(),
@@ -203,7 +204,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			Element layoutSetPrototypeElement)
 		throws Exception {
 
-		DynamicQuery dynamicQuery = LayoutLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _layoutLocalService.dynamicQuery();
 
 		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
 
@@ -219,8 +220,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 		dynamicQuery.add(conjunction);
 
-		List<Layout> layouts = LayoutLocalServiceUtil.dynamicQuery(
-			dynamicQuery);
+		List<Layout> layouts = _layoutLocalService.dynamicQuery(dynamicQuery);
 
 		boolean exportLayoutPrototypes = portletDataContext.getBooleanParameter(
 			"layout_set_prototypes", "page-templates");
@@ -229,7 +229,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
 
 			LayoutPrototype layoutPrototype =
-				LayoutPrototypeLocalServiceUtil.
+				_layoutPrototypeLocalService.
 					getLayoutPrototypeByUuidAndCompanyId(
 						layoutPrototypeUuid, portletDataContext.getCompanyId());
 
@@ -268,7 +268,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 				layoutSetPrototypeLARPath, inputStream);
 
 			List<Layout> layoutSetPrototypeLayouts =
-				LayoutLocalServiceUtil.getLayouts(
+				_layoutLocalService.getLayouts(
 					layoutSetPrototype.getGroupId(), true);
 
 			Element layoutSetPrototypeElement =
@@ -336,5 +336,36 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		PortletDataContext portletDataContext,
 		LayoutSetPrototype layoutSetPrototype) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutPrototypeLocalService(
+		LayoutPrototypeLocalService layoutPrototypeLocalService) {
+
+		_layoutPrototypeLocalService = layoutPrototypeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+
+		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 }

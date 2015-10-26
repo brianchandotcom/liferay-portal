@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SearchSiteMembersDirectory" priority="4">
+	<command name="SearchSiteMembersDirectory" priority="3">
 		<var name="pageName" value="${pageName}" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />

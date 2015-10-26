@@ -79,7 +79,7 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,8 +111,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		sb.append(type);
 		sb.append(", subtype=");
 		sb.append(subtype);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -189,13 +187,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 			roleImpl.setSubtype(subtype);
 		}
 
-		if (lastPublishDate == Long.MIN_VALUE) {
-			roleImpl.setLastPublishDate(null);
-		}
-		else {
-			roleImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
 		roleImpl.resetOriginalValues();
 
 		return roleImpl;
@@ -218,7 +209,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		description = objectInput.readUTF();
 		type = objectInput.readInt();
 		subtype = objectInput.readUTF();
-		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -278,8 +268,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		else {
 			objectOutput.writeUTF(subtype);
 		}
-
-		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -297,5 +285,4 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 	public String description;
 	public int type;
 	public String subtype;
-	public long lastPublishDate;
 }

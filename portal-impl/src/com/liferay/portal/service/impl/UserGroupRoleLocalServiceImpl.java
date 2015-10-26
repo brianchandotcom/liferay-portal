@@ -92,6 +92,19 @@ public class UserGroupRoleLocalServiceImpl
 	}
 
 	@Override
+	public void deleteUserGroupRoles(long groupId, int roleType) {
+		List<UserGroupRole> userGroupRoles =
+			userGroupRoleFinder.findByGroupRoleType(groupId, roleType);
+
+		for (UserGroupRole userGroupRole : userGroupRoles) {
+			userGroupRolePersistence.removeByG_R(
+				groupId, userGroupRole.getRoleId());
+		}
+
+		PermissionCacheUtil.clearCache();
+	}
+
+	@Override
 	public void deleteUserGroupRoles(
 		long userId, long groupId, long[] roleIds) {
 

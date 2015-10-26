@@ -1,39 +1,46 @@
 AUI.add(
 	'liferay-search-container',
 	function(A) {
+		var AArray = A.Array;
 		var Lang = A.Lang;
 
 		var CSS_TEMPLATE = 'lfr-template';
+
+		var STR_BLANK = '';
+
+		var TPL_HIDDEN_INPUT = '<input class="hide" name="{name}" value="{value}" type="checkbox" checked />';
+
+		var TPL_INPUT_SELECTOR = 'input[type="checkbox"][value="{value}"]';
 
 		var SearchContainer = A.Component.create(
 			{
 				ATTRS: {
 					classNameHover: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					hover: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					id: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					rowClassNameAlternate: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					rowClassNameAlternateHover: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					rowClassNameBody: {
-						value: ''
+						value: STR_BLANK
 					},
 
 					rowClassNameBodyHover: {
-						value: ''
+						value: STR_BLANK
 					}
 				},
 
@@ -82,6 +89,7 @@ AUI.add(
 						var contentBox = instance.get('contentBox');
 
 						instance._dataStore = A.one('#' + id + 'PrimaryKeys');
+						instance._emptyResultsMessage = A.one('#' + id + 'EmptyResultsMessage');
 
 						if (instance._dataStore) {
 							var dataStoreForm = instance._dataStore.attr('form');
@@ -122,44 +130,12 @@ AUI.add(
 							}
 						);
 
+						instance._eventHandles = [
+							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance)
+						];
+
 						if (instance.get('hover')) {
-							var classNameHover = instance.get('classNameHover');
-
-							var rowClassNameAlternate = instance.get('rowClassNameAlternate');
-							var rowClassNameAlternateHover = instance.get('rowClassNameAlternateHover');
-
-							var rowClassNameBody = instance.get('rowClassNameBody');
-							var rowClassNameBodyHover = instance.get('rowClassNameBodyHover');
-
-							instance._hoverHandle = instance.get('contentBox').delegate(
-								['mouseenter', 'mouseleave'],
-								function(event) {
-									var mouseenter = event.type == 'mouseenter';
-									var row = event.currentTarget;
-
-									var endAlternate = rowClassNameAlternateHover;
-									var endBody = rowClassNameAlternateHover;
-									var startAlternate = rowClassNameAlternate;
-									var startBody = rowClassNameBody;
-
-									if (mouseenter) {
-										endAlternate = rowClassNameAlternate;
-										endBody = rowClassNameBody;
-										startAlternate = rowClassNameAlternateHover;
-										startBody = rowClassNameBodyHover;
-									}
-
-									if (row.hasClass(startAlternate)) {
-										row.replaceClass(startAlternate, endAlternate);
-									}
-									else if (row.hasClass(startBody)) {
-										row.replaceClass(startBody, endBody);
-									}
-
-									row.toggleClass(classNameHover, mouseenter);
-								},
-								'tr'
-							);
+							instance._eventHandles.push(instance.get('contentBox').delegate(['mouseenter', 'mouseleave'], '_onContentHover', 'tr', instance));
 						}
 					},
 
@@ -175,6 +151,12 @@ AUI.add(
 
 							instance.updateDataStore(initialIds);
 						}
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					addRow: function(arr, id) {
@@ -311,22 +293,103 @@ AUI.add(
 						}
 					},
 
+					_addRestoreTask: function() {
+						var instance = this;
+
+						Liferay.DOMTaskRunner.addTask(
+							{
+								action: Liferay.SearchContainer.restoreTask,
+								condition: Liferay.SearchContainer.testRestoreTask,
+								params: {
+									containerId: instance.get('contentBox').attr('id'),
+									searchContainerId: instance.get('id')
+								}
+							}
+						);
+					},
+
+					_addRestoreTaskState: function() {
+						var instance = this;
+
+						var elements = [];
+
+						var checkedCheckBoxes = instance.get('contentBox').all('input:checked');
+
+						checkedCheckBoxes.each(
+							function(item, index) {
+								elements.push(
+									{
+										name: item.attr('name'),
+										value: item.val()
+									}
+								);
+							}
+						);
+
+						Liferay.DOMTaskRunner.addTaskState(
+							{
+								data: {
+									elements: elements
+								},
+								owner: instance.get('id')
+							}
+						);
+					},
+
 					_addRow: function(event) {
 						var instance = this;
 
 						instance._parentContainer.show();
+						instance._emptyResultsMessage.hide();
 					},
 
 					_deleteRow: function(event) {
 						var instance = this;
 
-						var action = 'hide';
+						var action = 'show';
 
-						if (instance._ids.length) {
-							action = 'show';
+						if (instance._ids.length == 0) {
+							action = 'hide';
+
+							instance._emptyResultsMessage.show();
 						}
 
 						instance._parentContainer[action]();
+					},
+
+					_onContentHover: function(event) {
+						var instance = this;
+
+						var mouseenter = event.type == 'mouseenter';
+						var row = event.currentTarget;
+
+						var endAlternate = instance.get('rowClassNameAlternateHover');
+						var endBody = instance.get('rowClassNameAlternateHover');
+						var startAlternate = instance.get('rowClassNameAlternate');
+						var startBody = instance.get('rowClassNameBody');
+
+						if (mouseenter) {
+							endAlternate = instance.get('rowClassNameAlternate');
+							endBody = instance.get('rowClassNameBody');
+							startAlternate = instance.get('rowClassNameAlternateHover');
+							startBody = instance.get('rowClassNameBodyHover');
+						}
+
+						if (row.hasClass(startAlternate)) {
+							row.replaceClass(startAlternate, endAlternate);
+						}
+						else if (row.hasClass(startBody)) {
+							row.replaceClass(startBody, endBody);
+						}
+
+						row.toggleClass(instance.get('classNameHover'), mouseenter);
+					},
+
+					_onSurfaceStartNavigate: function(event) {
+						var instance = this;
+
+						instance._addRestoreTask();
+						instance._addRestoreTaskState();
 					}
 				},
 
@@ -336,6 +399,33 @@ AUI.add(
 					var id = obj.get('id');
 
 					instance._cache[id] = obj;
+				},
+
+				restoreTask: function(state, params, node) {
+					var container = node.one('#' + params.containerId);
+
+					var offScreenElementsHtml = AArray.reduce(
+						state.data.elements,
+						STR_BLANK,
+						function(prevVal, item) {
+							var input = container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
+
+							if (input) {
+								input.attr('checked', true);
+							}
+							else {
+								prevVal += Lang.sub(TPL_HIDDEN_INPUT, currentValue);
+							}
+
+							return prevVal;
+						}
+					);
+
+					container.append(offScreenElementsHtml);
+				},
+
+				testRestoreTask: function(state, params, node) {
+					return state.owner === params.searchContainerId && node.one('#' + params.containerId);
 				},
 
 				_cache: {}

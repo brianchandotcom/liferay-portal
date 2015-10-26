@@ -16,7 +16,9 @@ package com.liferay.portlet.calendar.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -53,6 +55,7 @@ import com.liferay.portlet.calendar.service.persistence.CalEventPersistence;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -163,6 +166,26 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByUuid(String uuid, int start, int end,
 		OrderByComparator<CalEvent> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CalEvent> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -178,15 +201,19 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if (!Validator.equals(uuid, calEvent.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if (!Validator.equals(uuid, calEvent.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -257,10 +284,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -561,8 +588,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -600,10 +626,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -682,7 +708,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching cal event, or <code>null</code> if a matching cal event could not be found
 	 */
 	@Override
@@ -693,7 +719,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -747,7 +773,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				List<CalEvent> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -760,14 +786,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					if ((calEvent.getUuid() == null) ||
 							!calEvent.getUuid().equals(uuid) ||
 							(calEvent.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, calEvent);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -812,8 +837,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -855,10 +879,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -946,6 +970,28 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<CalEvent> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByUuid_C(String uuid, long companyId, int start,
+		int end, OrderByComparator<CalEvent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -965,16 +1011,20 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				};
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if (!Validator.equals(uuid, calEvent.getUuid()) ||
-						(companyId != calEvent.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if (!Validator.equals(uuid, calEvent.getUuid()) ||
+							(companyId != calEvent.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1049,10 +1099,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1373,8 +1423,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1416,10 +1465,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1501,6 +1550,26 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByGroupId(long groupId, int start, int end,
 		OrderByComparator<CalEvent> orderByComparator) {
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<CalEvent> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1516,15 +1585,19 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if ((groupId != calEvent.getGroupId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if ((groupId != calEvent.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1581,10 +1654,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1871,8 +1944,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1896,10 +1968,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1980,6 +2052,26 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByCompanyId(long companyId, int start, int end,
 		OrderByComparator<CalEvent> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<CalEvent> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1995,15 +2087,19 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if ((companyId != calEvent.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if ((companyId != calEvent.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2060,10 +2156,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2350,8 +2446,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2375,10 +2470,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2452,6 +2547,26 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByNotRemindBy(int remindBy, int start, int end,
 		OrderByComparator<CalEvent> orderByComparator) {
+		return findByNotRemindBy(remindBy, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where remindBy &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param remindBy the remind by
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByNotRemindBy(int remindBy, int start, int end,
+		OrderByComparator<CalEvent> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2459,15 +2574,19 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_NOTREMINDBY;
 		finderArgs = new Object[] { remindBy, start, end, orderByComparator };
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if ((remindBy == calEvent.getRemindBy())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if ((remindBy == calEvent.getRemindBy())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2524,10 +2643,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2815,8 +2934,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { remindBy };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2840,10 +2958,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2931,6 +3049,28 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByG_T(long groupId, String type, int start,
 		int end, OrderByComparator<CalEvent> orderByComparator) {
+		return findByG_T(groupId, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByG_T(long groupId, String type, int start,
+		int end, OrderByComparator<CalEvent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2950,16 +3090,20 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				};
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if ((groupId != calEvent.getGroupId()) ||
-						!Validator.equals(type, calEvent.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if ((groupId != calEvent.getGroupId()) ||
+							!Validator.equals(type, calEvent.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3034,10 +3178,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3381,11 +3525,35 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByG_T(long groupId, String[] types, int start,
 		int end, OrderByComparator<CalEvent> orderByComparator) {
+		return findByG_T(groupId, types, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where groupId = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByG_T(long groupId, String[] types, int start,
+		int end, OrderByComparator<CalEvent> orderByComparator,
+		boolean retrieveFromCache) {
 		if (types == null) {
 			types = new String[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (types.length == 1) {
@@ -3408,16 +3576,20 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				};
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if ((groupId != calEvent.getGroupId()) ||
-						!ArrayUtil.contains(types, calEvent.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if ((groupId != calEvent.getGroupId()) ||
+							!ArrayUtil.contains(types, calEvent.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3499,11 +3671,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T,
 					finderArgs);
 
 				throw processException(e);
@@ -3543,8 +3715,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { groupId, type };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3586,10 +3757,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3613,13 +3784,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		if (types == null) {
 			types = new String[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] { groupId, StringUtil.merge(types) };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
 				finderArgs, this);
 
 		if (count == null) {
@@ -3677,11 +3850,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
 					finderArgs);
 
 				throw processException(e);
@@ -3769,6 +3942,28 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByG_R(long groupId, boolean repeating, int start,
 		int end, OrderByComparator<CalEvent> orderByComparator) {
+		return findByG_R(groupId, repeating, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where groupId = &#63; and repeating = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param repeating the repeating
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByG_R(long groupId, boolean repeating, int start,
+		int end, OrderByComparator<CalEvent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3788,16 +3983,20 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				};
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if ((groupId != calEvent.getGroupId()) ||
-						(repeating != calEvent.getRepeating())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if ((groupId != calEvent.getGroupId()) ||
+							(repeating != calEvent.getRepeating())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3858,10 +4057,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4168,8 +4367,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { groupId, repeating };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4197,10 +4395,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4305,6 +4503,30 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public List<CalEvent> findByG_T_R(long groupId, String type,
 		boolean repeating, int start, int end,
 		OrderByComparator<CalEvent> orderByComparator) {
+		return findByG_T_R(groupId, type, repeating, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where groupId = &#63; and type = &#63; and repeating = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param repeating the repeating
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByG_T_R(long groupId, String type,
+		boolean repeating, int start, int end,
+		OrderByComparator<CalEvent> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4324,17 +4546,21 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				};
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if ((groupId != calEvent.getGroupId()) ||
-						!Validator.equals(type, calEvent.getType()) ||
-						(repeating != calEvent.getRepeating())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if ((groupId != calEvent.getGroupId()) ||
+							!Validator.equals(type, calEvent.getType()) ||
+							(repeating != calEvent.getRepeating())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4413,10 +4639,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4784,11 +5010,37 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public List<CalEvent> findByG_T_R(long groupId, String[] types,
 		boolean repeating, int start, int end,
 		OrderByComparator<CalEvent> orderByComparator) {
+		return findByG_T_R(groupId, types, repeating, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events where groupId = &#63; and type = &#63; and repeating = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param repeating the repeating
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cal events
+	 */
+	@Override
+	public List<CalEvent> findByG_T_R(long groupId, String[] types,
+		boolean repeating, int start, int end,
+		OrderByComparator<CalEvent> orderByComparator, boolean retrieveFromCache) {
 		if (types == null) {
 			types = new String[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (types.length == 1) {
@@ -4814,17 +5066,21 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				};
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_R,
-				finderArgs, this);
+		List<CalEvent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CalEvent calEvent : list) {
-				if ((groupId != calEvent.getGroupId()) ||
-						!ArrayUtil.contains(types, calEvent.getType()) ||
-						(repeating != calEvent.getRepeating())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_R,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CalEvent calEvent : list) {
+					if ((groupId != calEvent.getGroupId()) ||
+							!ArrayUtil.contains(types, calEvent.getType()) ||
+							(repeating != calEvent.getRepeating())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4912,11 +5168,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_R,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_R,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_R,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_R,
 					finderArgs);
 
 				throw processException(e);
@@ -4958,8 +5214,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		Object[] finderArgs = new Object[] { groupId, type, repeating };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -5005,10 +5260,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5033,15 +5288,17 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		if (types == null) {
 			types = new String[0];
 		}
-		else {
+		else if (types.length > 1) {
 			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(types), repeating
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_R,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_R,
 				finderArgs, this);
 
 		if (count == null) {
@@ -5105,11 +5362,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_R,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_R,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_R,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_R,
 					finderArgs);
 
 				throw processException(e);
@@ -5145,10 +5402,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public void cacheResult(CalEvent calEvent) {
-		EntityCacheUtil.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalEventImpl.class, calEvent.getPrimaryKey(), calEvent);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { calEvent.getUuid(), calEvent.getGroupId() }, calEvent);
 
 		calEvent.resetOriginalValues();
@@ -5162,8 +5419,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public void cacheResult(List<CalEvent> calEvents) {
 		for (CalEvent calEvent : calEvents) {
-			if (EntityCacheUtil.getResult(
-						CalEventModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 						CalEventImpl.class, calEvent.getPrimaryKey()) == null) {
 				cacheResult(calEvent);
 			}
@@ -5177,43 +5433,43 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 * Clears the cache for all cal events.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(CalEventImpl.class);
+		entityCache.clearCache(CalEventImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the cal event.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(CalEvent calEvent) {
-		EntityCacheUtil.removeResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalEventImpl.class, calEvent.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((CalEventModelImpl)calEvent);
 	}
 
 	@Override
 	public void clearCache(List<CalEvent> calEvents) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (CalEvent calEvent : calEvents) {
-			EntityCacheUtil.removeResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 				CalEventImpl.class, calEvent.getPrimaryKey());
 
 			clearUniqueFindersCache((CalEventModelImpl)calEvent);
@@ -5227,9 +5483,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					calEventModelImpl.getUuid(), calEventModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				calEventModelImpl);
 		}
 		else {
@@ -5240,9 +5496,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					calEventModelImpl);
 			}
 		}
@@ -5253,8 +5509,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				calEventModelImpl.getUuid(), calEventModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((calEventModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -5263,8 +5519,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					calEventModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 	}
 
@@ -5459,10 +5715,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !CalEventModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -5470,14 +5726,14 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { calEventModelImpl.getOriginalUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { calEventModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -5488,8 +5744,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -5497,8 +5753,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -5508,14 +5764,14 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { calEventModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -5525,16 +5781,14 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { calEventModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -5545,8 +5799,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getOriginalType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
 					args);
 
 				args = new Object[] {
@@ -5554,8 +5808,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
 					args);
 			}
 
@@ -5566,8 +5820,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getOriginalRepeating()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
 					args);
 
 				args = new Object[] {
@@ -5575,8 +5829,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getRepeating()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
 					args);
 			}
 
@@ -5588,8 +5842,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getOriginalRepeating()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_R,
 					args);
 
 				args = new Object[] {
@@ -5598,13 +5852,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEventModelImpl.getRepeating()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_R,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalEventImpl.class, calEvent.getPrimaryKey(), calEvent, false);
 
 		clearUniqueFindersCache(calEventModelImpl);
@@ -5696,7 +5950,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByPrimaryKey(Serializable primaryKey) {
-		CalEvent calEvent = (CalEvent)EntityCacheUtil.getResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+		CalEvent calEvent = (CalEvent)entityCache.getResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 				CalEventImpl.class, primaryKey);
 
 		if (calEvent == _nullCalEvent) {
@@ -5715,12 +5969,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					cacheResult(calEvent);
 				}
 				else {
-					EntityCacheUtil.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 						CalEventImpl.class, primaryKey, _nullCalEvent);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 					CalEventImpl.class, primaryKey);
 
 				throw processException(e);
@@ -5770,7 +6024,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			CalEvent calEvent = (CalEvent)EntityCacheUtil.getResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+			CalEvent calEvent = (CalEvent)entityCache.getResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 					CalEventImpl.class, primaryKey);
 
 			if (calEvent == null) {
@@ -5822,7 +6076,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 					CalEventImpl.class, primaryKey, _nullCalEvent);
 			}
 		}
@@ -5877,6 +6131,25 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findAll(int start, int end,
 		OrderByComparator<CalEvent> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cal events.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of cal events
+	 * @param end the upper bound of the range of cal events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of cal events
+	 */
+	@Override
+	public List<CalEvent> findAll(int start, int end,
+		OrderByComparator<CalEvent> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5892,8 +6165,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<CalEvent> list = (List<CalEvent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CalEvent> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CalEvent>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -5940,10 +6217,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5973,7 +6250,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -5986,11 +6263,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -6020,12 +6297,14 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(CalEventImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(CalEventImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_CALEVENT = "SELECT calEvent FROM CalEvent calEvent";
 	private static final String _SQL_SELECT_CALEVENT_WHERE_PKS_IN = "SELECT calEvent FROM CalEvent calEvent WHERE eventId IN (";
 	private static final String _SQL_SELECT_CALEVENT_WHERE = "SELECT calEvent FROM CalEvent calEvent WHERE ";

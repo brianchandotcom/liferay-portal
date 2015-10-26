@@ -27,10 +27,10 @@ if (sapEntryId > 0) {
 	sapEntry = SAPEntryServiceUtil.getSAPEntry(sapEntryId);
 }
 
-boolean defaultSAPEntry = false;
+boolean systemSAPEntry = false;
 
 if (sapEntry != null) {
-	defaultSAPEntry = sapEntry.isDefaultSAPEntry();
+	systemSAPEntry = sapEntry.isSystem();
 }
 %>
 
@@ -53,7 +53,7 @@ if (sapEntry != null) {
 
 	<aui:model-context bean="<%= sapEntry %>" model="<%= SAPEntry.class %>" />
 
-	<aui:input disabled="<%= defaultSAPEntry %>" name="name" required="<%= true %>">
+	<aui:input disabled="<%= systemSAPEntry %>" name="name" required="<%= true %>">
 		<aui:validator errorMessage="this-field-is-required-and-must-contain-only-following-characters" name="custom">
 			function(val, fieldNode, ruleValue) {
 				var allowedCharacters = '<%= HtmlUtil.escapeJS(SAPEntryConstants.NAME_ALLOWED_CHARACTERS) %>';
@@ -66,6 +66,10 @@ if (sapEntry != null) {
 			}
 		</aui:validator>
 	</aui:input>
+
+	<aui:input name="enabled" />
+
+	<aui:input disabled="<%= systemSAPEntry %>" helpMessage="default-sap-entry-help" label="default" name="defaultSAPEntry" />
 
 	<aui:input name="title" required="<%= true %>" />
 

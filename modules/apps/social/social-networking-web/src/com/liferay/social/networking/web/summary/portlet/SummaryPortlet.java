@@ -45,8 +45,8 @@ import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.portlet.social.service.SocialRequestLocalService;
 import com.liferay.social.networking.friends.social.FriendsRequestKeys;
 import com.liferay.social.networking.members.social.MembersRequestKeys;
-import com.liferay.social.networking.model.MeetupsRegistration;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
+import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
 import com.liferay.social.networking.service.WallEntryLocalService;
 
 import java.util.LinkedHashMap;
@@ -331,7 +331,7 @@ public class SummaryPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setMeetupsRegistrationLocalService(
-		MeetupsRegistration meetupsRegistrationLocalService) {
+		MeetupsRegistrationLocalService meetupsRegistrationLocalService) {
 	}
 
 	@Reference(unbind = "-")

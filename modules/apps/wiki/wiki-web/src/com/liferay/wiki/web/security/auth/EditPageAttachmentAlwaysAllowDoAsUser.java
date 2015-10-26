@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.wiki.web.display.portlet.security.auth;
+package com.liferay.wiki.web.security.auth;
 
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
-import com.liferay.wiki.web.security.auth.BaseAlwaysAllowDoAsUser;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,11 +27,22 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = AlwaysAllowDoAsUser.class)
 public class EditPageAttachmentAlwaysAllowDoAsUser
-	extends BaseAlwaysAllowDoAsUser {
+	implements AlwaysAllowDoAsUser {
 
-	@Override
+	public Collection<String> getActionNames() {
+		return Collections.emptyList();
+	}
+
 	public Collection<String> getMVCRenderCommandNames() {
 		return _mvcRenderCommandNames;
+	}
+
+	public Collection<String> getPaths() {
+		return Collections.emptyList();
+	}
+
+	public Collection<String> getStrutsActions() {
+		return Collections.emptyList();
 	}
 
 	private final Collection<String> _mvcRenderCommandNames = Arrays.asList(

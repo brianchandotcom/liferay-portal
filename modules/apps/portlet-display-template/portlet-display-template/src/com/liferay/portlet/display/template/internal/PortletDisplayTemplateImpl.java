@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -81,9 +81,9 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	@Override
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle) {
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			Group companyGroup = _groupLocalService.getCompanyGroup(
 				group.getCompanyId());
 
 			String uuid = getDDMTemplateKey(displayStyle);
@@ -118,7 +118,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	@Override
 	public long getDDMTemplateGroupId(long groupId) {
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			if (group.isLayout()) {
 				group = group.getParentGroup();
@@ -487,6 +487,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	private Map<String, Object> _getPortletPreferences(
 		RenderRequest renderRequest) {
 
@@ -522,6 +527,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		PortletDisplayTemplateImpl.class);
 
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private GroupLocalService _groupLocalService;
 
 	private static class TransformerHolder {
 

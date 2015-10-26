@@ -15,7 +15,7 @@
 package com.liferay.portlet.display.template.web.webdav;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDavUtil;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
 import com.liferay.portal.kernel.webdav.Resource;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juan Fernández
@@ -105,7 +106,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 		List<Resource> resources = new ArrayList<>();
 
 		List<DDMTemplate> ddmTemplates =
-			DDMTemplateLocalServiceUtil.getTemplatesByClassPK(
+			_ddmTemplateLocalService.getTemplatesByClassPK(
 				webDAVRequest.getGroupId(), 0);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
@@ -117,5 +118,14 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 
 		return resources;
 	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

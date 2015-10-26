@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
@@ -31,6 +31,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -95,7 +96,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 	protected long getClassNameId(
 		PortletDataContext portletDataContext, String portletId) {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			portletDataContext.getCompanyId(), portletId);
 
 		TemplateHandler templateHandler = portlet.getTemplateHandlerInstance();
@@ -114,7 +115,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
 			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
@@ -132,7 +133,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
 			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
@@ -145,5 +146,14 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 
 		return 0;
 	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	private PortletLocalService _portletLocalService;
 
 }

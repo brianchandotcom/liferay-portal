@@ -16,7 +16,7 @@ package com.liferay.portlet.display.template.web.lar;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -155,7 +155,7 @@ public class PortletDisplayTemplatePortletDataHandler
 		final StagedModelType stagedModelType) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			DDMTemplateLocalServiceUtil.getExportActionableDynamicQuery(
+			_ddmTemplateLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -212,11 +212,19 @@ public class PortletDisplayTemplatePortletDataHandler
 		return _stagedModelTypes;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private StagedModelType[] _stagedModelTypes;
 
 }

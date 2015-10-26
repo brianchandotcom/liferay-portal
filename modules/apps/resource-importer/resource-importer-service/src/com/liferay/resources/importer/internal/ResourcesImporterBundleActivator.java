@@ -25,14 +25,14 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Kocsis
  */
-public class ResourceImporterBundleActivator implements BundleActivator {
+public class ResourcesImporterBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				DestinationNames.RESOURCE_IMPORTER);
+				DestinationNames.RESOURCES_IMPORTER);
 
 		_destinationServiceRegistration = bundleContext.registerService(
 			DestinationConfiguration.class, destinationConfiguration,

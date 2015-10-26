@@ -19,6 +19,7 @@ package com.liferay.resources.importer.messaging;
  */
 public interface DestinationNames {
 
-	public static final String RESOURCE_IMPORTER = "liferay/resources_importer";
+	public static final String RESOURCES_IMPORTER =
+		"liferay/resources_importer";
 
 }

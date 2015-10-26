@@ -16,6 +16,7 @@ package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

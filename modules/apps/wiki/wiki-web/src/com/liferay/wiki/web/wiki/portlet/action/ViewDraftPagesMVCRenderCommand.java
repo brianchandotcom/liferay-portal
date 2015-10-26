@@ -16,11 +16,12 @@ package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Iván Zaera
@@ -31,7 +32,7 @@ import javax.portlet.RenderResponse;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"mvc.command.name=/wiki/view_draft_pages",
+		"mvc.command.name=/wiki/view_draft_pages"
 	},
 	service = MVCRenderCommand.class
 )

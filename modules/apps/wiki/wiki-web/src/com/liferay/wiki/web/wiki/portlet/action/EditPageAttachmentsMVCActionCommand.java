@@ -349,6 +349,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		PortletConfig portletConfig = getPortletConfig(actionRequest);
@@ -414,7 +415,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (NoSuchNodeException | NoSuchPageException |
-			PrincipalException e) {
+			   PrincipalException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 

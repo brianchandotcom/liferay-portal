@@ -24,7 +24,7 @@
 
 			<c:if test="<%= (syndImage != null) && rssPortletInstanceConfiguration.showFeedImage() %>">
 				<div class="feed-image">
-					<img alt="<%= HtmlUtil.escapeAttribute(syndImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(rssFeed.getSyndFeedImageURL()) %>" />
+					<img alt="<%= HtmlUtil.escapeAttribute(syndImage.getDescription()) %>" class="img-responsive" src="<%= HtmlUtil.escapeHREF(rssFeed.getSyndFeedImageURL()) %>" />
 				</div>
 			</c:if>
 

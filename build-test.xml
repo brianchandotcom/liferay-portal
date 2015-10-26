@@ -588,8 +588,6 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-testcase-property property.name="browser.type" />
-
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>
@@ -643,6 +641,13 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<attribute name="property.name" />
 
 		<sequential>
+			<if>
+				<isset property="@{property.name}" />
+				<then>
+					<propertycopy from="@{property.name}" name="property.value.default" />
+				</then>
+			</if>
+
 			<var name="@{property.name}" unset="true" />
 
 			<if>
@@ -658,6 +663,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<beanshell>
 						<![CDATA[
 							String propertyName = project.getProperty("property.name");
+							String propertyValueDefault = project.getProperty("property.value.default");
 							String testMethodName = project.getProperty("test.method.name");
 							String testSimpleClassName = project.getProperty("test.simple.class.name");
 
@@ -681,6 +687,10 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 								sb.append(propertyName);
 
 								propertyValue = project.getProperty(sb.toString());
+
+								if (propertyValue == null) {
+									propertyValue = propertyValueDefault;
+								}
 							}
 
 							project.setProperty(propertyName, propertyValue);
@@ -4856,6 +4866,8 @@ module.framework.properties.osgi.console=11312</echo>
 	<target name="prepare-selenium">
 		<delete file="${test.ext.properties.file}" />
 
+		<get-testcase-property property.name="browser.type" />
+
 		<if>
 			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 			<then>
@@ -5630,21 +5642,6 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium-testcase-properties">
-		<get-testcase-property property.name="browser.type" />
-
-		<if>
-			<or>
-				<equals arg1="${browser.type}" arg2="android" />
-				<equals arg1="${browser.type}" arg2="androidchrome" />
-				<equals arg1="${browser.type}" arg2="iossafari" />
-			</or>
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					mobile.browser=true
-				</echo>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>

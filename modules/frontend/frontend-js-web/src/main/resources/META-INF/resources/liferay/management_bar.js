@@ -42,6 +42,16 @@ AUI.add(
 						value: '.selected-items-count'
 					},
 
+					rowClassNameActive: {
+						validator: Lang.isString,
+						value: 'active'
+					},
+
+					rowSelector: {
+						validator: Lang.isString,
+						value: 'li.selectable,tr.selectable'
+					},
+
 					secondaryBar: {
 						setter: 'one'
 					},
@@ -170,7 +180,11 @@ AUI.add(
 					_toggleSelectAll: function(event) {
 						var instance = this;
 
-						instance._getPageCheckBoxes().attr(ATTR_CHECKED, event.currentTarget.attr(ATTR_CHECKED));
+						var checked = event.currentTarget.attr(ATTR_CHECKED);
+
+						instance._getPageCheckBoxes().attr(ATTR_CHECKED, checked);
+
+						instance.get(STR_CHECKBOX_CONTAINER).all(instance.get('rowSelector')).toggleClass(instance.get('rowClassNameActive'), checked);
 
 						instance._toggleSelect();
 					},

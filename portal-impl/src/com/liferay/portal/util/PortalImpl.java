@@ -5500,17 +5500,19 @@ public class PortalImpl implements Portal {
 			return userIdObj.longValue();
 		}
 
-		String path = GetterUtil.getString(request.getPathInfo());
+		String actionName = getPortletParam(request, "actionName");
 		String mvcRenderCommandName = ParamUtil.getString(
 			request, "mvcRenderCommandName");
-		String actionName = getPortletParam(request, "actionName");
+		String path = GetterUtil.getString(request.getPathInfo());
+		String strutsAction = getStrutsAction(request);
 
 		boolean alwaysAllowDoAsUser = false;
 
 		if (path.equals("/portal/session_click") ||
 			mvcRenderCommandName.equals("/document_library/edit_file_entry") ||
 			actionName.equals("addFile") ||
-			isAlwaysAllowDoAsUser(path, mvcRenderCommandName, actionName)) {
+			isAlwaysAllowDoAsUser(
+				path, mvcRenderCommandName, strutsAction, actionName)) {
 
 			try {
 				alwaysAllowDoAsUser = isAlwaysAllowDoAsUser(request);
@@ -8023,12 +8025,20 @@ public class PortalImpl implements Portal {
 	}
 
 	protected boolean isAlwaysAllowDoAsUser(
-		String path, String strutsAction, String actionName) {
+		String path, String mvcRenderCommandName, String strutsAction,
+		String actionName) {
 
 		for (AlwaysAllowDoAsUser alwaysAllowDoAsUser : _alwaysAllowDoAsUsers) {
 			Collection<String> paths = alwaysAllowDoAsUser.getPaths();
 
 			if (paths.contains(path)) {
+				return true;
+			}
+
+			Collection<String> mvcRenderCommandNames =
+				alwaysAllowDoAsUser.getMVCRenderCommandNames();
+
+			if (mvcRenderCommandNames.contains(mvcRenderCommandName)) {
 				return true;
 			}
 

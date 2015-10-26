@@ -30,6 +30,11 @@ public class BaseAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 	}
 
 	@Override
+	public Collection<String> getMVCRenderCommandNames() {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public Collection<String> getPaths() {
 		return Collections.emptyList();
 	}

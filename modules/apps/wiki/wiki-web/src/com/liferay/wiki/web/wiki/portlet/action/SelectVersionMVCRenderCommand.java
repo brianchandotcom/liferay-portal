@@ -27,16 +27,16 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"mvc.command.name=/wiki/view_page"
+		"mvc.command.name=/wiki/select_version"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewPageMVCRenderCommand
+public class SelectVersionMVCRenderCommand
 	extends BaseViewPageMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/wiki_display/view.jsp";
+		return "/wiki/select_version.jsp";
 	}
 
 }

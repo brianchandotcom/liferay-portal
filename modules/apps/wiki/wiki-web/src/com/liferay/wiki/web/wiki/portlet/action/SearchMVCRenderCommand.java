@@ -15,8 +15,16 @@
 package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import org.osgi.service.component.annotations.Component;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -27,16 +35,18 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"mvc.command.name=/wiki/view_page"
+		"mvc.command.name=/wiki/search",
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewPageMVCRenderCommand
-	extends BaseViewPageMVCRenderCommand {
+public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	protected String getPath() {
-		return "/wiki_display/view.jsp";
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		return ActionUtil.viewNode(renderRequest, "/wiki/search.jsp");
 	}
 
 }

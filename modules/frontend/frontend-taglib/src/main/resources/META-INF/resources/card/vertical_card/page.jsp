@@ -55,13 +55,13 @@
 
 						<c:if test="<%= Validator.isNotNull(title) %>">
 							<aui:a href="<%= url %>">
-								<div class="card-dm-text-large"><%= title %></div>
+								<div class="card-dm-text-large"><%= HtmlUtil.escape(title) %></div>
 							</aui:a>
 						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(subtitle) %>">
 							<div class="card-dm-text">
-								<%= subtitle %>
+								<%= HtmlUtil.escape(subtitle) %>
 							</div>
 						</c:if>
 

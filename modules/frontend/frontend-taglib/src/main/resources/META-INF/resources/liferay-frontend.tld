@@ -342,18 +342,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add to the card text zone footer, if the card is vertical</description>
-			<name>footer</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Text to add to the card text zone header, if the card is vertical</description>
-			<name>header</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>Whether the card type is horizontal. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>horizontal</name>
 			<required>false</required>

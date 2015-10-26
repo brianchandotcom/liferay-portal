@@ -31,7 +31,7 @@
 				assetTagClassPK="<%= entry.getEntryId() %>"
 				author="<%= entry.getUserName() %>"
 				createDate="<%= entry.getCreateDate() %>"
-				description="<%= HtmlUtil.escape(entry.getDescription()) %>"
+				description="<%= entry.getDescription() %>"
 				displayDate="<%= entry.getDisplayDate() %>"
 				displayStyle="descriptive"
 				markupView="lexicon"
@@ -40,7 +40,7 @@
 				rowCheckerName="<%= BlogsEntry.class.getSimpleName() %>"
 				showCheckbox="<%= true %>"
 				status="<%= entry.getStatus() %>"
-				title="<%= HtmlUtil.escape(entry.getTitle()) %>"
+				title="<%= entry.getTitle() %>"
 				url="<%= rowURL.toString() %>"
 			/>
 		</liferay-ui:search-container-column-text>
@@ -76,7 +76,7 @@
 				rowChecker="<%= searchContainer.getRowChecker() %>"
 				smallImageCSSClass="user-icon user-icon-lg"
 				smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
-				title="<%= HtmlUtil.escape(entry.getTitle()) %>"
+				title="<%= entry.getTitle() %>"
 				url="<%= rowURL.toString() %>"
 			>
 				<liferay-frontend:vertical-card-footer>

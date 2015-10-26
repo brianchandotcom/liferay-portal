@@ -313,7 +313,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								rowChecker="<%= entriesChecker %>"
 								smallImageCSSClass="user-icon user-icon-lg"
 								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
-								title="<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>"
+								title="<%= curArticle.getTitle(locale) %>"
 								url="<%= rowURL != null ? rowURL.toString() : null %>"
 							>
 								<liferay-frontend:vertical-card-header>
@@ -412,7 +412,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								actionJspServletContext="<%= application %>"
 								author="<%= curFolder.getUserName() %>"
 								createDate="<%= curFolder.getCreateDate() %>"
-								description="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
+								description="<%= curFolder.getDescription() %>"
 								displayStyle="descriptive"
 								folder="<%= true %>"
 								markupView="lexicon"
@@ -420,7 +420,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
 								showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
-								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
+								title="<%= curFolder.getName() %>"
 								url="<%= rowURL.toString() %>"
 							/>
 						</liferay-ui:search-container-column-text>

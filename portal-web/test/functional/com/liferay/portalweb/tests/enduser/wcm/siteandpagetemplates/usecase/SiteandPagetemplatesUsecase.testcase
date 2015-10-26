@@ -828,7 +828,7 @@
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.png" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="Document_1.png" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -874,7 +874,7 @@
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.png" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="Document_1.png" />
 		</execute>
 
 		<execute macro="SOTasks#addTask">

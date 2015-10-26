@@ -175,7 +175,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 		<div class="journal-article-wrapper" id="<portlet:namespace />journalArticleWrapper">
 			<div class="journal-article-wrapper-content">
-				<c:if test="<%= (article != null) && !article.isNew() %>">
+				<c:if test="<%= (article != null) && !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 					<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
 
 					<liferay-util:include page="/article_toolbar.jsp" servletContext="<%= application %>" />
@@ -216,16 +216,18 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 					}
 					%>
 
-					<c:if test="<%= approved %>">
-						<div class="alert alert-info">
-							<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
-						</div>
-					</c:if>
+					<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+						<c:if test="<%= approved %>">
+							<div class="alert alert-info">
+								<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
+							</div>
+						</c:if>
 
-					<c:if test="<%= pending %>">
-						<div class="alert alert-info">
-							<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-						</div>
+						<c:if test="<%= pending %>">
+							<div class="alert alert-info">
+								<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+							</div>
+						</c:if>
 					</c:if>
 
 					<aui:button-row cssClass="journal-article-button-row">

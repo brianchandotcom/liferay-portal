@@ -305,20 +305,20 @@ public class AssetPublisherExportImportTest
 
 		groups.add(group);
 
-		Group otherGroup = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
 
-		groups.add(otherGroup);
+		groups.add(group2);
 
 		Group layoutGroup1 = GroupTestUtil.addGroup(
 			TestPropsValues.getUserId(), layout);
 
 		groups.add(layoutGroup1);
 
-		Layout otherLayout = LayoutTestUtil.addLayout(group);
-		Group otherLayoutGroup = GroupTestUtil.addGroup(
-			TestPropsValues.getUserId(), otherLayout);
+		Layout layout2 = LayoutTestUtil.addLayout(group);
+		Group layoutGroup2 = GroupTestUtil.addGroup(
+			TestPropsValues.getUserId(), layout2);
 
-		groups.add(otherLayoutGroup);
+		groups.add(layoutGroup2);
 
 		testExportImportAssetEntries(groups);
 	}
@@ -767,12 +767,16 @@ public class AssetPublisherExportImportTest
 		Assert.assertEquals(
 			expectedAssetEntries.size(), actualAssetEntries.size());
 
-		Iterator<AssetEntry> expectedIterator = expectedAssetEntries.iterator();
-		Iterator<AssetEntry> actualIterator = expectedAssetEntries.iterator();
+		Iterator<AssetEntry> expectedAssetEntriesIterator =
+			expectedAssetEntries.iterator();
+		Iterator<AssetEntry> actualAssetEntriesIterator =
+			expectedAssetEntries.iterator();
 
-		while (expectedIterator.hasNext() && actualIterator.hasNext()) {
-			AssetEntry expectedAssetEntry = expectedIterator.next();
-			AssetEntry actualAssetEntry = actualIterator.next();
+		while (expectedAssetEntriesIterator.hasNext() &&
+			   actualAssetEntriesIterator.hasNext()) {
+
+			AssetEntry expectedAssetEntry = expectedAssetEntriesIterator.next();
+			AssetEntry actualAssetEntry = actualAssetEntriesIterator.next();
 
 			Assert.assertEquals(
 				expectedAssetEntry.getClassName(),

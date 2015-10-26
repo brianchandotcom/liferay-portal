@@ -196,6 +196,8 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
+		<execute function="SelectFrameTop" />
+
 		<execute function="SelectFrame" locator1="PGDynamicdatalistsAddlist#IFRAME" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />

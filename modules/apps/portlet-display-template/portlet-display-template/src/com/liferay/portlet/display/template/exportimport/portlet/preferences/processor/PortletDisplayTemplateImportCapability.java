@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -36,6 +36,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -65,7 +66,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 	protected long getClassNameId(
 		PortletDataContext portletDataContext, String portletId) {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			portletDataContext.getCompanyId(), portletId);
 
 		TemplateHandler templateHandler = portlet.getTemplateHandlerInstance();
@@ -84,7 +85,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
 			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
@@ -102,7 +103,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
 			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
@@ -164,5 +165,14 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 
 		return processedPreferences;
 	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	private PortletLocalService _portletLocalService;
 
 }

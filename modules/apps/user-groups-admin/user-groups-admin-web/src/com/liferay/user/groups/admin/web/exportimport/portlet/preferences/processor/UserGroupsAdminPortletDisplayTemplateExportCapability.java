@@ -15,12 +15,14 @@
 package com.liferay.user.groups.admin.web.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -51,6 +53,14 @@ public class UserGroupsAdminPortletDisplayTemplateExportCapability
 
 		return UserGroupsAdminExportImportPortletPreferencesProcessorUtil.
 			getDisplayStyleGroupId(portletPreferences);
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		super.setPortletLocalService(portletLocalService);
 	}
 
 }

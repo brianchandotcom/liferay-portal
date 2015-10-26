@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
-@Component(immediate = true)
+@Component(immediate = true, service = CalendarWebUpgrade.class)
 public class CalendarWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

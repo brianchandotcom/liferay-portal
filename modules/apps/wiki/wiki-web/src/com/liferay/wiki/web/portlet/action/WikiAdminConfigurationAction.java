@@ -12,11 +12,15 @@
  * details.
  */
 
-package com.liferay.wiki.web.display.portlet.action;
+package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.wiki.constants.WikiPortletKeys;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -29,15 +33,28 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY},
+	property = {"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN},
 	service = ConfigurationAction.class
 )
-public class WikiDisplayConfigurationAction
+public class WikiAdminConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
-		return "/wiki_display/configuration.jsp";
+		return "/wiki_admin/configuration.jsp";
+	}
+
+	@Override
+	public void processAction(
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		validateEmail(actionRequest, "emailPageAdded");
+		validateEmail(actionRequest, "emailPageUpdated");
+		validateEmailFrom(actionRequest);
+
+		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
 	@Override

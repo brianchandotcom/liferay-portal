@@ -345,6 +345,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 
 					PortletURL deletePageURL = PortletURLUtil.clone(editPageURL, PortletRequest.ACTION_PHASE, renderResponse);
 
+					deletePageURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
+
 					if (TrashUtil.isTrashEnabled(scopeGroupId)) {
 						deletePageURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
 					}

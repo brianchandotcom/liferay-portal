@@ -714,13 +714,10 @@ public class SiteAdminPortlet extends MVCPortlet {
 		int trashEntriesMaxAgeCompany = PrefsPropsUtil.getInteger(
 			themeDisplay.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE);
 
-		double trashEntriesMaxAgeGroup = ParamUtil.getDouble(
+		int trashEntriesMaxAgeGroup = ParamUtil.getInteger(
 			actionRequest, "trashEntriesMaxAge");
 
-		if (trashEntriesMaxAgeGroup > 0) {
-			trashEntriesMaxAgeGroup *= 1440;
-		}
-		else {
+		if (trashEntriesMaxAgeGroup <= 0) {
 			trashEntriesMaxAgeGroup = GetterUtil.getInteger(
 				typeSettingsProperties.getProperty("trashEntriesMaxAge"),
 				trashEntriesMaxAgeCompany);

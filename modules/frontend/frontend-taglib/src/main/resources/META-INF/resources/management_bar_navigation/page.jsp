@@ -20,44 +20,37 @@
 String[] navigationKeys = (String[])request.getAttribute("liferay-frontend:management-bar-navigation:navigationKeys");
 String navigationParam = (String)request.getAttribute("liferay-frontend:management-bar-navigation:navigationParam");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-navigation:portletURL");
-
-String navigationKey = ParamUtil.getString(request, navigationParam);
 %>
 
 <c:if test="<%= ArrayUtil.isNotEmpty(navigationKeys) %>">
-	<li>
-		<aui:select inlineField="<%= true %>" inlineLabel="left" label="" name="<%= navigationParam %>">
+
+	<%
+	String navigationKey = ParamUtil.getString(request, navigationParam, navigationKeys[0]);
+	%>
+
+	<li class="dropdown">
+		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+			<span class="management-bar-item-title"><liferay-ui:message key="<%= navigationKey %>" /></span>
+			<span class="icon-sort"></span>
+		</a>
+
+		<ul class="dropdown-menu">
 
 			<%
+			PortletURL navigationURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
 			for (String curNavigationKey : navigationKeys) {
+				navigationURL.setParameter(navigationParam, curNavigationKey);
 			%>
 
-				<aui:option label="<%= curNavigationKey %>" selected="<%= curNavigationKey.equals(navigationKey) %>" value="<%= curNavigationKey %>" />
+				<li class="<%= curNavigationKey.equals(navigationKey) ? "active" : StringPool.BLANK %>">
+					<aui:a href="<%= navigationURL.toString() %>" label="<%= curNavigationKey %>" />
+				</li>
 
 			<%
 			}
 			%>
 
-		</aui:select>
+		</ul>
 	</li>
 </c:if>
-
-<aui:script>
-
-	<%
-	PortletURL navigationURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-	%>
-
-	var navigation = $('#<%= namespace + navigationParam %>');
-
-	navigation.on(
-		'change',
-		function(event) {
-			var uri = '<%= navigationURL %>';
-
-			uri = Liferay.Util.addParams('<%= namespace + navigationParam %>=' + navigation.val(), uri);
-
-			window.location.href = uri;
-		}
-	);
-</aui:script>

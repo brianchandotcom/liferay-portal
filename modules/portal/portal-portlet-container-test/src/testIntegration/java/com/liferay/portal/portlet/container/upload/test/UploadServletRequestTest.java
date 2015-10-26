@@ -65,8 +65,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class UploadServletRequestTest {
 
 	@RunWith(Arquillian.class)
-	public static final class
-		WhenBuildingUploadServletRequestFromMainConstructor {
+	public static final class WhenBuildingFromMainConstructor {
 
 		@ClassRule
 		@Rule
@@ -123,8 +122,7 @@ public class UploadServletRequestTest {
 	}
 
 	@RunWith(Arquillian.class)
-	public static final class
-		WhenBuildingUploadServletRequestFromParametrizedConstructor {
+	public static final class WhenBuildingFromParametrizedConstructor {
 
 		@ClassRule
 		@Rule
@@ -221,6 +219,7 @@ public class UploadServletRequestTest {
 			Assert.assertNotNull(regularParameterMap);
 			Assert.assertEquals(10, regularParameterMap.size());
 		}
+
 	}
 
 	@RunWith(Arquillian.class)
@@ -322,6 +321,7 @@ public class UploadServletRequestTest {
 
 			Assert.assertNull(uploadServletRequest.getContentType("name"));
 		}
+
 	}
 
 	@RunWith(Arquillian.class)

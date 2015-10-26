@@ -76,7 +76,7 @@
 				rowChecker="<%= searchContainer.getRowChecker() %>"
 				smallImageCSSClass="user-icon user-icon-lg"
 				smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
-				title="<%= HtmlUtil.escape(entry.getTitle()) %>"
+				title="<%= entry.getTitle() %>"
 				url="<%= rowURL.toString() %>"
 			>
 				<liferay-frontend:vertical-card-footer>

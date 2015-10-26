@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.util.HtmlUtil;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -42,11 +44,11 @@ public class VerticalCardTag extends CardTag {
 	}
 
 	public void setSubtitle(String subtitle) {
-		_subtitle = subtitle;
+		_subtitle = HtmlUtil.unescape(subtitle);
 	}
 
 	public void setTitle(String title) {
-		_title = title;
+		_title = HtmlUtil.unescape(title);
 	}
 
 	@Override

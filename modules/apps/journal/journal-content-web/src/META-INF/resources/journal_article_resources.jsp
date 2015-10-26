@@ -37,7 +37,7 @@ if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 	smallImageCSSClass="user-icon user-icon-lg"
 	smallImageUrl="<%= (assetRendererUser != null) ? assetRendererUser.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 	subtitle="<%= assetRenderer.getSummary() %>"
-	title="<%= HtmlUtil.escape(title) %>"
+	title="<%= title %>"
 >
 	<liferay-frontend:vertical-card-footer>
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />

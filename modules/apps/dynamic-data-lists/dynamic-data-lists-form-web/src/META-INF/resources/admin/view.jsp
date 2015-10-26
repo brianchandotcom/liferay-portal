@@ -108,7 +108,7 @@ recordSetSearch.setOrderByType(orderByType);
 								showCheckbox= "<%= false %>"
 								smallImageCSSClass="user-icon user-icon-lg"
 								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
-								title="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
+								title="<%= recordSet.getName(locale) %>"
 								url="<%= rowURL %>"
 							>
 								<liferay-frontend:vertical-card-header>

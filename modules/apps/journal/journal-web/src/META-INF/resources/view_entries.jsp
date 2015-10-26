@@ -313,7 +313,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								rowChecker="<%= entriesChecker %>"
 								smallImageCSSClass="user-icon user-icon-lg"
 								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
-								title="<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>"
+								title="<%= curArticle.getTitle(locale) %>"
 								url="<%= rowURL != null ? rowURL.toString() : null %>"
 							>
 								<liferay-frontend:vertical-card-header>

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.cache.ehcache.internal.configurator;
 
-import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.util.Props;
 
 import java.util.List;
@@ -32,8 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.SINGLE_VM,
-	service = AbstractEhcachePortalCacheManagerConfigurator.class
+	service = SingleVMEhcachePortalCacheManagerConfigurator.class
 )
 public class SingleVMEhcachePortalCacheManagerConfigurator
 	extends AbstractEhcachePortalCacheManagerConfigurator {

@@ -16,6 +16,7 @@ package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -24,12 +25,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"mvc.command.name=/"
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN, "mvc.command.name=/"
 	},
 	service = MVCRenderCommand.class
 )
-public class WikiAdminDefaultMVCRenderCommand extends BaseViewPageMVCRenderCommand {
+public class WikiAdminDefaultMVCRenderCommand
+	extends BaseViewPageMVCRenderCommand {
 
 	@Override
 	protected String getPath() {

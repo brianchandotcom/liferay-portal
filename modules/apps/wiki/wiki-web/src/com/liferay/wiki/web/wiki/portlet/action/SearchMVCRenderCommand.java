@@ -15,16 +15,13 @@
 package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Iván Zaera
@@ -35,7 +32,7 @@ import java.util.Map;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"mvc.command.name=/wiki/search",
+		"mvc.command.name=/wiki/search"
 	},
 	service = MVCRenderCommand.class
 )

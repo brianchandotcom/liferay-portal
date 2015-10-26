@@ -119,19 +119,6 @@ AUI.add(
 						return FieldTypes.get(field.get('type'));
 					},
 
-					_afterSelectFieldType: function(event) {
-						var instance = this;
-
-						var fieldType = event.fieldType;
-
-						instance.hideFieldsPanel();
-
-						instance.showFieldSettingsPanel(
-							instance.createField(fieldType),
-							fieldType.get('label')
-						);
-					},
-
 					_afterActivePageNumberChange: function() {
 						var instance = this;
 
@@ -162,6 +149,19 @@ AUI.add(
 						FormBuilder.superclass._afterLayoutsChange.apply(instance, arguments);
 
 						instance._syncRowsLastColumnUI();
+					},
+
+					_afterSelectFieldType: function(event) {
+						var instance = this;
+
+						var fieldType = event.fieldType;
+
+						instance.hideFieldsPanel();
+
+						instance.showFieldSettingsPanel(
+							instance.createField(fieldType),
+							fieldType.get('label')
+						);
 					},
 
 					_getPageManagerInstance: function(config) {

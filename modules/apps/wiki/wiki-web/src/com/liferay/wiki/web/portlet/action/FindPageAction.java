@@ -55,8 +55,8 @@ public class FindPageAction extends FindStrutsAction {
 	protected String getStrutsAction(
 		HttpServletRequest request, String portletId) {
 
-		if (portletId.equals(WikiPortletKeys.WIKI_ADMIN) ||
-			portletId.equals(WikiPortletKeys.WIKI)) {
+		if (portletId.equals(WikiPortletKeys.WIKI) ||
+			portletId.equals(WikiPortletKeys.WIKI_ADMIN)) {
 
 			return "/wiki/view";
 		}

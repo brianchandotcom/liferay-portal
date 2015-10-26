@@ -20,14 +20,14 @@ import com.liferay.mail.model.CyrusVirtual;
 import com.liferay.mail.service.CyrusService;
 import com.liferay.mail.service.persistence.CyrusUserUtil;
 import com.liferay.mail.service.persistence.CyrusVirtualUtil;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.util.IdentifiableOSGIService;
 
 /**
  * @author Alexander Chow
  */
 @DoPrivileged
-public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
+public class CyrusServiceImpl implements CyrusService, IdentifiableOSGIService {
 
 	@Override
 	public void addUser(long userId, String emailAddress, String password) {
@@ -57,13 +57,8 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 	}
 
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGIServiceIdentifier() {
+		return CyrusService.class.getName();
 	}
 
 	@Override
@@ -92,7 +87,5 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 
 		CyrusUserUtil.update(cyrusUser);
 	}
-
-	private String _beanIdentifier;
 
 }

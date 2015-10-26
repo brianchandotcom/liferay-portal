@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 /**
  * @author Iván Zaera
  */
@@ -27,16 +31,18 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"mvc.command.name=/wiki/view_page"
+		"mvc.command.name=/wiki/view_all_pages",
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewPageMVCRenderCommand
-	extends BaseViewPageMVCRenderCommand {
+public class ViewAllPagesMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	protected String getPath() {
-		return "/wiki_display/view.jsp";
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		return ActionUtil.viewNode(renderRequest, "/wiki/view_all_pages.jsp");
 	}
 
 }

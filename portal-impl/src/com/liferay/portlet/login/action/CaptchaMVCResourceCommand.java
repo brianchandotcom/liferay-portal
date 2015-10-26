@@ -29,6 +29,7 @@ import javax.portlet.ResourceResponse;
  */
 @OSGiBeanProperties(
 	property = {
+		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + PortletKeys.LOGIN,
 		"mvc.command.name=/login/captcha"
 	},

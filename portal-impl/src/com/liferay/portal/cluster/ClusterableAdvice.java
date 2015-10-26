@@ -14,21 +14,14 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.kernel.cluster.NullClusterable;
-import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
-
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -52,17 +45,9 @@ public class ClusterableAdvice
 			return;
 		}
 
-		MethodHandler methodHandler =
-			ClusterableInvokerUtil.createMethodHandler(
-				clusterable.acceptor(), methodInvocation.getThis(),
-				methodInvocation.getMethod(), methodInvocation.getArguments());
-
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			methodHandler, true);
-
-		clusterRequest.setFireAndForget(true);
-
-		ClusterExecutorUtil.execute(clusterRequest);
+		ClusterableInvokerUtil.invokeOnCluster(
+			clusterable.acceptor(), methodInvocation.getThis(),
+			methodInvocation.getMethod(), methodInvocation.getArguments());
 	}
 
 	@Override
@@ -81,31 +66,20 @@ public class ClusterableAdvice
 			return null;
 		}
 
+		Object result = null;
+
+		if (ClusterMasterExecutorUtil.isMaster()) {
+			result = methodInvocation.proceed();
+		}
+		else {
+			result = ClusterableInvokerUtil.invokeOnMaster(
+				clusterable.acceptor(), methodInvocation.getThis(),
+				methodInvocation.getMethod(), methodInvocation.getArguments());
+		}
+
 		Method method = methodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
-
-		if (ClusterMasterExecutorUtil.isMaster()) {
-			Object result = methodInvocation.proceed();
-
-			if (returnType == void.class) {
-				result = nullResult;
-			}
-
-			return result;
-		}
-
-		MethodHandler methodHandler =
-			ClusterableInvokerUtil.createMethodHandler(
-				clusterable.acceptor(), methodInvocation.getThis(),
-				methodInvocation.getMethod(), methodInvocation.getArguments());
-
-		Future<Object> futureResult = ClusterMasterExecutorUtil.executeOnMaster(
-			methodHandler);
-
-		Object result = futureResult.get(
-			PropsValues.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT,
-			TimeUnit.SECONDS);
 
 		if (returnType == void.class) {
 			result = nullResult;

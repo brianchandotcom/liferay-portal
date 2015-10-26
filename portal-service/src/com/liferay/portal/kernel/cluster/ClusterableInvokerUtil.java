@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.cluster;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -75,7 +74,7 @@ public class ClusterableInvokerUtil {
 
 		if (Validator.isNotNull(clusterInvokeAcceptorClassName)) {
 			ClusterInvokeAcceptor clusterInvokeAcceptor =
-				(ClusterInvokeAcceptor)InstanceFactory.newInstance(
+				ClusterInvokeAcceptorUtil.getClusterInvokeAcceptor(
 					clusterInvokeAcceptorClassName);
 
 			if (!clusterInvokeAcceptor.accept(context)) {

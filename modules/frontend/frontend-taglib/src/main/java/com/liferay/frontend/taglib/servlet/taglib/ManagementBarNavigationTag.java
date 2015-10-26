@@ -58,7 +58,7 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 	@Override
 	protected void cleanUp() {
 		_navigationKeys = null;
-		_navigationParam = null;
+		_navigationParam = "navigation";
 		_portletURL = null;
 	}
 

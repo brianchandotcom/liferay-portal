@@ -3,7 +3,7 @@ package ${packagePath}.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.db.DB;
@@ -105,7 +105,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 </#if>
 
 	@ProviderType
-	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableBean {
+	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableOSGIService {
 
 		/*
 		 * NOTE FOR DEVELOPERS:
@@ -133,7 +133,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 	@Deprecated
 </#if>
 
-	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service, IdentifiableBean {
+	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service, IdentifiableOSGIService {
 
 		/*
 		 * NOTE FOR DEVELOPERS:
@@ -1035,23 +1035,15 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
-	 *
-	 * @return the Spring bean ID for this bean
+	 * Returns OSGI service identifier for this bean.
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGIServiceIdentifier() {
+		<#if sessionTypeName == "Local">
+			return ${entity.name}LocalService.class.getName();
+		<#else>
+			return ${entity.name}Service.class.getName();
+		</#if>
 	}
 
 	<#if pluginName != "">

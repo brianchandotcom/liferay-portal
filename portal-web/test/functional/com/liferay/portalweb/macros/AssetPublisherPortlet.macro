@@ -345,7 +345,7 @@
 
 				<execute function="SelectFrameTop" />
 
-				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 				<var name="key_assetTitle" value="${assetTitle}" />
 

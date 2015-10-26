@@ -11,6 +11,14 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="openNotError">
+		<execute argument1="null" selenium="selectWindow" />
+
+		<execute argument1="relative=top" selenium="selectFrame" />
+
+		<execute selenium="open" />
+	</command>
+
 	<command name="openWindow">
 		<execute argument1="15000" selenium="pause" />
 

@@ -5508,11 +5508,11 @@ public class PortalImpl implements Portal {
 
 		boolean alwaysAllowDoAsUser = false;
 
-		if (path.equals("/portal/session_click") ||
+		if (actionName.equals("addFile") ||
 			mvcRenderCommandName.equals("/document_library/edit_file_entry") ||
-			actionName.equals("addFile") ||
+			path.equals("/portal/session_click") ||
 			isAlwaysAllowDoAsUser(
-				path, mvcRenderCommandName, strutsAction, actionName)) {
+				actionName, mvcRenderCommandName, path, strutsAction)) {
 
 			try {
 				alwaysAllowDoAsUser = isAlwaysAllowDoAsUser(request);
@@ -8025,13 +8025,14 @@ public class PortalImpl implements Portal {
 	}
 
 	protected boolean isAlwaysAllowDoAsUser(
-		String path, String mvcRenderCommandName, String strutsAction,
-		String actionName) {
+		String actionName, String mvcRenderCommandName, String path,
+		String strutsAction) {
 
 		for (AlwaysAllowDoAsUser alwaysAllowDoAsUser : _alwaysAllowDoAsUsers) {
-			Collection<String> paths = alwaysAllowDoAsUser.getPaths();
+			Collection<String> actionNames =
+				alwaysAllowDoAsUser.getActionNames();
 
-			if (paths.contains(path)) {
+			if (actionNames.contains(actionName)) {
 				return true;
 			}
 
@@ -8042,17 +8043,16 @@ public class PortalImpl implements Portal {
 				return true;
 			}
 
+			Collection<String> paths = alwaysAllowDoAsUser.getPaths();
+
+			if (paths.contains(path)) {
+				return true;
+			}
+
 			Collection<String> strutsActions =
 				alwaysAllowDoAsUser.getStrutsActions();
 
 			if (strutsActions.contains(strutsAction)) {
-				return true;
-			}
-
-			Collection<String> actionNames =
-				alwaysAllowDoAsUser.getActionNames();
-
-			if (actionNames.contains(actionName)) {
 				return true;
 			}
 		}

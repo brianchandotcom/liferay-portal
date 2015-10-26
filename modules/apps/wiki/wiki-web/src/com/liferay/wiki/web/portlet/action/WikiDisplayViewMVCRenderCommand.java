@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.display.portlet.action;
+package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

@@ -415,7 +415,7 @@
 </tr>
 <tr>
 	<td>PUBLISH</td>
-	<td>//button[contains(.,'Publish')]</td>
+	<td>//button[span[contains(.,'Publish')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -37,14 +37,19 @@ AUI.add(
 						value: 'input[type=checkbox]'
 					},
 
-					elementActiveClass: {
+					itemsCountContainer: {
+						setter: 'all',
+						value: '.selected-items-count'
+					},
+
+					rowClassNameActive: {
 						validator: Lang.isString,
 						value: 'active'
 					},
 
-					itemsCountContainer: {
-						setter: 'all',
-						value: '.selected-items-count'
+					rowSelector: {
+						validator: Lang.isString,
+						value: 'li.selectable,tr.selectable'
 					},
 
 					secondaryBar: {
@@ -175,15 +180,11 @@ AUI.add(
 					_toggleSelectAll: function(event) {
 						var instance = this;
 
-						var pageCheckBoxes = instance._getPageCheckBoxes();
+						var checked = event.currentTarget.attr(ATTR_CHECKED);
 
-						pageCheckBoxes.attr(ATTR_CHECKED, event.currentTarget.attr(ATTR_CHECKED));
+						instance._getPageCheckBoxes().attr(ATTR_CHECKED, checked);
 
-						pageCheckBoxes.each(
-							function(item, index) {
-								item.ancestor('li,tr').toggleClass(instance.get('elementActiveClass'), event.currentTarget.attr(ATTR_CHECKED));
-							}
-						);
+						instance.get(STR_CHECKBOX_CONTAINER).all(instance.get('rowSelector')).toggleClass(instance.get('rowClassNameActive'), checked);
 
 						instance._toggleSelect();
 					},

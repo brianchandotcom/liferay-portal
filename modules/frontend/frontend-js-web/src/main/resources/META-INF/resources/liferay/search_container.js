@@ -19,17 +19,17 @@ AUI.add(
 						value: STR_BLANK
 					},
 
-					elementActiveClass: {
-						validator: Lang.isString,
-						value: 'active'
-					},
-
 					hover: {
 						value: STR_BLANK
 					},
 
 					id: {
 						value: STR_BLANK
+					},
+
+					rowClassNameActive: {
+						validator: Lang.isString,
+						value: 'active'
 					},
 
 					rowClassNameAlternate: {
@@ -46,6 +46,11 @@ AUI.add(
 
 					rowClassNameBodyHover: {
 						value: STR_BLANK
+					},
+
+					rowSelector: {
+						validator: Lang.isString,
+						value: 'li.selectable,tr.selectable'
 					}
 				},
 
@@ -308,7 +313,8 @@ AUI.add(
 								condition: Liferay.SearchContainer.testRestoreTask,
 								params: {
 									containerId: instance.get('contentBox').attr('id'),
-									elementActiveClass: instance.get('elementActiveClass'),
+									rowClassNameActive: instance.get('rowClassNameActive'),
+									rowSelector: instance.get('rowSelector'),
 									searchContainerId: instance.get('id')
 								}
 							}
@@ -407,7 +413,7 @@ AUI.add(
 					_toggleSelect: function(event) {
 						var instance = this;
 
-						event.currentTarget.ancestor('li,tr').toggleClass(instance.get('elementActiveClass'));
+						event.currentTarget.ancestor(instance.get('rowSelector')).toggleClass(instance.get('rowClassNameActive'));
 					}
 				},
 
@@ -431,7 +437,7 @@ AUI.add(
 
 							if (input) {
 								input.attr('checked', true);
-								input.ancestor('li,tr').addClass(params.elementActiveClass);
+								input.ancestor(params.rowSelector).addClass(params.rowClassNameActive);
 							}
 							else {
 								offScreenElementsHtml += Lang.sub(TPL_HIDDEN_INPUT, item);

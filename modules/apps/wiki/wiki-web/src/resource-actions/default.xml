@@ -3,6 +3,23 @@
 
 <resource-action-mapping>
 	<portlet-resource>
+		<portlet-name>com_liferay_wiki_web_portlet_WikiAdminPortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
 		<portlet-name>com_liferay_wiki_web_portlet_WikiPortlet</portlet-name>
 		<permissions>
 			<supports>
@@ -20,23 +37,6 @@
 			<guest-unsupported>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>CONFIGURATION</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
-	<portlet-resource>
-		<portlet-name>com_liferay_wiki_web_portlet_WikiAdminPortlet</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>

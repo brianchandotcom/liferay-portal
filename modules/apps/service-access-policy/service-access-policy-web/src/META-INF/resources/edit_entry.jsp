@@ -110,10 +110,10 @@ if (sapEntry != null) {
 			<div class="lfr-form-row">
 				<div class="row-fields">
 					<aui:col md="6">
-						<aui:input cssClass="service-class-name" data-service-class-name="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' name="serviceClassName" type="text" value="<%= serviceClassName %>" />
+						<aui:input cssClass="service-class-name" data-service-class-name="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' label="service-class" name="serviceClassName" type="text" value="<%= serviceClassName %>" />
 					</aui:col>
 					<aui:col md="6">
-						<aui:input cssClass="method-name" id='<%= "methodName" + i %>' name="methodName" type="text" value="<%= methodName %>" />
+						<aui:input cssClass="method-name" id='<%= "methodName" + i %>' label="method-name" name="methodName" type="text" value="<%= methodName %>" />
 					</aui:col>
 				</div>
 			</div>

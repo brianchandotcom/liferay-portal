@@ -1171,6 +1171,100 @@
 		</execute>
 	</command>
 
+	<command name="FilterTagsByNameAP" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Tags Navigation" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#configureDisplayStylePG">
+			<var name="displayTemplate" value="Number" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#configureFlaggableSettingsPG">
+			<var name="showAssetCount" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<for list="first tag,second tag,third tag" param="tagName">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Tags" />
+			</execute>
+
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="first tag,second tag" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0KB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="tagNameList" value="first tag" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#clickTagView">
+			<var name="tagAssetCount" value="first tag (2)" />
+			<var name="tagName" value="first tag" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewTagFocusPG">
+			<var name="assetTitleList" value="DM Document Title,Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#clickTagView">
+			<var name="tagAssetCount" value="second tag (1)" />
+			<var name="tagName" value="second tag" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewTagFocusPG">
+			<var name="assetTitleList" value="Web Content Title" />
+			<var name="nonTaggedAsset" value="DM Document Title" />
+		</execute>
+	</command>
+
 	<command name="FindSiteAPViaSearchScopeSelector" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

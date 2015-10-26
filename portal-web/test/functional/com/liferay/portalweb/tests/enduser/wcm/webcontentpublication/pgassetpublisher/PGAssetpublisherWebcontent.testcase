@@ -535,6 +535,67 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Text" />
 	</command>
 
+	<command name="DisplayWebContentTagViaAP" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Tags Navigation" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
+			<var name="addMetadata" value="true" />
+			<var name="metadataField" value="Tags" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="tag name" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewDefaultPG">
+			<var name="tagNameList" value="tag name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
+			<var name="tagName" value="tag name" />
+		</execute>
+	</command>
+e
 	<command name="SaveAsDraftWebContentPGViaAP" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />

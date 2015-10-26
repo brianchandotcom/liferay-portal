@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
-
-import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
-import com.liferay.portal.kernel.cluster.Clusterable;
+package com.liferay.portal.kernel.cluster;
 
 import java.lang.annotation.Annotation;
 

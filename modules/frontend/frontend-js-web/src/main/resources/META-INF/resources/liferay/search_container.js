@@ -135,7 +135,7 @@ AUI.add(
 						];
 
 						if (instance.get('hover')) {
-							instance._eventHandles.push(instance.get('contentBox').delegate(['mouseenter', 'mouseleave'], '_onContentHover', 'tr', instance));
+							instance._eventHandles.push(instance.get('contentBox').delegate(['mouseenter', 'mouseleave'], instance._onContentHover, 'tr', instance));
 						}
 					},
 

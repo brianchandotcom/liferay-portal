@@ -111,14 +111,12 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
-		<%
-		String taglibExportURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "exportDialog', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "export")) + "', uri: '" + HtmlUtil.escapeJS(exportURL.toString()) + "'});";
-		%>
-
 		<liferay-ui:icon
 			iconCssClass="icon-arrow-down"
 			message="export"
-			url="<%= taglibExportURL %>"
+			method="get"
+			url="<%= exportURL.toString() %>"
+			useDialog="<%= true %>"
 		/>
 
 		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -129,14 +127,12 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
-		<%
-		String taglibImportURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "importDialog', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "import")) + "', uri: '" + HtmlUtil.escapeJS(importURL.toString()) + "'});";
-		%>
-
 		<liferay-ui:icon
 			iconCssClass="icon-arrow-up"
 			message="import"
-			url="<%= taglibImportURL %>"
+			method="get"
+			url="<%= importURL.toString() %>"
+			useDialog="<%= true %>"
 		/>
 
 		<c:if test="<%= group.isStaged() %>">
@@ -147,14 +143,12 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 				<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
 			</liferay-portlet:renderURL>
 
-			<%
-			String taglibPublishURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "publishDialog', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "publish")) + "', uri: '" + HtmlUtil.escapeJS(publishURL.toString()) + "'});";
-			%>
-
 			<liferay-ui:icon
 				iconCssClass="icon-share-alt"
 				message="publish"
-				url="<%= taglibPublishURL %>"
+				method="get"
+				url="<%= publishURL.toString() %>"
+				useDialog="<%= true %>"
 			/>
 		</c:if>
 	</c:if>

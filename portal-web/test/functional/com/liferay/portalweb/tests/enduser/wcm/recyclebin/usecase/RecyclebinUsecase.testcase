@@ -282,7 +282,7 @@
 			<var name="maxAgeField" value="1" />
 		</execute>
 
-		<execute function="Pause" locator1="120000" />
+		<execute function="Pause" locator1="180000" />
 
 		<execute function="Refresh" />
 

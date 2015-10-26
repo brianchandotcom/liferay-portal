@@ -59,13 +59,7 @@ public class ClusterableAdvice
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
 
-		Method method = methodInvocation.getMethod();
-
-		Class<?> returnType = method.getReturnType();
-
-		if (returnType == void.class) {
-			clusterRequest.setFireAndForget(true);
-		}
+		clusterRequest.setFireAndForget(true);
 
 		ClusterExecutorUtil.execute(clusterRequest);
 	}

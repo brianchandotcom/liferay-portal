@@ -123,18 +123,18 @@ AUI.add(
 						return instance._getAllEnabledCheckBoxes().filter(STR_CHECKED_SELECTOR + STR_VISIBLE_SELECTOR);
 					},
 
-					_getSelectAllCheckBoxes: function() {
+					_getSelectAllCheckBox: function() {
 						var instance = this;
 
-						var selectAllCheckBoxes = instance._selectAllCheckBoxes;
+						var selectAllCheckBox = instance._selectAllCheckBox;
 
-						if (!selectAllCheckBoxes) {
-							selectAllCheckBoxes = instance.get('secondaryBar').all(instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR));
+						if (!selectAllCheckBox) {
+							selectAllCheckBox = instance.get('secondaryBar').one(instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR));
 
-							instance._selectAllCheckBoxes = selectAllCheckBoxes;
+							instance._selectAllCheckBox = selectAllCheckBox;
 						}
 
-						return selectAllCheckBoxes;
+						return selectAllCheckBox;
 					},
 
 					_onSurfaceStartNavigate: function(event) {
@@ -172,7 +172,7 @@ AUI.add(
 
 						instance._toggleSecondaryBar(totalSelectedItems > 0);
 
-						instance._toggleSelectAllCheckBoxesCheckBox(totalPageOn > 0, totalPageCheckboxes !== totalPageOn);
+						instance._toggleSelectAllCheckBox(totalPageOn > 0, totalPageCheckboxes !== totalPageOn);
 
 						instance._updateItemsCount(totalSelectedItems);
 					},
@@ -180,7 +180,7 @@ AUI.add(
 					_toggleSelectAll: function(event) {
 						var instance = this;
 
-						if (!event.currentTarget.ancestor('#' + instance.get('secondaryBar').attr('id'))) {
+						if (!instance.get('secondaryBar').contains(event.currentTarget)) {
 							event.preventDefault();
 						}
 
@@ -193,20 +193,20 @@ AUI.add(
 						instance._toggleSelect();
 					},
 
-					_toggleSelectAllCheckBoxesCheckBox: function(checked, partial) {
+					_toggleSelectAllCheckBox: function(checked, partial) {
 						var instance = this;
 
-						var selectAllCheckBoxes = instance._getSelectAllCheckBoxes();
+						var selectAllCheckBox = instance._getSelectAllCheckBox();
 
 						partial = partial && checked;
 
-						selectAllCheckBoxes.attr(ATTR_CHECKED, checked);
+						selectAllCheckBox.attr(ATTR_CHECKED, checked);
 
 						if (A.UA.gecko > 0 || A.UA.ie > 0) {
-							selectAllCheckBoxes.attr('indeterminate', partial);
+							selectAllCheckBox.attr('indeterminate', partial);
 						}
 						else {
-							selectAllCheckBoxes.toggleClass(STR_SELECTED_PARTIAL, partial);
+							selectAllCheckBox.toggleClass(STR_SELECTED_PARTIAL, partial);
 						}
 					},
 

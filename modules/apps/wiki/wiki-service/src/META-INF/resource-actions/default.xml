@@ -5,8 +5,8 @@
 	<model-resource>
 		<model-name>com.liferay.wiki</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_wiki_web_portlet_WikiPortlet</portlet-name>
 			<portlet-name>com_liferay_wiki_web_portlet_WikiAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_wiki_web_portlet_WikiPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -26,8 +26,8 @@
 	<model-resource>
 		<model-name>com.liferay.wiki.model.WikiNode</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_wiki_web_portlet_WikiPortlet</portlet-name>
 			<portlet-name>com_liferay_wiki_web_portlet_WikiAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_wiki_web_portlet_WikiPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -60,8 +60,8 @@
 	<model-resource>
 		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_wiki_web_portlet_WikiPortlet</portlet-name>
 			<portlet-name>com_liferay_wiki_web_portlet_WikiAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_wiki_web_portlet_WikiPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>

@@ -30,11 +30,11 @@ public class EditPageAttachmentAlwaysAllowDoAsUser
 	extends BaseAlwaysAllowDoAsUser {
 
 	@Override
-	public Collection<String> getStrutsActions() {
-		return _strutsActions;
+	public Collection<String> getMVCRenderCommandNames() {
+		return _mvcRenderCommandNames;
 	}
 
-	private final Collection<String> _strutsActions = Arrays.asList(
+	private final Collection<String> _mvcRenderCommandNames = Arrays.asList(
 		"/wiki/edit_page_attachment");
 
 }

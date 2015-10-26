@@ -627,24 +627,36 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<if>
 			<equals arg1="${searchNoResults}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="PGPortaldirectory#INFO_MESSAGE" value1="No users were found." />
 
-				<var name="key_userScreenName" value="${userScreenName}" />
+				<var name="key_userFirstName" value="${userFirstName}" />
 
 				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+
+				<var name="key_userLastName" value="${userLastName}" />
+
 				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_LAST_NAME" value1="${userLastName}" />
+
+				<var name="key_userScreenName" value="${userScreenName}" />
+
 				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 			</then>
 			<else>
-				<var name="key_userScreenName" value="${userScreenName}" />
+				<var name="key_userFirstName" value="${userFirstName}" />
 
 				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+
+				<var name="key_userLastName" value="${userLastName}" />
+
 				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_LAST_NAME" value1="${userLastName}" />
+
+				<var name="key_userScreenName" value="${userScreenName}" />
+
 				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 			</else>
 		</if>
@@ -1351,14 +1363,23 @@
 
 	<command name="fastLoginGuestPG">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="AssertClick" locator1="Link#GUEST" value1="Guest" />
 
 		<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${userFirstName}" />
 		<execute function="Type" locator1="PGFastloginGuest#LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your comment has already been posted. Would you like to create an account with the provided information?" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<var name="key_uniqueSuccess" value="${uniqueSuccess}" />
+
+		<execute function="AssertTextEquals" locator1="Message#UNIQUE_SUCCESS" value1="${uniqueSuccess}" />
+
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

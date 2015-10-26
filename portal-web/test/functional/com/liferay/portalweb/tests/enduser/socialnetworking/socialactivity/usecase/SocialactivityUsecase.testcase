@@ -415,6 +415,7 @@
 		</execute>
 
 		<execute macro="Polls#addPollCP">
+			<var name="guestPermissions" value="true" />
 			<var name="pollsQuestion" value="${pollsQuestion}" />
 			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
 			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />

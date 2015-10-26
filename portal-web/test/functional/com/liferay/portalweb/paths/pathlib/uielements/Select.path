@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ANYONE</td>
+	<td>//select[contains(.,'Anyone')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AVAILABLE</td>
 	<td>//div[label[contains(.,'Available')]]/select</td>
 	<td></td>

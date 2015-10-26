@@ -214,6 +214,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNIQUE_SUCCESS</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(.,'${key_uniqueSuccess}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_BLOCKED</td>
 	<td>//div[contains(@class,'alert-block')]</td>
 	<td></td>

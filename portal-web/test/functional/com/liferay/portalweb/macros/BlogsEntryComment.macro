@@ -21,6 +21,7 @@
 		<execute function="AssertClick" locator1="Button#REPLY_AS" value1="Reply as..." />
 
 		<execute macro="User#fastLoginGuestPG">
+			<var name="uniqueSuccess" value="Your comment has already been posted. Would you like to create an account with the provided information?" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />

@@ -137,24 +137,24 @@ if (sapEntry != null) {
 
 		var serviceClassNames = <%= JSONFactoryUtil.looseSerialize(request.getAttribute(SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES)) %>;
 
-		var serviceMethods = {};
+		var serviceMethodNames = {};
 
 		var getServiceContext = function(serviceClassName) {
-			var service = A.Array.find(
+			var serviceMap = A.Array.find(
 				serviceClassNames,
 				function(item, index) {
 					return item.serviceClassName === serviceClassName;
 				}
 			);
 
-			return service && service.contextName || 'portal';
+			return serviceMap && serviceMap.contextName || 'portal';
 		};
 
-		var getServiceMethods = function(contextName, serviceClassName, callback) {
+		var getServiceMethodNames = function(contextName, serviceClassName, callback) {
 			if (contextName && serviceClassName && callback) {
 				var namespace = contextName.replace(REGEX_DOT, '_') + '.' + serviceClassName.replace(REGEX_DOT, '_');
 
-				var methodObj = A.namespace.call(serviceMethods, namespace);
+				var methodObj = A.namespace.call(serviceMethodNames, namespace);
 
 				var methods = methodObj.methods;
 
@@ -227,7 +227,7 @@ if (sapEntry != null) {
 							serviceInput.attr('data-context-name', contextName);
 						}
 
-						getServiceMethods(contextName, serviceClassName, callback);
+						getServiceMethodNames(contextName, serviceClassName, callback);
 					}
 				}
 			).render();

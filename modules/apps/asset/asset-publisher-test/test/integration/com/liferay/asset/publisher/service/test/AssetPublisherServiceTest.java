@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.publisher.test.util.AssetPublisherTestUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -219,17 +220,9 @@ public class AssetPublisherServiceTest {
 			assetEntries.add(assetEntry);
 
 			if (manualMode) {
-				StringBuilder sb = new StringBuilder(6);
-
-				sb.append("<?xml version=\"1.0\"?><asset-entry>");
-				sb.append("<asset-entry-type>");
-				sb.append(JournalArticle.class.getName());
-				sb.append("</asset-entry-type><asset-entry-uuid>");
-				sb.append(assetEntry.getClassUuid());
-				sb.append("</asset-entry-uuid></asset-entry>");
-
 				_assetEntryXmls = ArrayUtil.append(
-					_assetEntryXmls, sb.toString());
+					_assetEntryXmls,
+					AssetPublisherTestUtil.getAssetEntryXml(assetEntry));
 			}
 		}
 

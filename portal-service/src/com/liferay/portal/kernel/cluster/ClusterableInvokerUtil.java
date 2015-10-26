@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -35,6 +37,8 @@ import java.lang.reflect.Method;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
@@ -64,6 +68,36 @@ public class ClusterableInvokerUtil {
 		return new MethodHandler(
 			_invokeMethodKey, methodHandler, clusterInvokeAcceptorClassName,
 			context);
+	}
+
+	public static void invokeOnCluster(
+			Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
+			Object targetObject, Method method, Object[] args)
+		throws Throwable {
+
+		MethodHandler methodHandler = createMethodHandler(
+			clusterInvokeAcceptorClass, targetObject, method, args);
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
+
+		clusterRequest.setFireAndForget(true);
+
+		ClusterExecutorUtil.execute(clusterRequest);
+	}
+
+	public static Object invokeOnMaster(
+			Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
+			Object targetObject, Method method, Object[] args)
+		throws Throwable {
+
+		MethodHandler methodHandler = createMethodHandler(
+			clusterInvokeAcceptorClass, targetObject, method, args);
+
+		Future<Object> futureResult = ClusterMasterExecutorUtil.executeOnMaster(
+			methodHandler);
+
+		return futureResult.get(_TIME_OUT, TimeUnit.SECONDS);
 	}
 
 	@SuppressWarnings("unused")
@@ -188,6 +222,9 @@ public class ClusterableInvokerUtil {
 			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
 		}
 	}
+
+	private static final int _TIME_OUT = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT));
 
 	private static final MethodKey _invokeMethodKey = new MethodKey(
 		ClusterableInvokerUtil.class, "_invoke", MethodHandler.class,

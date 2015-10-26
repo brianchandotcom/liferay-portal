@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
+import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -266,7 +267,9 @@ public final class CommandLoggerHandler {
 				String paramValue =
 					PoshiRunnerVariablesUtil.getValueFromExecuteMap(locatorKey);
 
-				sb.append(_getLineItemText("param-value", paramValue));
+				sb.append(
+					_getLineItemText(
+						"param-value", HtmlUtil.escape(paramValue)));
 			}
 
 			String valueKey = "value" + (i + 1);
@@ -278,7 +281,9 @@ public final class CommandLoggerHandler {
 				String paramValue =
 					PoshiRunnerVariablesUtil.getValueFromExecuteMap(valueKey);
 
-				sb.append(_getLineItemText("param-value", paramValue));
+				sb.append(
+					_getLineItemText(
+						"param-value", HtmlUtil.escape(paramValue)));
 			}
 		}
 
@@ -389,7 +394,8 @@ public final class CommandLoggerHandler {
 			sb.append(_getLineItemText("misc", " with parameters"));
 
 			for (String argument : arguments) {
-				sb.append(_getLineItemText("param-value", argument));
+				sb.append(
+					_getLineItemText("param-value", HtmlUtil.escape(argument)));
 			}
 		}
 

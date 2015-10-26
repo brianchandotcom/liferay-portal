@@ -85,7 +85,7 @@ if (sapEntry != null) {
 
 	<aui:input cssClass="hide" helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />
 
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="getMethodsURL">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="getMethodNamesURL">
 		<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="getMethodNames" />
 	</liferay-portlet:resourceURL>
 
@@ -133,7 +133,7 @@ if (sapEntry != null) {
 	<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields,liferay-portlet-url">
 		var REGEX_DOT = /\./g;
 
-		var getMethodsURL = Liferay.PortletURL.createURL('<%= getMethodsURL %>');
+		var getMethodNamesURL = Liferay.PortletURL.createURL('<%= getMethodNamesURL %>');
 
 		var serviceClassNames = <%= JSONFactoryUtil.looseSerialize(request.getAttribute(SAPWebKeys.REMOTE_SERVICES_CLASS_NAMES)) %>;
 
@@ -163,11 +163,11 @@ if (sapEntry != null) {
 						contextName = '';
 					}
 
-					getMethodsURL.setParameter('contextName', contextName);
-					getMethodsURL.setParameter('serviceClassName', serviceClassName);
+					getMethodNamesURL.setParameter('contextName', contextName);
+					getMethodNamesURL.setParameter('serviceClassName', serviceClassName);
 
 					A.io.request(
-						getMethodsURL.toString(),
+						getMethodNamesURL.toString(),
 						{
 							dataType: 'JSON',
 							method: 'GET',

@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,22 +83,19 @@ public class JournalPortletUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
 
-		String actionName = ParamUtil.getString(
-			request, ActionRequest.ACTION_NAME);
+		String mvcPath = ParamUtil.getString(request, "mvcPath");
 
-		if (actionName.equals("selectFolder")) {
-			portletURL.setParameter("mvcPath", "/select_folder.jsp");
+		portletURL.setParameter(
+			"folderId",
+			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		if (mvcPath.equals("/select_folder.jsp")) {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString());
 		}
 		else {
-			portletURL.setParameter(
-				"folderId",
-				String.valueOf(
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
 			Map<String, Object> data = new HashMap<>();
 
 			data.put("direction-right", Boolean.TRUE.toString());

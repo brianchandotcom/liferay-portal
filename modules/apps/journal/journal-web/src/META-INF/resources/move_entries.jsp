@@ -74,7 +74,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "move-web-content"));
 	<portlet:param name="mvcPath" value="/move_entries.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= moveArticleURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveArticle();" %>'>
+<aui:form action="<%= moveArticleURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveArticle();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
 
@@ -240,9 +240,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "move-web-content"));
 		</div>
 
 		<aui:button-row>
-			<aui:button type="submit" value="move" />
+			<aui:button cssClass="btn-lg" type="submit" value="move" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

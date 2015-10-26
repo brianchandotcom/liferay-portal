@@ -202,15 +202,31 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getTags(
+		long groupId, String name, int start, int end,
+		OrderByComparator<AssetTag> obc) {
+
+		return getTags(new long[] {groupId}, name, start, end, obc);
+	}
+
+	@Override
+	public List<AssetTag> getTags(
 		long[] groupIds, String name, int start, int end) {
 
+		return getTags(
+			groupIds, name, start, end, new AssetTagNameComparator());
+	}
+
+	@Override
+	public List<AssetTag> getTags(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<AssetTag> obc) {
+
 		if (Validator.isNull(name)) {
-			return assetTagPersistence.findByGroupId(
-				groupIds, start, end, new AssetTagNameComparator());
+			return assetTagPersistence.findByGroupId(groupIds, start, end, obc);
 		}
 
 		return assetTagPersistence.findByG_LikeN(
-			groupIds, name, start, end, new AssetTagNameComparator());
+			groupIds, name, start, end, obc);
 	}
 
 	@Override

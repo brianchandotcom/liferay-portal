@@ -59,15 +59,9 @@ public class CompareVersionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		resourceRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
 
-		PortletConfig portletConfig = getPortletConfig(resourceRequest);
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
-				"/wiki/compare_versions_diff_html.jsp");
-
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
+		include(
+			resourceRequest, resourceResponse,
+			"/wiki/compare_versions_diff_html.jsp");
 	}
 
 }

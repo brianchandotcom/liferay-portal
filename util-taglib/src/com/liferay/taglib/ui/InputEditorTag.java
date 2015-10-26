@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -385,6 +386,11 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:onFocusMethod", _onFocusMethod);
 		request.setAttribute(
 			"liferay-ui:input-editor:onInitMethod", _onInitMethod);
+
+		if (Validator.isNull(_placeholder)) {
+			_placeholder = LanguageUtil.get(request, "write-your-content-here");
+		}
+
 		request.setAttribute(
 			"liferay-ui:input-editor:placeholder", _placeholder);
 		request.setAttribute(

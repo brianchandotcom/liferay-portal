@@ -61,7 +61,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		<Configuration, PortalCacheManagerConfiguration>
 			getConfigurationObjectValuePair(
 				String portalCacheManagerName, URL configurationURL,
-				boolean clusterAware, boolean usingDefault) {
+				boolean usingDefault) {
 
 		if (configurationURL == null) {
 			throw new NullPointerException("Configuration path is null");

@@ -73,7 +73,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				abstractEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						getPortalCacheManagerName(), configurationURL,
-						isClusterAware(), _usingDefault);
+						_usingDefault);
 
 		reconfigEhcache(configurationObjectValuePair.getKey());
 
@@ -214,7 +214,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				abstractEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						getPortalCacheManagerName(), configFileURL,
-						isClusterAware(), _usingDefault);
+						_usingDefault);
 
 		_cacheManager = new CacheManager(configurationObjectValuePair.getKey());
 

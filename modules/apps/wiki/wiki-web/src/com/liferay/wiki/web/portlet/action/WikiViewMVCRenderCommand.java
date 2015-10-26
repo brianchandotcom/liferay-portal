@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class DefaultMVCRenderCommand extends BaseViewPageMVCRenderCommand {
+public class WikiViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 
 	@Override
 	protected String getPath() {

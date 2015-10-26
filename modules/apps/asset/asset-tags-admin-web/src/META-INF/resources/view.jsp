@@ -19,7 +19,12 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 PortletURL navigationPortletURL = renderResponse.createRenderURL();
+
+PortletURL sortPortletURL = renderResponse.createRenderURL();
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL" />
@@ -44,6 +49,13 @@ PortletURL navigationPortletURL = renderResponse.createRenderURL();
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= navigationPortletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= sortPortletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
@@ -80,11 +92,27 @@ PortletURL navigationPortletURL = renderResponse.createRenderURL();
 				keywords = StringUtil.quote(keywords, StringPool.PERCENT);
 			}
 
+			OrderByComparator<AssetTag> orderByComparator = null;
+
+			boolean orderByAsc = false;
+
+			if (orderByType.equals("asc")) {
+				orderByAsc = true;
+			}
+
+			if (orderByCol.equals("name")) {
+				orderByComparator = new AssetTagNameComparator(orderByAsc);
+			}
+
+			searchContainer.setOrderByCol(orderByCol);
+			searchContainer.setOrderByComparator(orderByComparator);
+			searchContainer.setOrderByType(orderByType);
+
 			total = AssetTagServiceUtil.getTagsCount(scopeGroupId, keywords);
 
 			searchContainer.setTotal(total);
 
-			results = AssetTagServiceUtil.getTags(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd());
+			results = AssetTagServiceUtil.getTags(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 			searchContainer.setResults(results);
 			%>

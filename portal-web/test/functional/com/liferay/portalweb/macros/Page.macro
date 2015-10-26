@@ -1033,7 +1033,7 @@
 					</then>
 				</if>
 
-				<execute function="MouseOver" locator1="Home#${viewChildPageDropdown}" />
+				<execute function="MouseOver" locator1="Home#PAGE_2" />
 
 				<var name="key_childPageName" value="${childPageName}" />
 

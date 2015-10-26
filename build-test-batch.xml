@@ -767,6 +767,8 @@
 		<element name="test-tear-down" optional="true" />
 
 		<sequential>
+			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+
 			<test-set-up />
 
 			<trycatch property="job.failure.message">
@@ -859,8 +861,6 @@
 					<antcall target="record-test-generated-properties" />
 
 					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
-
-					<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 				</test-set-up>
 
 				<test-tear-down>
@@ -1152,6 +1152,8 @@
 	</target>
 
 	<target name="ruby-sass-compiler">
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+
 		<echo file="build.${user.name}.properties">sass.compiler.class.name=ruby</echo>
 
 		<antcall target="setup-sdk" inheritAll="false" />

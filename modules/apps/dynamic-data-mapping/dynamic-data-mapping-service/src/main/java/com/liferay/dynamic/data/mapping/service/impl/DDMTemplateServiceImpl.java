@@ -352,7 +352,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long resourceClassNameId, int status) {
 
 		return getTemplates(
-			companyId, new long[] {groupId}, resourceClassNameId, 0,
+			companyId, new long[] {groupId}, classNameId, 0,
 			resourceClassNameId, null, null, status);
 	}
 

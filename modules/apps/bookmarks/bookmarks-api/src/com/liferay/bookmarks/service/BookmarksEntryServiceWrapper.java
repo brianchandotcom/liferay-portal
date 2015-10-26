@@ -49,16 +49,6 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 		_bookmarksEntryService.deleteEntry(entryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _bookmarksEntryService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
 		long groupId, long folderId, int start, int end) {
@@ -137,6 +127,14 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 			rootFolderId);
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _bookmarksEntryService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry moveEntry(long entryId,
 		long parentFolderId)
@@ -183,16 +181,6 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryService.search(groupId, creatorUserId, status,
 			start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_bookmarksEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

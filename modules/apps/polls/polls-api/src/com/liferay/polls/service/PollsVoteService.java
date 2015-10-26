@@ -54,16 +54,7 @@ public interface PollsVoteService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier();
 }

@@ -205,15 +205,6 @@ public class MembershipRequestLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the membership request with the primary key.
 	*
 	* @param membershipRequestId the primary key of the membership request
@@ -256,6 +247,13 @@ public class MembershipRequestLocalServiceUtil {
 		return getService().getMembershipRequestsCount();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -274,15 +272,6 @@ public class MembershipRequestLocalServiceUtil {
 
 	public static int searchCount(long groupId, int status) {
 		return getService().searchCount(groupId, status);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

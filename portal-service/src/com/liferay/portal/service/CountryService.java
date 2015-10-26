@@ -61,13 +61,6 @@ public interface CountryService extends BaseService {
 	public com.liferay.portal.model.Country fetchCountryByA3(
 		java.lang.String a3);
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Country> getCountries();
 
@@ -92,9 +85,7 @@ public interface CountryService extends BaseService {
 		java.lang.String name) throws PortalException;
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier();
 }

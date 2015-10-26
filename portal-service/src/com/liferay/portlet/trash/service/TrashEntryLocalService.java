@@ -246,13 +246,6 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the trash entries with the matching group ID.
 	*
 	* @param groupId the primary key of the group
@@ -330,6 +323,11 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	public com.liferay.portlet.trash.model.TrashEntry getEntry(long entryId)
 		throws PortalException;
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -378,13 +376,6 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.trash.model.TrashEntry> searchTrashEntries(
 		long companyId, long groupId, long userId, java.lang.String keywords,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the trash entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

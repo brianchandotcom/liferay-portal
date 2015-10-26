@@ -369,12 +369,10 @@ public class ResourcePermissionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -790,15 +788,6 @@ public class ResourcePermissionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.removeResourcePermissions(companyId, name, scope, roleId, actionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

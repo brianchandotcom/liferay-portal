@@ -290,13 +290,11 @@ public class AssetTagStatsLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _assetTagStatsLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _assetTagStatsLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -345,16 +343,6 @@ public class AssetTagStatsLocalServiceWrapper
 	public com.liferay.portlet.asset.model.AssetTagStats getTagStats(
 		long tagId, long classNameId) {
 		return _assetTagStatsLocalService.getTagStats(tagId, classNameId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetTagStatsLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

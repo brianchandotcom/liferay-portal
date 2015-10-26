@@ -49,11 +49,9 @@ public interface PortletPreferencesService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier();
 
 	public void restoreArchivedPreferences(long groupId,
 		com.liferay.portal.model.Layout layout, java.lang.String portletId,
@@ -68,13 +66,6 @@ public interface PortletPreferencesService extends BaseService {
 	public void restoreArchivedPreferences(long groupId, java.lang.String name,
 		com.liferay.portal.model.Layout layout, java.lang.String portletId,
 		javax.portlet.PortletPreferences preferences) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateArchivePreferences(long userId, long groupId,
 		java.lang.String name, java.lang.String portletId,

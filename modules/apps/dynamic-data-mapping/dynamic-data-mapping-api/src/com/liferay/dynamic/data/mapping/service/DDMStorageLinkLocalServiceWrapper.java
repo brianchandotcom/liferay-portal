@@ -219,16 +219,6 @@ public class DDMStorageLinkLocalServiceWrapper
 		return _ddmStorageLinkLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmStorageLinkLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStorageLink getClassStorageLink(
 		long classPK)
@@ -277,6 +267,14 @@ public class DDMStorageLinkLocalServiceWrapper
 		return _ddmStorageLinkLocalService.getDDMStorageLinksCount();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _ddmStorageLinkLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -300,16 +298,6 @@ public class DDMStorageLinkLocalServiceWrapper
 	@Override
 	public int getStructureStorageLinksCount(long structureId) {
 		return _ddmStorageLinkLocalService.getStructureStorageLinksCount(structureId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmStorageLinkLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

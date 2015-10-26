@@ -83,15 +83,6 @@ public class DLAppHelperLocalServiceUtil {
 		getService().deleteRepositoryFileEntries(repositoryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static void getFileAsStream(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		boolean incrementCounter) {
@@ -131,6 +122,13 @@ public class DLAppHelperLocalServiceUtil {
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries() {
 		return getService().getNoAssetFileEntries();
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -274,15 +272,6 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.Folder folder)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreFolderFromTrash(userId, folder);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetEntry updateAsset(

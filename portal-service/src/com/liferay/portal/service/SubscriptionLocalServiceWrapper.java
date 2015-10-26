@@ -309,13 +309,11 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _subscriptionLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _subscriptionLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -490,16 +488,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		java.lang.String className, long[] classPKs) {
 		return _subscriptionLocalService.isSubscribed(companyId, userId,
 			className, classPKs);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_subscriptionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

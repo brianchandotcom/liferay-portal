@@ -556,16 +556,6 @@ public class LayoutServiceWrapper implements LayoutService,
 		return _layoutService.getAncestorLayouts(plid);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutService.getBeanIdentifier();
-	}
-
 	@Override
 	public long getDefaultPlid(long groupId, long scopeGroupId,
 		java.lang.String portletId)
@@ -676,6 +666,14 @@ public class LayoutServiceWrapper implements LayoutService,
 		long parentLayoutId) {
 		return _layoutService.getLayoutsCount(groupId, privateLayout,
 			parentLayoutId);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _layoutService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -1153,16 +1151,6 @@ public class LayoutServiceWrapper implements LayoutService,
 			remotePathContext, secureConnection, remoteGroupId,
 			remotePrivateLayout, startDate, endDate, groupName, cronText,
 			schedulerStartDate, schedulerEndDate, description);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

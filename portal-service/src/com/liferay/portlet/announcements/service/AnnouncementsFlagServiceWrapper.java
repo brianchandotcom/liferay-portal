@@ -45,16 +45,6 @@ public class AnnouncementsFlagServiceWrapper implements AnnouncementsFlagService
 		_announcementsFlagService.deleteFlag(flagId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _announcementsFlagService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag getFlag(
 		long entryId, int value)
@@ -63,13 +53,11 @@ public class AnnouncementsFlagServiceWrapper implements AnnouncementsFlagService
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_announcementsFlagService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _announcementsFlagService.getOSGIServiceIdentifier();
 	}
 
 	/**

@@ -48,21 +48,12 @@ public interface PortletService extends BaseService {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONArray getWARPortlets();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.Portlet updatePortlet(long companyId,
 		java.lang.String portletId, java.lang.String roles, boolean active)

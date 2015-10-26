@@ -136,13 +136,11 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userGroupService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _userGroupService.getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -194,16 +192,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupService.getUserUserGroups(userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userGroupService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

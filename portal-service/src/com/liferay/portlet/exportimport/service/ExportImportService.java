@@ -66,11 +66,9 @@ public interface ExportImportService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier();
 
 	public void importLayouts(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
@@ -103,13 +101,6 @@ public interface ExportImportService extends BaseService {
 	public long importPortletInfoInBackground(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream inputStream) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,

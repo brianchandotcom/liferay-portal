@@ -244,16 +244,6 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		return _mbDiscussionLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbDiscussionLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.messageboards.model.MBDiscussion getDiscussion(
 		java.lang.String className, long classPK)
@@ -363,6 +353,14 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		return _mbDiscussionLocalService.getMBDiscussionsCount();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _mbDiscussionLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -375,16 +373,6 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbDiscussionLocalService.getThreadDiscussion(threadId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbDiscussionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

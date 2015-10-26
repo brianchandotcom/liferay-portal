@@ -46,12 +46,10 @@ public class PortletPreferencesServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static void restoreArchivedPreferences(long groupId,
@@ -80,15 +78,6 @@ public class PortletPreferencesServiceUtil {
 		getService()
 			.restoreArchivedPreferences(groupId, name, layout, portletId,
 			preferences);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void updateArchivePreferences(long userId, long groupId,

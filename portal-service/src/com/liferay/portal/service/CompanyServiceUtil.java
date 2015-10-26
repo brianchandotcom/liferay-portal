@@ -83,15 +83,6 @@ public class CompanyServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the company with the primary key.
 	*
 	* @param companyId the primary key of the company
@@ -161,6 +152,13 @@ public class CompanyServiceUtil {
 	}
 
 	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
+	}
+
+	/**
 	* Removes the values that match the keys of the company's preferences.
 	*
 	* This method is called by {@link
@@ -174,15 +172,6 @@ public class CompanyServiceUtil {
 	public static void removePreferences(long companyId, java.lang.String[] keys)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().removePreferences(companyId, keys);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

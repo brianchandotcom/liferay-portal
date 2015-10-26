@@ -73,15 +73,6 @@ public class CalendarServiceUtil {
 		return getService().fetchCalendar(calendarId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static com.liferay.calendar.model.Calendar getCalendar(
 		long calendarId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -101,6 +92,13 @@ public class CalendarServiceUtil {
 		return getService()
 				   .getCalendarResourceCalendars(groupId, calendarResourceId,
 			defaultCalendar);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static void importCalendar(long calendarId, java.lang.String data,
@@ -187,15 +185,6 @@ public class CalendarServiceUtil {
 		return getService()
 				   .searchCount(companyId, groupIds, calendarResourceIds, name,
 			description, andOperator, actionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.calendar.model.Calendar updateCalendar(

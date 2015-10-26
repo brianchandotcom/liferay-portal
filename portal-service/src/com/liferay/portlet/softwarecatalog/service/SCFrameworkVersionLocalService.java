@@ -227,13 +227,6 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion getFrameworkVersion(
 		long frameworkVersionId) throws PortalException;
@@ -255,6 +248,11 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFrameworkVersionsCount(long groupId, boolean active);
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -331,13 +329,6 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSCProductVersionSCFrameworkVersions(long productVersionId);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void setSCProductVersionSCFrameworkVersions(long productVersionId,
 		long[] frameworkVersionIds);

@@ -195,19 +195,17 @@ public class PluginSettingLocalServiceWrapper
 		return _pluginSettingLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _pluginSettingLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.PluginSetting getDefaultPluginSetting() {
 		return _pluginSettingLocalService.getDefaultPluginSetting();
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _pluginSettingLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -270,16 +268,6 @@ public class PluginSettingLocalServiceWrapper
 		java.lang.String pluginType) {
 		return _pluginSettingLocalService.hasPermission(userId, pluginId,
 			pluginType);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_pluginSettingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

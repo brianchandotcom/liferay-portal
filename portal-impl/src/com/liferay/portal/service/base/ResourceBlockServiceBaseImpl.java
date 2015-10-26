@@ -15,7 +15,6 @@
 package com.liferay.portal.service.base;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -32,6 +31,7 @@ import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
 import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
+import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.sql.DataSource;
@@ -49,7 +49,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class ResourceBlockServiceBaseImpl extends BaseServiceImpl
-	implements ResourceBlockService, IdentifiableBean {
+	implements ResourceBlockService, IdentifiableOSGIService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -402,23 +402,11 @@ public abstract class ResourceBlockServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
-	 *
-	 * @return the Spring bean ID for this bean
+	 * Returns OSGI service identifier for this bean.
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGIServiceIdentifier() {
+		return ResourceBlockService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {

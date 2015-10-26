@@ -297,13 +297,11 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmStructureService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _ddmStructureService.getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -525,16 +523,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 		return _ddmStructureService.searchCount(companyId, groupIds,
 			classNameId, name, description, storageType, type, status,
 			andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmStructureService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

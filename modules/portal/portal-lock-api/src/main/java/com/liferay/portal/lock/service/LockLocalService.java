@@ -179,13 +179,6 @@ public interface LockLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.lock.model.Lock getLock(
 		java.lang.String className, java.lang.String key)
@@ -241,6 +234,11 @@ public interface LockLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLocksCount();
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -281,13 +279,6 @@ public interface LockLocalService extends BaseLocalService,
 
 	public com.liferay.portal.lock.model.Lock refresh(java.lang.String uuid,
 		long companyId, long expirationTime) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void unlock(java.lang.String className, long key);
 

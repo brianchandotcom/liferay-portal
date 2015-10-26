@@ -67,13 +67,6 @@ public interface ShoppingItemService extends BaseService {
 
 	public void deleteItem(long itemId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesItemsCount(long groupId,
 		java.util.List<java.lang.Long> categoryIds);
@@ -101,11 +94,9 @@ public interface ShoppingItemService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier();
 
 	public com.liferay.shopping.model.ShoppingItem updateItem(long itemId,
 		long groupId, long categoryId, java.lang.String sku,

@@ -223,15 +223,6 @@ public class GroupServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the company group.
 	*
 	* @param companyId the primary key of the company
@@ -324,6 +315,13 @@ public class GroupServiceUtil {
 		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getManageableSites(portlets, max);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -718,15 +716,6 @@ public class GroupServiceUtil {
 	public static int searchCount(long companyId, java.lang.String name,
 		java.lang.String description, java.lang.String[] params) {
 		return getService().searchCount(companyId, name, description, params);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

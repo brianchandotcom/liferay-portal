@@ -195,13 +195,11 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _orgLaborLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _orgLaborLocalService.getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -255,16 +253,6 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _orgLaborLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_orgLaborLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

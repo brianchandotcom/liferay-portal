@@ -214,13 +214,6 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	public com.liferay.portlet.asset.model.AssetCategoryProperty getAssetCategoryProperty(
 		long categoryPropertyId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategoryProperty> getCategoryProperties();
 
@@ -240,17 +233,15 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategoryProperty> getCategoryPropertyValues(
 		long groupId, java.lang.String key);
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the asset category property in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

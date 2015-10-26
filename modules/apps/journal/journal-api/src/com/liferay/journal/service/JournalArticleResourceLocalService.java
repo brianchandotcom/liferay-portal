@@ -207,13 +207,6 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 		long groupId);
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the journal article resource with the primary key.
 	*
 	* @param resourcePrimKey the primary key of the journal article resource
@@ -259,17 +252,15 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getJournalArticleResourcesCount();
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -135,15 +135,6 @@ public class RoleServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the roles associated with the group.
 	*
 	* @param groupId the primary key of the group
@@ -154,6 +145,13 @@ public class RoleServiceUtil {
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupRoles(groupId);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -309,15 +307,6 @@ public class RoleServiceUtil {
 		java.lang.Integer[] types,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 		return getService().searchCount(companyId, keywords, types, params);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

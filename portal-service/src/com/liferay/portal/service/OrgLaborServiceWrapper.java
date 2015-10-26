@@ -48,13 +48,11 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _orgLaborService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _orgLaborService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -68,16 +66,6 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _orgLaborService.getOrgLabors(organizationId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_orgLaborService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

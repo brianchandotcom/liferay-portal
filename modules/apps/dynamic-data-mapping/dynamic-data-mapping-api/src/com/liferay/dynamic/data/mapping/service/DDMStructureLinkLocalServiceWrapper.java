@@ -228,16 +228,6 @@ public class DDMStructureLinkLocalServiceWrapper
 		return _ddmStructureLinkLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmStructureLinkLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getClassNameStructureLinks(
 		long classNameId) {
@@ -283,6 +273,14 @@ public class DDMStructureLinkLocalServiceWrapper
 	@Override
 	public int getDDMStructureLinksCount() {
 		return _ddmStructureLinkLocalService.getDDMStructureLinksCount();
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _ddmStructureLinkLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -333,16 +331,6 @@ public class DDMStructureLinkLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLinkLocalService.getUniqueStructureLink(classNameId,
 			classPK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmStructureLinkLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

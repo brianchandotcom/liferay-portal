@@ -354,16 +354,6 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _blogsEntryLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns a range of all the blogs entries.
 	*
 	* <p>
@@ -716,6 +706,14 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.getNoAssetEntries();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _blogsEntryLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
 		long organizationId, java.util.Date displayDate,
@@ -835,16 +833,6 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.restoreEntryFromTrash(userId, entryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_blogsEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

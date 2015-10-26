@@ -59,16 +59,6 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 			classPK, attributeValues);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _expandoValueService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.io.Serializable getData(long companyId,
 		java.lang.String className, java.lang.String tableName,
@@ -97,13 +87,11 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_expandoValueService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _expandoValueService.getOSGIServiceIdentifier();
 	}
 
 	/**

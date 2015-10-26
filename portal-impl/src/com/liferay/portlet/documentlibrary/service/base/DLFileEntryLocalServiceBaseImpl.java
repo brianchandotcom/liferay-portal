@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -47,6 +46,7 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.asset.service.persistence.AssetCategoryFinder;
@@ -99,7 +99,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class DLFileEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements DLFileEntryLocalService,
-		IdentifiableBean {
+		IdentifiableOSGIService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -1713,23 +1713,11 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
-	 *
-	 * @return the Spring bean ID for this bean
+	 * Returns OSGI service identifier for this bean.
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGIServiceIdentifier() {
+		return DLFileEntryLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {

@@ -326,15 +326,6 @@ public class DLFolderLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getCompanyFolders(
 		long companyId, int start, int end) {
 		return getService().getCompanyFolders(companyId, start, end);
@@ -689,6 +680,13 @@ public class DLFolderLocalServiceUtil {
 		return getService().getNoAssetFolders();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -771,15 +769,6 @@ public class DLFolderLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.rebuildTree(companyId, parentFolderId, parentTreePath, reindex);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void setDLFileEntryTypeDLFolders(long fileEntryTypeId,

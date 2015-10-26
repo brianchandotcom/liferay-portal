@@ -69,12 +69,10 @@ public class WebsiteServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static com.liferay.portal.model.Website getWebsite(long websiteId)
@@ -86,15 +84,6 @@ public class WebsiteServiceUtil {
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWebsites(className, classPK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portal.model.Website updateWebsite(

@@ -302,13 +302,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, java.lang.String parentTitle);
@@ -362,6 +355,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getNoAssetPages();
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
@@ -672,13 +670,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String title, double version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribePage(long userId, long nodeId, java.lang.String title)
 		throws PortalException;

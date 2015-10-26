@@ -49,13 +49,11 @@ public class RegionServiceWrapper implements RegionService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _regionService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _regionService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -92,16 +90,6 @@ public class RegionServiceWrapper implements RegionService,
 	public java.util.List<com.liferay.portal.model.Region> getRegions(
 		long countryId, boolean active) {
 		return _regionService.getRegions(countryId, active);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_regionService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

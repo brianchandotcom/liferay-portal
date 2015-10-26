@@ -169,13 +169,6 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the d d l record version with the primary key.
 	*
 	* @param recordVersionId the primary key of the d d l record version
@@ -213,6 +206,11 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
 		long recordId) throws PortalException;
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -233,13 +231,6 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordVersionsCount(long recordId);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the d d l record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -66,13 +66,11 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mdrRuleGroupService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _mdrRuleGroupService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -91,16 +89,6 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 	@Override
 	public int getRuleGroupsCount(long[] groupIds) {
 		return _mdrRuleGroupService.getRuleGroupsCount(groupIds);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mdrRuleGroupService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

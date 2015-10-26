@@ -100,12 +100,10 @@ public class StagingLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
@@ -128,15 +126,6 @@ public class StagingLocalServiceUtil {
 		return getService()
 				   .publishStagingRequest(userId, stagingRequestId,
 			privateLayout, parameterMap);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void updateStagingRequest(long userId, long stagingRequestId,

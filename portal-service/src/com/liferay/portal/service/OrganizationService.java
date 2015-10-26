@@ -275,13 +275,6 @@ public interface OrganizationService extends BaseService {
 		long organizationId) throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns all the organizations which the user has permission to manage.
 	*
 	* @param actionId the permitted action
@@ -295,6 +288,11 @@ public interface OrganizationService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getManageableOrganizations(
 		java.lang.String actionId, int max) throws PortalException;
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
 
 	/**
 	* Returns the organization with the primary key.
@@ -389,13 +387,6 @@ public interface OrganizationService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
 		long userId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Sets the organizations in the group, removing and adding organizations to

@@ -96,13 +96,11 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _stagingLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _stagingLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -125,16 +123,6 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _stagingLocalService.publishStagingRequest(userId,
 			stagingRequestId, privateLayout, parameterMap);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_stagingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -62,16 +62,6 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileEntryTypeService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
 		long fileEntryTypeId)
@@ -104,6 +94,14 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 			folderId, inherited);
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _dlFileEntryTypeService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
 		long companyId, long[] groupIds, java.lang.String keywords,
@@ -118,16 +116,6 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		java.lang.String keywords, boolean includeBasicFileEntryType) {
 		return _dlFileEntryTypeService.searchCount(companyId, groupIds,
 			keywords, includeBasicFileEntryType);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFileEntryTypeService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -35,13 +35,11 @@ public class CalendarImporterLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _calendarImporterLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _calendarImporterLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -60,16 +58,6 @@ public class CalendarImporterLocalServiceWrapper
 	@Override
 	public void importRolePermissions() {
 		_calendarImporterLocalService.importRolePermissions();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_calendarImporterLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

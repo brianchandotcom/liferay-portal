@@ -64,16 +64,6 @@ public class CalendarServiceWrapper implements CalendarService,
 		return _calendarService.fetchCalendar(calendarId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _calendarService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.calendar.model.Calendar getCalendar(long calendarId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -94,6 +84,14 @@ public class CalendarServiceWrapper implements CalendarService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.getCalendarResourceCalendars(groupId,
 			calendarResourceId, defaultCalendar);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _calendarService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -185,16 +183,6 @@ public class CalendarServiceWrapper implements CalendarService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.searchCount(companyId, groupIds,
 			calendarResourceIds, name, description, andOperator, actionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_calendarService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

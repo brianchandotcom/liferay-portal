@@ -59,13 +59,6 @@ public interface MicroblogsEntryService extends BaseService {
 	public com.liferay.microblogs.model.MicroblogsEntry deleteMicroblogsEntry(
 		long microblogsEntryId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		java.lang.String assetTagName, int start, int end)
@@ -86,6 +79,11 @@ public interface MicroblogsEntryService extends BaseService {
 	public com.liferay.microblogs.model.MicroblogsEntry getMicroblogsEntry(
 		long microblogsEntryId) throws PortalException;
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getUserMicroblogsEntries(
 		long microblogsEntryUserId, int start, int end)
@@ -103,13 +101,6 @@ public interface MicroblogsEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserMicroblogsEntriesCount(long microblogsEntryUserId,
 		int type) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.microblogs.model.MicroblogsEntry updateMicroblogsEntry(
 		long microblogsEntryId, java.lang.String content,

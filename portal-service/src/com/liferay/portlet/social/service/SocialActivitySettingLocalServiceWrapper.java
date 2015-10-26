@@ -224,13 +224,11 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivitySettingLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _socialActivitySettingLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -291,16 +289,6 @@ public class SocialActivitySettingLocalServiceWrapper
 	public boolean isEnabled(long groupId, long classNameId, long classPK) {
 		return _socialActivitySettingLocalService.isEnabled(groupId,
 			classNameId, classPK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivitySettingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -16,7 +16,6 @@ package com.liferay.item.selector.taglib.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -158,16 +157,12 @@ public class ItemSelectorBrowserUtil {
 	}
 
 	private static JSONObject _createJSONObject(String key, String value) {
-		String json = "{key: " + key + ", value: " + value + "}";
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		try {
-			return JSONFactoryUtil.createJSONObject(json);
-		}
-		catch (JSONException jsone) {
-			_log.error("Unable to create a JSON object from: " + json, jsone);
-		}
+		jsonObject.put("key", key);
+		jsonObject.put("value", value);
 
-		return JSONFactoryUtil.createJSONObject();
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

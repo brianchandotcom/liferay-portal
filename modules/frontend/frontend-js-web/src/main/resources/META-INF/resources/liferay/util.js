@@ -1495,7 +1495,7 @@
 					currentIconClass = iconHiddenClass;
 				}
 
-				var icon = trigger.one('.controls-state-icon');
+				var icon = trigger.one('.controls-state-icon') || trigger;
 
 				if (icon) {
 					icon.addClass(currentIconClass);

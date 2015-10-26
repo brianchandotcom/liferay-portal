@@ -137,7 +137,7 @@ public class CalendarBookingLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(titleMap, startTimeJCalendar, endTimeJCalendar, recurrence);
+		validate(startTimeJCalendar, endTimeJCalendar, recurrence);
 
 		CalendarBooking calendarBooking = calendarBookingPersistence.create(
 			calendarBookingId);
@@ -805,7 +805,7 @@ public class CalendarBookingLocalServiceImpl
 			firstReminder = originalSecondReminder;
 		}
 
-		validate(titleMap, startTimeJCalendar, endTimeJCalendar, recurrence);
+		validate(startTimeJCalendar, endTimeJCalendar, recurrence);
 
 		calendarBooking.setGroupId(calendar.getGroupId());
 		calendarBooking.setModifiedDate(serviceContext.getModifiedDate(null));
@@ -1283,13 +1283,9 @@ public class CalendarBookingLocalServiceImpl
 	}
 
 	protected void validate(
-			Map<Locale, String> titleMap, java.util.Calendar startTimeJCalendar,
+			java.util.Calendar startTimeJCalendar,
 			java.util.Calendar endTimeJCalendar, String recurrence)
 		throws PortalException {
-
-		if (Validator.isNull(titleMap) || titleMap.isEmpty()) {
-			throw new CalendarBookingTitleException();
-		}
 
 		if (startTimeJCalendar.after(endTimeJCalendar)) {
 			throw new CalendarBookingDurationException();

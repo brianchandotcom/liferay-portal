@@ -124,7 +124,7 @@ renderResponse.setTitle(title);
 										title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 										<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="mvcPath" value="/html/portletjournal/select_folder.jsp" />
+											<portlet:param name="mvcPath" value="/select_folder.jsp" />
 											<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
 										</portlet:renderURL>
 

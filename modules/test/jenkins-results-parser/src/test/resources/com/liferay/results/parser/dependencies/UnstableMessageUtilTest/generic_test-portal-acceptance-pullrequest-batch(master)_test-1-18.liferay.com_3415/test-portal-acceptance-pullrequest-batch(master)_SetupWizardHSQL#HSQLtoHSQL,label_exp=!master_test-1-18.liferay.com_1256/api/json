@@ -1,0 +1,72 @@
+{
+    "actions": [
+        {"parameters": [
+            {
+                "name": "AXIS_VARIABLES",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_NAME",
+                "value": "master-qa-18193-1"
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_USERNAME",
+                "value": "michaelhashimoto"
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JOB_VARIANT",
+                "value": "functional-tomcat-mysql-bare/0"
+            },
+            {
+                "name": "TOP_LEVEL_SHARED_DIR",
+                "value": "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-14/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/216"
+            }
+        ]},
+        {},
+        {"causes": [{
+            "shortDescription": "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 1,256",
+            "upstreamBuild": 1256,
+            "upstreamProject": "test-portal-acceptance-pullrequest-batch(master)",
+            "upstreamUrl": "job/test-portal-acceptance-pullrequest-batch(master)/"
+        }]},
+        null,
+        {},
+        {},
+        {
+            "failCount": 1,
+            "skipCount": 0,
+            "totalCount": 1,
+            "urlName": "testReport"
+        },
+        {},
+        {},
+        {}
+    ],
+    "artifacts": [],
+    "building": false,
+    "builtOn": "cloud-10-0-112-220",
+    "changeSet": {
+        "items": [],
+        "kind": null
+    },
+    "culprits": [],
+    "description": "<strong>michaelhashimoto<\/strong> - <a href=\"https://github.com/michaelhashimoto/liferay-portal/pull/840\">PR#840<\/a> - <a href=\"https://test-1-14.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/216/jenkins-report.html\">Jenkins Report<\/a>",
+    "duration": 46809,
+    "estimatedDuration": 46809,
+    "executor": null,
+    "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) » SetupWizardHSQL#HSQLtoHSQL,!master #1256",
+    "id": "2015-09-30_09-21-20",
+    "keepLog": false,
+    "number": 1256,
+    "result": "FAILURE",
+    "timestamp": 1443630080000,
+    "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizardHSQL%23HSQLtoHSQL,label_exp=!master/1256/"
+}

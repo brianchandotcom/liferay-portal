@@ -1,0 +1,168 @@
+{
+    "actions": [
+        {"parameters": [
+            {
+                "name": "AXIS_VARIABLES",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_NAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JOB_VARIANT",
+                "value": "modules-integration-oracle"
+            },
+            {
+                "name": "TOP_LEVEL_SHARED_DIR",
+                "value": "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1552"
+            }
+        ]},
+        {"causes": [{"shortDescription": "Started by remote host 10.0.16.21"}]},
+        {},
+        {
+            "failCount": 2,
+            "skipCount": 410,
+            "totalCount": 3888,
+            "urlName": "testReport"
+        },
+        {}
+    ],
+    "artifacts": [],
+    "building": false,
+    "builtOn": "cloud-10-0-112-200",
+    "changeSet": {
+        "items": [],
+        "kind": null
+    },
+    "culprits": [],
+    "description": null,
+    "duration": 1615077,
+    "estimatedDuration": 1120598,
+    "executor": null,
+    "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) #3415",
+    "id": "2015-10-27_00-51-50",
+    "keepLog": true,
+    "number": 3415,
+    "result": "UNSTABLE",
+    "runs": [
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_0,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_1,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_10,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_11,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_12,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_13,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_14,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_2,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_3,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_4,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_5,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_6,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_7,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_8,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 3415,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_9,label_exp=!master_test-1-18.liferay.com_3415"
+        },
+        {
+            "number": 1401,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_CPBlogs%23AddBlogsEntries,label_exp=!master_test-1-18.liferay.com_1401"
+        },
+        {
+            "number": 3388,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_CPCategories%23AddCategory,label_exp=!master_test-1-18.liferay.com_3388"
+        },
+        {
+            "number": 3388,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_CPDynamicdatalists%23AddDisplayTemplateVelocity,label_exp=!master_test-1-18.liferay.com_3388"
+        },
+        {
+            "number": 3388,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_PortalSmoke%23Smoke,label_exp=!master_test-1-18.liferay.com_3388"
+        },
+        {
+            "number": 1296,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_PortalSmokeMobile%23Smoke,label_exp=!master_test-1-18.liferay.com_1296"
+        },
+        {
+            "number": 1330,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_SetupWizard%23Hypersonic,label_exp=!master_test-1-18.liferay.com_1330"
+        },
+        {
+            "number": 3400,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_SetupWizard%23HypersonicToHypersonic,label_exp=!master_test-1-18.liferay.com_3400"
+        },
+        {
+            "number": 3388,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_SetupWizard%23HypersonicToMySQL,label_exp=!master_test-1-18.liferay.com_3388"
+        },
+        {
+            "number": 1256,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_SetupWizardHSQL%23HSQLtoHSQL,label_exp=!master_test-1-18.liferay.com_1256"
+        },
+        {
+            "number": 3388,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_TestRuntimePortlet%23Smoke,label_exp=!master_test-1-18.liferay.com_3388"
+        },
+        {
+            "number": 3388,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-18.liferay.com_3415/test-portal-acceptance-pullrequest-batch(master)_UIInfrastructureUsecase%23Smoke,label_exp=!master_test-1-18.liferay.com_3388"
+        }
+    ],
+    "timestamp": 1445932310639,
+    "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/3415/"
+}

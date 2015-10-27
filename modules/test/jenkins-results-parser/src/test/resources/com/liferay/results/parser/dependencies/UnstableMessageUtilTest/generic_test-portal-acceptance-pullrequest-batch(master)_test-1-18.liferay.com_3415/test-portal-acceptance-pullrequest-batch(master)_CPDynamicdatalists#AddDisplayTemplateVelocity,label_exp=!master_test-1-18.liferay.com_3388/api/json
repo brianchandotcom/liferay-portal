@@ -1,0 +1,72 @@
+{
+    "actions": [
+        {"parameters": [
+            {
+                "name": "AXIS_VARIABLES",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_NAME",
+                "value": "master-qa-18898"
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_USERNAME",
+                "value": "michaelhashimoto"
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JOB_VARIANT",
+                "value": "functional-tomcat-mysql/0"
+            },
+            {
+                "name": "TOP_LEVEL_SHARED_DIR",
+                "value": "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1547"
+            }
+        ]},
+        {},
+        {"causes": [{
+            "shortDescription": "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 3,388",
+            "upstreamBuild": 3388,
+            "upstreamProject": "test-portal-acceptance-pullrequest-batch(master)",
+            "upstreamUrl": "job/test-portal-acceptance-pullrequest-batch(master)/"
+        }]},
+        null,
+        {},
+        {},
+        {
+            "failCount": 1,
+            "skipCount": 0,
+            "totalCount": 1,
+            "urlName": "testReport"
+        },
+        {},
+        {},
+        {}
+    ],
+    "artifacts": [],
+    "building": false,
+    "builtOn": "cloud-10-0-112-216",
+    "changeSet": {
+        "items": [],
+        "kind": null
+    },
+    "culprits": [],
+    "description": "<strong>brianchandotcom<\/strong> - <a href=\"https://github.com/brianchandotcom/liferay-portal/pull/31450\">PR#31450<\/a> - <a href=\"https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1547/jenkins-report.html\">Jenkins Report<\/a>",
+    "duration": 819392,
+    "estimatedDuration": 862511,
+    "executor": null,
+    "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) » CPDynamicdatalists#AddDisplayTemplateVelocity,!master #3388",
+    "id": "2015-10-26_14-39-57",
+    "keepLog": false,
+    "number": 3388,
+    "result": "UNSTABLE",
+    "timestamp": 1445895597000,
+    "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23AddDisplayTemplateVelocity,label_exp=!master/3388/"
+}

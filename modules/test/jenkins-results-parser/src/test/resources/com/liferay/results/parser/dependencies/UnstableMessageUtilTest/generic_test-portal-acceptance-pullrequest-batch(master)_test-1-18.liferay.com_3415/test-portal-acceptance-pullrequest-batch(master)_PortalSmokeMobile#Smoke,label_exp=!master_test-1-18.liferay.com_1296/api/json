@@ -1,0 +1,72 @@
+{
+    "actions": [
+        {"parameters": [
+            {
+                "name": "AXIS_VARIABLES",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_NAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JOB_VARIANT",
+                "value": "functional-tomcat-mysql/0"
+            },
+            {
+                "name": "TOP_LEVEL_SHARED_DIR",
+                "value": "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-5/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1371"
+            }
+        ]},
+        {},
+        {"causes": [{
+            "shortDescription": "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 1,296",
+            "upstreamBuild": 1296,
+            "upstreamProject": "test-portal-acceptance-pullrequest-batch(master)",
+            "upstreamUrl": "job/test-portal-acceptance-pullrequest-batch(master)/"
+        }]},
+        null,
+        {},
+        {},
+        {
+            "failCount": 1,
+            "skipCount": 0,
+            "totalCount": 1,
+            "urlName": "testReport"
+        },
+        {},
+        {},
+        {}
+    ],
+    "artifacts": [],
+    "building": false,
+    "builtOn": "cloud-10-0-112-223",
+    "changeSet": {
+        "items": [],
+        "kind": null
+    },
+    "culprits": [],
+    "description": "<strong>brianchiu<\/strong> - <a href=\"https://github.com/brianchiu/liferay-portal/pull/817\">PR#817<\/a> - <a href=\"https://test-1-5.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1371/jenkins-report.html\">Jenkins Report<\/a>",
+    "duration": 1065113,
+    "estimatedDuration": 1032419,
+    "executor": null,
+    "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) » PortalSmokeMobile#Smoke,!master #1296",
+    "id": "2015-09-30_14-35-05",
+    "keepLog": false,
+    "number": 1296,
+    "result": "UNSTABLE",
+    "timestamp": 1443648905000,
+    "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PortalSmokeMobile%23Smoke,label_exp=!master/1296/"
+}

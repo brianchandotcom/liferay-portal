@@ -1,0 +1,34 @@
+{
+    "childReports": [{
+        "child": {
+            "number": 5141,
+            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-9.liferay.com_5141/test-portal-acceptance-pullrequest-batch(master)_SetupWizard%23HypersonicToHypersonic,label_exp=!master_test-1-9.liferay.com_5141"
+        },
+        "result": {
+            "duration": 0.001,
+            "empty": false,
+            "failCount": 1,
+            "passCount": 0,
+            "skipCount": 0,
+            "suites": [{
+                "cases": [{
+                    "age": 1,
+                    "className": "com.liferay.poshi.runner.PoshiRunner",
+                    "duration": 0.001,
+                    "failedSince": 5141,
+                    "name": "test[SetupWizard#HypersonicToHypersonic]",
+                    "skipped": false,
+                    "status": "REGRESSION"
+                }],
+                "duration": 0.001,
+                "id": "0",
+                "name": "com.liferay.poshi.runner.PoshiRunner",
+                "timestamp": "2015-10-26T19:21:32"
+            }]
+        }
+    }],
+    "failCount": 1,
+    "skipCount": 0,
+    "totalCount": 1,
+    "urlName": "testReport"
+}

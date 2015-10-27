@@ -88,6 +88,18 @@ public class JenkinsResultsParserUtilTest {
 	}
 
 	@Test
+	public void testGetAxisVariable() throws Exception {
+		JSONObject axisJson =
+			new JSONObject(
+				_read(
+					new File(
+						_testDependenciesDir.getPath() +
+						"/testGetAxisVariable.json")));
+
+		assertEquals("ABC", JenkinsResultsParserUtil.getAxisVariable(axisJson));
+	}
+
+	@Test
 	public void testGetJobVariant() throws Exception {
 		String functionalJSONString =
 			_read(
@@ -185,9 +197,8 @@ public class JenkinsResultsParserUtilTest {
 		URI functionalJSONUri = functionalJSONFile.toURI();
 		URI integrationJSONUri = integrationJSONFile.toURI();
 
-		String functionalToStringJSONString =
-			JenkinsResultsParserUtil.toString(
-				functionalJSONUri.toASCIIString());
+		String functionalToStringJSONString = JenkinsResultsParserUtil.toString(
+			functionalJSONUri.toASCIIString());
 		String integrationToStringJSONString =
 			JenkinsResultsParserUtil.toString(
 				integrationJSONUri.toASCIIString());
@@ -196,11 +207,11 @@ public class JenkinsResultsParserUtilTest {
 		// differently but they don't have an impact on actual equality.
 
 		functionalJSONString = functionalJSONString.replace("\n", "");
-		functionalToStringJSONString =
-			functionalToStringJSONString.replace("\n", "");
+		functionalToStringJSONString = functionalToStringJSONString.replace(
+			"\n", "");
 		integrationJSONString = integrationJSONString.replace("\n", "");
-		integrationToStringJSONString =
-			integrationToStringJSONString.replace("\n", "");
+		integrationToStringJSONString = integrationToStringJSONString.replace(
+			"\n", "");
 
 		assertEquals(functionalJSONString, functionalToStringJSONString);
 		assertEquals(integrationJSONString, integrationToStringJSONString);

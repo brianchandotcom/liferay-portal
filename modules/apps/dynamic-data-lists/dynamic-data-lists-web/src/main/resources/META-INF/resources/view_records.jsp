@@ -106,12 +106,8 @@ recordSearchContainer.setOrderByType(orderByType);
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</portlet:renderURL>
 
-		<%
-		request.setAttribute("liferay-ui:search:searchContainer", recordSearchContainer);
-		%>
-
-		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm1">
-			<liferay-util:include page="/record_search.jsp" servletContext="<%= application %>" />
+		<aui:form action="<%= searchURL.toString() %>" name="fm1">
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" name="<%= DisplayTerms.KEYWORDS %>" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

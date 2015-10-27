@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.comparator.UserScreenNameComparator;
+import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.util.SocialInteractionsConfiguration;
 
 import java.util.Collections;
@@ -57,12 +58,10 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 
 		User user = _userLocalService.getUser(userId);
 
-		int[] types =
-			socialInteractionsConfiguration.
-				getSocialInteractionsSocialRelationTypesArray();
+		int[] types = new int[] {SocialRelationConstants.TYPE_BI_FRIEND};
 
 		if (socialInteractionsConfiguration.
-				isSocialInteractionsSocialRelationTypesEnabled() &&
+				isSocialInteractionsFriendsEnabled() &&
 			socialInteractionsConfiguration.
 				isSocialInteractionsSitesEnabled()) {
 
@@ -80,7 +79,7 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 		}
 
 		if (socialInteractionsConfiguration.
-				isSocialInteractionsSocialRelationTypesEnabled()) {
+				isSocialInteractionsFriendsEnabled()) {
 
 			return _userLocalService.searchSocial(
 				userId, types, query, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

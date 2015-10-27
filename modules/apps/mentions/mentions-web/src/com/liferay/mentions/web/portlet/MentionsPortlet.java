@@ -16,6 +16,7 @@ package com.liferay.mentions.web.portlet;
 
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.mentions.util.MentionsUtil;
+import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.util.SocialInteractionsConfiguration;
@@ -60,6 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.social-interactions-configuration=true",
 		"javax.portlet.display-name=Mentions",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.name=" + MentionsPortletKeys.MENTIONS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
@@ -108,12 +109,10 @@ public class MentionsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		SocialInteractionsConfiguration socialInteractionsConfiguration =
 			SocialInteractionsConfigurationUtil.
 				getSocialInteractionsConfiguration(
-					themeDisplay.getCompanyId(), portletDisplay.getId());
+					themeDisplay.getCompanyId(), MentionsPortletKeys.MENTIONS);
 
 		String query = ParamUtil.getString(request, "query");
 

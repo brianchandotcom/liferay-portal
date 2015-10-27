@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.social.util;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-
 /**
  * @author Adolfo Pérez
  * @author Sergio González
@@ -26,64 +23,14 @@ public class SocialInteractionsConfiguration {
 	public SocialInteractionsConfiguration(
 		SocialInteractionsType socialInteractionsType,
 		boolean socialInteractionsSitesEnabled,
-		String socialInteractionsSocialRelationTypes,
-		boolean socialInteractionsSocialRelationTypesEnabled,
-		SocialInteractionsConfiguration
-			defaultSocialInteractionsConfiguration) {
+		boolean socialInteractionsFriendsEnabled) {
 
 		_socialInteractionsType = socialInteractionsType;
 		_socialInteractionsSitesEnabled = socialInteractionsSitesEnabled;
-		_socialInteractionsSocialRelationTypes =
-			socialInteractionsSocialRelationTypes;
-		_socialInteractionSocialRelationTypesEnabled =
-			socialInteractionsSocialRelationTypesEnabled;
-		_defaultSocialInteractionsConfiguration =
-			defaultSocialInteractionsConfiguration;
-
-		_socialInteractionsSocialRelationTypesArray =
-			GetterUtil.getIntegerValues(
-				StringUtil.split(_socialInteractionsSocialRelationTypes));
-	}
-
-	public String getSocialInteractionsSocialRelationTypes() {
-		if (isInheritSocialInteractionsConfiguration() &&
-			(_defaultSocialInteractionsConfiguration != null)) {
-
-			return _defaultSocialInteractionsConfiguration.
-				getSocialInteractionsSocialRelationTypes();
-		}
-
-		return _socialInteractionsSocialRelationTypes;
-	}
-
-	public int[] getSocialInteractionsSocialRelationTypesArray() {
-		if (isInheritSocialInteractionsConfiguration() &&
-			(_defaultSocialInteractionsConfiguration != null)) {
-
-			return _defaultSocialInteractionsConfiguration.
-				getSocialInteractionsSocialRelationTypesArray();
-		}
-
-		return _socialInteractionsSocialRelationTypesArray;
-	}
-
-	public boolean isInheritSocialInteractionsConfiguration() {
-		if (_socialInteractionsType.equals(SocialInteractionsType.INHERIT)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		_socialInteractionsFriendsEnabled = socialInteractionsFriendsEnabled;
 	}
 
 	public boolean isSocialInteractionsAnyUserEnabled() {
-		if (isInheritSocialInteractionsConfiguration() &&
-			(_defaultSocialInteractionsConfiguration != null)) {
-
-			return _defaultSocialInteractionsConfiguration.
-				isSocialInteractionsAnyUserEnabled();
-		}
-
 		if (_socialInteractionsType.equals(SocialInteractionsType.ALL_USERS)) {
 			return true;
 		}
@@ -92,14 +39,11 @@ public class SocialInteractionsConfiguration {
 		}
 	}
 
+	public boolean isSocialInteractionsFriendsEnabled() {
+		return _socialInteractionsFriendsEnabled;
+	}
+
 	public boolean isSocialInteractionsSelectUsersEnabled() {
-		if (isInheritSocialInteractionsConfiguration() &&
-			(_defaultSocialInteractionsConfiguration != null)) {
-
-			return _defaultSocialInteractionsConfiguration.
-				isSocialInteractionsSelectUsersEnabled();
-		}
-
 		if (_socialInteractionsType.equals(
 				SocialInteractionsType.SELECT_USERS)) {
 
@@ -111,38 +55,16 @@ public class SocialInteractionsConfiguration {
 	}
 
 	public boolean isSocialInteractionsSitesEnabled() {
-		if (isInheritSocialInteractionsConfiguration() &&
-			(_defaultSocialInteractionsConfiguration != null)) {
-
-			return _defaultSocialInteractionsConfiguration.
-				isSocialInteractionsSitesEnabled();
-		}
-
 		return _socialInteractionsSitesEnabled;
-	}
-
-	public boolean isSocialInteractionsSocialRelationTypesEnabled() {
-		if (isInheritSocialInteractionsConfiguration() &&
-			(_defaultSocialInteractionsConfiguration != null)) {
-
-			return _defaultSocialInteractionsConfiguration.
-				isSocialInteractionsSocialRelationTypesEnabled();
-		}
-
-		return _socialInteractionSocialRelationTypesEnabled;
 	}
 
 	public enum SocialInteractionsType {
 
-		ALL_USERS("all_users"), INHERIT("inherit"),
-		SELECT_USERS("select_users");
+		ALL_USERS("all_users"), SELECT_USERS("select_users");
 
 		public static SocialInteractionsType parse(String value) {
 			if (ALL_USERS.getValue().equals(value)) {
 				return ALL_USERS;
-			}
-			else if (INHERIT.getValue().equals(value)) {
-				return INHERIT;
 			}
 			else if (SELECT_USERS.getValue().equals(value)) {
 				return SELECT_USERS;
@@ -168,12 +90,8 @@ public class SocialInteractionsConfiguration {
 
 	}
 
-	private final SocialInteractionsConfiguration
-		_defaultSocialInteractionsConfiguration;
-	private final boolean _socialInteractionSocialRelationTypesEnabled;
+	private final boolean _socialInteractionsFriendsEnabled;
 	private final boolean _socialInteractionsSitesEnabled;
-	private final String _socialInteractionsSocialRelationTypes;
-	private final int[] _socialInteractionsSocialRelationTypesArray;
 	private final SocialInteractionsType _socialInteractionsType;
 
 }

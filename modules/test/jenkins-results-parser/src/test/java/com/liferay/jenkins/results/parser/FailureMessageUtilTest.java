@@ -43,6 +43,9 @@ public class FailureMessageUtilTest {
 		_downloadSlaveDependency(
 			null, "267", "rebase-fail",
 			"test-portal-acceptance-pullrequest-source(ee-6.2.x)", "test-1-1");
+		_downloadSlaveDependency(
+			"AXIS_VARIABLE=9,label_exp=!master", "233", "plugin-compile",
+			"test-portal-acceptance-pullrequest-batch(ee-6.2.x)", "test-1-20");
 	}
 
 	public FailureMessageUtilTest() {

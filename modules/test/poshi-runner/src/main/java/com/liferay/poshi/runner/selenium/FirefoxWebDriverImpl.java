@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -56,8 +57,14 @@ public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 		catch (Exception e) {
 		}
 
-		_firefoxProfile.setPreference(
-			"browser.download.dir", PropsValues.OUTPUT_DIR_NAME);
+		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
+
+		if (OSDetector.isWindows()) {
+			outputDirName = StringUtil.replace(
+				outputDirName, StringPool.FORWARD_SLASH, StringPool.BACK_SLASH);
+		}
+
+		_firefoxProfile.setPreference("browser.download.dir", outputDirName);
 		_firefoxProfile.setPreference("browser.download.folderList", 2);
 		_firefoxProfile.setPreference(
 			"browser.download.manager.showWhenStarting", false);

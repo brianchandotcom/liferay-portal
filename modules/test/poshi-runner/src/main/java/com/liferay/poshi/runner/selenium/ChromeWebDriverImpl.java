@@ -14,7 +14,10 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.StringPool;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +41,14 @@ public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 
 		Map<String, Object> preferences = new HashMap<>();
 
-		preferences.put(
-			"download.default_directory", PropsValues.OUTPUT_DIR_NAME);
+		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
+
+		if (OSDetector.isWindows()) {
+			outputDirName = StringUtil.replace(
+				outputDirName, StringPool.FORWARD_SLASH, StringPool.BACK_SLASH);
+		}
+
+		preferences.put("download.default_directory", outputDirName);
 		preferences.put("download.prompt_for_download", false);
 
 		_desiredCapabilities.setCapability("chrome.prefs", preferences);

@@ -26,7 +26,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 
 <style type="text/css">
 	.portlet-flags .form fieldset {
-		border: none;
+		border-width: 0;
 		padding: 0;
 		width: 100%;
 	}
@@ -85,6 +85,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 <aui:script use="liferay-util-window">
 	function <portlet:namespace />flag() {
 		var reasonNode = A.one('#<portlet:namespace />reason');
+
 		var reason = (reasonNode && reasonNode.val()) || '';
 
 		if (reason == 'other') {
@@ -94,6 +95,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 		}
 
 		var reporterEmailAddressNode = A.one('#<portlet:namespace />reporterEmailAddress');
+
 		var reporterEmailAddress = (reporterEmailAddressNode && reporterEmailAddressNode.val()) || '';
 
 		var flagsPopupNode = A.one('#<portlet:namespace />flagsPopup');

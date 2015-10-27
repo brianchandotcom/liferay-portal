@@ -327,9 +327,12 @@ public class DDMStructureFinderImpl
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(CAST_TEXT(name))", StringPool.LIKE, false, names);
+				sql, "lower(CAST_TEXT(DDMStructure.name))", StringPool.LIKE,
+				false, names);
+
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, true, descriptions);
+				sql, "DDMStructure.description", StringPool.LIKE, true,
+				descriptions);
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 

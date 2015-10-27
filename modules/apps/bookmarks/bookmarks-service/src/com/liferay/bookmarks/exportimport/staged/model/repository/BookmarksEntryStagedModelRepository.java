@@ -17,7 +17,6 @@ package com.liferay.bookmarks.exportimport.staged.model.repository;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -61,7 +60,7 @@ public class BookmarksEntryStagedModelRepository
 			serviceContext.setUuid(bookmarksEntry.getUuid());
 		}
 
-		return BookmarksEntryLocalServiceUtil.addEntry(
+		return _bookmarksEntryLocalService.addEntry(
 			userId, bookmarksEntry.getGroupId(), bookmarksEntry.getFolderId(),
 			bookmarksEntry.getName(), bookmarksEntry.getUrl(),
 			bookmarksEntry.getDescription(), serviceContext);
@@ -175,14 +174,14 @@ public class BookmarksEntryStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			bookmarksEntry);
 
-		return BookmarksEntryLocalServiceUtil.updateEntry(
+		return _bookmarksEntryLocalService.updateEntry(
 			userId, bookmarksEntry.getEntryId(), bookmarksEntry.getGroupId(),
 			bookmarksEntry.getFolderId(), bookmarksEntry.getName(),
 			bookmarksEntry.getUrl(), bookmarksEntry.getDescription(),
 			serviceContext);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setBookmarksEntryLocalService(
 		BookmarksEntryLocalService bookmarksEntryLocalService) {
 

@@ -1035,7 +1035,9 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 	}
 
 	/**
-	 * Returns OSGI service identifier for this bean.
+	 * Returns the OSGI service identifier.
+	 *
+	 * @return the OSGI service identifier
 	 */
 	@Override
 	public String getOSGIServiceIdentifier() {

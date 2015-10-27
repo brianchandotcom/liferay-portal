@@ -529,6 +529,7 @@
 		</execute>
 
 		<execute macro="BlogsEntryComment#viewPG">
+			<var name="commentCount" value="1" />
 			<var name="entryComment" value="Blogs Entry Comment" />
 			<var name="userFullName" value="Test Test" />
 		</execute>

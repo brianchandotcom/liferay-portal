@@ -814,15 +814,20 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Blogs#editEntryAndSaveDraftPG">
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#editEntryContent">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 			<var name="entrySubtitle" value="" />
 			<var name="entrySubtitleEdit" value="Blogs Entry Subtitle Edit" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
-			<var name="saveAsDraft" value="true" />
 		</execute>
+
+		<execute macro="BlogsEntry#saveAsDraft" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />

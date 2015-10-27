@@ -158,6 +158,7 @@ AUI.add(
 									fullScreenEditor = new A.LiferayFullScreenSourceEditor(
 										{
 											boundingBox: dialog.getStdModNode(A.WidgetStdMod.BODY).appendChild('<div></div>'),
+											dataProcessor: host.getNativeEditor().dataProcessor,
 											previewCssClass: 'alloy-editor alloy-editor-placeholder',
 											value: host.getHTML()
 										}

@@ -43,6 +43,10 @@ AUI.add(
 						}
 					},
 
+					dataProcessor: {
+						validator: Lang.isObject
+					},
+
 					layout: {
 						validator: Lang.isString,
 						value: 'vertical'
@@ -95,7 +99,7 @@ AUI.add(
 
 						instance._previewPanel = boundingBox.one(CSS_PREVIEW_PANEL);
 
-						instance._previewPanel.html(instance.get(STR_VALUE));
+						instance._previewPanel.html(instance._getHtml(instance.get(STR_VALUE)));
 						instance._previewPanel.addClass(instance.get('previewCssClass'));
 					},
 
@@ -133,6 +137,18 @@ AUI.add(
 						instance._editor.getEditor().resize();
 					},
 
+					_getHtml: function(val) {
+						var instance = this;
+
+						var dataProcessor = instance.get('dataProcessor');
+
+						if (dataProcessor && dataProcessor.toHtml) {
+							val = dataProcessor.toHtml(val);
+						}
+
+						return val;
+					},
+
 					_getValue: function(val) {
 						var instance = this;
 
@@ -142,7 +158,7 @@ AUI.add(
 					_onEditorChange: function(event) {
 						var instance = this;
 
-						instance._previewPanel.html(event.newVal);
+						instance._previewPanel.html(instance._getHtml(event.newVal));
 					},
 
 					_onLayoutChange: function(event) {

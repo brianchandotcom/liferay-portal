@@ -1,0 +1,167 @@
+Started by remote host 10.0.16.121
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-2/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/307/test-portal-acceptance-pullrequest-source(ee-6.2.x)//start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-1
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-12-173 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+[liferay-jenkins-ee] $ /bin/bash /tmp/hudson6205171503079074295.sh
+Update the workspace repository for build steps.
+No rebase in progress?
+Switched to branch 'master-temp-895280800'
+Switched to branch 'master'
+Deleted branch master-temp-895280800 (was 22f947d).
+HEAD is now at 22f947d LRQA-18842 Regen
+Rebase the workspace repository if needed for build steps.
+Exit shell.
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson1614657119347343564.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-source.sh start-current-job'
+Execute: test-portal-acceptance-pullrequest-source.sh start-current-job
++ commands/build-test-portal-acceptance-pullrequest-source.sh start-current-job
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-source.xml start-current-job
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml
+
+start-current-job:
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
++ echo 'Exit shell.'
+Exit shell.
+[EnvInject] - Injecting environment variables from a build step.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-2/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/307/test-portal-acceptance-pullrequest-source(ee-6.2.x)//start.properties'
+[EnvInject] - Variables injected successfully.
+[description-setter] Description set: <strong>michaelhashimoto</strong> - <a href="https://github.com/michaelhashimoto/liferay-portal-ee/pull/1695">PR#1695</a> - <a href="https://test-1-2.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/307/jenkins-report.html">Jenkins Report</a>
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson515916455847816786.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-source.sh'
+Execute: test-portal-acceptance-pullrequest-source.sh
++ commands/build-test-portal-acceptance-pullrequest-source.sh
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-source.xml 
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml
+
+run-current-job:
+
+clean-up-admin-portal-repository:
+     [exec] Timeout: killed the sub-process
+     [exec] Result: 143
+   [delete] Deleting: /opt/dev/projects/github/liferay-portal-ee-6.2.x/20151023162201733
+
+update-portal-repository:
+     [exec] Switched to a new branch 'temp-20151023162231933'
+     [exec] Switched to a new branch 'temp-20151023162231933'
+     [exec] From github.com:liferay/liferay-portal-ee
+     [exec]    b2f0885..d0dbbe9  ee-6.2.x   -> ee-6.2.x
+     [exec] From github.com:liferay/liferay-portal-ee
+     [exec]    b2f0885..d0dbbe9  ee-6.2.x   -> ee-6.2.x
+     [exec]  * [new tag]         fix-pack-fix-15810641 -> fix-pack-fix-15810641
+     [exec]  * [new tag]         fix-pack-fix-15946625 -> fix-pack-fix-15946625
+     [exec]  * [new tag]         fix-pack-fix-15810641 -> fix-pack-fix-15810641
+     [exec]  * [new tag]         fix-pack-fix-15946625 -> fix-pack-fix-15946625
+     [exec] Deleted branch ee-6.2.x-temp-20151022100818085 (was b7944c1).
+     [exec] Deleted branch temp-20151023162231933 (was b7944c1).
+     [exec] Switched to branch 'ee-6.2.x'
+     [exec] Switched to branch 'ee-6.2.x'
+     [exec] commit d0dbbe9ef2ce41ef0efbbd4048185daf8fa48b92
+     [exec] Author: Brian Chan <brian.chan@liferay.com>
+     [exec] Date:   Fri Oct 23 13:06:16 2015 -0700
+     [exec] 
+     [exec]     Record
+
+set-portal-release-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal-ee-6.2.x/release.cloud-10-0-12-173.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] lp.plugins.dir=/opt/dev/projects/github/liferay-plugins-ee-6.2.x
+
+update-plugins-repository:
+     [exec] Switched to a new branch 'temp-20151023162245185'
+     [exec] Switched to a new branch 'temp-20151023162245185'
+     [exec] From github.com:liferay/liferay-plugins-ee
+     [exec]    3850665..6567d3c  ee-6.2.x   -> ee-6.2.x
+     [exec] From github.com:liferay/liferay-plugins-ee
+     [exec]    3850665..6567d3c  ee-6.2.x   -> ee-6.2.x
+     [exec] Switched to branch 'ee-6.2.x'
+     [exec] Deleted branch temp-20151023162245185 (was 3850665).
+     [exec] Switched to branch 'ee-6.2.x'
+     [exec] commit 6567d3cba73530f9c7c354548d8d53b74d525549
+     [exec] Author: Brian Chan <brian.chan@liferay.com>
+     [exec] Date:   Fri Oct 23 13:04:05 2015 -0700
+     [exec] 
+     [exec]     CLDSVCS-1682 regen
+
+rebase-and-record-portal-pull-request-branch:
+     [exec] From github.com:michaelhashimoto/liferay-portal-ee
+     [exec] From github.com:michaelhashimoto/liferay-portal-ee
+     [exec]  * [new branch]      ee-6.2.x-qa-portal-rebase-error -> ee-6.2.x-temp-20151023162146064
+     [exec]  * [new branch]      ee-6.2.x-qa-portal-rebase-error -> ee-6.2.x-temp-20151023162146064
+     [exec] First, rewinding head to replay your work on top of it...
+     [exec] Applying: LRQA-TEST Portal rebase error
+     [exec] Using index info to reconstruct a base tree...
+     [exec] M	git-commit-plugins
+     [exec] Falling back to patching base and 3-way merge...
+     [exec] Failed to merge in the changes.
+     [exec] Failed to merge in the changes.
+     [exec] Auto-merging git-commit-plugins
+     [exec] CONFLICT (content): Merge conflict in git-commit-plugins
+     [exec] Patch failed at 0001 LRQA-TEST Portal rebase error
+     [exec] The copy of the patch that failed is found in:
+     [exec]    /opt/dev/projects/github/liferay-portal-ee-6.2.x/.git/rebase-apply/patch
+     [exec] 
+     [exec] When you have resolved this problem, run "git rebase --continue".
+     [exec] If you prefer to skip this patch, run "git rebase --skip" instead.
+     [exec] To check out the original branch and stop rebasing, run "git rebase --abort".
+     [exec] 
+     [exec] To git@github.com:brianchandotcom/liferay-portal-ee.git
+     [exec] To git@github.com:brianchandotcom/liferay-portal-ee.git
+     [exec]  * [new branch]      ee-6.2.x-temp-20151023162146064 -> ee-6.2.x-temp-20151023162146064
+     [exec]  * [new branch]      ee-6.2.x-temp-20151023162146064 -> ee-6.2.x-temp-20151023162146064
+     [exec] commit d0dbbe9ef2ce41ef0efbbd4048185daf8fa48b92
+     [exec] Author: Brian Chan <brian.chan@liferay.com>
+     [exec] Date:   Fri Oct 23 13:06:16 2015 -0700
+     [exec] 
+     [exec]     Record
+   [delete] Deleting: /opt/dev/projects/github/liferay-portal-ee-6.2.x/20151023162254164
+
+BUILD FAILED
+/opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml:123: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml:101: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-jenkins-ee/commands/build-common.xml:2126: Error on rebase of 'michaelhashimoto/ee-6.2.x-qa-portal-rebase-error' against 'ee-6.2.x'.
+
+Total time: 1 minute 28 seconds
+Build step 'Execute shell' marked build as failure
+[PostBuildScript] - Execution post build scripts.
+[liferay-jenkins-ee] $ /bin/bash /tmp/hudson3637303567859829065.sh
+Update the workspace repository for post-build steps.
+No rebase in progress?
+Switched to branch 'master-temp-752632465'
+Switched to branch 'master'
+Deleted branch master-temp-752632465 (was 22f947d).
+HEAD is now at 22f947d LRQA-18842 Regen
+Rebase the workspace repository if needed for post-build steps.
+Exit shell.
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson2396792743070967226.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-source.sh stop-current-job'
+Execute: test-portal-acceptance-pullrequest-source.sh stop-current-job
++ commands/build-test-portal-acceptance-pullrequest-source.sh stop-current-job
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-source.xml stop-current-job
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml
+
+stop-current-job:
+   [delete] Deleting: /opt/dev/projects/github/liferay-portal-ee-6.2.x/20151023162331528
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
++ echo 'Exit shell.'
+Exit shell.
+[EnvInject] - Injecting environment variables from a build step.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-2/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/307/test-portal-acceptance-pullrequest-source(ee-6.2.x)//stop.properties'
+[EnvInject] - Variables injected successfully.
+[description-setter] Description set: <strong>michaelhashimoto</strong> - <a href="https://github.com/michaelhashimoto/liferay-portal-ee/pull/1695">PR#1695</a> - <a href="https://test-1-2.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/307/jenkins-report.html">Jenkins Report</a>
+Finished: FAILURE

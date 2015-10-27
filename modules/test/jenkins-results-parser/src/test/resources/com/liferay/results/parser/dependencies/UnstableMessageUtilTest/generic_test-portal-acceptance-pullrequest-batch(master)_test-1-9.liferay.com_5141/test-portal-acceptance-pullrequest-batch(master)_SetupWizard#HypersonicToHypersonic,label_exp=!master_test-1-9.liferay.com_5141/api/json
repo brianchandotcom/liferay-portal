@@ -1,0 +1,72 @@
+{
+    "actions": [
+        {"parameters": [
+            {
+                "name": "AXIS_VARIABLES",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_NAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JOB_VARIANT",
+                "value": "functional-tomcat-hypersonic/0"
+            },
+            {
+                "name": "TOP_LEVEL_SHARED_DIR",
+                "value": "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1545"
+            }
+        ]},
+        {},
+        {"causes": [{
+            "shortDescription": "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 5,141",
+            "upstreamBuild": 5141,
+            "upstreamProject": "test-portal-acceptance-pullrequest-batch(master)",
+            "upstreamUrl": "job/test-portal-acceptance-pullrequest-batch(master)/"
+        }]},
+        null,
+        {},
+        {},
+        {
+            "failCount": 1,
+            "skipCount": 0,
+            "totalCount": 1,
+            "urlName": "testReport"
+        },
+        {},
+        {},
+        {}
+    ],
+    "artifacts": [],
+    "building": false,
+    "builtOn": "cloud-10-0-19-95",
+    "changeSet": {
+        "items": [],
+        "kind": null
+    },
+    "culprits": [],
+    "description": "<strong>brianchandotcom<\/strong> - <a href=\"https://github.com/brianchandotcom/liferay-portal/pull/31450\">PR#31450<\/a> - <a href=\"https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1545/jenkins-report.html\">Jenkins Report<\/a>",
+    "duration": 675308,
+    "estimatedDuration": 1013381,
+    "executor": null,
+    "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) » SetupWizard#HypersonicToHypersonic,!master #5141",
+    "id": "2015-10-26_12-10-33",
+    "keepLog": false,
+    "number": 5141,
+    "result": "UNSTABLE",
+    "timestamp": 1445886633000,
+    "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToHypersonic,label_exp=!master/5141/"
+}

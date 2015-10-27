@@ -63,9 +63,9 @@ import net.sf.ehcache.event.NotificationScope;
  * @author Tina Tian
  */
 @Component(
-	immediate = true, service = EhcacheConfigurationHelperUtil.class
+	immediate = true, service = EhcachePortalCacheManagerConfigurator.class
 )
-public class EhcacheConfigurationHelperUtil {
+public class EhcachePortalCacheManagerConfigurator {
 
 	public ObjectValuePair
 		<Configuration, PortalCacheManagerConfiguration>
@@ -454,7 +454,7 @@ public class EhcacheConfigurationHelperUtil {
 	private static final String _PORTAL_PROPERTY_KEY = "portalPropertyKey";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EhcacheConfigurationHelperUtil.class);
+		EhcachePortalCacheManagerConfigurator.class);
 
 	private static final Map<NotificationScope, PortalCacheListenerScope>
 		_portalCacheListenerScopes = new EnumMap<>(NotificationScope.class);

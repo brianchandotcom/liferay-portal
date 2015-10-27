@@ -72,10 +72,12 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Reference(unbind = "-")
-	protected void setEhcacheConfigurationHelperUtil(
-		EhcacheConfigurationHelperUtil ehcacheConfigurationHelperUtil) {
+	protected void setEhcachePortalCacheManagerConfigurator(
+		EhcachePortalCacheManagerConfigurator
+			ehcachePortalCacheManagerConfigurator) {
 
-		this.ehcacheConfigurationHelperUtil = ehcacheConfigurationHelperUtil;
+		this.ehcachePortalCacheManagerConfigurator =
+			ehcachePortalCacheManagerConfigurator;
 	}
 
 	@Reference(unbind = "-")

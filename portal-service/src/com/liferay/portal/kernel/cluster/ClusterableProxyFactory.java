@@ -40,10 +40,6 @@ public class ClusterableProxyFactory {
 	private static class ClusterableInvocationHandler<T>
 		implements InvocationHandler {
 
-		public ClusterableInvocationHandler(T targetObject) {
-			_targetObject = targetObject;
-		}
-
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
@@ -73,6 +69,10 @@ public class ClusterableProxyFactory {
 				clusterable.acceptor(), _targetObject, method, args);
 
 			return result;
+		}
+
+		private ClusterableInvocationHandler(T targetObject) {
+			_targetObject = targetObject;
 		}
 
 		private Clusterable _getClusterable(

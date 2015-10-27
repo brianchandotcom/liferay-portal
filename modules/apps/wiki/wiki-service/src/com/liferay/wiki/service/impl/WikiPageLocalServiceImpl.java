@@ -2332,18 +2332,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			portletURL = PortalUtil.getControlPanelPortletURL(
 				request, WikiPortletKeys.WIKI_ADMIN, 0,
 				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"struts_action", "/wiki_admin/compare_versions");
 		}
 		else {
 			portletURL = PortletURLFactoryUtil.create(
 				request, WikiPortletKeys.WIKI, plid,
 				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("struts_action", "/wiki/compare_versions");
 		}
 
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/wiki/compare_versions");
 		portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
 		portletURL.setParameter("title", page.getTitle());
 		portletURL.setParameter(
@@ -2379,7 +2376,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
-				"struts_action", "/wiki_admin/view_page_activities");
+				"mvcRenderCommandName", "/wiki/view_page_activities");
 			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
 			portletURL.setParameter("title", page.getTitle());
 

@@ -23,6 +23,8 @@ public interface AlwaysAllowDoAsUser {
 
 	public Collection<String> getActionNames();
 
+	public Collection<String> getMVCRenderCommandNames();
+
 	public Collection<String> getPaths();
 
 	public Collection<String> getStrutsActions();

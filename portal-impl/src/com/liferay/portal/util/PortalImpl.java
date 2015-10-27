@@ -5500,17 +5500,19 @@ public class PortalImpl implements Portal {
 			return userIdObj.longValue();
 		}
 
-		String path = GetterUtil.getString(request.getPathInfo());
+		String actionName = getPortletParam(request, "actionName");
 		String mvcRenderCommandName = ParamUtil.getString(
 			request, "mvcRenderCommandName");
-		String actionName = getPortletParam(request, "actionName");
+		String path = GetterUtil.getString(request.getPathInfo());
+		String strutsAction = getStrutsAction(request);
 
 		boolean alwaysAllowDoAsUser = false;
 
-		if (path.equals("/portal/session_click") ||
+		if (actionName.equals("addFile") ||
 			mvcRenderCommandName.equals("/document_library/edit_file_entry") ||
-			actionName.equals("addFile") ||
-			isAlwaysAllowDoAsUser(path, mvcRenderCommandName, actionName)) {
+			path.equals("/portal/session_click") ||
+			isAlwaysAllowDoAsUser(
+				actionName, mvcRenderCommandName, path, strutsAction)) {
 
 			try {
 				alwaysAllowDoAsUser = isAlwaysAllowDoAsUser(request);
@@ -8023,9 +8025,24 @@ public class PortalImpl implements Portal {
 	}
 
 	protected boolean isAlwaysAllowDoAsUser(
-		String path, String strutsAction, String actionName) {
+		String actionName, String mvcRenderCommandName, String path,
+		String strutsAction) {
 
 		for (AlwaysAllowDoAsUser alwaysAllowDoAsUser : _alwaysAllowDoAsUsers) {
+			Collection<String> actionNames =
+				alwaysAllowDoAsUser.getActionNames();
+
+			if (actionNames.contains(actionName)) {
+				return true;
+			}
+
+			Collection<String> mvcRenderCommandNames =
+				alwaysAllowDoAsUser.getMVCRenderCommandNames();
+
+			if (mvcRenderCommandNames.contains(mvcRenderCommandName)) {
+				return true;
+			}
+
 			Collection<String> paths = alwaysAllowDoAsUser.getPaths();
 
 			if (paths.contains(path)) {
@@ -8036,13 +8053,6 @@ public class PortalImpl implements Portal {
 				alwaysAllowDoAsUser.getStrutsActions();
 
 			if (strutsActions.contains(strutsAction)) {
-				return true;
-			}
-
-			Collection<String> actionNames =
-				alwaysAllowDoAsUser.getActionNames();
-
-			if (actionNames.contains(actionName)) {
 				return true;
 			}
 		}

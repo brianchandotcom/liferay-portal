@@ -121,7 +121,7 @@ public class WikiPageAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			return "/html/portlet/wiki/asset/" + template + ".jsp";
+			return "/wiki/asset/" + template + ".jsp";
 		}
 		else {
 			return null;
@@ -189,7 +189,7 @@ public class WikiPageAssetRenderer
 			liferayPortletRequest, WikiPortletKeys.WIKI, 0,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/wiki/edit_page");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 
@@ -206,7 +206,7 @@ public class WikiPageAssetRenderer
 			liferayPortletRequest, WikiPortletKeys.WIKI, 0,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/wiki/export_page");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/export_page");
 		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 
@@ -225,7 +225,7 @@ public class WikiPageAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("struts_action", "/wiki/view");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 		portletURL.setWindowState(windowState);
@@ -250,7 +250,8 @@ public class WikiPageAssetRenderer
 			return null;
 		}
 
-		portletURL.setParameter("struts_action", "/wiki/compare_versions");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/wiki/compare_versions");
 		portletURL.setParameter("groupId", String.valueOf(_page.getGroupId()));
 		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());

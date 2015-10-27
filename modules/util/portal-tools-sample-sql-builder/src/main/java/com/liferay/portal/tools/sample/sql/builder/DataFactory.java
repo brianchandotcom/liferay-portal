@@ -2009,10 +2009,10 @@ public class DataFactory {
 				DLPortletKeys.DOCUMENT_LIBRARY + ","));
 		layoutModels.add(
 			newLayoutModel(
-				groupId, "forums", "",
-				MBPortletKeys.MESSAGE_BOARDS + ","));
+				groupId, "forums", "", MBPortletKeys.MESSAGE_BOARDS + ","));
 		layoutModels.add(
-			newLayoutModel(groupId, "wiki", "", "36_WAR_wikiweb,"));
+			newLayoutModel(
+				groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
 
 		return layoutModels;
 	}

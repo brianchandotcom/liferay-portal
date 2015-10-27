@@ -30,7 +30,7 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 
-import java.net.UnknownHostException;
+import java.io.IOException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -116,7 +116,7 @@ public class PortletContainerTestUtilTest {
 		}
 	}
 
-	@Test(expected = UnknownHostException.class)
+	@Test(expected = IOException.class)
 	public void testRequestFromUnknownURL() throws Exception {
 		PortletContainerTestUtil.request("http://www.lifxxasdaeray.com");
 	}

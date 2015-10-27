@@ -48,7 +48,6 @@
 					cssClass="<%= portletConfigurationIcon.getCssClass() %>"
 					data="<%= portletConfigurationIcon.getData() %>"
 					id="<%= portletConfigurationIcon.getId() %>"
-					image="<%= portletConfigurationIcon.getImage() %>"
 					imageHover="<%= portletConfigurationIcon.getImageHover() %>"
 					label="<%= portletConfigurationIcon.isLabel() %>"
 					lang="<%= portletConfigurationIcon.getLang() %>"

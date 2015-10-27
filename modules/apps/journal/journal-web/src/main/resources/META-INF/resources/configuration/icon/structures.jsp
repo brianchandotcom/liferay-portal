@@ -21,7 +21,6 @@ String taglibOnClick = renderResponse.getNamespace() + "openStructuresView()";
 %>
 
 <liferay-ui:icon
-	iconCssClass="icon-th-large"
 	message="structures"
 	onClick="<%= taglibOnClick %>"
 	url="javascript:;"

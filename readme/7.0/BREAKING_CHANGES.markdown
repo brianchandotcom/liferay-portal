@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `d6e41b2`.*
+*This document has been reviewed through commit `1adcc25`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2597,14 +2597,18 @@ longer continue to support it.
 
 #### What changed?
 
-Liferay no longer supports integration with AIM, ICQ, and Yahoo Messenger instant messaging services nor MySpace.  The corresponding `aimSn`, `icqSn`, `mySpaceSn`, and `ymSn` columns have been removed from the Contacts table.
+Liferay no longer supports integration with MySpace and AIM, ICQ, and Yahoo
+Messenger instant messaging services. The corresponding `aimSn`, `icqSn`,
+`mySpaceSn`, and `ymSn` columns have been removed from the `Contacts` table.
 
 The following classes have been removed:
+
 - `AIMConnector`
 - `ICQConnector`
 - `YMConnector`
 
 The following constants have been removed:
+
 - `CalEventConstants.REMIND_BY_AIM`
 - `CalEventConstants.REMIND_BY_ICQ`
 - `CalEventConstants.REMIND_BY_YM`
@@ -2621,6 +2625,7 @@ The following constants have been removed:
 - `PropsKeys.YM_PASSWORD`
 
 The following methods have been removed:
+
 - `getAimSn`
 - `getIcqSn`
 - `getMySpaceSn`
@@ -2631,10 +2636,12 @@ The following methods have been removed:
 - `setYmSn`
 
 The following methods have been changed:
+
 - `updateUser`
 - `addContact`
 
 The following portal properties have been removed:
+
 - `aim.login`
 - `aim.password`
 - `icq.jar`
@@ -2645,17 +2652,65 @@ The following portal properties have been removed:
 
 #### Who is affected?
 
-This affects developers who use any of the classes, constants, or methods listed above.
+This affects developers who use any of the classes, constants, methods, or
+properties listed above.
 
 #### How should I update my code?
 
 When updating or adding a user or contact using one of the changed methods
-above, remove the `aimSn`, `icqSn`, `mySpaceSn`, and `ymSn` arguments from the method call. If you are using one of the removed items above, you should remove all references to them from your code and look for alternatives, if necessary. Lastly, remove any references to the `aimSn`, `icqSn`, `mySpaceSn`, and `ymSn` columns in the Contacts table from your SQL queries.
+above, remove the `aimSn`, `icqSn`, `mySpaceSn`, and `ymSn` arguments from the
+method call. If you are using one of the removed items above, you should remove
+all references to them from your code and look for alternatives, if necessary.
+Lastly, remove from your SQL queries any references to former `Contacts` table
+columns `aimSn`, `icqSn`, `mySpaceSn`, and `ymSn`.
 
-Also, any reference to the removed portal properties above will no longer return a value.
+Also, a reference to any one of the removed portal properties above no longer
+returns a value.
 
 #### Why was this change made?
 
-The services removed in this change are no longer popular enough to merit continued support.
+The services removed in this change are no longer popular enough to merit
+continued support.
+
+---------------------------------------
+
+### Removed All Methods from SchedulerEngineHelper that Explicitly Schedule Jobs Using SchedulerEntry or Specify MessageListener Class Names
+- **Date:** 2015-Oct-29
+- **JIRA Ticket:** LPS-59681
+
+#### What changed?
+
+The following methods were removed from `SchedulerEngine`:
+
+- `SchedulerEngineHelper.addJob(Trigger, StorageType, String, String, Message, String, String, int)`
+- `SchedulerEngineHelper.addJob(Trigger, StorageType, String, String, Object, String, String, int)`
+- `SchedulerEngineHelper.schedule(SchedulerEntry, StorageType, String, int)`
+
+#### Who is affected?
+
+This affects developers that use the above methods to schedule jobs into the
+`SchedulerEngine`.
+
+#### How should I update my code?
+
+You should update your code to call one of these methods:
+
+- `SchedulerEngineHelper.schedule(Trigger, StorageType, String, String, Message, int)`
+- `SchedulerEngineHelper.schedule(Trigger, StorageType, String, String, Object, int)`
+
+Instead of simply providing the class name of your scheduled job listener, you
+should follow these steps:
+
+1.  Instantiate your MessageListener.
+
+2.  Call `SchedulerEngineHelper.register(MessageListener, SchedulerEntry)` to
+    register your `SchedulerEventMessageListener`.
+
+
+#### Why was this change made?
+
+The deleted methods provided facilities that aren't compatible with using
+declarative services in an OSGI container. The new approach allows for proper
+injection of dependencies into scheduled event message listeners.
 
 ---------------------------------------

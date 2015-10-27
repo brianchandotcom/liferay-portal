@@ -82,12 +82,12 @@ public class EhcachePortalCacheManagerConfigurator {
 
 		ehcacheConfiguration.setName(portalCacheManagerName);
 
-		_handlePeerFactoryConfigurations(
+		_handleCacheManagerPeerFactoryConfigurations(
 			ehcacheConfiguration.
 				getCacheManagerPeerProviderFactoryConfiguration(),
 			clusterAware);
 
-		_handlePeerFactoryConfigurations(
+		_handleCacheManagerPeerFactoryConfigurations(
 			ehcacheConfiguration.
 				getCacheManagerPeerListenerFactoryConfigurations(),
 			clusterAware);
@@ -96,7 +96,7 @@ public class EhcachePortalCacheManagerConfigurator {
 			_getCacheManagerListenerPropertiesSet(ehcacheConfiguration);
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
-			_parseCacheConfiguration(
+			_getPortalCacheConfiguration(
 				ehcacheConfiguration.getDefaultCacheConfiguration(),
 				clusterAware, usingDefault);
 
@@ -110,7 +110,7 @@ public class EhcachePortalCacheManagerConfigurator {
 				cacheConfigurations.entrySet()) {
 
 			portalCacheConfigurations.add(
-				_parseCacheConfiguration(
+				_getPortalCacheConfiguration(
 					entry.getValue(), clusterAware, usingDefault));
 		}
 
@@ -188,7 +188,7 @@ public class EhcachePortalCacheManagerConfigurator {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void _handlePeerFactoryConfigurations(
+	private void _handleCacheManagerPeerFactoryConfigurations(
 		List<FactoryConfiguration> factoryConfigurations,
 		boolean clusterAware) {
 
@@ -265,7 +265,7 @@ public class EhcachePortalCacheManagerConfigurator {
 		return false;
 	}
 
-	private PortalCacheConfiguration _parseCacheConfiguration(
+	private PortalCacheConfiguration _getPortalCacheConfiguration(
 		CacheConfiguration cacheConfiguration, boolean clusterAware,
 		boolean usingDefault) {
 

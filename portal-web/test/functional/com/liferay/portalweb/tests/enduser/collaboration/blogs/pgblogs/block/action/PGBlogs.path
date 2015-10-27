@@ -24,38 +24,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS</td>
-	<td>//div[@id='main-content']//a[@title='Options']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_ENTRY_BUTTON</td>
-	<td>//li[@name='addEntryButton']/a[contains(.,'Add Blog Entry')]</td>
+	<td>//a[contains(.,'Add Blog Entry')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
 	<td>//li/a[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[@name='_33_keywords']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULT_BLOG_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'entry-display-style search')]/a/div/span[@class='entry-title' and contains(.,'${key_blogsEntryTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULT_BLOG_ENTRY_CONTENT</td>
-	<td>//div[contains(@class,'entry-display-style search')]/a/div/span[@class='entry-description' and contains(.,'${key_blogsEntryContent}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,11 +54,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[contains(@id,'undoForm')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAG</td>
 	<td>//span/a[contains(.,'${key_tagName}')]</td>
 	<td></td>
@@ -91,11 +61,6 @@
 <tr>
 	<td>CATEGORIZATION_FILTER_TITLE</td>
 	<td>//h2[contains(@class,'taglib-categorization-filter') and contains (.,'${key_vocabularyName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAG_FILTER_TITLE</td>
-	<td>//h2[contains(@class,'taglib-categorization-filter') and contains (.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -115,45 +80,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGINATION_FIRST_BUTTON</td>
-	<td>//div[contains(@class,'lfr-pagination')]//a[contains(.,'First')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGINATION_PREVIOUS_BUTTON</td>
-	<td>//div[contains(@class,'lfr-pagination')]//a[contains(.,'Previous')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGINATION_NEXT_BUTTON</td>
 	<td>//div[contains(@class,'lfr-pagination')]//a[contains(.,'Next')]</td>
 	<td>Next</td>
-</tr>
-<tr>
-	<td>PAGINATION_LAST_BUTTON</td>
-	<td>//div[contains(@class,'lfr-pagination')]//a[contains(.,'Last')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--OPTIONS_MENULIST-->
-<tr>
-	<td>OPTIONS_MENULIST_LOOKANDFEEL</td>
-	<td>//div/ul/li[1]/a[contains(/.,'Look and Feel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td>//div/ul/li[2]/a[contains(/.,'Configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td>//div/ul/li[3]/a[contains(/.,' Export / Import ')]</td>
-	<td></td>
 </tr>
 <tr>
 	<td></td>

@@ -316,6 +316,8 @@
 
 		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 
+		<execute function="Click" locator1="Button#COG" />
+
 		<var locator="PGBlogsAdd#DISPLAY_DATE_DATE_HOUR" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
@@ -1388,7 +1390,7 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE_HEADER" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 

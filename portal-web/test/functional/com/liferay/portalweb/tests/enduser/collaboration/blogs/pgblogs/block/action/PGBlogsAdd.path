@@ -9,38 +9,18 @@
 </thead>
 <tbody>
 <tr>
-	<td>ERROR_MESSAGE_1</td>
-	<td>xPath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ERROR_MESSAGE_2</td>
-	<td>xPath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SAVE_STATUS</td>
 	<td>//div[@id='_33_saveStatus']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SETTINGS_TAB</td>
-	<td>//a[contains(.,'Settings')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE_FIELD</td>
-	<td>//div[@class='entry-title']/h2/div</td>
+	<td>//div[contains(@id,'titleEditor') and contains(@aria-label,'Rich Text Editor')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_REQUIRED</td>
 	<td>//span[@class='label-required']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_REQUIRED</td>
-	<td>//div[@class='required']</td>
 	<td></td>
 </tr>
 <tr>

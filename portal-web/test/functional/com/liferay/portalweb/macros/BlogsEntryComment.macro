@@ -81,9 +81,9 @@
 	<command name="searchPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="Type" locator1="PGBlogsSearch#SEARCH_FIELD" value1="${entrySearchTerm}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${entrySearchTerm}" />
 
-		<execute function="AssertClick" locator1="PGBlogsSearch#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SEARCH" />
 
 		<execute function="AssertTextEquals" locator1="PGBlogsSearch#SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="PGBlogsSearch#SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
@@ -125,6 +125,9 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="Comments#ENTRY_COUNT_PANEL" value1="${commentCount} Comments" />
+
+		<var name="key_userFullName" value="${userFullName}" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#USER_NAME" value1="${userFullName}" />
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />
 	</command>

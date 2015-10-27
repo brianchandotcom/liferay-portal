@@ -629,6 +629,10 @@
 			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewEntryViaAPPG">
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="entryContent" value="Blogs Entry Content" />

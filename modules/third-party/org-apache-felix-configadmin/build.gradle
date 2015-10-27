@@ -1,7 +1,11 @@
 task reJar(type: Jar)
 
+configurations {
+	configAdmin
+}
+
 dependencies {
-	compile group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.8"
+	configAdmin group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.8"
 }
 
 jar {
@@ -15,13 +19,13 @@ reJar {
 
 	from zipTree(
 		{
-			configurations.compile.singleFile
+			configurations.configAdmin.singleFile
 		})
 
 	manifest {
 		from {
 			copy {
-				from zipTree(configurations.compile.singleFile)
+				from zipTree(configurations.configAdmin.singleFile)
 				include "META-INF/MANIFEST.MF"
 				into temporaryDir
 			}

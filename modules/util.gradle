@@ -1,3 +1,4 @@
+import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 buildscript {
@@ -14,8 +15,13 @@ buildscript {
 	}
 }
 
+task setUpPortalTools
+task wrapper(type: Wrapper)
+
+File portalToolsDir = rootProject.file("../tools/sdk/tmp/portal-tools")
+
 configurations {
-	portalTools {
+	all {
 		resolutionStrategy {
 			eachDependency {
 				DependencyResolveDetails dependencyResolveDetails ->
@@ -26,20 +32,32 @@ configurations {
 			}
 		}
 	}
+
+	portalToolsCssBuilder
+	portalToolsJasperJspc
+	portalToolsJavadocFormatter
+	portalToolsLangBuilder
+	portalToolsPortalToolsServiceBuilder
+	portalToolsPortalToolsUpgradeTableBuilder
+	portalToolsPortalToolsWsddBuilder
+	portalToolsSonar
+	portalToolsSourceFormatter
+	portalToolsTldFormatter
+	portalToolsWhip
 }
 
 dependencies {
-	portalTools group: "com.liferay", name: "com.liferay.css.builder", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.jasper.jspc", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.lang.builder", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
-	portalTools group: "com.liferay", name: "com.liferay.whip", version: "default"
-	portalTools group: "org.codehaus.sonar-plugins", name: "sonar-ant-task", version: "2.1"
+	portalToolsCssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "default"
+	portalToolsJasperJspc group: "com.liferay", name: "com.liferay.jasper.jspc", version: "default"
+	portalToolsJavadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
+	portalToolsLangBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "default"
+	portalToolsPortalToolsServiceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"
+	portalToolsPortalToolsUpgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
+	portalToolsPortalToolsWsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
+	portalToolsSonar group: "org.codehaus.sonar-plugins", name: "sonar-ant-task", version: "2.1"
+	portalToolsSourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
+	portalToolsTldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
+	portalToolsWhip group: "com.liferay", name: "com.liferay.whip", version: "default"
 }
 
 repositories {
@@ -48,15 +66,6 @@ repositories {
 	maven {
 		url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
-}
-
-task setUpPortalTools(type: Copy)
-task wrapper(type: Wrapper)
-
-setUpPortalTools {
-	from configurations.portalTools
-	into rootProject.file("../tools/sdk/tmp/portal-tools")
-	rename new RenameDependencyClosure(project, "portalTools")
 }
 
 wrapper {
@@ -84,4 +93,30 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% -Dgradle.user.home=%APP_HOME%\\.gradle''
 
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
 	scriptFile = new File(wrapperDir, "gradlew")
+}
+
+Collection<Configuration> portalToolsConfigurations = configurations.matching {
+	it.name.startsWith "portalTools"
+}
+
+portalToolsConfigurations.each {
+	Configuration configuration ->
+
+	String dirName = configuration.name.substring(11)
+
+	dirName = dirName.replaceAll(/[A-Z]/) {
+		"-" + it.toLowerCase()
+	}
+
+	dirName = dirName.substring(1)
+
+	String taskName = "setUp" + StringUtil.capitalize(configuration.name)
+
+	Task configurationTask = tasks.create(name: taskName, type: Copy) {
+		from configuration
+		into new File(portalToolsDir, dirName)
+		rename new RenameDependencyClosure(project, configuration.name)
+	}
+
+	setUpPortalTools.dependsOn configurationTask
 }

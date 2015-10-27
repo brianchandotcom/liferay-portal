@@ -807,7 +807,6 @@
 		<execute macro="BlogsEntry#viewEntryViaAPPG">
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
@@ -818,7 +817,7 @@
 		<execute macro="Blogs#editEntryAndSaveDraftPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entrySubtitle" value="" />
 			<var name="entrySubtitleEdit" value="Blogs Entry Subtitle Edit" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />

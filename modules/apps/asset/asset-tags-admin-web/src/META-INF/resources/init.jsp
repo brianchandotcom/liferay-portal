@@ -43,6 +43,7 @@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetPermission" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetTagPermission" %><%@
+page import="com.liferay.portlet.asset.util.comparator.AssetTagAssetCountComparator" %><%@
 page import="com.liferay.portlet.asset.util.comparator.AssetTagNameComparator" %>
 
 <%@ page import="java.util.ArrayList" %><%@

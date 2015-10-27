@@ -54,7 +54,7 @@ PortletURL sortPortletURL = renderResponse.createRenderURL();
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"name"} %>'
+			orderColumns='<%= new String[] {"name", "usages"} %>'
 			portletURL="<%= sortPortletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -102,6 +102,9 @@ PortletURL sortPortletURL = renderResponse.createRenderURL();
 
 			if (orderByCol.equals("name")) {
 				orderByComparator = new AssetTagNameComparator(orderByAsc);
+			}
+			else if (orderByCol.equals("usages")) {
+				orderByComparator = new AssetTagAssetCountComparator(orderByAsc);
 			}
 
 			searchContainer.setOrderByCol(orderByCol);

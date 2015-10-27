@@ -63,13 +63,13 @@ import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.util.RestoreEntryUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageService;
 
 import java.io.InputStream;
 
@@ -85,6 +85,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -144,8 +145,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			WikiPageServiceUtil.addPageAttachments(
-				nodeId, title, inputStreamOVPs);
+			_wikiPageService.addPageAttachments(nodeId, title, inputStreamOVPs);
 		}
 		finally {
 			for (ObjectValuePair<String, InputStream> inputStreamOVP :
@@ -237,7 +237,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			InputStream inputStream = tempFileEntry.getContentStream();
 			String mimeType = tempFileEntry.getMimeType();
 
-			WikiPageServiceUtil.addPageAttachment(
+			_wikiPageService.addPageAttachment(
 				nodeId, title, selectedFileName, inputStream, mimeType);
 
 			validFileNameKVPs.add(
@@ -276,7 +276,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 			String mimeType = uploadPortletRequest.getContentType("file");
 
-			WikiPageServiceUtil.addTempFileEntry(
+			_wikiPageService.addTempFileEntry(
 				nodeId, _TEMP_FOLDER_NAME, sourceFileName, inputStream,
 				mimeType);
 		}
@@ -296,7 +296,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 		TrashedModel trashedModel = null;
 
 		if (moveToTrash) {
-			FileEntry fileEntry = WikiPageServiceUtil.movePageAttachmentToTrash(
+			FileEntry fileEntry = _wikiPageService.movePageAttachmentToTrash(
 				nodeId, title, attachment);
 
 			if (fileEntry.getModel() instanceof DLFileEntry) {
@@ -304,7 +304,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		else {
-			WikiPageServiceUtil.deletePageAttachment(nodeId, title, attachment);
+			_wikiPageService.deletePageAttachment(nodeId, title, attachment);
 		}
 
 		if (moveToTrash && (trashedModel != null)) {
@@ -328,7 +328,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			WikiPageServiceUtil.deleteTempFileEntry(
+			_wikiPageService.deleteTempFileEntry(
 				nodeId, fileName, _TEMP_FOLDER_NAME);
 
 			jsonObject.put("deleted", Boolean.TRUE);
@@ -431,7 +431,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 
-		WikiPageServiceUtil.deleteTrashPageAttachments(nodeId, title);
+		_wikiPageService.deleteTrashPageAttachments(nodeId, title);
 	}
 
 	/**
@@ -708,7 +708,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		if (trashEntryId > 0) {
-			TrashEntryServiceUtil.restoreEntry(trashEntryId);
+			_trashEntryService.restoreEntry(trashEntryId);
 
 			return;
 		}
@@ -717,7 +717,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreEntryId : restoreEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreEntryId);
+			_trashEntryService.restoreEntry(restoreEntryId);
 		}
 	}
 
@@ -729,8 +729,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 		long duplicateEntryId = ParamUtil.getLong(
 			actionRequest, "duplicateEntryId");
 
-		TrashEntryServiceUtil.restoreEntry(
-			trashEntryId, duplicateEntryId, null);
+		_trashEntryService.restoreEntry(trashEntryId, duplicateEntryId, null);
 	}
 
 	protected void restoreRename(ActionRequest actionRequest) throws Exception {
@@ -747,10 +746,23 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			newName = TrashUtil.getNewName(themeDisplay, null, 0, oldName);
 		}
 
-		TrashEntryServiceUtil.restoreEntry(trashEntryId, 0, newName);
+		_trashEntryService.restoreEntry(trashEntryId, 0, newName);
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
 	}
 
 	private static final String _TEMP_FOLDER_NAME =
 		EditPageAttachmentsMVCActionCommand.class.getName();
+
+	private TrashEntryService _trashEntryService;
+	private WikiPageService _wikiPageService;
 
 }

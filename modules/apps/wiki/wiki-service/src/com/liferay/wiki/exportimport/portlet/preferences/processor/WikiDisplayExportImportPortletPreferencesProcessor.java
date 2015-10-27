@@ -34,7 +34,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
 import com.liferay.wiki.service.persistence.WikiNodeUtil;
 
@@ -180,7 +180,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 		final String portletId) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			WikiPageLocalServiceUtil.getExportActionableDynamicQuery(
+			_wikiPageLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -224,10 +224,18 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 			referencedStagedModelImporterCapability;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiDisplayExportImportPortletPreferencesProcessor.class);
 
 	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

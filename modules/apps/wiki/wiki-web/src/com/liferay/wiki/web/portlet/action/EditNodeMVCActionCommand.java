@@ -31,7 +31,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicateNodeNameException;
@@ -39,8 +39,8 @@ import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NodeNameException;
 import com.liferay.wiki.exception.RequiredNodeException;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
@@ -49,6 +49,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -71,7 +72,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		int nodeCount = WikiNodeLocalServiceUtil.getNodesCount(
+		int nodeCount = _wikiNodeLocalService.getNodesCount(
 			themeDisplay.getScopeGroupId());
 
 		if (nodeCount == 1) {
@@ -82,7 +83,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 
-		WikiNode wikiNode = WikiNodeServiceUtil.getNode(nodeId);
+		WikiNode wikiNode = _wikiNodeService.getNode(nodeId);
 
 		String oldName = wikiNode.getName();
 
@@ -91,10 +92,10 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 		WikiNode trashWikiNode = null;
 
 		if (moveToTrash) {
-			trashWikiNode = WikiNodeServiceUtil.moveNodeToTrash(nodeId);
+			trashWikiNode = _wikiNodeService.moveNodeToTrash(nodeId);
 		}
 		else {
-			WikiNodeServiceUtil.deleteNode(nodeId);
+			_wikiNodeService.deleteNode(nodeId);
 		}
 
 		WikiCacheUtil.clearCache(nodeId);
@@ -189,14 +190,31 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
+		_wikiNodeService = wikiNodeService;
 	}
 
 	protected void subscribeNode(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 
-		WikiNodeServiceUtil.subscribeNode(nodeId);
+		_wikiNodeService.subscribeNode(nodeId);
 	}
 
 	protected void unsubscribeNode(ActionRequest actionRequest)
@@ -204,7 +222,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 
-		WikiNodeServiceUtil.unsubscribeNode(nodeId);
+		_wikiNodeService.unsubscribeNode(nodeId);
 	}
 
 	protected void updateNode(ActionRequest actionRequest) throws Exception {
@@ -220,17 +238,17 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add node
 
-			WikiNodeServiceUtil.addNode(name, description, serviceContext);
+			_wikiNodeService.addNode(name, description, serviceContext);
 		}
 		else {
 
 			// Update node
 
-			WikiNode wikiNode = WikiNodeServiceUtil.getNode(nodeId);
+			WikiNode wikiNode = _wikiNodeService.getNode(nodeId);
 
 			String oldName = wikiNode.getName();
 
-			WikiNodeServiceUtil.updateNode(
+			_wikiNodeService.updateNode(
 				nodeId, name, description, serviceContext);
 
 			WikiPortletInstanceOverriddenConfiguration
@@ -266,5 +284,9 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 		wikiPortletInstanceOverriddenConfiguration.store();
 	}
+
+	private TrashEntryService _trashEntryService;
+	private WikiNodeLocalService _wikiNodeLocalService;
+	private WikiNodeService _wikiNodeService;
 
 }

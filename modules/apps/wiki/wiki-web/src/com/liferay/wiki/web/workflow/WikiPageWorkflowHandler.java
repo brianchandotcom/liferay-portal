@@ -23,7 +23,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.io.Serializable;
 
@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -66,9 +67,9 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(classPK);
+		WikiPage page = _wikiPageLocalService.getPageByPageId(classPK);
 
-		return WikiPageLocalServiceUtil.updateStatus(
+		return _wikiPageLocalService.updateStatus(
 			userId, page, status, serviceContext, workflowContext);
 	}
 
@@ -76,5 +77,14 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

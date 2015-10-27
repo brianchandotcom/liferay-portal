@@ -25,8 +25,8 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
 import javax.portlet.PortletRequest;
@@ -66,17 +66,17 @@ public class WikiPageAssetRendererFactory
 	public AssetRenderer<WikiPage> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
+		WikiPage page = _wikiPageLocalService.fetchWikiPage(classPK);
 
 		if (page == null) {
 			if (type == TYPE_LATEST_APPROVED) {
-				page = WikiPageLocalServiceUtil.getPage(classPK);
+				page = _wikiPageLocalService.getPage(classPK);
 			}
 			else {
 				WikiPageResource pageResource =
-					WikiPageResourceLocalServiceUtil.getPageResource(classPK);
+					_wikiPageResourceLocalService.getPageResource(classPK);
 
-				page = WikiPageLocalServiceUtil.getPage(
+				page = _wikiPageLocalService.getPage(
 					pageResource.getNodeId(), pageResource.getTitle(), null);
 			}
 		}
@@ -144,6 +144,22 @@ public class WikiPageAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageResourceLocalService(
+		WikiPageResourceLocalService wikiPageResourceLocalService) {
+
+		_wikiPageResourceLocalService = wikiPageResourceLocalService;
+	}
+
 	private ServletContext _servletContext;
+	private WikiPageLocalService _wikiPageLocalService;
+	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

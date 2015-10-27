@@ -30,12 +30,13 @@ import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -63,7 +64,7 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WikiPage.class.getName(), actionRequest);
 
-		WikiPageServiceUtil.changeParent(
+		_wikiPageService.changeParent(
 			nodeId, title, newParentTitle, serviceContext);
 	}
 
@@ -115,7 +116,14 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WikiPage.class.getName(), actionRequest);
 
-		WikiPageServiceUtil.renamePage(nodeId, title, newTitle, serviceContext);
+		_wikiPageService.renamePage(nodeId, title, newTitle, serviceContext);
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
+	}
+
+	private WikiPageService _wikiPageService;
 
 }

@@ -30,8 +30,8 @@ import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiNodeService;
+import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.portlet.PortletException;
@@ -40,6 +40,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -85,11 +86,11 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 					"{nodeId=" + node.getNodeId() + "}");
 			}
 
-			WikiPage page = WikiPageServiceUtil.fetchPage(
+			WikiPage page = _wikiPageService.fetchPage(
 				node.getNodeId(), title, version);
 
 			if ((page == null) || page.isInTrash()) {
-				page = WikiPageServiceUtil.getPage(
+				page = _wikiPageService.getPage(
 					node.getNodeId(),
 					wikiGroupServiceConfiguration.frontPageName());
 			}
@@ -123,15 +124,28 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 		String nodeName = ParamUtil.getString(renderRequest, "nodeName");
 
 		if (Validator.isNotNull(nodeName)) {
-			return WikiNodeServiceUtil.getNode(
+			return _wikiNodeService.getNode(
 				themeDisplay.getScopeGroupId(), nodeName);
 		}
 		else {
 			long nodeId = GetterUtil.getLong(
 				portletPreferences.getValue("nodeId", StringPool.BLANK));
 
-			return WikiNodeServiceUtil.getNode(nodeId);
+			return _wikiNodeService.getNode(nodeId);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
+		_wikiNodeService = wikiNodeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
+	}
+
+	private WikiNodeService _wikiNodeService;
+	private WikiPageService _wikiPageService;
 
 }

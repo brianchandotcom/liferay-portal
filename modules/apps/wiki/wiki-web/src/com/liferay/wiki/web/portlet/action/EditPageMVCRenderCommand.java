@@ -31,7 +31,7 @@ import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.portlet.PortletException;
@@ -39,6 +39,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -116,15 +117,15 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			if (version == 0) {
-				page = WikiPageServiceUtil.getPage(nodeId, title, null);
+				page = _wikiPageService.getPage(nodeId, title, null);
 			}
 			else {
-				page = WikiPageServiceUtil.getPage(nodeId, title, version);
+				page = _wikiPageService.getPage(nodeId, title, version);
 			}
 		}
 		catch (NoSuchPageException nspe1) {
 			try {
-				page = WikiPageServiceUtil.getPage(nodeId, title, false);
+				page = _wikiPageService.getPage(nodeId, title, false);
 			}
 			catch (NoSuchPageException nspe2) {
 				WikiWebComponentProvider wikiWebComponentProvider =
@@ -139,7 +140,7 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 
 					ServiceContext serviceContext = new ServiceContext();
 
-					page = WikiPageServiceUtil.addPage(
+					page = _wikiPageService.addPage(
 						nodeId, title, null, WikiPageConstants.NEW, true,
 						serviceContext);
 				}
@@ -156,5 +157,12 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
+	}
+
+	private WikiPageService _wikiPageService;
 
 }

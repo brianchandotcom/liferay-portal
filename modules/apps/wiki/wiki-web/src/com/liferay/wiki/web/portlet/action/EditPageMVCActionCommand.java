@@ -35,8 +35,8 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryLocalService;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -48,9 +48,9 @@ import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.exception.PageVersionException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.service.WikiPageResourceLocalService;
+import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.portlet.ActionRequest;
@@ -58,6 +58,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -86,19 +87,19 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 		if (moveToTrash) {
 			if (version > 0) {
-				wikiPage = WikiPageServiceUtil.movePageToTrash(
+				wikiPage = _wikiPageService.movePageToTrash(
 					nodeId, title, version);
 			}
 			else {
-				wikiPage = WikiPageServiceUtil.movePageToTrash(nodeId, title);
+				wikiPage = _wikiPageService.movePageToTrash(nodeId, title);
 			}
 		}
 		else {
 			if (version > 0) {
-				WikiPageServiceUtil.discardDraft(nodeId, title, version);
+				_wikiPageService.discardDraft(nodeId, title, version);
 			}
 			else {
-				WikiPageServiceUtil.deletePage(nodeId, title);
+				_wikiPageService.deletePage(nodeId, title);
 			}
 		}
 
@@ -229,11 +230,11 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		for (long restoreEntryId : restoreEntryIds) {
 			long overridePageResourcePrimKey = 0;
 
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getTrashEntry(
+			TrashEntry trashEntry = _trashEntryLocalService.getTrashEntry(
 				restoreEntryId);
 
 			WikiPageResource pageResource =
-				WikiPageResourceLocalServiceUtil.getPageResource(
+				_wikiPageResourceLocalService.getPageResource(
 					trashEntry.getClassPK());
 
 			String title = TrashUtil.getOriginalTitle(pageResource.getTitle());
@@ -245,7 +246,7 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 				wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 			if (title.equals(wikiGroupServiceConfiguration.frontPageName())) {
-				WikiPage overridePage = WikiPageLocalServiceUtil.fetchPage(
+				WikiPage overridePage = _wikiPageLocalService.fetchPage(
 					pageResource.getNodeId(),
 					wikiGroupServiceConfiguration.frontPageName());
 
@@ -255,7 +256,7 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			TrashEntryServiceUtil.restoreEntry(
+			_trashEntryService.restoreEntry(
 				restoreEntryId, overridePageResourcePrimKey, null);
 		}
 	}
@@ -268,14 +269,45 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WikiPage.class.getName(), actionRequest);
 
-		WikiPageServiceUtil.revertPage(nodeId, title, version, serviceContext);
+		_wikiPageService.revertPage(nodeId, title, version, serviceContext);
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryLocalService(
+		TrashEntryLocalService trashEntryLocalService) {
+
+		_trashEntryLocalService = trashEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageResourceLocalService(
+		WikiPageResourceLocalService wikiPageResourceLocalService) {
+
+		_wikiPageResourceLocalService = wikiPageResourceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
 	}
 
 	protected void subscribePage(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 
-		WikiPageServiceUtil.subscribePage(nodeId, title);
+		_wikiPageService.subscribePage(nodeId, title);
 	}
 
 	protected void unsubscribePage(ActionRequest actionRequest)
@@ -284,7 +316,7 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 
-		WikiPageServiceUtil.unsubscribePage(nodeId, title);
+		_wikiPageService.unsubscribePage(nodeId, title);
 	}
 
 	protected WikiPage updatePage(ActionRequest actionRequest)
@@ -311,12 +343,12 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		WikiPage page = null;
 
 		if (cmd.equals(Constants.UPDATE)) {
-			page = WikiPageServiceUtil.updatePage(
+			page = _wikiPageService.updatePage(
 				nodeId, title, version, content, summary, minorEdit, format,
 				parentTitle, redirectTitle, serviceContext);
 		}
 		else {
-			page = WikiPageServiceUtil.addPage(
+			page = _wikiPageService.addPage(
 				nodeId, title, content, summary, minorEdit, format, parentTitle,
 				redirectTitle, serviceContext);
 
@@ -326,7 +358,7 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 				String templateTitle = ParamUtil.getString(
 					actionRequest, "templateTitle");
 
-				WikiPageServiceUtil.copyPageAttachments(
+				_wikiPageService.copyPageAttachments(
 					templateNodeId, templateTitle, page.getNodeId(),
 					page.getTitle());
 			}
@@ -334,5 +366,11 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 		return page;
 	}
+
+	private TrashEntryLocalService _trashEntryLocalService;
+	private TrashEntryService _trashEntryService;
+	private WikiPageLocalService _wikiPageLocalService;
+	private WikiPageResourceLocalService _wikiPageResourceLocalService;
+	private WikiPageService _wikiPageService;
 
 }

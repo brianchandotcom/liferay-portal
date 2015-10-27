@@ -32,11 +32,12 @@ import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Kong
@@ -120,7 +121,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		throws Exception {
 
 		WikiPageResource pageResource =
-			WikiPageResourceLocalServiceUtil.fetchWikiPageResource(
+			_wikiPageResourceLocalService.fetchWikiPageResource(
 				activity.getClassPK());
 
 		if (pageResource == null) {
@@ -237,13 +238,13 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		if (activityType == WikiActivityKeys.UPDATE_PAGE) {
 			WikiPageResource pageResource =
-				WikiPageResourceLocalServiceUtil.getPageResource(
+				_wikiPageResourceLocalService.getPageResource(
 					activity.getClassPK());
 
 			double version = GetterUtil.getDouble(
 				activity.getExtraDataValue("version"));
 
-			WikiPage page = WikiPageLocalServiceUtil.getPage(
+			WikiPage page = _wikiPageLocalService.getPage(
 				pageResource.getNodeId(), pageResource.getTitle(), version);
 
 			if (!page.isApproved() &&
@@ -258,6 +259,23 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageResourceLocalService(
+		WikiPageResourceLocalService wikiPageResourceLocalService) {
+
+		_wikiPageResourceLocalService = wikiPageResourceLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {WikiPage.class.getName()};
+
+	private WikiPageLocalService _wikiPageLocalService;
+	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

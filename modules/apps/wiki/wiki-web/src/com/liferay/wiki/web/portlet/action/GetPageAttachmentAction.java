@@ -32,7 +32,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importer.impl.mediawiki.MediaWikiImporter;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageService;
 
 import java.io.InputStream;
 
@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -98,7 +99,7 @@ public class GetPageAttachmentAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		WikiPage wikiPage = WikiPageServiceUtil.getPage(nodeId, title);
+		WikiPage wikiPage = _wikiPageService.getPage(nodeId, title);
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
@@ -129,7 +130,14 @@ public class GetPageAttachmentAction extends BaseStrutsAction {
 			fileEntry.getMimeType());
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetPageAttachmentAction.class);
+
+	private WikiPageService _wikiPageService;
 
 }

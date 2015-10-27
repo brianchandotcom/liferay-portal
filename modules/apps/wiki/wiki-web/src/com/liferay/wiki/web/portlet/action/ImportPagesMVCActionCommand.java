@@ -28,7 +28,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
+import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
 
@@ -39,6 +39,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -110,7 +111,7 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 			NotificationThreadLocal.setEnabled(false);
 			WikiCacheThreadLocal.setClearCache(false);
 
-			WikiNodeServiceUtil.importPages(
+			_wikiNodeService.importPages(
 				nodeId, importer, inputStreams,
 				actionRequest.getParameterMap());
 		}
@@ -124,5 +125,12 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 
 		progressTracker.finish(actionRequest);
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
+		_wikiNodeService = wikiNodeService;
+	}
+
+	private WikiNodeService _wikiNodeService;
 
 }

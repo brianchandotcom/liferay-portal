@@ -35,7 +35,7 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.util.WikiUtil;
 
 import java.io.File;
@@ -54,6 +54,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -148,7 +149,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			HttpServletResponse response)
 		throws Exception {
 
-		WikiPage page = WikiPageServiceUtil.getPage(nodeId, title, version);
+		WikiPage page = _wikiPageService.getPage(nodeId, title, version);
 
 		String content = page.getContent();
 
@@ -219,11 +220,18 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			request, response, fileName, is, contentType);
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
+	}
+
 	private static final String _LOCALHOST = "localhost";
 
 	private static final String _LOCALHOST_IP = "127.0.0.1";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportPageMVCActionCommand.class);
+
+	private WikiPageService _wikiPageService;
 
 }

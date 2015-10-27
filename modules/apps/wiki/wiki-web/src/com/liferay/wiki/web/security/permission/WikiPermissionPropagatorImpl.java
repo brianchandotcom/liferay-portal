@@ -22,13 +22,14 @@ import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Hugo Huijser
@@ -57,7 +58,7 @@ public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 
 		long nodeId = GetterUtil.getLong(primKey);
 
-		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
+		List<WikiPage> wikiPages = _wikiPageLocalService.getPages(
 			nodeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (WikiPage wikiPage : wikiPages) {
@@ -68,5 +69,14 @@ public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 			}
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

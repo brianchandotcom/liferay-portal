@@ -25,8 +25,8 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.service.WikiPageService;
 
 import java.util.List;
 
@@ -34,6 +34,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -79,15 +80,30 @@ public class EditNodeAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	protected void emptyTrash(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 
-		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
+		List<WikiPage> wikiPages = _wikiPageLocalService.getPages(
 			nodeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (WikiPage wikiPage : wikiPages) {
 			if (wikiPage.getDeletedAttachmentsFileEntriesCount() > 0) {
-				WikiPageServiceUtil.deleteTrashPageAttachments(
+				_wikiPageService.deleteTrashPageAttachments(
 					nodeId, wikiPage.getTitle());
 			}
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
+	}
+
+	private WikiPageLocalService _wikiPageLocalService;
+	private WikiPageService _wikiPageService;
 
 }

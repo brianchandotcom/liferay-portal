@@ -44,9 +44,9 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiNodeService;
+import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.util.WikiUtil;
 
@@ -56,6 +56,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -110,7 +111,7 @@ public class WikiPageIndexer
 		WikiPage page = null;
 
 		try {
-			page = WikiPageLocalServiceUtil.getPage(classPK);
+			page = _wikiPageLocalService.getPage(classPK);
 		}
 		catch (Exception e) {
 			return;
@@ -130,7 +131,7 @@ public class WikiPageIndexer
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(entryClassPK);
+		WikiPage page = _wikiPageLocalService.getPage(entryClassPK);
 
 		return WikiPagePermissionChecker.contains(
 			permissionChecker, page, ActionKeys.VIEW);
@@ -138,7 +139,7 @@ public class WikiPageIndexer
 
 	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+		WikiPage page = _wikiPageLocalService.getPage(classPK);
 
 		return isVisible(page.getStatus(), status);
 	}
@@ -157,7 +158,7 @@ public class WikiPageIndexer
 
 			for (long nodeId : nodeIds) {
 				try {
-					WikiNodeServiceUtil.getNode(nodeId);
+					_wikiNodeService.getNode(nodeId);
 				}
 				catch (Exception e) {
 					if (_log.isDebugEnabled()) {
@@ -217,10 +218,10 @@ public class WikiPageIndexer
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
+		WikiPage page = _wikiPageLocalService.fetchWikiPage(classPK);
 
 		if (page == null) {
-			page = WikiPageLocalServiceUtil.getPage(classPK, (Boolean)null);
+			page = _wikiPageLocalService.getPage(classPK, (Boolean)null);
 		}
 
 		doReindex(page);
@@ -254,7 +255,7 @@ public class WikiPageIndexer
 
 	protected void reindexNodes(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			WikiNodeLocalServiceUtil.getActionableDynamicQuery();
+			_wikiNodeLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -277,7 +278,7 @@ public class WikiPageIndexer
 		throws PortalException {
 
 		final ActionableDynamicQuery actionableDynamicQuery =
-			WikiPageLocalServiceUtil.getActionableDynamicQuery();
+			_wikiPageLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -322,10 +323,32 @@ public class WikiPageIndexer
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
+		_wikiNodeService = wikiNodeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageIndexer.class);
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
+	private WikiNodeLocalService _wikiNodeLocalService;
+	private WikiNodeService _wikiNodeService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

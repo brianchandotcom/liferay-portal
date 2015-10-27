@@ -20,14 +20,15 @@ import com.liferay.portal.struts.FindStrutsAction;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPageResource;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiPageResourceLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Kong
@@ -38,10 +39,9 @@ public class FindPageAction extends FindStrutsAction {
 	@Override
 	protected long getGroupId(long primaryKey) throws Exception {
 		WikiPageResource pageResource =
-			WikiPageResourceLocalServiceUtil.getPageResource(primaryKey);
+			_wikiPageResourceLocalService.getPageResource(primaryKey);
 
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(
-			pageResource.getNodeId());
+		WikiNode node = _wikiNodeLocalService.getNode(pageResource.getNodeId());
 
 		return node.getGroupId();
 	}
@@ -85,16 +85,31 @@ public class FindPageAction extends FindStrutsAction {
 			request, getPrimaryKeyParameterName());
 
 		WikiPageResource pageResource =
-			WikiPageResourceLocalServiceUtil.getPageResource(
-				pageResourcePrimKey);
+			_wikiPageResourceLocalService.getPageResource(pageResourcePrimKey);
 
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(
-			pageResource.getNodeId());
+		WikiNode node = _wikiNodeLocalService.getNode(pageResource.getNodeId());
 
 		portletURL.setParameter("nodeName", node.getName());
 		portletURL.setParameter("title", pageResource.getTitle());
 
 		return portletURL;
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageResourceLocalService(
+		WikiPageResourceLocalService wikiPageResourceLocalService) {
+
+		_wikiPageResourceLocalService = wikiPageResourceLocalService;
+	}
+
+	private WikiNodeLocalService _wikiNodeLocalService;
+	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

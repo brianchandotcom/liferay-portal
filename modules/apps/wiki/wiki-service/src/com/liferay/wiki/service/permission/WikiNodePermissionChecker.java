@@ -21,9 +21,10 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,7 +39,7 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long nodeId, String actionId)
 		throws PortalException {
 
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(nodeId);
+		WikiNode node = _wikiNodeLocalService.getNode(nodeId);
 
 		check(permissionChecker, node, actionId);
 	}
@@ -48,7 +49,7 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(groupId, name);
+		WikiNode node = _wikiNodeLocalService.getNode(groupId, name);
 
 		check(permissionChecker, node, actionId);
 	}
@@ -68,7 +69,7 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long nodeId, String actionId)
 		throws PortalException {
 
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(nodeId);
+		WikiNode node = _wikiNodeLocalService.getNode(nodeId);
 
 		return contains(permissionChecker, node, actionId);
 	}
@@ -78,7 +79,7 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(groupId, name);
+		WikiNode node = _wikiNodeLocalService.getNode(groupId, name);
 
 		return contains(permissionChecker, node, actionId);
 	}
@@ -114,5 +115,14 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 
 		check(permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	private static WikiNodeLocalService _wikiNodeLocalService;
 
 }

@@ -25,13 +25,14 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.util.WikiServiceComponentProvider;
 
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
@@ -56,14 +57,14 @@ public class WikiNodeStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(WikiNode node) throws PortalException {
-		WikiNodeLocalServiceUtil.deleteNode(node);
+		_wikiNodeLocalService.deleteNode(node);
 	}
 
 	@Override
 	public WikiNode fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return WikiNodeLocalServiceUtil.fetchWikiNodeByUuidAndGroupId(
+		return _wikiNodeLocalService.fetchWikiNodeByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -71,7 +72,7 @@ public class WikiNodeStagedModelDataHandler
 	public List<WikiNode> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return WikiNodeLocalServiceUtil.getWikiNodesByUuidAndCompanyId(
+		return _wikiNodeLocalService.getWikiNodesByUuidAndCompanyId(
 			uuid, companyId);
 	}
 
@@ -135,12 +136,12 @@ public class WikiNodeStagedModelDataHandler
 			if (existingNode == null) {
 				serviceContext.setUuid(node.getUuid());
 
-				importedNode = WikiNodeLocalServiceUtil.addNode(
+				importedNode = _wikiNodeLocalService.addNode(
 					userId, node.getName(), node.getDescription(),
 					serviceContext);
 			}
 			else {
-				importedNode = WikiNodeLocalServiceUtil.updateNode(
+				importedNode = _wikiNodeLocalService.updateNode(
 					existingNode.getNodeId(), node.getName(),
 					node.getDescription(), serviceContext);
 			}
@@ -152,7 +153,7 @@ public class WikiNodeStagedModelDataHandler
 			if ((existingNode != null) &&
 				initialNodeName.equals(existingNode.getName())) {
 
-				importedNode = WikiNodeLocalServiceUtil.updateNode(
+				importedNode = _wikiNodeLocalService.updateNode(
 					existingNode.getNodeId(), node.getName(),
 					node.getDescription(), serviceContext);
 			}
@@ -160,7 +161,7 @@ public class WikiNodeStagedModelDataHandler
 				String nodeName = getNodeName(
 					portletDataContext, node, node.getName(), 2);
 
-				importedNode = WikiNodeLocalServiceUtil.addNode(
+				importedNode = _wikiNodeLocalService.addNode(
 					userId, nodeName, node.getDescription(), serviceContext);
 			}
 		}
@@ -194,7 +195,7 @@ public class WikiNodeStagedModelDataHandler
 			int count)
 		throws Exception {
 
-		WikiNode existingNode = WikiNodeLocalServiceUtil.fetchNode(
+		WikiNode existingNode = _wikiNodeLocalService.fetchNode(
 			portletDataContext.getScopeGroupId(), name);
 
 		if (existingNode == null) {
@@ -208,5 +209,14 @@ public class WikiNodeStagedModelDataHandler
 			nodeName.concat(StringPool.SPACE).concat(String.valueOf(count)),
 			++count);
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

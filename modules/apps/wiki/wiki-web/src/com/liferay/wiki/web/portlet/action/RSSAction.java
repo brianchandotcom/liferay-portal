@@ -28,7 +28,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
@@ -37,6 +37,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -84,12 +85,12 @@ public class RSSAction extends BaseRSSStrutsAction {
 				title);
 
 			if (Validator.isNotNull(title)) {
-				rss = WikiPageServiceUtil.getPagesRSS(
+				rss = _wikiPageService.getPagesRSS(
 					nodeId, title, max, type, version, displayStyle, feedURL,
 					entryURL, attachmentURLPrefix, locale);
 			}
 			else {
-				rss = WikiPageServiceUtil.getNodePagesRSS(
+				rss = _wikiPageService.getNodePagesRSS(
 					nodeId, max, type, version, displayStyle, feedURL, entryURL,
 					attachmentURLPrefix);
 			}
@@ -110,5 +111,12 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		return wikiGroupServiceOverriddenConfiguration.enableRss();
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
+	}
+
+	private WikiPageService _wikiPageService;
 
 }

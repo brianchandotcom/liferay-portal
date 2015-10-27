@@ -26,9 +26,10 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,10 +45,10 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		WikiPage page = WikiPageLocalServiceUtil.fetchPage(resourcePrimKey);
+		WikiPage page = _wikiPageLocalService.fetchPage(resourcePrimKey);
 
 		if (page == null) {
-			page = WikiPageLocalServiceUtil.getPageByPageId(resourcePrimKey);
+			page = _wikiPageLocalService.getPageByPageId(resourcePrimKey);
 		}
 
 		check(permissionChecker, page, actionId);
@@ -90,10 +91,10 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		WikiPage page = WikiPageLocalServiceUtil.fetchPage(classPK);
+		WikiPage page = _wikiPageLocalService.fetchPage(classPK);
 
 		if (page == null) {
-			page = WikiPageLocalServiceUtil.getPageByPageId(classPK);
+			page = _wikiPageLocalService.getPageByPageId(classPK);
 		}
 
 		return contains(permissionChecker, page, actionId);
@@ -105,7 +106,7 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		try {
-			WikiPage page = WikiPageLocalServiceUtil.getPage(
+			WikiPage page = _wikiPageLocalService.getPage(
 				nodeId, title, version);
 
 			return contains(permissionChecker, page, actionId);
@@ -122,8 +123,7 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		try {
-			WikiPage page = WikiPageLocalServiceUtil.getPage(
-				nodeId, title, null);
+			WikiPage page = _wikiPageLocalService.getPage(nodeId, title, null);
 
 			return contains(permissionChecker, page, actionId);
 		}
@@ -214,6 +214,13 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		check(permissionChecker, primaryKey, actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	private static boolean _hasPermission(
 		PermissionChecker permissionChecker, WikiPage page, String actionId) {
 
@@ -229,5 +236,7 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 
 		return false;
 	}
+
+	private static WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -26,7 +26,7 @@ import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
 
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class WikiExportImportPortletPreferencesProcessor
 			"hiddenNodes", null);
 
 		for (String hiddenNodeName : StringUtil.split(hiddenNodeNames)) {
-			WikiNode wikiNode = WikiNodeLocalServiceUtil.fetchNode(
+			WikiNode wikiNode = _wikiNodeLocalService.fetchNode(
 				portletDataContext.getScopeGroupId(), hiddenNodeName);
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -83,7 +83,7 @@ public class WikiExportImportPortletPreferencesProcessor
 			"visibleNodes", null);
 
 		for (String visibleNodeName : StringUtil.split(visibleNodeNames)) {
-			WikiNode wikiNode = WikiNodeLocalServiceUtil.fetchNode(
+			WikiNode wikiNode = _wikiNodeLocalService.fetchNode(
 				portletDataContext.getScopeGroupId(), visibleNodeName);
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -129,11 +129,19 @@ public class WikiExportImportPortletPreferencesProcessor
 			referencedStagedModelImporterCapability;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
 	private PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
 	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

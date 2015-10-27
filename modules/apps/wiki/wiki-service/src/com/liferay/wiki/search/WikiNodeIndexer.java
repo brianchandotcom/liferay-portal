@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
 import java.util.Locale;
@@ -42,6 +42,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -70,7 +71,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(entryClassPK);
+		WikiNode node = _wikiNodeLocalService.getNode(entryClassPK);
 
 		return WikiNodePermissionChecker.contains(
 			permissionChecker, node, ActionKeys.VIEW);
@@ -110,7 +111,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
+		WikiNode node = _wikiNodeLocalService.getNode(classPK);
 
 		doReindex(node);
 	}
@@ -141,7 +142,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	protected void reindexEntries(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
-			WikiNodeLocalServiceUtil.getActionableDynamicQuery();
+			_wikiNodeLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -181,7 +182,16 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeIndexer.class);
+
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

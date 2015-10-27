@@ -27,5 +27,5 @@ String languageId = LocaleUtil.toLanguageId(snippetLocale);
 %>
 
 <c:if test="<%= languageId.length() > 0 %>">
-	<liferay-ui:icon image='<%= "../language/" + languageId %>' message='<%= LanguageUtil.format(locale, "this-result-comes-from-the-x-version-of-this-content", snippetLocale.getDisplayLanguage(locale), false) %>' />
+	<liferay-ui:icon image='<%= "../language/" + languageId %>' message='<%= LanguageUtil.format(request, "this-result-comes-from-the-x-version-of-this-content", snippetLocale.getDisplayLanguage(locale), false) %>' />
 </c:if>

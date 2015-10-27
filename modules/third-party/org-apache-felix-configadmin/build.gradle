@@ -1,10 +1,15 @@
-task jar(type: Jar, overwrite: true)
+task reJar(type: Jar)
 
 dependencies {
 	compile group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.8"
 }
 
 jar {
+	deleteAllActions()
+	dependsOn = [reJar]
+}
+
+reJar {
 	exclude "OSGI-INF/permissions.perm"
 	includeEmptyDirs = false
 

@@ -16,7 +16,7 @@ package com.liferay.portlet.tck.bridge;
 
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalUtil;
 
@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -79,7 +80,7 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 			}
 		}
 
-		User tckUser = UserLocalServiceUtil.fetchUserByEmailAddress(
+		User tckUser = _userLocalService.fetchUserByEmailAddress(
 			PortalUtil.getCompanyId(request), "tck@liferay.com");
 
 		if (tckUser != null) {
@@ -90,6 +91,13 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 			PortletTCKAutoLoginFilter.class, request, response, filterChain);
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final String _TCK_SKIP_LOGIN = "TCK_SKIP_LOGIN";
+
+	private UserLocalService _userLocalService;
 
 }

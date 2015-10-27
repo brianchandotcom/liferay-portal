@@ -37,6 +37,8 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -94,6 +96,10 @@ public class MonitoringFilter extends BaseFilter
 		_monitorPortalRequest = monitorPortalRequest;
 	}
 
+	protected int decrementProcessFilterCount() {
+		return _processFilterCount.get().decrementAndGet();
+	}
+
 	protected long getGroupId(HttpServletRequest request) {
 		long groupId = ParamUtil.getLong(request, "groupId");
 
@@ -130,6 +136,10 @@ public class MonitoringFilter extends BaseFilter
 		return _log;
 	}
 
+	protected void incrementProcessFilterCount() {
+		_processFilterCount.get().incrementAndGet();
+	}
+
 	@Override
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
@@ -140,6 +150,8 @@ public class MonitoringFilter extends BaseFilter
 		long groupId = getGroupId(request);
 
 		PortalRequestDataSample portalRequestDataSample = null;
+
+		incrementProcessFilterCount();
 
 		if (_monitorPortalRequest) {
 			portalRequestDataSample = (PortalRequestDataSample)
@@ -187,9 +199,13 @@ public class MonitoringFilter extends BaseFilter
 				DataSampleThreadLocal.addDataSample(portalRequestDataSample);
 			}
 
-			MessageBusUtil.sendMessage(
-				DestinationNames.MONITORING,
-				DataSampleThreadLocal.getDataSamples());
+			if (decrementProcessFilterCount() == 0) {
+				MessageBusUtil.sendMessage(
+					DestinationNames.MONITORING,
+					DataSampleThreadLocal.getDataSamples());
+
+				_processFilterCount.remove();
+			}
 		}
 	}
 
@@ -231,6 +247,15 @@ public class MonitoringFilter extends BaseFilter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringFilter.class);
+
+	private static final ThreadLocal<AtomicInteger> _processFilterCount =
+		new ThreadLocal<AtomicInteger>() {
+
+		protected AtomicInteger initialValue() {
+			return new AtomicInteger(0);
+		};
+
+	};
 
 	private DataSampleFactory _dataSampleFactory;
 	private volatile LayoutLocalService _layoutLocalService;

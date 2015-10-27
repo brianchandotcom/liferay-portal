@@ -154,7 +154,6 @@
 	<classpathentry kind="lib" path="lib/portal/commons-validator.jar"/>
 	<classpathentry kind="lib" path="lib/portal/concurrent.jar"/>
 	<classpathentry kind="lib" path="lib/portal/crypt.jar"/>
-	<classpathentry kind="lib" path="lib/portal/daim.jar"/>
 	<classpathentry kind="lib" path="lib/portal/daisydiff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/displaytag.jar"/>
 	<classpathentry kind="lib" path="lib/portal/dom4j.jar"/>
@@ -174,7 +173,6 @@
 	<classpathentry kind="lib" path="lib/portal/httpcore.jar"/>
 	<classpathentry kind="lib" path="lib/portal/httpmime.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ical4j.jar"/>
-	<classpathentry kind="lib" path="lib/portal/icq.jar"/>
 	<classpathentry kind="lib" path="lib/portal/im4java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/isoparser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jabsorb.jar"/>

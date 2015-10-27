@@ -164,20 +164,6 @@
 		<execute function="Click" locator1="NavListItem#INSTANT_MESSENGER" />
 
 		<if>
-			<isset var="userInstantMessengerAIM" />
-			<then>
-				<execute function="Type" locator1="TextInput#AIM" value1="${userInstantMessengerAIM}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerICQ" />
-			<then>
-				<execute function="Type" locator1="TextInput#ICQ" value1="${userInstantMessengerICQ}" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="userInstantMessengerJabber" />
 			<then>
 				<execute function="Type" locator1="TextInput#JABBER" value1="${userInstantMessengerJabber}" />
@@ -188,13 +174,6 @@
 			<isset var="userInstantMessengerSkype" />
 			<then>
 				<execute function="Type" locator1="TextInput#SKYPE" value1="${userInstantMessengerSkype}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerYM" />
-			<then>
-				<execute function="Type" locator1="TextInput#YM" value1="${userInstantMessengerYM}" />
 			</then>
 		</if>
 

@@ -1955,14 +1955,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		contactImpl.setMale(contact.isMale());
 		contactImpl.setBirthday(contact.getBirthday());
 		contactImpl.setSmsSn(contact.getSmsSn());
-		contactImpl.setAimSn(contact.getAimSn());
 		contactImpl.setFacebookSn(contact.getFacebookSn());
-		contactImpl.setIcqSn(contact.getIcqSn());
 		contactImpl.setJabberSn(contact.getJabberSn());
-		contactImpl.setMySpaceSn(contact.getMySpaceSn());
 		contactImpl.setSkypeSn(contact.getSkypeSn());
 		contactImpl.setTwitterSn(contact.getTwitterSn());
-		contactImpl.setYmSn(contact.getYmSn());
 		contactImpl.setEmployeeStatusId(contact.getEmployeeStatusId());
 		contactImpl.setEmployeeNumber(contact.getEmployeeNumber());
 		contactImpl.setJobTitle(contact.getJobTitle());

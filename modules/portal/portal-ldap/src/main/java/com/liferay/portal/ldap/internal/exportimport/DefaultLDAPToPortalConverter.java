@@ -199,30 +199,18 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		contact.setSmsSn(
 			LDAPUtil.getAttributeString(
 				attributes, contactMappings, ContactConverterKeys.SMS_SN));
-		contact.setAimSn(
-			LDAPUtil.getAttributeString(
-				attributes, contactMappings, ContactConverterKeys.AIM_SN));
 		contact.setFacebookSn(
 			LDAPUtil.getAttributeString(
 				attributes, contactMappings, ContactConverterKeys.FACEBOOK_SN));
-		contact.setIcqSn(
-			LDAPUtil.getAttributeString(
-				attributes, contactMappings, ContactConverterKeys.ICQ_SN));
 		contact.setJabberSn(
 			LDAPUtil.getAttributeString(
 				attributes, contactMappings, ContactConverterKeys.JABBER_SN));
-		contact.setMySpaceSn(
-			LDAPUtil.getAttributeString(
-				attributes, contactMappings, ContactConverterKeys.MYSPACE_SN));
 		contact.setSkypeSn(
 			LDAPUtil.getAttributeString(
 				attributes, contactMappings, ContactConverterKeys.SKYPE_SN));
 		contact.setTwitterSn(
 			LDAPUtil.getAttributeString(
 				attributes, contactMappings, ContactConverterKeys.TWITTER_SN));
-		contact.setYmSn(
-			LDAPUtil.getAttributeString(
-				attributes, contactMappings, ContactConverterKeys.YM_SN));
 		contact.setJobTitle(
 			LDAPUtil.getAttributeString(
 				attributes, contactMappings, ContactConverterKeys.JOB_TITLE));

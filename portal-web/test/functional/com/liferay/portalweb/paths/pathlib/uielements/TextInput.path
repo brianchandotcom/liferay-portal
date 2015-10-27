@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>AIM</td>
-	<td>//div[label[contains(.,'AIM')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ANSWER</td>
 	<td>//div[label[contains(.,'Answer')]]/input[@type='text']</td>
 	<td></td>
@@ -154,11 +149,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ICQ</td>
-	<td>//div[label[contains(.,'ICQ')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INITIAL_URL</td>
 	<td>//input[contains(@id,'_initUrl')]</td>
 	<td></td>
@@ -266,11 +256,6 @@
 <tr>
 	<td>MONTHLY_PAYMENT</td>
 	<td>//div[label[contains(.,'Monthly Payment')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MYSPACE</td>
-	<td>//div[label[contains(.,'MySpace')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -485,11 +470,6 @@
 </tr>
 <tr>
 	<td>YIM</td>
-	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YM</td>
 	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
 	<td></td>
 </tr>

@@ -394,12 +394,10 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			firstName, user.getMiddleName(), lastName, contact.getPrefixId(),
 			contact.getSuffixId(), male, birthdayMonth, birthdayDay,
-			birthdayYear, contact.getSmsSn(), contact.getAimSn(),
-			contact.getFacebookSn(), contact.getIcqSn(), contact.getJabberSn(),
-			contact.getMySpaceSn(), contact.getSkypeSn(),
-			contact.getTwitterSn(), contact.getYmSn(), contact.getJobTitle(),
-			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
-			serviceContext);
+			birthdayYear, contact.getSmsSn(), contact.getFacebookSn(),
+			contact.getJabberSn(), contact.getSkypeSn(), contact.getTwitterSn(),
+			contact.getJobTitle(), groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, serviceContext);
 	}
 
 	private FacebookConnect _facebookConnect;

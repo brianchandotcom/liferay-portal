@@ -380,7 +380,6 @@
 				<classpath mode="compile">lib/portal/commons-validator.jar</classpath>
 				<classpath mode="compile">lib/portal/concurrent.jar</classpath>
 				<classpath mode="compile">lib/portal/crypt.jar</classpath>
-				<classpath mode="compile">lib/portal/daim.jar</classpath>
 				<classpath mode="compile">lib/portal/daisydiff.jar</classpath>
 				<classpath mode="compile">lib/portal/displaytag.jar</classpath>
 				<classpath mode="compile">lib/portal/dom4j.jar</classpath>
@@ -400,7 +399,6 @@
 				<classpath mode="compile">lib/portal/httpcore.jar</classpath>
 				<classpath mode="compile">lib/portal/httpmime.jar</classpath>
 				<classpath mode="compile">lib/portal/ical4j.jar</classpath>
-				<classpath mode="compile">lib/portal/icq.jar</classpath>
 				<classpath mode="compile">lib/portal/im4java.jar</classpath>
 				<classpath mode="compile">lib/portal/isoparser.jar</classpath>
 				<classpath mode="compile">lib/portal/jabsorb.jar</classpath>

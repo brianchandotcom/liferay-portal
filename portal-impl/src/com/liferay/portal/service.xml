@@ -129,10 +129,6 @@
 
 		<column name="classNameId" type="long" primary="true" />
 
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="value" type="String" />
@@ -148,10 +144,6 @@
 		<!-- PK fields -->
 
 		<column name="clusterGroupId" type="long" primary="true" />
-
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -277,10 +269,6 @@
 		<!-- PK fields -->
 
 		<column name="countryId" type="long" primary="true" />
-
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1601,10 +1589,6 @@
 
 		<column name="portalPreferencesId" type="long" primary="true" />
 
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="ownerId" type="long" />
@@ -1767,10 +1751,6 @@
 
 		<column name="regionId" type="long" primary="true" />
 
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="countryId" type="long" />
@@ -1810,10 +1790,6 @@
 		<!-- PK fields -->
 
 		<column name="releaseId" type="long" primary="true" />
-
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -1945,10 +1921,6 @@
 		<!-- PK fields -->
 
 		<column name="resourceActionId" type="long" primary="true" />
-
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 

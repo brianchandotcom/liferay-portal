@@ -36,6 +36,9 @@ public class TestAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 	public static final String ACTION_NAME =
 		"/TestAlwaysAllowDoAsUser/action/name";
 
+	public static final String MVC_RENDER_COMMMAND_NAME =
+		"/TestAlwaysAllowDoAsUser/mvc/render/command/name";
+
 	public static final String PATH = "/TestAlwaysAllowDoAsUser/";
 
 	public static final String STRUTS_ACTION =
@@ -50,6 +53,17 @@ public class TestAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 		actionNames.add(ACTION_NAME);
 
 		return actionNames;
+	}
+
+	@Override
+	public Collection<String> getMVCRenderCommandNames() {
+		_atomicReference.set(StackTraceUtil.getCallerKey());
+
+		Collection<String> mvcRenderCommandNames = new ArrayList<>();
+
+		mvcRenderCommandNames.add(MVC_RENDER_COMMMAND_NAME);
+
+		return mvcRenderCommandNames;
 	}
 
 	@Override

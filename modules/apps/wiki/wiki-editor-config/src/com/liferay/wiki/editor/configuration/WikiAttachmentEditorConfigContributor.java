@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -100,7 +101,8 @@ public class WikiAttachmentEditorConfigContributor
 		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
 			WikiPortletKeys.WIKI);
 
-		uploadURL.setParameter("struts_action", "/wiki/upload_page_attachment");
+		uploadURL.setParameter(
+			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
 		uploadURL.setParameter(
 			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
 

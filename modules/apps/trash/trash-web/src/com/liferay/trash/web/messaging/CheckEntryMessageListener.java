@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.service.TrashEntryLocalService;
-import com.liferay.trash.web.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -61,10 +59,6 @@ public class CheckEntryMessageListener
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(target = "(javax.portlet.name=" + TrashPortletKeys.TRASH + ")")
-	protected void setPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

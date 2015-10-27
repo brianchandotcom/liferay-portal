@@ -655,7 +655,13 @@
 	</command>
 
 	<command name="viewNoDeletePagesAssociatedWithSiteTemplateCP">
-		<execute function="SelectFrame" locator1="IFrame#MANAGE_SITE_PAGES" />
+		<if>
+			<equals arg1="${iframe}" arg2="true" />
+			<then>
+
+				<execute function="SelectFrame" locator1="IFrame#MANAGE_SITE_PAGES" />
+			</then>
+		</if>
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
@@ -676,7 +682,7 @@
 		<execute function="AssertElementNotPresent" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewOnlyAddOptionViaSiteAdminCP">

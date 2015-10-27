@@ -267,9 +267,13 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="build-lang-cmd">
+		<path id="lang.builder.classpath">
+			<fileset dir="${portal.tools.dir}/lang-builder" includes="*.jar" />
+		</path>
+
 		<java
 			classname="com.liferay.lang.builder.LangBuilder"
-			classpathref="portal.tools.classpath"
+			classpathref="lang.builder.classpath"
 			fork="true"
 			newenvironment="true"
 		>
@@ -618,9 +622,13 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="build-service">
+		<path id="service.builder.classpath">
+			<fileset dir="${portal.tools.dir}/portal-tools-service-builder" includes="*.jar" />
+		</path>
+
 		<java
 			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
-			classpathref="portal.tools.classpath"
+			classpathref="service.builder.classpath"
 			fork="true"
 			newenvironment="true"
 			outputproperty="build-service.output"
@@ -798,9 +806,13 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<then>
 				<antcall target="prepare-upgrade-table" />
 
+				<path id="upgrade.table.builder.classpath">
+					<fileset dir="${portal.tools.dir}/portal-tools-upgrade-table-builder" includes="*.jar" />
+				</path>
+
 				<java
 					classname="com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder"
-					classpathref="portal.tools.classpath"
+					classpathref="upgrade.table.builder.classpath"
 					fork="true"
 					newenvironment="true"
 				>
@@ -814,7 +826,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="build-wsdd" depends="compile">
 		<path id="wsdd.builder.classpath">
-			<path refid="portal.tools.classpath" />
+			<fileset dir="${portal.tools.dir}/portal-tools-wsdd-builder" includes="*.jar" />
 			<path refid="project.classpath" />
 		</path>
 
@@ -978,7 +990,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-source">
 		<path id="source.formatter.classpath">
-			<path refid="portal.tools.classpath" />
+			<fileset dir="${portal.tools.dir}/source-formatter" includes="*.jar" />
 			<path refid="project.classpath" />
 		</path>
 
@@ -1031,9 +1043,13 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="format-tld">
+		<path id="tld.formatter.classpath">
+			<fileset dir="${portal.tools.dir}/tld-formatter" includes="*.jar" />
+		</path>
+
 		<java
 			classname="com.liferay.tld.formatter.TLDFormatter"
-			classpathref="portal.tools.classpath"
+			classpathref="tld.formatter.classpath"
 			dir="${project.dir}"
 			fork="true"
 			newenvironment="true"

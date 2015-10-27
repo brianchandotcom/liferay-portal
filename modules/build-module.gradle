@@ -133,7 +133,7 @@ dependencies {
 	portal group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	portal group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 
-	serviceBuilder fileTree(dir: rootProject.file("../tools/sdk/tmp/portal-tools"), include: "*.jar")
+	serviceBuilder fileTree(dir: rootProject.file("../tools/sdk/tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
 	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
 
 	testCompile group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion

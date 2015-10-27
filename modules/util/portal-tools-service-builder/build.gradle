@@ -14,5 +14,5 @@ dependencies {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools"
+	deployDir = "../../../tools/sdk/tmp/portal-tools/portal-tools-service-builder"
 }

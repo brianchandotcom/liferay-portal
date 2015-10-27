@@ -64,7 +64,7 @@ if (!dlFileEntries.isEmpty()) {
 	<c:otherwise>
 		<c:if test="<%= (expandoBridgeAttributeNames != null) && !expandoBridgeAttributeNames.isEmpty() %>">
 			<div class="alert alert-danger">
-				<%= LanguageUtil.format(request, "custom-fields-already-exist-for-these-extra-settings-x", StringUtil.merge(expandoBridgeAttributeNames), false) %>
+				<liferay-ui:message arguments="<%= StringUtil.merge(expandoBridgeAttributeNames) %>" key="custom-fields-already-exist-for-these-extra-settings-x" translateArguments="<%= false %>" />
 			</div>
 		</c:if>
 
@@ -80,7 +80,7 @@ if (!dlFileEntries.isEmpty()) {
 			%>
 
 				<aui:fieldset>
-					<%= LanguageUtil.format(request, "convert-extra-settings-key-from-x-to", key, false) %>
+					<liferay-ui:message arguments="<%= key %>" key="convert-extra-settings-key-from-x-to" translateArguments="<%= false %>" />
 
 					<br />
 

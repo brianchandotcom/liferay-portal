@@ -30,8 +30,8 @@ response.setContentType(ContentTypes.TEXT_XML_UTF8);
 <portlet:resourceURL id="getOpenSearchXML" var="openSearchResourceURL" />
 
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-	<ShortName><%= LanguageUtil.format(request, "x-search", HtmlUtil.escape(company.getName()), false) %></ShortName>
-	<Description><%= LanguageUtil.format(request, "x-search-provider", HtmlUtil.escape(company.getName()), false) %></Description>
+	<ShortName><liferay-ui:message arguments="<%= HtmlUtil.escape(company.getName()) %>" key="x-search" translateArguments="<%= false %>" /></ShortName>
+	<Description><liferay-ui:message arguments="<%= HtmlUtil.escape(company.getName()) %>" key="x-search-provider" translateArguments="<%= false %>" /></Description>
 	<Url template="<%= HtmlUtil.escapeURL(searchURL.toString()) %>&amp;keywords={searchTerms}" type="text/html" />
 	<Url template="<%= HtmlUtil.escapeURL(openSearchResourceURL.toString()) %>&amp;keywords={searchTerms}&amp;p={startPage?}&amp;c={count?}&amp;format=atom" type="application/atom+xml" />
 	<Url template="<%= HtmlUtil.escapeURL(openSearchResourceURL.toString()) %>&amp;keywords={searchTerms}&amp;p={startPage?}&amp;c={count?}&amp;format=rss" type="application/rss+xml" />

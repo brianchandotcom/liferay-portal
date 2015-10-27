@@ -109,9 +109,9 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 		</liferay-ui:search-container>
 	</c:when>
 	<c:when test="<%= !PropsValues.LIVE_USERS_ENABLED %>">
-		<%= LanguageUtil.format(request, "display-of-live-session-data-is-disabled", PropsKeys.LIVE_USERS_ENABLED, false) %>
+		<liferay-ui:message arguments="<%= PropsKeys.LIVE_USERS_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
 	</c:when>
 	<c:otherwise>
-		<%= LanguageUtil.format(request, "display-of-live-session-data-is-disabled", PropsKeys.SESSION_TRACKER_MEMORY_ENABLED, false) %>
+		<liferay-ui:message arguments="<%= PropsKeys.SESSION_TRACKER_MEMORY_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
 	</c:otherwise>
 </c:choose>

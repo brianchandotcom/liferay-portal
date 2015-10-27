@@ -149,11 +149,11 @@ if (entry == null) {
 
 		<div class="entry-header">
 			<div class="entry-action">
-				<%= LanguageUtil.format(request, "x-to-x", new Object[] {"<a href=\"" + currentUser.getDisplayURL(themeDisplay) + "\">" + HtmlUtil.escape(currentUser.getFullName()) + "</a>", "<span class=\"scope\" id=\"" + renderResponse.getNamespace() + "scope\"></span>"}, false) %>
+				<liferay-ui:message arguments='<%= new Object[] {"<a href=\"" + currentUser.getDisplayURL(themeDisplay) + "\">" + HtmlUtil.escape(currentUser.getFullName()) + "</a>", "<span class=\"scope\" id=\"" + renderResponse.getNamespace() + "scope\"></span>"} %>' key="x-to-x" translateArguments="<%= false %>" />
 			</div>
 
 			<div class="entry-time">
-				<%= LanguageUtil.get(request, "about-a-minute-ago") %>
+				<liferay-ui:message key="about-a-minute-ago" />
 			</div>
 		</div>
 

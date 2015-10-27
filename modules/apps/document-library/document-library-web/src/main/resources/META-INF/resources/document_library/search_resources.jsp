@@ -77,7 +77,14 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 				}
 				%>
 
-				<%= !searchEverywhere ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
+				<c:choose>
+					<c:when test="<%= !searchEverywhere %>">
+						<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())} %>" key="searched-for-x-in-x" translateArguments="<%= false %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(keywords) %>" key="searched-for-x-everywhere" translateArguments="<%= false %>" />
+					</c:otherwise>
+				</c:choose>
 			</span>
 
 			<c:if test="<%= folderId != rootFolderId %>">
@@ -266,7 +273,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 				<c:if test="<%= searchResultsList.isEmpty() %>">
 					<div class="alert alert-info">
-						<%= LanguageUtil.format(request, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>
+						<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(keywords) + "</strong>" %>' key="no-documents-were-found-that-matched-the-keywords-x" translateArguments="<%= false %>" />
 					</div>
 				</c:if>
 
@@ -326,7 +333,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 							</c:when>
 							<c:otherwise>
 								<div class="alert alert-info">
-									<%= LanguageUtil.get(request, "searching,-please-wait") %>
+									<liferay-ui:message key="searching,-please-wait"/>
 								</div>
 								<div class="loading-animation"></div>
 							</c:otherwise>
@@ -346,7 +353,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								</c:when>
 								<c:otherwise>
 									<div class="alert alert-info">
-										<%= LanguageUtil.get(request, "searching,-please-wait") %>
+										<liferay-ui:message key="searching,-please-wait"/>
 									</div>
 									<div class="loading-animation"></div>
 								</c:otherwise>

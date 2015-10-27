@@ -131,7 +131,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 				List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), groupId, user.getUserId(), false);
 				%>
 
-				<%= LanguageUtil.format(request, "available-themes-x", (themes.size() - 1), false) %>
+				<liferay-ui:message arguments="<%= themes.size() - 1 %>" key="available-themes-x" translateArguments="<%= false %>" />
 			</span>
 		</h3>
 

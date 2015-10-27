@@ -34,7 +34,7 @@ public class ClusterableProxyFactory {
 
 		return (T)ProxyUtil.newProxyInstance(
 			targetClass.getClassLoader(), targetClass.getInterfaces(),
-			new ClusterableInvocationHandler(targetObject));
+			new ClusterableInvocationHandler<>(targetObject));
 	}
 
 	private static class ClusterableInvocationHandler<T>

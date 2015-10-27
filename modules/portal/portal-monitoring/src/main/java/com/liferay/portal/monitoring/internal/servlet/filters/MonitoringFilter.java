@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.PortalMonitoringControl;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -144,9 +144,11 @@ public class MonitoringFilter extends BaseFilter
 		if (_monitorPortalRequest) {
 			portalRequestDataSample = (PortalRequestDataSample)
 				_dataSampleFactory.createPortalRequestDataSample(
-					companyId, groupId, request.getRemoteUser(),
+					companyId, groupId, request.getHeader(HttpHeaders.REFERER),
+					request.getRemoteAddr(), request.getRemoteUser(),
 					request.getRequestURI(),
-					GetterUtil.getString(request.getRequestURL()));
+					GetterUtil.getString(request.getRequestURL()),
+					request.getHeader(HttpHeaders.USER_AGENT));
 
 			DataSampleThreadLocal.initialize();
 		}

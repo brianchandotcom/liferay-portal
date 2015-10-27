@@ -59,9 +59,9 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		PortalRequestDataSample portalRequestDataSample = (PortalRequestDataSample)
-				request.getAttribute(
-					MonitoringWebKeys.PORTAL_REQUEST_DATA_SAMPLE);
+		PortalRequestDataSample portalRequestDataSample =
+			(PortalRequestDataSample)request.getAttribute(
+				MonitoringWebKeys.PORTAL_REQUEST_DATA_SAMPLE);
 
 		if (portalRequestDataSample != null) {
 			portalRequestDataSample.capture(RequestStatus.SUCCESS);

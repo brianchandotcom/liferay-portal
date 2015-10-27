@@ -40,7 +40,7 @@
 
 @include respond-to(phone, tablet) {
 	.navbar {
-		.container, .container-fluid {
+		.container, .container-fluid, .container-fluid-1280 {
 			.navbar-btn {
 				margin-bottom: 5px;
 				width: 45px;

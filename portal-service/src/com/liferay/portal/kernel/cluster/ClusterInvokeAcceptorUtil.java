@@ -34,6 +34,9 @@ public class ClusterInvokeAcceptorUtil {
 		return _clusterInvokeAcceptors.get(clusterInvokeAcceptorName);
 	}
 
+	private ClusterInvokeAcceptorUtil() {
+	}
+
 	private static final Map<String, ClusterInvokeAcceptor>
 		_clusterInvokeAcceptors = new ConcurrentHashMap<>();
 	private static final ServiceTracker

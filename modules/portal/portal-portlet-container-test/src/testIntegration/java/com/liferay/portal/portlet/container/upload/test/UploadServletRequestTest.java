@@ -110,13 +110,16 @@ public class UploadServletRequestTest {
 				uploadServletRequest.getMultipartParameterMap();
 
 			Assert.assertNotNull(multipartParameterMap);
-			Assert.assertEquals(0, multipartParameterMap.size());
+			Assert.assertTrue(
+				multipartParameterMap.toString(),
+				multipartParameterMap.isEmpty());
 
 			Map<String, List<String>> regularParameterMap =
 				uploadServletRequest.getRegularParameterMap();
 
 			Assert.assertNotNull(regularParameterMap);
-			Assert.assertEquals(0, regularParameterMap.size());
+			Assert.assertTrue(
+				regularParameterMap.toString(), regularParameterMap.isEmpty());
 		}
 
 	}
@@ -153,13 +156,16 @@ public class UploadServletRequestTest {
 				uploadServletRequest.getMultipartParameterMap();
 
 			Assert.assertNotNull(multipartParameterMap);
-			Assert.assertEquals(0, multipartParameterMap.size());
+			Assert.assertTrue(
+				multipartParameterMap.toString(),
+				multipartParameterMap.isEmpty());
 
 			Map<String, List<String>> regularParameterMap =
 				uploadServletRequest.getRegularParameterMap();
 
 			Assert.assertNotNull(regularParameterMap);
-			Assert.assertEquals(0, regularParameterMap.size());
+			Assert.assertTrue(
+				regularParameterMap.toString(), regularParameterMap.isEmpty());
 		}
 
 		@Test
@@ -182,13 +188,16 @@ public class UploadServletRequestTest {
 				uploadServletRequest.getMultipartParameterMap();
 
 			Assert.assertNotNull(multipartParameterMap);
-			Assert.assertEquals(1, multipartParameterMap.size());
+			Assert.assertEquals(
+				multipartParameterMap.toString(), 1,
+				multipartParameterMap.size());
 
 			Map<String, List<String>> regularParameterMap =
 				uploadServletRequest.getRegularParameterMap();
 
 			Assert.assertNotNull(regularParameterMap);
-			Assert.assertEquals(0, regularParameterMap.size());
+			Assert.assertTrue(
+				regularParameterMap.toString(), regularParameterMap.isEmpty());
 		}
 
 		@Test
@@ -211,13 +220,16 @@ public class UploadServletRequestTest {
 				uploadServletRequest.getMultipartParameterMap();
 
 			Assert.assertNotNull(multipartParameterMap);
-			Assert.assertEquals(0, multipartParameterMap.size());
+			Assert.assertTrue(
+				multipartParameterMap.toString(),
+				multipartParameterMap.isEmpty());
 
 			Map<String, List<String>> regularParameterMap =
 				uploadServletRequest.getRegularParameterMap();
 
 			Assert.assertNotNull(regularParameterMap);
-			Assert.assertEquals(10, regularParameterMap.size());
+			Assert.assertEquals(
+				regularParameterMap.toString(), 10, regularParameterMap.size());
 		}
 
 	}
@@ -255,7 +267,9 @@ public class UploadServletRequestTest {
 				uploadServletRequest.getMultipartParameterMap();
 
 			Assert.assertNotNull(multipartParameterMap);
-			Assert.assertEquals(1, multipartParameterMap.size());
+			Assert.assertEquals(
+				multipartParameterMap.toString(), 1,
+				multipartParameterMap.size());
 		}
 
 	}

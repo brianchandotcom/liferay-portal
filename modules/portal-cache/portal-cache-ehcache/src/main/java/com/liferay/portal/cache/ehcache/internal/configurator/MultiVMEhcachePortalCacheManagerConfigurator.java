@@ -88,11 +88,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 					factoryConfiguration.getPropertySeparator());
 			}
 
-			properties.put(PropsKeys.CLUSTER_LINK_ENABLED, _clusterEnabled);
-			properties.put(
-				PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED,
-				_clusterLinkReplicationEnabled);
-
 			factoryConfiguration.setProperties(
 				getPropertiesString(
 					properties, factoryConfiguration.getPropertySeparator()));

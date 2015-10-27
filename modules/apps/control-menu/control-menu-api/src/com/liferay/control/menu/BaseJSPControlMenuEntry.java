@@ -35,11 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BaseJSPControlMenuEntry extends BaseControlMenuEntry
 	implements ControlMenuEntry {
 
-	@Override
-	public String getIconCssClass(HttpServletRequest request) {
-		return null;
-	}
-
 	public abstract String getJspPath();
 
 	@Override

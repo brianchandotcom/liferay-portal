@@ -103,12 +103,6 @@ int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repos
 				%>
 
 				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-file" label="document-types" />
-
-				<%
-				taglibURL = "javascript:" + renderResponse.getNamespace() + "openDDMStructureView()";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-file-text" label="metadata-sets" />
 			</aui:nav-item>
 		</c:if>
 	</aui:nav>
@@ -142,22 +136,6 @@ int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repos
 				id: '<portlet:namespace />openFileEntryTypeView',
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/view_file_entry_type.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
-			}
-		);
-	}
-
-	function <portlet:namespace />openDDMStructureView() {
-		Liferay.Util.openDDMPortlet(
-			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-				dialog: {
-					destroyOnHide: true
-				},
-				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= DLPortletKeys.DOCUMENT_LIBRARY %>',
-				showAncestorScopes: true,
-				showManageTemplates: false,
-				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
 			}
 		);
 	}
